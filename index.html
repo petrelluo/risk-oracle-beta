@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behavioral Risk Oracle | Protect Your Capital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Dark Mode Styles */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --alert: #ef4444;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+            line-height: 1.2;
+        }
+        a {
+            text-decoration: none;
+            color: var(--accent);
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 1px solid #334155;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Problem & Solution Sections */
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px solid #334155;
+        }
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .card {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        /* List Styling */
+        ul.custom-list {
+            list-style: none;
+            padding: 0;
+        }
+        ul.custom-list li {
+            margin-bottom: 15px;
+            padding-left: 24px;
+            position: relative;
+        }
+        ul.custom-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #000000 100%);
+        }
+        .footer-cta h2 {
+            font-size: 2.5rem;
+        }
+        .footer-links {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            margin: 0 10px;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Stop Funding Your Emotions.<br>Protect Your Trading Capital.</h1>
+            <p>The first AI-driven behavioral risk oracle. We monitor real-time execution data to detect psychological "tilt" and enforce discipline before a single bad day wipes out a month of profit.</p>
+            <a href="#waitlist" class="btn">Request Early Access</a>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <h2>The Edge Isn't the Chart.<br>It's the Mindset.</h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">You already know how to find a perfect setup. But finding the setup isn't why accounts blow up. Accounts blow up because of revenge trading, oversized positions, and the inability to walk away after a loss.</p>
+                    <p style="color: var(--text-muted); font-size: 1.1rem;">Even the best traders struggle with the mental game. When volatility spikes and losses compound, human psychology overrides mathematical discipline. You stop thinking in bets, and you start gambling.</p>
+                </div>
+                <div class="card">
+                    <h3>Your Automated Daily Coach</h3>
+                    <p>We built a real-time behavioral circuit breaker that sits directly between your charting platform and your brokerage execution. It stops you from trading <em>when you shouldn't</em>.</p>
+                    <ul class="custom-list">
+                        <li><strong>Real-Time Tilt Detection:</strong> Our proprietary engine establishes a baseline of your disciplined trading parameters.</li>
+                        <li><strong>Dynamic Guardrails:</strong> Flags anomalous behavior instantly (e.g., doubling size immediately after a stop-out).</li>
+                        <li><strong>Programmatic Intervention:</strong> We mathematically step in to enforce your rules when your willpower fails.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: #0b1121;">
+        <div class="container">
+            <div class="grid-2">
+                <div class="card" style="border-top: 4px solid var(--accent);">
+                    <h3 style="color: #fff;">For Proprietary Trading Firms</h3>
+                    <h4 style="color: var(--accent); margin-top: -10px;">Protect Your Downside Capital</h4>
+                    <p>Prop firms lose thousands when a single funded trader goes on tilt and breaks their daily loss limit.</p>
+                    <p>We integrate seamlessly into your backend platform. When our models detect a funded trader spiraling, our API automatically locks their sub-account or throttles their max leverage, preserving the firm's capital without human intervention.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--alert);">
+                    <h3 style="color: #fff;">For Independent Traders</h3>
+                    <h4 style="color: var(--alert); margin-top: -10px;">Institutional Discipline for Retail</h4>
+                    <p>Stop relying on sticky notes on your monitor. Connect your brokerage account securely via our API gateway.</p>
+                    <p>Set your hard limits, and let our system act as your mathematical conscience. Receive SMS interventions or temporary platform lockouts when you violate your own historical risk metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Seamless Integration. Zero Execution Lag.</h2>
+                <p>We don't hold your funds, and we don't place your trades. Our infrastructure operates as an invisible layer of protection.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card" style="text-align: center;">
+                    <h1 style="color: var(--text-muted); font-size: 3rem; margin-bottom: 10px;">1</h1>
+                    <h3 style="color: #fff;">Connect</h3>
+                    <p style="color: var(--text-muted);">Securely link your supported trading platform or brokerage via our enterprise-grade API gateway.</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h1 style="color: var(--text-muted); font-size: 3rem; margin-bottom: 10px;">2</h1>
+                    <h3 style="color: #fff;">Analyze</h3>
+                    <p style="color: var(--text-muted);">Our system ingests your live execution feed, applying behavioral clustering to map your "disciplined" vs "tilt" state.</p>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h1 style="color: var(--text-muted); font-size: 3rem; margin-bottom: 10px;">3</h1>
+                    <h3 style="color: #fff;">Protect</h3>
+                    <p style="color: var(--text-muted);">When execution metrics indicate emotional distress, the oracle fires a webhook to intervene—saving your capital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-cta" id="waitlist">
+        <div class="container">
+            <h2>Trading is a game of survival.<br>Make sure you are here tomorrow.</h2>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">Currently in closed beta for select Prop Firms and high-volume independent traders.</p>
+            <a href="mailto:ceo@yourstartup.com?subject=Early Access: Risk Oracle" class="btn" style="padding: 18px 36px; font-size: 1.1rem;">Join the Waitlist</a>
+            
+            <div class="footer-links">
+                <a href="#">API Documentation</a> | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
