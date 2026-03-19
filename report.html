@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Campaign Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+        }
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
+        }
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            flex: 1 1 500px;
+            min-width: 300px;
+            position: relative;
+        }
+        h2 {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Ad Performance Explorer</h1>
+        <p>Interactive breakdown of impressions, clicks, and spend.</p>
+    </div>
+
+    <div class="controls">
+        <div>
+            <label for="campaignSelect"><strong>Campaign:</strong></label>
+            <select id="campaignSelect">
+                <option value="All">All Campaigns</option>
+                <option value="SAT Vocabulary">SAT Vocabulary</option>
+                <option value="Fiji Water">Fiji Water</option>
+            </select>
+        </div>
+        <div>
+            <label for="metricSelect"><strong>Metric:</strong></label>
+            <select id="metricSelect">
+                <option value="impressions">Impressions</option>
+                <option value="clicks">Clicks</option>
+                <option value="spend">Spend ($)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="chart-card">
+            <h2>Performance by Age & Gender</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h2>Performance by Publisher Platform</h2>
+            <canvas id="donutChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const rawDemoData = [
+            { campaign: 'SAT Vocabulary', age: '18-24', gender: 'male', impressions: 3, clicks: 0, spend: 0.02 },
+            { campaign: 'SAT Vocabulary', age: '25-34', gender: 'female', impressions: 22, clicks: 0, spend: 0.13 },
+            { campaign: 'SAT Vocabulary', age: '25-34', gender: 'male', impressions: 28, clicks: 0, spend: 0.15 },
+            { campaign: 'SAT Vocabulary', age: '35-44', gender: 'female', impressions: 42, clicks: 1, spend: 0.23 },
+            { campaign: 'SAT Vocabulary', age: '35-44', gender: 'male', impressions: 61, clicks: 1, spend: 0.53 },
+            { campaign: 'SAT Vocabulary', age: '45-54', gender: 'female', impressions: 23, clicks: 1, spend: 0.10 },
+            { campaign: 'SAT Vocabulary', age: '45-54', gender: 'male', impressions: 41, clicks: 1, spend: 0.24 },
+            { campaign: 'SAT Vocabulary', age: '45-54', gender: 'unknown', impressions: 1, clicks: 0, spend: 0.00 },
+            { campaign: 'SAT Vocabulary', age: '55-64', gender: 'female', impressions: 30, clicks: 0, spend: 0.17 },
+            { campaign: 'SAT Vocabulary', age: '55-64', gender: 'male', impressions: 24, clicks: 1, spend: 0.16 },
+            { campaign: 'SAT Vocabulary', age: '65+', gender: 'female', impressions: 55, clicks: 0, spend: 0.58 },
+            { campaign: 'SAT Vocabulary', age: '65+', gender: 'male', impressions: 40, clicks: 0, spend: 0.28 },
+            { campaign: 'SAT Vocabulary', age: '65+', gender: 'unknown', impressions: 2, clicks: 0, spend: 0.02 },
+            { campaign: 'Fiji Water', age: '18-24', gender: 'female', impressions: 2, clicks: 0, spend: 0.01 },
+            { campaign: 'Fiji Water', age: '18-24', gender: 'male', impressions: 1, clicks: 0, spend: 0.00 },
+            { campaign: 'Fiji Water', age: '25-34', gender: 'female', impressions: 8, clicks: 0, spend: 0.06 },
+            { campaign: 'Fiji Water', age: '25-34', gender: 'male', impressions: 14, clicks: 1, spend: 0.15 },
+            { campaign: 'Fiji Water', age: '35-44', gender: 'female', impressions: 9, clicks: 1, spend: 0.11 },
+            { campaign: 'Fiji Water', age: '35-44', gender: 'male', impressions: 26, clicks: 0, spend: 0.25 },
+            { campaign: 'Fiji Water', age: '45-54', gender: 'female', impressions: 8, clicks: 4, spend: 0.48 },
+            { campaign: 'Fiji Water', age: '45-54', gender: 'male', impressions: 10, clicks: 0, spend: 0.09 },
+            { campaign: 'Fiji Water', age: '55-64', gender: 'female', impressions: 7, clicks: 2, spend: 0.08 },
+            { campaign: 'Fiji Water', age: '55-64', gender: 'male', impressions: 9, clicks: 1, spend: 0.03 },
+            { campaign: 'Fiji Water', age: '65+', gender: 'female', impressions: 20, clicks: 0, spend: 0.27 },
+            { campaign: 'Fiji Water', age: '65+', gender: 'male', impressions: 27, clicks: 2, spend: 0.37 }
+        ];
+
+        const rawPlatformData = [
+            { campaign: 'SAT Vocabulary', platform: 'facebook', impressions: 364, clicks: 5, spend: 2.60 },
+            { campaign: 'SAT Vocabulary', platform: 'unknown', impressions: 8, clicks: 0, spend: 0.01 },
+            { campaign: 'Fiji Water', platform: 'facebook', impressions: 156, clicks: 11, spend: 2.00 },
+            { campaign: 'Fiji Water', platform: 'audience_network', impressions: 99, clicks: 1, spend: 0.35 },
+            { campaign: 'Fiji Water', platform: 'instagram', impressions: 24, clicks: 0, spend: 0.14 }
+        ];
+
+        // --- CHART INITIALIZATION ---
+        let barChart, donutChart;
+        const ages = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+        const colors = { female: '#FF6B6B', male: '#4ECDC4', unknown: '#95A5A6' };
+        const platformColors = ['#3b5998', '#E1306C', '#f39c12', '#95A5A6']; // Facebook, Insta, Audience, Unknown
+
+        function initCharts() {
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: { labels: ages, datasets: [] },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            });
+
+            const donutCtx = document.getElementById('donutChart').getContext('2d');
+            donutChart = new Chart(donutCtx, {
+                type: 'doughnut',
+                data: { labels: [], datasets: [] },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            updateCharts(); // Load initial data
+        }
+
+        // --- DATA PROCESSING & UPDATING ---
+        function updateCharts() {
+            const campaign = document.getElementById('campaignSelect').value;
+            const metric = document.getElementById('metricSelect').value;
+
+            // 1. Process Bar Chart Data (Demographics)
+            const filteredDemo = campaign === 'All' ? rawDemoData : rawDemoData.filter(d => d.campaign === campaign);
+            
+            const getGenderData = (genderStr) => {
+                return ages.map(age => {
+                    return filteredDemo
+                        .filter(d => d.age === age && d.gender === genderStr)
+                        .reduce((sum, item) => sum + item[metric], 0);
+                });
+            };
+
+            barChart.data.datasets = [
+                { label: 'Female', data: getGenderData('female'), backgroundColor: colors.female },
+                { label: 'Male', data: getGenderData('male'), backgroundColor: colors.male },
+                { label: 'Unknown', data: getGenderData('unknown'), backgroundColor: colors.unknown }
+            ];
+            barChart.update();
+
+            // 2. Process Donut Chart Data (Platforms)
+            const filteredPlatform = campaign === 'All' ? rawPlatformData : rawPlatformData.filter(d => d.campaign === campaign);
+            
+            const platforms = [...new Set(filteredPlatform.map(d => d.platform))];
+            const platformValues = platforms.map(plat => {
+                return filteredPlatform
+                    .filter(d => d.platform === plat)
+                    .reduce((sum, item) => sum + item[metric], 0);
+            });
+
+            // Format labels to be readable (e.g., "audience_network" -> "Audience Network")
+            const cleanLabels = platforms.map(p => p.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()));
+
+            donutChart.data.labels = cleanLabels;
+            donutChart.data.datasets = [{
+                data: platformValues,
+                backgroundColor: platformColors.slice(0, platforms.length)
+            }];
+            donutChart.update();
+        }
+
+        // --- EVENT LISTENERS ---
+        document.getElementById('campaignSelect').addEventListener('change', updateCharts);
+        document.getElementById('metricSelect').addEventListener('change', updateCharts);
+
+        // Run on load
+        window.onload = initCharts;
+    </script>
+</body>
+</html>
