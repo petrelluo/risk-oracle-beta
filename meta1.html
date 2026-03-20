@@ -3,48 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Campaign Performance Dashboard</title>
+    <title>Dynamic Ad Campaign Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-color: #f4f7f6;
+            --bg-color: #f8f9fa;
             --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --sat-color: #4CAF50;
-            --fiji-color: #2196F3;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --primary-color: #0984e3;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px;
         }
         header {
             text-align: center;
             margin-bottom: 30px;
         }
         h1 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
+            margin: 0 0 15px 0;
+            font-size: 32px;
         }
-        p {
-            color: var(--text-muted);
-            margin: 0;
+        .controls {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        select {
+            padding: 12px 24px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 2px solid var(--primary-color);
+            background-color: white;
+            color: var(--text-main);
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        select:hover {
+            border-color: #74b9ff;
         }
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
+            gap: 25px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         .card {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+            border: 1px solid #edf2f7;
         }
         .card h2 {
             font-size: 18px;
@@ -52,139 +66,145 @@
             margin-bottom: 20px;
             text-align: center;
             color: var(--text-main);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
         }
-        canvas {
-            max-height: 300px;
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Ad Campaign Performance Dashboard</h1>
-        <p>SAT Vocabulary Books vs. Fiji Water Display Campaigns</p>
+        <h1>Campaign Deep-Dive Dashboard</h1>
     </header>
+
+    <div class="controls">
+        <select id="campaignSelector" onchange="updateDashboard()">
+            <option value="sat">SAT Vocabulary Books Campaign</option>
+            <option value="fiji">Fiji Water Campaign</option>
+        </select>
+    </div>
 
     <div class="dashboard-grid">
         <div class="card">
-            <h2>Impressions by Age Group</h2>
-            <canvas id="ageChart"></canvas>
+            <h2>Impressions by Age</h2>
+            <div class="chart-container"><canvas id="ageChart"></canvas></div>
         </div>
-
         <div class="card">
-            <h2>Total Clicks Comparison</h2>
-            <canvas id="clicksChart"></canvas>
+            <h2>Impressions by Gender</h2>
+            <div class="chart-container"><canvas id="genderChart"></canvas></div>
         </div>
-
         <div class="card">
-            <h2>Device Delivery (SAT Books)</h2>
-            <canvas id="deviceSatChart"></canvas>
+            <h2>Impressions by Device</h2>
+            <div class="chart-container"><canvas id="deviceChart"></canvas></div>
         </div>
-
         <div class="card">
-            <h2>Top 5 Regions (SAT Books)</h2>
-            <canvas id="geoChart"></canvas>
+            <h2>Impressions by Platform / Placement</h2>
+            <div class="chart-container"><canvas id="platformChart"></canvas></div>
+        </div>
+        <div class="card" style="grid-column: 1 / -1;">
+            <h2>Top Regions (Impressions)</h2>
+            <div class="chart-container" style="height: 400px;"><canvas id="regionChart"></canvas></div>
         </div>
     </div>
 
     <script>
-        // Set default font for charts
         Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-        Chart.defaults.color = '#666';
+        Chart.defaults.color = '#636e72';
 
-        // 1. Impressions by Age Group (Bar Chart)
-        const ageCtx = document.getElementById('ageChart').getContext('2d');
-        new Chart(ageCtx, {
-            type: 'bar',
-            data: {
-                labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
-                datasets: [
-                    {
-                        label: 'SAT Books',
-                        backgroundColor: '#4CAF50',
-                        data: [5, 126, 244, 111, 93, 177] // Aggregated from raw data
-                    },
-                    {
-                        label: 'Fiji Water',
-                        backgroundColor: '#2196F3',
-                        data: [3, 22, 35, 19, 7, 0] // Aggregated from raw data
-                    }
-                ]
+        // Aggregated data based on your reports
+        const campaignData = {
+            sat: {
+                age: { labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], data: [5, 126, 244, 111, 93, 177] },
+                gender: { labels: ['Female', 'Male', 'Unknown'], data: [333, 415, 8] },
+                device: { labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], data: [537, 139, 20, 19, 11, 30] },
+                platform: { labels: ['Facebook Feed', 'Unknown'], data: [748, 8] },
+                region: { labels: ['California', 'Florida', 'Georgia', 'Kentucky', 'Michigan', 'Illinois', 'Mississippi'], data: [60, 45, 30, 29, 28, 23, 21] }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true }
-                }
+            fiji: {
+                age: { labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], data: [3, 22, 35, 19, 7, 0] },
+                gender: { labels: ['Female', 'Male', 'Unknown'], data: [34, 52, 0] },
+                device: { labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], data: [271, 116, 51, 11, 6, 1] },
+                platform: { labels: ['Audience Network', 'Facebook Feed', 'IG Reels', 'FB Instream Video', 'FB Marketplace', 'FB Search', 'Other'], data: [244, 152, 35, 9, 6, 4, 6] },
+                region: { labels: ['No Geographic Data in Report'], data: [0] }
             }
-        });
+        };
 
-        // 2. Total Clicks Comparison (Doughnut Chart)
-        const clicksCtx = document.getElementById('clicksChart').getContext('2d');
-        new Chart(clicksCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['SAT Books Clicks', 'Fiji Water Clicks'],
-                datasets: [{
-                    data: [18, 14], // Aggregated total clicks across platforms
-                    backgroundColor: ['#4CAF50', '#2196F3'],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' }
-                }
-            }
-        });
+        // Chart Instances
+        let charts = {};
 
-        // 3. Device Delivery - SAT Books (Pie Chart)
-        const deviceSatCtx = document.getElementById('deviceSatChart').getContext('2d');
-        new Chart(deviceSatCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Android Phone', 'iPhone', 'Desktop', 'Tablets', 'Other'],
-                datasets: [{
-                    data: [537, 139, 11, 39, 30], // Aggregated device data
-                    backgroundColor: ['#FF9800', '#9C27B0', '#607D8B', '#FFC107', '#9E9E9E'],
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right' }
-                }
-            }
-        });
+        function initCharts() {
+            const commonOptions = { responsive: true, maintainAspectRatio: false };
 
-        // 4. Top 5 Regions - SAT Books (Horizontal Bar Chart)
-        const geoCtx = document.getElementById('geoChart').getContext('2d');
-        new Chart(geoCtx, {
-            type: 'bar',
-            data: {
-                labels: ['California', 'Florida', 'Georgia', 'Kentucky', 'Michigan'],
-                datasets: [{
-                    label: 'Impressions',
-                    backgroundColor: '#FF5722',
-                    data: [60, 45, 30, 29, 28] // Aggregated top 5 states
-                }]
-            },
-            options: {
-                indexAxis: 'y', // Makes it a horizontal bar chart
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { beginAtZero: true }
-                },
-                plugins: {
-                    legend: { display: false }
-                }
-            }
-        });
+            charts.age = new Chart(document.getElementById('ageChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#74b9ff', data: [] }] },
+                options: { ...commonOptions, plugins: { legend: { display: false } } }
+            });
+
+            charts.gender = new Chart(document.getElementById('genderChart'), {
+                type: 'doughnut',
+                data: { labels: [], datasets: [{ backgroundColor: ['#fd79a8', '#0984e3', '#b2bec3'], data: [] }] },
+                options: commonOptions
+            });
+
+            charts.device = new Chart(document.getElementById('deviceChart'), {
+                type: 'pie',
+                data: { labels: [], datasets: [{ backgroundColor: ['#00b894', '#6c5ce7', '#ffeaa7', '#fab1a0', '#81ecec', '#dfe6e9'], data: [] }] },
+                options: { ...commonOptions, plugins: { legend: { position: 'right' } } }
+            });
+
+            charts.platform = new Chart(document.getElementById('platformChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#a29bfe', data: [] }] },
+                options: { ...commonOptions, plugins: { legend: { display: false } } }
+            });
+
+            charts.region = new Chart(document.getElementById('regionChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#fdcb6e', data: [] }] },
+                options: { ...commonOptions, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+
+            updateDashboard(); // Load initial data
+        }
+
+        function updateDashboard() {
+            const selected = document.getElementById('campaignSelector').value;
+            const data = campaignData[selected];
+
+            // Update Age Chart
+            charts.age.data.labels = data.age.labels;
+            charts.age.data.datasets[0].data = data.age.data;
+            charts.age.update();
+
+            // Update Gender Chart
+            charts.gender.data.labels = data.gender.labels;
+            charts.gender.data.datasets[0].data = data.gender.data;
+            charts.gender.update();
+
+            // Update Device Chart
+            charts.device.data.labels = data.device.labels;
+            charts.device.data.datasets[0].data = data.device.data;
+            charts.device.update();
+
+            // Update Platform Chart
+            charts.platform.data.labels = data.platform.labels;
+            charts.platform.data.datasets[0].data = data.platform.data;
+            charts.platform.update();
+
+            // Update Region Chart
+            charts.region.data.labels = data.region.labels;
+            charts.region.data.datasets[0].data = data.region.data;
+            charts.region.update();
+        }
+
+        // Initialize on load
+        window.onload = initCharts;
     </script>
 </body>
 </html>
