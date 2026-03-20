@@ -30,19 +30,40 @@
             margin-top: 0;
             color: #1a365d;
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
-        .score-container {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #2b6cb0;
+        
+        /* Stats Header Styles */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 1.5rem;
-            background-color: #ebf8ff;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            font-size: 1.1rem;
+            font-weight: bold;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            display: inline-block;
+        }
+        .score-box {
+            color: #2b6cb0;
+            background-color: #ebf8ff;
             border: 1px solid #bee3f8;
         }
+        .mastery-box {
+            color: #276749;
+            background-color: #f0fff4;
+            border: 1px solid #c6f6d5;
+            transition: all 0.3s ease;
+        }
+        .mastery-complete {
+            background-color: #38a169;
+            color: white;
+            border-color: #2f855a;
+        }
+
         .instruction {
             color: #718096;
             font-size: 0.9rem;
@@ -80,6 +101,7 @@
             gap: 10px;
             justify-content: center;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
         button {
             background-color: #3182ce;
@@ -99,6 +121,12 @@
             color: #4a5568;
         }
         button.secondary:hover { background-color: #cbd5e0; }
+
+        button.danger {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+        button.danger:hover { background-color: #feb2b2; }
 
         #feedback {
             margin-top: 1rem;
@@ -145,8 +173,13 @@
 
     <div class="card" id="quiz-screen">
         <h1>Chemistry Quiz</h1>
-        <div class="score-container">Score: <span id="score">0</span></div>
-        <p class="instruction">Type your answer below. Formulas don't need subscripts (e.g., Al2(SO4)3).</p>
+        
+        <div class="stats-row">
+            <div class="stat-box score-box">Score: <span id="score">0</span></div>
+            <div class="stat-box mastery-box" id="mastery-container">Mastered: <span id="mastery-count">0</span> / <span id="mastery-total">20</span></div>
+        </div>
+
+        <p class="instruction">Formulas don't need subscripts (e.g., Al2(SO4)3).</p>
         
         <div id="question-prompt">Loading question...</div>
         <div id="target"></div>
@@ -163,16 +196,19 @@
 
     <div class="card hidden" id="mistakes-screen">
         <h1>Top 10 Mistakes</h1>
-        <p class="instruction">Here are the questions you've missed the most during this session.</p>
+        <p class="instruction">Questions you miss most frequently appear more often in the quiz.</p>
         
         <div id="mistakes-container">
             </div>
 
-        <button id="back-btn">Back to Quiz</button>
+        <div class="btn-group">
+            <button id="back-btn">Back to Quiz</button>
+            <button id="reset-btn" class="danger">Reset Progress</button>
+        </div>
     </div>
 
     <script>
-        // The chemical data
+        // The core chemical data
         const chemicals = [
             { name: "Aluminum Sulfate", formula: "Al2(SO4)3" },
             { name: "Magnesium nitrate", formula: "Mg(NO3)2" },
@@ -186,14 +222,13 @@
             { name: "Ammonium sulfide", formula: "(NH4)2S" }
         ];
 
-        // App state
-        let currentItem = {};
-        let askingFor = ""; 
-        let correctAnswer = "";
-        let score = 0; 
-        
-        // Dictionary to track mistakes. Key: Question string, Value: Object with details
-        let mistakesTracker = {}; 
+        // App state variables
+        let appData = {
+            deck: [],
+            mistakes: {},
+            score: 0
+        };
+        let currentCard = null;
 
         // DOM Elements
         const quizScreen = document.getElementById('quiz-screen');
@@ -204,11 +239,65 @@
         const submitBtn = document.getElementById('submit-btn');
         const reviewBtn = document.getElementById('review-btn');
         const backBtn = document.getElementById('back-btn');
+        const resetBtn = document.getElementById('reset-btn');
         const feedbackEl = document.getElementById('feedback');
         const scoreEl = document.getElementById('score');
+        const masteryCountEl = document.getElementById('mastery-count');
+        const masteryTotalEl = document.getElementById('mastery-total');
+        const masteryContainer = document.getElementById('mastery-container');
         const mistakesContainer = document.getElementById('mistakes-container');
 
-        // Function to start a new round
+        // --- Initialization & Data Management ---
+
+        function initData() {
+            const savedData = localStorage.getItem('chemistryQuizData');
+            
+            if (savedData) {
+                appData = JSON.parse(savedData);
+            } else {
+                buildNewDeck();
+            }
+            scoreEl.textContent = appData.score;
+            masteryTotalEl.textContent = appData.deck.length;
+            updateMasteryDisplay();
+        }
+
+        function buildNewDeck() {
+            appData.deck = [];
+            appData.mistakes = {};
+            appData.score = 0;
+            scoreEl.textContent = 0;
+
+            // Create 2 cards per chemical (one asking for name, one for formula)
+            chemicals.forEach((chem, index) => {
+                appData.deck.push({ id: `f-${index}`, item: chem, askFor: 'formula', weight: 10 });
+                appData.deck.push({ id: `n-${index}`, item: chem, askFor: 'name', weight: 10 });
+            });
+            
+            masteryTotalEl.textContent = appData.deck.length;
+            saveData();
+            updateMasteryDisplay();
+        }
+
+        function saveData() {
+            localStorage.setItem('chemistryQuizData', JSON.stringify(appData));
+        }
+
+        function updateMasteryDisplay() {
+            // A card is "mastered" if its weight has been reduced to the minimum (1)
+            const masteredCards = appData.deck.filter(card => card.weight === 1).length;
+            masteryCountEl.textContent = masteredCards;
+
+            // Add a visual flair if the user achieves 100% mastery
+            if (masteredCards === appData.deck.length && appData.deck.length > 0) {
+                masteryContainer.classList.add('mastery-complete');
+            } else {
+                masteryContainer.classList.remove('mastery-complete');
+            }
+        }
+
+        // --- Quiz Logic ---
+
         function generateQuestion() {
             feedbackEl.textContent = "";
             feedbackEl.className = "";
@@ -217,78 +306,92 @@
             inputEl.disabled = false;
             submitBtn.disabled = false;
 
-            const randomIndex = Math.floor(Math.random() * chemicals.length);
-            currentItem = chemicals[randomIndex];
+            // Spaced Repetition: Weighted Random Selection
+            let totalWeight = appData.deck.reduce((sum, card) => sum + card.weight, 0);
+            let randomNum = Math.random() * totalWeight;
+            
+            for (let card of appData.deck) {
+                randomNum -= card.weight;
+                if (randomNum <= 0) {
+                    currentCard = card;
+                    break;
+                }
+            }
 
-            const isAskingFormula = Math.random() < 0.5;
+            if (!currentCard) currentCard = appData.deck[0]; 
 
-            if (isAskingFormula) {
-                askingFor = "formula";
+            if (currentCard.askFor === "formula") {
                 promptEl.textContent = "What is the formula for:";
-                targetEl.textContent = currentItem.name;
-                correctAnswer = currentItem.formula;
+                targetEl.textContent = currentCard.item.name;
             } else {
-                askingFor = "name";
                 promptEl.textContent = "What is the name of:";
-                targetEl.textContent = currentItem.formula;
-                correctAnswer = currentItem.name;
+                targetEl.textContent = currentCard.item.formula;
             }
         }
 
-        // Function to check the user's input
         function checkAnswer() {
             const userAnswer = inputEl.value.trim();
             if (userAnswer === "") return; 
 
-            // Disable input briefly to prevent spamming enter
             inputEl.disabled = true;
             submitBtn.disabled = true;
 
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-                score++; 
-                scoreEl.textContent = score; 
+            const correctAnswer = currentCard.askFor === "formula" ? currentCard.item.formula : currentCard.item.name;
+            const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+
+            if (isCorrect) {
+                appData.score++; 
+                // Decrease weight (min weight is 1)
+                currentCard.weight = Math.max(1, currentCard.weight - 3);
+
+                scoreEl.textContent = appData.score; 
                 feedbackEl.textContent = "Correct! Well done.";
                 feedbackEl.className = "correct";
+                
+                updateMasteryDisplay();
+                saveData();
                 setTimeout(generateQuestion, 1200);
             } else {
-                score--; 
-                scoreEl.textContent = score; 
+                appData.score--; 
+                // Increase weight heavily on mistakes
+                currentCard.weight += 15;
+
+                scoreEl.textContent = appData.score; 
                 feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`;
                 feedbackEl.className = "incorrect";
 
-                // --- TRACK MISTAKE ---
+                // Track Mistake
                 const questionAsked = `${promptEl.textContent} ${targetEl.textContent}`;
-                if (!mistakesTracker[questionAsked]) {
-                    mistakesTracker[questionAsked] = {
+                if (!appData.mistakes[questionAsked]) {
+                    appData.mistakes[questionAsked] = {
                         question: questionAsked,
                         correctAnswer: correctAnswer,
                         count: 0
                     };
                 }
-                mistakesTracker[questionAsked].count++;
-                // ---------------------
-
-                setTimeout(generateQuestion, 2500);
+                appData.mistakes[questionAsked].count++;
+                
+                updateMasteryDisplay();
+                saveData();
+                setTimeout(generateQuestion, 3000);
             }
         }
 
-        // Function to render the mistakes table
+        // --- UI Flow & Event Listeners ---
+
         function showMistakes() {
-            // Hide quiz, show mistakes
             quizScreen.classList.add('hidden');
             mistakesScreen.classList.remove('hidden');
 
-            // Convert tracker object to an array and sort by count (highest to lowest)
-            const sortedMistakes = Object.values(mistakesTracker)
+            const sortedMistakes = Object.values(appData.mistakes)
                                          .sort((a, b) => b.count - a.count)
-                                         .slice(0, 10); // Grab top 10
+                                         .slice(0, 10); 
 
             if (sortedMistakes.length === 0) {
-                mistakesContainer.innerHTML = '<p class="empty-state">No mistakes yet! You are doing great.</p>';
+                mistakesContainer.innerHTML = '<p class="empty-state">No mistakes recorded yet! Keep up the good work.</p>';
                 return;
             }
 
-            // Build HTML table
             let tableHTML = `
                 <table>
                     <thead>
@@ -315,17 +418,24 @@
             mistakesContainer.innerHTML = tableHTML;
         }
 
-        // Function to return to the quiz
         function hideMistakes() {
             mistakesScreen.classList.add('hidden');
             quizScreen.classList.remove('hidden');
             inputEl.focus();
         }
 
-        // Event Listeners
+        function resetProgress() {
+            if(confirm("Are you sure you want to reset your score, mistakes, and spaced-repetition progress?")) {
+                buildNewDeck();
+                hideMistakes();
+                generateQuestion();
+            }
+        }
+
         submitBtn.addEventListener('click', checkAnswer);
         reviewBtn.addEventListener('click', showMistakes);
         backBtn.addEventListener('click', hideMistakes);
+        resetBtn.addEventListener('click', resetProgress);
         
         inputEl.addEventListener('keypress', function(event) {
             if (event.key === 'Enter' && !inputEl.disabled) {
@@ -333,7 +443,8 @@
             }
         });
 
-        // Initialize the first question on load
+        // Start App
+        initData();
         generateQuestion();
     </script>
 </body>
