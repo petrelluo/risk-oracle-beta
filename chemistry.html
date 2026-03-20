@@ -25,12 +25,14 @@
             text-align: center;
             max-width: 550px;
             width: 100%;
+            position: relative; /* Needed for absolute positioning of the Tips button */
         }
         h1 {
             margin-top: 0;
             color: #1a365d;
             font-size: 1.8rem;
             margin-bottom: 1rem;
+            padding-right: 60px; /* Prevent text from hiding under the tips button */
         }
         
         /* Stats Header Styles */
@@ -128,6 +130,71 @@
         }
         button.danger:hover { background-color: #feb2b2; }
 
+        /* Tips Button & Modal Styles */
+        .tips-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #edf2f7;
+            color: #2b6cb0;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            border: 1px solid #cbd5e0;
+        }
+        .tips-btn:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .modal-header h2 { margin: 0; color: #1a365d; font-size: 1.5rem; }
+        .close-btn {
+            background: none; border: none; font-size: 1.5rem; color: #a0aec0;
+            cursor: pointer; padding: 0;
+        }
+        .close-btn:hover { color: #4a5568; background: none; }
+        
+        .tip-box {
+            background-color: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-box h3 { margin-top: 0; color: #2b6cb0; font-size: 1.1rem; }
+        .tip-box p { margin-bottom: 0; font-size: 0.95rem; line-height: 1.4; }
+        
+        .all-rules-container { display: none; margin-top: 1.5rem; }
+        .rule-item { margin-bottom: 1rem; border-bottom: 1px solid #edf2f7; padding-bottom: 0.5rem;}
+        .rule-item:last-child { border-bottom: none; }
+        .rule-item h4 { margin: 0 0 0.25rem 0; color: #2d3748; }
+        .rule-item p { margin: 0; font-size: 0.9rem; color: #4a5568; line-height: 1.4;}
+
         #feedback {
             margin-top: 1rem;
             font-size: 1.1rem;
@@ -148,30 +215,16 @@
             text-align: left;
             font-size: 0.95rem;
         }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        th {
-            background-color: #f7fafc;
-            color: #4a5568;
-            font-weight: bold;
-        }
-        .mistake-count {
-            font-weight: bold;
-            color: #e53e3e;
-            text-align: center;
-        }
-        .empty-state {
-            color: #718096;
-            font-style: italic;
-            margin: 2rem 0;
-        }
+        th, td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f7fafc; color: #4a5568; font-weight: bold; }
+        .mistake-count { font-weight: bold; color: #e53e3e; text-align: center; }
+        .empty-state { color: #718096; font-style: italic; margin: 2rem 0; }
     </style>
 </head>
 <body>
 
     <div class="card" id="quiz-screen">
+        <button id="tips-btn" class="tips-btn">💡 Tips</button>
         <h1>Chemistry Quiz</h1>
         
         <div class="stats-row">
@@ -198,8 +251,7 @@
         <h1>Top 10 Mistakes</h1>
         <p class="instruction">Questions you miss most frequently appear more often in the quiz.</p>
         
-        <div id="mistakes-container">
-            </div>
+        <div id="mistakes-container"></div>
 
         <div class="btn-group">
             <button id="back-btn">Back to Quiz</button>
@@ -207,133 +259,47 @@
         </div>
     </div>
 
+    <div id="tips-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nomenclature Tips</h2>
+                <button id="close-tips-btn" class="close-btn">&times;</button>
+            </div>
+            
+            <div class="tip-box" id="current-tip-box">
+                <h3 id="tip-title">Rule Name</h3>
+                <p id="tip-text">Rule description goes here.</p>
+            </div>
+
+            <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View All Naming Rules</button>
+            
+            <div id="all-rules" class="all-rules-container">
+                <div class="rule-item">
+                    <h4>1. Binary Ionic Compounds</h4>
+                    <p>Formed by a standard metal and a nonmetal. Name the metal normally, and change the ending of the nonmetal to "-ide". Cross the ionic charges to balance the formula to zero.</p>
+                </div>
+                <div class="rule-item">
+                    <h4>2. Transition Metals (Stock System)</h4>
+                    <p>Transition metals can have multiple charges. A Roman numeral in parentheses indicates the exact positive charge of the metal ion (e.g., Iron(III) means Fe³⁺).</p>
+                </div>
+                <div class="rule-item">
+                    <h4>3. Polyatomic Ions</h4>
+                    <p>Compounds containing groups of covalently bonded atoms with an overall charge. Look for special endings like "-ate" or "-ite", or the names "hydroxide" and "ammonium". Use parentheses in formulas if there is more than one.</p>
+                </div>
+                <div class="rule-item">
+                    <h4>4. Covalent (Molecular) Compounds</h4>
+                    <p>Formed by two nonmetals. Greek prefixes (mono-, di-, tri-, tetra-, etc.) are used to tell you exactly how many atoms of each element are present. The second element ends in "-ide".</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // The ultimate chemical data dictionary
         const chemicals = [
-            { formula: "Al2(SO4)3", name: "Aluminum sulfate" },
-            { formula: "Mg(NO3)2", name: "Magnesium nitrate" },
-            { formula: "NaCl", name: "Sodium chloride" },
-            { formula: "NO3", name: "Nitrate" },
-            { formula: "CO", name: "Carbon monoxide" },
-            { formula: "MnO2", name: "Manganese(IV) oxide" },
-            { formula: "SO2", name: "Sulfur dioxide" },
-            { formula: "K2S", name: "Potassium sulfide" },
-            { formula: "AgClO3", name: "Silver chlorate" },
-            { formula: "(NH4)2S", name: "Ammonium sulfide" },
-            { formula: "BaCO3", name: "Barium carbonate" },
-            { formula: "MgI2", name: "Magnesium iodide" },
-            { formula: "Cs2CO3", name: "Cesium carbonate" },
-            { formula: "SiC", name: "Silicon carbide" },
-            { formula: "FeO", name: "Iron(II) oxide" },
-            { formula: "Al(OH)3", name: "Aluminum hydroxide" },
-            { formula: "Fe2O3", name: "Iron(III) oxide" },
-            { formula: "CuCl", name: "Copper(I) chloride" },
-            { formula: "CaCrO4", name: "Calcium chromate" },
-            { formula: "CrF3", name: "Chromium(III) fluoride" },
-            { formula: "FeSO4", name: "Iron(II) sulfate" },
-            { formula: "Pb3(PO4)2", name: "Lead(II) phosphate" },
-            { formula: "Cu(OH)2", name: "Copper(II) hydroxide" },
-            { formula: "Al2S3", name: "Aluminum sulfide" },
-            { formula: "NH4NO3", name: "Ammonium nitrate" },
-            { formula: "Mg3(PO4)2", name: "Magnesium phosphate" },
-            { formula: "KClO3", name: "Potassium chlorate" },
-            { formula: "Fe(OH)3", name: "Iron(III) hydroxide" },
-            { formula: "SbF5", name: "Antimony pentafluoride" },
-            { formula: "CaS", name: "Calcium sulfide" },
-            { formula: "LiF", name: "Lithium fluoride" },
-            { formula: "CS2", name: "Carbon disulfide" },
-            { formula: "CuCO3", name: "Copper(II) carbonate" },
-            { formula: "SiO2", name: "Silicon dioxide" },
-            { formula: "Fe(NO3)3", name: "Iron(III) nitrate" },
-            { formula: "CCl4", name: "Carbon tetrachloride" },
-            { formula: "MgSO4", name: "Magnesium sulfate" },
-            { formula: "Ca(OH)2", name: "Calcium hydroxide" },
-            { formula: "XeF6", name: "Xenon hexafluoride" },
-            { formula: "KMnO4", name: "Potassium permanganate" },
-            { formula: "Ba(OH)2", name: "Barium hydroxide" },
-            { formula: "CBr4", name: "Carbon tetrabromide" },
-            { formula: "CO2", name: "Carbon dioxide" },
-            { formula: "SCl4", name: "Sulfur tetrachloride" },
-            { formula: "K2SO4", name: "Potassium sulfate" },
-            { formula: "NaNO2", name: "Sodium nitrite" },
-            { formula: "CuCl2", name: "Copper(II) chloride" },
-            { formula: "KI", name: "Potassium iodide" },
-            { formula: "SrBr2", name: "Strontium bromide" },
-            { formula: "Rb2O", name: "Rubidium oxide" },
-            { formula: "Na3N", name: "Sodium nitride" },
-            { formula: "FeSO3", name: "Iron(II) sulfite" },
-            { formula: "Cs2SO4", name: "Cesium sulfate" },
-            { formula: "Cu3PO3", name: "Copper(I) phosphite" },
-            { formula: "Ag2CO3", name: "Silver carbonate" },
-            { formula: "LiNO3", name: "Lithium nitrate" },
-            { formula: "KClO2", name: "Potassium chlorite" },
-            { formula: "Ni2CO3", name: "Nickel(I) carbonate" },
-            { formula: "KOH", name: "Potassium hydroxide" },
-            { formula: "Ba(C2H3O2)2", name: "Barium acetate" },
-            { formula: "CaI2", name: "Calcium iodide" },
-            { formula: "SnS2", name: "Tin(IV) sulfide" },
-            { formula: "Zn(CN)2", name: "Zinc cyanide" },
-            { formula: "(NH4)3P", name: "Ammonium phosphide" },
-            { formula: "Li2CO3", name: "Lithium carbonate" },
-            { formula: "Al(C2H3O2)3", name: "Aluminum acetate" },
-            { formula: "NH4F", name: "Ammonium fluoride" },
-            { formula: "Sr(NO3)2", name: "Strontium nitrate" },
-            { formula: "Cs2Se", name: "Cesium selenide" },
-            { formula: "Li3As", name: "Lithium arsenide" },
-            { formula: "NaF", name: "Sodium fluoride" },
-            { formula: "Cs2O", name: "Cesium oxide" },
-            { formula: "Ca(NO3)2", name: "Calcium nitrate" },
-            { formula: "Li2S", name: "Lithium sulfide" },
-            { formula: "AlPO4", name: "Aluminum phosphate" },
-            { formula: "MgCO3", name: "Magnesium carbonate" },
-            { formula: "(NH4)2SO4", name: "Ammonium sulfate" },
-            { formula: "Zn(OH)2", name: "Zinc hydroxide" },
-            { formula: "Cs3N", name: "Cesium nitride" },
-            { formula: "Li2SO4", name: "Lithium sulfate" },
-            { formula: "Cs2S", name: "Cesium sulfide" },
-            { formula: "Rb3P", name: "Rubidium phosphide" },
-            { formula: "Na3PO3", name: "Sodium phosphite" },
-            { formula: "AgC2H3O2", name: "Silver acetate" },
-            { formula: "Sr3P2", name: "Strontium phosphide" },
-            { formula: "BaSO4", name: "Barium sulfate" },
-            { formula: "Cd(NO2)2", name: "Cadmium nitrite" },
-            { formula: "MgO", name: "Magnesium oxide" },
-            { formula: "AgCN", name: "Silver cyanide" },
-            { formula: "AlBr3", name: "Aluminum bromide" },
-            { formula: "K2CrO4", name: "Potassium chromate" },
-            { formula: "Li2C2O4", name: "Lithium oxalate" },
-            { formula: "Ni3PO4", name: "Nickel(I) phosphate" },
-            { formula: "MnO", name: "Manganese(II) oxide" },
-            { formula: "CrF2", name: "Chromium(II) fluoride" },
-            { formula: "VI2", name: "Vanadium(II) iodide" },
-            { formula: "Na3P", name: "Sodium phosphide" },
-            { formula: "NiS", name: "Nickel(II) sulfide" },
-            { formula: "Pb3N2", name: "Lead(II) nitride" },
-            { formula: "CuNO3", name: "Copper(I) nitrate" },
-            { formula: "SrS", name: "Strontium sulfide" },
-            { formula: "Fe2(CrO4)3", name: "Iron(III) chromate" },
-            { formula: "SnSO3", name: "Tin(II) sulfite" },
-            { formula: "BiF5", name: "Bismuth(V) fluoride" },
-            { formula: "AlP", name: "Aluminum phosphide" },
-            { formula: "CuOH", name: "Copper(I) hydroxide" },
-            { formula: "P2O5", name: "Diphosphorus pentoxide" },
-            { formula: "N2O3", name: "Dinitrogen trioxide" },
-            { formula: "S2F10", name: "Disulfur decafluoride" },
-            { formula: "OF2", name: "Oxygen difluoride" },
-            { formula: "H2O", name: "Water (Dihydrogen monoxide)" },
-            { formula: "SCl6", name: "Sulfur hexachloride" },
-            { formula: "Ni(OH)2", name: "Nickel(II) hydroxide" },
-            { formula: "Al2(CO3)3", name: "Aluminum carbonate" },
-            { formula: "Fe2(SO4)3", name: "Iron(III) sulfate" },
-            { formula: "Cu(ClO4)2", name: "Copper(II) perchlorate" }
+            { formula: "Al2(SO4)3", name: "Aluminum sulfate" }, { formula: "Mg(NO3)2", name: "Magnesium nitrate" }, { formula: "NaCl", name: "Sodium chloride" }, { formula: "NO3", name: "Nitrate" }, { formula: "CO", name: "Carbon monoxide" }, { formula: "MnO2", name: "Manganese(IV) oxide" }, { formula: "SO2", name: "Sulfur dioxide" }, { formula: "K2S", name: "Potassium sulfide" }, { formula: "AgClO3", name: "Silver chlorate" }, { formula: "(NH4)2S", name: "Ammonium sulfide" }, { formula: "BaCO3", name: "Barium carbonate" }, { formula: "MgI2", name: "Magnesium iodide" }, { formula: "Cs2CO3", name: "Cesium carbonate" }, { formula: "SiC", name: "Silicon carbide" }, { formula: "FeO", name: "Iron(II) oxide" }, { formula: "Al(OH)3", name: "Aluminum hydroxide" }, { formula: "Fe2O3", name: "Iron(III) oxide" }, { formula: "CuCl", name: "Copper(I) chloride" }, { formula: "CaCrO4", name: "Calcium chromate" }, { formula: "CrF3", name: "Chromium(III) fluoride" }, { formula: "FeSO4", name: "Iron(II) sulfate" }, { formula: "Pb3(PO4)2", name: "Lead(II) phosphate" }, { formula: "Cu(OH)2", name: "Copper(II) hydroxide" }, { formula: "Al2S3", name: "Aluminum sulfide" }, { formula: "NH4NO3", name: "Ammonium nitrate" }, { formula: "Mg3(PO4)2", name: "Magnesium phosphate" }, { formula: "KClO3", name: "Potassium chlorate" }, { formula: "Fe(OH)3", name: "Iron(III) hydroxide" }, { formula: "SbF5", name: "Antimony pentafluoride" }, { formula: "CaS", name: "Calcium sulfide" }, { formula: "LiF", name: "Lithium fluoride" }, { formula: "CS2", name: "Carbon disulfide" }, { formula: "CuCO3", name: "Copper(II) carbonate" }, { formula: "SiO2", name: "Silicon dioxide" }, { formula: "Fe(NO3)3", name: "Iron(III) nitrate" }, { formula: "CCl4", name: "Carbon tetrachloride" }, { formula: "MgSO4", name: "Magnesium sulfate" }, { formula: "Ca(OH)2", name: "Calcium hydroxide" }, { formula: "XeF6", name: "Xenon hexafluoride" }, { formula: "KMnO4", name: "Potassium permanganate" }, { formula: "Ba(OH)2", name: "Barium hydroxide" }, { formula: "CBr4", name: "Carbon tetrabromide" }, { formula: "CO2", name: "Carbon dioxide" }, { formula: "SCl4", name: "Sulfur tetrachloride" }, { formula: "K2SO4", name: "Potassium sulfate" }, { formula: "NaNO2", name: "Sodium nitrite" }, { formula: "CuCl2", name: "Copper(II) chloride" }, { formula: "KI", name: "Potassium iodide" }, { formula: "SrBr2", name: "Strontium bromide" }, { formula: "Rb2O", name: "Rubidium oxide" }, { formula: "Na3N", name: "Sodium nitride" }, { formula: "FeSO3", name: "Iron(II) sulfite" }, { formula: "Cs2SO4", name: "Cesium sulfate" }, { formula: "Cu3PO3", name: "Copper(I) phosphite" }, { formula: "Ag2CO3", name: "Silver carbonate" }, { formula: "LiNO3", name: "Lithium nitrate" }, { formula: "KClO2", name: "Potassium chlorite" }, { formula: "Ni2CO3", name: "Nickel(I) carbonate" }, { formula: "KOH", name: "Potassium hydroxide" }, { formula: "Ba(C2H3O2)2", name: "Barium acetate" }, { formula: "CaI2", name: "Calcium iodide" }, { formula: "SnS2", name: "Tin(IV) sulfide" }, { formula: "Zn(CN)2", name: "Zinc cyanide" }, { formula: "(NH4)3P", name: "Ammonium phosphide" }, { formula: "Li2CO3", name: "Lithium carbonate" }, { formula: "Al(C2H3O2)3", name: "Aluminum acetate" }, { formula: "NH4F", name: "Ammonium fluoride" }, { formula: "Sr(NO3)2", name: "Strontium nitrate" }, { formula: "Cs2Se", name: "Cesium selenide" }, { formula: "Li3As", name: "Lithium arsenide" }, { formula: "NaF", name: "Sodium fluoride" }, { formula: "Cs2O", name: "Cesium oxide" }, { formula: "Ca(NO3)2", name: "Calcium nitrate" }, { formula: "Li2S", name: "Lithium sulfide" }, { formula: "AlPO4", name: "Aluminum phosphate" }, { formula: "MgCO3", name: "Magnesium carbonate" }, { formula: "(NH4)2SO4", name: "Ammonium sulfate" }, { formula: "Zn(OH)2", name: "Zinc hydroxide" }, { formula: "Cs3N", name: "Cesium nitride" }, { formula: "Li2SO4", name: "Lithium sulfate" }, { formula: "Cs2S", name: "Cesium sulfide" }, { formula: "Rb3P", name: "Rubidium phosphide" }, { formula: "Na3PO3", name: "Sodium phosphite" }, { formula: "AgC2H3O2", name: "Silver acetate" }, { formula: "Sr3P2", name: "Strontium phosphide" }, { formula: "BaSO4", name: "Barium sulfate" }, { formula: "Cd(NO2)2", name: "Cadmium nitrite" }, { formula: "MgO", name: "Magnesium oxide" }, { formula: "AgCN", name: "Silver cyanide" }, { formula: "AlBr3", name: "Aluminum bromide" }, { formula: "K2CrO4", name: "Potassium chromate" }, { formula: "Li2C2O4", name: "Lithium oxalate" }, { formula: "Ni3PO4", name: "Nickel(I) phosphate" }, { formula: "MnO", name: "Manganese(II) oxide" }, { formula: "CrF2", name: "Chromium(II) fluoride" }, { formula: "VI2", name: "Vanadium(II) iodide" }, { formula: "Na3P", name: "Sodium phosphide" }, { formula: "NiS", name: "Nickel(II) sulfide" }, { formula: "Pb3N2", name: "Lead(II) nitride" }, { formula: "CuNO3", name: "Copper(I) nitrate" }, { formula: "SrS", name: "Strontium sulfide" }, { formula: "Fe2(CrO4)3", name: "Iron(III) chromate" }, { formula: "SnSO3", name: "Tin(II) sulfite" }, { formula: "BiF5", name: "Bismuth(V) fluoride" }, { formula: "AlP", name: "Aluminum phosphide" }, { formula: "CuOH", name: "Copper(I) hydroxide" }, { formula: "P2O5", name: "Diphosphorus pentoxide" }, { formula: "N2O3", name: "Dinitrogen trioxide" }, { formula: "S2F10", name: "Disulfur decafluoride" }, { formula: "OF2", name: "Oxygen difluoride" }, { formula: "H2O", name: "Water (Dihydrogen monoxide)" }, { formula: "SCl6", name: "Sulfur hexachloride" }, { formula: "Ni(OH)2", name: "Nickel(II) hydroxide" }, { formula: "Al2(CO3)3", name: "Aluminum carbonate" }, { formula: "Fe2(SO4)3", name: "Iron(III) sulfate" }, { formula: "Cu(ClO4)2", name: "Copper(II) perchlorate" }
         ];
 
-        // App state variables
-        let appData = {
-            deck: [],
-            mistakes: {},
-            score: 0
-        };
+        let appData = { deck: [], mistakes: {}, score: 0 };
         let currentCard = null;
 
         // DOM Elements
@@ -352,19 +318,22 @@
         const masteryTotalEl = document.getElementById('mastery-total');
         const masteryContainer = document.getElementById('mastery-container');
         const mistakesContainer = document.getElementById('mistakes-container');
+        
+        // Modal Elements
+        const tipsModal = document.getElementById('tips-modal');
+        const tipsBtn = document.getElementById('tips-btn');
+        const closeTipsBtn = document.getElementById('close-tips-btn');
+        const toggleRulesBtn = document.getElementById('toggle-rules-btn');
+        const allRulesContainer = document.getElementById('all-rules');
+        const tipTitle = document.getElementById('tip-title');
+        const tipText = document.getElementById('tip-text');
 
-        // --- Initialization & Data Management ---
-
+        // --- Core Functions ---
         function initData() {
             const savedData = localStorage.getItem('chemistryQuizData');
-            
             if (savedData) {
                 appData = JSON.parse(savedData);
-                
-                // Safety check: If they loaded old saved data with only 20 cards, force a reset to get all 200+ cards
-                if(appData.deck.length < chemicals.length * 2) {
-                    buildNewDeck();
-                }
+                if(appData.deck.length < chemicals.length * 2) buildNewDeck();
             } else {
                 buildNewDeck();
             }
@@ -374,32 +343,20 @@
         }
 
         function buildNewDeck() {
-            appData.deck = [];
-            appData.mistakes = {};
-            appData.score = 0;
-            scoreEl.textContent = 0;
-
-            // Create 2 cards per chemical (one asking for name, one for formula)
+            appData.deck = []; appData.mistakes = {}; appData.score = 0; scoreEl.textContent = 0;
             chemicals.forEach((chem, index) => {
                 appData.deck.push({ id: `f-${index}`, item: chem, askFor: 'formula', weight: 10 });
                 appData.deck.push({ id: `n-${index}`, item: chem, askFor: 'name', weight: 10 });
             });
-            
             masteryTotalEl.textContent = appData.deck.length;
-            saveData();
-            updateMasteryDisplay();
+            saveData(); updateMasteryDisplay();
         }
 
-        function saveData() {
-            localStorage.setItem('chemistryQuizData', JSON.stringify(appData));
-        }
+        function saveData() { localStorage.setItem('chemistryQuizData', JSON.stringify(appData)); }
 
         function updateMasteryDisplay() {
-            // A card is "mastered" if its weight has been reduced to the minimum (1)
             const masteredCards = appData.deck.filter(card => card.weight === 1).length;
             masteryCountEl.textContent = masteredCards;
-
-            // Add a visual flair if the user achieves 100% mastery
             if (masteredCards === appData.deck.length && appData.deck.length > 0) {
                 masteryContainer.classList.add('mastery-complete');
             } else {
@@ -407,28 +364,17 @@
             }
         }
 
-        // --- Quiz Logic ---
-
         function generateQuestion() {
-            feedbackEl.textContent = "";
-            feedbackEl.className = "";
-            inputEl.value = "";
-            inputEl.focus();
-            inputEl.disabled = false;
-            submitBtn.disabled = false;
+            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = ""; inputEl.focus();
+            inputEl.disabled = false; submitBtn.disabled = false;
 
-            // Spaced Repetition: Weighted Random Selection
             let totalWeight = appData.deck.reduce((sum, card) => sum + card.weight, 0);
             let randomNum = Math.random() * totalWeight;
             
             for (let card of appData.deck) {
                 randomNum -= card.weight;
-                if (randomNum <= 0) {
-                    currentCard = card;
-                    break;
-                }
+                if (randomNum <= 0) { currentCard = card; break; }
             }
-
             if (!currentCard) currentCard = appData.deck[0]; 
 
             if (currentCard.askFor === "formula") {
@@ -444,102 +390,112 @@
             const userAnswer = inputEl.value.trim();
             if (userAnswer === "") return; 
 
-            inputEl.disabled = true;
-            submitBtn.disabled = true;
+            inputEl.disabled = true; submitBtn.disabled = true;
 
             const correctAnswer = currentCard.askFor === "formula" ? currentCard.item.formula : currentCard.item.name;
             const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
 
             if (isCorrect) {
-                appData.score++; 
-                // Decrease weight (min weight is 1)
-                currentCard.weight = Math.max(1, currentCard.weight - 3);
-
+                appData.score++; currentCard.weight = Math.max(1, currentCard.weight - 3);
                 scoreEl.textContent = appData.score; 
-                feedbackEl.textContent = "Correct! Well done.";
-                feedbackEl.className = "correct";
-                
-                updateMasteryDisplay();
-                saveData();
-                setTimeout(generateQuestion, 1200);
+                feedbackEl.textContent = "Correct! Well done."; feedbackEl.className = "correct";
+                updateMasteryDisplay(); saveData(); setTimeout(generateQuestion, 1200);
             } else {
-                appData.score--; 
-                // Increase weight heavily on mistakes
-                currentCard.weight += 15;
-
+                appData.score--; currentCard.weight += 15;
                 scoreEl.textContent = appData.score; 
-                feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`;
-                feedbackEl.className = "incorrect";
+                feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`; feedbackEl.className = "incorrect";
 
-                // Track Mistake
                 const questionAsked = `${promptEl.textContent} ${targetEl.textContent}`;
-                if (!appData.mistakes[questionAsked]) {
-                    appData.mistakes[questionAsked] = {
-                        question: questionAsked,
-                        correctAnswer: correctAnswer,
-                        count: 0
-                    };
-                }
+                if (!appData.mistakes[questionAsked]) appData.mistakes[questionAsked] = { question: questionAsked, correctAnswer: correctAnswer, count: 0 };
                 appData.mistakes[questionAsked].count++;
                 
-                updateMasteryDisplay();
-                saveData();
-                setTimeout(generateQuestion, 3000);
+                updateMasteryDisplay(); saveData(); setTimeout(generateQuestion, 3000);
+            }
+        }
+
+        // --- Rule Detection Logic ---
+        function determineCurrentRule() {
+            const chemName = currentCard.item.name.toLowerCase();
+            
+            // 1. Check for Transition Metals (Roman Numerals)
+            if (/\([ivx]+\)/i.test(chemName)) {
+                return {
+                    title: "Relevant Rule: Transition Metals (Stock System)",
+                    text: "Because transition metals can have multiple charges, the Roman numeral in parentheses indicates the exact positive charge of the metal ion (e.g., Iron(III) means Fe³⁺). Use this to balance the formula."
+                };
+            }
+            
+            // 2. Check for Polyatomic Ions
+            const polyatomics = ["sulfate", "nitrate", "carbonate", "hydroxide", "phosphate", "chlorate", "cyanide", "acetate", "chromate", "oxalate", "perchlorate", "phosphite", "sulfite", "nitrite", "ammonium"];
+            if (polyatomics.some(poly => chemName.includes(poly))) {
+                return {
+                    title: "Relevant Rule: Polyatomic Ions",
+                    text: "This compound contains a polyatomic ion (a group of atoms with an overall charge). Notice the special endings like '-ate' or '-ite', or specific names like 'hydroxide'. If the formula requires more than one of these ions to balance the charge, you must use parentheses around it."
+                };
+            }
+            
+            // 3. Check for Covalent Compounds
+            const covalentClues = ["monoxide", "dioxide", "trioxide", "tetrachloride", "pentafluoride", "hexafluoride", "decafluoride", "difluoride", "tetrabromide", "pentoxide", "hexachloride", "disulfide", "dinitrogen", "diphosphorus", "disulfur"];
+            if (covalentClues.some(clue => chemName.includes(clue))) {
+                return {
+                    title: "Relevant Rule: Covalent (Molecular) Compounds",
+                    text: "These are formed by two nonmetals. Greek prefixes (mono, di, tri, tetra, penta, etc.) are used to tell you exactly how many atoms of each element are present. (Note: the 'mono-' prefix is usually skipped for the first element)."
+                };
+            }
+
+            // 4. Default: Binary Ionic
+            return {
+                title: "Relevant Rule: Binary Ionic Compounds",
+                text: "Formed by a standard metal and a nonmetal. Name the metal normally, and change the ending of the nonmetal to '-ide' (e.g., Chlorine becomes Chloride). To write the formula, determine the typical ionic charges from the periodic table and balance them to zero."
+            };
+        }
+
+        function openTips() {
+            const rule = determineCurrentRule();
+            tipTitle.textContent = rule.title;
+            tipText.textContent = rule.text;
+            
+            // Reset view state
+            allRulesContainer.style.display = 'none';
+            toggleRulesBtn.textContent = 'View All Naming Rules';
+            
+            tipsModal.classList.remove('hidden');
+        }
+
+        function toggleAllRules() {
+            if (allRulesContainer.style.display === 'none') {
+                allRulesContainer.style.display = 'block';
+                toggleRulesBtn.textContent = 'Hide All Rules';
+            } else {
+                allRulesContainer.style.display = 'none';
+                toggleRulesBtn.textContent = 'View All Naming Rules';
+            }
+        }
+
+        function closeTips(e) {
+            if (e.target === tipsModal || e.target === closeTipsBtn) {
+                tipsModal.classList.add('hidden');
             }
         }
 
         // --- UI Flow & Event Listeners ---
-
         function showMistakes() {
-            quizScreen.classList.add('hidden');
-            mistakesScreen.classList.remove('hidden');
-
-            const sortedMistakes = Object.values(appData.mistakes)
-                                         .sort((a, b) => b.count - a.count)
-                                         .slice(0, 10); 
-
+            quizScreen.classList.add('hidden'); mistakesScreen.classList.remove('hidden');
+            const sortedMistakes = Object.values(appData.mistakes).sort((a, b) => b.count - a.count).slice(0, 10); 
             if (sortedMistakes.length === 0) {
-                mistakesContainer.innerHTML = '<p class="empty-state">No mistakes recorded yet! Keep up the good work.</p>';
-                return;
+                mistakesContainer.innerHTML = '<p class="empty-state">No mistakes recorded yet! Keep up the good work.</p>'; return;
             }
-
-            let tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Question</th>
-                            <th>Correct Answer</th>
-                            <th style="text-align: center;">Misses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
+            let tableHTML = `<table><thead><tr><th>Question</th><th>Correct Answer</th><th style="text-align: center;">Misses</th></tr></thead><tbody>`;
             sortedMistakes.forEach(mistake => {
-                tableHTML += `
-                    <tr>
-                        <td>${mistake.question}</td>
-                        <td><strong>${mistake.correctAnswer}</strong></td>
-                        <td class="mistake-count">${mistake.count}</td>
-                    </tr>
-                `;
+                tableHTML += `<tr><td>${mistake.question}</td><td><strong>${mistake.correctAnswer}</strong></td><td class="mistake-count">${mistake.count}</td></tr>`;
             });
-
-            tableHTML += `</tbody></table>`;
-            mistakesContainer.innerHTML = tableHTML;
+            mistakesContainer.innerHTML = tableHTML + `</tbody></table>`;
         }
 
-        function hideMistakes() {
-            mistakesScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            inputEl.focus();
-        }
-
+        function hideMistakes() { mistakesScreen.classList.add('hidden'); quizScreen.classList.remove('hidden'); inputEl.focus(); }
         function resetProgress() {
             if(confirm("Are you sure you want to reset your score, mistakes, and spaced-repetition progress?")) {
-                buildNewDeck();
-                hideMistakes();
-                generateQuestion();
+                buildNewDeck(); hideMistakes(); generateQuestion();
             }
         }
 
@@ -547,11 +503,13 @@
         reviewBtn.addEventListener('click', showMistakes);
         backBtn.addEventListener('click', hideMistakes);
         resetBtn.addEventListener('click', resetProgress);
+        tipsBtn.addEventListener('click', openTips);
+        closeTipsBtn.addEventListener('click', closeTips);
+        tipsModal.addEventListener('click', closeTips);
+        toggleRulesBtn.addEventListener('click', toggleAllRules);
         
         inputEl.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter' && !inputEl.disabled) {
-                checkAnswer();
-            }
+            if (event.key === 'Enter' && !inputEl.disabled) checkAnswer();
         });
 
         // Start App
