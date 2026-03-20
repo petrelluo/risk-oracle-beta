@@ -10,7 +10,6 @@
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --text-main: #2d3436;
-            --text-muted: #636e72;
             --primary-color: #0984e3;
         }
         body {
@@ -22,19 +21,22 @@
         }
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         h1 {
-            margin: 0 0 15px 0;
+            margin: 0 0 10px 0;
             font-size: 32px;
         }
         .controls {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
             margin-bottom: 40px;
+            flex-wrap: wrap;
         }
         select {
-            padding: 12px 24px;
-            font-size: 18px;
+            padding: 12px 20px;
+            font-size: 16px;
             border-radius: 8px;
             border: 2px solid var(--primary-color);
             background-color: white;
@@ -42,10 +44,9 @@
             cursor: pointer;
             outline: none;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-weight: bold;
         }
-        select:hover {
-            border-color: #74b9ff;
-        }
+        select:hover { border-color: #74b9ff; }
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -65,7 +66,6 @@
             margin-top: 0;
             margin-bottom: 20px;
             text-align: center;
-            color: var(--text-main);
             border-bottom: 2px solid var(--bg-color);
             padding-bottom: 10px;
         }
@@ -80,35 +80,42 @@
 
     <header>
         <h1>Campaign Deep-Dive Dashboard</h1>
+        <p>Explore breakdowns across Impressions, Clicks, and Ad Spend.</p>
     </header>
 
     <div class="controls">
         <select id="campaignSelector" onchange="updateDashboard()">
-            <option value="sat">SAT Vocabulary Books Campaign</option>
-            <option value="fiji">Fiji Water Campaign</option>
+            <option value="sat">Campaign: SAT Vocabulary Books</option>
+            <option value="fiji">Campaign: Fiji Water</option>
+        </select>
+        
+        <select id="metricSelector" onchange="updateDashboard()">
+            <option value="impressions">Metric: Impressions</option>
+            <option value="clicks">Metric: Total Clicks</option>
+            <option value="spend">Metric: Total Spend ($)</option>
         </select>
     </div>
 
     <div class="dashboard-grid">
         <div class="card">
-            <h2>Impressions by Age</h2>
+            <h2 id="title-age">By Age Group</h2>
             <div class="chart-container"><canvas id="ageChart"></canvas></div>
         </div>
         <div class="card">
-            <h2>Impressions by Gender</h2>
+            <h2 id="title-gender">By Gender</h2>
             <div class="chart-container"><canvas id="genderChart"></canvas></div>
         </div>
         <div class="card">
-            <h2>Impressions by Device</h2>
+            <h2 id="title-device">By Device</h2>
             <div class="chart-container"><canvas id="deviceChart"></canvas></div>
         </div>
         <div class="card">
-            <h2>Impressions by Platform / Placement</h2>
+            <h2 id="title-platform">By Platform & Placement</h2>
             <div class="chart-container"><canvas id="platformChart"></canvas></div>
         </div>
         <div class="card" style="grid-column: 1 / -1;">
-            <h2>Top Regions (Impressions)</h2>
-            <div class="chart-container" style="height: 400px;"><canvas id="regionChart"></canvas></div>
+            <h2 id="title-region">Top Regions</h2>
+            <div class="chart-container" style="height: 350px;"><canvas id="regionChart"></canvas></div>
         </div>
     </div>
 
@@ -116,34 +123,123 @@
         Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
         Chart.defaults.color = '#636e72';
 
-        // Aggregated data based on your reports
+        // Pre-aggregated Data including Impressions, Clicks, and Spend
         const campaignData = {
             sat: {
-                age: { labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], data: [5, 126, 244, 111, 93, 177] },
-                gender: { labels: ['Female', 'Male', 'Unknown'], data: [333, 415, 8] },
-                device: { labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], data: [537, 139, 20, 19, 11, 30] },
-                platform: { labels: ['Facebook Feed', 'Unknown'], data: [748, 8] },
-                region: { labels: ['California', 'Florida', 'Georgia', 'Kentucky', 'Michigan', 'Illinois', 'Mississippi'], data: [60, 45, 30, 29, 28, 23, 21] }
+                age: { 
+                    labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], 
+                    impressions: [5, 126, 244, 111, 93, 177],
+                    clicks: [0, 3, 6, 5, 2, 2],
+                    spend: [0.03, 0.90, 1.74, 0.72, 0.59, 1.43]
+                },
+                gender: { 
+                    labels: ['Female', 'Male', 'Unknown'], 
+                    impressions: [333, 415, 8],
+                    clicks: [6, 11, 1],
+                    spend: [2.17, 3.07, 0.08]
+                },
+                device: { 
+                    labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], 
+                    impressions: [537, 139, 20, 19, 11, 30],
+                    clicks: [16, 1, 1, 0, 0, 0],
+                    spend: [3.81, 1.01, 0.11, 0.12, 0.18, 0.18]
+                },
+                platform: { 
+                    labels: ['Facebook Feed', 'Unknown'], 
+                    impressions: [748, 8],
+                    clicks: [18, 0],
+                    spend: [5.40, 0.01]
+                },
+                region: { 
+                    labels: ['California', 'Florida', 'Georgia', 'Kentucky', 'Michigan', 'Illinois', 'Mississippi'], 
+                    impressions: [60, 45, 30, 29, 28, 23, 21],
+                    clicks: [4, 0, 0, 0, 1, 1, 0],
+                    spend: [0.38, 0.24, 0.31, 0.16, 0.14, 0.27, 0.10]
+                }
             },
             fiji: {
-                age: { labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], data: [3, 22, 35, 19, 7, 0] },
-                gender: { labels: ['Female', 'Male', 'Unknown'], data: [34, 52, 0] },
-                device: { labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], data: [271, 116, 51, 11, 6, 1] },
-                platform: { labels: ['Audience Network', 'Facebook Feed', 'IG Reels', 'FB Instream Video', 'FB Marketplace', 'FB Search', 'Other'], data: [244, 152, 35, 9, 6, 4, 6] },
-                region: { labels: ['No Geographic Data in Report'], data: [0] }
+                age: { 
+                    labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'], 
+                    impressions: [3, 22, 35, 19, 7, 0],
+                    clicks: [0, 1, 1, 4, 2, 0],
+                    spend: [0.01, 0.21, 0.36, 0.61, 0.08, 0]
+                },
+                gender: { 
+                    labels: ['Female', 'Male', 'Unknown'], 
+                    impressions: [34, 52, 0],
+                    clicks: [7, 1, 0],
+                    spend: [0.74, 0.53, 0]
+                },
+                device: { 
+                    labels: ['Android Phone', 'iPhone', 'Android Tablet', 'iPad', 'Desktop', 'Other'], 
+                    impressions: [271, 116, 51, 11, 6, 1],
+                    clicks: [11, 1, 1, 1, 1, 0],
+                    spend: [1.96, 0.82, 0.28, 0.52, 0.06, 0]
+                },
+                platform: { 
+                    labels: ['Audience Network', 'Facebook Feed', 'IG Reels', 'FB Instream Video', 'FB Marketplace', 'FB Search', 'Other'], 
+                    impressions: [244, 152, 35, 9, 6, 4, 6],
+                    clicks: [3, 12, 0, 0, 0, 0, 0],
+                    spend: [1.28, 2.04, 0.19, 0.04, 0.07, 0.01, 0.01]
+                },
+                region: { 
+                    labels: ['No Data in Report'], 
+                    impressions: [0],
+                    clicks: [0],
+                    spend: [0]
+                }
             }
         };
 
-        // Chart Instances
         let charts = {};
 
+        function formatCurrency(value, metric) {
+            if (metric === 'spend') {
+                return '$' + parseFloat(value).toFixed(2);
+            }
+            return value;
+        }
+
         function initCharts() {
-            const commonOptions = { responsive: true, maintainAspectRatio: false };
+            const commonOptions = { 
+                responsive: true, 
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                const metric = document.getElementById('metricSelector').value;
+                                label += formatCurrency(context.raw, metric);
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const barOptions = {
+                ...commonOptions,
+                plugins: { ...commonOptions.plugins, legend: { display: false } },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                const metric = document.getElementById('metricSelector').value;
+                                return metric === 'spend' ? '$' + value : value;
+                            }
+                        }
+                    }
+                }
+            };
+
+            const hBarOptions = { ...barOptions, indexAxis: 'y', scales: { x: barOptions.scales.y, y: {} } };
 
             charts.age = new Chart(document.getElementById('ageChart'), {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#74b9ff', data: [] }] },
-                options: { ...commonOptions, plugins: { legend: { display: false } } }
+                data: { labels: [], datasets: [{ backgroundColor: '#74b9ff', data: [] }] },
+                options: barOptions
             });
 
             charts.gender = new Chart(document.getElementById('genderChart'), {
@@ -155,55 +251,40 @@
             charts.device = new Chart(document.getElementById('deviceChart'), {
                 type: 'pie',
                 data: { labels: [], datasets: [{ backgroundColor: ['#00b894', '#6c5ce7', '#ffeaa7', '#fab1a0', '#81ecec', '#dfe6e9'], data: [] }] },
-                options: { ...commonOptions, plugins: { legend: { position: 'right' } } }
+                options: { ...commonOptions, plugins: { ...commonOptions.plugins, legend: { position: 'right' } } }
             });
 
             charts.platform = new Chart(document.getElementById('platformChart'), {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#a29bfe', data: [] }] },
-                options: { ...commonOptions, plugins: { legend: { display: false } } }
+                data: { labels: [], datasets: [{ backgroundColor: '#a29bfe', data: [] }] },
+                options: barOptions
             });
 
             charts.region = new Chart(document.getElementById('regionChart'), {
                 type: 'bar',
-                data: { labels: [], datasets: [{ label: 'Impressions', backgroundColor: '#fdcb6e', data: [] }] },
-                options: { ...commonOptions, indexAxis: 'y', plugins: { legend: { display: false } } }
+                data: { labels: [], datasets: [{ backgroundColor: '#fdcb6e', data: [] }] },
+                options: hBarOptions
             });
 
-            updateDashboard(); // Load initial data
+            updateDashboard();
         }
 
         function updateDashboard() {
-            const selected = document.getElementById('campaignSelector').value;
-            const data = campaignData[selected];
+            const campaign = document.getElementById('campaignSelector').value;
+            const metric = document.getElementById('metricSelector').value;
+            const data = campaignData[campaign];
+            
+            // Format Metric string for tooltips
+            const metricLabel = metric.charAt(0).toUpperCase() + metric.slice(1);
 
-            // Update Age Chart
-            charts.age.data.labels = data.age.labels;
-            charts.age.data.datasets[0].data = data.age.data;
-            charts.age.update();
-
-            // Update Gender Chart
-            charts.gender.data.labels = data.gender.labels;
-            charts.gender.data.datasets[0].data = data.gender.data;
-            charts.gender.update();
-
-            // Update Device Chart
-            charts.device.data.labels = data.device.labels;
-            charts.device.data.datasets[0].data = data.device.data;
-            charts.device.update();
-
-            // Update Platform Chart
-            charts.platform.data.labels = data.platform.labels;
-            charts.platform.data.datasets[0].data = data.platform.data;
-            charts.platform.update();
-
-            // Update Region Chart
-            charts.region.data.labels = data.region.labels;
-            charts.region.data.datasets[0].data = data.region.data;
-            charts.region.update();
+            ['age', 'gender', 'device', 'platform', 'region'].forEach(dim => {
+                charts[dim].data.labels = data[dim].labels;
+                charts[dim].data.datasets[0].data = data[dim][metric];
+                charts[dim].data.datasets[0].label = metricLabel;
+                charts[dim].update();
+            });
         }
 
-        // Initialize on load
         window.onload = initCharts;
     </script>
 </body>
