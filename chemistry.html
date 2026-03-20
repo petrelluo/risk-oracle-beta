@@ -11,10 +11,10 @@
             color: #333;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Changed to flex-start to allow scrolling for long mistake lists */
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
         }
         .card {
@@ -26,23 +26,35 @@
             max-width: 550px;
             width: 100%;
             position: relative; 
+            margin: auto; /* Centers horizontally and vertically if enough room */
         }
         h1 {
             margin-top: 0;
             color: #1a365d;
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             padding-right: 60px; 
         }
         
-        /* Category Selector Styles */
-        .category-container {
+        /* Dropdown Controls */
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
             margin-bottom: 1.5rem;
         }
-        .category-select {
-            width: 80%;
+        .control-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        .filter-select {
+            flex: 1;
+            max-width: 200px;
             padding: 0.5rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #2b6cb0;
             background-color: #ebf8ff;
             border: 1px solid #bee3f8;
@@ -51,9 +63,21 @@
             outline: none;
             cursor: pointer;
         }
-        .category-select:focus {
-            border-color: #3182ce;
+        .filter-select:focus { border-color: #3182ce; }
+        
+        /* Subtle Link Button */
+        .subtle-link {
+            background: none;
+            border: none;
+            color: #718096;
+            text-decoration: underline;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 0;
+            margin-top: -5px;
+            transition: color 0.2s;
         }
+        .subtle-link:hover { color: #2b6cb0; }
 
         /* Stats Header Styles */
         .stats-row {
@@ -79,7 +103,7 @@
         
         /* Subscript and Superscript adjustments for readability */
         sub { font-size: 0.65em; bottom: -0.25em; }
-        sup { font-size: 0.65em; top: -0.4em; color: #e53e3e; } /* Colored charges red to stand out slightly */
+        sup { font-size: 0.65em; top: -0.4em; color: #e53e3e; }
         
         input[type="text"] {
             width: 80%; padding: 0.75rem; font-size: 1rem; border: 2px solid #e2e8f0;
@@ -89,20 +113,21 @@
         
         /* Button Styles */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-        button {
+        button.primary-btn {
             background-color: #3182ce; color: white; border: none; padding: 0.75rem 1.5rem;
             font-size: 1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; font-weight: bold;
         }
-        button:hover { background-color: #2b6cb0; }
-        button.secondary { background-color: #e2e8f0; color: #4a5568; }
+        button.primary-btn:hover { background-color: #2b6cb0; }
+        button.secondary { background-color: #e2e8f0; color: #4a5568; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;}
         button.secondary:hover { background-color: #cbd5e0; }
-        button.danger { background-color: #fed7d7; color: #c53030; }
+        button.danger { background-color: #fed7d7; color: #c53030; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;}
         button.danger:hover { background-color: #feb2b2; }
 
         /* Modals (Tips & Cheat Sheet) */
         .tips-btn {
             position: absolute; top: 20px; right: 20px; background-color: #edf2f7;
             color: #2b6cb0; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid #cbd5e0;
+            border-radius: 6px; cursor: pointer; font-weight: bold;
         }
         .tips-btn:hover { background-color: #e2e8f0; }
         
@@ -160,21 +185,29 @@
         <button id="tips-btn" class="tips-btn">💡 Tips</button>
         <h1>Chemistry Quiz</h1>
         
-        <div class="category-container">
-            <select id="category-select" class="category-select">
-                <option value="Everything">Category: Everything</option>
-                <option value="Binary Ionic Compounds">Binary Ionic Compounds</option>
-                <option value="Ternary Ionic Compounds">Ternary Ionic Compounds</option>
-                <option value="Polyatomic Ions">Polyatomic Ions</option>
-                <option value="Binary Molecular Compounds">Binary Molecular Compounds</option>
-                <option value="Acids">Acids</option>
-                <option value="Bases">Bases</option>
-            </select>
+        <div class="controls-container">
+            <div class="control-row">
+                <select id="category-select" class="filter-select">
+                    <option value="Everything">All Categories</option>
+                    <option value="Binary Ionic Compounds">Binary Ionic Compounds</option>
+                    <option value="Ternary Ionic Compounds">Ternary Ionic Compounds</option>
+                    <option value="Polyatomic Ions">Polyatomic Ions</option>
+                    <option value="Binary Molecular Compounds">Binary Molecular Compounds</option>
+                    <option value="Acids">Acids</option>
+                    <option value="Bases">Bases</option>
+                </select>
+                <select id="direction-select" class="filter-select">
+                    <option value="both">Both Directions</option>
+                    <option value="formula">Name → Formula</option>
+                    <option value="name">Formula → Name</option>
+                </select>
+            </div>
+            <button id="view-category-btn" class="subtle-link">View list of compounds in this category</button>
         </div>
 
         <div class="stats-row">
             <div class="stat-box score-box">Global Score: <span id="score">0</span></div>
-            <div class="stat-box mastery-box" id="mastery-container">Category Mastered: <span id="mastery-count">0</span> / <span id="mastery-total">0</span></div>
+            <div class="stat-box mastery-box" id="mastery-container">Mastered: <span id="mastery-count">0</span> / <span id="mastery-total">0</span></div>
         </div>
 
         <p class="instruction">Formulas don't need subscripts or charges (e.g., type SO4 for Sulfate).</p>
@@ -185,8 +218,7 @@
         <input type="text" id="answer-input" placeholder="Type answer here..." autocomplete="off">
         
         <div class="btn-group">
-            <button id="submit-btn">Submit</button>
-            <button id="view-category-btn" class="secondary">View Category List</button>
+            <button id="submit-btn" class="primary-btn">Submit</button>
             <button id="review-btn" class="secondary">Review Mistakes</button>
         </div>
         
@@ -194,14 +226,14 @@
     </div>
 
     <div class="card hidden" id="mistakes-screen">
-        <h1>Global Top 10 Mistakes</h1>
-        <p class="instruction">Questions you miss most frequently across all categories.</p>
+        <h1>Global Mistakes History</h1>
+        <p class="instruction">A complete list of every question you have missed.</p>
         
         <div id="mistakes-container"></div>
 
         <div class="btn-group">
-            <button id="back-btn">Back to Quiz</button>
-            <button id="reset-btn" class="danger">Reset Progress</button>
+            <button id="back-btn" class="secondary">Back to Quiz</button>
+            <button id="reset-btn" class="danger">Reset All Progress</button>
         </div>
     </div>
 
@@ -260,11 +292,8 @@
         // Formatter Function: Converts numbers to subscripts, and parses ^ for charges (superscripts)
         function formatFormula(formulaStr) {
             if (!formulaStr) return "";
-            // Split the string by the charge identifier '^'
             let parts = formulaStr.split('^');
-            // Format numbers as subscripts in the main part
             let base = parts[0].replace(/(\d+)/g, '<sub>$1</sub>');
-            // If there's a charge, format it as a superscript
             let charge = parts[1] ? `<sup>${parts[1]}</sup>` : '';
             return base + charge;
         }
@@ -335,7 +364,7 @@
             { formula: "CrF3", name: "Chromium(III) fluoride", category: "Binary Ionic Compounds" },
             { formula: "Al2S3", name: "Aluminum sulfide", category: "Binary Ionic Compounds" },
             { formula: "CaS", name: "Calcium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" }, // Fixed typo here
+            { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" },
             { formula: "CuCl2", name: "Copper(II) chloride", category: "Binary Ionic Compounds" },
             { formula: "KI", name: "Potassium iodide", category: "Binary Ionic Compounds" },
             { formula: "SrBr2", name: "Strontium bromide", category: "Binary Ionic Compounds" },
@@ -421,6 +450,7 @@
 
         let appData = { deck: [], mistakes: {}, score: 0 };
         let currentCategory = "Everything";
+        let currentDirection = "both";
         let currentCard = null;
 
         // DOM Elements
@@ -434,7 +464,10 @@
         const viewCategoryBtn = document.getElementById('view-category-btn');
         const backBtn = document.getElementById('back-btn');
         const resetBtn = document.getElementById('reset-btn');
+        
         const categorySelect = document.getElementById('category-select');
+        const directionSelect = document.getElementById('direction-select');
+        
         const feedbackEl = document.getElementById('feedback');
         const scoreEl = document.getElementById('score');
         const masteryCountEl = document.getElementById('mastery-count');
@@ -479,9 +512,16 @@
 
         function saveData() { localStorage.setItem('chemistryQuizData', JSON.stringify(appData)); }
 
+        // Filter the deck based on Category AND Direction
         function getActiveDeck() {
-            if (currentCategory === "Everything") return appData.deck;
-            return appData.deck.filter(card => card.item.category === currentCategory);
+            let deck = appData.deck;
+            if (currentCategory !== "Everything") {
+                deck = deck.filter(card => card.item.category === currentCategory);
+            }
+            if (currentDirection !== "both") {
+                deck = deck.filter(card => card.askFor === currentDirection);
+            }
+            return deck;
         }
 
         function updateMasteryDisplay() {
@@ -499,8 +539,9 @@
             }
         }
 
-        function handleCategoryChange() {
+        function handleModeChange() {
             currentCategory = categorySelect.value;
+            currentDirection = directionSelect.value;
             updateMasteryDisplay();
             generateQuestion();
         }
@@ -512,7 +553,7 @@
             const activeDeck = getActiveDeck();
             
             if (activeDeck.length === 0) {
-                promptEl.textContent = ""; targetEl.innerHTML = "No questions in this category.";
+                promptEl.textContent = ""; targetEl.innerHTML = "No questions match these filters.";
                 inputEl.disabled = true; submitBtn.disabled = true; return;
             }
 
@@ -543,7 +584,7 @@
             const targetFormula = currentCard.item.formula;
             const correctAnswer = currentCard.askFor === "formula" ? targetFormula : currentCard.item.name;
             
-            // Normalize inputs: remove any charge formatting (anything after ^) and convert to lowercase
+            // Normalize inputs: remove charge formatting and lowercase
             const cleanUserAnswer = userAnswer.replace(/\^.*/, '').toLowerCase();
             const cleanCorrectAnswer = correctAnswer.replace(/\^.*/, '').toLowerCase();
 
@@ -581,7 +622,6 @@
 
         // --- View Category List Logic ---
         function openCheatSheet() {
-            // Filter the master list of chemicals (not the duplicated deck) to get unique items
             const activeCategoryList = currentCategory === "Everything" ? chemicals : chemicals.filter(c => c.category === currentCategory);
             
             let tableHTML = `<table class="rule-table"><thead><tr><th>Formula</th><th>Name</th></tr></thead><tbody>`;
@@ -664,7 +704,10 @@
         // --- UI Flow & Event Listeners ---
         function showMistakes() {
             quizScreen.classList.add('hidden'); mistakesScreen.classList.remove('hidden');
-            const sortedMistakes = Object.values(appData.mistakes).sort((a, b) => b.count - a.count).slice(0, 10); 
+            
+            // Remove the .slice(0, 10) to show ALL mistakes recorded
+            const sortedMistakes = Object.values(appData.mistakes).sort((a, b) => b.count - a.count); 
+            
             if (sortedMistakes.length === 0) {
                 mistakesContainer.innerHTML = '<p class="empty-state">No mistakes recorded yet! Keep up the good work.</p>'; return;
             }
@@ -696,7 +739,8 @@
         closeCheatSheetBtn.addEventListener('click', closeCheatSheet);
         cheatSheetModal.addEventListener('click', closeCheatSheet);
         toggleRulesBtn.addEventListener('click', toggleAllRules);
-        categorySelect.addEventListener('change', handleCategoryChange);
+        categorySelect.addEventListener('change', handleModeChange);
+        directionSelect.addEventListener('change', handleModeChange);
         
         inputEl.addEventListener('keypress', function(event) {
             if (event.key === 'Enter' && !inputEl.disabled) checkAnswer();
