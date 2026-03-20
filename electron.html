@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,15 +55,15 @@
             display: flex; justify-content: center; margin: 30px 0; position: relative;
         }
         #atomVisualizer {
-            width: 100%; max-width: 450px; height: auto;
-            background: #0f172a; border-radius: 50%;
+            width: 100%; max-width: 500px; height: auto;
+            background: #0f172a; border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
         @keyframes orbit-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .orbit-group { transform-origin: 200px 200px; animation-name: orbit-spin; animation-iteration-count: infinite; animation-timing-function: linear; }
+        .orbit-group { transform-origin: 250px 250px; animation-name: orbit-spin; animation-iteration-count: infinite; animation-timing-function: linear; }
         
         .orbital-container {
             display: flex; flex-wrap: wrap; gap: 15px; 
@@ -127,12 +128,12 @@
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
-            <div class="shape-card" id="s-card">
+            <div class="shape-card">
                 <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="#e63946" opacity="0.8"/></svg>
                 <h4 style="color: #e63946; margin: 0;">s subshell</h4>
                 <p style="margin: 5px 0;">Sphere</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">1 Orbital</p>
             </div>
-            <div class="shape-card" id="p-card">
+            <div class="shape-card">
                 <svg viewBox="0 0 100 100">
                     <path d="M 50 50 C 80 20, 80 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
                     <path d="M 50 50 C 20 20, 20 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
@@ -140,7 +141,7 @@
                 <h4 style="color: #2a9d8f; margin: 0;">p subshell</h4>
                 <p style="margin: 5px 0;">Dumbbell</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">3 Orbitals</p>
             </div>
-            <div class="shape-card" id="d-card">
+            <div class="shape-card">
                 <svg viewBox="0 0 100 100">
                     <path d="M 50 50 C 75 25, 25 25, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
                     <path d="M 50 50 C 75 75, 25 75, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
@@ -150,7 +151,7 @@
                 <h4 style="color: #e9c46a; margin: 0;">d subshell</h4>
                 <p style="margin: 5px 0;">Cloverleaf</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">5 Orbitals</p>
             </div>
-            <div class="shape-card" id="f-card">
+            <div class="shape-card">
                 <svg viewBox="0 0 100 100">
                     <circle cx="35" cy="35" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="35" r="15" fill="#f4a261" opacity="0.8"/>
                     <circle cx="35" cy="65" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="65" r="15" fill="#f4a261" opacity="0.8"/>
@@ -205,7 +206,7 @@
 
     <div class="card interactive-section">
         <h2>🎛️ Interactive Orbital Filler</h2>
-        <p>Use the buttons or slider to add electrons. Watch the atomic structure map out the specific subshells, and see Hund's Rule in action inside the orbital boxes below!</p>
+        <p>Use the controls to add electrons. Watch the atomic structure map out the principal shells (thick gray bands) and subshells (colored rings), while seeing Hund's Rule in action inside the orbital boxes below!</p>
         
         <div class="control-panel">
             <button class="ctrl-btn" onclick="adjustElectrons(-1)">-</button>
@@ -216,7 +217,7 @@
         <p style="text-align: center; font-size: 1.2em; font-weight: bold;">Total Electrons: <span id="eCount">8</span></p>
         
         <div class="atom-container">
-            <svg id="atomVisualizer" viewBox="0 0 400 400"></svg>
+            <svg id="atomVisualizer" viewBox="0 0 500 500"></svg>
         </div>
 
         <div class="text-config" id="textConfigDisplay">1s² 2s² 2p⁴</div>
@@ -255,7 +256,7 @@
             { sub: "7p", cap: 6 }
         ];
 
-        // Color mapping for subshells (matches the CSS cards above)
+        // Color mapping for subshells
         const subshellColors = {
             's': '#e63946', // Red
             'p': '#2a9d8f', // Teal
@@ -263,7 +264,7 @@
             'f': '#f4a261'  // Orange
         };
 
-        // Subshell Type Ordering (for sorting visually)
+        // Subshell Type Ordering (for visual nesting)
         const typeOrder = { 's': 0, 'p': 1, 'd': 2, 'f': 3 };
 
         function adjustElectrons(delta) {
@@ -275,52 +276,58 @@
             }
         }
 
-        // Advanced Atom Visualizer (Plots Specific Subshells)
-        function drawSubshellAtom(activeSubshells) {
+        // Advanced Atom Visualizer (Groups Subshells inside Principal Shells)
+        function drawHierarchicalAtom(activeSubshells) {
             const svg = document.getElementById('atomVisualizer');
-            let svgHTML = `<circle cx="200" cy="200" r="14" fill="#ffffff" stroke="#333" stroke-width="2" />
-                           <text x="200" y="204" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
+            // Center is now 250,250 due to 500x500 viewBox
+            let svgHTML = `<circle cx="250" cy="250" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
+                           <text x="250" y="254" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
             
-            // Sort active subshells by Principal Shell (n), then by Subshell Type (s,p,d,f)
-            let sortedSubshells = [...activeSubshells].sort((a, b) => {
-                if (a.n !== b.n) return a.n - b.n;
-                return typeOrder[a.type] - typeOrder[b.type];
-            });
-
-            // Calculate dynamic spacing so they all fit in the SVG box
-            let minRadius = 35;
-            let maxRadius = 190;
-            let totalActive = sortedSubshells.length;
-            let radiusStep = totalActive > 1 ? (maxRadius - minRadius) / (totalActive - 1) : 0;
+            // Get unique active Principal Shells (n)
+            let activeShellNumbers = [...new Set(activeSubshells.map(s => s.n))].sort((a,b)=>a-b);
+            let totalShells = activeShellNumbers.length;
             
-            // Cap the maximum gap so hydrogen doesn't look weirdly huge
-            if (radiusStep > 35) radiusStep = 35;
+            // Dynamic Spacing based on 500x500 canvas
+            let minRadius = 55;
+            let maxRadius = 230; 
+            let radiusStep = totalShells > 1 ? (maxRadius - minRadius) / (totalShells - 1) : 0;
+            if (radiusStep > 60) radiusStep = 60; // Cap the distance between shells
 
-            sortedSubshells.forEach((sub, index) => {
-                let radius = minRadius + (index * radiusStep);
-                let color = subshellColors[sub.type];
+            activeShellNumbers.forEach((n, shellIdx) => {
+                let shellCenter = minRadius + (shellIdx * radiusStep);
+                let subs = activeSubshells.filter(s => s.n === n).sort((a,b) => typeOrder[a.type] - typeOrder[b.type]);
                 
-                // Outer subshells spin slower. Every other subshell spins in reverse to look dynamic.
-                let speed = 6 + (radius / 15); 
-                let direction = index % 2 === 0 ? 'normal' : 'reverse';
+                // 1. Draw the Principal Shell Band (Thick translucent highlight)
+                let bandWidth = Math.min(45, radiusStep * 0.7); // Dynamic thickness based on available space
+                svgHTML += `<circle cx="250" cy="250" r="${shellCenter}" fill="none" stroke="#cbd5e1" stroke-width="${bandWidth}" opacity="0.15"/>`;
                 
-                // Draw the faint orbit ring, color-coded to the subshell
-                svgHTML += `<circle cx="200" cy="200" r="${radius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="2 6" opacity="0.6"/>`;
-                
-                // Group electrons together to spin them via CSS
-                svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s; animation-direction: ${direction};">`;
-                
-                for (let i = 0; i < sub.eCount; i++) {
-                    let angle = (i / sub.eCount) * 2 * Math.PI;
-                    let ex = 200 + radius * Math.cos(angle);
-                    let ey = 200 + radius * Math.sin(angle);
-                    // The electron particle
-                    svgHTML += `<circle cx="${ex}" cy="${ey}" r="4.5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
-                }
-                svgHTML += `</g>`;
-                
-                // Add tiny label for the subshell ring (only if space permits or just for aesthetics)
-                svgHTML += `<text x="200" y="${200 - radius - 5}" font-size="10" fill="${color}" opacity="0.8" text-anchor="middle">${sub.name}</text>`;
+                // Add label for the Principal Shell
+                svgHTML += `<text x="250" y="${250 - shellCenter - (bandWidth/2) + 14}" font-size="12" font-weight="bold" fill="#94a3b8" text-anchor="middle">Shell n=${n}</text>`;
+
+                // 2. Distribute Subshells inside this band
+                let subCount = subs.length;
+                subs.forEach((sub, subIdx) => {
+                    // Spread subshells evenly within the band's thickness
+                    let offset = subCount === 1 ? 0 : (subIdx / (subCount - 1) - 0.5) * (bandWidth * 0.75);
+                    let subRadius = shellCenter + offset;
+                    
+                    let color = subshellColors[sub.type];
+                    let speed = 6 + (subRadius / 15); 
+                    let direction = subIdx % 2 === 0 ? 'normal' : 'reverse';
+                    
+                    // Draw Subshell Orbit Ring
+                    svgHTML += `<circle cx="250" cy="250" r="${subRadius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.7"/>`;
+                    
+                    // Group and animate electrons
+                    svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s; animation-direction: ${direction};">`;
+                    for (let i = 0; i < sub.eCount; i++) {
+                        let angle = (i / sub.eCount) * 2 * Math.PI;
+                        let ex = 250 + subRadius * Math.cos(angle);
+                        let ey = 250 + subRadius * Math.sin(angle);
+                        svgHTML += `<circle cx="${ex}" cy="${ey}" r="5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
+                    }
+                    svgHTML += `</g>`;
+                });
             });
             
             svg.innerHTML = svgHTML;
@@ -334,8 +341,6 @@
             let remaining = totalElectrons;
             let textConfigArr = [];
             let boxesHTML = '';
-            
-            // Array to hold the subshells that actually contain electrons
             let activeSubshells = [];
 
             const superscripts = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
@@ -346,7 +351,7 @@
                 let currentSub = fillingOrder[i];
                 let adding = Math.min(remaining, currentSub.cap);
                 
-                // Record for the Subshell Visualizer
+                // Record for Visualizer
                 let n = parseInt(currentSub.sub.charAt(0));
                 let type = currentSub.sub.charAt(1);
                 activeSubshells.push({
@@ -356,11 +361,11 @@
                     n: n
                 });
 
-                // 1. Build Text String
+                // Build Text String
                 let powStr = adding.toString().split('').map(c => superscripts[c] || c).join('');
                 textConfigArr.push(`${currentSub.sub}${powStr}`);
 
-                // 2. Build Physical Boxes (Applying Hund's Rule)
+                // Build Physical Boxes (Applying Hund's Rule)
                 let numBoxes = currentSub.cap / 2;
                 let boxContent = Array(numBoxes).fill('');
                 
@@ -388,8 +393,8 @@
             document.getElementById("textConfigDisplay").innerText = textConfigArr.join(' ');
             document.getElementById("boxContainer").innerHTML = boxesHTML;
             
-            // Update the atomic structure graph
-            drawSubshellAtom(activeSubshells);
+            // Draw the updated atom
+            drawHierarchicalAtom(activeSubshells);
         }
 
         // QUIZ LOGIC
