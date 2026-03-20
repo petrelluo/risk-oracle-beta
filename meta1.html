@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Campaign Performance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --sat-color: #4CAF50;
+            --fiji-color: #2196F3;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .card h2 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text-main);
+        }
+        canvas {
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Ad Campaign Performance Dashboard</h1>
+        <p>SAT Vocabulary Books vs. Fiji Water Display Campaigns</p>
+    </header>
+
+    <div class="dashboard-grid">
+        <div class="card">
+            <h2>Impressions by Age Group</h2>
+            <canvas id="ageChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Total Clicks Comparison</h2>
+            <canvas id="clicksChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Device Delivery (SAT Books)</h2>
+            <canvas id="deviceSatChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Top 5 Regions (SAT Books)</h2>
+            <canvas id="geoChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Set default font for charts
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        Chart.defaults.color = '#666';
+
+        // 1. Impressions by Age Group (Bar Chart)
+        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        new Chart(ageCtx, {
+            type: 'bar',
+            data: {
+                labels: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'],
+                datasets: [
+                    {
+                        label: 'SAT Books',
+                        backgroundColor: '#4CAF50',
+                        data: [5, 126, 244, 111, 93, 177] // Aggregated from raw data
+                    },
+                    {
+                        label: 'Fiji Water',
+                        backgroundColor: '#2196F3',
+                        data: [3, 22, 35, 19, 7, 0] // Aggregated from raw data
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // 2. Total Clicks Comparison (Doughnut Chart)
+        const clicksCtx = document.getElementById('clicksChart').getContext('2d');
+        new Chart(clicksCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['SAT Books Clicks', 'Fiji Water Clicks'],
+                datasets: [{
+                    data: [18, 14], // Aggregated total clicks across platforms
+                    backgroundColor: ['#4CAF50', '#2196F3'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // 3. Device Delivery - SAT Books (Pie Chart)
+        const deviceSatCtx = document.getElementById('deviceSatChart').getContext('2d');
+        new Chart(deviceSatCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Android Phone', 'iPhone', 'Desktop', 'Tablets', 'Other'],
+                datasets: [{
+                    data: [537, 139, 11, 39, 30], // Aggregated device data
+                    backgroundColor: ['#FF9800', '#9C27B0', '#607D8B', '#FFC107', '#9E9E9E'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                }
+            }
+        });
+
+        // 4. Top 5 Regions - SAT Books (Horizontal Bar Chart)
+        const geoCtx = document.getElementById('geoChart').getContext('2d');
+        new Chart(geoCtx, {
+            type: 'bar',
+            data: {
+                labels: ['California', 'Florida', 'Georgia', 'Kentucky', 'Michigan'],
+                datasets: [{
+                    label: 'Impressions',
+                    backgroundColor: '#FF5722',
+                    data: [60, 45, 30, 29, 28] // Aggregated top 5 states
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Makes it a horizontal bar chart
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
