@@ -5,580 +5,337 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Electron Configuration Explorer</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --bg: #ecf0f1;
-            --white: #ffffff;
-            --correct: #2ecc71;
-            --incorrect: #e74c3c;
-        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--primary);
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1100px;
+            color: #333;
+            max-width: 1000px;
             margin: 0 auto;
-            background: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2, h3 { color: var(--primary); text-align: center; }
-        h1 { font-size: 2.5em; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
-        
-        /* Enhanced Tutorial Section */
-        .tutorial-box {
-            background: #e8f4f8;
-            padding: 25px;
-            border-left: 5px solid var(--secondary);
-            margin-bottom: 30px;
-            border-radius: 5px;
-        }
-        .rule-box {
-            background: #fff;
             padding: 20px;
-            margin: 15px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: #f9f9fb;
         }
-        .visual-row {
-            display: flex;
-            justify-content: space-around;
-            align-items: stretch;
-            flex-wrap: wrap;
-            margin: 20px 0;
-            background: #fdfbf7;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            gap: 10px;
+        h1, h2, h3, h4 {
+            color: #2c3e50;
         }
-        .visual-item {
+        h1 {
             text-align: center;
-            padding: 10px;
-            flex: 1;
-            min-width: 140px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .visual-item div { margin-top: 10px; }
-        
-        /* Explorer Section */
-        .explorer-section {
-            background: #fdfbf7;
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px dashed #f39c12;
+            font-size: 2.5em;
             margin-bottom: 40px;
         }
-        .controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #eaeaea;
         }
-        input[type="range"] { width: 300px; cursor: pointer; }
-        .electron-count { font-size: 1.5em; font-weight: bold; color: var(--accent); }
-        .config-string {
-            font-size: 1.8em;
+        .rule-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .rule-col {
+            flex: 1;
+            min-width: 300px;
+        }
+        .diagram-box {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            line-height: 1.8;
             text-align: center;
+            font-size: 1.1em;
+        }
+        .interactive-section {
+            background: #e8f4f8;
+            border: 2px solid #bce0ed;
+        }
+        input[type=range] {
+            width: 100%;
             margin: 20px 0;
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--secondary);
-            font-weight: bold;
-            word-wrap: break-word;
+        }
+        .config-output {
+            font-size: 1.5em;
+            font-family: monospace;
             background: #fff;
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #bdc3c7;
-        }
-        
-        /* Orbital Visuals */
-        .orbital-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
-        .subshell {
-            background: var(--white);
-            border: 2px solid #bdc3c7;
-            border-radius: 8px;
-            padding: 10px;
+            border: 2px dashed #3498db;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-top: 15px;
+            min-height: 40px;
+            word-wrap: break-word;
         }
-        .subshell.active { border-color: var(--secondary); background: #ebf5fb; }
-        .subshell-label { font-weight: bold; margin-bottom: 5px; font-size: 1.2em; }
-        .boxes-wrapper { display: flex; gap: 4px; justify-content: center; }
-        .orbital-box {
-            width: 35px;
-            height: 35px;
-            border: 2px solid var(--primary);
-            background: var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--accent);
+        .quiz-section {
+            background: #fff3e0;
+            border: 2px solid #ffe0b2;
+        }
+        button {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #d35400;
+        }
+        input[type=text] {
+            padding: 10px;
+            font-size: 1.1em;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
             border-radius: 4px;
         }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: #f0f3f4;
-            padding: 20px;
-            border-radius: 10px;
-            border: 2px solid #bdc3c7;
-        }
-        .quiz-header {
+        .quiz-status {
             display: flex;
             justify-content: space-between;
-            font-size: 1.2em;
             font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .question-text { font-size: 1.4em; margin-bottom: 20px; text-align: center; }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .option-btn {
-            padding: 15px;
-            font-size: 1.1em;
-            background: var(--white);
-            border: 2px solid var(--secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-        }
-        .option-btn:hover:not(:disabled) { background: var(--secondary); color: var(--white); }
-        .option-btn:disabled { cursor: not-allowed; }
-        .option-btn.correct { background: var(--correct) !important; color: white !important; border-color: var(--correct); }
-        .option-btn.incorrect { background: var(--incorrect) !important; color: white !important; border-color: var(--incorrect); }
-        
-        #next-btn {
-            display: none;
-            margin: 20px auto 0;
-            padding: 10px 30px;
-            font-size: 1.2em;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        #next-btn:hover { background: #1a252f; }
-        #quiz-result { text-align: center; font-size: 2em; display: none; color: var(--secondary); font-weight: bold; }
-        
-        .start-btn {
-            display: block;
-            margin: 0 auto;
-            padding: 15px 40px;
-            font-size: 1.3em;
-            background: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
     <h1>⚛️ The Electron Explorer ⚛️</h1>
 
-    <div class="tutorial-box">
-        <h2>How to Read the Map of an Atom</h2>
-        <p>Electron configuration is like a secret map. It tells us exactly how a specific atom's electrons are arranged around its nucleus. Think of the nucleus as a stage, and the electrons as the audience sitting in very specific sections and rows.</p>
+    <h2>How to Read the Map of an Atom</h2>
+    <p>Electron configuration is like a secret map. It tells us exactly how a specific atom's electrons are arranged around its nucleus. Think of the nucleus as a stage, and the electrons as the audience sitting in very specific sections and rows.</p>
+
+    <div class="card">
+        <h3>1. The Seats (Shells & Subshells)</h3>
+        <p>Electrons sit in layers called <strong>Shells</strong> (numbered 1, 2, 3...). Shell 1 is closest to the nucleus and has the lowest energy. Inside each shell are different types of "sections" called <strong>Subshells</strong>, labeled by letters (s, p, d, f). They have specific shapes and hold a maximum number of electrons.</p>
         
-        <div class="rule-box">
-            <h3>1. The Seats (Shells & Subshells)</h3>
-            <p>Electrons sit in layers called <strong>Shells</strong> (numbered 1, 2, 3...). Shell 1 is closest to the nucleus and has the lowest energy. Inside each shell are different types of "sections" called <strong>Subshells</strong>, labeled by letters (s, p, d, f). They have specific shapes and hold a maximum number of electrons.</p>
-            
-            <div class="visual-row">
-                <div class="visual-item">
-                    <svg width="100" height="100" viewBox="0 0 120 120">
-                        <line x1="10" y1="60" x2="110" y2="60" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <line x1="60" y1="10" x2="60" y2="110" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <circle cx="60" cy="60" r="35" fill="rgba(52, 152, 219, 0.6)" stroke="#2980b9" stroke-width="2"/>
-                    </svg>
-                    <div><strong>s subshell</strong><br>Sphere<br>Holds <strong>2</strong> max</div>
-                </div>
-                
-                <div class="visual-item">
-                    <svg width="100" height="100" viewBox="0 0 120 120">
-                        <line x1="10" y1="60" x2="110" y2="60" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <line x1="60" y1="10" x2="60" y2="110" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <ellipse cx="60" cy="25" rx="15" ry="30" fill="rgba(231, 76, 60, 0.6)" stroke="#c0392b" stroke-width="2"/>
-                        <ellipse cx="60" cy="95" rx="15" ry="30" fill="rgba(231, 76, 60, 0.6)" stroke="#c0392b" stroke-width="2"/>
-                    </svg>
-                    <div><strong>p subshell</strong><br>Dumbbell<br>Holds <strong>6</strong> max</div>
-                </div>
-
-                <div class="visual-item">
-                    <svg width="100" height="100" viewBox="0 0 120 120">
-                        <line x1="10" y1="60" x2="110" y2="60" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <line x1="60" y1="10" x2="60" y2="110" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <ellipse cx="40" cy="40" rx="15" ry="25" transform="rotate(45 40 40)" fill="rgba(155, 89, 182, 0.6)" stroke="#8e44ad" stroke-width="2"/>
-                        <ellipse cx="80" cy="80" rx="15" ry="25" transform="rotate(45 80 80)" fill="rgba(155, 89, 182, 0.6)" stroke="#8e44ad" stroke-width="2"/>
-                        <ellipse cx="40" cy="80" rx="15" ry="25" transform="rotate(-45 40 80)" fill="rgba(155, 89, 182, 0.6)" stroke="#8e44ad" stroke-width="2"/>
-                        <ellipse cx="80" cy="40" rx="15" ry="25" transform="rotate(-45 80 40)" fill="rgba(155, 89, 182, 0.6)" stroke="#8e44ad" stroke-width="2"/>
-                    </svg>
-                    <div><strong>d subshell</strong><br>Cloverleaf<br>Holds <strong>10</strong> max</div>
-                </div>
-
-                <div class="visual-item">
-                    <svg width="100" height="100" viewBox="0 0 120 120">
-                        <line x1="10" y1="60" x2="110" y2="60" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <line x1="60" y1="10" x2="60" y2="110" stroke="#bdc3c7" stroke-width="2" stroke-dasharray="4"/>
-                        <ellipse cx="60" cy="25" rx="10" ry="20" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="60" cy="95" rx="10" ry="20" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="25" cy="60" rx="20" ry="10" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="95" cy="60" rx="20" ry="10" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="35" cy="35" rx="10" ry="18" transform="rotate(45 35 35)" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="85" cy="85" rx="10" ry="18" transform="rotate(45 85 85)" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="35" cy="85" rx="10" ry="18" transform="rotate(-45 35 85)" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                        <ellipse cx="85" cy="35" rx="10" ry="18" transform="rotate(-45 85 35)" fill="rgba(26, 188, 156, 0.6)" stroke="#16a085" stroke-width="1.5"/>
-                    </svg>
-                    <div><strong>f subshell</strong><br>Complex Lobes<br>Holds <strong>14</strong> max</div>
-                </div>
-            </div>
+        <div style="background-color: #f0f7ff; border-left: 4px solid #0066cc; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0;">
+            <h4 style="margin-top: 0; color: #004488;">🤔 Why do they hold exactly 2, 6, 10, or 14 electrons?</h4>
+            <p style="margin-bottom: 10px;">It all comes down to <strong>Orbitals</strong> (individual seats inside the section) and a rule called the <strong>Pauli Exclusion Principle</strong>. This rule states that a single exact seat (an orbital) can hold exactly <strong>2 electrons maximum</strong> (one spinning "up" &uarr;, and one spinning "down" &darr;).</p>
+            <p style="margin-bottom: 10px;">Because of 3D geometry and quantum physics, each subshell has a strictly odd number of available orbitals. You just multiply the number of orbitals by 2:</p>
+            <ul style="margin-bottom: 0;">
+                <li><strong>s subshell:</strong> has <strong>1 orbital</strong> &times; 2 electrons = <strong>2 max</strong></li>
+                <li><strong>p subshell:</strong> has <strong>3 orbitals</strong> &times; 2 electrons = <strong>6 max</strong></li>
+                <li><strong>d subshell:</strong> has <strong>5 orbitals</strong> &times; 2 electrons = <strong>10 max</strong></li>
+                <li><strong>f subshell:</strong> has <strong>7 orbitals</strong> &times; 2 electrons = <strong>14 max</strong></li>
+            </ul>
         </div>
 
-        <div class="rule-box">
-            <h3>2. The Rules of Filling Seats</h3>
-            <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px;">
-                    <ol>
-                        <li><strong>The Aufbau Principle:</strong> Electrons are "lazy"—they always sit in the lowest available energy seat first. They follow the diagonal path shown in the diagram to the right.</li>
-                        <li><strong>The Pauli Exclusion Principle:</strong> A single exact seat (an orbital box) can hold exactly 2 electrons, but they must spin in opposite directions (represented as one up ↑, one down ↓).</li>
-                        <li><strong>Hund's Rule (The Bus Seat Rule):</strong> When electrons are filling a section with multiple seats (like the 'p' subshell, which has 3 boxes), they prefer to have their own seat. They will spread out into empty seats first before pairing up!</li>
-                    </ol>
-                </div>
-                
-                <div class="visual-item" style="flex: 1; background: #fff; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
-                    <h4 style="margin-top:0;">Aufbau Diagonal Rule</h4>
-                    <svg width="220" height="180" viewBox="0 0 220 180" style="margin: 0 auto; display: block;">
-                        <defs>
-                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e74c3c" />
-                            </marker>
-                        </defs>
-                        <text x="20" y="20" font-family="monospace" font-weight="bold">1s</text>
-                        <text x="20" y="50" font-family="monospace" font-weight="bold">2s</text> <text x="60" y="50" font-family="monospace" font-weight="bold">2p</text>
-                        <text x="20" y="80" font-family="monospace" font-weight="bold">3s</text> <text x="60" y="80" font-family="monospace" font-weight="bold">3p</text> <text x="100" y="80" font-family="monospace" font-weight="bold">3d</text>
-                        <text x="20" y="110" font-family="monospace" font-weight="bold">4s</text> <text x="60" y="110" font-family="monospace" font-weight="bold">4p</text> <text x="100" y="110" font-family="monospace" font-weight="bold">4d</text> <text x="140" y="110" font-family="monospace" font-weight="bold">4f</text>
-                        <text x="20" y="140" font-family="monospace" font-weight="bold">5s</text> <text x="60" y="140" font-family="monospace" font-weight="bold">5p</text> <text x="100" y="140" font-family="monospace" font-weight="bold">5d</text> <text x="140" y="140" font-family="monospace" font-weight="bold">5f</text>
-                        <text x="20" y="170" font-family="monospace" font-weight="bold">6s</text> <text x="60" y="170" font-family="monospace" font-weight="bold">6p</text> <text x="100" y="170" font-family="monospace" font-weight="bold">6d</text>
-                        
-                        <line x1="40" y1="5" x2="10" y2="25" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                        <line x1="40" y1="35" x2="10" y2="55" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                        <line x1="80" y1="35" x2="10" y2="85" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                        <line x1="80" y1="65" x2="10" y2="115" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                        <line x1="120" y1="65" x2="10" y2="145" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                        <line x1="120" y1="95" x2="10" y2="175" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
-                    </svg>
-                </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+            <div style="flex: 1; min-width: 150px; padding: 15px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4 style="color: #e63946;">s subshell</h4>
+                <p style="margin: 5px 0;">Sphere</p>
+                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">1 Orbital</p>
+                <p style="margin: 5px 0;">Holds <strong>2</strong> max</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; padding: 15px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4 style="color: #2a9d8f;">p subshell</h4>
+                <p style="margin: 5px 0;">Dumbbell</p>
+                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">3 Orbitals</p>
+                <p style="margin: 5px 0;">Holds <strong>6</strong> max</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; padding: 15px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4 style="color: #e9c46a;">d subshell</h4>
+                <p style="margin: 5px 0;">Cloverleaf</p>
+                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">5 Orbitals</p>
+                <p style="margin: 5px 0;">Holds <strong>10</strong> max</p>
+            </div>
+            <div style="flex: 1; min-width: 150px; padding: 15px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                <h4 style="color: #f4a261;">f subshell</h4>
+                <p style="margin: 5px 0;">Complex Lobes</p>
+                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">7 Orbitals</p>
+                <p style="margin: 5px 0;">Holds <strong>14</strong> max</p>
             </div>
         </div>
-        
-        <p><strong>Example - Oxygen (Atomic Number 8, so 8 Electrons):</strong><br>
-        1. Fill 1s with 2 electrons (6 left) → <code>1s²</code><br>
-        2. Fill 2s with 2 electrons (4 left) → <code>2s²</code><br>
-        3. Put remaining 4 into 2p (which can hold up to 6) → <code>2p⁴</code><br>
-        Result: <strong>1s² 2s² 2p⁴</strong></p>
     </div>
 
-    <div class="explorer-section">
+    <div class="card">
+        <h3>2. The Rules of Filling Seats</h3>
+        <div class="rule-grid">
+            <div class="rule-col">
+                <ol>
+                    <li><strong>The Aufbau Principle:</strong> Electrons are "lazy"—they always sit in the lowest available energy seat first. They follow the diagonal path shown in the diagram to the right.</li>
+                    <li><strong>The Pauli Exclusion Principle:</strong> A single exact seat (an orbital box) can hold exactly 2 electrons, but they must spin in opposite directions.</li>
+                    <li><strong>Hund's Rule (The Bus Seat Rule):</strong> When electrons are filling a section with multiple seats (like the 'p' subshell), they prefer to have their own seat. They will spread out into empty seats first before pairing up!</li>
+                </ol>
+                <div style="background: #fdf2e9; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <strong>Example - Oxygen (Atomic Number 8, 8 Electrons):</strong><br>
+                    1. Fill 1s with 2 electrons (6 left) &rarr; <code>1s²</code><br>
+                    2. Fill 2s with 2 electrons (4 left) &rarr; <code>2s²</code><br>
+                    3. Put remaining 4 into 2p (which holds 6) &rarr; <code>2p⁴</code><br>
+                    Result: <strong>1s² 2s² 2p⁴</strong>
+                </div>
+            </div>
+            <div class="rule-col">
+                <h4>Aufbau Diagonal Rule</h4>
+                <div class="diagram-box">
+                    1s<br>
+                    2s 2p<br>
+                    3s 3p 3d<br>
+                    4s 4p 4d 4f<br>
+                    5s 5p 5d 5f<br>
+                    6s 6p 6d 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card interactive-section">
         <h2>🎛️ Interactive Orbital Filler</h2>
-        <p style="text-align: center;">Move the slider to add electrons and watch how they fill the subshells according to the rules above. Pay special attention to how <strong>Hund's Rule</strong> works when filling the <strong>2p</strong> orbital!</p>
+        <p>Move the slider to add electrons and watch how they fill the subshells according to the rules.</p>
         
-        <div class="controls">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #555;">
             <span>1 (H)</span>
-            <input type="range" id="electron-slider" min="1" max="118" value="1">
             <span>118 (Og)</span>
         </div>
-        <div style="text-align: center;">
-            <p>Total Electrons: <span class="electron-count" id="count-display">1</span></p>
-        </div>
-
-        <div class="config-string" id="config-string-display">1s¹</div>
-        <div class="orbital-container" id="orbital-container">
-            </div>
+        
+        <input type="range" id="electronSlider" min="1" max="118" value="1" oninput="updateConfig()">
+        <p style="text-align: center; font-size: 1.2em; font-weight: bold;">Total Electrons: <span id="eCount">1</span></p>
+        
+        <div class="config-output" id="configDisplay">1s¹</div>
     </div>
 
-    <div class="quiz-section">
+    <div class="card quiz-section">
         <h2>🧠 The 50-Question Challenge</h2>
+        <p>Test your knowledge! Practice generating configurations.</p>
         
-        <div id="quiz-intro">
-            <p style="text-align: center;">Test your knowledge! You will face 50 randomly generated questions testing both forward and reverse thinking. Good luck!</p>
-            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        <div id="quizStartPanel">
+            <button onclick="startQuiz()">Start Quiz</button>
         </div>
 
-        <div id="quiz-area" style="display: none;">
-            <div class="quiz-header">
-                <span id="q-counter">Question: 1 / 50</span>
-                <span id="score-display">Score: 0</span>
+        <div id="quizActivePanel" style="display: none;">
+            <div class="quiz-status">
+                <span>Question: <span id="qNum">1</span> / 50</span>
+                <span>Score: <span id="score">0</span></span>
             </div>
-            
-            <div class="question-text" id="question-text">Question goes here</div>
-            
-            <div class="options-grid" id="options-grid">
-                </div>
-            
-            <button id="next-btn" onclick="nextQuestion()">Next Question ➡️</button>
+            <h3 id="questionText">Question goes here</h3>
+            <input type="text" id="answerInput" placeholder="e.g. 1s2 2s2 2p6" autocomplete="off">
+            <button onclick="checkAnswer()" style="margin-top: 10px;">Submit Answer</button>
+            <p id="feedback" style="font-weight: bold; margin-top: 10px;"></p>
         </div>
-
-        <div id="quiz-result"></div>
     </div>
 
-</div>
+    <script>
+        // Data for orbital filling order
+        const fillingOrder = [
+            { sub: "1s", cap: 2 }, { sub: "2s", cap: 2 }, { sub: "2p", cap: 6 },
+            { sub: "3s", cap: 2 }, { sub: "3p", cap: 6 }, { sub: "4s", cap: 2 },
+            { sub: "3d", cap: 10 }, { sub: "4p", cap: 6 }, { sub: "5s", cap: 2 },
+            { sub: "4d", cap: 10 }, { sub: "5p", cap: 6 }, { sub: "6s", cap: 2 },
+            { sub: "4f", cap: 14 }, { sub: "5d", cap: 10 }, { sub: "6p", cap: 6 },
+            { sub: "7s", cap: 2 }, { sub: "5f", cap: 14 }, { sub: "6d", cap: 10 },
+            { sub: "7p", cap: 6 }
+        ];
 
-<script>
-    // --- PART 1: EXPLORER LOGIC ---
-    // The strict Aufbau filling order
-    const orbitalOrder = [
-        {name: '1s', max: 2}, {name: '2s', max: 2}, {name: '2p', max: 6},
-        {name: '3s', max: 2}, {name: '3p', max: 6}, {name: '4s', max: 2},
-        {name: '3d', max: 10}, {name: '4p', max: 6}, {name: '5s', max: 2},
-        {name: '4d', max: 10}, {name: '5p', max: 6}, {name: '6s', max: 2},
-        {name: '4f', max: 14}, {name: '5d', max: 10}, {name: '6p', max: 6},
-        {name: '7s', max: 2}, {name: '5f', max: 14}, {name: '6d', max: 10}, {name: '7p', max: 6}
-    ];
-
-    const slider = document.getElementById('electron-slider');
-    const countDisplay = document.getElementById('count-display');
-    const configStringDisplay = document.getElementById('config-string-display');
-    const orbitalContainer = document.getElementById('orbital-container');
-
-    // Helper: Convert number to superscript
-    function toSuperscript(num) {
-        const supers = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
-        return num.toString().split('').map(c => supers[c] || c).join('');
-    }
-
-    // Generate the config string & data for a given atomic number
-    function getConfigurationData(totalElectrons) {
-        let remaining = totalElectrons;
-        let configStr = "";
-        let filledSubshells = [];
-
-        for (let subshell of orbitalOrder) {
-            if (remaining <= 0) break;
+        // Core logic to calculate configuration
+        function getConfiguration(electrons) {
+            let config = [];
+            let remaining = electrons;
             
-            let take = Math.min(remaining, subshell.max);
-            filledSubshells.push({ name: subshell.name, capacity: subshell.max, count: take });
-            configStr += `${subshell.name}${toSuperscript(take)} `;
-            remaining -= take;
-        }
-        return { string: configStr.trim(), subshells: filledSubshells };
-    }
-
-    function renderVisualizer(electrons) {
-        countDisplay.innerText = electrons;
-        const data = getConfigurationData(electrons);
-        configStringDisplay.innerText = data.string;
-        
-        orbitalContainer.innerHTML = ''; // Clear
-
-        data.subshells.forEach(sub => {
-            const shellDiv = document.createElement('div');
-            shellDiv.className = 'subshell active';
-            
-            const label = document.createElement('div');
-            label.className = 'subshell-label';
-            label.innerText = sub.name;
-            shellDiv.appendChild(label);
-
-            const boxesWrapper = document.createElement('div');
-            boxesWrapper.className = 'boxes-wrapper';
-            
-            const numBoxes = sub.capacity / 2;
-            let boxes = new Array(numBoxes).fill(0);
-            
-            // Apply Hund's Rule visually
-            for (let i = 0; i < sub.count; i++) {
-                if (i < numBoxes) {
-                    boxes[i] = 1; // 1 electron = Up
-                } else {
-                    boxes[i - numBoxes] = 2; // 2 electrons = Up/Down
-                }
+            for (let i = 0; i < fillingOrder.length; i++) {
+                if (remaining <= 0) break;
+                
+                let currentSub = fillingOrder[i];
+                let adding = Math.min(remaining, currentSub.cap);
+                
+                // Use superscript mapping for display (optional, but looks better)
+                const superscripts = {
+                    '0':'⁰', '1':'¹', '2':'²', '3':'³', '4':'⁴', '5':'⁵', 
+                    '6':'⁶', '7':'⁷', '8':'⁸', '9':'⁹'
+                };
+                let powStr = adding.toString().split('').map(c => superscripts[c] || c).join('');
+                
+                config.push(`${currentSub.sub}${powStr}`);
+                remaining -= adding;
             }
-
-            boxes.forEach(val => {
-                const box = document.createElement('div');
-                box.className = 'orbital-box';
-                if (val === 1) box.innerText = '↑';
-                if (val === 2) box.innerText = '↑↓';
-                boxesWrapper.appendChild(box);
-            });
-
-            shellDiv.appendChild(boxesWrapper);
-            orbitalContainer.appendChild(shellDiv);
-        });
-    }
-
-    // Listen to slider
-    slider.addEventListener('input', (e) => {
-        renderVisualizer(parseInt(e.target.value));
-    });
-
-    // Initial render
-    renderVisualizer(1);
-
-
-    // --- PART 2: QUIZ LOGIC ---
-    // Elements 1 to 36 for quiz generation (Standard Aufbau applies to most here)
-    const elements = [
-        "Hydrogen (1)","Helium (2)","Lithium (3)","Beryllium (4)","Boron (5)",
-        "Carbon (6)","Nitrogen (7)","Oxygen (8)","Fluorine (9)","Neon (10)",
-        "Sodium (11)","Magnesium (12)","Aluminum (13)","Silicon (14)","Phosphorus (15)",
-        "Sulfur (16)","Chlorine (17)","Argon (18)","Potassium (19)","Calcium (20)",
-        "Scandium (21)","Titanium (22)","Vanadium (23)","Chromium (24)","Manganese (25)",
-        "Iron (26)","Cobalt (27)","Nickel (28)","Copper (29)","Zinc (30)",
-        "Gallium (31)","Germanium (32)","Arsenic (33)","Selenium (34)","Bromine (35)","Krypton (36)"
-    ];
-
-    let quizQuestions = [];
-    let currentQ = 0;
-    let score = 0;
-
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            return config.join(' ');
         }
-        return array;
-    }
 
-    function generateQuizData() {
-        let pool = [];
-        
-        // Generate 25 "What is the config for Element X?"
-        for(let i=1; i<=25; i++) {
-            let z = Math.floor(Math.random() * 36) + 1; // 1 to 36
-            let correct = getConfigurationData(z).string;
-            let options = new Set([correct]);
-            while(options.size < 4) {
-                let wrongZ = Math.floor(Math.random() * 36) + 1;
-                options.add(getConfigurationData(wrongZ).string);
+        // Plain text version for quiz checking (e.g. "1s2 2s2")
+        function getPlainConfiguration(electrons) {
+            let config = [];
+            let remaining = electrons;
+            for (let i = 0; i < fillingOrder.length; i++) {
+                if (remaining <= 0) break;
+                let adding = Math.min(remaining, fillingOrder[i].cap);
+                config.push(`${fillingOrder[i].sub}${adding}`);
+                remaining -= adding;
             }
-            pool.push({
-                q: `What is the standard electron configuration for ${elements[z-1]}?`,
-                correct: correct,
-                options: shuffle(Array.from(options))
-            });
+            return config.join(' ');
         }
 
-        // Generate 25 "Which element has this config?"
-        for(let i=1; i<=25; i++) {
-            let z = Math.floor(Math.random() * 36) + 1;
-            let config = getConfigurationData(z).string;
-            let correct = elements[z-1];
-            let options = new Set([correct]);
-            while(options.size < 4) {
-                let wrongZ = Math.floor(Math.random() * 36) + 1;
-                options.add(elements[wrongZ-1]);
+        // Interactive Slider
+        function updateConfig() {
+            let eCount = document.getElementById("electronSlider").value;
+            document.getElementById("eCount").innerText = eCount;
+            document.getElementById("configDisplay").innerText = getConfiguration(eCount);
+        }
+
+        // Quiz State Variables
+        let currentQuestion = 1;
+        let score = 0;
+        let targetElectrons = 0;
+        let expectedAnswer = "";
+
+        // Quiz Logic
+        function startQuiz() {
+            document.getElementById("quizStartPanel").style.display = "none";
+            document.getElementById("quizActivePanel").style.display = "block";
+            currentQuestion = 1;
+            score = 0;
+            updateQuizUI();
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion > 50) {
+                document.getElementById("questionText").innerText = `Quiz Complete! Final Score: ${score} / 50`;
+                document.getElementById("answerInput").style.display = "none";
+                return;
             }
-            pool.push({
-                q: `Which element has the electron configuration: <br><span style="color:var(--secondary)">${config}</span> ?`,
-                correct: correct,
-                options: shuffle(Array.from(options))
-            });
+            
+            // Generate a random atomic number between 1 and 36 (keeping it reasonable for typing)
+            targetElectrons = Math.floor(Math.random() * 36) + 1;
+            expectedAnswer = getPlainConfiguration(targetElectrons);
+            
+            document.getElementById("questionText").innerText = `What is the electron configuration for an atom with ${targetElectrons} electrons? (Format: 1s2 2s2 2p6)`;
+            document.getElementById("answerInput").value = "";
+            document.getElementById("feedback").innerText = "";
+            document.getElementById("answerInput").focus();
         }
 
-        return shuffle(pool);
-    }
-
-    function startQuiz() {
-        document.getElementById('quiz-intro').style.display = 'none';
-        document.getElementById('quiz-area').style.display = 'block';
-        quizQuestions = generateQuizData();
-        currentQ = 0;
-        score = 0;
-        loadQuestion();
-    }
-
-    function loadQuestion() {
-        if(currentQ >= 50) {
-            endQuiz();
-            return;
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answerInput").value.trim().toLowerCase().replace(/\s+/g, ' ');
+            
+            if (userAnswer === expectedAnswer) {
+                score++;
+                document.getElementById("feedback").style.color = "green";
+                document.getElementById("feedback").innerText = "Correct! ✅";
+            } else {
+                document.getElementById("feedback").style.color = "red";
+                document.getElementById("feedback").innerText = `Incorrect ❌. The correct answer was: ${expectedAnswer}`;
+            }
+            
+            currentQuestion++;
+            updateQuizUI();
+            
+            // Wait 2 seconds before showing next question
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
         }
 
-        const qData = quizQuestions[currentQ];
-        document.getElementById('q-counter').innerText = `Question: ${currentQ + 1} / 50`;
-        document.getElementById('score-display').innerText = `Score: ${score}`;
-        document.getElementById('question-text').innerHTML = qData.q;
-        document.getElementById('next-btn').style.display = 'none';
-
-        const grid = document.getElementById('options-grid');
-        grid.innerHTML = '';
-
-        qData.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = opt;
-            btn.onclick = () => checkAnswer(btn, opt, qData.correct);
-            grid.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(clickedBtn, selected, correct) {
-        // Disable all buttons
-        const btns = document.querySelectorAll('.option-btn');
-        btns.forEach(b => b.disabled = true);
-
-        if(selected === correct) {
-            clickedBtn.classList.add('correct');
-            score++;
-        } else {
-            clickedBtn.classList.add('incorrect');
-            // Find and highlight correct answer
-            btns.forEach(b => {
-                if(b.innerHTML === correct) b.classList.add('correct');
-            });
+        function updateQuizUI() {
+            document.getElementById("qNum").innerText = Math.min(currentQuestion, 50);
+            document.getElementById("score").innerText = score;
         }
-        
-        document.getElementById('score-display').innerText = `Score: ${score}`;
-        document.getElementById('next-btn').style.display = 'block';
-    }
 
-    function nextQuestion() {
-        currentQ++;
-        loadQuestion();
-    }
-
-    function endQuiz() {
-        document.getElementById('quiz-area').style.display = 'none';
-        const resultDiv = document.getElementById('quiz-result');
-        resultDiv.style.display = 'block';
-        
-        let message = "";
-        if(score >= 45) message = "🏆 Outstanding! You are a Quantum Master!";
-        else if(score >= 35) message = "🌟 Great job! You know your orbitals well.";
-        else if(score >= 25) message = "👍 Good effort! Keep practicing those shells.";
-        else message = "📚 Nice try! Head up to the explorer to review the rules.";
-
-        resultDiv.innerHTML = `Quiz Complete!<br><br>Final Score: ${score} / 50<br><span style="font-size:0.7em; color:var(--primary)">${message}</span>
-        <br><br><button class="start-btn" onclick="startQuiz()">Try Again</button>`;
-    }
-
-</script>
+        // Initialize display
+        updateConfig();
+    </script>
 </body>
 </html>
