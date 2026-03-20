@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Electron Configuration Explorer</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --bg: #ecf0f1;
+            --white: #ffffff;
+            --correct: #2ecc71;
+            --incorrect: #e74c3c;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: var(--primary); text-align: center; }
+        h1 { font-size: 2.5em; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
+        
+        /* Tutorial Section */
+        .tutorial-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-left: 5px solid var(--secondary);
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        .rule-box {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Explorer Section */
+        .explorer-section {
+            background: #fdfbf7;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #f39c12;
+            margin-bottom: 40px;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        input[type="range"] { width: 300px; cursor: pointer; }
+        .electron-count { font-size: 1.5em; font-weight: bold; color: var(--accent); }
+        .config-string {
+            font-size: 1.5em;
+            text-align: center;
+            margin: 20px 0;
+            font-family: monospace;
+            color: var(--secondary);
+            font-weight: bold;
+            word-wrap: break-word;
+        }
+        
+        /* Orbital Visuals */
+        .orbital-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .subshell {
+            background: var(--white);
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .subshell.active { border-color: var(--secondary); background: #ebf5fb; }
+        .subshell-label { font-weight: bold; margin-bottom: 5px; }
+        .boxes-wrapper { display: flex; gap: 4px; justify-content: center; }
+        .orbital-box {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--primary);
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: #f0f3f4;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #bdc3c7;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .question-text { font-size: 1.4em; margin-bottom: 20px; text-align: center; }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .option-btn {
+            padding: 15px;
+            font-size: 1.1em;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .option-btn:hover:not(:disabled) { background: var(--secondary); color: var(--white); }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background: var(--correct) !important; color: white !important; border-color: var(--correct); }
+        .option-btn.incorrect { background: var(--incorrect) !important; color: white !important; border-color: var(--incorrect); }
+        
+        #next-btn {
+            display: none;
+            margin: 20px auto 0;
+            padding: 10px 30px;
+            font-size: 1.2em;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #next-btn:hover { background: #1a252f; }
+        #quiz-result { text-align: center; font-size: 2em; display: none; color: var(--secondary); font-weight: bold; }
+        
+        .start-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>⚛️ The Electron Explorer ⚛️</h1>
+
+    <div class="tutorial-box">
+        <h2>How to Read the Map of an Atom</h2>
+        <p>Electron configuration is like a seating chart for an atom. It tells us exactly where the electrons "sit" around the nucleus.</p>
+        
+        <div class="rule-box">
+            <h3>The Seats (Shells & Subshells)</h3>
+            <p>Electrons sit in layers called <strong>Shells</strong> (1, 2, 3...). Inside each shell are sections called <strong>Subshells</strong> (s, p, d, f).</p>
+            <ul>
+                <li><strong>s</strong> subshell: Holds up to <strong>2</strong> electrons.</li>
+                <li><strong>p</strong> subshell: Holds up to <strong>6</strong> electrons.</li>
+                <li><strong>d</strong> subshell: Holds up to <strong>10</strong> electrons.</li>
+                <li><strong>f</strong> subshell: Holds up to <strong>14</strong> electrons.</li>
+            </ul>
+        </div>
+
+        <div class="rule-box">
+            <h3>The 3 Golden Rules</h3>
+            <ol>
+                <li><strong>The Aufbau Principle:</strong> Electrons are lazy. They always fill the lowest energy seats first (1s, then 2s, then 2p...).</li>
+                <li><strong>The Pauli Exclusion Principle:</strong> A single exact seat (an orbital box) can hold exactly 2 electrons, but they must spin in opposite directions (one up ↑, one down ↓).</li>
+                <li><strong>Hund's Rule:</strong> When electrons sit in a section with multiple seats (like 'p' which has 3 boxes), they prefer to sit alone first! They put one electron in each empty box before they start pairing up.</li>
+            </ol>
+        </div>
+        
+        <p><strong>Example - Oxygen (8 Electrons):</strong><br>
+        Fill 1s (2) → Fill 2s (2) → Remaining 4 go into 2p. <br>
+        Result: <code>1s² 2s² 2p⁴</code></p>
+    </div>
+
+    <div class="explorer-section">
+        <h2>🎛️ Interactive Orbital Filler</h2>
+        <p style="text-align: center;">Move the slider to add electrons and watch how they fill the subshells according to the rules!</p>
+        
+        <div class="controls">
+            <span>1 (H)</span>
+            <input type="range" id="electron-slider" min="1" max="118" value="1">
+            <span>118 (Og)</span>
+        </div>
+        <div style="text-align: center;">
+            <p>Total Electrons: <span class="electron-count" id="count-display">1</span></p>
+        </div>
+
+        <div class="config-string" id="config-string-display">1s¹</div>
+        <div class="orbital-container" id="orbital-container">
+            </div>
+    </div>
+
+    <div class="quiz-section">
+        <h2>🧠 The 50-Question Challenge</h2>
+        
+        <div id="quiz-intro">
+            <p style="text-align: center;">Test your knowledge! You will face 50 random questions about electron configurations. Good luck!</p>
+            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <div id="quiz-area" style="display: none;">
+            <div class="quiz-header">
+                <span id="q-counter">Question: 1 / 50</span>
+                <span id="score-display">Score: 0</span>
+            </div>
+            
+            <div class="question-text" id="question-text">Question goes here</div>
+            
+            <div class="options-grid" id="options-grid">
+                </div>
+            
+            <button id="next-btn" onclick="nextQuestion()">Next Question ➡️</button>
+        </div>
+
+        <div id="quiz-result"></div>
+    </div>
+
+</div>
+
+<script>
+    // --- PART 1: EXPLORER LOGIC ---
+    // The strict Aufbau filling order
+    const orbitalOrder = [
+        {name: '1s', max: 2}, {name: '2s', max: 2}, {name: '2p', max: 6},
+        {name: '3s', max: 2}, {name: '3p', max: 6}, {name: '4s', max: 2},
+        {name: '3d', max: 10}, {name: '4p', max: 6}, {name: '5s', max: 2},
+        {name: '4d', max: 10}, {name: '5p', max: 6}, {name: '6s', max: 2},
+        {name: '4f', max: 14}, {name: '5d', max: 10}, {name: '6p', max: 6},
+        {name: '7s', max: 2}, {name: '5f', max: 14}, {name: '6d', max: 10}, {name: '7p', max: 6}
+    ];
+
+    const slider = document.getElementById('electron-slider');
+    const countDisplay = document.getElementById('count-display');
+    const configStringDisplay = document.getElementById('config-string-display');
+    const orbitalContainer = document.getElementById('orbital-container');
+
+    // Helper: Convert number to superscript
+    function toSuperscript(num) {
+        const supers = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+        return num.toString().split('').map(c => supers[c] || c).join('');
+    }
+
+    // Generate the config string & data for a given atomic number
+    function getConfigurationData(totalElectrons) {
+        let remaining = totalElectrons;
+        let configStr = "";
+        let filledSubshells = [];
+
+        for (let subshell of orbitalOrder) {
+            if (remaining <= 0) break;
+            
+            let take = Math.min(remaining, subshell.max);
+            filledSubshells.push({ name: subshell.name, capacity: subshell.max, count: take });
+            configStr += `${subshell.name}${toSuperscript(take)} `;
+            remaining -= take;
+        }
+        return { string: configStr.trim(), subshells: filledSubshells };
+    }
+
+    function renderVisualizer(electrons) {
+        countDisplay.innerText = electrons;
+        const data = getConfigurationData(electrons);
+        configStringDisplay.innerText = data.string;
+        
+        orbitalContainer.innerHTML = ''; // Clear
+
+        data.subshells.forEach(sub => {
+            const shellDiv = document.createElement('div');
+            shellDiv.className = 'subshell active';
+            
+            const label = document.createElement('div');
+            label.className = 'subshell-label';
+            label.innerText = sub.name;
+            shellDiv.appendChild(label);
+
+            const boxesWrapper = document.createElement('div');
+            boxesWrapper.className = 'boxes-wrapper';
+            
+            const numBoxes = sub.capacity / 2;
+            let boxes = new Array(numBoxes).fill(0);
+            
+            // Apply Hund's Rule visually
+            for (let i = 0; i < sub.count; i++) {
+                if (i < numBoxes) {
+                    boxes[i] = 1; // 1 electron = Up
+                } else {
+                    boxes[i - numBoxes] = 2; // 2 electrons = Up/Down
+                }
+            }
+
+            boxes.forEach(val => {
+                const box = document.createElement('div');
+                box.className = 'orbital-box';
+                if (val === 1) box.innerText = '↑';
+                if (val === 2) box.innerText = '↑↓';
+                boxesWrapper.appendChild(box);
+            });
+
+            shellDiv.appendChild(boxesWrapper);
+            orbitalContainer.appendChild(shellDiv);
+        });
+    }
+
+    // Listen to slider
+    slider.addEventListener('input', (e) => {
+        renderVisualizer(parseInt(e.target.value));
+    });
+
+    // Initial render
+    renderVisualizer(1);
+
+
+    // --- PART 2: QUIZ LOGIC ---
+    // Elements 1 to 36 for quiz generation (Standard Aufbau applies to most here)
+    const elements = [
+        "Hydrogen (1)","Helium (2)","Lithium (3)","Beryllium (4)","Boron (5)",
+        "Carbon (6)","Nitrogen (7)","Oxygen (8)","Fluorine (9)","Neon (10)",
+        "Sodium (11)","Magnesium (12)","Aluminum (13)","Silicon (14)","Phosphorus (15)",
+        "Sulfur (16)","Chlorine (17)","Argon (18)","Potassium (19)","Calcium (20)",
+        "Scandium (21)","Titanium (22)","Vanadium (23)","Chromium (24)","Manganese (25)",
+        "Iron (26)","Cobalt (27)","Nickel (28)","Copper (29)","Zinc (30)",
+        "Gallium (31)","Germanium (32)","Arsenic (33)","Selenium (34)","Bromine (35)","Krypton (36)"
+    ];
+
+    let quizQuestions = [];
+    let currentQ = 0;
+    let score = 0;
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function generateQuizData() {
+        let pool = [];
+        
+        // Generate 25 "What is the config for Element X?"
+        for(let i=1; i<=25; i++) {
+            let z = Math.floor(Math.random() * 36) + 1; // 1 to 36
+            let correct = getConfigurationData(z).string;
+            let options = new Set([correct]);
+            while(options.size < 4) {
+                let wrongZ = Math.floor(Math.random() * 36) + 1;
+                options.add(getConfigurationData(wrongZ).string);
+            }
+            pool.push({
+                q: `What is the standard electron configuration for ${elements[z-1]}?`,
+                correct: correct,
+                options: shuffle(Array.from(options))
+            });
+        }
+
+        // Generate 25 "Which element has this config?"
+        for(let i=1; i<=25; i++) {
+            let z = Math.floor(Math.random() * 36) + 1;
+            let config = getConfigurationData(z).string;
+            let correct = elements[z-1];
+            let options = new Set([correct]);
+            while(options.size < 4) {
+                let wrongZ = Math.floor(Math.random() * 36) + 1;
+                options.add(elements[wrongZ-1]);
+            }
+            pool.push({
+                q: `Which element has the electron configuration: <br><span style="color:var(--secondary)">${config}</span> ?`,
+                correct: correct,
+                options: shuffle(Array.from(options))
+            });
+        }
+
+        return shuffle(pool);
+    }
+
+    function startQuiz() {
+        document.getElementById('quiz-intro').style.display = 'none';
+        document.getElementById('quiz-area').style.display = 'block';
+        quizQuestions = generateQuizData();
+        currentQ = 0;
+        score = 0;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if(currentQ >= 50) {
+            endQuiz();
+            return;
+        }
+
+        const qData = quizQuestions[currentQ];
+        document.getElementById('q-counter').innerText = `Question: ${currentQ + 1} / 50`;
+        document.getElementById('score-display').innerText = `Score: ${score}`;
+        document.getElementById('question-text').innerHTML = qData.q;
+        document.getElementById('next-btn').style.display = 'none';
+
+        const grid = document.getElementById('options-grid');
+        grid.innerHTML = '';
+
+        qData.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = opt;
+            btn.onclick = () => checkAnswer(btn, opt, qData.correct);
+            grid.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(clickedBtn, selected, correct) {
+        // Disable all buttons
+        const btns = document.querySelectorAll('.option-btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(selected === correct) {
+            clickedBtn.classList.add('correct');
+            score++;
+        } else {
+            clickedBtn.classList.add('incorrect');
+            // Find and highlight correct answer
+            btns.forEach(b => {
+                if(b.innerHTML === correct) b.classList.add('correct');
+            });
+        }
+        
+        document.getElementById('score-display').innerText = `Score: ${score}`;
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        loadQuestion();
+    }
+
+    function endQuiz() {
+        document.getElementById('quiz-area').style.display = 'none';
+        const resultDiv = document.getElementById('quiz-result');
+        resultDiv.style.display = 'block';
+        
+        let message = "";
+        if(score >= 45) message = "🏆 Outstanding! You are a Quantum Master!";
+        else if(score >= 35) message = "🌟 Great job! You know your orbitals well.";
+        else if(score >= 25) message = "👍 Good effort! Keep practicing those shells.";
+        else message = "📚 Nice try! Head up to the explorer to review the rules.";
+
+        resultDiv.innerHTML = `Quiz Complete!<br><br>Final Score: ${score} / 50<br><span style="font-size:0.7em; color:var(--primary)">${message}</span>
+        <br><br><button class="start-btn" onclick="startQuiz()">Try Again</button>`;
+    }
+
+</script>
+</body>
+</html>
