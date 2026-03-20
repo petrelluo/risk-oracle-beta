@@ -58,15 +58,16 @@
             display: flex; justify-content: center; margin: 30px 0; position: relative;
         }
         #atomVisualizer {
-            width: 100%; max-width: 550px; height: auto;
+            width: 100%; max-width: 700px; height: auto;
             background: #0f172a; border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border: 2px solid #1e293b;
         }
         @keyframes orbit-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .orbit-group { transform-origin: 250px 250px; animation-name: orbit-spin; animation-iteration-count: infinite; animation-timing-function: linear; }
+        .orbit-group { transform-origin: 240px 250px; animation-name: orbit-spin; animation-iteration-count: infinite; animation-timing-function: linear; }
         
         .orbital-container {
             display: flex; flex-wrap: wrap; gap: 15px; 
@@ -180,33 +181,66 @@
 
         <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
             <div class="shape-card">
-                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="#e63946" opacity="0.8"/></svg>
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <radialGradient id="grad-s-card" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#ff7b89" />
+                            <stop offset="100%" stop-color="#ba1a2b" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="35" fill="url(#grad-s-card)"/>
+                </svg>
                 <h4 style="color: #e63946; margin: 0;">s subshell</h4>
                 <p style="margin: 5px 0;">Sphere</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">1 Orbital</p>
             </div>
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
-                    <path d="M 50 50 C 80 20, 80 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
-                    <path d="M 50 50 C 20 20, 20 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
+                    <defs>
+                        <radialGradient id="grad-p-card" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#4fd1c5" />
+                            <stop offset="100%" stop-color="#237b73" />
+                        </radialGradient>
+                    </defs>
+                    <ellipse cx="50" cy="25" rx="15" ry="22" fill="url(#grad-p-card)"/>
+                    <ellipse cx="50" cy="75" rx="15" ry="22" fill="url(#grad-p-card)"/>
                 </svg>
                 <h4 style="color: #2a9d8f; margin: 0;">p subshell</h4>
                 <p style="margin: 5px 0;">Dumbbell</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">3 Orbitals</p>
             </div>
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
-                    <path d="M 50 50 C 75 25, 25 25, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
-                    <path d="M 50 50 C 75 75, 25 75, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
-                    <path d="M 50 50 C 25 25, 25 75, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
-                    <path d="M 50 50 C 75 25, 75 75, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
+                    <defs>
+                        <radialGradient id="grad-d-card" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fde047" />
+                            <stop offset="100%" stop-color="#a16207" />
+                        </radialGradient>
+                    </defs>
+                    <g transform="translate(50,50)">
+                        <ellipse cx="18" cy="18" rx="12" ry="20" transform="rotate(-45 18 18)" fill="url(#grad-d-card)"/>
+                        <ellipse cx="-18" cy="-18" rx="12" ry="20" transform="rotate(-45 -18 -18)" fill="url(#grad-d-card)"/>
+                        <ellipse cx="-18" cy="18" rx="12" ry="20" transform="rotate(45 -18 18)" fill="url(#grad-d-card)"/>
+                        <ellipse cx="18" cy="-18" rx="12" ry="20" transform="rotate(45 18 -18)" fill="url(#grad-d-card)"/>
+                    </g>
                 </svg>
                 <h4 style="color: #e9c46a; margin: 0;">d subshell</h4>
                 <p style="margin: 5px 0;">Cloverleaf</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">5 Orbitals</p>
             </div>
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
-                    <circle cx="35" cy="35" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="35" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="35" cy="65" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="65" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="50" cy="20" r="12" fill="#f4a261" opacity="0.8"/><circle cx="50" cy="80" r="12" fill="#f4a261" opacity="0.8"/>
+                    <defs>
+                        <radialGradient id="grad-f-card" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fdba74" />
+                            <stop offset="100%" stop-color="#c2410c" />
+                        </radialGradient>
+                    </defs>
+                    <g transform="translate(50,50)">
+                        <circle cx="0" cy="-22" r="12" fill="url(#grad-f-card)"/>
+                        <circle cx="0" cy="22" r="12" fill="url(#grad-f-card)"/>
+                        <circle cx="-20" cy="-12" r="12" fill="url(#grad-f-card)"/>
+                        <circle cx="20" cy="-12" r="12" fill="url(#grad-f-card)"/>
+                        <circle cx="-20" cy="12" r="12" fill="url(#grad-f-card)"/>
+                        <circle cx="20" cy="12" r="12" fill="url(#grad-f-card)"/>
+                    </g>
                 </svg>
                 <h4 style="color: #f4a261; margin: 0;">f subshell</h4>
                 <p style="margin: 5px 0;">Complex Lobes</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">7 Orbitals</p>
@@ -256,8 +290,8 @@
     </div>
 
     <div class="card interactive-section">
-        <h2>🎛️ Interactive Orbital Filler</h2>
-        <p>Notice the structure below! The thick gray tracks are the <strong>Shells</strong>. The colored rings inside them are the <strong>Subshells</strong>. On those rings, you will see faint circles—these are the <strong>Orbitals</strong>. Watch how the electrons fill the orbitals one by one (Hund's Rule) before pairing up!</p>
+        <h2>🎛️ Interactive Orbital Dashboard</h2>
+        <p>Notice the structure below! The thick gray tracks are the <strong>Principal Shells</strong>. The colored rings inside them are the <strong>Subshells</strong>. On those rings, you will see faint circles—these are the <strong>Orbitals</strong>. Use the 3D legend on the right to match the colors to their physical shapes!</p>
         
         <div class="control-panel">
             <button class="ctrl-btn" onclick="adjustElectrons(-1)">-</button>
@@ -268,7 +302,7 @@
         <p style="text-align: center; font-size: 1.2em; font-weight: bold;">Total Electrons: <span id="eCount">8</span></p>
         
         <div class="atom-container">
-            <svg id="atomVisualizer" viewBox="0 0 500 500"></svg>
+            <svg id="atomVisualizer" viewBox="0 0 650 500"></svg>
         </div>
 
         <div class="text-config" id="textConfigDisplay">1s² 2s² 2p⁴</div>
@@ -326,43 +360,108 @@
             }
         }
 
-        // Advanced Atom Visualizer (Explicit Shell Boundaries & Orbital Seats)
+        // Advanced Atom Visualizer (Explicit Boundaries, Orbitals & 3D Legend)
         function drawHierarchicalAtom(activeSubshells) {
             const svg = document.getElementById('atomVisualizer');
-            let svgHTML = `<circle cx="250" cy="250" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
-                           <text x="250" y="254" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
             
-            // --- Legend ---
-            const legendX = 390;
-            const legendY = 30;
-            const itemHeight = 18;
-            ['s','p','d','f'].forEach((type, idx) => {
-                let y = legendY + (idx * itemHeight);
-                let color = subshellColors[type];
-                svgHTML += `<circle cx="${legendX}" cy="${y}" r="5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
-                svgHTML += `<text x="${legendX + 15}" y="${y + 4}" font-size="12" fill="${color}" font-weight="bold">${type} subshell</text>`;
-            });
+            // --- INJECT 3D GRADIENTS ---
+            let svgHTML = `<defs>
+                <radialGradient id="grad-s" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#ff7b89" />
+                    <stop offset="100%" stop-color="#991122" />
+                </radialGradient>
+                <radialGradient id="grad-p" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#4fd1c5" />
+                    <stop offset="100%" stop-color="#1b5e58" />
+                </radialGradient>
+                <radialGradient id="grad-d" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#fde047" />
+                    <stop offset="100%" stop-color="#854d0e" />
+                </radialGradient>
+                <radialGradient id="grad-f" cx="30%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#fdba74" />
+                    <stop offset="100%" stop-color="#9a3412" />
+                </radialGradient>
+            </defs>`;
 
+            // --- DRAW ATOM CENTER ---
+            // Center of atom shifted left to make room for 3D legend
+            const cx = 240; 
+            const cy = 250;
+            svgHTML += `<circle cx="${cx}" cy="${cy}" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
+                        <text x="${cx}" y="${cy+4}" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
+            
+            // --- DRAW 3D STYLIZED LEGEND (RIGHT SIDE) ---
+            const legX = 490; // Center X of the shapes
+            const textX = 525; // Start X of the text
+            const legStartY = 80;
+            const legSpacing = 110;
+
+            // Box for legend background
+            svgHTML += `<rect x="440" y="20" width="190" height="460" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2" opacity="0.8"/>`;
+            svgHTML += `<text x="535" y="45" font-size="16" font-weight="bold" fill="#f8fafc" text-anchor="middle">Subshell Shapes</text>`;
+            svgHTML += `<line x1="450" y1="55" x2="620" y2="55" stroke="#334155" stroke-width="2"/>`;
+
+            // 1. 's' Sphere
+            let sy = legStartY;
+            svgHTML += `<circle cx="${legX}" cy="${sy}" r="18" fill="url(#grad-s)"/>`;
+            svgHTML += `<text x="${textX}" y="${sy-4}" font-size="14" font-weight="bold" fill="#e63946">s Subshell</text>`;
+            svgHTML += `<text x="${textX}" y="${sy+12}" font-size="11" fill="#cbd5e1">1 Orbital (2e⁻ max)</text>`;
+
+            // 2. 'p' Dumbbell
+            let py = legStartY + legSpacing;
+            svgHTML += `<g transform="translate(${legX}, ${py})">
+                            <ellipse cx="0" cy="-12" rx="10" ry="18" fill="url(#grad-p)"/>
+                            <ellipse cx="0" cy="12" rx="10" ry="18" fill="url(#grad-p)"/>
+                        </g>`;
+            svgHTML += `<text x="${textX}" y="${py-4}" font-size="14" font-weight="bold" fill="#2a9d8f">p Subshell</text>`;
+            svgHTML += `<text x="${textX}" y="${py+12}" font-size="11" fill="#cbd5e1">3 Orbitals (6e⁻ max)</text>`;
+
+            // 3. 'd' Cloverleaf
+            let dy = legStartY + (legSpacing * 2);
+            svgHTML += `<g transform="translate(${legX}, ${dy})">
+                            <ellipse cx="12" cy="12" rx="8" ry="16" transform="rotate(-45 12 12)" fill="url(#grad-d)"/>
+                            <ellipse cx="-12" cy="-12" rx="8" ry="16" transform="rotate(-45 -12 -12)" fill="url(#grad-d)"/>
+                            <ellipse cx="-12" cy="12" rx="8" ry="16" transform="rotate(45 -12 12)" fill="url(#grad-d)"/>
+                            <ellipse cx="12" cy="-12" rx="8" ry="16" transform="rotate(45 12 -12)" fill="url(#grad-d)"/>
+                        </g>`;
+            svgHTML += `<text x="${textX}" y="${dy-4}" font-size="14" font-weight="bold" fill="#e9c46a">d Subshell</text>`;
+            svgHTML += `<text x="${textX}" y="${dy+12}" font-size="11" fill="#cbd5e1">5 Orbitals (10e⁻ max)</text>`;
+
+            // 4. 'f' Complex Lobes
+            let fy = legStartY + (legSpacing * 3);
+            svgHTML += `<g transform="translate(${legX}, ${fy})">
+                            <circle cx="0" cy="-16" r="8" fill="url(#grad-f)"/>
+                            <circle cx="0" cy="16" r="8" fill="url(#grad-f)"/>
+                            <circle cx="-14" cy="-8" r="8" fill="url(#grad-f)"/>
+                            <circle cx="14" cy="-8" r="8" fill="url(#grad-f)"/>
+                            <circle cx="-14" cy="8" r="8" fill="url(#grad-f)"/>
+                            <circle cx="14" cy="8" r="8" fill="url(#grad-f)"/>
+                        </g>`;
+            svgHTML += `<text x="${textX}" y="${fy-4}" font-size="14" font-weight="bold" fill="#f4a261">f Subshell</text>`;
+            svgHTML += `<text x="${textX}" y="${fy+12}" font-size="11" fill="#cbd5e1">7 Orbitals (14e⁻ max)</text>`;
+
+            // --- DRAW ATOMIC STRUCTURE ---
             let activeShellNumbers = [...new Set(activeSubshells.map(s => s.n))].sort((a,b)=>a-b);
             let totalShells = activeShellNumbers.length;
             
-            let minRadius = 60;
-            let maxRadius = 230; 
+            let minRadius = 55;
+            let maxRadius = 210; // Capped so it doesn't bleed into the right-side legend
             let radiusStep = totalShells > 1 ? (maxRadius - minRadius) / (totalShells - 1) : 0;
-            if (radiusStep > 60) radiusStep = 60; 
+            if (radiusStep > 55) radiusStep = 55; 
 
             activeShellNumbers.forEach((n, shellIdx) => {
                 let shellCenter = minRadius + (shellIdx * radiusStep);
                 let subs = activeSubshells.filter(s => s.n === n).sort((a,b) => typeOrder[a.type] - typeOrder[b.type]);
                 
-                // 1. Draw The Shell Boundary (Hard border, clear track)
-                let bandWidth = Math.min(45, radiusStep * 0.7); 
-                svgHTML += `<circle cx="250" cy="250" r="${shellCenter}" fill="none" stroke="#1e293b" stroke-width="${bandWidth}" opacity="0.4"/>`; // Dark base track
-                svgHTML += `<circle cx="250" cy="250" r="${shellCenter + bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; // Outer limit
-                svgHTML += `<circle cx="250" cy="250" r="${shellCenter - bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; // Inner limit
+                // 1. Draw The Shell Boundary
+                let bandWidth = Math.min(40, radiusStep * 0.75); 
+                svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter}" fill="none" stroke="#1e293b" stroke-width="${bandWidth}" opacity="0.4"/>`; 
+                svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter + bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
+                svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter - bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
                 
-                // Label the Shell Track
-                svgHTML += `<text x="250" y="${250 - shellCenter - (bandWidth/2) - 4}" font-size="11" font-weight="bold" fill="#cbd5e1" text-anchor="middle">Shell n=${n}</text>`;
+                // Label the Shell Track (Top center)
+                svgHTML += `<text x="${cx}" y="${cy - shellCenter - (bandWidth/2) - 4}" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">Shell n=${n}</text>`;
 
                 // 2. Distribute Subshells inside this track
                 let subCount = subs.length;
@@ -375,7 +474,7 @@
                     let direction = subIdx % 2 === 0 ? 'normal' : 'reverse';
                     
                     // Draw Subshell Orbit Path
-                    svgHTML += `<circle cx="250" cy="250" r="${subRadius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="2 4" opacity="0.8"/>`;
+                    svgHTML += `<circle cx="${cx}" cy="${cy}" r="${subRadius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="2 4" opacity="0.8"/>`;
                     
                     // Group and animate electrons and orbitals
                     svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s; animation-direction: ${direction};">`;
@@ -387,27 +486,25 @@
                         let baseAngle = orbIdx * angleStep;
                         
                         // Draw the "Orbital Seat" (faint circle marker)
-                        let seatX = 250 + subRadius * Math.cos(baseAngle);
-                        let seatY = 250 + subRadius * Math.sin(baseAngle);
-                        svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="9" fill="#0f172a" stroke="${color}" stroke-width="1" opacity="0.6"/>`;
+                        let seatX = cx + subRadius * Math.cos(baseAngle);
+                        let seatY = cy + subRadius * Math.sin(baseAngle);
+                        svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="8" fill="#0f172a" stroke="${color}" stroke-width="1" opacity="0.6"/>`;
                         
                         // Place electrons in the seat
                         if (eCountInOrbital === 1) {
-                            // Single electron centered
-                            svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="4.5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
+                            svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="4" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
                         } else if (eCountInOrbital === 2) {
-                            // Two paired electrons side-by-side inside the orbital seat
-                            let offsetAngle = 4.5 / subRadius; // Converts ~4.5px linear distance to radians
-                            let ex1 = 250 + subRadius * Math.cos(baseAngle - offsetAngle);
-                            let ey1 = 250 + subRadius * Math.sin(baseAngle - offsetAngle);
-                            let ex2 = 250 + subRadius * Math.cos(baseAngle + offsetAngle);
-                            let ey2 = 250 + subRadius * Math.sin(baseAngle + offsetAngle);
+                            // Two paired electrons side-by-side
+                            let offsetAngle = 4.5 / subRadius; 
+                            let ex1 = cx + subRadius * Math.cos(baseAngle - offsetAngle);
+                            let ey1 = cy + subRadius * Math.sin(baseAngle - offsetAngle);
+                            let ex2 = cx + subRadius * Math.cos(baseAngle + offsetAngle);
+                            let ey2 = cy + subRadius * Math.sin(baseAngle + offsetAngle);
                             
-                            svgHTML += `<circle cx="${ex1}" cy="${ey1}" r="4" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
-                            svgHTML += `<circle cx="${ex2}" cy="${ey2}" r="4" fill="${color}" stroke="#fff" stroke-width="0.5"/>`; // Tiny white rim for visual distinction
+                            svgHTML += `<circle cx="${ex1}" cy="${ey1}" r="3.5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
+                            svgHTML += `<circle cx="${ex2}" cy="${ey2}" r="3.5" fill="${color}" stroke="#fff" stroke-width="0.5"/>`;
                         }
                     });
-
                     svgHTML += `</g>`;
                 });
             });
@@ -433,17 +530,16 @@
                 let adding = Math.min(remaining, currentSub.cap);
                 
                 let numBoxes = currentSub.cap / 2;
-                let orbitalFillArray = Array(numBoxes).fill(0); // Tracks exactly how many electrons in each orbital
+                let orbitalFillArray = Array(numBoxes).fill(0);
                 let boxContent = Array(numBoxes).fill('');
                 
-                // Hund's Rule: Apply 1 electron to each orbital first
+                // Hund's Rule logic
                 let tempAdding = adding;
                 for (let b = 0; b < numBoxes && tempAdding > 0; b++) {
                     orbitalFillArray[b]++;
                     boxContent[b] = '<span class="arrow-up">&uarr;</span>';
                     tempAdding--;
                 }
-                // Then pair them up
                 for (let b = 0; b < numBoxes && tempAdding > 0; b++) {
                     orbitalFillArray[b]++;
                     boxContent[b] += '<span class="arrow-down">&darr;</span>';
@@ -453,7 +549,6 @@
                 let n = parseInt(currentSub.sub.charAt(0));
                 let type = currentSub.sub.charAt(1);
                 
-                // Pass the exact orbital filling data to the visualizer
                 activeSubshells.push({
                     name: currentSub.sub,
                     eCount: adding,
