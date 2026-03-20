@@ -28,6 +28,18 @@
             margin-top: 0;
             color: #1a365d;
             font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .score-container {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 1.5rem;
+            background-color: #ebf8ff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #bee3f8;
         }
         .instruction {
             color: #718096;
@@ -87,6 +99,7 @@
 
     <div class="card">
         <h1>Chemistry Quiz</h1>
+        <div class="score-container">Score: <span id="score">0</span></div>
         <p class="instruction">Type your answer below. Formulas don't need subscripts (e.g., Al2(SO4)3).</p>
         
         <div id="question-prompt">Loading question...</div>
@@ -118,6 +131,7 @@
         let currentItem = {};
         let askingFor = ""; // "formula" or "name"
         let correctAnswer = "";
+        let score = 0; // Initialize score
 
         // DOM Elements
         const promptEl = document.getElementById('question-prompt');
@@ -125,6 +139,7 @@
         const inputEl = document.getElementById('answer-input');
         const submitBtn = document.getElementById('submit-btn');
         const feedbackEl = document.getElementById('feedback');
+        const scoreEl = document.getElementById('score'); // Get score element
 
         // Function to start a new round
         function generateQuestion() {
@@ -162,12 +177,20 @@
 
             // Case-insensitive comparison
             if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                // Correct answer logic
+                score++; 
+                scoreEl.textContent = score; 
+                
                 feedbackEl.textContent = "Correct! Well done.";
                 feedbackEl.className = "correct";
                 
                 // Wait 1.5 seconds, then load next question
                 setTimeout(generateQuestion, 1500);
             } else {
+                // Incorrect answer logic
+                score--; 
+                scoreEl.textContent = score; 
+
                 feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`;
                 feedbackEl.className = "incorrect";
                 
