@@ -12,10 +12,9 @@
             --ionic: #9b59b6;
             --covalent: #27ae60;
             --metallic: #f1c40f;
+            --polar: #d35400;
             --bg: #f8f9fa;
             --white: #ffffff;
-            --correct: #2ecc71;
-            --incorrect: #e74c3c;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,14 +25,14 @@
             padding: 20px;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             background: var(--white);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 { color: var(--primary); text-align: center; }
+        h1, h2, h3, h4 { color: var(--primary); text-align: center; }
         h1 { font-size: 2.5em; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
         
         .tutorial-box {
@@ -54,11 +53,12 @@
         .rule-box.ionic { border-top-color: var(--ionic); }
         .rule-box.covalent { border-top-color: var(--covalent); }
         .rule-box.metallic { border-top-color: var(--metallic); }
+        .rule-box.polar { border-top-color: var(--polar); }
         
         .visual-row {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: stretch;
             gap: 20px;
             margin: 20px 0;
             flex-wrap: wrap;
@@ -69,8 +69,30 @@
             border-radius: 10px;
             text-align: center;
             border: 1px solid #dee2e6;
+            flex: 1;
             min-width: 200px;
         }
+
+        /* Shape Gallery Grid */
+        .shape-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .shape-card {
+            background: #fff;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .shape-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+        .shape-card svg { margin-bottom: 10px; }
+        .shape-card h4 { margin: 5px 0; color: var(--secondary); }
+        .shape-card p { font-size: 0.9em; margin: 0; color: #7f8c8d; }
 
         /* Interactive Sections */
         .interactive-section {
@@ -106,7 +128,6 @@
             margin: 0 5px;
         }
         button:hover { background: #1a5276; }
-        button:disabled { background: #95a5a6; cursor: not-allowed; }
         
         canvas {
             background: #fff;
@@ -132,91 +153,142 @@
 
     <div class="tutorial-box">
         <h2>Part 1: Why Do Atoms Bond?</h2>
-        <p>Atoms crave stability! For most atoms, being "stable" means having a full outer shell of 8 electrons (the <strong>Octet Rule</strong>). If they don't have 8, they will steal, give away, or share electrons with other atoms to get there. The magnetic attraction that holds them together afterward is called a <strong>Chemical Bond</strong>.</p>
+        <p>Atoms crave stability! For most atoms, being "stable" means having a full outer shell of 8 electrons (the <strong>Octet Rule</strong>). If they don't have 8, they will steal, give away, or share electrons with other atoms. The magnetic attraction that holds them together afterward is called a <strong>Chemical Bond</strong>.</p>
         
-        <div class="visual-row">
-            <div class="visual-card">
-                <svg width="150" height="150" viewBox="0 0 150 150">
-                    <circle cx="75" cy="75" r="40" fill="none" stroke="#2c3e50" stroke-width="2" stroke-dasharray="4"/>
-                    <circle cx="75" cy="75" r="15" fill="#e74c3c"/>
-                    <circle cx="75" cy="35" r="5" fill="#3498db"/>
-                    <circle cx="115" cy="75" r="5" fill="#3498db"/>
-                    <circle cx="75" cy="115" r="5" fill="#3498db"/>
-                    <circle cx="35" cy="75" r="5" fill="#3498db"/>
-                    <circle cx="45" cy="45" r="5" fill="#3498db"/>
-                    <circle cx="105" cy="105" r="5" fill="#3498db"/>
-                    <circle cx="45" cy="105" r="5" fill="#3498db"/>
-                    <circle cx="105" cy="45" r="5" fill="none" stroke="#e67e22" stroke-width="2" stroke-dasharray="2"/>
-                    <text x="115" y="40" fill="#e67e22" font-weight="bold">Needs 1!</text>
-                </svg>
-                <p><strong>The Octet Rule</strong><br>Atoms want 8 outer electrons.</p>
-            </div>
-        </div>
-
         <div class="rule-box ionic">
             <h3>1. Ionic Bonds (The "Give & Take")</h3>
             <p><strong>Who:</strong> Metals + Non-Metals.</p>
             <p><strong>How:</strong> A metal (like Sodium) completely <em>gives</em> an electron to a non-metal (like Chlorine). This makes the metal Positive (+) and the non-metal Negative (-). Like magnets, they stick together!</p>
-            <div class="visual-row">
-                <svg width="250" height="100" viewBox="0 0 250 100">
-                    <circle cx="50" cy="50" r="30" fill="#ecf0f1" stroke="#9b59b6" stroke-width="3"/>
-                    <text x="35" y="55" font-weight="bold" fill="#9b59b6">Na⁺</text>
-                    <circle cx="200" cy="50" r="30" fill="#ecf0f1" stroke="#e74c3c" stroke-width="3"/>
-                    <text x="185" y="55" font-weight="bold" fill="#e74c3c">Cl⁻</text>
-                    <circle cx="125" cy="30" r="6" fill="#3498db"/>
-                    <path d="M 85 30 Q 125 0 165 30" fill="none" stroke="#3498db" stroke-width="2" marker-end="url(#arrow)"/>
-                    <defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3498db" /></marker></defs>
-                </svg>
-            </div>
         </div>
 
         <div class="rule-box covalent">
             <h3>2. Covalent Bonds ("Sharing is Caring")</h3>
             <p><strong>Who:</strong> Non-Metals + Non-Metals.</p>
             <p><strong>How:</strong> When both atoms need electrons, neither will give one away. Instead, they overlap their outer shells and <em>share</em> electrons to build a bridge.</p>
+            
+            <h4 style="margin-top: 20px;">Single, Double, and Triple Bonds</h4>
+            <p style="text-align: center;">Atoms can share more than one pair of electrons if they are really desperate to reach 8!</p>
             <div class="visual-row">
-                <svg width="200" height="120" viewBox="0 0 200 120">
-                    <circle cx="70" cy="60" r="40" fill="rgba(39, 174, 96, 0.2)" stroke="#27ae60" stroke-width="2"/>
-                    <text x="50" y="65" font-weight="bold" fill="#27ae60">O</text>
-                    <circle cx="130" cy="60" r="40" fill="rgba(39, 174, 96, 0.2)" stroke="#27ae60" stroke-width="2"/>
-                    <text x="140" y="65" font-weight="bold" fill="#27ae60">O</text>
-                    <circle cx="100" cy="45" r="5" fill="#3498db"/>
-                    <circle cx="100" cy="75" r="5" fill="#3498db"/>
-                </svg>
+                <div class="visual-card">
+                    <h4>Single Bond (Share 2)</h4>
+                    <svg width="150" height="100" viewBox="0 0 150 100">
+                        <circle cx="55" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="95" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="75" cy="40" r="4" fill="#2c3e50"/>
+                        <circle cx="75" cy="60" r="4" fill="#2c3e50"/>
+                        <text x="35" y="55" font-weight="bold" fill="#27ae60">H</text>
+                        <text x="105" y="55" font-weight="bold" fill="#27ae60">H</text>
+                    </svg>
+                    <p>Hydrogen gas (H₂)</p>
+                </div>
+                <div class="visual-card">
+                    <h4>Double Bond (Share 4)</h4>
+                    <svg width="150" height="100" viewBox="0 0 150 100">
+                        <circle cx="55" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="95" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="70" cy="35" r="4" fill="#2c3e50"/><circle cx="80" cy="35" r="4" fill="#2c3e50"/>
+                        <circle cx="70" cy="65" r="4" fill="#2c3e50"/><circle cx="80" cy="65" r="4" fill="#2c3e50"/>
+                        <text x="35" y="55" font-weight="bold" fill="#27ae60">O</text>
+                        <text x="105" y="55" font-weight="bold" fill="#27ae60">O</text>
+                    </svg>
+                    <p>Oxygen gas (O₂)</p>
+                </div>
+                <div class="visual-card">
+                    <h4>Triple Bond (Share 6)</h4>
+                    <svg width="150" height="100" viewBox="0 0 150 100">
+                        <circle cx="55" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="95" cy="50" r="35" fill="rgba(39,174,96,0.2)" stroke="#27ae60" stroke-width="2"/>
+                        <circle cx="65" cy="30" r="4" fill="#2c3e50"/><circle cx="85" cy="30" r="4" fill="#2c3e50"/>
+                        <circle cx="65" cy="50" r="4" fill="#2c3e50"/><circle cx="85" cy="50" r="4" fill="#2c3e50"/>
+                        <circle cx="65" cy="70" r="4" fill="#2c3e50"/><circle cx="85" cy="70" r="4" fill="#2c3e50"/>
+                        <text x="35" y="55" font-weight="bold" fill="#27ae60">N</text>
+                        <text x="105" y="55" font-weight="bold" fill="#27ae60">N</text>
+                    </svg>
+                    <p>Nitrogen gas (N₂)</p>
+                </div>
             </div>
         </div>
 
         <div class="rule-box metallic">
             <h3>3. Metallic Bonds (The "Communal Sea")</h3>
             <p><strong>Who:</strong> Metals + Metals.</p>
-            <p><strong>How:</strong> Metal atoms let their outer electrons flow away freely. The solid metal is held together by a rigid grid of positive nuclei sitting in a flexible "sea" of shared, floating electrons. This is why metals bend without snapping and conduct electricity!</p>
-            <div class="visual-row">
-                <svg width="200" height="120" viewBox="0 0 200 120" style="background: rgba(52, 152, 219, 0.2); border-radius: 8px;">
-                    <circle cx="40" cy="30" r="15" fill="#f1c40f"/><text x="34" y="35" font-weight="bold">+</text>
-                    <circle cx="100" cy="30" r="15" fill="#f1c40f"/><text x="94" y="35" font-weight="bold">+</text>
-                    <circle cx="160" cy="30" r="15" fill="#f1c40f"/><text x="154" y="35" font-weight="bold">+</text>
-                    <circle cx="40" cy="90" r="15" fill="#f1c40f"/><text x="34" y="95" font-weight="bold">+</text>
-                    <circle cx="100" cy="90" r="15" fill="#f1c40f"/><text x="94" y="95" font-weight="bold">+</text>
-                    <circle cx="160" cy="90" r="15" fill="#f1c40f"/><text x="154" y="95" font-weight="bold">+</text>
-                    <circle cx="70" cy="60" r="3" fill="#e74c3c"/><circle cx="130" cy="60" r="3" fill="#e74c3c"/>
-                    <circle cx="70" cy="15" r="3" fill="#e74c3c"/><circle cx="130" cy="100" r="3" fill="#e74c3c"/>
-                </svg>
-            </div>
-        </div>
-        
-        <div class="rule-box">
-            <h3>4. Polyatomic Ions (The Hybrid)</h3>
-            <p>Sometimes you get both! A polyatomic ion is a cluster of atoms joined by <em>covalent</em> bonds, but the entire cluster has gained or lost an extra electron, giving it a charge. Because of that charge, the whole group can now form <em>ionic</em> bonds with other atoms.</p>
+            <p><strong>How:</strong> Metal atoms let their outer electrons flow away freely into a "sea" of shared electrons. This is why metals bend without snapping and conduct electricity!</p>
         </div>
     </div>
 
     <div class="tutorial-box">
         <h2>Part 2: Molecular Shapes (VSEPR Theory)</h2>
-        <p>When atoms share electrons (covalent bonds), they form a molecule. But they don't sit flat! Because electrons are all negative, they <strong>repel</strong> each other. Bonds and lone pairs push as far apart from each other as physically possible in 3D space. This creates specific shapes.</p>
+        <p>Because electrons are all negatively charged, they <strong>repel</strong> each other. The bonds and lone pairs (unshared electrons) around a central atom will push as far apart as physically possible in 3D space to avoid each other. This creates specific geometric shapes!</p>
+        
+        <h3>The VSEPR Shape Gallery</h3>
+        <div class="shape-gallery">
+            <div class="shape-card">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <line x1="20" y1="50" x2="80" y2="50" stroke="#34495e" stroke-width="4"/>
+                    <circle cx="20" cy="50" r="12" fill="#3498db"/><circle cx="80" cy="50" r="12" fill="#3498db"/>
+                    <circle cx="50" cy="50" r="16" fill="#e74c3c"/>
+                </svg>
+                <h4>Linear (180°)</h4>
+                <p>2 Bonds<br>0 Lone Pairs</p>
+                <p style="font-size:0.8em; margin-top:5px;">Pushed flat to opposite sides.</p>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <line x1="50" y1="50" x2="50" y2="15" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="20" y2="75" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="80" y2="75" stroke="#34495e" stroke-width="4"/>
+                    <circle cx="50" cy="15" r="10" fill="#3498db"/><circle cx="20" cy="75" r="10" fill="#3498db"/><circle cx="80" cy="75" r="10" fill="#3498db"/>
+                    <circle cx="50" cy="50" r="14" fill="#e74c3c"/>
+                </svg>
+                <h4>Trigonal Planar (120°)</h4>
+                <p>3 Bonds<br>0 Lone Pairs</p>
+                <p style="font-size:0.8em; margin-top:5px;">Flat triangle shape.</p>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <ellipse cx="50" cy="25" rx="15" ry="20" fill="rgba(241,196,15,0.4)" stroke="#f1c40f"/>
+                    <circle cx="45" cy="20" r="2" fill="#e74c3c"/><circle cx="55" cy="20" r="2" fill="#e74c3c"/>
+                    <line x1="50" y1="50" x2="20" y2="80" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="80" y2="80" stroke="#34495e" stroke-width="4"/>
+                    <circle cx="20" cy="80" r="10" fill="#3498db"/><circle cx="80" cy="80" r="10" fill="#3498db"/>
+                    <circle cx="50" cy="50" r="14" fill="#e74c3c"/>
+                </svg>
+                <h4>Bent (<120°)</h4>
+                <p>2 Bonds<br>1 or 2 Lone Pairs</p>
+                <p style="font-size:0.8em; margin-top:5px;">Lone pairs push the bonds down.</p>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <line x1="50" y1="50" x2="50" y2="15" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="15" y2="65" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="85" y2="65" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="50" y2="85" stroke="#bdc3c7" stroke-width="4" stroke-dasharray="4"/>
+                    <circle cx="50" cy="15" r="10" fill="#3498db"/><circle cx="15" cy="65" r="10" fill="#3498db"/><circle cx="85" cy="65" r="10" fill="#3498db"/><circle cx="50" cy="85" r="10" fill="#95a5a6"/>
+                    <circle cx="50" cy="50" r="14" fill="#e74c3c"/>
+                </svg>
+                <h4>Tetrahedral (109.5°)</h4>
+                <p>4 Bonds<br>0 Lone Pairs</p>
+                <p style="font-size:0.8em; margin-top:5px;">A 3D pyramid with a top.</p>
+            </div>
+            <div class="shape-card">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <ellipse cx="50" cy="20" rx="15" ry="15" fill="rgba(241,196,15,0.4)" stroke="#f1c40f"/>
+                    <circle cx="45" cy="15" r="2" fill="#e74c3c"/><circle cx="55" cy="15" r="2" fill="#e74c3c"/>
+                    <line x1="50" y1="50" x2="15" y2="75" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="85" y2="75" stroke="#34495e" stroke-width="4"/>
+                    <line x1="50" y1="50" x2="50" y2="85" stroke="#bdc3c7" stroke-width="4" stroke-dasharray="4"/>
+                    <circle cx="15" cy="75" r="10" fill="#3498db"/><circle cx="85" cy="75" r="10" fill="#3498db"/><circle cx="50" cy="85" r="10" fill="#95a5a6"/>
+                    <circle cx="50" cy="50" r="14" fill="#e74c3c"/>
+                </svg>
+                <h4>Trigonal Pyramidal</h4>
+                <p>3 Bonds<br>1 Lone Pair</p>
+                <p style="font-size:0.8em; margin-top:5px;">Lone pair acts like an invisible top bond.</p>
+            </div>
+        </div>
     </div>
 
     <div class="interactive-section">
-        <h2>🛠️ 3D Shape Builder (VSEPR)</h2>
+        <h2>🛠️ 3D Shape Builder Simulator</h2>
         <p style="text-align:center;">Add bonded atoms and lone pairs (unshared electrons) to the central atom to see how electron repulsion forces the molecule into different geometries!</p>
         
         <div class="controls">
@@ -242,34 +314,83 @@
     <div class="tutorial-box">
         <h2>Part 3: Polarity & Intermolecular Forces (IMFs)</h2>
         
-        <div class="rule-box">
-            <h3>Polar Molecules (Unequal Sharing)</h3>
-            <p>In a covalent bond, sometimes one atom is "greedier" than the other. Oxygen, for example, pulls shared electrons closer to itself than Hydrogen does. This makes the Oxygen side slightly negative (δ-) and the Hydrogen side slightly positive (δ+). This creates a <strong>Polar Molecule</strong>—a tiny molecular magnet!</p>
-            <div class="visual-row">
-                <svg width="150" height="150" viewBox="0 0 150 150">
-                    <circle cx="75" cy="80" r="30" fill="#e74c3c"/>
-                    <text x="65" y="85" font-weight="bold" fill="white">O (δ-)</text>
-                    <circle cx="45" cy="40" r="20" fill="#ecf0f1" stroke="#bdc3c7"/>
-                    <text x="32" y="45" font-weight="bold" fill="#2c3e50">H(δ+)</text>
-                    <circle cx="105" cy="40" r="20" fill="#ecf0f1" stroke="#bdc3c7"/>
-                    <text x="92" y="45" font-weight="bold" fill="#2c3e50">H(δ+)</text>
+        <div class="rule-box polar">
+            <h3>Polar Molecules (The Electron Tug of War)</h3>
+            <p>In a covalent bond, atoms share electrons, but rarely equally! <strong>Electronegativity</strong> is how "greedy" an atom is for electrons. If a greedy atom (like Fluorine) bonds with a weak atom (like Hydrogen), the greedy atom pulls the shared electrons closer to itself.</p>
+            <p>This creates a <strong>Polar Molecule</strong>: One side is slightly negative (δ-), and the other side is slightly positive (δ+). It acts just like a tiny magnet!</p>
+            
+            <div class="visual-row" style="background:#fff; padding:20px; border-radius:10px;">
+                <svg width="400" height="120" viewBox="0 0 400 120">
+                    <line x1="80" y1="60" x2="320" y2="60" stroke="#7f8c8d" stroke-width="6"/>
+                    <ellipse cx="250" cy="60" rx="90" ry="45" fill="rgba(52, 152, 219, 0.3)" stroke="none"/>
+                    <circle cx="80" cy="60" r="25" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="3"/>
+                    <text x="70" y="66" font-weight="bold" font-size="20">H</text>
+                    <text x="60" y="30" font-weight="bold" fill="#e74c3c" font-size="18">δ+</text>
+                    <circle cx="320" cy="60" r="45" fill="#e74c3c" stroke="#c0392b" stroke-width="3"/>
+                    <text x="310" y="68" font-weight="bold" fill="white" font-size="26">F</text>
+                    <text x="340" y="25" font-weight="bold" fill="#2980b9" font-size="18">δ-</text>
+                    
+                    <text x="140" y="110" font-style="italic" fill="#7f8c8d">Shared electrons pulled toward Fluorine</text>
+                    <path d="M 170 95 L 230 95 L 220 85 M 230 95 L 220 105" fill="none" stroke="#7f8c8d" stroke-width="2"/>
                 </svg>
             </div>
         </div>
 
         <div class="rule-box">
             <h3>Intermolecular Forces (The Glue Between Molecules)</h3>
-            <p>Chemical bonds hold atoms together <em>inside</em> a molecule. IMFs are the magnetic pulls <em>between</em> separate molecules. When you boil water, you aren't breaking the H and O apart; you are using heat to break the IMFs so the molecules can float away as gas.</p>
-            <ul>
-                <li><strong>London Dispersion Forces:</strong> Weakest. Happens in all molecules. Easy to boil.</li>
-                <li><strong>Dipole-Dipole:</strong> Medium strength. The (+) end of one polar molecule attracts the (-) end of another.</li>
-                <li><strong>Hydrogen Bonding:</strong> Strongest! Only happens when Hydrogen bonds to greedy N, O, or F. It acts like molecular super-velcro. This is why Water (H₂O) takes so much heat to boil!</li>
-            </ul>
+            <p>Chemical bonds hold atoms together <em>inside</em> a molecule. <strong>IMFs</strong> are the magnetic pulls <em>between</em> separate molecules. When you boil water, you break the IMFs, allowing the molecules to float away as gas.</p>
+            
+            <div class="visual-row">
+                <div class="visual-card">
+                    <h4>1. London Dispersion</h4>
+                    <svg width="180" height="80" viewBox="0 0 180 80">
+                        <ellipse cx="50" cy="40" rx="40" ry="25" fill="rgba(149, 165, 166, 0.3)"/>
+                        <circle cx="50" cy="40" r="10" fill="#95a5a6"/>
+                        <text x="75" y="45" font-weight="bold" fill="#2980b9">δ-</text>
+                        
+                        <ellipse cx="140" cy="40" rx="40" ry="25" fill="rgba(149, 165, 166, 0.3)"/>
+                        <circle cx="140" cy="40" r="10" fill="#95a5a6"/>
+                        <text x="105" y="45" font-weight="bold" fill="#e74c3c">δ+</text>
+                        
+                        <line x1="90" y1="40" x2="110" y2="40" stroke="#f39c12" stroke-width="2" stroke-dasharray="4"/>
+                    </svg>
+                    <p style="font-size:0.85em;">Weakest. Temporary shifting of electron clouds in all molecules.</p>
+                </div>
+                <div class="visual-card">
+                    <h4>2. Dipole-Dipole</h4>
+                    <svg width="180" height="80" viewBox="0 0 180 80">
+                        <ellipse cx="60" cy="40" rx="35" ry="20" fill="#fff" stroke="#d35400" stroke-width="2"/>
+                        <text x="35" y="45" font-weight="bold" fill="#e74c3c">+</text>
+                        <text x="75" y="45" font-weight="bold" fill="#2980b9">-</text>
+                        
+                        <ellipse cx="140" cy="40" rx="35" ry="20" fill="#fff" stroke="#d35400" stroke-width="2"/>
+                        <text x="115" y="45" font-weight="bold" fill="#e74c3c">+</text>
+                        <text x="155" y="45" font-weight="bold" fill="#2980b9">-</text>
+                        
+                        <line x1="85" y1="40" x2="115" y2="40" stroke="#d35400" stroke-width="3" stroke-dasharray="4"/>
+                    </svg>
+                    <p style="font-size:0.85em;">Medium strength. The permanent (+) end attracts the (-) end.</p>
+                </div>
+                <div class="visual-card">
+                    <h4>3. Hydrogen Bonding</h4>
+                    <svg width="180" height="80" viewBox="0 0 180 80">
+                        <circle cx="50" cy="40" r="15" fill="#e74c3c"/>
+                        <circle cx="35" cy="25" r="8" fill="#ecf0f1" stroke="#bdc3c7"/><text x="31" y="28" font-size="10">H</text>
+                        <circle cx="65" cy="25" r="8" fill="#ecf0f1" stroke="#bdc3c7"/><text x="61" y="28" font-size="10">H</text>
+                        <circle cx="130" cy="40" r="15" fill="#e74c3c"/>
+                        <circle cx="115" cy="55" r="8" fill="#ecf0f1" stroke="#bdc3c7"/><text x="111" y="58" font-size="10">H</text>
+                        <circle cx="145" cy="55" r="8" fill="#ecf0f1" stroke="#bdc3c7"/><text x="141" y="58" font-size="10">H</text>
+                        
+                        <line x1="65" y1="25" x2="130" y2="40" stroke="#e74c3c" stroke-width="4" stroke-dasharray="4"/>
+                    </svg>
+                    <p style="font-size:0.85em;">Strongest! Super-velcro when H bonds directly to greedy N, O, or F.</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="interactive-section">
-        <h2>🔥 Boiling Point Simulator (IMFs)</h2>
+        <h2>🔥 Boiling Point Simulator (IMFs in Action)</h2>
         <p style="text-align:center;">Select a substance and apply heat. Notice how substances with stronger IMFs (like Hydrogen Bonding) require much higher temperatures to break apart into a gas!</p>
 
         <div class="controls">
@@ -286,7 +407,7 @@
             <span id="temp-display" style="color:var(--accent); font-weight:bold; font-size:1.2em;">0 (Cold)</span>
         </div>
 
-        <canvas id="imf-canvas" width="600" height="300" style="background:#2c3e50;"></canvas>
+        <canvas id="imf-canvas" width="600" height="300" style="background:#2c3e50; border-radius:10px;"></canvas>
         <div class="result-text" id="state-text" style="color:#2ecc71;">State: Liquid (Molecules clustered)</div>
     </div>
 
@@ -331,12 +452,12 @@
         const total = bonds + lones;
         let shapeName = "";
 
-        // Define angles based on steric number (pseudo-3D for Tetrahedral)
+        // Define angles based on steric number
         let angles = [];
         if (total === 2) { angles = [0, 180]; shapeName = "Linear (180°)"; }
         else if (total === 3) { angles = [90, 210, 330]; shapeName = bonds === 3 ? "Trigonal Planar (120°)" : "Bent (<120°)"; }
         else if (total === 4) { 
-            angles = [45, 135, 230, 310]; // X shape for pseudo-3D
+            angles = [45, 135, 230, 310]; 
             if (bonds === 4) shapeName = "Tetrahedral (109.5°)";
             else if (bonds === 3) shapeName = "Trigonal Pyramidal (<109.5°)";
             else if (bonds === 2) shapeName = "Bent (<<109.5°)";
@@ -347,9 +468,7 @@
 
         document.getElementById('shape-name').innerText = `Shape: ${shapeName}`;
 
-        // Draw appendages
         let currentBond = 0;
-        let currentLone = 0;
 
         for (let i = 0; i < total; i++) {
             let rad = angles[i] * (Math.PI / 180);
@@ -389,7 +508,7 @@
             }
         }
 
-        // Draw Central Atom (drawn last to sit on top of lines)
+        // Draw Central Atom
         vCtx.beginPath();
         vCtx.arc(cx, cy, 25, 0, Math.PI * 2);
         vCtx.fillStyle = "#e74c3c";
@@ -399,7 +518,6 @@
         vCtx.stroke();
     }
     
-    // Initial Render
     drawVSEPR();
 
     // --- IMF SIMULATOR LOGIC ---
@@ -408,16 +526,14 @@
     const tempSlider = document.getElementById('temp-slider');
     
     let particles = [];
-    const numParticles = 20;
-    let animationId;
+    const numParticles = 25;
 
     function initParticles() {
         particles = [];
         for(let i=0; i<numParticles; i++) {
-            // Start clustered in the center bottom (Liquid state)
             particles.push({
-                x: imfCanvas.width/2 + (Math.random() * 100 - 50),
-                y: imfCanvas.height - 30 - (Math.random() * 50),
+                x: imfCanvas.width/2 + (Math.random() * 120 - 60),
+                y: imfCanvas.height - 40 - (Math.random() * 60),
                 vx: Math.random() * 2 - 1,
                 vy: Math.random() * 2 - 1,
                 color: getColor()
@@ -427,9 +543,9 @@
 
     function getColor() {
         const type = document.getElementById('substance-select').value;
-        if(type === 'nonpolar') return '#95a5a6'; // Gray
-        if(type === 'polar') return '#f39c12'; // Orange
-        return '#3498db'; // Blue (Water)
+        if(type === 'nonpolar') return '#95a5a6'; // LDF Gray
+        if(type === 'polar') return '#d35400'; // Dipole Orange
+        return '#3498db'; // H-Bond Blue
     }
 
     function resetIMF() {
@@ -453,9 +569,9 @@
         
         // Define boiling points (arbitrary scale 0-100)
         let bp = 0;
-        if(type === 'nonpolar') bp = 20; // Boils very easily
-        else if(type === 'polar') bp = 55; // Medium heat
-        else if(type === 'hbond') bp = 90; // Needs massive heat
+        if(type === 'nonpolar') bp = 20; 
+        else if(type === 'polar') bp = 55; 
+        else if(type === 'hbond') bp = 90; 
 
         let isGas = temp > bp;
         
@@ -463,8 +579,35 @@
             document.getElementById('state-text').innerText = `State: GAS (IMFs Broken at Temp > ${bp}!)`;
             document.getElementById('state-text').style.color = "#e74c3c";
         } else {
-            document.getElementById('state-text').innerText = "State: Liquid (IMFs holding them together)";
+            document.getElementById('state-text').innerText = `State: Liquid (IMFs holding up to Temp ${bp})`;
             document.getElementById('state-text').style.color = "#2ecc71";
+        }
+
+        // Draw IMF connection lines if liquid
+        if (!isGas) {
+            iCtx.strokeStyle = "rgba(255,255,255,0.2)";
+            if(type === 'polar') iCtx.strokeStyle = "rgba(211, 84, 0, 0.5)";
+            if(type === 'hbond') {
+                iCtx.strokeStyle = "rgba(231, 76, 60, 0.8)";
+                iCtx.setLineDash([5, 5]);
+            } else {
+                iCtx.setLineDash([]);
+            }
+            
+            iCtx.beginPath();
+            for(let i=0; i<particles.length; i++) {
+                for(let j=i+1; j<particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx*dx + dy*dy);
+                    if(dist < 50) {
+                        iCtx.moveTo(particles[i].x, particles[i].y);
+                        iCtx.lineTo(particles[j].x, particles[j].y);
+                    }
+                }
+            }
+            iCtx.stroke();
+            iCtx.setLineDash([]);
         }
 
         particles.forEach(p => {
@@ -473,26 +616,26 @@
             iCtx.arc(p.x, p.y, 10, 0, Math.PI*2);
             iCtx.fillStyle = p.color;
             iCtx.fill();
+            iCtx.strokeStyle = "#2c3e50";
+            iCtx.lineWidth = 1;
+            iCtx.stroke();
 
             // Movement Logic
-            let jiggle = (temp / 100) * 3; // Heat causes kinetic energy/jiggle
+            let jiggle = (temp / 100) * 3; 
             
             if (!isGas) {
-                // Liquid: Gravity pulls down, IMFs pull towards center
                 p.x += (Math.random() - 0.5) * jiggle;
                 p.y += (Math.random() - 0.5) * jiggle;
                 
-                // Pull back to cluster (simulating IMFs)
-                if(p.x < imfCanvas.width/2 - 60) p.x += 2;
-                if(p.x > imfCanvas.width/2 + 60) p.x -= 2;
+                // Pull back to cluster
+                if(p.x < imfCanvas.width/2 - 80) p.x += 2;
+                if(p.x > imfCanvas.width/2 + 80) p.x -= 2;
                 if(p.y < imfCanvas.height - 80) p.y += 2;
-                if(p.y > imfCanvas.height - 10) p.y -= 2;
+                if(p.y > imfCanvas.height - 15) p.y -= 2;
             } else {
-                // Gas: Bonds broken, fly freely!
                 p.x += p.vx * (jiggle + 2);
                 p.y += p.vy * (jiggle + 2);
                 
-                // Bounce off walls
                 if(p.x < 10 || p.x > imfCanvas.width - 10) p.vx *= -1;
                 if(p.y < 10 || p.y > imfCanvas.height - 10) p.vy *= -1;
             }
@@ -501,7 +644,6 @@
         requestAnimationFrame(animateIMF);
     }
 
-    // Start Simulation
     initParticles();
     animateIMF();
 
