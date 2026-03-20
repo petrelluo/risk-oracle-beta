@@ -33,22 +33,37 @@
         h1, h2, h3 { color: var(--primary); text-align: center; }
         h1 { font-size: 2.5em; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
         
-        /* Tutorial Section */
+        /* Enhanced Tutorial Section */
         .tutorial-box {
             background: #e8f4f8;
-            padding: 20px;
+            padding: 25px;
             border-left: 5px solid var(--secondary);
             margin-bottom: 30px;
             border-radius: 5px;
         }
         .rule-box {
             background: #fff;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 20px;
+            margin: 15px 0;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-
+        .visual-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            background: #fdfbf7;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        .visual-item {
+            text-align: center;
+            padding: 10px;
+        }
+        
         /* Explorer Section */
         .explorer-section {
             background: #fdfbf7;
@@ -67,13 +82,17 @@
         input[type="range"] { width: 300px; cursor: pointer; }
         .electron-count { font-size: 1.5em; font-weight: bold; color: var(--accent); }
         .config-string {
-            font-size: 1.5em;
+            font-size: 1.8em;
             text-align: center;
             margin: 20px 0;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
             color: var(--secondary);
             font-weight: bold;
             word-wrap: break-word;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bdc3c7;
         }
         
         /* Orbital Visuals */
@@ -92,7 +111,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         .subshell.active { border-color: var(--secondary); background: #ebf5fb; }
-        .subshell-label { font-weight: bold; margin-bottom: 5px; }
+        .subshell-label { font-weight: bold; margin-bottom: 5px; font-size: 1.2em; }
         .boxes-wrapper { display: flex; gap: 4px; justify-content: center; }
         .orbital-box {
             width: 35px;
@@ -136,7 +155,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
         }
         .option-btn:hover:not(:disabled) { background: var(--secondary); color: var(--white); }
@@ -178,36 +197,86 @@
 
     <div class="tutorial-box">
         <h2>How to Read the Map of an Atom</h2>
-        <p>Electron configuration is like a seating chart for an atom. It tells us exactly where the electrons "sit" around the nucleus.</p>
+        <p>Electron configuration is like a secret map. It tells us exactly how a specific atom's electrons are arranged around its nucleus. Think of the nucleus as a stage, and the electrons as the audience sitting in very specific sections and rows.</p>
         
         <div class="rule-box">
-            <h3>The Seats (Shells & Subshells)</h3>
-            <p>Electrons sit in layers called <strong>Shells</strong> (1, 2, 3...). Inside each shell are sections called <strong>Subshells</strong> (s, p, d, f).</p>
-            <ul>
-                <li><strong>s</strong> subshell: Holds up to <strong>2</strong> electrons.</li>
-                <li><strong>p</strong> subshell: Holds up to <strong>6</strong> electrons.</li>
-                <li><strong>d</strong> subshell: Holds up to <strong>10</strong> electrons.</li>
-                <li><strong>f</strong> subshell: Holds up to <strong>14</strong> electrons.</li>
-            </ul>
+            <h3>1. The Seats (Shells & Subshells)</h3>
+            <p>Electrons sit in layers called <strong>Shells</strong> (numbered 1, 2, 3...). Shell 1 is closest to the nucleus and has the lowest energy. Inside each shell are different types of "sections" called <strong>Subshells</strong>, labeled by letters (s, p, d, f). They have specific shapes and hold a maximum number of electrons.</p>
+            
+            <div class="visual-row">
+                <div class="visual-item">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <line x1="10" y1="60" x2="110" y2="60" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="60" y1="10" x2="60" y2="110" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="20" y1="100" x2="100" y2="20" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <circle cx="60" cy="60" r="35" fill="rgba(52, 152, 219, 0.6)" stroke="#2980b9" stroke-width="2"/>
+                    </svg>
+                    <div><strong>s subshell</strong><br>Spherical shape<br>Holds <strong>2</strong> electrons max</div>
+                </div>
+                <div class="visual-item">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <line x1="10" y1="60" x2="110" y2="60" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="60" y1="10" x2="60" y2="110" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="20" y1="100" x2="100" y2="20" stroke="#95a5a6" stroke-width="2" stroke-dasharray="4"/>
+                        <ellipse cx="60" cy="25" rx="15" ry="30" fill="rgba(231, 76, 60, 0.6)" stroke="#c0392b" stroke-width="2"/>
+                        <ellipse cx="60" cy="95" rx="15" ry="30" fill="rgba(231, 76, 60, 0.6)" stroke="#c0392b" stroke-width="2"/>
+                    </svg>
+                    <div><strong>p subshell</strong><br>Dumbbell shape<br>Holds <strong>6</strong> electrons max</div>
+                </div>
+                <div class="visual-item" style="max-width: 200px;">
+                    <p><strong>d subshell:</strong> Holds <strong>10</strong></p>
+                    <p><strong>f subshell:</strong> Holds <strong>14</strong></p>
+                </div>
+            </div>
         </div>
 
         <div class="rule-box">
-            <h3>The 3 Golden Rules</h3>
-            <ol>
-                <li><strong>The Aufbau Principle:</strong> Electrons are lazy. They always fill the lowest energy seats first (1s, then 2s, then 2p...).</li>
-                <li><strong>The Pauli Exclusion Principle:</strong> A single exact seat (an orbital box) can hold exactly 2 electrons, but they must spin in opposite directions (one up ↑, one down ↓).</li>
-                <li><strong>Hund's Rule:</strong> When electrons sit in a section with multiple seats (like 'p' which has 3 boxes), they prefer to sit alone first! They put one electron in each empty box before they start pairing up.</li>
-            </ol>
+            <h3>2. The Rules of Filling Seats</h3>
+            <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <ol>
+                        <li><strong>The Aufbau Principle:</strong> Electrons are "lazy"—they always sit in the lowest available energy seat first. They follow the diagonal path shown in the diagram to the right.</li>
+                        <li><strong>The Pauli Exclusion Principle:</strong> A single exact seat (an orbital box) can hold exactly 2 electrons, but they must spin in opposite directions (represented as one up ↑, one down ↓).</li>
+                        <li><strong>Hund's Rule (The Bus Seat Rule):</strong> When electrons are filling a section with multiple seats (like the 'p' subshell, which has 3 boxes), they prefer to have their own seat. They will spread out into empty seats first before pairing up!</li>
+                    </ol>
+                </div>
+                
+                <div class="visual-item" style="flex: 1; background: #fff; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+                    <h4 style="margin-top:0;">Aufbau Diagonal Rule</h4>
+                    <svg width="220" height="180" viewBox="0 0 220 180" style="margin: 0 auto; display: block;">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e74c3c" />
+                            </marker>
+                        </defs>
+                        <text x="20" y="20" font-family="monospace" font-weight="bold">1s</text>
+                        <text x="20" y="50" font-family="monospace" font-weight="bold">2s</text> <text x="60" y="50" font-family="monospace" font-weight="bold">2p</text>
+                        <text x="20" y="80" font-family="monospace" font-weight="bold">3s</text> <text x="60" y="80" font-family="monospace" font-weight="bold">3p</text> <text x="100" y="80" font-family="monospace" font-weight="bold">3d</text>
+                        <text x="20" y="110" font-family="monospace" font-weight="bold">4s</text> <text x="60" y="110" font-family="monospace" font-weight="bold">4p</text> <text x="100" y="110" font-family="monospace" font-weight="bold">4d</text> <text x="140" y="110" font-family="monospace" font-weight="bold">4f</text>
+                        <text x="20" y="140" font-family="monospace" font-weight="bold">5s</text> <text x="60" y="140" font-family="monospace" font-weight="bold">5p</text> <text x="100" y="140" font-family="monospace" font-weight="bold">5d</text> <text x="140" y="140" font-family="monospace" font-weight="bold">5f</text>
+                        <text x="20" y="170" font-family="monospace" font-weight="bold">6s</text> <text x="60" y="170" font-family="monospace" font-weight="bold">6p</text> <text x="100" y="170" font-family="monospace" font-weight="bold">6d</text>
+                        
+                        <line x1="40" y1="5" x2="10" y2="25" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="40" y1="35" x2="10" y2="55" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="80" y1="35" x2="10" y2="85" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="80" y1="65" x2="10" y2="115" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="120" y1="65" x2="10" y2="145" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="120" y1="95" x2="10" y2="175" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+                    </svg>
+                </div>
+            </div>
         </div>
         
-        <p><strong>Example - Oxygen (8 Electrons):</strong><br>
-        Fill 1s (2) → Fill 2s (2) → Remaining 4 go into 2p. <br>
-        Result: <code>1s² 2s² 2p⁴</code></p>
+        <p><strong>Example - Oxygen (Atomic Number 8, so 8 Electrons):</strong><br>
+        1. Fill 1s with 2 electrons (6 left) → <code>1s²</code><br>
+        2. Fill 2s with 2 electrons (4 left) → <code>2s²</code><br>
+        3. Put remaining 4 into 2p (which can hold up to 6) → <code>2p⁴</code><br>
+        Result: <strong>1s² 2s² 2p⁴</strong></p>
     </div>
 
     <div class="explorer-section">
         <h2>🎛️ Interactive Orbital Filler</h2>
-        <p style="text-align: center;">Move the slider to add electrons and watch how they fill the subshells according to the rules!</p>
+        <p style="text-align: center;">Move the slider to add electrons and watch how they fill the subshells according to the rules above. Pay special attention to how <strong>Hund's Rule</strong> works when filling the <strong>2p</strong> orbital!</p>
         
         <div class="controls">
             <span>1 (H)</span>
@@ -227,7 +296,7 @@
         <h2>🧠 The 50-Question Challenge</h2>
         
         <div id="quiz-intro">
-            <p style="text-align: center;">Test your knowledge! You will face 50 random questions about electron configurations. Good luck!</p>
+            <p style="text-align: center;">Test your knowledge! You will face 50 randomly generated questions testing both forward and reverse thinking. Good luck!</p>
             <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
         </div>
 
