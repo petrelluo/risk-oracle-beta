@@ -37,7 +37,32 @@
 
         /* Interactive Filler Styles */
         .interactive-section { background: #e8f4f8; border: 2px solid #bce0ed; }
-        input[type=range] { width: 100%; margin: 20px 0; cursor: pointer; }
+        
+        .control-panel {
+            display: flex; align-items: center; justify-content: center; gap: 15px; margin: 20px 0;
+        }
+        .ctrl-btn {
+            background: #3498db; color: white; border: none; width: 40px; height: 40px;
+            border-radius: 50%; font-size: 1.5em; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+        }
+        .ctrl-btn:hover { background: #2980b9; }
+        input[type=range] { flex-grow: 1; max-width: 500px; cursor: pointer; }
+        
+        /* Atom Visualizer Styles */
+        .atom-container {
+            display: flex; justify-content: center; margin: 30px 0;
+        }
+        #atomVisualizer {
+            width: 100%; max-width: 400px; height: auto;
+            background: #0f172a; border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        @keyframes orbit-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .orbit-group { transform-origin: 200px 200px; animation: orbit-spin infinite linear; }
         
         .orbital-container {
             display: flex; flex-wrap: wrap; gap: 15px; 
@@ -65,12 +90,12 @@
 
         /* Quiz Styles */
         .quiz-section { background: #fff3e0; border: 2px solid #ffe0b2; }
-        button {
+        .quiz-btn {
             background: #e67e22; color: white; border: none;
             padding: 12px 24px; border-radius: 6px; font-size: 1.1em;
             cursor: pointer; transition: background 0.3s;
         }
-        button:hover { background: #d35400; }
+        .quiz-btn:hover { background: #d35400; }
         input[type=text] {
             padding: 10px; font-size: 1.1em; width: 80%; max-width: 300px;
             border: 1px solid #ccc; border-radius: 4px;
@@ -103,24 +128,18 @@
 
         <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
             <div class="shape-card">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="35" fill="#e63946" opacity="0.8"/>
-                </svg>
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="#e63946" opacity="0.8"/></svg>
                 <h4 style="color: #e63946; margin: 0;">s subshell</h4>
-                <p style="margin: 5px 0;">Sphere</p>
-                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">1 Orbital</p>
+                <p style="margin: 5px 0;">Sphere</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">1 Orbital</p>
             </div>
-            
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
                     <path d="M 50 50 C 80 20, 80 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
                     <path d="M 50 50 C 20 20, 20 80, 50 50 Z" fill="#2a9d8f" opacity="0.8"/>
                 </svg>
                 <h4 style="color: #2a9d8f; margin: 0;">p subshell</h4>
-                <p style="margin: 5px 0;">Dumbbell</p>
-                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">3 Orbitals</p>
+                <p style="margin: 5px 0;">Dumbbell</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">3 Orbitals</p>
             </div>
-            
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
                     <path d="M 50 50 C 75 25, 25 25, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
@@ -129,22 +148,16 @@
                     <path d="M 50 50 C 75 25, 75 75, 50 50 Z" fill="#e9c46a" opacity="0.9"/>
                 </svg>
                 <h4 style="color: #e9c46a; margin: 0;">d subshell</h4>
-                <p style="margin: 5px 0;">Cloverleaf</p>
-                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">5 Orbitals</p>
+                <p style="margin: 5px 0;">Cloverleaf</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">5 Orbitals</p>
             </div>
-            
             <div class="shape-card">
                 <svg viewBox="0 0 100 100">
-                    <circle cx="35" cy="35" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="65" cy="35" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="35" cy="65" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="65" cy="65" r="15" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="50" cy="20" r="12" fill="#f4a261" opacity="0.8"/>
-                    <circle cx="50" cy="80" r="12" fill="#f4a261" opacity="0.8"/>
+                    <circle cx="35" cy="35" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="35" r="15" fill="#f4a261" opacity="0.8"/>
+                    <circle cx="35" cy="65" r="15" fill="#f4a261" opacity="0.8"/><circle cx="65" cy="65" r="15" fill="#f4a261" opacity="0.8"/>
+                    <circle cx="50" cy="20" r="12" fill="#f4a261" opacity="0.8"/><circle cx="50" cy="80" r="12" fill="#f4a261" opacity="0.8"/>
                 </svg>
                 <h4 style="color: #f4a261; margin: 0;">f subshell</h4>
-                <p style="margin: 5px 0;">Complex Lobes</p>
-                <p style="margin: 5px 0; font-size: 0.9em; color: #555;">7 Orbitals</p>
+                <p style="margin: 5px 0;">Complex Lobes</p><p style="margin: 5px 0; font-size: 0.9em; color: #555;">7 Orbitals</p>
             </div>
         </div>
     </div>
@@ -158,13 +171,6 @@
                     <li><strong>The Pauli Exclusion Principle:</strong> An orbital box holds exactly 2 electrons spinning in opposite directions (↑↓).</li>
                     <li><strong>Hund's Rule:</strong> When filling a section with multiple seats (like 'p' or 'd'), electrons spread out into empty seats first before pairing up.</li>
                 </ol>
-                <div style="background: #fdf2e9; padding: 15px; border-radius: 8px; margin-top: 15px;">
-                    <strong>Example - Oxygen (8 Electrons):</strong><br>
-                    1. Fill 1s with 2 electrons (6 left) &rarr; <code>1s²</code><br>
-                    2. Fill 2s with 2 electrons (4 left) &rarr; <code>2s²</code><br>
-                    3. Put remaining 4 into 2p (which holds 6) &rarr; <code>2p⁴</code><br>
-                    Result: <strong>1s² 2s² 2p⁴</strong>
-                </div>
             </div>
             <div class="rule-col" style="text-align: center;">
                 <h4>Aufbau Diagonal Rule</h4>
@@ -179,31 +185,12 @@
                         .auf-line { stroke: #e74c3c; stroke-width: 2; stroke-dasharray: 4; }
                     </style>
                     <text x="30" y="30" class="auf-text">1s</text>
-                    
-                    <text x="30" y="70" class="auf-text">2s</text>
-                    <text x="80" y="70" class="auf-text">2p</text>
-                    
-                    <text x="30" y="110" class="auf-text">3s</text>
-                    <text x="80" y="110" class="auf-text">3p</text>
-                    <text x="130" y="110" class="auf-text">3d</text>
-                    
-                    <text x="30" y="150" class="auf-text">4s</text>
-                    <text x="80" y="150" class="auf-text">4p</text>
-                    <text x="130" y="150" class="auf-text">4d</text>
-                    <text x="180" y="150" class="auf-text">4f</text>
-
-                    <text x="30" y="190" class="auf-text">5s</text>
-                    <text x="80" y="190" class="auf-text">5p</text>
-                    <text x="130" y="190" class="auf-text">5d</text>
-                    <text x="180" y="190" class="auf-text">5f</text>
-
-                    <text x="30" y="230" class="auf-text">6s</text>
-                    <text x="80" y="230" class="auf-text">6p</text>
-                    <text x="130" y="230" class="auf-text">6d</text>
-
-                    <text x="30" y="270" class="auf-text">7s</text>
-                    <text x="80" y="270" class="auf-text">7p</text>
-
+                    <text x="30" y="70" class="auf-text">2s</text><text x="80" y="70" class="auf-text">2p</text>
+                    <text x="30" y="110" class="auf-text">3s</text><text x="80" y="110" class="auf-text">3p</text><text x="130" y="110" class="auf-text">3d</text>
+                    <text x="30" y="150" class="auf-text">4s</text><text x="80" y="150" class="auf-text">4p</text><text x="130" y="150" class="auf-text">4d</text><text x="180" y="150" class="auf-text">4f</text>
+                    <text x="30" y="190" class="auf-text">5s</text><text x="80" y="190" class="auf-text">5p</text><text x="130" y="190" class="auf-text">5d</text><text x="180" y="190" class="auf-text">5f</text>
+                    <text x="30" y="230" class="auf-text">6s</text><text x="80" y="230" class="auf-text">6p</text><text x="130" y="230" class="auf-text">6d</text>
+                    <text x="30" y="270" class="auf-text">7s</text><text x="80" y="270" class="auf-text">7p</text>
                     <line x1="50" y1="10" x2="20" y2="40" class="auf-line" marker-end="url(#arrowhead)"/>
                     <line x1="50" y1="50" x2="20" y2="80" class="auf-line" marker-end="url(#arrowhead)"/>
                     <line x1="100" y1="50" x2="20" y2="120" class="auf-line" marker-end="url(#arrowhead)"/>
@@ -218,16 +205,20 @@
 
     <div class="card interactive-section">
         <h2>🎛️ Interactive Orbital Filler</h2>
-        <p>Move the slider to add electrons. Watch Hund's Rule in action as the physical orbital boxes fill up!</p>
+        <p>Use the buttons or slider to add electrons. Watch the atomic structure grow and see Hund's Rule in action inside the orbital boxes!</p>
         
-        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #555;">
-            <span>1 (H)</span>
-            <span>118 (Og)</span>
+        <div class="control-panel">
+            <button class="ctrl-btn" onclick="adjustElectrons(-1)">-</button>
+            <input type="range" id="electronSlider" min="1" max="118" value="8" oninput="updateConfig()">
+            <button class="ctrl-btn" onclick="adjustElectrons(1)">+</button>
         </div>
         
-        <input type="range" id="electronSlider" min="1" max="118" value="8" oninput="updateConfig()">
         <p style="text-align: center; font-size: 1.2em; font-weight: bold;">Total Electrons: <span id="eCount">8</span></p>
         
+        <div class="atom-container">
+            <svg id="atomVisualizer" viewBox="0 0 400 400"></svg>
+        </div>
+
         <div class="text-config" id="textConfigDisplay">1s² 2s² 2p⁴</div>
         
         <div class="orbital-container" id="boxContainer"></div>
@@ -238,7 +229,7 @@
         <p>Test your knowledge! Practice generating configurations.</p>
         
         <div id="quizStartPanel">
-            <button onclick="startQuiz()">Start Quiz</button>
+            <button class="quiz-btn" onclick="startQuiz()">Start Quiz</button>
         </div>
 
         <div id="quizActivePanel" style="display: none;">
@@ -248,7 +239,7 @@
             </div>
             <h3 id="questionText">Question goes here</h3>
             <input type="text" id="answerInput" placeholder="e.g. 1s2 2s2 2p6" autocomplete="off">
-            <button onclick="checkAnswer()" style="margin-top: 10px;">Submit Answer</button>
+            <button class="quiz-btn" onclick="checkAnswer()" style="margin-top: 10px;">Submit Answer</button>
             <p id="feedback" style="font-weight: bold; margin-top: 10px;"></p>
         </div>
     </div>
@@ -264,7 +255,52 @@
             { sub: "7p", cap: 6 }
         ];
 
-        // FIXED INTERACTIVE FILLER LOGIC
+        // Button Controls
+        function adjustElectrons(delta) {
+            let slider = document.getElementById("electronSlider");
+            let newVal = parseInt(slider.value) + delta;
+            if (newVal >= 1 && newVal <= 118) {
+                slider.value = newVal;
+                updateConfig();
+            }
+        }
+
+        // Draw the Animated Atom (Bohr Model)
+        function drawAtom(shells) {
+            const svg = document.getElementById('atomVisualizer');
+            let svgHTML = `<circle cx="200" cy="200" r="18" fill="#e74c3c" />`; // Nucleus
+            
+            // Only draw shells that have electrons
+            let activeShells = [1, 2, 3, 4, 5, 6, 7].filter(n => shells[n] > 0);
+            
+            // Calculate spacing so it always fits in the 400x400 box
+            let radiusStep = 170 / Math.max(activeShells.length, 1);
+            if (radiusStep > 40) radiusStep = 40;
+
+            activeShells.forEach((shellLevel, index) => {
+                let eCount = shells[shellLevel];
+                let radius = 35 + (index * radiusStep);
+                let speed = 8 + (index * 4); // Outer shells spin slower
+                
+                // Draw the faint orbit ring
+                svgHTML += `<circle cx="200" cy="200" r="${radius}" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+                
+                // Group electrons together to spin them via CSS
+                svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s;">`;
+                
+                for (let i = 0; i < eCount; i++) {
+                    let angle = (i / eCount) * 2 * Math.PI;
+                    let ex = 200 + radius * Math.cos(angle);
+                    let ey = 200 + radius * Math.sin(angle);
+                    svgHTML += `<circle cx="${ex}" cy="${ey}" r="5" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>`;
+                }
+                svgHTML += `</g>`;
+            });
+            
+            svg.innerHTML = svgHTML;
+        }
+
+        // Main Update Logic
         function updateConfig() {
             let totalElectrons = parseInt(document.getElementById("electronSlider").value);
             document.getElementById("eCount").innerText = totalElectrons;
@@ -272,6 +308,9 @@
             let remaining = totalElectrons;
             let textConfigArr = [];
             let boxesHTML = '';
+            
+            // Track electrons per principal shell (n=1 to 7) for the visualizer
+            let shellCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
 
             const superscripts = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
 
@@ -281,27 +320,28 @@
                 let currentSub = fillingOrder[i];
                 let adding = Math.min(remaining, currentSub.cap);
                 
+                // Track for Bohr Model (first character of subshell name is the shell number)
+                let n = parseInt(currentSub.sub.charAt(0));
+                shellCounts[n] += adding;
+
                 // 1. Build Text String
                 let powStr = adding.toString().split('').map(c => superscripts[c] || c).join('');
                 textConfigArr.push(`${currentSub.sub}${powStr}`);
 
                 // 2. Build Physical Boxes (Applying Hund's Rule)
                 let numBoxes = currentSub.cap / 2;
-                let boxContent = Array(numBoxes).fill(''); // empty strings
+                let boxContent = Array(numBoxes).fill('');
                 
-                // First pass: put one 'up' arrow in each box (Hund's rule)
                 let tempAdding = adding;
                 for (let b = 0; b < numBoxes && tempAdding > 0; b++) {
                     boxContent[b] = '<span class="arrow-up">&uarr;</span>';
                     tempAdding--;
                 }
-                // Second pass: put 'down' arrows to pair them up
                 for (let b = 0; b < numBoxes && tempAdding > 0; b++) {
                     boxContent[b] += '<span class="arrow-down">&darr;</span>';
                     tempAdding--;
                 }
 
-                // Generate HTML for this subshell block
                 boxesHTML += `<div class="subshell-group">
                                 <div class="subshell-label">${currentSub.sub}</div>
                                 <div class="boxes-row">`;
@@ -315,6 +355,7 @@
 
             document.getElementById("textConfigDisplay").innerText = textConfigArr.join(' ');
             document.getElementById("boxContainer").innerHTML = boxesHTML;
+            drawAtom(shellCounts); // Update the visual graphic
         }
 
         // QUIZ LOGIC
@@ -376,7 +417,7 @@
             document.getElementById("score").innerText = score;
         }
 
-        // Initialize display with default slider value (8 / Oxygen)
+        // Initialize display
         document.addEventListener("DOMContentLoaded", updateConfig);
     </script>
 </body>
