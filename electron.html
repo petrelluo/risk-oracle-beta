@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -283,6 +282,22 @@
             let svgHTML = `<circle cx="250" cy="250" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
                            <text x="250" y="254" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
             
+            // --- Legend Logic (Permanently on the SVG in the top right) ---
+            const legendX = 390;
+            const legendY = 30;
+            const itemHeight = 18;
+            const standardOrder = ['s','p','d','f'];
+
+            standardOrder.forEach((type, idx) => {
+                let y = legendY + (idx * itemHeight);
+                let color = subshellColors[type];
+                // Colored dot (like a little electron)
+                svgHTML += `<circle cx="${legendX}" cy="${y}" r="5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
+                // Text label matching the color
+                svgHTML += `<text x="${legendX + 15}" y="${y + 4}" font-size="12" fill="${color}" font-weight="bold">${type} subshell</text>`;
+            });
+            // --- End Legend Logic ---
+
             // Get unique active Principal Shells (n)
             let activeShellNumbers = [...new Set(activeSubshells.map(s => s.n))].sort((a,b)=>a-b);
             let totalShells = activeShellNumbers.length;
