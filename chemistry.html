@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Formula & Name Quiz</title>
+    <title>Chemical Nomenclature Practice</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,7 +11,7 @@
             color: #333;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Changed to flex-start to allow scrolling for long mistake lists */
+            align-items: flex-start; 
             min-height: 100vh;
             margin: 0;
             padding: 40px 20px;
@@ -26,16 +26,41 @@
             max-width: 550px;
             width: 100%;
             position: relative; 
-            margin: auto; /* Centers horizontally and vertically if enough room */
+            margin: auto; 
         }
         h1 {
             margin-top: 0;
             color: #1a365d;
             font-size: 1.8rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             padding-right: 60px; 
         }
         
+        /* Mode Toggle Styles */
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #3182ce;
+        }
+        .mode-toggle button {
+            flex: 1;
+            padding: 0.6rem;
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: white;
+            color: #3182ce;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .mode-toggle button.active {
+            background-color: #3182ce;
+            color: white;
+        }
+
         /* Dropdown Controls */
         .controls-container {
             display: flex;
@@ -67,41 +92,27 @@
         
         /* Subtle Link Button */
         .subtle-link {
-            background: none;
-            border: none;
-            color: #718096;
-            text-decoration: underline;
-            font-size: 0.85rem;
-            cursor: pointer;
-            padding: 0;
-            margin-top: -5px;
-            transition: color 0.2s;
+            background: none; border: none; color: #718096; text-decoration: underline;
+            font-size: 0.85rem; cursor: pointer; padding: 0; margin-top: -5px; transition: color 0.2s;
         }
         .subtle-link:hover { color: #2b6cb0; }
 
         /* Stats Header Styles */
         .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 1.5rem; flex-wrap: wrap;
         }
-        .stat-box {
-            font-size: 1.1rem;
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
+        .stat-box { font-size: 1.1rem; font-weight: bold; padding: 0.5rem 1rem; border-radius: 8px; }
         .score-box { color: #2b6cb0; background-color: #ebf8ff; border: 1px solid #bee3f8; }
         .mastery-box { color: #276749; background-color: #f0fff4; border: 1px solid #c6f6d5; transition: all 0.3s ease; }
         .mastery-complete { background-color: #38a169; color: white; border-color: #2f855a; }
+        
+        .quiz-box { color: #805ad5; background-color: #faf5ff; border: 1px solid #d6bcfa; }
 
         .instruction { color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem; }
         #question-prompt { font-size: 1.1rem; margin-bottom: 0.5rem; color: #4a5568; }
         #target { font-size: 1.6rem; font-weight: bold; color: #2b6cb0; margin-bottom: 1.5rem; min-height: 38px; }
         
-        /* Subscript and Superscript adjustments for readability */
+        /* Subscript and Superscript adjustments */
         sub { font-size: 0.65em; bottom: -0.25em; }
         sup { font-size: 0.65em; top: -0.4em; color: #e53e3e; }
         
@@ -123,7 +134,7 @@
         button.danger { background-color: #fed7d7; color: #c53030; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;}
         button.danger:hover { background-color: #feb2b2; }
 
-        /* Modals (Tips & Cheat Sheet) */
+        /* Modals */
         .tips-btn {
             position: absolute; top: 20px; right: 20px; background-color: #edf2f7;
             color: #2b6cb0; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid #cbd5e0;
@@ -148,10 +159,7 @@
         .close-btn { background: none; border: none; font-size: 1.5rem; color: #a0aec0; cursor: pointer; padding: 0; }
         .close-btn:hover { color: #4a5568; background: none; }
         
-        .tip-box {
-            background-color: #ebf8ff; border-left: 4px solid #3182ce; padding: 1.2rem;
-            margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;
-        }
+        .tip-box { background-color: #ebf8ff; border-left: 4px solid #3182ce; padding: 1.2rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
         .tip-box h3 { margin-top: 0; color: #2b6cb0; font-size: 1.1rem; }
         .tip-box p { margin-bottom: 0; font-size: 0.95rem; line-height: 1.5; }
         
@@ -161,7 +169,6 @@
         .rule-item h4 { margin: 0 0 0.5rem 0; color: #2d3748; font-size: 1.1rem; }
         .rule-item p { margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #4a5568; line-height: 1.5;}
         
-        /* Inner Tables */
         .rule-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.95rem; }
         .rule-table th, .rule-table td { padding: 8px 10px; border: 1px solid #e2e8f0; text-align: left; }
         .rule-table th { background-color: #f7fafc; color: #4a5568; }
@@ -170,7 +177,6 @@
         .correct { color: #38a169; }
         .incorrect { color: #e53e3e; }
 
-        /* Mistakes Table Styles */
         .hidden { display: none !important; }
         .mistakes-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.95rem; }
         .mistakes-table th, .mistakes-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
@@ -183,9 +189,14 @@
 
     <div class="card" id="quiz-screen">
         <button id="tips-btn" class="tips-btn">💡 Tips</button>
-        <h1>Chemistry Quiz</h1>
+        <h1>Chemical Nomenclature Practice</h1>
         
-        <div class="controls-container">
+        <div class="mode-toggle">
+            <button id="mode-practice-btn" class="active">Practice Mode</button>
+            <button id="mode-quiz-btn">Quiz Mode (25 Qs)</button>
+        </div>
+
+        <div id="practice-controls" class="controls-container">
             <div class="control-row">
                 <select id="category-select" class="filter-select">
                     <option value="Everything">All Categories</option>
@@ -205,12 +216,17 @@
             <button id="view-category-btn" class="subtle-link">View list of compounds in this category</button>
         </div>
 
-        <div class="stats-row">
+        <div id="practice-stats" class="stats-row">
             <div class="stat-box score-box">Global Score: <span id="score">0</span></div>
             <div class="stat-box mastery-box" id="mastery-container">Mastered: <span id="mastery-count">0</span> / <span id="mastery-total">0</span></div>
         </div>
 
-        <p class="instruction">Formulas don't need subscripts or charges (e.g., type SO4 for Sulfate).</p>
+        <div id="quiz-stats" class="stats-row hidden">
+            <div class="stat-box quiz-box">Question: <span id="quiz-progress">1</span> / 25</div>
+            <div class="stat-box score-box">Quiz Score: <span id="quiz-score">0</span></div>
+        </div>
+
+        <p class="instruction" id="main-instruction">Formulas don't need subscripts or charges (e.g., type SO4 for Sulfate).</p>
         
         <div id="question-prompt">Loading question...</div>
         <div id="target"></div>
@@ -228,12 +244,22 @@
     <div class="card hidden" id="mistakes-screen">
         <h1>Global Mistakes History</h1>
         <p class="instruction">A complete list of every question you have missed.</p>
-        
         <div id="mistakes-container"></div>
-
         <div class="btn-group">
-            <button id="back-btn" class="secondary">Back to Quiz</button>
+            <button id="back-btn" class="secondary">Back to Practice</button>
             <button id="reset-btn" class="danger">Reset All Progress</button>
+        </div>
+    </div>
+
+    <div class="card hidden" id="quiz-end-screen">
+        <h1>Quiz Complete!</h1>
+        <div class="stats-row">
+            <div class="stat-box quiz-box" style="font-size: 1.5rem;">Final Score: <span id="quiz-final-score">0</span> / 25</div>
+        </div>
+        <p class="instruction">Your global score and repetition weights have been updated in the background.</p>
+        <div class="btn-group" style="margin-top: 2rem;">
+            <button id="retake-quiz-btn" class="primary-btn">Retake Quiz</button>
+            <button id="exit-quiz-btn" class="secondary">Return to Practice</button>
         </div>
     </div>
 
@@ -254,14 +280,11 @@
                 <h2>Nomenclature Tips</h2>
                 <button id="close-tips-btn" class="close-btn">&times;</button>
             </div>
-            
             <div class="tip-box" id="current-tip-box">
                 <h3 id="tip-title">Rule Name</h3>
                 <p id="tip-text">Rule description goes here.</p>
             </div>
-
             <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View Complete Naming Guide</button>
-            
             <div id="all-rules" class="all-rules-container">
                 <div class="rule-item">
                     <h4>1. Polyatomic Ions</h4>
@@ -273,23 +296,21 @@
                 </div>
                 <div class="rule-item">
                     <h4>3. Transition Metals (Stock System)</h4>
-                    <p>Transition metals can form ions with different charges. A Roman numeral indicates the exact positive charge of the metal ion (e.g. Iron(III) oxide is Fe₂O₃).</p>
-                    <p><strong>Exceptions (No Roman Numeral Needed):</strong> Zinc (Zn²⁺), Silver (Ag⁺), and Cadmium (Cd²⁺).</p>
+                    <p>Transition metals can form ions with different charges. A Roman numeral indicates the exact positive charge of the metal ion.</p>
                 </div>
                 <div class="rule-item">
                     <h4>4. Covalent (Molecular) Compounds</h4>
-                    <p>Formed by two nonmetals sharing electrons. Greek prefixes are used to specify the exact number of atoms of each element. The second element ends in <strong>"-ide"</strong>. <em>(Note: Never use 'mono-' on the first element).</em></p>
+                    <p>Formed by two nonmetals sharing electrons. Greek prefixes are used to specify the exact number of atoms of each element. The second element ends in <strong>"-ide"</strong>.</p>
                 </div>
                 <div class="rule-item">
                     <h4>5. Acids</h4>
-                    <p>Compounds beginning with Hydrogen. Binary acids (H + nonmetal) use "hydro-" + "-ic acid" (e.g. HCl is Hydrochloric acid). Oxyacids (H + polyatomic ion) change "-ate" to "-ic acid" and "-ite" to "-ous acid".</p>
+                    <p>Compounds beginning with Hydrogen. Binary acids (H + nonmetal) use "hydro-" + "-ic acid". Oxyacids (H + polyatomic ion) change "-ate" to "-ic acid" and "-ite" to "-ous acid".</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Formatter Function: Converts numbers to subscripts, and parses ^ for charges (superscripts)
         function formatFormula(formulaStr) {
             if (!formulaStr) return "";
             let parts = formulaStr.split('^');
@@ -298,164 +319,35 @@
             return base + charge;
         }
 
-        // The comprehensively categorized chemical data dictionary
         const chemicals = [
             // --- TERNARY IONIC COMPOUNDS ---
-            { formula: "Al2(SO4)3", name: "Aluminum sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Mg(NO3)2", name: "Magnesium nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "AgClO3", name: "Silver chlorate", category: "Ternary Ionic Compounds" },
-            { formula: "(NH4)2S", name: "Ammonium sulfide", category: "Ternary Ionic Compounds" },
-            { formula: "BaCO3", name: "Barium carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "Cs2CO3", name: "Cesium carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "CaCrO4", name: "Calcium chromate", category: "Ternary Ionic Compounds" },
-            { formula: "FeSO4", name: "Iron(II) sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Pb3(PO4)2", name: "Lead(II) phosphate", category: "Ternary Ionic Compounds" },
-            { formula: "NH4NO3", name: "Ammonium nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "Mg3(PO4)2", name: "Magnesium phosphate", category: "Ternary Ionic Compounds" },
-            { formula: "KClO3", name: "Potassium chlorate", category: "Ternary Ionic Compounds" },
-            { formula: "CuCO3", name: "Copper(II) carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "Fe(NO3)3", name: "Iron(III) nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "MgSO4", name: "Magnesium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "KMnO4", name: "Potassium permanganate", category: "Ternary Ionic Compounds" },
-            { formula: "K2SO4", name: "Potassium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "NaNO2", name: "Sodium nitrite", category: "Ternary Ionic Compounds" },
-            { formula: "FeSO3", name: "Iron(II) sulfite", category: "Ternary Ionic Compounds" },
-            { formula: "Cs2SO4", name: "Cesium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Cu3PO3", name: "Copper(I) phosphite", category: "Ternary Ionic Compounds" },
-            { formula: "Ag2CO3", name: "Silver carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "LiNO3", name: "Lithium nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "KClO2", name: "Potassium chlorite", category: "Ternary Ionic Compounds" },
-            { formula: "Ni2CO3", name: "Nickel(I) carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "Ba(C2H3O2)2", name: "Barium acetate", category: "Ternary Ionic Compounds" },
-            { formula: "Zn(CN)2", name: "Zinc cyanide", category: "Ternary Ionic Compounds" },
-            { formula: "(NH4)3P", name: "Ammonium phosphide", category: "Ternary Ionic Compounds" },
-            { formula: "Li2CO3", name: "Lithium carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "Al(C2H3O2)3", name: "Aluminum acetate", category: "Ternary Ionic Compounds" },
-            { formula: "NH4F", name: "Ammonium fluoride", category: "Ternary Ionic Compounds" },
-            { formula: "Sr(NO3)2", name: "Strontium nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "Ca(NO3)2", name: "Calcium nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "AlPO4", name: "Aluminum phosphate", category: "Ternary Ionic Compounds" },
-            { formula: "MgCO3", name: "Magnesium carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "(NH4)2SO4", name: "Ammonium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Li2SO4", name: "Lithium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Na3PO3", name: "Sodium phosphite", category: "Ternary Ionic Compounds" },
-            { formula: "AgC2H3O2", name: "Silver acetate", category: "Ternary Ionic Compounds" },
-            { formula: "BaSO4", name: "Barium sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Cd(NO2)2", name: "Cadmium nitrite", category: "Ternary Ionic Compounds" },
-            { formula: "AgCN", name: "Silver cyanide", category: "Ternary Ionic Compounds" },
-            { formula: "K2CrO4", name: "Potassium chromate", category: "Ternary Ionic Compounds" },
-            { formula: "Li2C2O4", name: "Lithium oxalate", category: "Ternary Ionic Compounds" },
-            { formula: "Ni3PO4", name: "Nickel(I) phosphate", category: "Ternary Ionic Compounds" },
-            { formula: "CuNO3", name: "Copper(I) nitrate", category: "Ternary Ionic Compounds" },
-            { formula: "Fe2(CrO4)3", name: "Iron(III) chromate", category: "Ternary Ionic Compounds" },
-            { formula: "SnSO3", name: "Tin(II) sulfite", category: "Ternary Ionic Compounds" },
-            { formula: "Al2(CO3)3", name: "Aluminum carbonate", category: "Ternary Ionic Compounds" },
-            { formula: "Fe2(SO4)3", name: "Iron(III) sulfate", category: "Ternary Ionic Compounds" },
-            { formula: "Cu(ClO4)2", name: "Copper(II) perchlorate", category: "Ternary Ionic Compounds" },
-
+            { formula: "Al2(SO4)3", name: "Aluminum sulfate", category: "Ternary Ionic Compounds" }, { formula: "Mg(NO3)2", name: "Magnesium nitrate", category: "Ternary Ionic Compounds" }, { formula: "AgClO3", name: "Silver chlorate", category: "Ternary Ionic Compounds" }, { formula: "(NH4)2S", name: "Ammonium sulfide", category: "Ternary Ionic Compounds" }, { formula: "BaCO3", name: "Barium carbonate", category: "Ternary Ionic Compounds" }, { formula: "Cs2CO3", name: "Cesium carbonate", category: "Ternary Ionic Compounds" }, { formula: "CaCrO4", name: "Calcium chromate", category: "Ternary Ionic Compounds" }, { formula: "FeSO4", name: "Iron(II) sulfate", category: "Ternary Ionic Compounds" }, { formula: "Pb3(PO4)2", name: "Lead(II) phosphate", category: "Ternary Ionic Compounds" }, { formula: "NH4NO3", name: "Ammonium nitrate", category: "Ternary Ionic Compounds" }, { formula: "Mg3(PO4)2", name: "Magnesium phosphate", category: "Ternary Ionic Compounds" }, { formula: "KClO3", name: "Potassium chlorate", category: "Ternary Ionic Compounds" }, { formula: "CuCO3", name: "Copper(II) carbonate", category: "Ternary Ionic Compounds" }, { formula: "Fe(NO3)3", name: "Iron(III) nitrate", category: "Ternary Ionic Compounds" }, { formula: "MgSO4", name: "Magnesium sulfate", category: "Ternary Ionic Compounds" }, { formula: "KMnO4", name: "Potassium permanganate", category: "Ternary Ionic Compounds" }, { formula: "K2SO4", name: "Potassium sulfate", category: "Ternary Ionic Compounds" }, { formula: "NaNO2", name: "Sodium nitrite", category: "Ternary Ionic Compounds" }, { formula: "FeSO3", name: "Iron(II) sulfite", category: "Ternary Ionic Compounds" }, { formula: "Cs2SO4", name: "Cesium sulfate", category: "Ternary Ionic Compounds" }, { formula: "Cu3PO3", name: "Copper(I) phosphite", category: "Ternary Ionic Compounds" }, { formula: "Ag2CO3", name: "Silver carbonate", category: "Ternary Ionic Compounds" }, { formula: "LiNO3", name: "Lithium nitrate", category: "Ternary Ionic Compounds" }, { formula: "KClO2", name: "Potassium chlorite", category: "Ternary Ionic Compounds" }, { formula: "Ni2CO3", name: "Nickel(I) carbonate", category: "Ternary Ionic Compounds" }, { formula: "Ba(C2H3O2)2", name: "Barium acetate", category: "Ternary Ionic Compounds" }, { formula: "Zn(CN)2", name: "Zinc cyanide", category: "Ternary Ionic Compounds" }, { formula: "(NH4)3P", name: "Ammonium phosphide", category: "Ternary Ionic Compounds" }, { formula: "Li2CO3", name: "Lithium carbonate", category: "Ternary Ionic Compounds" }, { formula: "Al(C2H3O2)3", name: "Aluminum acetate", category: "Ternary Ionic Compounds" }, { formula: "NH4F", name: "Ammonium fluoride", category: "Ternary Ionic Compounds" }, { formula: "Sr(NO3)2", name: "Strontium nitrate", category: "Ternary Ionic Compounds" }, { formula: "Ca(NO3)2", name: "Calcium nitrate", category: "Ternary Ionic Compounds" }, { formula: "AlPO4", name: "Aluminum phosphate", category: "Ternary Ionic Compounds" }, { formula: "MgCO3", name: "Magnesium carbonate", category: "Ternary Ionic Compounds" }, { formula: "(NH4)2SO4", name: "Ammonium sulfate", category: "Ternary Ionic Compounds" }, { formula: "Li2SO4", name: "Lithium sulfate", category: "Ternary Ionic Compounds" }, { formula: "Na3PO3", name: "Sodium phosphite", category: "Ternary Ionic Compounds" }, { formula: "AgC2H3O2", name: "Silver acetate", category: "Ternary Ionic Compounds" }, { formula: "BaSO4", name: "Barium sulfate", category: "Ternary Ionic Compounds" }, { formula: "Cd(NO2)2", name: "Cadmium nitrite", category: "Ternary Ionic Compounds" }, { formula: "AgCN", name: "Silver cyanide", category: "Ternary Ionic Compounds" }, { formula: "K2CrO4", name: "Potassium chromate", category: "Ternary Ionic Compounds" }, { formula: "Li2C2O4", name: "Lithium oxalate", category: "Ternary Ionic Compounds" }, { formula: "Ni3PO4", name: "Nickel(I) phosphate", category: "Ternary Ionic Compounds" }, { formula: "CuNO3", name: "Copper(I) nitrate", category: "Ternary Ionic Compounds" }, { formula: "Fe2(CrO4)3", name: "Iron(III) chromate", category: "Ternary Ionic Compounds" }, { formula: "SnSO3", name: "Tin(II) sulfite", category: "Ternary Ionic Compounds" }, { formula: "Al2(CO3)3", name: "Aluminum carbonate", category: "Ternary Ionic Compounds" }, { formula: "Fe2(SO4)3", name: "Iron(III) sulfate", category: "Ternary Ionic Compounds" }, { formula: "Cu(ClO4)2", name: "Copper(II) perchlorate", category: "Ternary Ionic Compounds" },
             // --- BINARY IONIC COMPOUNDS ---
-            { formula: "NaCl", name: "Sodium chloride", category: "Binary Ionic Compounds" },
-            { formula: "MnO2", name: "Manganese(IV) oxide", category: "Binary Ionic Compounds" },
-            { formula: "K2S", name: "Potassium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "MgI2", name: "Magnesium iodide", category: "Binary Ionic Compounds" },
-            { formula: "FeO", name: "Iron(II) oxide", category: "Binary Ionic Compounds" },
-            { formula: "Fe2O3", name: "Iron(III) oxide", category: "Binary Ionic Compounds" },
-            { formula: "CuCl", name: "Copper(I) chloride", category: "Binary Ionic Compounds" },
-            { formula: "CrF3", name: "Chromium(III) fluoride", category: "Binary Ionic Compounds" },
-            { formula: "Al2S3", name: "Aluminum sulfide", category: "Binary Ionic Compounds" },
-            { formula: "CaS", name: "Calcium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" },
-            { formula: "CuCl2", name: "Copper(II) chloride", category: "Binary Ionic Compounds" },
-            { formula: "KI", name: "Potassium iodide", category: "Binary Ionic Compounds" },
-            { formula: "SrBr2", name: "Strontium bromide", category: "Binary Ionic Compounds" },
-            { formula: "Rb2O", name: "Rubidium oxide", category: "Binary Ionic Compounds" },
-            { formula: "Na3N", name: "Sodium nitride", category: "Binary Ionic Compounds" },
-            { formula: "CaI2", name: "Calcium iodide", category: "Binary Ionic Compounds" },
-            { formula: "SnS2", name: "Tin(IV) sulfide", category: "Binary Ionic Compounds" },
-            { formula: "Cs2Se", name: "Cesium selenide", category: "Binary Ionic Compounds" },
-            { formula: "Li3As", name: "Lithium arsenide", category: "Binary Ionic Compounds" },
-            { formula: "NaF", name: "Sodium fluoride", category: "Binary Ionic Compounds" },
-            { formula: "Cs2O", name: "Cesium oxide", category: "Binary Ionic Compounds" },
-            { formula: "Li2S", name: "Lithium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "Cs3N", name: "Cesium nitride", category: "Binary Ionic Compounds" },
-            { formula: "Cs2S", name: "Cesium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "Rb3P", name: "Rubidium phosphide", category: "Binary Ionic Compounds" },
-            { formula: "Sr3P2", name: "Strontium phosphide", category: "Binary Ionic Compounds" },
-            { formula: "MgO", name: "Magnesium oxide", category: "Binary Ionic Compounds" },
-            { formula: "AlBr3", name: "Aluminum bromide", category: "Binary Ionic Compounds" },
-            { formula: "MnO", name: "Manganese(II) oxide", category: "Binary Ionic Compounds" },
-            { formula: "CrF2", name: "Chromium(II) fluoride", category: "Binary Ionic Compounds" },
-            { formula: "VI2", name: "Vanadium(II) iodide", category: "Binary Ionic Compounds" },
-            { formula: "Na3P", name: "Sodium phosphide", category: "Binary Ionic Compounds" },
-            { formula: "NiS", name: "Nickel(II) sulfide", category: "Binary Ionic Compounds" },
-            { formula: "Pb3N2", name: "Lead(II) nitride", category: "Binary Ionic Compounds" },
-            { formula: "SrS", name: "Strontium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "BiF5", name: "Bismuth(V) fluoride", category: "Binary Ionic Compounds" },
-            { formula: "AlP", name: "Aluminum phosphide", category: "Binary Ionic Compounds" },
-
+            { formula: "NaCl", name: "Sodium chloride", category: "Binary Ionic Compounds" }, { formula: "MnO2", name: "Manganese(IV) oxide", category: "Binary Ionic Compounds" }, { formula: "K2S", name: "Potassium sulfide", category: "Binary Ionic Compounds" }, { formula: "MgI2", name: "Magnesium iodide", category: "Binary Ionic Compounds" }, { formula: "FeO", name: "Iron(II) oxide", category: "Binary Ionic Compounds" }, { formula: "Fe2O3", name: "Iron(III) oxide", category: "Binary Ionic Compounds" }, { formula: "CuCl", name: "Copper(I) chloride", category: "Binary Ionic Compounds" }, { formula: "CrF3", name: "Chromium(III) fluoride", category: "Binary Ionic Compounds" }, { formula: "Al2S3", name: "Aluminum sulfide", category: "Binary Ionic Compounds" }, { formula: "CaS", name: "Calcium sulfide", category: "Binary Ionic Compounds" }, { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" }, { formula: "CuCl2", name: "Copper(II) chloride", category: "Binary Ionic Compounds" }, { formula: "KI", name: "Potassium iodide", category: "Binary Ionic Compounds" }, { formula: "SrBr2", name: "Strontium bromide", category: "Binary Ionic Compounds" }, { formula: "Rb2O", name: "Rubidium oxide", category: "Binary Ionic Compounds" }, { formula: "Na3N", name: "Sodium nitride", category: "Binary Ionic Compounds" }, { formula: "CaI2", name: "Calcium iodide", category: "Binary Ionic Compounds" }, { formula: "SnS2", name: "Tin(IV) sulfide", category: "Binary Ionic Compounds" }, { formula: "Cs2Se", name: "Cesium selenide", category: "Binary Ionic Compounds" }, { formula: "Li3As", name: "Lithium arsenide", category: "Binary Ionic Compounds" }, { formula: "NaF", name: "Sodium fluoride", category: "Binary Ionic Compounds" }, { formula: "Cs2O", name: "Cesium oxide", category: "Binary Ionic Compounds" }, { formula: "Li2S", name: "Lithium sulfide", category: "Binary Ionic Compounds" }, { formula: "Cs3N", name: "Cesium nitride", category: "Binary Ionic Compounds" }, { formula: "Cs2S", name: "Cesium sulfide", category: "Binary Ionic Compounds" }, { formula: "Rb3P", name: "Rubidium phosphide", category: "Binary Ionic Compounds" }, { formula: "Sr3P2", name: "Strontium phosphide", category: "Binary Ionic Compounds" }, { formula: "MgO", name: "Magnesium oxide", category: "Binary Ionic Compounds" }, { formula: "AlBr3", name: "Aluminum bromide", category: "Binary Ionic Compounds" }, { formula: "MnO", name: "Manganese(II) oxide", category: "Binary Ionic Compounds" }, { formula: "CrF2", name: "Chromium(II) fluoride", category: "Binary Ionic Compounds" }, { formula: "VI2", name: "Vanadium(II) iodide", category: "Binary Ionic Compounds" }, { formula: "Na3P", name: "Sodium phosphide", category: "Binary Ionic Compounds" }, { formula: "NiS", name: "Nickel(II) sulfide", category: "Binary Ionic Compounds" }, { formula: "Pb3N2", name: "Lead(II) nitride", category: "Binary Ionic Compounds" }, { formula: "SrS", name: "Strontium sulfide", category: "Binary Ionic Compounds" }, { formula: "BiF5", name: "Bismuth(V) fluoride", category: "Binary Ionic Compounds" }, { formula: "AlP", name: "Aluminum phosphide", category: "Binary Ionic Compounds" },
             // --- BINARY MOLECULAR COMPOUNDS ---
-            { formula: "CO", name: "Carbon monoxide", category: "Binary Molecular Compounds" },
-            { formula: "SO2", name: "Sulfur dioxide", category: "Binary Molecular Compounds" },
-            { formula: "SiC", name: "Silicon carbide", category: "Binary Molecular Compounds" },
-            { formula: "SbF5", name: "Antimony pentafluoride", category: "Binary Molecular Compounds" },
-            { formula: "CS2", name: "Carbon disulfide", category: "Binary Molecular Compounds" },
-            { formula: "SiO2", name: "Silicon dioxide", category: "Binary Molecular Compounds" },
-            { formula: "CCl4", name: "Carbon tetrachloride", category: "Binary Molecular Compounds" },
-            { formula: "XeF6", name: "Xenon hexafluoride", category: "Binary Molecular Compounds" },
-            { formula: "CBr4", name: "Carbon tetrabromide", category: "Binary Molecular Compounds" },
-            { formula: "CO2", name: "Carbon dioxide", category: "Binary Molecular Compounds" },
-            { formula: "SCl4", name: "Sulfur tetrachloride", category: "Binary Molecular Compounds" },
-            { formula: "P2O5", name: "Diphosphorus pentoxide", category: "Binary Molecular Compounds" },
-            { formula: "N2O3", name: "Dinitrogen trioxide", category: "Binary Molecular Compounds" },
-            { formula: "S2F10", name: "Disulfur decafluoride", category: "Binary Molecular Compounds" },
-            { formula: "OF2", name: "Oxygen difluoride", category: "Binary Molecular Compounds" },
-            { formula: "SCl6", name: "Sulfur hexachloride", category: "Binary Molecular Compounds" },
-
+            { formula: "CO", name: "Carbon monoxide", category: "Binary Molecular Compounds" }, { formula: "SO2", name: "Sulfur dioxide", category: "Binary Molecular Compounds" }, { formula: "SiC", name: "Silicon carbide", category: "Binary Molecular Compounds" }, { formula: "SbF5", name: "Antimony pentafluoride", category: "Binary Molecular Compounds" }, { formula: "CS2", name: "Carbon disulfide", category: "Binary Molecular Compounds" }, { formula: "SiO2", name: "Silicon dioxide", category: "Binary Molecular Compounds" }, { formula: "CCl4", name: "Carbon tetrachloride", category: "Binary Molecular Compounds" }, { formula: "XeF6", name: "Xenon hexafluoride", category: "Binary Molecular Compounds" }, { formula: "CBr4", name: "Carbon tetrabromide", category: "Binary Molecular Compounds" }, { formula: "CO2", name: "Carbon dioxide", category: "Binary Molecular Compounds" }, { formula: "SCl4", name: "Sulfur tetrachloride", category: "Binary Molecular Compounds" }, { formula: "P2O5", name: "Diphosphorus pentoxide", category: "Binary Molecular Compounds" }, { formula: "N2O3", name: "Dinitrogen trioxide", category: "Binary Molecular Compounds" }, { formula: "S2F10", name: "Disulfur decafluoride", category: "Binary Molecular Compounds" }, { formula: "OF2", name: "Oxygen difluoride", category: "Binary Molecular Compounds" }, { formula: "SCl6", name: "Sulfur hexachloride", category: "Binary Molecular Compounds" },
             // --- BASES ---
-            { formula: "Al(OH)3", name: "Aluminum hydroxide", category: "Bases" },
-            { formula: "Cu(OH)2", name: "Copper(II) hydroxide", category: "Bases" },
-            { formula: "Fe(OH)3", name: "Iron(III) hydroxide", category: "Bases" },
-            { formula: "Ca(OH)2", name: "Calcium hydroxide", category: "Bases" },
-            { formula: "Ba(OH)2", name: "Barium hydroxide", category: "Bases" },
-            { formula: "KOH", name: "Potassium hydroxide", category: "Bases" },
-            { formula: "Zn(OH)2", name: "Zinc hydroxide", category: "Bases" },
-            { formula: "CuOH", name: "Copper(I) hydroxide", category: "Bases" },
-            { formula: "Ni(OH)2", name: "Nickel(II) hydroxide", category: "Bases" },
-
-            // --- POLYATOMIC IONS (Encoded with ^ for charges) ---
-            { formula: "NO3^-", name: "Nitrate", category: "Polyatomic Ions" },
-            { formula: "SO4^2-", name: "Sulfate", category: "Polyatomic Ions" },
-            { formula: "PO4^3-", name: "Phosphate", category: "Polyatomic Ions" },
-            { formula: "OH^-", name: "Hydroxide", category: "Polyatomic Ions" },
-            { formula: "NH4^+", name: "Ammonium", category: "Polyatomic Ions" },
-            { formula: "CO3^2-", name: "Carbonate", category: "Polyatomic Ions" },
-
+            { formula: "Al(OH)3", name: "Aluminum hydroxide", category: "Bases" }, { formula: "Cu(OH)2", name: "Copper(II) hydroxide", category: "Bases" }, { formula: "Fe(OH)3", name: "Iron(III) hydroxide", category: "Bases" }, { formula: "Ca(OH)2", name: "Calcium hydroxide", category: "Bases" }, { formula: "Ba(OH)2", name: "Barium hydroxide", category: "Bases" }, { formula: "KOH", name: "Potassium hydroxide", category: "Bases" }, { formula: "Zn(OH)2", name: "Zinc hydroxide", category: "Bases" }, { formula: "CuOH", name: "Copper(I) hydroxide", category: "Bases" }, { formula: "Ni(OH)2", name: "Nickel(II) hydroxide", category: "Bases" },
+            // --- POLYATOMIC IONS ---
+            { formula: "NO3^-", name: "Nitrate", category: "Polyatomic Ions" }, { formula: "SO4^2-", name: "Sulfate", category: "Polyatomic Ions" }, { formula: "PO4^3-", name: "Phosphate", category: "Polyatomic Ions" }, { formula: "OH^-", name: "Hydroxide", category: "Polyatomic Ions" }, { formula: "NH4^+", name: "Ammonium", category: "Polyatomic Ions" }, { formula: "CO3^2-", name: "Carbonate", category: "Polyatomic Ions" },
             // --- ACIDS ---
-            { formula: "H2O", name: "Water (Dihydrogen monoxide)", category: "Acids" },
-            { formula: "HCl", name: "Hydrochloric acid", category: "Acids" },
-            { formula: "H2SO4", name: "Sulfuric acid", category: "Acids" },
-            { formula: "HNO3", name: "Nitric acid", category: "Acids" },
-            { formula: "H3PO4", name: "Phosphoric acid", category: "Acids" },
-            { formula: "HC2H3O2", name: "Acetic acid", category: "Acids" }
+            { formula: "H2O", name: "Water (Dihydrogen monoxide)", category: "Acids" }, { formula: "HCl", name: "Hydrochloric acid", category: "Acids" }, { formula: "H2SO4", name: "Sulfuric acid", category: "Acids" }, { formula: "HNO3", name: "Nitric acid", category: "Acids" }, { formula: "H3PO4", name: "Phosphoric acid", category: "Acids" }, { formula: "HC2H3O2", name: "Acetic acid", category: "Acids" }
         ];
 
-        // Dictionary of Common Polyatomic Ions for Smart Detection
-        const polyatomicIonsDict = {
-            "sulfate": "SO₄²⁻", "sulfite": "SO₃²⁻", "nitrate": "NO₃⁻", "nitrite": "NO₂⁻",
-            "carbonate": "CO₃²⁻", "hydroxide": "OH⁻", "phosphate": "PO₄³⁻", "phosphite": "PO₃³⁻",
-            "chlorate": "ClO₃⁻", "chlorite": "ClO₂⁻", "perchlorate": "ClO₄⁻", "cyanide": "CN⁻",
-            "acetate": "C₂H₃O₂⁻", "chromate": "CrO₄²⁻", "oxalate": "C₂O₄²⁻", "ammonium": "NH₄⁺",
-            "permanganate": "MnO₄⁻"
-        };
+        const polyatomicIonsDict = { "sulfate": "SO₄²⁻", "sulfite": "SO₃²⁻", "nitrate": "NO₃⁻", "nitrite": "NO₂⁻", "carbonate": "CO₃²⁻", "hydroxide": "OH⁻", "phosphate": "PO₄³⁻", "phosphite": "PO₃³⁻", "chlorate": "ClO₃⁻", "chlorite": "ClO₂⁻", "perchlorate": "ClO₄⁻", "cyanide": "CN⁻", "acetate": "C₂H₃O₂⁻", "chromate": "CrO₄²⁻", "oxalate": "C₂O₄²⁻", "ammonium": "NH₄⁺", "permanganate": "MnO₄⁻" };
 
+        let appMode = 'practice'; // 'practice' or 'quiz'
         let appData = { deck: [], mistakes: {}, score: 0 };
         let currentCategory = "Everything";
         let currentDirection = "both";
         let currentCard = null;
+        
+        let quizState = { questions: [], currentIndex: 0, score: 0 };
 
         // DOM Elements
         const quizScreen = document.getElementById('quiz-screen');
         const mistakesScreen = document.getElementById('mistakes-screen');
+        const quizEndScreen = document.getElementById('quiz-end-screen');
         const promptEl = document.getElementById('question-prompt');
         const targetEl = document.getElementById('target');
         const inputEl = document.getElementById('answer-input');
@@ -464,7 +356,15 @@
         const viewCategoryBtn = document.getElementById('view-category-btn');
         const backBtn = document.getElementById('back-btn');
         const resetBtn = document.getElementById('reset-btn');
+        const retakeQuizBtn = document.getElementById('retake-quiz-btn');
+        const exitQuizBtn = document.getElementById('exit-quiz-btn');
         
+        const modePracticeBtn = document.getElementById('mode-practice-btn');
+        const modeQuizBtn = document.getElementById('mode-quiz-btn');
+        const practiceControls = document.getElementById('practice-controls');
+        const practiceStats = document.getElementById('practice-stats');
+        const quizStats = document.getElementById('quiz-stats');
+
         const categorySelect = document.getElementById('category-select');
         const directionSelect = document.getElementById('direction-select');
         
@@ -474,6 +374,10 @@
         const masteryTotalEl = document.getElementById('mastery-total');
         const masteryContainer = document.getElementById('mastery-container');
         const mistakesContainer = document.getElementById('mistakes-container');
+        
+        const quizProgressEl = document.getElementById('quiz-progress');
+        const quizScoreEl = document.getElementById('quiz-score');
+        const quizFinalScoreEl = document.getElementById('quiz-final-score');
         
         const tipsModal = document.getElementById('tips-modal');
         const tipsBtn = document.getElementById('tips-btn');
@@ -512,19 +416,91 @@
 
         function saveData() { localStorage.setItem('chemistryQuizData', JSON.stringify(appData)); }
 
-        // Filter the deck based on Category AND Direction
+        // --- Mode Switching ---
+        function setAppMode(mode) {
+            appMode = mode;
+            feedbackEl.textContent = ""; 
+            inputEl.value = "";
+            
+            if (mode === 'practice') {
+                modePracticeBtn.classList.add('active');
+                modeQuizBtn.classList.remove('active');
+                practiceControls.classList.remove('hidden');
+                practiceStats.classList.remove('hidden');
+                quizStats.classList.add('hidden');
+                tipsBtn.style.display = 'block';
+                reviewBtn.style.display = 'inline-block';
+                generateQuestion();
+            } else {
+                modePracticeBtn.classList.remove('active');
+                modeQuizBtn.classList.add('active');
+                practiceControls.classList.add('hidden');
+                practiceStats.classList.add('hidden');
+                quizStats.classList.remove('hidden');
+                tipsBtn.style.display = 'none';
+                reviewBtn.style.display = 'none';
+                startQuiz();
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            quizScreen.classList.remove('hidden');
+            quizEndScreen.classList.add('hidden');
+            
+            // Generate 25 random questions from the master deck
+            let allCards = [...appData.deck];
+            shuffleArray(allCards);
+            quizState.questions = allCards.slice(0, 25);
+            quizState.currentIndex = 0;
+            quizState.score = 0;
+            
+            updateQuizDisplay();
+            loadQuizQuestion();
+        }
+
+        function updateQuizDisplay() {
+            quizProgressEl.textContent = quizState.currentIndex + 1;
+            quizScoreEl.textContent = quizState.score;
+        }
+
+        function loadQuizQuestion() {
+            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = ""; inputEl.focus();
+            inputEl.disabled = false; submitBtn.disabled = false;
+            
+            currentCard = quizState.questions[quizState.currentIndex];
+            
+            if (currentCard.askFor === "formula") {
+                promptEl.textContent = "What is the formula for:";
+                targetEl.innerHTML = currentCard.item.name;
+            } else {
+                promptEl.textContent = "What is the name of:";
+                targetEl.innerHTML = formatFormula(currentCard.item.formula); 
+            }
+        }
+
+        function endQuiz() {
+            quizScreen.classList.add('hidden');
+            quizEndScreen.classList.remove('hidden');
+            quizFinalScoreEl.textContent = quizState.score;
+        }
+
+        // --- Practice Logic ---
         function getActiveDeck() {
             let deck = appData.deck;
-            if (currentCategory !== "Everything") {
-                deck = deck.filter(card => card.item.category === currentCategory);
-            }
-            if (currentDirection !== "both") {
-                deck = deck.filter(card => card.askFor === currentDirection);
-            }
+            if (currentCategory !== "Everything") deck = deck.filter(card => card.item.category === currentCategory);
+            if (currentDirection !== "both") deck = deck.filter(card => card.askFor === currentDirection);
             return deck;
         }
 
         function updateMasteryDisplay() {
+            if (appMode !== 'practice') return;
             const activeDeck = getActiveDeck();
             const totalCards = activeDeck.length;
             const masteredCards = activeDeck.filter(card => card.weight === 1).length;
@@ -532,14 +508,11 @@
             masteryTotalEl.textContent = totalCards;
             masteryCountEl.textContent = masteredCards;
             
-            if (masteredCards === totalCards && totalCards > 0) {
-                masteryContainer.classList.add('mastery-complete');
-            } else {
-                masteryContainer.classList.remove('mastery-complete');
-            }
+            if (masteredCards === totalCards && totalCards > 0) masteryContainer.classList.add('mastery-complete');
+            else masteryContainer.classList.remove('mastery-complete');
         }
 
-        function handleModeChange() {
+        function handleFilterChange() {
             currentCategory = categorySelect.value;
             currentDirection = directionSelect.value;
             updateMasteryDisplay();
@@ -547,11 +520,11 @@
         }
 
         function generateQuestion() {
+            if (appMode !== 'practice') return;
             feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = ""; inputEl.focus();
             inputEl.disabled = false; submitBtn.disabled = false;
 
             const activeDeck = getActiveDeck();
-            
             if (activeDeck.length === 0) {
                 promptEl.textContent = ""; targetEl.innerHTML = "No questions match these filters.";
                 inputEl.disabled = true; submitBtn.disabled = true; return;
@@ -575,6 +548,7 @@
             }
         }
 
+        // --- Shared Checking Logic ---
         function checkAnswer() {
             const userAnswer = inputEl.value.trim();
             if (userAnswer === "") return; 
@@ -584,20 +558,40 @@
             const targetFormula = currentCard.item.formula;
             const correctAnswer = currentCard.askFor === "formula" ? targetFormula : currentCard.item.name;
             
-            // Normalize inputs: remove charge formatting and lowercase
             const cleanUserAnswer = userAnswer.replace(/\^.*/, '').toLowerCase();
             const cleanCorrectAnswer = correctAnswer.replace(/\^.*/, '').toLowerCase();
-
             const isCorrect = cleanUserAnswer === cleanCorrectAnswer;
 
             if (isCorrect) {
-                appData.score++; currentCard.weight = Math.max(1, currentCard.weight - 3);
-                scoreEl.textContent = appData.score; 
+                appData.score++; // Global score always increases
+                currentCard.weight = Math.max(1, currentCard.weight - 3); // Spaced rep always tracks
+                
+                if (appMode === 'practice') {
+                    scoreEl.textContent = appData.score; 
+                    updateMasteryDisplay();
+                } else {
+                    quizState.score++;
+                    updateQuizDisplay();
+                }
+                
                 feedbackEl.innerHTML = "Correct! Well done."; feedbackEl.className = "correct";
-                updateMasteryDisplay(); saveData(); setTimeout(generateQuestion, 1200);
+                saveData(); 
+                
+                setTimeout(() => {
+                    if (appMode === 'practice') generateQuestion();
+                    else {
+                        quizState.currentIndex++;
+                        if (quizState.currentIndex >= 25) endQuiz();
+                        else { updateQuizDisplay(); loadQuizQuestion(); }
+                    }
+                }, 1200);
+
             } else {
                 appData.score--; currentCard.weight += 15;
-                scoreEl.textContent = appData.score; 
+                
+                if (appMode === 'practice') {
+                    scoreEl.textContent = appData.score; 
+                }
                 
                 const displayCorrectAnswer = currentCard.askFor === "formula" ? formatFormula(correctAnswer) : correctAnswer;
                 feedbackEl.innerHTML = `Incorrect. The correct answer is: ${displayCorrectAnswer}`; feedbackEl.className = "incorrect";
@@ -607,23 +601,27 @@
                 const questionKey = `${promptEl.textContent} ${qTargetDisplay}`; 
 
                 if (!appData.mistakes[questionKey]) {
-                    appData.mistakes[questionKey] = { 
-                        questionHtml: questionAskedHtml, 
-                        correctAnswer: correctAnswer, 
-                        isFormula: currentCard.askFor === "formula", 
-                        count: 0 
-                    };
+                    appData.mistakes[questionKey] = { questionHtml: questionAskedHtml, correctAnswer: correctAnswer, isFormula: currentCard.askFor === "formula", count: 0 };
                 }
                 appData.mistakes[questionKey].count++;
                 
-                updateMasteryDisplay(); saveData(); setTimeout(generateQuestion, 3000);
+                if (appMode === 'practice') updateMasteryDisplay(); 
+                saveData(); 
+                
+                setTimeout(() => {
+                    if (appMode === 'practice') generateQuestion();
+                    else {
+                        quizState.currentIndex++;
+                        if (quizState.currentIndex >= 25) endQuiz();
+                        else { updateQuizDisplay(); loadQuizQuestion(); }
+                    }
+                }, 3000);
             }
         }
 
-        // --- View Category List Logic ---
+        // --- Modals & Views ---
         function openCheatSheet() {
             const activeCategoryList = currentCategory === "Everything" ? chemicals : chemicals.filter(c => c.category === currentCategory);
-            
             let tableHTML = `<table class="rule-table"><thead><tr><th>Formula</th><th>Name</th></tr></thead><tbody>`;
             activeCategoryList.forEach(chem => {
                 tableHTML += `<tr><td><strong>${formatFormula(chem.formula)}</strong></td><td>${chem.name}</td></tr>`;
@@ -635,44 +633,24 @@
             cheatSheetModal.classList.remove('hidden');
         }
 
-        function closeCheatSheet(e) {
-            if (e.target === cheatSheetModal || e.target === closeCheatSheetBtn) {
-                cheatSheetModal.classList.add('hidden');
-            }
-        }
-
-        // --- Smart Rule Detection Logic ---
         function determineCurrentRule() {
             if (!currentCard) return { title: "Error", text: "No card selected." };
-            
             const category = currentCard.item.category;
             const chemName = currentCard.item.name.toLowerCase();
 
-            if (category === "Acids") {
-                 return { title: "Relevant Rule: Acids", text: "Acids begin with Hydrogen. Binary acids (H + nonmetal) use 'hydro-' + '-ic acid'. Oxyacids (H + polyatomic ion) change '-ate' to '-ic acid' and '-ite' to '-ous acid'." };
-            }
-
-            if (category === "Bases") {
-                 return { title: "Relevant Rule: Bases", text: "Bases contain the **Hydroxide (OH⁻)** polyatomic ion paired with a metal. Name the metal normally, then add 'hydroxide'." };
-            }
-            
-            if (/\([ivx]+\)/i.test(chemName)) {
-                return { title: "Relevant Rule: Transition Metals", text: "Because transition metals can have multiple charges, the Roman numeral in parentheses indicates the exact positive charge of the metal ion (e.g., Iron(III) means Fe³⁺). Cross this charge with the nonmetal's charge to balance the formula." };
-            }
+            if (category === "Acids") return { title: "Relevant Rule: Acids", text: "Acids begin with Hydrogen. Binary acids (H + nonmetal) use 'hydro-' + '-ic acid'. Oxyacids (H + polyatomic ion) change '-ate' to '-ic acid' and '-ite' to '-ous acid'." };
+            if (category === "Bases") return { title: "Relevant Rule: Bases", text: "Bases contain the **Hydroxide (OH⁻)** polyatomic ion paired with a metal. Name the metal normally, then add 'hydroxide'." };
+            if (/\([ivx]+\)/i.test(chemName)) return { title: "Relevant Rule: Transition Metals", text: "Because transition metals can have multiple charges, the Roman numeral in parentheses indicates the exact positive charge of the metal ion (e.g., Iron(III) means Fe³⁺). Cross this charge with the nonmetal's charge to balance the formula." };
             
             let foundIon = null;
             for (const [ionName, ionFormula] of Object.entries(polyatomicIonsDict)) {
                 if (chemName.includes(ionName)) { foundIon = { name: ionName, formula: ionFormula }; break; }
             }
-
             if (foundIon || category === "Polyatomic Ions" || category === "Ternary Ionic Compounds") {
                 const ionText = foundIon ? ` Specifically, it uses the **${foundIon.name}** ion, which has the formula and charge of **${foundIon.formula}**.` : "";
                 return { title: "Relevant Rule: Polyatomic Ions", text: `This compound contains a polyatomic ion.${ionText} Remember: If you need more than one of these ions to balance the chemical charge, you must put it in parentheses!` };
             }
-            
-            if (category === "Binary Molecular Compounds") {
-                return { title: "Relevant Rule: Covalent (Molecular) Compounds", text: "These are formed by two nonmetals. Greek prefixes (mono, di, tri, tetra, penta, etc.) tell you exactly how many atoms of each element are present. You don't need to balance charges here, just read the prefixes!" };
-            }
+            if (category === "Binary Molecular Compounds") return { title: "Relevant Rule: Covalent (Molecular) Compounds", text: "These are formed by two nonmetals. Greek prefixes (mono, di, tri, tetra, penta, etc.) tell you exactly how many atoms of each element are present. You don't need to balance charges here, just read the prefixes!" };
 
             return { title: "Relevant Rule: Binary Ionic Compounds", text: "Formed by a standard metal and a nonmetal. Determine the typical ionic charges from their periodic table group (e.g., Group 1 is +1, Halogens are -1) and cross them to balance the formula to zero." };
         }
@@ -688,24 +666,15 @@
 
         function toggleAllRules() {
             if (allRulesContainer.style.display === 'none') {
-                allRulesContainer.style.display = 'block';
-                toggleRulesBtn.textContent = 'Hide Naming Guide';
+                allRulesContainer.style.display = 'block'; toggleRulesBtn.textContent = 'Hide Naming Guide';
                 tipsModal.querySelector('.modal-content').scrollBy({top: 150, behavior: 'smooth'});
             } else {
-                allRulesContainer.style.display = 'none';
-                toggleRulesBtn.textContent = 'View Complete Naming Guide';
+                allRulesContainer.style.display = 'none'; toggleRulesBtn.textContent = 'View Complete Naming Guide';
             }
         }
 
-        function closeTips(e) {
-            if (e.target === tipsModal || e.target === closeTipsBtn) tipsModal.classList.add('hidden');
-        }
-
-        // --- UI Flow & Event Listeners ---
         function showMistakes() {
             quizScreen.classList.add('hidden'); mistakesScreen.classList.remove('hidden');
-            
-            // Remove the .slice(0, 10) to show ALL mistakes recorded
             const sortedMistakes = Object.values(appData.mistakes).sort((a, b) => b.count - a.count); 
             
             if (sortedMistakes.length === 0) {
@@ -728,19 +697,27 @@
             }
         }
 
+        // --- Event Listeners ---
+        modePracticeBtn.addEventListener('click', () => setAppMode('practice'));
+        modeQuizBtn.addEventListener('click', () => setAppMode('quiz'));
+        retakeQuizBtn.addEventListener('click', () => startQuiz());
+        exitQuizBtn.addEventListener('click', () => { quizEndScreen.classList.add('hidden'); setAppMode('practice'); });
+        
         submitBtn.addEventListener('click', checkAnswer);
         reviewBtn.addEventListener('click', showMistakes);
         viewCategoryBtn.addEventListener('click', openCheatSheet);
         backBtn.addEventListener('click', hideMistakes);
         resetBtn.addEventListener('click', resetProgress);
         tipsBtn.addEventListener('click', openTips);
-        closeTipsBtn.addEventListener('click', closeTips);
-        tipsModal.addEventListener('click', closeTips);
-        closeCheatSheetBtn.addEventListener('click', closeCheatSheet);
-        cheatSheetModal.addEventListener('click', closeCheatSheet);
+        
+        closeTipsBtn.addEventListener('click', () => tipsModal.classList.add('hidden'));
+        tipsModal.addEventListener('click', (e) => { if(e.target === tipsModal) tipsModal.classList.add('hidden'); });
+        closeCheatSheetBtn.addEventListener('click', () => cheatSheetModal.classList.add('hidden'));
+        cheatSheetModal.addEventListener('click', (e) => { if(e.target === cheatSheetModal) cheatSheetModal.classList.add('hidden'); });
+        
         toggleRulesBtn.addEventListener('click', toggleAllRules);
-        categorySelect.addEventListener('change', handleModeChange);
-        directionSelect.addEventListener('change', handleModeChange);
+        categorySelect.addEventListener('change', handleFilterChange);
+        directionSelect.addEventListener('change', handleFilterChange);
         
         inputEl.addEventListener('keypress', function(event) {
             if (event.key === 'Enter' && !inputEl.disabled) checkAnswer();
@@ -748,7 +725,7 @@
 
         // Start App
         initData();
-        generateQuestion();
+        setAppMode('practice');
     </script>
 </body>
 </html>
