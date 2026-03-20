@@ -12,8 +12,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .card {
             background-color: #ffffff;
@@ -21,7 +23,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 450px;
+            max-width: 550px;
             width: 100%;
         }
         h1 {
@@ -71,6 +73,14 @@
         input[type="text"]:focus {
             border-color: #3182ce;
         }
+        
+        /* Button Styles */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
         button {
             background-color: #3182ce;
             color: white;
@@ -82,22 +92,58 @@
             transition: background-color 0.2s;
             font-weight: bold;
         }
-        button:hover {
-            background-color: #2b6cb0;
+        button:hover { background-color: #2b6cb0; }
+        
+        button.secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
         }
+        button.secondary:hover { background-color: #cbd5e0; }
+
         #feedback {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             font-size: 1.1rem;
             font-weight: bold;
             min-height: 24px;
         }
         .correct { color: #38a169; }
         .incorrect { color: #e53e3e; }
+
+        /* Mistakes Table Styles */
+        .hidden { display: none !important; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: bold;
+        }
+        .mistake-count {
+            font-weight: bold;
+            color: #e53e3e;
+            text-align: center;
+        }
+        .empty-state {
+            color: #718096;
+            font-style: italic;
+            margin: 2rem 0;
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" id="quiz-screen">
         <h1>Chemistry Quiz</h1>
         <div class="score-container">Score: <span id="score">0</span></div>
         <p class="instruction">Type your answer below. Formulas don't need subscripts (e.g., Al2(SO4)3).</p>
@@ -106,10 +152,23 @@
         <div id="target"></div>
         
         <input type="text" id="answer-input" placeholder="Type answer here..." autocomplete="off">
-        <br>
-        <button id="submit-btn">Submit</button>
+        
+        <div class="btn-group">
+            <button id="submit-btn">Submit</button>
+            <button id="review-btn" class="secondary">Review Mistakes</button>
+        </div>
         
         <div id="feedback"></div>
+    </div>
+
+    <div class="card hidden" id="mistakes-screen">
+        <h1>Top 10 Mistakes</h1>
+        <p class="instruction">Here are the questions you've missed the most during this session.</p>
+        
+        <div id="mistakes-container">
+            </div>
+
+        <button id="back-btn">Back to Quiz</button>
     </div>
 
     <script>
@@ -129,31 +188,38 @@
 
         // App state
         let currentItem = {};
-        let askingFor = ""; // "formula" or "name"
+        let askingFor = ""; 
         let correctAnswer = "";
-        let score = 0; // Initialize score
+        let score = 0; 
+        
+        // Dictionary to track mistakes. Key: Question string, Value: Object with details
+        let mistakesTracker = {}; 
 
         // DOM Elements
+        const quizScreen = document.getElementById('quiz-screen');
+        const mistakesScreen = document.getElementById('mistakes-screen');
         const promptEl = document.getElementById('question-prompt');
         const targetEl = document.getElementById('target');
         const inputEl = document.getElementById('answer-input');
         const submitBtn = document.getElementById('submit-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const backBtn = document.getElementById('back-btn');
         const feedbackEl = document.getElementById('feedback');
-        const scoreEl = document.getElementById('score'); // Get score element
+        const scoreEl = document.getElementById('score');
+        const mistakesContainer = document.getElementById('mistakes-container');
 
         // Function to start a new round
         function generateQuestion() {
-            // Clear previous feedback and input
             feedbackEl.textContent = "";
             feedbackEl.className = "";
             inputEl.value = "";
             inputEl.focus();
+            inputEl.disabled = false;
+            submitBtn.disabled = false;
 
-            // Pick a random chemical
             const randomIndex = Math.floor(Math.random() * chemicals.length);
             currentItem = chemicals[randomIndex];
 
-            // Randomly decide what to ask for (0 = ask for formula, 1 = ask for name)
             const isAskingFormula = Math.random() < 0.5;
 
             if (isAskingFormula) {
@@ -172,37 +238,97 @@
         // Function to check the user's input
         function checkAnswer() {
             const userAnswer = inputEl.value.trim();
-            
-            if (userAnswer === "") return; // Don't process empty submissions
+            if (userAnswer === "") return; 
 
-            // Case-insensitive comparison
+            // Disable input briefly to prevent spamming enter
+            inputEl.disabled = true;
+            submitBtn.disabled = true;
+
             if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-                // Correct answer logic
                 score++; 
                 scoreEl.textContent = score; 
-                
                 feedbackEl.textContent = "Correct! Well done.";
                 feedbackEl.className = "correct";
-                
-                // Wait 1.5 seconds, then load next question
-                setTimeout(generateQuestion, 1500);
+                setTimeout(generateQuestion, 1200);
             } else {
-                // Incorrect answer logic
                 score--; 
                 scoreEl.textContent = score; 
-
                 feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`;
                 feedbackEl.className = "incorrect";
-                
-                // Wait 3 seconds so they can read the right answer, then load next question
-                setTimeout(generateQuestion, 3000);
+
+                // --- TRACK MISTAKE ---
+                const questionAsked = `${promptEl.textContent} ${targetEl.textContent}`;
+                if (!mistakesTracker[questionAsked]) {
+                    mistakesTracker[questionAsked] = {
+                        question: questionAsked,
+                        correctAnswer: correctAnswer,
+                        count: 0
+                    };
+                }
+                mistakesTracker[questionAsked].count++;
+                // ---------------------
+
+                setTimeout(generateQuestion, 2500);
             }
+        }
+
+        // Function to render the mistakes table
+        function showMistakes() {
+            // Hide quiz, show mistakes
+            quizScreen.classList.add('hidden');
+            mistakesScreen.classList.remove('hidden');
+
+            // Convert tracker object to an array and sort by count (highest to lowest)
+            const sortedMistakes = Object.values(mistakesTracker)
+                                         .sort((a, b) => b.count - a.count)
+                                         .slice(0, 10); // Grab top 10
+
+            if (sortedMistakes.length === 0) {
+                mistakesContainer.innerHTML = '<p class="empty-state">No mistakes yet! You are doing great.</p>';
+                return;
+            }
+
+            // Build HTML table
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Correct Answer</th>
+                            <th style="text-align: center;">Misses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            sortedMistakes.forEach(mistake => {
+                tableHTML += `
+                    <tr>
+                        <td>${mistake.question}</td>
+                        <td><strong>${mistake.correctAnswer}</strong></td>
+                        <td class="mistake-count">${mistake.count}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table>`;
+            mistakesContainer.innerHTML = tableHTML;
+        }
+
+        // Function to return to the quiz
+        function hideMistakes() {
+            mistakesScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            inputEl.focus();
         }
 
         // Event Listeners
         submitBtn.addEventListener('click', checkAnswer);
+        reviewBtn.addEventListener('click', showMistakes);
+        backBtn.addEventListener('click', hideMistakes);
+        
         inputEl.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && !inputEl.disabled) {
                 checkAnswer();
             }
         });
