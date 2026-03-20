@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Formula & Name Quiz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+        }
+        h1 {
+            margin-top: 0;
+            color: #1a365d;
+            font-size: 1.8rem;
+        }
+        .instruction {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        #question-prompt {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+        #target {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 1.5rem;
+            min-height: 36px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus {
+            border-color: #3182ce;
+        }
+        button {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2b6cb0;
+        }
+        #feedback {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 24px;
+        }
+        .correct { color: #38a169; }
+        .incorrect { color: #e53e3e; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Chemistry Quiz</h1>
+        <p class="instruction">Type your answer below. Formulas don't need subscripts (e.g., Al2(SO4)3).</p>
+        
+        <div id="question-prompt">Loading question...</div>
+        <div id="target"></div>
+        
+        <input type="text" id="answer-input" placeholder="Type answer here..." autocomplete="off">
+        <br>
+        <button id="submit-btn">Submit</button>
+        
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        // The chemical data
+        const chemicals = [
+            { name: "Aluminum Sulfate", formula: "Al2(SO4)3" },
+            { name: "Magnesium nitrate", formula: "Mg(NO3)2" },
+            { name: "Sodium chloride", formula: "NaCl" },
+            { name: "Nitrogen trioxide", formula: "NO3" },
+            { name: "Carbon monoxide", formula: "CO" },
+            { name: "Manganese(IV) oxide", formula: "MnO2" },
+            { name: "Sulfur dioxide", formula: "SO2" },
+            { name: "Potassium sulfide", formula: "K2S" },
+            { name: "Silver chlorate", formula: "AgClO3" },
+            { name: "Ammonium sulfide", formula: "(NH4)2S" }
+        ];
+
+        // App state
+        let currentItem = {};
+        let askingFor = ""; // "formula" or "name"
+        let correctAnswer = "";
+
+        // DOM Elements
+        const promptEl = document.getElementById('question-prompt');
+        const targetEl = document.getElementById('target');
+        const inputEl = document.getElementById('answer-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedbackEl = document.getElementById('feedback');
+
+        // Function to start a new round
+        function generateQuestion() {
+            // Clear previous feedback and input
+            feedbackEl.textContent = "";
+            feedbackEl.className = "";
+            inputEl.value = "";
+            inputEl.focus();
+
+            // Pick a random chemical
+            const randomIndex = Math.floor(Math.random() * chemicals.length);
+            currentItem = chemicals[randomIndex];
+
+            // Randomly decide what to ask for (0 = ask for formula, 1 = ask for name)
+            const isAskingFormula = Math.random() < 0.5;
+
+            if (isAskingFormula) {
+                askingFor = "formula";
+                promptEl.textContent = "What is the formula for:";
+                targetEl.textContent = currentItem.name;
+                correctAnswer = currentItem.formula;
+            } else {
+                askingFor = "name";
+                promptEl.textContent = "What is the name of:";
+                targetEl.textContent = currentItem.formula;
+                correctAnswer = currentItem.name;
+            }
+        }
+
+        // Function to check the user's input
+        function checkAnswer() {
+            const userAnswer = inputEl.value.trim();
+            
+            if (userAnswer === "") return; // Don't process empty submissions
+
+            // Case-insensitive comparison
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                feedbackEl.textContent = "Correct! Well done.";
+                feedbackEl.className = "correct";
+                
+                // Wait 1.5 seconds,
