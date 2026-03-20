@@ -165,4 +165,27 @@
                 feedbackEl.textContent = "Correct! Well done.";
                 feedbackEl.className = "correct";
                 
-                // Wait 1.5 seconds,
+                // Wait 1.5 seconds, then load next question
+                setTimeout(generateQuestion, 1500);
+            } else {
+                feedbackEl.textContent = `Incorrect. The correct answer is: ${correctAnswer}`;
+                feedbackEl.className = "incorrect";
+                
+                // Wait 3 seconds so they can read the right answer, then load next question
+                setTimeout(generateQuestion, 3000);
+            }
+        }
+
+        // Event Listeners
+        submitBtn.addEventListener('click', checkAnswer);
+        inputEl.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // Initialize the first question on load
+        generateQuestion();
+    </script>
+</body>
+</html>
