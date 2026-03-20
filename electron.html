@@ -291,7 +291,7 @@
 
     <div class="card interactive-section">
         <h2>🎛️ Interactive Orbital Dashboard</h2>
-        <p>Notice the structure below! The thick gray tracks are the <strong>Principal Shells</strong>. The colored rings inside them are the <strong>Subshells</strong>. On those rings, you will see faint circles—these are the <strong>Orbitals</strong>. Use the 3D legend on the right to match the colors to their physical shapes!</p>
+        <p>Notice the structure below! The thick gray tracks are the <strong>Principal Shells</strong>. Floating dynamically on those tracks are the <strong>3D Subshell Shapes</strong>. These shapes act as the "orbital seats." Watch how the bright electrons populate these specific volumetric shapes according to the rules!</p>
         
         <div class="control-panel">
             <button class="ctrl-btn" onclick="adjustElectrons(-1)">-</button>
@@ -341,7 +341,7 @@
             { sub: "7p", cap: 6 }
         ];
 
-        // Color mapping for subshells
+        // Color mapping for text and layout
         const subshellColors = {
             's': '#e63946', // Red
             'p': '#2a9d8f', // Teal
@@ -360,7 +360,7 @@
             }
         }
 
-        // Advanced Atom Visualizer (Explicit Boundaries, Orbitals & 3D Legend)
+        // Advanced Atom Visualizer (Explicit Boundaries, 3D Orbital Seats & Legend)
         function drawHierarchicalAtom(activeSubshells) {
             const svg = document.getElementById('atomVisualizer');
             
@@ -385,30 +385,28 @@
             </defs>`;
 
             // --- DRAW ATOM CENTER ---
-            // Center of atom shifted left to make room for 3D legend
             const cx = 240; 
             const cy = 250;
             svgHTML += `<circle cx="${cx}" cy="${cy}" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
                         <text x="${cx}" y="${cy+4}" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
             
             // --- DRAW 3D STYLIZED LEGEND (RIGHT SIDE) ---
-            const legX = 490; // Center X of the shapes
-            const textX = 525; // Start X of the text
+            const legX = 490;
+            const textX = 525;
             const legStartY = 80;
             const legSpacing = 110;
 
-            // Box for legend background
             svgHTML += `<rect x="440" y="20" width="190" height="460" rx="10" fill="#1e293b" stroke="#334155" stroke-width="2" opacity="0.8"/>`;
             svgHTML += `<text x="535" y="45" font-size="16" font-weight="bold" fill="#f8fafc" text-anchor="middle">Subshell Shapes</text>`;
             svgHTML += `<line x1="450" y1="55" x2="620" y2="55" stroke="#334155" stroke-width="2"/>`;
 
-            // 1. 's' Sphere
+            // 1. 's' Sphere Legend
             let sy = legStartY;
             svgHTML += `<circle cx="${legX}" cy="${sy}" r="18" fill="url(#grad-s)"/>`;
             svgHTML += `<text x="${textX}" y="${sy-4}" font-size="14" font-weight="bold" fill="#e63946">s Subshell</text>`;
             svgHTML += `<text x="${textX}" y="${sy+12}" font-size="11" fill="#cbd5e1">1 Orbital (2e⁻ max)</text>`;
 
-            // 2. 'p' Dumbbell
+            // 2. 'p' Dumbbell Legend
             let py = legStartY + legSpacing;
             svgHTML += `<g transform="translate(${legX}, ${py})">
                             <ellipse cx="0" cy="-12" rx="10" ry="18" fill="url(#grad-p)"/>
@@ -417,7 +415,7 @@
             svgHTML += `<text x="${textX}" y="${py-4}" font-size="14" font-weight="bold" fill="#2a9d8f">p Subshell</text>`;
             svgHTML += `<text x="${textX}" y="${py+12}" font-size="11" fill="#cbd5e1">3 Orbitals (6e⁻ max)</text>`;
 
-            // 3. 'd' Cloverleaf
+            // 3. 'd' Cloverleaf Legend
             let dy = legStartY + (legSpacing * 2);
             svgHTML += `<g transform="translate(${legX}, ${dy})">
                             <ellipse cx="12" cy="12" rx="8" ry="16" transform="rotate(-45 12 12)" fill="url(#grad-d)"/>
@@ -428,7 +426,7 @@
             svgHTML += `<text x="${textX}" y="${dy-4}" font-size="14" font-weight="bold" fill="#e9c46a">d Subshell</text>`;
             svgHTML += `<text x="${textX}" y="${dy+12}" font-size="11" fill="#cbd5e1">5 Orbitals (10e⁻ max)</text>`;
 
-            // 4. 'f' Complex Lobes
+            // 4. 'f' Complex Lobes Legend
             let fy = legStartY + (legSpacing * 3);
             svgHTML += `<g transform="translate(${legX}, ${fy})">
                             <circle cx="0" cy="-16" r="8" fill="url(#grad-f)"/>
@@ -446,7 +444,7 @@
             let totalShells = activeShellNumbers.length;
             
             let minRadius = 55;
-            let maxRadius = 210; // Capped so it doesn't bleed into the right-side legend
+            let maxRadius = 210; 
             let radiusStep = totalShells > 1 ? (maxRadius - minRadius) / (totalShells - 1) : 0;
             if (radiusStep > 55) radiusStep = 55; 
 
@@ -460,7 +458,6 @@
                 svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter + bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
                 svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter - bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
                 
-                // Label the Shell Track (Top center)
                 svgHTML += `<text x="${cx}" y="${cy - shellCenter - (bandWidth/2) - 4}" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">Shell n=${n}</text>`;
 
                 // 2. Distribute Subshells inside this track
@@ -476,33 +473,52 @@
                     // Draw Subshell Orbit Path
                     svgHTML += `<circle cx="${cx}" cy="${cy}" r="${subRadius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="2 4" opacity="0.8"/>`;
                     
-                    // Group and animate electrons and orbitals
+                    // Group and animate electrons and 3D shapes
                     svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s; animation-direction: ${direction};">`;
                     
-                    // Calculate spacing for the orbitals
                     let angleStep = (2 * Math.PI) / sub.maxOrbitals;
                     
                     sub.orbitals.forEach((eCountInOrbital, orbIdx) => {
                         let baseAngle = orbIdx * angleStep;
-                        
-                        // Draw the "Orbital Seat" (faint circle marker)
                         let seatX = cx + subRadius * Math.cos(baseAngle);
                         let seatY = cy + subRadius * Math.sin(baseAngle);
-                        svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="8" fill="#0f172a" stroke="${color}" stroke-width="1" opacity="0.6"/>`;
+                        let rotDeg = baseAngle * 180 / Math.PI;
                         
-                        // Place electrons in the seat
+                        // DRAW THE 3D SHAPE INSTEAD OF A DOT
+                        if (sub.type === 's') {
+                            svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="11" fill="url(#grad-s)" opacity="0.85"/>`;
+                        } else if (sub.type === 'p') {
+                            svgHTML += `<g transform="translate(${seatX}, ${seatY}) rotate(${rotDeg})">
+                                            <ellipse cx="0" cy="-7" rx="6" ry="11" fill="url(#grad-p)" opacity="0.85"/>
+                                            <ellipse cx="0" cy="7" rx="6" ry="11" fill="url(#grad-p)" opacity="0.85"/>
+                                        </g>`;
+                        } else if (sub.type === 'd') {
+                            svgHTML += `<g transform="translate(${seatX}, ${seatY}) rotate(${rotDeg})">
+                                            <ellipse cx="6" cy="6" rx="4.5" ry="9" transform="rotate(-45 6 6)" fill="url(#grad-d)" opacity="0.85"/>
+                                            <ellipse cx="-6" cy="-6" rx="4.5" ry="9" transform="rotate(-45 -6 -6)" fill="url(#grad-d)" opacity="0.85"/>
+                                            <ellipse cx="-6" cy="6" rx="4.5" ry="9" transform="rotate(45 -6 6)" fill="url(#grad-d)" opacity="0.85"/>
+                                            <ellipse cx="6" cy="-6" rx="4.5" ry="9" transform="rotate(45 6 -6)" fill="url(#grad-d)" opacity="0.85"/>
+                                        </g>`;
+                        } else if (sub.type === 'f') {
+                            svgHTML += `<g transform="translate(${seatX}, ${seatY}) rotate(${rotDeg})">
+                                            <circle cx="0" cy="-9" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                            <circle cx="0" cy="9" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                            <circle cx="-8" cy="-4.5" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                            <circle cx="8" cy="-4.5" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                            <circle cx="-8" cy="4.5" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                            <circle cx="8" cy="4.5" r="4.5" fill="url(#grad-f)" opacity="0.85"/>
+                                        </g>`;
+                        }
+                        
+                        // Place electrons brightly on top of the shapes
                         if (eCountInOrbital === 1) {
-                            svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="4" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
+                            svgHTML += `<circle cx="${seatX}" cy="${seatY}" r="4" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>`;
                         } else if (eCountInOrbital === 2) {
-                            // Two paired electrons side-by-side
-                            let offsetAngle = 4.5 / subRadius; 
-                            let ex1 = cx + subRadius * Math.cos(baseAngle - offsetAngle);
-                            let ey1 = cy + subRadius * Math.sin(baseAngle - offsetAngle);
-                            let ex2 = cx + subRadius * Math.cos(baseAngle + offsetAngle);
-                            let ey2 = cy + subRadius * Math.sin(baseAngle + offsetAngle);
-                            
-                            svgHTML += `<circle cx="${ex1}" cy="${ey1}" r="3.5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
-                            svgHTML += `<circle cx="${ex2}" cy="${ey2}" r="3.5" fill="${color}" stroke="#fff" stroke-width="0.5"/>`;
+                            // Two paired electrons slightly offset
+                            let dx = 4.5 * Math.cos(baseAngle + Math.PI/2);
+                            let dy = 4.5 * Math.sin(baseAngle + Math.PI/2);
+                            svgHTML += `<circle cx="${seatX - dx}" cy="${seatY - dy}" r="3.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>`;
+                            svgHTML += `<circle cx="${seatX + dx}" cy="${seatY + dy}" r="3.5" fill="#94a3b8" stroke="#0f172a" stroke-width="1.5"/>`; // Second electron shaded
                         }
                     });
                     svgHTML += `</g>`;
