@@ -27,6 +27,10 @@
         .rule-grid { display: flex; gap: 20px; flex-wrap: wrap; }
         .rule-col { flex: 1; min-width: 300px; }
         
+        /* Section 1 Layout Styles */
+        .concept-split { display: flex; flex-wrap: wrap; gap: 20px; margin: 20px 0; }
+        .concept-box { flex: 1; min-width: 300px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; }
+        
         /* Orbital SVG Container Styles */
         .shape-card {
             flex: 1; min-width: 150px; padding: 15px; 
@@ -112,18 +116,46 @@
 
     <div class="card">
         <h3>1. The Seats (Shells & Subshells)</h3>
-        <p>Electrons sit in layers called <strong>Shells</strong> (numbered 1, 2, 3...). Shell 1 is closest to the nucleus and has the lowest energy. Inside each shell are different types of "sections" called <strong>Subshells</strong>, labeled by letters (s, p, d, f). They have specific shapes and hold a maximum number of electrons.</p>
+        <p>Electrons sit in structured layers around the nucleus. To understand how they fit, we must look at the "Big Layers" (Principal Shells) and the "Smaller Sections" inside them (Subshells).</p>
         
-        <div style="background-color: #f0f7ff; border-left: 4px solid #0066cc; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0;">
-            <h4 style="margin-top: 0; color: #004488;">🤔 Why do they hold exactly 2, 6, 10, or 14 electrons?</h4>
-            <p style="margin-bottom: 10px;">It comes down to <strong>Orbitals</strong> (individual seats) and the <strong>Pauli Exclusion Principle</strong>. A single exact seat (orbital) can hold exactly <strong>2 electrons maximum</strong> (one spinning "up" &uarr;, and one spinning "down" &darr;).</p>
-            <p style="margin-bottom: 10px;">Because of 3D geometry, each subshell has a strictly odd number of available orbitals. Multiply the number of orbitals by 2:</p>
-            <ul style="margin-bottom: 0;">
-                <li><strong>s subshell:</strong> 1 orbital &times; 2 = <strong>2 max</strong></li>
-                <li><strong>p subshell:</strong> 3 orbitals &times; 2 = <strong>6 max</strong></li>
-                <li><strong>d subshell:</strong> 5 orbitals &times; 2 = <strong>10 max</strong></li>
-                <li><strong>f subshell:</strong> 7 orbitals &times; 2 = <strong>14 max</strong></li>
-            </ul>
+        <div class="concept-split">
+            <div class="concept-box">
+                <h4 style="margin-top: 0; color: #0f172a;">🏢 The Principal Shells (n)</h4>
+                <p>The main layers are numbered <strong>n = 1, 2, 3...</strong> Shell 1 is closest to the nucleus. As you move further out, the shells get larger and can hold more electrons.</p>
+                <p><strong>The Rule of 2n²:</strong> You can calculate the exact maximum capacity of any major shell using the formula <code>2n²</code>.</p>
+                
+                <div style="background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #ddd; text-align: center; margin-top: 15px;">
+                    <svg viewBox="0 0 400 220" style="max-width: 100%; height: auto;">
+                        <circle cx="200" cy="200" r="16" fill="#e74c3c" />
+                        <text x="200" y="204" font-size="14" font-weight="bold" fill="#fff" text-anchor="middle">+</text>
+
+                        <path d="M 160 200 A 40 40 0 0 1 240 200" fill="none" stroke="#3b82f6" stroke-width="6" stroke-dasharray="4 4" opacity="0.8"/>
+                        <text x="200" y="152" font-size="12" font-weight="bold" fill="#2563eb" text-anchor="middle">n=1 (2e⁻)</text>
+                        
+                        <path d="M 115 200 A 85 85 0 0 1 285 200" fill="none" stroke="#8b5cf6" stroke-width="6" stroke-dasharray="4 4" opacity="0.8"/>
+                        <text x="200" y="107" font-size="12" font-weight="bold" fill="#7c3aed" text-anchor="middle">n=2 (8e⁻)</text>
+
+                        <path d="M 70 200 A 130 130 0 0 1 330 200" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="4 4" opacity="0.8"/>
+                        <text x="200" y="62" font-size="12" font-weight="bold" fill="#d97706" text-anchor="middle">n=3 (18e⁻)</text>
+
+                        <path d="M 25 200 A 175 175 0 0 1 375 200" fill="none" stroke="#10b981" stroke-width="6" stroke-dasharray="4 4" opacity="0.8"/>
+                        <text x="200" y="17" font-size="12" font-weight="bold" fill="#059669" text-anchor="middle">n=4 (32e⁻)</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="concept-box" style="background-color: #f0f7ff; border-left: 4px solid #0066cc;">
+                <h4 style="margin-top: 0; color: #004488;">🧩 The Subshells (s, p, d, f)</h4>
+                <p>Inside those large shells are specific geometric sections called <strong>Subshells</strong>. But why do these subshells hold exactly 2, 6, 10, or 14 electrons?</p>
+                <p style="margin-bottom: 10px;">It comes down to <strong>Orbitals</strong> (individual seats) and the <strong>Pauli Exclusion Principle</strong>. A single orbital can hold exactly <strong>2 electrons maximum</strong> (one spinning "up" &uarr;, and one spinning "down" &darr;).</p>
+                <p style="margin-bottom: 10px;">Because of 3D geometry, each subshell has a strictly odd number of available orbitals. Multiply the number of orbitals by 2:</p>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>s subshell:</strong> 1 orbital &times; 2 = <strong>2 max</strong></li>
+                    <li><strong>p subshell:</strong> 3 orbitals &times; 2 = <strong>6 max</strong></li>
+                    <li><strong>d subshell:</strong> 5 orbitals &times; 2 = <strong>10 max</strong></li>
+                    <li><strong>f subshell:</strong> 7 orbitals &times; 2 = <strong>14 max</strong></li>
+                </ul>
+            </div>
         </div>
 
         <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
@@ -278,11 +310,10 @@
         // Advanced Atom Visualizer (Groups Subshells inside Principal Shells)
         function drawHierarchicalAtom(activeSubshells) {
             const svg = document.getElementById('atomVisualizer');
-            // Center is now 250,250 due to 500x500 viewBox
             let svgHTML = `<circle cx="250" cy="250" r="16" fill="#ffffff" stroke="#333" stroke-width="2" />
                            <text x="250" y="254" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">+</text>`; 
             
-            // --- Legend Logic (Permanently on the SVG in the top right) ---
+            // --- Legend Logic ---
             const legendX = 390;
             const legendY = 30;
             const itemHeight = 18;
@@ -291,38 +322,29 @@
             standardOrder.forEach((type, idx) => {
                 let y = legendY + (idx * itemHeight);
                 let color = subshellColors[type];
-                // Colored dot (like a little electron)
                 svgHTML += `<circle cx="${legendX}" cy="${y}" r="5" fill="${color}" stroke="#0f172a" stroke-width="1"/>`;
-                // Text label matching the color
                 svgHTML += `<text x="${legendX + 15}" y="${y + 4}" font-size="12" fill="${color}" font-weight="bold">${type} subshell</text>`;
             });
             // --- End Legend Logic ---
 
-            // Get unique active Principal Shells (n)
             let activeShellNumbers = [...new Set(activeSubshells.map(s => s.n))].sort((a,b)=>a-b);
             let totalShells = activeShellNumbers.length;
             
-            // Dynamic Spacing based on 500x500 canvas
             let minRadius = 55;
             let maxRadius = 230; 
             let radiusStep = totalShells > 1 ? (maxRadius - minRadius) / (totalShells - 1) : 0;
-            if (radiusStep > 60) radiusStep = 60; // Cap the distance between shells
+            if (radiusStep > 60) radiusStep = 60; 
 
             activeShellNumbers.forEach((n, shellIdx) => {
                 let shellCenter = minRadius + (shellIdx * radiusStep);
                 let subs = activeSubshells.filter(s => s.n === n).sort((a,b) => typeOrder[a.type] - typeOrder[b.type]);
                 
-                // 1. Draw the Principal Shell Band (Thick translucent highlight)
-                let bandWidth = Math.min(45, radiusStep * 0.7); // Dynamic thickness based on available space
+                let bandWidth = Math.min(45, radiusStep * 0.7); 
                 svgHTML += `<circle cx="250" cy="250" r="${shellCenter}" fill="none" stroke="#cbd5e1" stroke-width="${bandWidth}" opacity="0.15"/>`;
-                
-                // Add label for the Principal Shell
                 svgHTML += `<text x="250" y="${250 - shellCenter - (bandWidth/2) + 14}" font-size="12" font-weight="bold" fill="#94a3b8" text-anchor="middle">Shell n=${n}</text>`;
 
-                // 2. Distribute Subshells inside this band
                 let subCount = subs.length;
                 subs.forEach((sub, subIdx) => {
-                    // Spread subshells evenly within the band's thickness
                     let offset = subCount === 1 ? 0 : (subIdx / (subCount - 1) - 0.5) * (bandWidth * 0.75);
                     let subRadius = shellCenter + offset;
                     
@@ -330,10 +352,8 @@
                     let speed = 6 + (subRadius / 15); 
                     let direction = subIdx % 2 === 0 ? 'normal' : 'reverse';
                     
-                    // Draw Subshell Orbit Ring
                     svgHTML += `<circle cx="250" cy="250" r="${subRadius}" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.7"/>`;
                     
-                    // Group and animate electrons
                     svgHTML += `<g class="orbit-group" style="animation-duration: ${speed}s; animation-direction: ${direction};">`;
                     for (let i = 0; i < sub.eCount; i++) {
                         let angle = (i / sub.eCount) * 2 * Math.PI;
@@ -348,7 +368,6 @@
             svg.innerHTML = svgHTML;
         }
 
-        // Main Update Logic
         function updateConfig() {
             let totalElectrons = parseInt(document.getElementById("electronSlider").value);
             document.getElementById("eCount").innerText = totalElectrons;
@@ -366,7 +385,6 @@
                 let currentSub = fillingOrder[i];
                 let adding = Math.min(remaining, currentSub.cap);
                 
-                // Record for Visualizer
                 let n = parseInt(currentSub.sub.charAt(0));
                 let type = currentSub.sub.charAt(1);
                 activeSubshells.push({
@@ -376,11 +394,9 @@
                     n: n
                 });
 
-                // Build Text String
                 let powStr = adding.toString().split('').map(c => superscripts[c] || c).join('');
                 textConfigArr.push(`${currentSub.sub}${powStr}`);
 
-                // Build Physical Boxes (Applying Hund's Rule)
                 let numBoxes = currentSub.cap / 2;
                 let boxContent = Array(numBoxes).fill('');
                 
@@ -407,12 +423,9 @@
 
             document.getElementById("textConfigDisplay").innerText = textConfigArr.join(' ');
             document.getElementById("boxContainer").innerHTML = boxesHTML;
-            
-            // Draw the updated atom
             drawHierarchicalAtom(activeSubshells);
         }
 
-        // QUIZ LOGIC
         function getPlainConfiguration(electrons) {
             let config = [];
             let remaining = electrons;
@@ -471,7 +484,6 @@
             document.getElementById("score").innerText = score;
         }
 
-        // Initialize display
         document.addEventListener("DOMContentLoaded", updateConfig);
     </script>
 </body>
