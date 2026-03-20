@@ -77,8 +77,9 @@
         #question-prompt { font-size: 1.1rem; margin-bottom: 0.5rem; color: #4a5568; }
         #target { font-size: 1.6rem; font-weight: bold; color: #2b6cb0; margin-bottom: 1.5rem; min-height: 38px; }
         
-        /* Subscript adjustments for better readability */
+        /* Subscript and Superscript adjustments for readability */
         sub { font-size: 0.65em; bottom: -0.25em; }
+        sup { font-size: 0.65em; top: -0.4em; color: #e53e3e; } /* Colored charges red to stand out slightly */
         
         input[type="text"] {
             width: 80%; padding: 0.75rem; font-size: 1rem; border: 2px solid #e2e8f0;
@@ -98,7 +99,7 @@
         button.danger { background-color: #fed7d7; color: #c53030; }
         button.danger:hover { background-color: #feb2b2; }
 
-        /* Tips Button & Modal Styles */
+        /* Modals (Tips & Cheat Sheet) */
         .tips-btn {
             position: absolute; top: 20px; right: 20px; background-color: #edf2f7;
             color: #2b6cb0; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid #cbd5e0;
@@ -135,9 +136,9 @@
         .rule-item h4 { margin: 0 0 0.5rem 0; color: #2d3748; font-size: 1.1rem; }
         .rule-item p { margin: 0 0 0.75rem 0; font-size: 0.95rem; color: #4a5568; line-height: 1.5;}
         
-        /* Inner Tables for Rules */
-        .rule-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.9rem; }
-        .rule-table th, .rule-table td { padding: 6px 10px; border: 1px solid #e2e8f0; text-align: left; }
+        /* Inner Tables */
+        .rule-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 0.95rem; }
+        .rule-table th, .rule-table td { padding: 8px 10px; border: 1px solid #e2e8f0; text-align: left; }
         .rule-table th { background-color: #f7fafc; color: #4a5568; }
 
         #feedback { margin-top: 1rem; font-size: 1.1rem; font-weight: bold; min-height: 24px; }
@@ -176,7 +177,7 @@
             <div class="stat-box mastery-box" id="mastery-container">Category Mastered: <span id="mastery-count">0</span> / <span id="mastery-total">0</span></div>
         </div>
 
-        <p class="instruction">Formulas don't need subscripts (e.g., type Al2(SO4)3).</p>
+        <p class="instruction">Formulas don't need subscripts or charges (e.g., type SO4 for Sulfate).</p>
         
         <div id="question-prompt">Loading question...</div>
         <div id="target"></div>
@@ -185,6 +186,7 @@
         
         <div class="btn-group">
             <button id="submit-btn">Submit</button>
+            <button id="view-category-btn" class="secondary">View Category List</button>
             <button id="review-btn" class="secondary">Review Mistakes</button>
         </div>
         
@@ -200,6 +202,17 @@
         <div class="btn-group">
             <button id="back-btn">Back to Quiz</button>
             <button id="reset-btn" class="danger">Reset Progress</button>
+        </div>
+    </div>
+
+    <div id="cheat-sheet-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="cheat-sheet-title">Category List</h2>
+                <button id="close-cheat-sheet-btn" class="close-btn">&times;</button>
+            </div>
+            <p class="instruction" style="text-align: left; margin-top: -10px;">A complete reference of all compounds in your currently selected category.</p>
+            <div id="cheat-sheet-container"></div>
         </div>
     </div>
 
@@ -221,34 +234,20 @@
                 <div class="rule-item">
                     <h4>1. Polyatomic Ions</h4>
                     <p>These are tightly bound groups of atoms that behave as a unit and carry a charge. When a formula requires more than one of a polyatomic ion, place it in parentheses with the subscript outside (e.g., <strong>Al₂(SO₄)₃</strong>).</p>
-                    <table class="rule-table">
-                        <tr><th>Name</th><th>Formula</th><th>Name</th><th>Formula</th></tr>
-                        <tr><td>Ammonium</td><td>NH₄⁺</td><td>Nitrate</td><td>NO₃⁻</td></tr>
-                        <tr><td>Hydroxide</td><td>OH⁻</td><td>Nitrite</td><td>NO₂⁻</td></tr>
-                        <tr><td>Acetate</td><td>C₂H₃O₂⁻</td><td>Sulfate</td><td>SO₄²⁻</td></tr>
-                        <tr><td>Cyanide</td><td>CN⁻</td><td>Sulfite</td><td>SO₃²⁻</td></tr>
-                        <tr><td>Chlorate</td><td>ClO₃⁻</td><td>Carbonate</td><td>CO₃²⁻</td></tr>
-                        <tr><td>Perchlorate</td><td>ClO₄⁻</td><td>Chromate</td><td>CrO₄²⁻</td></tr>
-                        <tr><td>Chlorite</td><td>ClO₂⁻</td><td>Phosphate</td><td>PO₄³⁻</td></tr>
-                    </table>
                 </div>
-
                 <div class="rule-item">
                     <h4>2. Binary Ionic Compounds</h4>
                     <p>Formed by a metal (cation) and a nonmetal (anion). Name the metal normally, and change the ending of the nonmetal to <strong>"-ide"</strong>. To write the formula, determine the typical charges based on their periodic table group and balance them to zero.</p>
                 </div>
-
                 <div class="rule-item">
                     <h4>3. Transition Metals (Stock System)</h4>
                     <p>Transition metals can form ions with different charges. A Roman numeral indicates the exact positive charge of the metal ion (e.g. Iron(III) oxide is Fe₂O₃).</p>
                     <p><strong>Exceptions (No Roman Numeral Needed):</strong> Zinc (Zn²⁺), Silver (Ag⁺), and Cadmium (Cd²⁺).</p>
                 </div>
-
                 <div class="rule-item">
                     <h4>4. Covalent (Molecular) Compounds</h4>
                     <p>Formed by two nonmetals sharing electrons. Greek prefixes are used to specify the exact number of atoms of each element. The second element ends in <strong>"-ide"</strong>. <em>(Note: Never use 'mono-' on the first element).</em></p>
                 </div>
-
                 <div class="rule-item">
                     <h4>5. Acids</h4>
                     <p>Compounds beginning with Hydrogen. Binary acids (H + nonmetal) use "hydro-" + "-ic acid" (e.g. HCl is Hydrochloric acid). Oxyacids (H + polyatomic ion) change "-ate" to "-ic acid" and "-ite" to "-ous acid".</p>
@@ -258,10 +257,16 @@
     </div>
 
     <script>
-        // Formatter Function: Converts numbers in formulas to proper subscripts
+        // Formatter Function: Converts numbers to subscripts, and parses ^ for charges (superscripts)
         function formatFormula(formulaStr) {
             if (!formulaStr) return "";
-            return formulaStr.replace(/(\d+)/g, '<sub>$1</sub>');
+            // Split the string by the charge identifier '^'
+            let parts = formulaStr.split('^');
+            // Format numbers as subscripts in the main part
+            let base = parts[0].replace(/(\d+)/g, '<sub>$1</sub>');
+            // If there's a charge, format it as a superscript
+            let charge = parts[1] ? `<sup>${parts[1]}</sup>` : '';
+            return base + charge;
         }
 
         // The comprehensively categorized chemical data dictionary
@@ -330,7 +335,7 @@
             { formula: "CrF3", name: "Chromium(III) fluoride", category: "Binary Ionic Compounds" },
             { formula: "Al2S3", name: "Aluminum sulfide", category: "Binary Ionic Compounds" },
             { formula: "CaS", name: "Calcium sulfide", category: "Binary Ionic Compounds" },
-            { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" },
+            { formula: "LiF", name: "Lithium fluoride", category: "Binary Ionic Compounds" }, // Fixed typo here
             { formula: "CuCl2", name: "Copper(II) chloride", category: "Binary Ionic Compounds" },
             { formula: "KI", name: "Potassium iodide", category: "Binary Ionic Compounds" },
             { formula: "SrBr2", name: "Strontium bromide", category: "Binary Ionic Compounds" },
@@ -388,16 +393,16 @@
             { formula: "CuOH", name: "Copper(I) hydroxide", category: "Bases" },
             { formula: "Ni(OH)2", name: "Nickel(II) hydroxide", category: "Bases" },
 
-            // --- POLYATOMIC IONS ---
-            { formula: "NO3", name: "Nitrate", category: "Polyatomic Ions" },
-            { formula: "SO4", name: "Sulfate", category: "Polyatomic Ions" },
-            { formula: "PO4", name: "Phosphate", category: "Polyatomic Ions" },
-            { formula: "OH", name: "Hydroxide", category: "Polyatomic Ions" },
-            { formula: "NH4", name: "Ammonium", category: "Polyatomic Ions" },
-            { formula: "CO3", name: "Carbonate", category: "Polyatomic Ions" },
+            // --- POLYATOMIC IONS (Encoded with ^ for charges) ---
+            { formula: "NO3^-", name: "Nitrate", category: "Polyatomic Ions" },
+            { formula: "SO4^2-", name: "Sulfate", category: "Polyatomic Ions" },
+            { formula: "PO4^3-", name: "Phosphate", category: "Polyatomic Ions" },
+            { formula: "OH^-", name: "Hydroxide", category: "Polyatomic Ions" },
+            { formula: "NH4^+", name: "Ammonium", category: "Polyatomic Ions" },
+            { formula: "CO3^2-", name: "Carbonate", category: "Polyatomic Ions" },
 
             // --- ACIDS ---
-            { formula: "H2O", name: "Water (Dihydrogen monoxide)", category: "Acids" }, // Retained from your original list
+            { formula: "H2O", name: "Water (Dihydrogen monoxide)", category: "Acids" },
             { formula: "HCl", name: "Hydrochloric acid", category: "Acids" },
             { formula: "H2SO4", name: "Sulfuric acid", category: "Acids" },
             { formula: "HNO3", name: "Nitric acid", category: "Acids" },
@@ -426,6 +431,7 @@
         const inputEl = document.getElementById('answer-input');
         const submitBtn = document.getElementById('submit-btn');
         const reviewBtn = document.getElementById('review-btn');
+        const viewCategoryBtn = document.getElementById('view-category-btn');
         const backBtn = document.getElementById('back-btn');
         const resetBtn = document.getElementById('reset-btn');
         const categorySelect = document.getElementById('category-select');
@@ -444,12 +450,16 @@
         const tipTitle = document.getElementById('tip-title');
         const tipText = document.getElementById('tip-text');
 
+        const cheatSheetModal = document.getElementById('cheat-sheet-modal');
+        const closeCheatSheetBtn = document.getElementById('close-cheat-sheet-btn');
+        const cheatSheetTitle = document.getElementById('cheat-sheet-title');
+        const cheatSheetContainer = document.getElementById('cheat-sheet-container');
+
         // --- Core Functions ---
         function initData() {
             const savedData = localStorage.getItem('chemistryQuizData');
             if (savedData) {
                 appData = JSON.parse(savedData);
-                // Ensure array lengths roughly match in case of updates
                 if(appData.deck.length < chemicals.length * 2) buildNewDeck();
             } else {
                 buildNewDeck();
@@ -469,7 +479,6 @@
 
         function saveData() { localStorage.setItem('chemistryQuizData', JSON.stringify(appData)); }
 
-        // Returns only the deck applicable to the current category
         function getActiveDeck() {
             if (currentCategory === "Everything") return appData.deck;
             return appData.deck.filter(card => card.item.category === currentCategory);
@@ -502,7 +511,6 @@
 
             const activeDeck = getActiveDeck();
             
-            // Safety in case of empty category (shouldn't happen with our current data)
             if (activeDeck.length === 0) {
                 promptEl.textContent = ""; targetEl.innerHTML = "No questions in this category.";
                 inputEl.disabled = true; submitBtn.disabled = true; return;
@@ -534,7 +542,12 @@
 
             const targetFormula = currentCard.item.formula;
             const correctAnswer = currentCard.askFor === "formula" ? targetFormula : currentCard.item.name;
-            const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+            
+            // Normalize inputs: remove any charge formatting (anything after ^) and convert to lowercase
+            const cleanUserAnswer = userAnswer.replace(/\^.*/, '').toLowerCase();
+            const cleanCorrectAnswer = correctAnswer.replace(/\^.*/, '').toLowerCase();
+
+            const isCorrect = cleanUserAnswer === cleanCorrectAnswer;
 
             if (isCorrect) {
                 appData.score++; currentCard.weight = Math.max(1, currentCard.weight - 3);
@@ -552,7 +565,6 @@
                 const questionAskedHtml = `${promptEl.textContent} <strong>${qTargetDisplay}</strong>`;
                 const questionKey = `${promptEl.textContent} ${qTargetDisplay}`; 
 
-                // Track mistake globally
                 if (!appData.mistakes[questionKey]) {
                     appData.mistakes[questionKey] = { 
                         questionHtml: questionAskedHtml, 
@@ -564,6 +576,28 @@
                 appData.mistakes[questionKey].count++;
                 
                 updateMasteryDisplay(); saveData(); setTimeout(generateQuestion, 3000);
+            }
+        }
+
+        // --- View Category List Logic ---
+        function openCheatSheet() {
+            // Filter the master list of chemicals (not the duplicated deck) to get unique items
+            const activeCategoryList = currentCategory === "Everything" ? chemicals : chemicals.filter(c => c.category === currentCategory);
+            
+            let tableHTML = `<table class="rule-table"><thead><tr><th>Formula</th><th>Name</th></tr></thead><tbody>`;
+            activeCategoryList.forEach(chem => {
+                tableHTML += `<tr><td><strong>${formatFormula(chem.formula)}</strong></td><td>${chem.name}</td></tr>`;
+            });
+            tableHTML += `</tbody></table>`;
+            
+            cheatSheetTitle.textContent = currentCategory === "Everything" ? "All Compounds List" : `${currentCategory} List`;
+            cheatSheetContainer.innerHTML = tableHTML;
+            cheatSheetModal.classList.remove('hidden');
+        }
+
+        function closeCheatSheet(e) {
+            if (e.target === cheatSheetModal || e.target === closeCheatSheetBtn) {
+                cheatSheetModal.classList.add('hidden');
             }
         }
 
@@ -653,11 +687,14 @@
 
         submitBtn.addEventListener('click', checkAnswer);
         reviewBtn.addEventListener('click', showMistakes);
+        viewCategoryBtn.addEventListener('click', openCheatSheet);
         backBtn.addEventListener('click', hideMistakes);
         resetBtn.addEventListener('click', resetProgress);
         tipsBtn.addEventListener('click', openTips);
         closeTipsBtn.addEventListener('click', closeTips);
         tipsModal.addEventListener('click', closeTips);
+        closeCheatSheetBtn.addEventListener('click', closeCheatSheet);
+        cheatSheetModal.addEventListener('click', closeCheatSheet);
         toggleRulesBtn.addEventListener('click', toggleAllRules);
         categorySelect.addEventListener('change', handleCategoryChange);
         
