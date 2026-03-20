@@ -1,0 +1,435 @@
+========================================================
+                 DEMOGRAPHICS REPORT                    
+========================================================
+
+--- Fetching: Demographics ---
+Breakdowns: [age, gender]
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 18-24
+    > gender: male
+      Metrics: Impressions=5, Clicks=0, Spend=$0.03, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 25-34
+    > gender: female
+      Metrics: Impressions=48, Clicks=0, Spend=$0.29, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 25-34
+    > gender: male
+      Metrics: Impressions=77, Clicks=2, Spend=$0.61, CPC=$0.305, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 25-34
+    > gender: unknown
+      Metrics: Impressions=1, Clicks=1, Spend=$0, CPC=$0, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 35-44
+    > gender: female
+      Metrics: Impressions=91, Clicks=3, Spend=$0.54, CPC=$0.18, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 35-44
+    > gender: male
+      Metrics: Impressions=150, Clicks=3, Spend=$1.15, CPC=$0.383333, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 35-44
+    > gender: unknown
+      Metrics: Impressions=3, Clicks=0, Spend=$0.05, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 45-54
+    > gender: female
+      Metrics: Impressions=44, Clicks=3, Spend=$0.17, CPC=$0.056667, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 45-54
+    > gender: male
+      Metrics: Impressions=66, Clicks=2, Spend=$0.55, CPC=$0.275, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 45-54
+    > gender: unknown
+      Metrics: Impressions=1, Clicks=0, Spend=$0, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 55-64
+    > gender: female
+      Metrics: Impressions=48, Clicks=0, Spend=$0.29, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 55-64
+    > gender: male
+      Metrics: Impressions=44, Clicks=2, Spend=$0.29, CPC=$0.145, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 55-64
+    > gender: unknown
+      Metrics: Impressions=1, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 65+
+    > gender: female
+      Metrics: Impressions=102, Clicks=0, Spend=$0.88, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 65+
+    > gender: male
+      Metrics: Impressions=73, Clicks=2, Spend=$0.53, CPC=$0.265, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > age: 65+
+    > gender: unknown
+      Metrics: Impressions=2, Clicks=0, Spend=$0.02, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 18-24
+    > gender: female
+      Metrics: Impressions=2, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 18-24
+    > gender: male
+      Metrics: Impressions=1, Clicks=0, Spend=$0, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 25-34
+    > gender: female
+      Metrics: Impressions=8, Clicks=0, Spend=$0.06, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 25-34
+    > gender: male
+      Metrics: Impressions=14, Clicks=1, Spend=$0.15, CPC=$0.15, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 35-44
+    > gender: female
+      Metrics: Impressions=9, Clicks=1, Spend=$0.11, CPC=$0.11, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 35-44
+    > gender: male
+      Metrics: Impressions=26, Clicks=0, Spend=$0.25, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 45-54
+    > gender: female
+      Metrics: Impressions=8, Clicks=4, Spend=$0.48, CPC=$0.12, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 45-54
+    > gender: male
+      Metrics: Impressions=11, Clicks=0, Spend=$0.13, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > age: 55-64
+    > gender: female
+      Metrics: Impressions=7, Clicks=2, Spend=$0.08, CPC=$0.04, Reach=N/A
+
+========================================================
+                 GEOGRAPHY REPORT                       
+========================================================
+
+--- Fetching: Geo (Country) ---
+Breakdowns: [country]
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > country: US
+      Metrics: Impressions=756, Clicks=18, Spend=$5.41, CPC=$0.300556, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > country: US
+      Metrics: Impressions=142, Clicks=11, Spend=$1.94, CPC=$0.176364, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > country: US
+      Metrics: Impressions=314, Clicks=4, Spend=$1.7, CPC=$0.425, Reach=N/A
+
+--- Fetching: Geo (Region) ---
+Breakdowns: [region]
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Alabama
+      Metrics: Impressions=20, Clicks=0, Spend=$0.1, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Alaska
+      Metrics: Impressions=2, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Arizona
+      Metrics: Impressions=8, Clicks=1, Spend=$0.02, CPC=$0.02, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Arkansas
+      Metrics: Impressions=11, Clicks=0, Spend=$0.05, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: California
+      Metrics: Impressions=60, Clicks=4, Spend=$0.38, CPC=$0.095, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Colorado
+      Metrics: Impressions=11, Clicks=1, Spend=$0.06, CPC=$0.06, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Connecticut
+      Metrics: Impressions=6, Clicks=0, Spend=$0.05, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Delaware
+      Metrics: Impressions=2, Clicks=0, Spend=$0.03, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Florida
+      Metrics: Impressions=45, Clicks=0, Spend=$0.24, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Georgia
+      Metrics: Impressions=30, Clicks=0, Spend=$0.31, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Hawaii
+      Metrics: Impressions=5, Clicks=0, Spend=$0.04, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Illinois
+      Metrics: Impressions=23, Clicks=1, Spend=$0.27, CPC=$0.27, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Indiana
+      Metrics: Impressions=18, Clicks=0, Spend=$0.07, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Iowa
+      Metrics: Impressions=11, Clicks=0, Spend=$0.09, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Kansas
+      Metrics: Impressions=11, Clicks=1, Spend=$0.19, CPC=$0.19, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Kentucky
+      Metrics: Impressions=29, Clicks=0, Spend=$0.16, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Louisiana
+      Metrics: Impressions=20, Clicks=2, Spend=$0.15, CPC=$0.075, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Maine
+      Metrics: Impressions=6, Clicks=0, Spend=$0.06, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Maryland
+      Metrics: Impressions=7, Clicks=0, Spend=$0.06, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Massachusetts
+      Metrics: Impressions=9, Clicks=0, Spend=$0.04, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Michigan
+      Metrics: Impressions=28, Clicks=1, Spend=$0.14, CPC=$0.14, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Minnesota
+      Metrics: Impressions=7, Clicks=1, Spend=$0.02, CPC=$0.02, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Mississippi
+      Metrics: Impressions=21, Clicks=0, Spend=$0.1, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Missouri
+      Metrics: Impressions=10, Clicks=0, Spend=$0.11, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > region: Montana
+      Metrics: Impressions=5, Clicks=1, Spend=$0.05, CPC=$0.05, Reach=N/A
+
+--- Fetching: Geo (DMA/Market) ---
+Breakdowns: [dma]
+  No data found for this breakdown combination.
+
+========================================================
+                 DELIVERY & PLACEMENT REPORT            
+========================================================
+
+--- Fetching: Platform & Placement ---
+Breakdowns: [publisher_platform, platform_position]
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > publisher_platform: facebook
+    > platform_position: feed
+      Metrics: Impressions=748, Clicks=18, Spend=$5.4, CPC=$0.3, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > publisher_platform: unknown
+    > platform_position: unknown
+      Metrics: Impressions=8, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > publisher_platform: facebook
+    > platform_position: feed
+      Metrics: Impressions=142, Clicks=11, Spend=$1.94, CPC=$0.176364, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: audience_network
+    > platform_position: an_classic
+      Metrics: Impressions=244, Clicks=3, Spend=$1.28, CPC=$0.426667, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: facebook_reels
+      Metrics: Impressions=2, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: feed
+      Metrics: Impressions=10, Clicks=1, Spend=$0.1, CPC=$0.1, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: instream_video
+      Metrics: Impressions=9, Clicks=0, Spend=$0.04, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: marketplace
+      Metrics: Impressions=6, Clicks=0, Spend=$0.07, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: right_hand_column
+      Metrics: Impressions=3, Clicks=0, Spend=$0, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: facebook
+    > platform_position: search
+      Metrics: Impressions=4, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: instagram
+    > platform_position: feed
+      Metrics: Impressions=1, Clicks=0, Spend=$0, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > publisher_platform: instagram
+    > platform_position: instagram_reels
+      Metrics: Impressions=35, Clicks=0, Spend=$0.19, CPC=$N/A, Reach=N/A
+
+--- Fetching: Impression Device ---
+Breakdowns: [impression_device]
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: android_smartphone
+      Metrics: Impressions=537, Clicks=16, Spend=$3.81, CPC=$0.238125, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: android_tablet
+      Metrics: Impressions=20, Clicks=1, Spend=$0.11, CPC=$0.11, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: desktop
+      Metrics: Impressions=11, Clicks=0, Spend=$0.18, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: ipad
+      Metrics: Impressions=19, Clicks=0, Spend=$0.12, CPC=$N/A, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: iphone
+      Metrics: Impressions=139, Clicks=1, Spend=$1.01, CPC=$1.01, Reach=N/A
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+    > impression_device: other
+      Metrics: Impressions=30, Clicks=0, Spend=$0.18, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: android_smartphone
+      Metrics: Impressions=81, Clicks=8, Spend=$0.91, CPC=$0.11375, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: android_tablet
+      Metrics: Impressions=5, Clicks=0, Spend=$0.07, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: desktop
+      Metrics: Impressions=1, Clicks=1, Spend=$0.05, CPC=$0.05, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: ipad
+      Metrics: Impressions=8, Clicks=1, Spend=$0.51, CPC=$0.51, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: iphone
+      Metrics: Impressions=46, Clicks=1, Spend=$0.4, CPC=$0.4, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+    > impression_device: other
+      Metrics: Impressions=1, Clicks=0, Spend=$0, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > impression_device: android_smartphone
+      Metrics: Impressions=190, Clicks=3, Spend=$1.05, CPC=$0.35, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > impression_device: android_tablet
+      Metrics: Impressions=46, Clicks=1, Spend=$0.21, CPC=$0.21, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > impression_device: desktop
+      Metrics: Impressions=5, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > impression_device: ipad
+      Metrics: Impressions=3, Clicks=0, Spend=$0.01, CPC=$N/A, Reach=N/A
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+    > impression_device: iphone
+      Metrics: Impressions=70, Clicks=0, Spend=$0.42, CPC=$N/A, Reach=N/A
+
+========================================================
+                 TIME OF DAY REPORT                     
+========================================================
+
+--- Fetching: Time of Day (Viewer TZ) ---
+
+  Ad: SAT Vocabulary Books Display Campaign Ad (ID: 120246070694980110)
+      Metrics: Impressions=756, Clicks=18, Spend=$5.41
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246070776720110)
+      Metrics: Impressions=142, Clicks=11, Spend=$1.94
+
+  Ad: Fiji Water Display Campaign Ad (ID: 120246105632810110)
+      Metrics: Impressions=314, Clicks=4, Spend=$1.7
+
+========================================================
+                 DELIVERY ESTIMATES (AD SET LEVEL)      
+========================================================
+
+  Ad Set: Mental Math Books - Parents 5-8 Grade Ad Set (ID: 120246162958860110)
+    > Estimated Daily Active Users (DAU): 0
+    > Estimated Monthly Active Users (MAU - Audience Size): N/A
+    > Curve Estimates (Min Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Mid Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Max Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+
+  Ad Set: Fiji Water Display Campaign Ad Set (ID: 120246105629720110)
+    > Estimated Daily Active Users (DAU): 0
+    > Estimated Monthly Active Users (MAU - Audience Size): N/A
+    > Curve Estimates (Min Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Mid Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Max Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+
+  Ad Set: SAT Vocabulary Books Display Campaign Ad Set (ID: 120246070694160110)
+    > Estimated Daily Active Users (DAU): 0
+    > Estimated Monthly Active Users (MAU - Audience Size): N/A
+    > Curve Estimates (Min Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Mid Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
+    > Curve Estimates (Max Budget): Spend=$0.00, Reach=0, Impressions=0, Actions=0
