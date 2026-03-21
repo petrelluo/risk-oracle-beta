@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Molar Master Guide v4</title>
+    <title>The Ultimate Molar Guide</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1e293b; max-width: 1100px; margin: 0 auto; padding: 20px; background-color: #f1f5f9; }
@@ -26,6 +26,12 @@
         .example-box h4 { margin-top: 0; color: #b45309; font-size: 1.1em; }
         .math-step { color: #78350f; font-weight: bold; display: block; margin-top: 10px; }
         .math-result { color: #15803d; font-weight: bold; font-size: 1.2em; border-left: 4px solid #15803d; padding-left: 10px; margin-top: 5px; display: block; }
+
+        /* CSS Beakers for Dilution */
+        .beaker-container { display: flex; justify-content: center; align-items: flex-end; gap: 40px; margin: 40px 0; }
+        .beaker-glass { border: 4px solid #cbd5e1; border-top: none; border-radius: 0 0 15px 15px; position: relative; display: flex; align-items: flex-end; margin: 0 auto; background: rgba(255,255,255,0.5); }
+        .beaker-liquid { width: 100%; border-radius: 0 0 10px 10px; transition: all 0.5s ease; }
+        .beaker-label { text-align: center; margin-top: 15px; font-weight: bold; color: #475569; }
     </style>
 </head>
 <body>
@@ -42,8 +48,24 @@
         <li><strong>A Dozen:</strong> 12 items</li>
         <li><strong>A Mole:</strong> 602,200,000,000,000,000,000,000 items (6.022 x 10²³)</li>
     </ul>
-    <div style="height: 300px;"><canvas id="dozenChart"></canvas></div>
-    <p><em>This scale shows that a Mole is like a trillion, trillion times bigger than a dozen. It's the only way to get enough atoms to actually see them!</em></p>
+    <div style="height: 250px;"><canvas id="dozenChart"></canvas></div>
+    
+    <div class="example-box">
+        <h4>Example A: Moles to Particles (Simple)</h4>
+        <em>Problem:</em> You have 0.5 moles of pure Gold (Au). How many atoms is this?<br>
+        <span class="math-step">Step 1: Multiply Moles by Avogadro's Number</span>
+        0.5 mol × (6.022 x 10²³) = <span class="math-result">3.011 x 10²³ Atoms of Gold</span>
+    </div>
+
+    <div class="example-box">
+        <h4>Example B: The Molecule/Ion Trick</h4>
+        <em>Problem:</em> You have 2.0 moles of Calcium Chloride (CaCl₂). How many individual <strong>Chloride ions (Cl⁻)</strong> do you have?<br>
+        <span class="math-step">Step 1: Find total Molecules first</span>
+        2.0 mol × (6.022 x 10²³) = 1.204 x 10²⁴ Molecules of CaCl₂<br>
+        <span class="math-step">Step 2: Multiply by the number of ions inside</span>
+        Every 1 molecule of CaCl₂ contains 2 Chloride ions.<br>
+        (1.204 x 10²⁴) × 2 = <span class="math-result">2.408 x 10²⁴ Chloride Ions</span>
+    </div>
 </div>
 
 <div class="card">
@@ -55,7 +77,7 @@
     <div class="example-box">
         <h4>Example: Weighing Water</h4>
         <em>Problem:</em> You have 2.0 moles of pure water (H₂O). How many grams is this?<br>
-        <span class="math-step">Step 1: Find the Molar Mass</span>
+        <span class="math-step">Step 1: Find the Molar Mass (from Periodic Table)</span>
         H₂O = (1.01 × 2) + 16.00 = 18.02 g/mol<br>
         <span class="math-step">Step 2: Multiply Moles by Molar Mass</span>
         2.0 mol × 18.02 g/mol = <span class="math-result">36.04 Grams</span>
@@ -74,14 +96,14 @@
         <div class="arrow-label">&larr; Mult by MM<br>Div by MM &rarr;</div>
         <div class="node hub">THE MOLE<br>6.022 x 10²³</div>
         <div class="arrow-label">&larr; Div by N<sub>A</sub><br>Mult by N<sub>A</sub> &rarr;</div>
-        <div class="node parts">PARTICLES<br>(Atoms)</div>
+        <div class="node parts">PARTICLES<br>(Atoms/Mols)</div>
     </div>
 </div>
 
 <div class="card">
     <h2>4. Molarity: The Particle Crowd</h2>
     <p>Molarity measures how many moles are "crowded" into 1 Liter. If you add more water, the room gets bigger and the crowd thins out.</p>
-    <div style="height: 350px;"><canvas id="crowdChart"></canvas></div>
+    <div style="height: 300px;"><canvas id="crowdChart"></canvas></div>
     <div class="formula-box">Molarity (M) = Moles ÷ Liters</div>
     
     <div class="example-box">
@@ -94,19 +116,75 @@
 
 <div class="card">
     <h2>5. Dilution: The "Watering Down" Rule</h2>
-    <p>Dilution is adding water to a strong solution to make it weaker. <strong>The Secret:</strong> The amount of solute (the moles) never changes, only the water changes!</p>
-    <div style="height: 350px;"><canvas id="dilutionChart"></canvas></div>
-    <p><em>Notice the seesaw effect: As Volume goes UP, Molarity goes DOWN proportionally.</em></p>
+    <p>Dilution is adding water to a strong solution to make it weaker. <strong>The Secret:</strong> The amount of solute (the moles) never changes, only the water changes! Notice how the color gets lighter as the particles spread out into a larger volume.</p>
+    
+    <div class="beaker-container">
+        <div>
+            <div class="beaker-glass" style="width: 100px; height: 120px;">
+                <div class="beaker-liquid" style="height: 30%; background-color: rgba(59, 130, 246, 1);"></div>
+            </div>
+            <div class="beaker-label">Stock (Before)<br><span style="color: #3b82f6;">Dark & Concentrated</span></div>
+        </div>
+        
+        <div style="font-size: 2em; font-weight: bold; color: #94a3b8; padding-bottom: 50px; text-align: center;">
+            &rarr;<br><span style="font-size: 0.4em; text-transform: uppercase;">Add Water</span>
+        </div>
+        
+        <div>
+            <div class="beaker-glass" style="width: 160px; height: 180px;">
+                <div class="beaker-liquid" style="height: 80%; background-color: rgba(59, 130, 246, 0.25);"></div>
+            </div>
+            <div class="beaker-label">Diluted (After)<br><span style="color: #93c5fd;">Light & Weak</span></div>
+        </div>
+    </div>
+
     <div class="formula-box">M₁ × V₁ = M₂ × V₂</div>
     
     <div class="example-box">
         <h4>Example: Watering it Down</h4>
         <em>Problem:</em> You have 0.1 Liters of a very strong 5.0 M Stock Solution. You add water until the total volume reaches 1.0 Liter. What is the new Molarity?<br>
         <span class="math-step">Step 1: Set up M₁V₁ = M₂V₂</span>
-        5.0 M × 0.1 L = M₂ × 1.0 L<br>
+        (5.0 M) × (0.1 L) = (M₂) × (1.0 L)<br>
         <span class="math-step">Step 2: Solve for M₂ (New Molarity)</span>
         0.5 = M₂ × 1.0<br>
         <span class="math-result">New Molarity = 0.5 M</span>
+    </div>
+</div>
+
+<div class="card">
+    <h2>6. Step-by-Step Conversion Lab (Full Map Challenges)</h2>
+    
+    <div class="example-box">
+        <h4>Challenge 1: Mass to Particles (The Jewelry Shop)</h4>
+        <em>Problem:</em> You have a 19.7 gram gold (Au) ring. How many gold atoms are in it?<br>
+        <span class="math-step">Step 1: Go to the Hub (Grams &rarr; Moles)</span>
+        Divide by Molar Mass of Gold (197 g/mol).<br>
+        19.7 g ÷ 197 g/mol = 0.1 Moles<br>
+        <span class="math-step">Step 2: Go to Particles (Moles &rarr; Atoms)</span>
+        Multiply by Avogadro's Number.<br>
+        0.1 mol × (6.022 x 10²³) = <span class="math-result">6.022 x 10²² Atoms of Gold</span>
+    </div>
+
+    <div class="example-box">
+        <h4>Challenge 2: Molarity to Mass (The Medicine Cabinet)</h4>
+        <em>Problem:</em> You need to make 0.5 Liters of a 2.0 M Sugar (C₆H₁₂O₆) solution. How many grams of sugar powder do you need to weigh out?<br>
+        <span class="math-step">Step 1: Find the Moles needed (Molarity &rarr; Moles)</span>
+        Multiply Molarity by Liters.<br>
+        2.0 M × 0.5 L = 1.0 Mole<br>
+        <span class="math-step">Step 2: Convert Moles to Grams (Moles &rarr; Mass)</span>
+        Multiply by Molar Mass of Sugar (180 g/mol).<br>
+        1.0 mol × 180 g/mol = <span class="math-result">180 Grams of Sugar</span>
+    </div>
+
+    <div class="example-box">
+        <h4>Challenge 3: Particles to Molarity (The Water Treatment Lab)</h4>
+        <em>Problem:</em> A 2.0 Liter sample of water contains 3.011 x 10²³ molecules of a pollutant. What is the Molarity of the pollutant?<br>
+        <span class="math-step">Step 1: Go to the Hub (Particles &rarr; Moles)</span>
+        Divide by Avogadro's Number.<br>
+        (3.011 x 10²³) ÷ (6.022 x 10²³) = 0.5 Moles<br>
+        <span class="math-step">Step 2: Find Molarity (Moles &rarr; Concentration)</span>
+        Divide Moles by Volume.<br>
+        0.5 mol ÷ 2.0 L = <span class="math-result">0.25 M</span>
     </div>
 </div>
 
@@ -136,7 +214,7 @@
                 backgroundColor: '#10b981'
             }]
         },
-        options: { maintainAspectRatio: false }
+        options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
 
     // 4. Molarity Crowding Chart
@@ -152,31 +230,8 @@
         },
         options: { 
             maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
             scales: { y: { title: { display: true, text: 'Concentration Level (M)' } } }
-        }
-    });
-
-    // 5. Dilution Comparison Chart
-    new Chart(document.getElementById('dilutionChart'), {
-        type: 'bar',
-        data: {
-            labels: ['Before (Stock Solution)', 'After (Diluted Solution)'],
-            datasets: [
-                {
-                    label: 'Volume (Liters) - Goes UP',
-                    data: [0.1, 1.0],
-                    backgroundColor: '#3b82f6'
-                },
-                {
-                    label: 'Molarity (Concentration) - Goes DOWN',
-                    data: [5.0, 0.5],
-                    backgroundColor: '#f59e0b'
-                }
-            ]
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: { y: { title: { display: true, text: 'Value' } } }
         }
     });
 </script>
