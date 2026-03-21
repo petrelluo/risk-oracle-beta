@@ -471,8 +471,11 @@
         }
 
         function loadQuizQuestion() {
-            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = ""; inputEl.focus();
+            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = "";
+            
+            // FIXED: Enable inputs first, then focus
             inputEl.disabled = false; submitBtn.disabled = false;
+            inputEl.focus();
             
             currentCard = quizState.questions[quizState.currentIndex];
             
@@ -521,8 +524,11 @@
 
         function generateQuestion() {
             if (appMode !== 'practice') return;
-            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = ""; inputEl.focus();
+            feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = "";
+            
+            // FIXED: Enable inputs first, then focus
             inputEl.disabled = false; submitBtn.disabled = false;
+            inputEl.focus();
 
             const activeDeck = getActiveDeck();
             if (activeDeck.length === 0) {
