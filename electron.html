@@ -257,6 +257,17 @@
                     <li><strong>The Pauli Exclusion Principle:</strong> An orbital box holds exactly 2 electrons spinning in opposite directions (↑↓).</li>
                     <li><strong>Hund's Rule:</strong> When filling a section with multiple seats (like 'p' or 'd'), electrons spread out into empty seats first before pairing up.</li>
                 </ol>
+
+                <div style="background: #eef2ff; border-left: 4px solid #4f46e5; padding: 15px; margin-top: 20px; border-radius: 0 8px 8px 0;">
+                    <h4 style="margin-top: 0; color: #3730a3; font-size: 1.1em;">🔍 Decoding the Diagram (e.g., <code>3p<sup>6</sup></code>)</h4>
+                    <p style="margin-bottom: 5px;">What do the numbers and letters in the Aufbau diagram actually mean?</p>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li style="margin-bottom: 5px;"><strong>The First Number (e.g., <span style="color:#e63946; font-weight:bold;">3</span>):</strong> The Principal Shell (<strong>n</strong>). This is the main energy level or "floor" of the atom indicating distance from the nucleus.</li>
+                        <li style="margin-bottom: 5px;"><strong>The Letter (e.g., <span style="color:#2a9d8f; font-weight:bold;">p</span>):</strong> The Subshell. This is the specific 3D shape of the orbital.</li>
+                        <li><strong>The Superscript (e.g., <sup>6</sup>):</strong> The number of electrons currently occupying that subshell.</li>
+                    </ul>
+                </div>
+
             </div>
             <div class="rule-col" style="text-align: center;">
                 <h4>Aufbau Diagonal Rule</h4>
@@ -291,7 +302,7 @@
 
     <div class="card interactive-section">
         <h2>🎛️ Interactive Orbital Dashboard</h2>
-        <p>Notice the structure below! The thick gray tracks are the <strong>Principal Shells</strong>. Floating dynamically on those tracks are the <strong>3D Subshell Shapes</strong>. These shapes act as the "orbital seats." Watch how the bright electrons populate these specific volumetric shapes according to the rules!</p>
+        <p>Notice the structure below! The thick gray tracks are the <strong>Principal Shells (n)</strong>. Floating dynamically on those tracks are the <strong>3D Subshell Shapes</strong>. These shapes act as the "orbital seats." Watch how the bright electrons populate these specific volumetric shapes according to the rules!</p>
         
         <div class="control-panel">
             <button class="ctrl-btn" onclick="adjustElectrons(-1)">-</button>
@@ -458,6 +469,7 @@
                 svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter + bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
                 svgHTML += `<circle cx="${cx}" cy="${cy}" r="${shellCenter - bandWidth/2}" fill="none" stroke="#475569" stroke-width="1" opacity="0.8"/>`; 
                 
+                // Label the Shell Track (Top center)
                 svgHTML += `<text x="${cx}" y="${cy - shellCenter - (bandWidth/2) - 4}" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">Shell n=${n}</text>`;
 
                 // 2. Distribute Subshells inside this track
