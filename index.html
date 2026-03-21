@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>efinancialpal</title>
+    <meta name="description" content="efinancialpal - The first AI-driven behavioral risk oracle. Stop funding your emotions and protect your trading capital at efinancialpal.com.">
+    <meta name="keywords" content="efinancialpal, efinancialpal.com, trading psychology, risk management, AI trading coach, prop firm risk">
+    <title>efinancialpal | AI Trading Risk Management</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -26,19 +29,54 @@
             color: var(--text-main);
             line-height: 1.6;
         }
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             margin-top: 0;
             line-height: 1.2;
         }
         a {
             text-decoration: none;
             color: var(--accent);
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: var(--accent-hover);
         }
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
+        
+        /* Navigation & Logo */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #1e293b;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+        }
+        .logo-img {
+            max-height: 60px; /* Adjust based on preference */
+            width: auto;
+        }
+        .nav-links a {
+            color: var(--text-main);
+            margin-left: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
         .btn {
             display: inline-block;
             background-color: var(--accent);
@@ -53,12 +91,14 @@
         }
         .btn:hover {
             background-color: var(--accent-hover);
+            color: #fff;
         }
         
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 100px 20px;
+            padding: 80px 20px 100px 20px;
+            background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 100%);
             border-bottom: 1px solid #334155;
         }
         .hero h1 {
@@ -72,6 +112,31 @@
             color: var(--text-muted);
             max-width: 700px;
             margin: 0 auto 40px auto;
+        }
+
+        /* Integration Banner */
+        .integrations {
+            padding: 30px 0;
+            background-color: #0b1121;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+        .integrations p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .integration-logos {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            color: #475569;
+            font-weight: 800;
+            font-size: 1.2rem;
         }
 
         /* Problem & Solution Sections */
@@ -97,6 +162,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
+            align-items: center;
         }
         .grid-3 {
             display: grid;
@@ -108,6 +174,10 @@
             padding: 40px;
             border-radius: 12px;
             border: 1px solid #334155;
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
         }
         .card h3 {
             font-size: 1.5rem;
@@ -136,7 +206,7 @@
         /* Footer CTA */
         .footer-cta {
             text-align: center;
-            padding: 100px 20px;
+            padding: 80px 20px;
             background: linear-gradient(180deg, var(--bg-dark) 0%, #000000 100%);
         }
         .footer-cta h2 {
@@ -154,25 +224,57 @@
         .footer-links a:hover {
             color: #fff;
         }
+        .seo-footer-text {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #334155;
+        }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; gap: 20px; }
+            .nav-links a { margin: 0 15px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="brand-logo">
+                <img src="efinancialpal_logo.png" alt="efinancialpal - Trading Risk AI Logo" class="logo-img">
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#solutions">Solutions</a>
+                <a href="#how-it-works">How It Works</a>
+            </div>
+        </nav>
+    </div>
+
     <header class="hero">
         <div class="container">
             <h1>Stop Funding Your Emotions.<br>Protect Your Trading Capital.</h1>
-            <p>The first AI-driven behavioral risk oracle. We monitor real-time execution data to detect psychological "tilt" and enforce discipline before a single bad day wipes out a month of profit.</p>
-            <a href="#waitlist" class="btn">Request Early Access</a>
+            <p>Welcome to <strong>efinancialpal</strong>. The first AI-driven behavioral risk oracle. We monitor real-time execution data to detect psychological "tilt" and enforce discipline before a single bad day wipes out a month of profit.</p>
         </div>
     </header>
 
-    <section class="section">
+    <section class="integrations">
+        <div class="container">
+            <p>Native APIs built for the platforms you already use</p>
+            <div class="integration-logos">
+                <span>MetaTrader 5</span>
+                <span>NinjaTrader</span>
+                <span>TradeStation</span>
+                <span>Interactive Brokers</span>
+                <span>cTrader</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
         <div class="container">
             <div class="grid-2">
                 <div>
@@ -193,8 +295,12 @@
         </div>
     </section>
 
-    <section class="section" style="background-color: #0b1121;">
+    <section class="section" id="solutions" style="background-color: #0b1121;">
         <div class="container">
+            <div class="section-header">
+                <h2>Built for Traders, Scaled for Firms</h2>
+                <p>Whether you are managing your own portfolio or allocating capital to a team, efinancialpal acts as your ultimate defense mechanism.</p>
+            </div>
             <div class="grid-2">
                 <div class="card" style="border-top: 4px solid var(--accent);">
                     <h3 style="color: #fff;">For Proprietary Trading Firms</h3>
@@ -212,7 +318,7 @@
         </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="how-it-works">
         <div class="container">
             <div class="section-header">
                 <h2>Seamless Integration. Zero Execution Lag.</h2>
@@ -222,7 +328,7 @@
                 <div class="card" style="text-align: center;">
                     <h1 style="color: var(--text-muted); font-size: 3rem; margin-bottom: 10px;">1</h1>
                     <h3 style="color: #fff;">Connect</h3>
-                    <p style="color: var(--text-muted);">Securely link your supported trading platform or brokerage via our enterprise-grade API gateway.</p>
+                    <p style="color: var(--text-muted);">Securely link your supported trading platform or brokerage via our enterprise-grade API gateway at efinancialpal.com.</p>
                 </div>
                 <div class="card" style="text-align: center;">
                     <h1 style="color: var(--text-muted); font-size: 3rem; margin-bottom: 10px;">2</h1>
@@ -238,20 +344,21 @@
         </div>
     </section>
 
-    <footer class="footer-cta" id="waitlist">
+    <footer class="footer-cta">
         <div class="container">
             <h2>Trading is a game of survival.<br>Make sure you are here tomorrow.</h2>
-            <p style="color: var(--text-muted); margin-bottom: 30px;">Currently in closed beta for select Prop Firms and high-volume independent traders.</p>
-            <a href="mailto:ceo@yourstartup.com?subject=Early Access: Risk Oracle" class="btn" style="padding: 18px 36px; font-size: 1.1rem;">Join the Waitlist</a>
+            <p style="color: var(--text-muted); margin-bottom: 30px;">Currently operating as an invisible shield for top tier traders.</p>
             
-        <div class="footer-links">
-            <a href="#">API Documentation</a> | 
-            <a href="privacy.html">Privacy Policy</a> | 
-            <a href="terms.html">Terms of Service</a>
-        </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            
+            <div class="seo-footer-text">
+                <p>&copy; 2026 efinancialpal. All Rights Reserved. Visit us at efinancialpal.com for industry-leading automated trading risk management.</p>
+            </div>
         </div>
     </footer>
 
 </body>
-
 </html>
