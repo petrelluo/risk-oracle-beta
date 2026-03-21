@@ -251,6 +251,7 @@
     <div class="card">
         <h3>2. The Rules of Filling Seats</h3>
         <div class="rule-grid">
+            
             <div class="rule-col">
                 <ol>
                     <li><strong>The Aufbau Principle:</strong> Electrons are "lazy"—they sit in the lowest available energy seat first, following the diagonal path shown to the right.</li>
@@ -275,35 +276,8 @@
                         </ul>
                     </div>
                 </div>
-
-                <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 15px; margin-top: 20px; border-radius: 0 8px 8px 0;">
-                    <h4 style="margin-top: 0; color: #d35400; font-size: 1.1em;">📝 Step-by-Step Worked Examples</h4>
-                    <p style="margin-bottom: 10px;">Let's put the rules together to write the full configuration for a specific number of electrons.</p>
-                    
-                    <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f9e7d9;">
-                        <strong>Example 1: Oxygen (8 Electrons)</strong>
-                        <ol style="margin: 5px 0 0 0; padding-left: 20px; font-size: 0.95em;">
-                            <li>Fill the lowest energy seat first: <code>1s</code> holds 2. (6 electrons left) &rarr; <code>1s²</code></li>
-                            <li>Next is <code>2s</code>, holds 2. (4 left) &rarr; <code>1s² 2s²</code></li>
-                            <li>Next is <code>2p</code>. It holds up to 6, but we only have 4 left. &rarr; <code>1s² 2s² 2p⁴</code></li>
-                        </ol>
-                        <p style="margin: 5px 0 0 0; font-weight: bold; color: #b95d04;">Final: 1s² 2s² 2p⁴</p>
-                    </div>
-
-                    <div>
-                        <strong>Example 2: Titanium (22 Electrons)</strong>
-                        <p style="margin: 5px 0; font-size: 0.9em; color: #666;"><em>Notice how 4s fills BEFORE 3d following the diagonal rule!</em></p>
-                        <ol style="margin: 0; padding-left: 20px; font-size: 0.95em;">
-                            <li>Fill <code>1s</code>, <code>2s</code>, and <code>2p</code> (10 electrons used, 12 left) &rarr; <code>1s² 2s² 2p⁶</code></li>
-                            <li>Fill <code>3s</code> and <code>3p</code> (8 electrons used, 4 left) &rarr; ...<code>3s² 3p⁶</code></li>
-                            <li>Diagonal rule! Fill <code>4s</code> next (2 used, 2 left) &rarr; ...<code>4s²</code></li>
-                            <li>Put the last 2 into <code>3d</code>. &rarr; ...<code>3d²</code></li>
-                        </ol>
-                        <p style="margin: 5px 0 0 0; font-weight: bold; color: #b95d04;">Final: 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d²</p>
-                    </div>
-                </div>
-
             </div>
+
             <div class="rule-col" style="text-align: center;">
                 <h4>Aufbau Diagonal Rule</h4>
                 <svg viewBox="0 0 300 300" style="max-width: 100%; background: #2c3e50; border-radius: 8px; padding: 10px;">
@@ -331,8 +305,54 @@
                     <line x1="150" y1="130" x2="20" y2="240" class="auf-line" marker-end="url(#arrowhead)"/>
                     <line x1="200" y1="130" x2="20" y2="280" class="auf-line" marker-end="url(#arrowhead)"/>
                 </svg>
+
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; margin-top: 20px; border-radius: 8px; text-align: left;">
+                    <h4 style="margin-top: 0; color: #0f172a; font-size: 1.1em;">🧭 How to Follow the Arrows</h4>
+                    <p style="margin-bottom: 10px; font-size: 0.95em;">The diagram above shows the exact order of energy levels. You do not read it left-to-right! Instead, follow the red arrows <strong>diagonally from top-right to bottom-left</strong>.</p>
+                    <ul style="margin: 0; padding-left: 20px; font-size: 0.9em; color: #334155;">
+                        <li style="margin-bottom: 5px;">Arrow 1: Passes through <strong>1s</strong></li>
+                        <li style="margin-bottom: 5px;">Arrow 2: Passes through <strong>2s</strong></li>
+                        <li style="margin-bottom: 5px;">Arrow 3: Passes through <strong>2p</strong>, then <strong>3s</strong></li>
+                        <li style="margin-bottom: 5px;">Arrow 4: Passes through <strong>3p</strong>, then <strong>4s</strong></li>
+                        <li>Arrow 5: Passes through <strong>3d</strong>, <strong>4p</strong>, then <strong>5s</strong></li>
+                    </ul>
+                    <p style="margin: 10px 0 0 0; font-size: 0.9em; color: #e63946; font-weight: bold;">Notice: This diagonal path is why the 4s subshell fills BEFORE the 3d subshell!</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div style="background: #fdf2e9; border-left: 4px solid #e67e22; padding: 20px; margin-top: 25px; border-radius: 0 8px 8px 0;">
+            <h4 style="margin-top: 0; color: #d35400; font-size: 1.2em;">📝 Step-by-Step Worked Examples</h4>
+            <p style="margin-bottom: 15px;">Let's put the rules together to write the full configuration for a specific number of electrons.</p>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                
+                <div style="flex: 1; min-width: 250px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #fdba74;">
+                    <strong style="color: #c2410c; font-size: 1.1em;">Example 1: Oxygen (8 Electrons)</strong>
+                    <ol style="margin: 10px 0 0 0; padding-left: 20px; font-size: 0.95em;">
+                        <li style="margin-bottom: 5px;">Fill the lowest energy seat first: <code>1s</code> holds 2. (6 left) &rarr; <code>1s²</code></li>
+                        <li style="margin-bottom: 5px;">Next is <code>2s</code>, holds 2. (4 left) &rarr; <code>1s² 2s²</code></li>
+                        <li style="margin-bottom: 5px;">Next is <code>2p</code>. It holds up to 6, but we only have 4 left. &rarr; <code>1s² 2s² 2p⁴</code></li>
+                    </ol>
+                    <p style="margin: 15px 0 0 0; font-weight: bold; color: #b95d04; text-align: center; background: #fff3e0; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 1.1em;">Final: 1s² 2s² 2p⁴</p>
+                </div>
+
+                <div style="flex: 1; min-width: 250px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #fdba74;">
+                    <strong style="color: #c2410c; font-size: 1.1em;">Example 2: Titanium (22 Electrons)</strong>
+                    <p style="margin: 5px 0; font-size: 0.85em; color: #666;"><em>Notice how 4s fills BEFORE 3d following the diagonal rule!</em></p>
+                    <ol style="margin: 10px 0 0 0; padding-left: 20px; font-size: 0.95em;">
+                        <li style="margin-bottom: 5px;">Fill <code>1s</code>, <code>2s</code>, and <code>2p</code> (10 used, 12 left) &rarr; <code>1s² 2s² 2p⁶</code></li>
+                        <li style="margin-bottom: 5px;">Fill <code>3s</code> and <code>3p</code> (8 used, 4 left) &rarr; ...<code>3s² 3p⁶</code></li>
+                        <li style="margin-bottom: 5px;">Diagonal rule! Fill <code>4s</code> next (2 used, 2 left) &rarr; ...<code>4s²</code></li>
+                        <li style="margin-bottom: 5px;">Put the last 2 into <code>3d</code>. &rarr; ...<code>3d²</code></li>
+                    </ol>
+                    <p style="margin: 15px 0 0 0; font-weight: bold; color: #b95d04; text-align: center; background: #fff3e0; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 1.1em;">Final: 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d²</p>
+                </div>
+
             </div>
         </div>
+
     </div>
 
     <div class="card interactive-section">
