@@ -3,133 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Molar Master Guide</title>
+    <title>The Molar Master Guide v3</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 1100px; margin: 0 auto; padding: 20px; background-color: #f8fafc; }
-        header { text-align: center; padding: 40px; background: #0f172a; color: white; border-radius: 15px; margin-bottom: 30px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 8px solid #3b82f6; }
-        h2 { color: #1e293b; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        .formula-box { background: #eff6ff; padding: 20px; border-radius: 10px; border: 1px solid #bfdbfe; margin: 20px 0; font-size: 1.2em; text-align: center; color: #1e40af; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #1e293b; max-width: 1100px; margin: 0 auto; padding: 20px; background-color: #f1f5f9; }
+        header { text-align: center; padding: 50px; background: #1e293b; color: #f8fafc; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 35px; border-top: 6px solid #3b82f6; }
+        h2 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-top: 0; }
+        .formula-box { background: #f0f9ff; padding: 20px; border-radius: 12px; border: 1px solid #bae6fd; margin: 25px 0; font-size: 1.25em; text-align: center; color: #0369a1; font-weight: bold; }
         
         /* The Roadmap Visual */
-        .roadmap { display: grid; grid-template-columns: 1fr 120px 1fr 120px 1fr; align-items: center; text-align: center; margin: 40px 0; }
-        .node { padding: 20px; border-radius: 12px; color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .roadmap-grid { display: grid; grid-template-columns: 1fr 100px 1fr 100px 1fr; align-items: center; text-align: center; margin: 40px 0; }
+        .node { padding: 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .mass { background: #10b981; }
-        .hub { background: #ef4444; font-size: 1.2em; border: 4px solid #b91c1c; }
+        .hub { background: #ef4444; font-size: 1.3em; border: 3px solid #b91c1c; }
         .parts { background: #3b82f6; }
-        .mol-city { background: #8b5cf6; margin: 0 auto 20px auto; width: 200px; }
-        .arrow-text { font-size: 0.85em; color: #64748b; font-weight: bold; }
+        .molarity-city { background: #8b5cf6; margin: 0 auto 30px auto; width: 220px; }
+        .arrow-label { font-size: 0.8em; color: #64748b; font-weight: 700; text-transform: uppercase; }
         
-        .example-card { background: #fffbeb; border: 1px solid #fef3c7; padding: 20px; border-radius: 10px; margin-top: 15px; }
-        .step { color: #b45309; font-weight: bold; display: block; margin-top: 10px; }
-        .result { color: #15803d; font-weight: bold; font-size: 1.1em; }
+        .example-box { background: #fffbeb; border: 1px solid #fef3c7; padding: 25px; border-radius: 15px; margin-top: 20px; }
+        .math-step { color: #b45309; font-weight: bold; display: block; margin-top: 15px; }
+        .math-result { color: #15803d; font-weight: bold; font-size: 1.2em; border-left: 4px solid #15803d; padding-left: 10px; margin-top: 5px; display: block; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>The Molar Master Guide</h1>
-    <p>Visualizing Molar Mass, Particles, and Molarity Sweetness</p>
+    <h1>The Ultimate Molar Guide</h1>
+    <p>From the "Chemistry Dozen" to Liquid Concentration</p>
 </header>
 
 <div class="card">
-    <h2>1. Molar Mass: The "Identity" of the Substance</h2>
-    <p>Think of <strong>Molar Mass</strong> as the weight of one "truckload" (one mole). Every element has a different weight for the same count of atoms.</p>
-    <div style="height: 300px;"><canvas id="molarMassChart"></canvas></div>
-    <p><em>Even though these bars represent the same <strong>number</strong> of atoms (1 mole), their weights are vastly different because of how "heavy" each atom is.</em></p>
-    <div class="formula-box">Grams = Moles &times; Molar Mass (from Periodic Table)</div>
+    <h2>1. The Chemistry Dozen (Avogadro's Number)</h2>
+    <p>In the kitchen, we use a <strong>Dozen</strong> to group 12 eggs. In the lab, atoms are so small we need a much bigger group. We call this the <strong>Mole</strong>.</p>
+    <ul>
+        <li><strong>A Dozen:</strong> 12 items</li>
+        <li><strong>A Mole:</strong> 602,200,000,000,000,000,000,000 items (6.022 x 10²³)</li>
+    </ul>
+    <div style="height: 300px;"><canvas id="dozenChart"></canvas></div>
+    <p><em>This scale shows that a Mole is like a trillion, trillion times bigger than a dozen. It's the only way to get enough atoms to actually see them!</em></p>
 </div>
 
 <div class="card">
-    <h2>2. The 4-Way Molar Roadmap</h2>
-    <p>To go from one unit to another, you <strong>must</strong> stop at the red Moles Hub first.</p>
+    <h2>2. Molar Mass: The Identity Weight</h2>
+    <p>One mole of Carbon and one mole of Gold both have the <strong>same count</strong> of atoms, but Gold atoms are much "fatter."</p>
+    <div style="height: 300px;"><canvas id="massCompareChart"></canvas></div>
+    <div class="formula-box">Grams = Moles × Molar Mass</div>
+</div>
+
+<div class="card">
+    <h2>3. The 4-Way Molar Roadmap</h2>
+    <p>Use the <strong>Mole Hub</strong> as your transfer station to move between any units.</p>
     
-    <div class="node mol-city">MOLARITY (mol/L)</div>
-    <div style="text-align:center; color:#94a3b8; font-weight:bold;">&uarr; &darr; Use Volume (L)</div>
+    <div class="node molarity-city">MOLARITY (mol/L)<br><small>Concentration</small></div>
+    <div style="text-align:center; color:#94a3b8; font-weight:bold; margin-bottom:10px;">&uarr; &darr; Use Volume (L)</div>
     
-    <div class="roadmap">
+    <div class="roadmap-grid">
         <div class="node mass">MASS (Grams)</div>
-        <div class="arrow-text">&larr; Mult by MM<br>Divide by MM &rarr;</div>
-        <div class="node hub">THE MOLE<br>(Central Hub)</div>
-        <div class="arrow-text">&larr; Divide by N<sub>A</sub><br>Mult by N<sub>A</sub> &rarr;</div>
+        <div class="arrow-label">&larr; Mult by MM<br>Div by MM &rarr;</div>
+        <div class="node hub">THE MOLE<br>6.022 x 10²³</div>
+        <div class="arrow-label">&larr; Div by N<sub>A</sub><br>Mult by N<sub>A</sub> &rarr;</div>
         <div class="node parts">PARTICLES<br>(Atoms)</div>
     </div>
-    <p style="text-align:center; font-style:italic; color:#64748b;">N<sub>A</sub> = Avogadro's Number (6.022 x 10²³)</p>
 </div>
 
 <div class="card">
-    <h2>3. Molarity: The "Sweetness" Analogy</h2>
-    <p>Molarity is like the <strong>sweetness of tea</strong>. It depends on how much sugar (moles) you put into the cup (volume).</p>
-    <ul>
-        <li><strong>Low Molarity (0.1 M):</strong> One sugar cube in a gallon of water (Not sweet / Dilute).</li>
-        <li><strong>High Molarity (5.0 M):</strong> Fifty sugar cubes in a tiny espresso cup (Very sweet / Concentrated).</li>
-    </ul>
-    <div style="height: 300px;"><canvas id="molarityChart"></canvas></div>
-    <div class="formula-box">Molarity (M) = Moles &divide; Liters</div>
+    <h2>4. Molarity: The Particle Crowd</h2>
+    <p>Molarity measures how many moles are "crowded" into 1 Liter. If you add more water, the room gets bigger and the crowd thins out.</p>
+    <div style="height: 350px;"><canvas id="crowdChart"></canvas></div>
+    <div class="formula-box">Molarity (M) = Moles ÷ Liters</div>
 </div>
 
 <div class="card">
-    <h2>4. Practical Conversion Lab</h2>
+    <h2>5. Conversion Lab Examples</h2>
 
-    <div class="example-card">
-        <strong>Scenario 1: Weighing Gold Atoms (Mass &harr; Particles)</strong><br>
-        <em>Problem:</em> You have 3.011 x 10²³ atoms of Gold (Au). How much does this weigh in grams?<br>
-        <span class="step">Step 1: Go to the Hub (Particles to Moles)</span>
-        (3.011 x 10²³) &divide; (6.022 x 10²³) = 0.5 Moles<br>
-        <span class="step">Step 2: Go to Grams (Moles to Mass)</span>
-        0.5 mol &times; 196.97 g/mol (Gold's Molar Mass) = <span class="result">98.49 Grams</span>
+    <div class="example-box">
+        <strong>Example 1: The Gold atoms to Weight</strong><br>
+        <em>Problem:</em> You have 1.204 x 10²⁴ atoms of Gold. What is the mass?<br>
+        <span class="math-step">Step 1: Count the "Truckloads" (Moles)</span>
+        (1.204 x 10²⁴) ÷ (6.022 x 10²³) = 2.0 Moles<br>
+        <span class="math-step">Step 2: Find the Weight (Mass)</span>
+        2.0 mol × 196.97 g/mol (Gold MM) = <span class="math-result">393.94 Grams</span>
     </div>
 
-    <div class="example-card">
-        <strong>Scenario 2: Making "Sweet" Salt Water (Molarity &harr; Mass)</strong><br>
-        <em>Problem:</em> You want 2 Liters of a 0.5 M Salt (NaCl) solution. How many grams of salt do you need?<br>
-        <span class="step">Step 1: Find the Moles needed (Molarity to Moles)</span>
-        0.5 M &times; 2.0 L = 1.0 Mole of Salt<br>
-        <span class="step">Step 2: Find the weight (Moles to Mass)</span>
-        1.0 mol &times; 58.44 g/mol (NaCl Molar Mass) = <span class="result">58.44 Grams</span>
+    <div class="example-box">
+        <strong>Example 2: The Salty Liters</strong><br>
+        <em>Problem:</em> How many grams of Salt (NaCl) are in 3.0 Liters of a 1.0 M solution?<br>
+        <span class="math-step">Step 1: Find total Moles in the liquid</span>
+        1.0 M × 3.0 L = 3.0 Moles<br>
+        <span class="math-step">Step 2: Convert Moles to Grams</span>
+        3.0 mol × 58.44 g/mol (NaCl MM) = <span class="math-result">175.32 Grams</span>
     </div>
 </div>
 
 <script>
-    // Molar Mass Chart
-    new Chart(document.getElementById('molarMassChart'), {
+    // Dozen vs Mole Comparison
+    new Chart(document.getElementById('dozenChart'), {
         type: 'bar',
         data: {
-            labels: ['Hydrogen (H)', 'Carbon (C)', 'Oxygen (O)', 'Gold (Au)'],
+            labels: ['Dozen (12)', 'Billion (10⁹)', 'Trillion (10¹²)', 'Mole (10²³+)'],
             datasets: [{
-                label: 'Weight of 1 Mole (Grams)',
-                data: [1.01, 12.01, 16.00, 196.97],
-                backgroundColor: ['#34d399', '#475569', '#f87171', '#fbbf24'],
-                borderRadius: 5
+                label: 'Scale (Power of 10)',
+                data: [1.1, 9, 12, 23.7],
+                backgroundColor: '#ef4444'
             }]
         },
-        options: {
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true, title: { display: true, text: 'Grams' } } }
-        }
+        options: { indexAxis: 'y', maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
 
-    // Molarity Chart
-    new Chart(document.getElementById('molarityChart'), {
-        type: 'line',
+    // Molar Mass Chart
+    new Chart(document.getElementById('massCompareChart'), {
+        type: 'bar',
         data: {
-            labels: ['0.1L (Big Bottle)', '0.5L', '1.0L', '2.0L', '5.0L (Bucket)'],
+            labels: ['Hydrogen', 'Carbon', 'Oxygen', 'Gold'],
             datasets: [{
-                label: 'Sweetness (Molarity) of 1 Mole of Sugar',
-                data: [10, 2, 1, 0.5, 0.2],
-                borderColor: '#8b5cf6',
-                backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                fill: true,
-                tension: 0.4,
-                pointRadius: 8,
-                pointBackgroundColor: '#8b5cf6'
+                label: 'Grams per 1 Mole',
+                data: [1.01, 12.01, 16.00, 196.97],
+                backgroundColor: '#10b981'
             }]
         },
-        options: {
+        options: { maintainAspectRatio: false }
+    });
+
+    // Molarity Crowding Chart
+    new Chart(document.getElementById('crowdChart'), {
+        type: 'bar',
+        data: {
+            labels: ['0.1L (Crowded!)', '0.5L (Tight)', '1.0L (Standard)', '2.0L (Roomy)', '5.0L (Spaced Out)'],
+            datasets: [{
+                label: 'Particles per unit of space (Molarity)',
+                data: [10, 2, 1, 0.5, 0.2],
+                backgroundColor: ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe']
+            }]
+        },
+        options: { 
             maintainAspectRatio: false,
-            scales: { y: { title: { display: true, text: 'Concentration (M)' } } }
+            scales: { y: { title: { display: true, text: 'Concentration Level (M)' } } }
         }
     });
 </script>
