@@ -16,9 +16,16 @@
             --warning: #f59e0b;
             --error: #dc2626;
             --border: #e2e8f0;
+            
+            /* Atom Colors */
             --atom-h: #f1f5f9;
             --atom-o: #ef4444;
             --atom-n: #3b82f6;
+            --atom-na: #8b5cf6;
+            --atom-p: #f97316;
+            --atom-ca: #14b8a6;
+            --atom-cl: #84cc16;
+            --atom-c: #1e293b;
         }
 
         body {
@@ -108,6 +115,17 @@
             min-width: 200px;
             padding: 15px;
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .example-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .example-card h3 {
@@ -142,7 +160,7 @@
         }
 
         .sim-header { margin-bottom: 20px; }
-        .sim-select { padding: 10px; font-size: 1.1em; border-radius: 8px; border: none; font-weight: bold; }
+        .sim-select { padding: 10px; font-size: 1.1em; border-radius: 8px; border: none; font-weight: bold; max-width: 100%; }
 
         .equation-builder {
             display: flex;
@@ -165,7 +183,7 @@
             border-radius: 10px;
         }
 
-        /* Updated Stepper for Vertical Layout */
+        /* Vertical Stepper Layout */
         .stepper {
             display: flex;
             flex-direction: column;
@@ -228,9 +246,15 @@
             transition: all 0.3s ease;
         }
 
+        /* Dynamic Atom Colors */
         .bg-h { background: var(--atom-h); }
         .bg-o { background: var(--atom-o); color: white; }
         .bg-n { background: var(--atom-n); color: white; }
+        .bg-na { background: var(--atom-na); color: white; }
+        .bg-p { background: var(--atom-p); color: white; }
+        .bg-ca { background: var(--atom-ca); color: white; }
+        .bg-cl { background: var(--atom-cl); color: white; }
+        .bg-c { background: var(--atom-c); color: white; }
 
         .status-banner {
             margin-top: 20px;
@@ -285,14 +309,17 @@
 
         <div class="example-grid">
             <div class="example-card" style="background: #eff6ff; border-left: 4px solid #3b82f6;">
+                <img class="example-img" src="https://loremflickr.com/320/240/campfire,fire/all" alt="Campfire">
                 <h3 style="color: #1e40af;">🔥 A Campfire</h3>
                 <p>Wood combusts with oxygen in the air to release heat, light, carbon dioxide gas, and water vapor.</p>
             </div>
             <div class="example-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
+                <img class="example-img" src="https://loremflickr.com/320/240/rust,metal/all" alt="Rusting Metal">
                 <h3 style="color: #991b1b;">🚲 Rusting Metal</h3>
                 <p>An old bicycle left in the rain. The iron (Fe) reacts with oxygen (O₂) to form a crumbly new substance: Iron Oxide (rust).</p>
             </div>
             <div class="example-card" style="background: #f0fdf4; border-left: 4px solid #10b981;">
+                <img class="example-img" src="https://loremflickr.com/320/240/cake,baking/all" alt="Baking a Cake">
                 <h3 style="color: #065f46;">🧁 Baking a Cake</h3>
                 <p>Baking powder reacts with heat to create trapped carbon dioxide gas bubbles, making the cake rise and become fluffy.</p>
             </div>
@@ -402,8 +429,9 @@
         <div class="sim-header">
             <h2>Step 6: Interactive Balancing Lab</h2>
             <select class="sim-select" id="reaction-select" onchange="loadReaction()">
-                <option value="water">Synthesizing Water (H₂ + O₂ &rarr; H₂O)</option>
-                <option value="ammonia">Synthesizing Ammonia (N₂ + H₂ &rarr; NH₃)</option>
+                <option value="water">Synthesis (H₂ + O₂ &rarr; H₂O)</option>
+                <option value="ammonia">Synthesis (N₂ + H₂ &rarr; NH₃)</option>
+                <option value="calcium_phosphate">Double Replacement (Na₃PO₄ + CaCl₂ &rarr; Ca₃(PO₄)₂ + NaCl)</option>
             </select>
         </div>
 
@@ -516,6 +544,16 @@
             products: [
                 { id: 'p1', formula: 'NH₃', atoms: { n: 1, h: 3 }, coeff: 1 }
             ]
+        },
+        calcium_phosphate: {
+            reactants: [
+                { id: 'r1', formula: 'Na₃PO₄', atoms: { na: 3, p: 1, o: 4 }, coeff: 1 },
+                { id: 'r2', formula: 'CaCl₂', atoms: { ca: 1, cl: 2 }, coeff: 1 }
+            ],
+            products: [
+                { id: 'p1', formula: 'Ca₃(PO₄)₂', atoms: { ca: 3, p: 2, o: 8 }, coeff: 1 },
+                { id: 'p2', formula: 'NaCl', atoms: { na: 1, cl: 1 }, coeff: 1 }
+            ]
         }
     };
 
@@ -577,8 +615,10 @@
 
     function updateScale() {
         const data = reactions[currentReaction];
-        let rCounts = { h: 0, o: 0, n: 0 };
-        let pCounts = { h: 0, o: 0, n: 0 };
+        
+        // Dynamically track any atom type provided
+        let rCounts = {};
+        let pCounts = {};
 
         const rCont = document.getElementById('reactants-container');
         const pCont = document.getElementById('products-container');
@@ -587,7 +627,7 @@
         data.reactants.forEach(r => {
             for (let atom in r.atoms) {
                 let total = r.atoms[atom] * r.coeff;
-                rCounts[atom] += total;
+                rCounts[atom] = (rCounts[atom] || 0) + total;
                 for(let i=0; i<total; i++) rCont.appendChild(createAtom(atom));
             }
         });
@@ -595,7 +635,7 @@
         data.products.forEach(p => {
             for (let atom in p.atoms) {
                 let total = p.atoms[atom] * p.coeff;
-                pCounts[atom] += total;
+                pCounts[atom] = (pCounts[atom] || 0) + total;
                 for(let i=0; i<total; i++) pCont.appendChild(createAtom(atom));
             }
         });
@@ -606,12 +646,35 @@
     function createAtom(type) {
         const div = document.createElement('div');
         div.className = `atom bg-${type}`;
-        div.innerText = type.toUpperCase();
+        
+        // Handle two letter atom symbols gracefully (Na, Ca, Cl)
+        let label = type.charAt(0).toUpperCase() + type.slice(1);
+        if (label.length > 2) label = label.substring(0,2);
+        
+        div.innerText = label;
         return div;
     }
 
     function checkBalance(r, p) {
-        let isBalanced = (r.h === p.h && r.o === p.o && r.n === p.n) && (r.h > 0 || r.o > 0 || r.n > 0);
+        let isBalanced = true;
+        let hasAtoms = false;
+        
+        // Get all unique atoms present in either reactants or products
+        let allAtoms = new Set([...Object.keys(r), ...Object.keys(p)]);
+        
+        for (let atom of allAtoms) {
+            let rCount = r[atom] || 0;
+            let pCount = p[atom] || 0;
+            
+            if (rCount !== pCount) {
+                isBalanced = false;
+                break;
+            }
+            if (rCount > 0) hasAtoms = true;
+        }
+
+        isBalanced = isBalanced && hasAtoms;
+        
         const banner = document.getElementById('status-banner');
         
         if (isBalanced) {
