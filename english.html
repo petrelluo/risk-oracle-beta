@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocab Master: Audio Flashcards</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 { margin: 0 0 10px 0; color: var(--primary); }
+        
+        .progress-text {
+            color: var(--text-light);
+            font-weight: bold;
+        }
+
+        /* Flashcard CSS */
+        .scene {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card-front {
+            background-color: var(--card-bg);
+            border: 2px solid #e5e7eb;
+        }
+
+        .card-back {
+            background-color: var(--primary);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .word { font-size: 3rem; font-weight: 800; margin-bottom: 20px; text-transform: capitalize;}
+        .definition { font-size: 1.5rem; line-height: 1.5; }
+        .hint { font-size: 0.9rem; opacity: 0.7; margin-top: auto; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-nav {
+            background-color: white;
+            color: var(--text-main);
+            border: 2px solid #e5e7eb;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-nav:hover { background-color: #f9fafb; border-color: #d1d5db; }
+
+        .btn-audio {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-audio:hover { background-color: var(--primary-hover); }
+
+        .btn-shuffle {
+            background-color: #10b981;
+            color: white;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-shuffle:hover { background-color: #059669; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Vocab Master</h1>
+        <div class="progress-text" id="progress">Card 1 of 50</div>
+    </header>
+
+    <div class="scene" id="scene">
+        <div class="card" id="flashcard">
+            <div class="card-face card-front">
+                <div class="word" id="wordDisplay">Loading...</div>
+                <div class="hint">Click anywhere on card to flip</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="definition" id="defDisplay">Definition goes here...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-audio" onclick="speakCurrentWord()">
+            <span>🔊</span> Listen to Word
+        </button>
+        <button class="btn-nav" onclick="prevCard()">&larr; Previous</button>
+        <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
+        <button class="btn-shuffle" onclick="shuffleDeck()">🔀 Shuffle Deck</button>
+    </div>
+
+    <script>
+        // Data structure containing the 50 words and definitions
+        const vocabData = [
+            { word: "victory lap", definition: "A celebratory circuit or appearance after a win or success." },
+            { word: "subdued", definition: "Quiet, reflective, or depressed; soft and restrained." },
+            { word: "wishy washy", definition: "Feeble or bland in character; lacking clear, firm decisions." },
+            { word: "in a bid", definition: "In an attempt or effort to achieve something." },
+            { word: "level-headed", definition: "Calm and sensible, especially in difficult situations." },
+            { word: "hellacious", definition: "Very great, bad, or overwhelming; extraordinarily difficult." },
+            { word: "telegenic", definition: "Having an appearance or manner that is highly attractive on television." },
+            { word: "shake the cage", definition: "To cause a disturbance, provoke, or challenge the status quo." },
+            { word: "butterfingers", definition: "A clumsy person who frequently drops things." },
+            { word: "pacifist", definition: "A person who believes that war and violence are unjustifiable." },
+            { word: "unctuous", definition: "Excessively or ingratiatingly flattering; oily; smug." },
+            { word: "vigil", definition: "A period of keeping awake during the time usually spent asleep, especially to keep watch or pray." },
+            { word: "ravish", definition: "To seize and carry off by force; to fill with intense delight or emotion." },
+            { word: "zing", definition: "Energy, enthusiasm, or liveliness; a striking or amusing remark." },
+            { word: "dangle the carrot", definition: "To tempt someone with an attractive offer or reward to persuade them to do something." },
+            { word: "tread water", definition: "To maintain one's position without making progress; to expend effort just to stay afloat." },
+            { word: "obtuse", definition: "Annoyingly insensitive or slow to understand." },
+            { word: "cry someone a river", definition: "Used sarcastically to tell someone complaining that one has no sympathy for them." },
+            { word: "icy", definition: "Covered with ice; extremely cold; unfriendly and hostile." },
+            { word: "self-possessed", definition: "Calm, confident, and in control of one's feelings." },
+            { word: "awe-inspiring", definition: "Arousing awe through being impressive, formidable, or magnificent." },
+            { word: "sappy", definition: "Excessively sentimental or emotional." },
+            { word: "dead-eyed", definition: "Having a blank, emotionless, or soulless gaze." },
+            { word: "shut your pie hole", definition: "A rude slang expression telling someone to be quiet or shut up." },
+            { word: "up in arms", definition: "Very angry and protesting loudly about something." },
+            { word: "curtail", definition: "To reduce in extent or quantity; impose a restriction on." },
+            { word: "stage fright", definition: "Nervousness felt by a person performing or speaking in front of an audience." },
+            { word: "anti-Semitism", definition: "Hostility to or prejudice against Jewish people." },
+            { word: "progressive", definition: "Happening or developing gradually; favoring social reform or new ideas." },
+            { word: "lip gloss", definition: "A cosmetic applied to the lips to provide a glossy finish and sometimes color." },
+            { word: "dox", definition: "To publish private or identifying information about a particular individual on the internet with malicious intent." },
+            { word: "fish bowl", definition: "A state of affairs in which one's activities are scrutinized by others; lacking privacy." },
+            { word: "wheel and deal", definition: "To engage in commercial or political scheming, especially shrewdly or unscrupulously." },
+            { word: "divvy up", definition: "To divide or share something among a group of people." },
+            { word: "unwind", definition: "To relax after a period of work or tension." },
+            { word: "prudish", definition: "Having a tendency to be easily shocked by matters relating to sex or nudity; excessively proper." },
+            { word: "weak source", definition: "An unreliable, unverified, or untrustworthy origin of information." },
+            { word: "blow the whistle", definition: "To expose illegal or unethical activity within an organization." },
+            { word: "nester", definition: "A person who builds or occupies a nest; someone settling comfortably into a home." },
+            { word: "centaur", definition: "A mythological creature with the upper body of a human and the lower body of a horse." },
+            { word: "infamy", definition: "The state of being well known for some bad quality or deed." },
+            { word: "boom box", definition: "A portable, battery-operated radio and cassette/CD player with powerful speakers." },
+            { word: "hair shirt", definition: "A shirt of haircloth worn by ascetics; a self-imposed punishment or penance." },
+            { word: "decathlon", definition: "An athletic event taking place over two days, in which each competitor takes part in ten events." },
+            { word: "testify", definition: "To give evidence as a witness in a law court." },
+            { word: "delinquency", definition: "Minor crime, especially that committed by young people; neglect of one's duty." },
+            { word: "intramural", definition: "Situated or done within the walls of a building or institution (often referring to sports within one school)." },
+            { word: "bulldozer", definition: "A powerful tractor for clearing ground; a domineering person who overpowers others." },
+            { word: "steamroller", definition: "A heavy vehicle used to flatten roads; to crush or overwhelm opposition." },
+            { word: "hitch a ride", definition: "To get a free ride in someone else's vehicle." }
+        ];
+
+        let currentDeck = [...vocabData];
+        let currentIndex = 0;
+        const flashcard = document.getElementById('flashcard');
+
+        // Flip logic
+        flashcard.addEventListener('click', () => {
+            flashcard.classList.toggle('is-flipped');
+            // Optional: Speak definition when flipped
+            if(flashcard.classList.contains('is-flipped')) {
+                speakText(currentDeck[currentIndex].definition, 0.9);
+            }
+        });
+
+        function updateUI() {
+            // Ensure card is showing front before changing text
+            flashcard.classList.remove('is-flipped');
+            
+            // Wait slightly for the flip animation to start before swapping text
+            setTimeout(() => {
+                document.getElementById('wordDisplay').textContent = currentDeck[currentIndex].word;
+                document.getElementById('defDisplay').textContent = currentDeck[currentIndex].definition;
+                document.getElementById('progress').textContent = `Card ${currentIndex + 1} of ${currentDeck.length}`;
+            }, 150);
+        }
+
+        function nextCard() {
+            if (currentIndex < currentDeck.length - 1) {
+                currentIndex++;
+                updateUI();
+            } else {
+                // Loop back to start
+                currentIndex = 0;
+                updateUI();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateUI();
+            } else {
+                // Loop to end
+                currentIndex = currentDeck.length - 1;
+                updateUI();
+            }
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates Shuffle
+            for (let i = currentDeck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
+            }
+            currentIndex = 0;
+            updateUI();
+        }
+
+        // Web Speech API for Audio
+        function speakText(text, rate = 1.0) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop any current speech
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = rate; // Speed of speech
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser doesn't support text-to-speech!");
+            }
+        }
+
+        function speakCurrentWord() {
+            // Speak the word clearly and slightly slower
+            speakText(currentDeck[currentIndex].word, 0.85);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flashcard.classList.toggle('is-flipped');
+            } else if (e.code === 'ArrowRight') {
+                nextCard();
+            } else if (e.code === 'ArrowLeft') {
+                prevCard();
+            }
+        });
+
+        // Initialize first card
+        updateUI();
+
+    </script>
+</body>
+</html>
