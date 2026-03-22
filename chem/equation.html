@@ -117,15 +117,20 @@
             border-radius: 8px;
             display: flex;
             flex-direction: column;
+            align-items: center; /* Center the new SVG visuals */
         }
 
-        .example-img {
+        /* SVG Visualization Container */
+        .reaction-visual {
             width: 100%;
             height: 140px;
-            object-fit: cover;
-            border-radius: 6px;
             margin-bottom: 12px;
+            border-radius: 6px;
             border: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
         }
 
         .example-card h3 {
@@ -134,11 +139,13 @@
             align-items: center;
             gap: 8px;
             font-size: 1.2em;
+            width: 100%;
         }
 
         .example-card p {
             font-size: 0.9em;
             margin-bottom: 0;
+            width: 100%;
         }
 
         .rxn-type-box {
@@ -154,7 +161,7 @@
         .simulator {
             background: #1e293b;
             color: white;
-            padding: 30px;
+            padding: 30px 15px; /* Reduced side padding for tighter look */
             border-radius: 12px;
             text-align: center;
         }
@@ -162,25 +169,34 @@
         .sim-header { margin-bottom: 20px; }
         .sim-select { padding: 10px; font-size: 1.1em; border-radius: 8px; border: none; font-weight: bold; max-width: 100%; }
 
+        /* Step 6 Specific Enhancements for Single-Line Display */
         .equation-builder {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 2em;
+            flex-wrap: nowrap; /* Prevent wrapping */
+            overflow-x: auto;  /* Allow horizontal scroll on mobile if needed */
+            gap: 10px;         /* Tighter gap */
             margin: 30px 0;
             font-weight: bold;
+            padding-bottom: 10px; /* Space for potential scrollbar */
+        }
+
+        /* Standard Equation symbols in Step 6 (+ and arrow) */
+        .equation-builder > div:not(.molecule-group) {
+            font-size: 1.8em; /* Slightly smaller symbols to match formulas */
+            color: #94a3b8;
         }
 
         .molecule-group {
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 15px;
+            gap: 10px; /* Tighter gap */
             background: #334155;
-            padding: 10px 20px;
+            padding: 8px 15px; /* Reduced padding */
             border-radius: 10px;
+            flex-shrink: 0; /* Prevents molecules from squishing */
         }
 
         /* Vertical Stepper Layout */
@@ -210,7 +226,12 @@
         
         .coeff { color: #fbbf24; font-size: 1.2em; min-width: 20px; text-align: center; line-height: 1;}
 
-        .formula-text { font-family: 'Segoe UI', sans-serif; font-size: 1.1em; color: white; }
+        .formula-text { 
+            font-family: 'Segoe UI', sans-serif; 
+            font-size: 1.05em; /* Reduced size to fit long formulas */
+            color: white; 
+            white-space: nowrap; /* Formulas do not wrap internally */
+        }
 
         .atom-scale {
             display: grid;
@@ -309,17 +330,53 @@
 
         <div class="example-grid">
             <div class="example-card" style="background: #eff6ff; border-left: 4px solid #3b82f6;">
-                <img class="example-img" src="https://loremflickr.com/320/240/campfire,fire/all" alt="Campfire">
+                <div class="reaction-visual" style="background:linear-gradient(#0f172a, #1e293b)">
+                    <svg viewBox="0 0 100 100" width="100" height="100">
+                        <rect x="20" y="70" width="60" height="10" rx="3" fill="#854d0e"/>
+                        <rect x="25" y="62" width="50" height="8" rx="3" fill="#a16207" transform="rotate(10 50 66)"/>
+                        <rect x="25" y="62" width="50" height="8" rx="3" fill="#a16207" transform="rotate(-10 50 66)"/>
+                        <ellipse cx="50" cy="65" rx="15" ry="10" fill="#ea580c" opacity="0.8"/>
+                        <path d="M50 10 C60 40 75 50 70 70 C65 85 35 85 30 70 C25 50 40 40 50 10Z" fill="#f97316"/>
+                        <path d="M50 25 C55 45 65 52 62 65 C60 75 40 75 38 65 C35 52 45 45 50 25Z" fill="#fbbf24"/>
+                        <ellipse cx="60" cy="30" rx="8" ry="6" fill="#94a3b8" opacity="0.6"/>
+                        <ellipse cx="40" cy="20" rx="10" ry="8" fill="#cbd5e1" opacity="0.5"/>
+                    </svg>
+                </div>
                 <h3 style="color: #1e40af;">🔥 A Campfire</h3>
                 <p>Wood combusts with oxygen in the air to release heat, light, carbon dioxide gas, and water vapor.</p>
             </div>
             <div class="example-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
-                <img class="example-img" src="https://loremflickr.com/320/240/rust,metal/all" alt="Rusting Metal">
+                <div class="reaction-visual" style="background:#e2e8f0">
+                    <svg viewBox="0 0 100 100" width="100" height="100">
+                        <path d="M30 40 L70 40 A10 10 0 0 1 70 60 L30 60 A10 10 0 0 1 30 40Z" fill="#94a3b8" stroke="#475569" stroke-width="3"/>
+                        <path d="M20 50 H80" stroke="#475569" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M32 44 L68 44" stroke="white" stroke-width="1" opacity="0.5"/>
+                        <circle cx="35" cy="48" r="4" fill="#c2410c"/>
+                        <circle cx="50" cy="55" r="5" fill="#9a3412"/>
+                        <circle cx="65" cy="45" r="3.5" fill="#ea580c"/>
+                        <ellipse cx="45" cy="43" rx="6" ry="3" fill="#c2410c" transform="rotate(-15 45 43)"/>
+                        <ellipse cx="60" cy="57" rx="5" ry="4" fill="#9a3412" transform="rotate(10 60 57)"/>
+                        <path d="M75 50 C78 52 82 50 85 53" stroke="#ea580c" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
                 <h3 style="color: #991b1b;">🚲 Rusting Metal</h3>
                 <p>An old bicycle left in the rain. The iron (Fe) reacts with oxygen (O₂) to form a crumbly new substance: Iron Oxide (rust).</p>
             </div>
             <div class="example-card" style="background: #f0fdf4; border-left: 4px solid #10b981;">
-                <img class="example-img" src="https://loremflickr.com/320/240/cake,baking/all" alt="Baking a Cake">
+                <div class="reaction-visual" style="background:#fff7ed">
+                    <svg viewBox="0 0 100 100" width="100" height="100">
+                        <path d="M30 60 L70 60 L65 90 L35 90Z" fill="#a16207"/>
+                        <path d="M30 60 L35 90 M40 60 L42 90 M50 60 L50 90 M60 60 L58 90 M70 60 L65 90" stroke="#854d0e" stroke-width="1"/>
+                        <path d="M30 60 C30 40 70 40 70 60" fill="#fbbf24"/>
+                        <path d="M30 60 C35 30 65 30 70 60" fill="#f59e0b" opacity="0.8"/>
+                        <circle cx="45" cy="50" r="3" fill="#ea580c" opacity="0.7"/>
+                        <circle cx="55" cy="45" r="4" fill="#c2410c" opacity="0.6"/>
+                        <circle cx="62" cy="55" r="2.5" fill="#f97316" opacity="0.8"/>
+                        <circle cx="38" cy="58" r="2" fill="#ea580c" opacity="0.7"/>
+                        <ellipse cx="50" cy="53" rx="5" ry="3" fill="white" opacity="0.4"/>
+                        <ellipse cx="58" cy="48" rx="4" ry="2" fill="white" opacity="0.3"/>
+                    </svg>
+                </div>
                 <h3 style="color: #065f46;">🧁 Baking a Cake</h3>
                 <p>Baking powder reacts with heat to create trapped carbon dioxide gas bubbles, making the cake rise and become fluffy.</p>
             </div>
