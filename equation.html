@@ -85,6 +85,33 @@
             box-sizing: border-box;
         }
 
+        .example-grid {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .example-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .example-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2em;
+        }
+
+        .example-card p {
+            font-size: 0.9em;
+            margin-bottom: 0;
+        }
+
         /* Simulator Styles */
         .simulator {
             background: #1e293b;
@@ -222,7 +249,24 @@
 
     <div class="card">
         <h2>Introduction: The Ultimate Lego Set</h2>
-        <p>A <strong>chemical reaction</strong> is the amazing process where matter transforms. But to understand how it works, you must understand the golden rule of chemistry: <strong>The Law of Conservation of Mass</strong>.</p>
+        <p>A <strong>chemical reaction</strong> is the amazing process where matter transforms. It happens all around us, every single day! Before we dive into the math of chemistry, let's look at a few real-world examples:</p>
+
+        <div class="example-grid">
+            <div class="example-card" style="background: #eff6ff; border-left: 4px solid #3b82f6;">
+                <h3 style="color: #1e40af;">🔥 A Campfire</h3>
+                <p>Wood combusts with oxygen in the air to release heat, light, carbon dioxide gas, and water vapor.</p>
+            </div>
+            <div class="example-card" style="background: #fef2f2; border-left: 4px solid #ef4444;">
+                <h3 style="color: #991b1b;">🚲 Rusting Metal</h3>
+                <p>An old bicycle left in the rain. The iron (Fe) reacts with oxygen (O₂) to form a crumbly new substance: Iron Oxide (rust).</p>
+            </div>
+            <div class="example-card" style="background: #f0fdf4; border-left: 4px solid #10b981;">
+                <h3 style="color: #065f46;">🧁 Baking a Cake</h3>
+                <p>Baking powder reacts with heat to create trapped carbon dioxide gas bubbles, making the cake rise and become fluffy.</p>
+            </div>
+        </div>
+
+        <p>To understand how these transformations work, you must understand the golden rule of chemistry: <strong>The Law of Conservation of Mass</strong>.</p>
         <p>Think of atoms like Lego blocks. When a chemical reaction happens, you do not get any brand new Legos out of nowhere, and none of your old Legos magically disappear. You simply take apart your starting creations (the <strong>Reactants</strong>) and use those <em>exact same blocks</em> to build completely new things (the <strong>Products</strong>).</p>
         <p>Below is a graph showing the combustion of Methane (CH<sub>4</sub> + 2O<sub>2</sub> &rarr; CO<sub>2</sub> + 2H<sub>2</sub>O). Notice how the chemical substances change completely, but the actual count of every single atom stays exactly the same!</p>
         
