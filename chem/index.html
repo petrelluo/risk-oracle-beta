@@ -1,0 +1,26 @@
+---
+title: Directory Listing
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repository Directory</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 20px; line-height: 1.6; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 8px; }
+        a { text-decoration: none; color: #2563eb; font-weight: 500; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Files in this Directory</h1>
+    <ul>
+        {% for file in site.static_files %}
+            <li>📄 <a href="{{ site.baseurl }}{{ file.path }}">{{ file.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
