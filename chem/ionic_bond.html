@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ionic & Metallic Bonding Study Guide</title>
+    <title>Chemical Bonding: Ionic, Metallic & Covalent</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -11,6 +11,7 @@
             --primary-dark: #3730a3;
             --ionic: #e11d48;
             --metallic: #059669;
+            --covalent: #ca8a04;
             --bg-light: #f8fafc;
             --text-main: #0f172a;
             --border: #e2e8f0;
@@ -55,7 +56,7 @@
 
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 350px;
             width: 100%;
             margin: 25px 0;
             background: var(--bg-light);
@@ -72,6 +73,18 @@
             border-radius: 0 8px 8px 0;
             margin: 15px 0;
             font-weight: 500;
+        }
+
+        /* SVG Diagram Containers */
+        .svg-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
         }
 
         /* Sorter Styles */
@@ -126,25 +139,14 @@
         .option-btn.incorrect { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
         .quiz-feedback { margin-top: 10px; font-weight: bold; display: none; padding: 10px; border-radius: 5px; }
         .score-display { font-size: 1.5em; font-weight: bold; color: var(--primary); text-align: center; margin-top: 20px; }
-
-        .image-placeholder {
-            background: #cbd5e1;
-            color: #475569;
-            text-align: center;
-            padding: 40px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-style: italic;
-            border: 2px dashed #94a3b8;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>⚛️ Ionic & Metallic Bonding</h1>
-        <p>Comprehensive Study Guide & Interactive Assessment</p>
+        <h1>⚛️ Chemical Bonding</h1>
+        <p>Ionic, Metallic, and Covalent Study Guide</p>
     </header>
 
     <div class="card" style="border-top-color: var(--primary);">
@@ -152,70 +154,114 @@
         <p>The Prime Directive of Bonding: Atoms bond to achieve a stable, full outer electron shell (a "perfect octet"). By bonding, they reach a state of lower, more stable potential energy.</p>
         <p>You can predict which bond will form based on the <strong>Electronegativity (EN)</strong> difference between the two atoms. EN is how strongly an atom pulls on shared electrons.</p>
         
-        <div class="chart-container">
+        <div class="chart-container" style="height: 250px;">
             <canvas id="enChart"></canvas>
         </div>
         <div class="highlight-box">
             <strong>The Quick Rule:</strong><br>
-            Metal + Nonmetal = Ionic Bond<br>
-            Metal + Metal = Metallic Bond<br>
-            Nonmetal + Nonmetal = Covalent Bond
+            Metal + Nonmetal = <strong>Ionic Bond</strong><br>
+            Metal + Metal = <strong>Metallic Bond</strong><br>
+            Nonmetal + Nonmetal = <strong>Covalent Bond</strong>
         </div>
     </div>
 
     <div class="card" style="border-top-color: var(--ionic);">
-        <h2>Step 2: Ionic Bonding (The Transfer of Electrons)</h2>
+        <h2>Step 2: Ionic Bonding (The Transfer)</h2>
         <p>An ionic bond is the strong electrostatic attraction between oppositely charged ions. It occurs when a metal completely transfers its electron(s) to a nonmetal.</p>
         
-        <h3>The ChemThink Radius Shift</h3>
-        <p>When electrons are transferred, the physical sizes of the atoms change dramatically:</p>
-        <ul>
-            <li><strong>Metals (e.g., Na):</strong> Lose electrons. Because they lose their entire outer shell, their radius <strong>shrinks</strong> significantly. They become positive Cations.</li>
-            <li><strong>Nonmetals (e.g., Cl):</strong> Gain electrons. The extra electrons repel each other, causing the electron cloud to <strong>grow</strong>. They become negative Anions.</li>
-        </ul>
-
-        <div class="chart-container">
-            <canvas id="radiusChart"></canvas>
-        </div>
+        <h3>The Radius Shift</h3>
+        <p>When electrons are transferred, physical sizes change dramatically. Metals lose their outer shell and <strong>shrink</strong> (becoming positive cations). Nonmetals gain electrons which repel each other, causing the cloud to <strong>grow</strong> (becoming negative anions).</p>
 
         <h3>The Ionic Crystal Lattice</h3>
-        <p>Ionic compounds do not exist as single, isolated pairs. Instead, they spontaneously assemble into a massive, repeating 3D grid called a <strong>Crystal Lattice</strong>. The chemical formula (like MgCl₂) simply represents the lowest ratio of these ions that results in a neutral zero charge.</p>
+        <p>Ionic compounds spontaneously assemble into a massive, repeating 3D grid called a <strong>Crystal Lattice</strong>. The chemical formula (like MgCl₂) simply represents the lowest ratio of these ions that results in a neutral zero charge.</p>
         
-        <div class="image-placeholder">
-            
+        <div class="svg-diagram">
+            <svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+                <rect width="250" height="250" fill="#f8fafc" rx="10"/>
+                <circle cx="50" cy="50" r="20" fill="#e11d48"/><text x="50" y="55" fill="white" font-weight="bold" font-size="20" text-anchor="middle">+</text>
+                <circle cx="125" cy="50" r="28" fill="#3b82f6"/><text x="125" y="55" fill="white" font-weight="bold" font-size="20" text-anchor="middle">-</text>
+                <circle cx="200" cy="50" r="20" fill="#e11d48"/><text x="200" y="55" fill="white" font-weight="bold" font-size="20" text-anchor="middle">+</text>
+                <circle cx="50" cy="125" r="28" fill="#3b82f6"/><text x="50" y="130" fill="white" font-weight="bold" font-size="20" text-anchor="middle">-</text>
+                <circle cx="125" cy="125" r="20" fill="#e11d48"/><text x="125" y="130" fill="white" font-weight="bold" font-size="20" text-anchor="middle">+</text>
+                <circle cx="200" cy="125" r="28" fill="#3b82f6"/><text x="200" y="130" fill="white" font-weight="bold" font-size="20" text-anchor="middle">-</text>
+                <circle cx="50" cy="200" r="20" fill="#e11d48"/><text x="50" y="205" fill="white" font-weight="bold" font-size="20" text-anchor="middle">+</text>
+                <circle cx="125" cy="200" r="28" fill="#3b82f6"/><text x="125" y="205" fill="white" font-weight="bold" font-size="20" text-anchor="middle">-</text>
+                <circle cx="200" cy="200" r="20" fill="#e11d48"/><text x="200" y="205" fill="white" font-weight="bold" font-size="20" text-anchor="middle">+</text>
+                <line x1="70" y1="50" x2="97" y2="50" stroke="#94a3b8" stroke-width="3"/>
+                <line x1="153" y1="50" x2="180" y2="50" stroke="#94a3b8" stroke-width="3"/>
+                <line x1="50" y1="70" x2="50" y2="97" stroke="#94a3b8" stroke-width="3"/>
+                <line x1="125" y1="78" x2="125" y2="105" stroke="#94a3b8" stroke-width="3"/>
+            </svg>
         </div>
 
         <h3>Macroscopic Properties</h3>
         <ul>
-            <li><strong>High Melting Points:</strong> The electrostatic bonds in the lattice are extremely strong.</li>
+            <li><strong>High Melting Points:</strong> The electrostatic bonds are extremely strong.</li>
             <li><strong>Brittle:</strong> If struck, the lattice shifts. Positive ions align with positive ions, violently repelling and shattering the crystal.</li>
-            <li><strong>Electrical Conductivity:</strong> They do <strong>not</strong> conduct as solids. They ONLY conduct when melted or dissolved in water, which frees the ions to move.</li>
+            <li><strong>Conductivity:</strong> They do <strong>not</strong> conduct as solids. They ONLY conduct when melted or dissolved in water, freeing the ions.</li>
         </ul>
     </div>
 
     <div class="card" style="border-top-color: var(--metallic);">
-        <h2>Step 3: Metallic Bonding (The "Sea of Electrons")</h2>
-        <p>Metals bond very differently than ionic compounds. Instead of trading electrons, metal atoms share them in a massive, communal pool.</p>
+        <h2>Step 3: Metallic Bonding (Sea of Electrons)</h2>
+        <p>Instead of trading electrons, tightly packed metal atoms share them in a massive, communal pool. Because they have a weak hold on outer electrons, valence electrons detach and flow freely, creating a <strong>"Sea of Delocalized Electrons"</strong> surrounding positively charged nuclei.</p>
 
-        <h3>How it Forms:</h3>
-        <p>Metal atoms pack tightly together. Because they have a weak hold on their outer electrons, those valence electrons detach and flow freely between all the atoms. This creates a <strong>"Sea of Delocalized Electrons"</strong> surrounding stationary, positively charged metal nuclei.</p>
-
-        <div class="image-placeholder">
-            
+        <div class="svg-diagram">
+            <svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+                <rect width="250" height="250" fill="#f0fdf4" rx="10" stroke="#059669" stroke-width="2"/>
+                <circle cx="60" cy="60" r="25" fill="#059669"/><text x="60" y="66" fill="white" font-weight="bold" font-size="18" text-anchor="middle">M+</text>
+                <circle cx="125" cy="125" r="25" fill="#059669"/><text x="125" y="131" fill="white" font-weight="bold" font-size="18" text-anchor="middle">M+</text>
+                <circle cx="190" cy="60" r="25" fill="#059669"/><text x="190" y="66" fill="white" font-weight="bold" font-size="18" text-anchor="middle">M+</text>
+                <circle cx="60" cy="190" r="25" fill="#059669"/><text x="60" y="196" fill="white" font-weight="bold" font-size="18" text-anchor="middle">M+</text>
+                <circle cx="190" cy="190" r="25" fill="#059669"/><text x="190" y="196" fill="white" font-weight="bold" font-size="18" text-anchor="middle">M+</text>
+                <circle cx="125" cy="60" r="6" fill="#f59e0b"/><text x="125" y="48" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">e-</text>
+                <circle cx="60" cy="125" r="6" fill="#f59e0b"/><text x="60" y="113" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">e-</text>
+                <circle cx="190" cy="125" r="6" fill="#f59e0b"/><text x="190" y="113" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">e-</text>
+                <circle cx="125" cy="190" r="6" fill="#f59e0b"/><text x="125" y="178" fill="#b45309" font-size="12" font-weight="bold" text-anchor="middle">e-</text>
+                <circle cx="95" cy="95" r="6" fill="#f59e0b"/>
+                <circle cx="155" cy="155" r="6" fill="#f59e0b"/>
+            </svg>
         </div>
 
         <h3>Macroscopic Properties</h3>
         <ul>
             <li><strong>Excellent Conductors:</strong> Because the "sea of electrons" is highly mobile, metals conduct electricity easily, even as solids.</li>
-            <li><strong>Malleable & Ductile:</strong> You can hammer them (malleable) or pull them into wires (ductile). The fluid electrons allow the metal nuclei to slide past each other without breaking the bonds.</li>
+            <li><strong>Malleable & Ductile:</strong> You can hammer them or pull them into wires. The fluid electrons allow the metal nuclei to slide past each other without breaking the bonds.</li>
+            <li><strong>Alloys:</strong> Mixing metals (like Copper + Zinc = Brass) creates a distorted lattice, making the metal much harder and stronger.</li>
         </ul>
+    </div>
 
-        <div class="chart-container">
-            <canvas id="meltingChart"></canvas>
+    <div class="card" style="border-top-color: var(--covalent);">
+        <h2>Step 4: Covalent Bonding (The Sharing)</h2>
+        <p>When two <strong>nonmetals</strong> interact, neither wants to give up an electron (they both have high electronegativity). Instead, their electron clouds overlap and they <strong>share</strong> valence electrons to complete their octets.</p>
+
+        <div class="svg-diagram">
+            <svg width="250" height="150" viewBox="0 0 250 150" xmlns="http://www.w3.org/2000/svg">
+                <rect width="250" height="150" fill="#fefce8" rx="10" stroke="#ca8a04" stroke-width="2"/>
+                <circle cx="100" cy="75" r="40" fill="none" stroke="#ca8a04" stroke-width="3"/>
+                <text x="85" y="80" fill="#854d0e" font-weight="bold" font-size="18">Cl</text>
+                <circle cx="150" cy="75" r="40" fill="none" stroke="#ca8a04" stroke-width="3"/>
+                <text x="165" y="80" fill="#854d0e" font-weight="bold" font-size="18">Cl</text>
+                <circle cx="125" cy="65" r="5" fill="#3b82f6"/>
+                <circle cx="125" cy="85" r="5" fill="#3b82f6"/>
+            </svg>
         </div>
 
-        <h3>Metal Alloys</h3>
-        <p>An <strong>alloy</strong> is a mixture of two or more elements where at least one is a metal. We make alloys to create superior properties (e.g., 14K Gold is an alloy of gold, copper, and silver, making it much stronger and more durable for jewelry than pure 24K gold).</p>
+        <h3>Macroscopic Properties</h3>
+        <ul>
+            <li><strong>Low Melting/Boiling Points:</strong> While the bond <em>inside</em> the molecule is strong, the forces <em>between</em> separate molecules are weak.</li>
+            <li><strong>Poor Conductors:</strong> Because electrons are locked tightly in the shared bond, there are no free-moving charges. They do not conduct electricity.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Step 5: Visualizing the Differences</h2>
+        <p>The macroscopic properties of a substance are entirely dictated by its microscopic bond type. The radar chart below maps out how these three bonds compare across major physical traits.</p>
+        
+        <div class="chart-container" style="height: 400px;">
+            <canvas id="radarChart"></canvas>
+        </div>
+        <p style="font-size: 0.9em; color: var(--text-light); text-align: center;"><em>Notice how Ionic bonds only conduct as liquids, Metals conduct in both states, and Covalent bonds generally do neither!</em></p>
     </div>
 
     <div class="card" style="background-color: #f8fafc;">
@@ -223,7 +269,7 @@
         <p style="text-align: center; margin-bottom: 30px;">Test your mastery of the concepts below.</p>
 
         <h3>Part 1: The Property Sorter</h3>
-        <p>Select whether each property applies to an Ionic or Metallic bond.</p>
+        <p>Select whether each property applies to an Ionic, Metallic, or Covalent bond.</p>
         
         <div id="sorter-container">
             </div>
@@ -249,7 +295,7 @@
             datasets: [{
                 label: 'Electronegativity Difference Range',
                 data: [[0, 0.4], [0.4, 1.7], [1.7, 3.3]],
-                backgroundColor: ['#94a3b8', '#3b82f6', '#e11d48'],
+                backgroundColor: ['#ca8a04', '#3b82f6', '#e11d48'],
                 borderWidth: 1
             }]
         },
@@ -258,77 +304,61 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                title: { display: true, text: 'Bond Type by Electronegativity Difference', font: {size: 16} },
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `EN Difference: ${context.raw[0]} to ${context.raw[1]}`;
-                        }
-                    }
-                }
+                title: { display: true, text: 'Bond Type by EN Difference', font: {size: 16} },
+                legend: { display: false }
             },
             scales: {
-                x: { 
-                    min: 0, max: 3.5,
-                    title: { display: true, text: 'Electronegativity Difference (ΔEN)', font: {weight: 'bold'} }
-                }
+                x: { min: 0, max: 3.5, title: { display: true, text: 'ΔEN', font: {weight: 'bold'} } }
             }
         }
     });
 
-    // --- CHART 2: Atomic vs Ionic Radius ---
-    const ctxRadius = document.getElementById('radiusChart').getContext('2d');
-    new Chart(ctxRadius, {
-        type: 'bar',
+    // --- CHART 2: Property Radar Chart ---
+    const ctxRadar = document.getElementById('radarChart').getContext('2d');
+    new Chart(ctxRadar, {
+        type: 'radar',
         data: {
-            labels: ['Sodium (Metal)', 'Chlorine (Nonmetal)'],
+            labels: ['Melting Point', 'Conductivity (Solid)', 'Conductivity (Liquid/Aqueous)', 'Malleability'],
             datasets: [
                 {
-                    label: 'Neutral Atom Radius (pm)',
-                    data: [186, 99],
-                    backgroundColor: '#94a3b8'
+                    label: 'Ionic (e.g. NaCl)',
+                    data: [8, 0, 9, 0],
+                    backgroundColor: 'rgba(225, 29, 72, 0.2)',
+                    borderColor: '#e11d48',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#e11d48'
                 },
                 {
-                    label: 'Ion Radius (pm)',
-                    data: [102, 181],
-                    backgroundColor: ['#3b82f6', '#e11d48']
+                    label: 'Metallic (e.g. Fe)',
+                    data: [7, 10, 10, 9],
+                    backgroundColor: 'rgba(5, 150, 105, 0.2)',
+                    borderColor: '#059669',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#059669'
+                },
+                {
+                    label: 'Basic Covalent (e.g. H₂O)',
+                    data: [2, 0, 0, 0],
+                    backgroundColor: 'rgba(202, 138, 4, 0.2)',
+                    borderColor: '#ca8a04',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#ca8a04'
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                title: { display: true, text: 'The ChemThink Shift: Atom vs. Ion Size', font: {size: 16} }
-            },
             scales: {
-                y: { title: { display: true, text: 'Radius Size (Picometers)', font: {weight: 'bold'} } }
-            }
-        }
-    });
-
-    // --- CHART 3: Melting Points ---
-    const ctxMelting = document.getElementById('meltingChart').getContext('2d');
-    new Chart(ctxMelting, {
-        type: 'bar',
-        data: {
-            labels: ['Water (Covalent)', 'Table Salt (Ionic)', 'Iron (Metallic)'],
-            datasets: [{
-                label: 'Melting Point (°C)',
-                data: [0, 801, 1538],
-                backgroundColor: ['#64748b', '#e11d48', '#059669'],
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: { display: true, text: 'Macroscopic Property: Melting Points', font: {size: 16} },
-                legend: { display: false }
+                r: {
+                    angleLines: { display: true },
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    ticks: { display: false } // Hide the 0-10 numbers
+                }
             },
-            scales: {
-                y: { title: { display: true, text: 'Temperature (°C)', font: {weight: 'bold'} } }
+            plugins: {
+                title: { display: true, text: 'Macroscopic Property Comparison (Scale 0-10)', font: {size: 16} }
             }
         }
     });
@@ -339,14 +369,15 @@
         { term: "Forms a rigid Crystal Lattice", ans: "ionic" },
         { term: "Malleable & Ductile", ans: "metallic" },
         { term: "Brittle (Shatters when struck)", ans: "ionic" },
+        { term: "Shares electrons between nonmetals", ans: "covalent" },
         { term: "Conducts electricity perfectly as a Solid", ans: "metallic" },
         { term: "Conducts ONLY when dissolved in water or melted", ans: "ionic" },
+        { term: "Generally has the lowest melting points", ans: "covalent" },
         { term: "Formed by a complete transfer of electrons", ans: "ionic" }
     ];
 
     function renderSorter() {
         const container = document.getElementById('sorter-container');
-        // Shuffle items
         const shuffled = sorterItems.sort(() => 0.5 - Math.random());
         
         shuffled.forEach((item, index) => {
@@ -356,8 +387,9 @@
                 <span>${item.term}</span>
                 <select class="sorter-select" id="sort-${index}" data-ans="${item.ans}">
                     <option value="none">Choose...</option>
-                    <option value="ionic">Ionic Bond</option>
-                    <option value="metallic">Metallic Bond</option>
+                    <option value="ionic">Ionic</option>
+                    <option value="metallic">Metallic</option>
+                    <option value="covalent">Covalent</option>
                 </select>
             `;
             container.appendChild(row);
@@ -403,16 +435,16 @@
             exp: "Because Sodium lost its entire outermost valence shell, the remaining electron cloud shrank tightly around the nucleus."
         },
         {
+            q: "Which type of bond will most likely form between Carbon (Nonmetal) and Oxygen (Nonmetal)?",
+            options: ["Ionic", "Metallic", "Hydrogen", "Covalent"],
+            correct: 3,
+            exp: "Two nonmetals will share electrons to complete their octets, forming a covalent bond."
+        },
+        {
             q: "Why are ionic compounds brittle?",
             options: ["Because they have a sea of electrons", "Shifting the lattice aligns like-charges, causing them to repel and shatter", "Because they have very low melting points", "Because nonmetals are naturally soft"],
             correct: 1,
             exp: "When hit, the rigid lattice shifts. Positive ions line up next to positive ions, and the massive repulsive force shatters the crystal."
-        },
-        {
-            q: "What does the chemical formula MgCl₂ actually represent?",
-            options: ["One single, isolated molecule of Magnesium Chloride", "A metallic alloy of Magnesium and Chlorine", "The simplest ratio of ions in the crystal lattice that results in a neutral charge", "A sea of electrons surrounding Magnesium"],
-            correct: 2,
-            exp: "Ionic compounds exist as massive 3D grids, not single molecules. The formula just tells you the lowest ratio needed to hit a zero charge."
         },
         {
             q: "Why is 14K gold often preferred over 24K gold for jewelry?",
