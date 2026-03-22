@@ -1,25 +1,37 @@
 ---
-title: Directory Listing
+title: Subdirectory Listing
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repository Directory</title>
+    <title>Files in {{ page.dir }}</title>
     <style>
         body { font-family: system-ui, sans-serif; padding: 20px; line-height: 1.6; }
         ul { list-style-type: none; padding: 0; }
         li { margin-bottom: 8px; }
         a { text-decoration: none; color: #2563eb; font-weight: 500; }
         a:hover { text-decoration: underline; }
+        .folder-path { color: #64748b; font-size: 0.9em; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <h1>Files in this Directory</h1>
+    <h1>Directory Listing</h1>
+    <div class="folder-path">Current folder: <strong>{{ page.dir }}</strong></div>
+    
     <ul>
+        {% for p in site.pages %}
+            {% if p.dir == page.dir and p.name != 'index.html' %}
+                <li>🌐 <a href="{{ site.baseurl }}{{ p.url }}">{{ p.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+
         {% for file in site.static_files %}
-            <li>📄 <a href="{{ site.baseurl }}{{ file.path }}">{{ file.name }}</a></li>
+            {% assign file_dir = file.path | replace: file.name, '' %}
+            {% if file_dir == page.dir %}
+                <li>📄 <a href="{{ site.baseurl }}{{ file.path }}">{{ file.name }}</a></li>
+            {% endif %}
         {% endfor %}
     </ul>
 </body>
