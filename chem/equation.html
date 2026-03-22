@@ -165,10 +165,12 @@
             border-radius: 10px;
         }
 
+        /* Updated Stepper for Vertical Layout */
         .stepper {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 0;
         }
 
@@ -176,7 +178,7 @@
             background: var(--primary);
             color: white;
             width: 30px;
-            height: 30px;
+            height: 25px;
             border-radius: 5px;
             cursor: pointer;
             display: flex;
@@ -188,7 +190,7 @@
 
         .stepper btn:hover { background: var(--primary-dark); }
         
-        .coeff { color: #fbbf24; font-size: 1.2em; min-width: 20px; text-align: center;}
+        .coeff { color: #fbbf24; font-size: 1.2em; min-width: 20px; text-align: center; line-height: 1;}
 
         .formula-text { font-family: 'Segoe UI', sans-serif; font-size: 1.1em; color: white; }
 
@@ -564,9 +566,9 @@
         div.className = 'molecule-group';
         div.innerHTML = `
             <div class="stepper">
-                <btn onclick="changeCoeff('${type}', ${index}, -1)">-</btn>
-                <span class="coeff">${molData.coeff}</span>
                 <btn onclick="changeCoeff('${type}', ${index}, 1)">+</btn>
+                <span class="coeff">${molData.coeff}</span>
+                <btn onclick="changeCoeff('${type}', ${index}, -1)">-</btn>
             </div>
             <div class="formula-text">${molData.formula}</div>
         `;
