@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocab Master: Audio Flashcards</title>
+    <title>Vocab Master: Flashcards & Quiz</title>
     <style>
         :root {
             --primary: #4f46e5;
             --primary-hover: #4338ca;
+            --secondary: #10b981;
+            --secondary-hover: #059669;
+            --danger: #ef4444;
             --bg: #f3f4f6;
             --card-bg: #ffffff;
             --text-main: #1f2937;
-            --text-light: #6b7280;
+            --text-light: #4b5563;
         }
 
         body {
@@ -29,23 +32,51 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
         }
 
-        h1 { margin: 0 0 10px 0; color: var(--primary); }
+        h1 { margin: 0 0 15px 0; color: var(--primary); }
         
-        .progress-text {
-            color: var(--text-light);
-            font-weight: bold;
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #e5e7eb;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
         }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Container visibility */
+        .mode-container { display: none; width: 100%; max-width: 600px; }
+        .mode-container.active { display: block; }
 
         /* Flashcard CSS */
         .scene {
             width: 100%;
-            max-width: 600px;
-            height: 350px;
+            height: 400px;
             perspective: 1000px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .card {
@@ -57,9 +88,7 @@
             cursor: pointer;
         }
 
-        .card.is-flipped {
-            transform: rotateY(180deg);
-        }
+        .card.is-flipped { transform: rotateY(180deg); }
 
         .card-face {
             position: absolute;
@@ -70,11 +99,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            padding: 30px;
             box-sizing: border-box;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             text-align: center;
+            overflow-y: auto;
         }
 
         .card-front {
@@ -88,235 +118,490 @@
             transform: rotateY(180deg);
         }
 
-        .word { font-size: 3rem; font-weight: 800; margin-bottom: 20px; text-transform: capitalize;}
-        .definition { font-size: 1.5rem; line-height: 1.5; }
-        .hint { font-size: 0.9rem; opacity: 0.7; margin-top: auto; }
+        .word { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
+        .definition { font-size: 1.3rem; line-height: 1.4; margin-bottom: 20px; font-weight: bold;}
+        .examples { font-size: 1rem; line-height: 1.5; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
+        .hint { font-size: 0.9rem; color: var(--text-light); margin-top: auto; }
 
         /* Controls */
-        .controls {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        button {
-            padding: 12px 24px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-nav {
-            background-color: white;
-            color: var(--text-main);
-            border: 2px solid #e5e7eb;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .btn-nav:hover { background-color: #f9fafb; border-color: #d1d5db; }
-
-        .btn-audio {
-            background-color: var(--primary);
-            color: white;
-            width: 100%;
-            justify-content: center;
-        }
-
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        button { padding: 12px 20px; font-size: 1rem; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-nav { background-color: white; color: var(--text-main); border: 2px solid #e5e7eb; flex: 1; }
+        .btn-nav:hover { background-color: #f9fafb; }
+        .btn-audio { background-color: var(--primary); color: white; width: 100%; }
         .btn-audio:hover { background-color: var(--primary-hover); }
 
-        .btn-shuffle {
-            background-color: #10b981;
-            color: white;
-            width: 100%;
-            justify-content: center;
-        }
+        /* Quiz CSS */
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; }
+        .quiz-word { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 20px; color: var(--primary); text-transform: capitalize; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
+        .options-grid { display: grid; gap: 10px; }
+        .option-btn { background: white; border: 2px solid #e5e7eb; padding: 15px; text-align: left; font-size: 1rem; color: var(--text-main); transition: all 0.2s; line-height: 1.4; }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #f5f3ff; }
+        .option-btn.correct { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
+        .option-btn.incorrect { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+        .option-btn:disabled { cursor: not-allowed; }
         
-        .btn-shuffle:hover { background-color: #059669; }
-
+        .quiz-feedback { text-align: center; margin-top: 20px; min-height: 60px; }
+        .btn-next-quiz { background-color: var(--primary); color: white; margin: 10px auto; display: none; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Vocab Master</h1>
-        <div class="progress-text" id="progress">Card 1 of 50</div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="setMode('flashcard')">Flashcards</button>
+            <button class="tab-btn" onclick="setMode('quiz')">Quiz Mode</button>
+        </div>
     </header>
 
-    <div class="scene" id="scene">
-        <div class="card" id="flashcard">
-            <div class="card-face card-front">
-                <div class="word" id="wordDisplay">Loading...</div>
-                <div class="hint">Click anywhere on card to flip</div>
+    <div id="flashcard-mode" class="mode-container active">
+        <div class="scene">
+            <div class="card" id="flashcard">
+                <div class="card-face card-front">
+                    <div class="word" id="wordDisplay">Loading...</div>
+                    <div class="hint">Click anywhere on card to flip</div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="definition" id="defDisplay">Definition goes here...</div>
+                    <div class="examples" id="exDisplay">"Example sentences go here..."</div>
+                </div>
             </div>
-            <div class="card-face card-back">
-                <div class="definition" id="defDisplay">Definition goes here...</div>
-            </div>
+        </div>
+        <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--text-light);" id="fc-progress">Card 1 of 50</div>
+        <div class="controls">
+            <button class="btn-audio" onclick="speakCurrentWord()"><span>🔊</span> Listen to Word</button>
+            <button class="btn-nav" onclick="prevCard()">&larr; Previous</button>
+            <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
         </div>
     </div>
 
-    <div class="controls">
-        <button class="btn-audio" onclick="speakCurrentWord()">
-            <span>🔊</span> Listen to Word
-        </button>
-        <button class="btn-nav" onclick="prevCard()">&larr; Previous</button>
-        <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
-        <button class="btn-shuffle" onclick="shuffleDeck()">🔀 Shuffle Deck</button>
+    <div id="quiz-mode" class="mode-container">
+        <div class="quiz-header">
+            <span id="quiz-score">Score: 0 / 0</span>
+            <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="speakQuizWord()">🔊</button>
+        </div>
+        
+        <div class="quiz-word" id="quizWordDisplay">Word</div>
+        <div style="text-align:center; margin-bottom:10px; color:var(--text-light);">Select the correct definition:</div>
+        
+        <div class="options-grid" id="optionsContainer">
+            </div>
+
+        <div class="quiz-feedback">
+            <div id="feedbackText" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;"></div>
+            <button class="btn-next-quiz" id="btnNextQuiz" onclick="generateQuizQuestion()">Next Question &rarr;</button>
+        </div>
     </div>
 
     <script>
-        // Data structure containing the 50 words and definitions
         const vocabData = [
-            { word: "victory lap", definition: "A celebratory circuit or appearance after a win or success." },
-            { word: "subdued", definition: "Quiet, reflective, or depressed; soft and restrained." },
-            { word: "wishy washy", definition: "Feeble or bland in character; lacking clear, firm decisions." },
-            { word: "in a bid", definition: "In an attempt or effort to achieve something." },
-            { word: "level-headed", definition: "Calm and sensible, especially in difficult situations." },
-            { word: "hellacious", definition: "Very great, bad, or overwhelming; extraordinarily difficult." },
-            { word: "telegenic", definition: "Having an appearance or manner that is highly attractive on television." },
-            { word: "shake the cage", definition: "To cause a disturbance, provoke, or challenge the status quo." },
-            { word: "butterfingers", definition: "A clumsy person who frequently drops things." },
-            { word: "pacifist", definition: "A person who believes that war and violence are unjustifiable." },
-            { word: "unctuous", definition: "Excessively or ingratiatingly flattering; oily; smug." },
-            { word: "vigil", definition: "A period of keeping awake during the time usually spent asleep, especially to keep watch or pray." },
-            { word: "ravish", definition: "To seize and carry off by force; to fill with intense delight or emotion." },
-            { word: "zing", definition: "Energy, enthusiasm, or liveliness; a striking or amusing remark." },
-            { word: "dangle the carrot", definition: "To tempt someone with an attractive offer or reward to persuade them to do something." },
-            { word: "tread water", definition: "To maintain one's position without making progress; to expend effort just to stay afloat." },
-            { word: "obtuse", definition: "Annoyingly insensitive or slow to understand." },
-            { word: "cry someone a river", definition: "Used sarcastically to tell someone complaining that one has no sympathy for them." },
-            { word: "icy", definition: "Covered with ice; extremely cold; unfriendly and hostile." },
-            { word: "self-possessed", definition: "Calm, confident, and in control of one's feelings." },
-            { word: "awe-inspiring", definition: "Arousing awe through being impressive, formidable, or magnificent." },
-            { word: "sappy", definition: "Excessively sentimental or emotional." },
-            { word: "dead-eyed", definition: "Having a blank, emotionless, or soulless gaze." },
-            { word: "shut your pie hole", definition: "A rude slang expression telling someone to be quiet or shut up." },
-            { word: "up in arms", definition: "Very angry and protesting loudly about something." },
-            { word: "curtail", definition: "To reduce in extent or quantity; impose a restriction on." },
-            { word: "stage fright", definition: "Nervousness felt by a person performing or speaking in front of an audience." },
-            { word: "anti-Semitism", definition: "Hostility to or prejudice against Jewish people." },
-            { word: "progressive", definition: "Happening or developing gradually; favoring social reform or new ideas." },
-            { word: "lip gloss", definition: "A cosmetic applied to the lips to provide a glossy finish and sometimes color." },
-            { word: "dox", definition: "To publish private or identifying information about a particular individual on the internet with malicious intent." },
-            { word: "fish bowl", definition: "A state of affairs in which one's activities are scrutinized by others; lacking privacy." },
-            { word: "wheel and deal", definition: "To engage in commercial or political scheming, especially shrewdly or unscrupulously." },
-            { word: "divvy up", definition: "To divide or share something among a group of people." },
-            { word: "unwind", definition: "To relax after a period of work or tension." },
-            { word: "prudish", definition: "Having a tendency to be easily shocked by matters relating to sex or nudity; excessively proper." },
-            { word: "weak source", definition: "An unreliable, unverified, or untrustworthy origin of information." },
-            { word: "blow the whistle", definition: "To expose illegal or unethical activity within an organization." },
-            { word: "nester", definition: "A person who builds or occupies a nest; someone settling comfortably into a home." },
-            { word: "centaur", definition: "A mythological creature with the upper body of a human and the lower body of a horse." },
-            { word: "infamy", definition: "The state of being well known for some bad quality or deed." },
-            { word: "boom box", definition: "A portable, battery-operated radio and cassette/CD player with powerful speakers." },
-            { word: "hair shirt", definition: "A shirt of haircloth worn by ascetics; a self-imposed punishment or penance." },
-            { word: "decathlon", definition: "An athletic event taking place over two days, in which each competitor takes part in ten events." },
-            { word: "testify", definition: "To give evidence as a witness in a law court." },
-            { word: "delinquency", definition: "Minor crime, especially that committed by young people; neglect of one's duty." },
-            { word: "intramural", definition: "Situated or done within the walls of a building or institution (often referring to sports within one school)." },
-            { word: "bulldozer", definition: "A powerful tractor for clearing ground; a domineering person who overpowers others." },
-            { word: "steamroller", definition: "A heavy vehicle used to flatten roads; to crush or overwhelm opposition." },
-            { word: "hitch a ride", definition: "To get a free ride in someone else's vehicle." }
+            { 
+                word: "victory lap", 
+                definition: "A celebratory circuit or appearance after a win or success.",
+                examples: ["After closing the multi-million dollar deal, the CEO took a victory lap around the office.", "The winning runner grabbed her country's flag for a well-deserved victory lap."]
+            },
+            { 
+                word: "subdued", 
+                definition: "Quiet, reflective, or depressed; soft and restrained.",
+                examples: ["The usually boisterous classroom was surprisingly subdued after the difficult exam.", "She wore a subdued gray dress to the somber event."]
+            },
+            { 
+                word: "wishy washy", 
+                definition: "Feeble or bland in character; lacking clear, firm decisions.",
+                examples: ["His wishy-washy answers during the interview made the hiring manager doubt his leadership skills.", "We need a firm decision on this budget, not a wishy-washy compromise."]
+            },
+            { 
+                word: "in a bid", 
+                definition: "In an attempt or effort to achieve something.",
+                examples: ["In a bid to win the election, the candidate promised sweeping tax cuts.", "The company lowered its prices in a bid to attract more customers from their rivals."]
+            },
+            { 
+                word: "level-headed", 
+                definition: "Calm and sensible, especially in difficult situations.",
+                examples: ["During the fire drill, she remained level-headed and safely guided everyone out.", "We need a level-headed negotiator to resolve this heated dispute without causing a strike."]
+            },
+            { 
+                word: "hellacious", 
+                definition: "Very great, bad, or overwhelming; extraordinarily difficult.",
+                examples: ["The commute home during the blizzard was an absolutely hellacious experience.", "He woke up with a hellacious headache after the loud concert."]
+            },
+            { 
+                word: "telegenic", 
+                definition: "Having an appearance or manner that is highly attractive on television.",
+                examples: ["The news anchor was incredibly telegenic, capturing the audience's attention effortlessly.", "Despite his brilliant ideas, the politician wasn't telegenic enough to win the televised debate."]
+            },
+            { 
+                word: "shake the cage", 
+                definition: "To cause a disturbance, provoke, or challenge the status quo.",
+                examples: ["The new director isn't afraid to shake the cage and change how this department operates.", "Sometimes you have to shake the cage to get people to pay attention to important systemic issues."]
+            },
+            { 
+                word: "butterfingers", 
+                definition: "A clumsy person who frequently drops things.",
+                examples: ["I dropped another glass today; I'm such a butterfingers!", "The quarterback was called 'butterfingers' after fumbling the ball twice in one quarter."]
+            },
+            { 
+                word: "pacifist", 
+                definition: "A person who believes that war and violence are unjustifiable.",
+                examples: ["As a lifelong pacifist, he refused to bear arms and served as a frontline medic instead.", "The pacifist movement organized a massive, peaceful protest against the escalating conflict."]
+            },
+            { 
+                word: "unctuous", 
+                definition: "Excessively or ingratiatingly flattering; oily; smug.",
+                examples: ["The salesman's unctuous manner immediately made me suspicious of his true motives.", "I couldn't stand his unctuous compliments; they felt completely insincere and forced."]
+            },
+            { 
+                word: "vigil", 
+                definition: "A period of keeping awake during the time usually spent asleep, especially to keep watch or pray.",
+                examples: ["The community held a candlelight vigil for the victims of the tragedy.", "She kept a quiet bedside vigil while her son was recovering from the severe fever."]
+            },
+            { 
+                word: "ravish", 
+                definition: "To seize and carry off by force; to fill with intense delight or emotion.",
+                examples: ["The majestic beauty of the snowy mountains completely ravished the hikers.", "In older literature, the knight would often rescue the maiden before she could be ravished by the villain."]
+            },
+            { 
+                word: "zing", 
+                definition: "Energy, enthusiasm, or liveliness; a striking or amusing remark.",
+                examples: ["Adding a splash of fresh lime juice really gives the salsa some extra zing.", "The comedian's routine lacked its usual zing, and the audience remained mostly silent."]
+            },
+            { 
+                word: "dangle the carrot", 
+                definition: "To tempt someone with an attractive offer or reward to persuade them to do something.",
+                examples: ["The manager continued to dangle the carrot of a promotion to keep the team working overtime.", "You can't just dangle the carrot forever without ever giving them the actual reward."]
+            },
+            { 
+                word: "tread water", 
+                definition: "To maintain one's position without making progress; to expend effort just to stay afloat.",
+                examples: ["Without a clear strategy, the business is just treading water and not growing.", "I'm just treading water in this job until I figure out what I really want to do with my career."]
+            },
+            { 
+                word: "obtuse", 
+                definition: "Annoyingly insensitive or slow to understand.",
+                examples: ["Are you being deliberately obtuse, or do you really not understand the core problem?", "He was so obtuse that he didn't realize she was actively insulting him."]
+            },
+            { 
+                word: "cry someone a river", 
+                definition: "Used sarcastically to tell someone complaining that one has no sympathy for them.",
+                examples: ["You're upset because your luxury car has a tiny scratch? Oh, cry me a river.", "He complained about having to wake up at 8 AM, but I just told him to cry me a river."]
+            },
+            { 
+                word: "icy", 
+                definition: "Covered with ice; extremely cold; unfriendly and hostile.",
+                examples: ["She gave him an icy glare when he interrupted her big presentation.", "The sidewalks are extremely icy this morning, so walk very carefully."]
+            },
+            { 
+                word: "self-possessed", 
+                definition: "Calm, confident, and in control of one's feelings.",
+                examples: ["Even under intense cross-examination, the witness remained completely self-possessed.", "She is a highly self-possessed young woman who knows exactly what she wants from life."]
+            },
+            { 
+                word: "awe-inspiring", 
+                definition: "Arousing awe through being impressive, formidable, or magnificent.",
+                examples: ["The view of the Grand Canyon at sunrise is truly awe-inspiring.", "His lifelong dedication to helping others in poverty is awe-inspiring and humbling."]
+            },
+            { 
+                word: "sappy", 
+                definition: "Excessively sentimental or emotional.",
+                examples: ["We ended up watching a sappy romantic comedy that made us both cry on the couch.", "He wrote her a sappy, heartfelt poem for their five-year anniversary."]
+            },
+            { 
+                word: "dead-eyed", 
+                definition: "Having a blank, emotionless, or soulless gaze.",
+                examples: ["The exhausted cashier gave me a dead-eyed stare as she scanned my groceries.", "He delivered the terrible news with a cold, dead-eyed expression."]
+            },
+            { 
+                word: "shut your pie hole", 
+                definition: "A rude slang expression telling someone to be quiet or shut up.",
+                examples: ["If you don't have anything constructive to add to the plan, just shut your pie hole.", "My older brother told me to shut my pie hole when I tried to sing along to the radio."]
+            },
+            { 
+                word: "up in arms", 
+                definition: "Very angry and protesting loudly about something.",
+                examples: ["The neighborhood is up in arms over the city's plan to bulldoze the local dog park.", "Employees were up in arms when management announced the sudden, drastic pay cuts."]
+            },
+            { 
+                word: "curtail", 
+                definition: "To reduce in extent or quantity; impose a restriction on.",
+                examples: ["We need to curtail our discretionary spending if we want to afford a vacation this year.", "The government attempted to curtail the spread of the virus by issuing a strict lockdown."]
+            },
+            { 
+                word: "stage fright", 
+                definition: "Nervousness felt by a person performing or speaking in front of an audience.",
+                examples: ["Even highly experienced actors can suffer from debilitating stage fright before an opening night.", "She forgot her lines because a sudden, intense wave of stage fright hit her."]
+            },
+            { 
+                word: "anti-Semitism", 
+                definition: "Hostility to or prejudice against Jewish people.",
+                examples: ["The organization was founded specifically to combat anti-Semitism and protect human rights.", "The graffiti spray-painted on the synagogue was a clear, hateful act of anti-Semitism."]
+            },
+            { 
+                word: "progressive", 
+                definition: "Happening or developing gradually; favoring social reform or new ideas.",
+                examples: ["The company is known for its progressive policies on work-life balance and parental leave.", "Progressive muscular dystrophy causes a gradual, worsening weakening of the body's muscles."]
+            },
+            { 
+                word: "lip gloss", 
+                definition: "A cosmetic applied to the lips to provide a glossy finish and sometimes color.",
+                examples: ["She applied a layer of shiny pink lip gloss before heading out to the birthday party.", "Her lip gloss left a sticky, sparkling mark on the edge of the coffee cup."]
+            },
+            { 
+                word: "dox", 
+                definition: "To publish private or identifying information about a particular individual on the internet with malicious intent.",
+                examples: ["The hacker threatened to dox the celebrity by releasing her home address if the ransom wasn't paid.", "It's incredibly dangerous and illegal to dox someone just over an online disagreement."]
+            },
+            { 
+                word: "fish bowl", 
+                definition: "A state of affairs in which one's activities are scrutinized by others; lacking privacy.",
+                examples: ["Living in a small town can feel like living in a fish bowl where everyone knows your business.", "Celebrities often complain about the stressful fish bowl existence created by the paparazzi."]
+            },
+            { 
+                word: "wheel and deal", 
+                definition: "To engage in commercial or political scheming, especially shrewdly or unscrupulously.",
+                examples: ["He loves to wheel and deal at the weekend flea market to get the best possible prices.", "The lobbyist was known to wheel and deal behind closed doors to pass corporate legislation."]
+            },
+            { 
+                word: "divvy up", 
+                definition: "To divide or share something among a group of people.",
+                examples: ["Let's divvy up the restaurant bill evenly so we don't have to calculate exactly what everyone ate.", "The pirates retreated to their secret hideout to safely divvy up the stolen treasure."]
+            },
+            { 
+                word: "unwind", 
+                definition: "To relax after a period of work or tension.",
+                examples: ["After a highly stressful week at work, I like to unwind by taking a long hike in the woods.", "Reading a good fantasy book is the perfect way for me to unwind before going to bed."]
+            },
+            { 
+                word: "prudish", 
+                definition: "Having a tendency to be easily shocked by matters relating to sex or nudity; excessively proper.",
+                examples: ["Her prudish aunt was deeply scandalized by the modern swimsuits being worn at the beach.", "He thought the movie was fine, but his prudish friends found the jokes highly offensive."]
+            },
+            { 
+                word: "weak source", 
+                definition: "An unreliable, unverified, or untrustworthy origin of information.",
+                examples: ["The journalist refused to publish the story because it relied on a very weak source.", "You can't base your entire historical argument on one weak source from an unverified, anonymous blog."]
+            },
+            { 
+                word: "blow the whistle", 
+                definition: "To expose illegal or unethical activity within an organization.",
+                examples: ["The senior accountant decided to blow the whistle on the company's fraudulent tax practices.", "She was unjustly fired after blowing the whistle on severe safety violations at the factory."]
+            },
+            { 
+                word: "nester", 
+                definition: "A person who builds or occupies a nest; someone settling comfortably into a home.",
+                examples: ["As she entered her third trimester, she became an aggressive nester, scrubbing every closet.", "He's a real nester who prefers staying home, baking bread, and decorating over going out to clubs."]
+            },
+            { 
+                word: "centaur", 
+                definition: "A mythological creature with the upper body of a human and the lower body of a horse.",
+                examples: ["In Greek mythology, Chiron was a wise and noble centaur who tutored famous young heroes.", "The fantasy novel featured a fierce, galloping tribe of centaurs guarding the magical forest."]
+            },
+            { 
+                word: "infamy", 
+                definition: "The state of being well known for some bad quality or deed.",
+                examples: ["The ruthless dictator's reign of terror will live in infamy for many generations.", "The surprise military attack on Pearl Harbor is famously described as a date which will live in infamy."]
+            },
+            { 
+                word: "boom box", 
+                definition: "A portable, battery-operated radio and cassette/CD player with powerful speakers.",
+                examples: ["In the 1980s, teenagers would carry a heavy boom box on their shoulders to play music in the park.", "The breakdancers practiced their routine to the heavy bass blaring from a battered boom box."]
+            },
+            { 
+                word: "hair shirt", 
+                definition: "A shirt of haircloth worn by ascetics; a self-imposed punishment or penance.",
+                examples: ["He acted as though paying his fair share of taxes was wearing a hair shirt, complaining endlessly.", "She took on the tedious, unpaid project as a sort of hair shirt to atone for her previous mistakes."]
+            },
+            { 
+                word: "decathlon", 
+                definition: "An athletic event taking place over two days, in which each competitor takes part in ten events.",
+                examples: ["Winning the Olympic decathlon requires an incredible, rare balance of speed, strength, and endurance.", "He trained rigorously for years to compete in the decathlon, mastering all ten track and field events."]
+            },
+            { 
+                word: "testify", 
+                definition: "To give evidence as a witness in a law court.",
+                examples: ["The key eyewitness was officially subpoenaed to testify before the grand jury.", "She bravely agreed to testify against her former boss in the high-profile embezzlement trial."]
+            },
+            { 
+                word: "delinquency", 
+                definition: "Minor crime, especially that committed by young people; neglect of one's duty.",
+                examples: ["The community center aims to reduce juvenile delinquency by offering engaging after-school programs.", "His constant delinquency regarding his mortgage payments ultimately resulted in bank foreclosure."]
+            },
+            { 
+                word: "intramural", 
+                definition: "Situated or done within the walls of a building or institution (often referring to sports within one school).",
+                examples: ["She joined the casual intramural volleyball league just to meet new people on the university campus.", "The intramural debate tournament was surprisingly highly competitive among the different dormitories."]
+            },
+            { 
+                word: "bulldozer", 
+                definition: "A powerful tractor for clearing ground; a domineering person who overpowers others.",
+                examples: ["The construction crew used a massive bulldozer to level the uneven lot before laying the foundation.", "Don't be such a bulldozer; you need to listen to other people's opinions instead of just pushing your own."]
+            },
+            { 
+                word: "steamroller", 
+                definition: "A heavy vehicle used to flatten roads; to crush or overwhelm opposition.",
+                examples: ["The political party acted like a steamroller, passing the controversial bill without allowing any debate.", "The massive machine flattened the fresh, hot asphalt just like a steamroller."]
+            },
+            { 
+                word: "hitch a ride", 
+                definition: "To get a free ride in someone else's vehicle.",
+                examples: ["My car broke down on the highway, so I had to hitch a ride to work with my kind neighbor.", "The adventurous teenagers decided to hitch a ride across the country instead of taking the bus."]
+            }
         ];
 
-        let currentDeck = [...vocabData];
-        let currentIndex = 0;
-        const flashcard = document.getElementById('flashcard');
+        // --- GLOBAL STATE ---
+        let currentMode = 'flashcard'; 
+        
+        // Flashcard State
+        let fcDeck = [...vocabData];
+        let fcIndex = 0;
 
-        // Flip logic
-        flashcard.addEventListener('click', () => {
-            flashcard.classList.toggle('is-flipped');
-            // Optional: Speak definition when flipped
-            if(flashcard.classList.contains('is-flipped')) {
-                speakText(currentDeck[currentIndex].definition, 0.9);
+        // Quiz State
+        let quizCorrectAnswers = 0;
+        let quizTotalAttempts = 0;
+        let currentQuizWord = null;
+
+        // --- INITIALIZATION ---
+        function init() {
+            // Shuffle flashcards initially
+            fcDeck.sort(() => Math.random() - 0.5);
+            updateFlashcardUI();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // Update Tab UI
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/Hide Containers
+            document.getElementById('flashcard-mode').classList.remove('active');
+            document.getElementById('quiz-mode').classList.remove('active');
+            
+            if (mode === 'flashcard') {
+                document.getElementById('flashcard-mode').classList.add('active');
+            } else {
+                document.getElementById('quiz-mode').classList.add('active');
+                generateQuizQuestion();
             }
+        }
+
+        // --- FLASHCARD LOGIC ---
+        const flashcardElement = document.getElementById('flashcard');
+        
+        flashcardElement.addEventListener('click', () => {
+            flashcardElement.classList.toggle('is-flipped');
         });
 
-        function updateUI() {
-            // Ensure card is showing front before changing text
-            flashcard.classList.remove('is-flipped');
-            
-            // Wait slightly for the flip animation to start before swapping text
+        function updateFlashcardUI() {
+            flashcardElement.classList.remove('is-flipped');
             setTimeout(() => {
-                document.getElementById('wordDisplay').textContent = currentDeck[currentIndex].word;
-                document.getElementById('defDisplay').textContent = currentDeck[currentIndex].definition;
-                document.getElementById('progress').textContent = `Card ${currentIndex + 1} of ${currentDeck.length}`;
+                const item = fcDeck[fcIndex];
+                document.getElementById('wordDisplay').textContent = item.word;
+                document.getElementById('defDisplay').textContent = item.definition;
+                
+                // Format examples
+                let exHTML = "";
+                item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:8px;">"${ex}"</div>`; });
+                document.getElementById('exDisplay').innerHTML = exHTML;
+                
+                document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${fcDeck.length}`;
             }, 150);
         }
 
         function nextCard() {
-            if (currentIndex < currentDeck.length - 1) {
-                currentIndex++;
-                updateUI();
-            } else {
-                // Loop back to start
-                currentIndex = 0;
-                updateUI();
-            }
+            fcIndex = (fcIndex + 1) % fcDeck.length;
+            updateFlashcardUI();
         }
 
         function prevCard() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateUI();
+            fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length;
+            updateFlashcardUI();
+        }
+
+        // --- QUIZ LOGIC ---
+        function generateQuizQuestion() {
+            // Reset UI
+            document.getElementById('feedbackText').textContent = "";
+            document.getElementById('btnNextQuiz').style.display = "none";
+            
+            // 1. Pick a random word
+            currentQuizWord = vocabData[Math.floor(Math.random() * vocabData.length)];
+            document.getElementById('quizWordDisplay').textContent = currentQuizWord.word;
+
+            // 2. Get 3 random INCORRECT definitions
+            let options = [currentQuizWord.definition];
+            while(options.length < 4) {
+                let randomDef = vocabData[Math.floor(Math.random() * vocabData.length)].definition;
+                if(!options.includes(randomDef)) {
+                    options.push(randomDef);
+                }
+            }
+
+            // 3. Shuffle options
+            options.sort(() => Math.random() - 0.5);
+
+            // 4. Render buttons
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = "";
+            options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn";
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(btn, opt);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedBtn, selectedText) {
+            // Disable all buttons
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if(btn.textContent === currentQuizWord.definition) {
+                    btn.classList.add('correct'); // Highlight the right answer regardless
+                }
+            });
+
+            quizTotalAttempts++;
+            const feedback = document.getElementById('feedbackText');
+
+            if(selectedText === currentQuizWord.definition) {
+                selectedBtn.classList.add('correct');
+                feedback.textContent = "✅ Correct!";
+                feedback.style.color = "var(--secondary)";
+                quizCorrectAnswers++;
             } else {
-                // Loop to end
-                currentIndex = currentDeck.length - 1;
-                updateUI();
+                selectedBtn.classList.add('incorrect');
+                feedback.textContent = "❌ Incorrect.";
+                feedback.style.color = "var(--danger)";
             }
+
+            // Update Score
+            document.getElementById('quiz-score').textContent = `Score: ${quizCorrectAnswers} / ${quizTotalAttempts}`;
+            
+            // Show Next button
+            document.getElementById('btnNextQuiz').style.display = "block";
         }
 
-        function shuffleDeck() {
-            // Fisher-Yates Shuffle
-            for (let i = currentDeck.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
-            }
-            currentIndex = 0;
-            updateUI();
-        }
-
-        // Web Speech API for Audio
-        function speakText(text, rate = 1.0) {
+        // --- AUDIO LOGIC ---
+        function speakText(text, rate = 0.85) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop any current speech
+                window.speechSynthesis.cancel(); 
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = rate; // Speed of speech
+                utterance.rate = rate; 
                 utterance.lang = 'en-US';
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Sorry, your browser doesn't support text-to-speech!");
+                alert("Your browser doesn't support Text-to-Speech.");
             }
         }
 
-        function speakCurrentWord() {
-            // Speak the word clearly and slightly slower
-            speakText(currentDeck[currentIndex].word, 0.85);
-        }
+        function speakCurrentWord() { speakText(fcDeck[fcIndex].word); }
+        function speakQuizWord() { speakText(currentQuizWord.word); }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault();
-                flashcard.classList.toggle('is-flipped');
-            } else if (e.code === 'ArrowRight') {
-                nextCard();
-            } else if (e.code === 'ArrowLeft') {
-                prevCard();
-            }
-        });
-
-        // Initialize first card
-        updateUI();
+        // Start app
+        init();
 
     </script>
 </body>
