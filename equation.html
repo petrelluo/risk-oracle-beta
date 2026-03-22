@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Chemical Equation Builder</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e2e8f0;
+            --atom-h: #f1f5f9;
+            --atom-o: #ef4444;
+            --atom-n: #3b82f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        h2 { color: var(--primary-dark); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-top: 30px; }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary);
+        }
+
+        .alert-box {
+            background-color: #fef3c7;
+            border: 1px solid #fde68a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .alert-title {
+            font-weight: bold;
+            color: #b45309;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        /* Simulator Styles */
+        .simulator {
+            background: #1e293b;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .sim-header { margin-bottom: 20px; }
+        .sim-select { padding: 10px; font-size: 1.1em; border-radius: 8px; border: none; font-weight: bold; }
+
+        .equation-builder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            font-size: 2em;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .molecule-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #334155;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stepper btn {
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            user-select: none;
+        }
+
+        .stepper btn:hover { background: var(--primary-dark); }
+        
+        .coeff { color: #fbbf24; font-size: 1.2em; min-width: 30px; text-align: center;}
+
+        .atom-scale {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .scale-side { padding: 10px; }
+        .scale-title { font-size: 1.2em; font-weight: bold; margin-bottom: 15px; color: #94a3b8; border-bottom: 1px solid #334155; padding-bottom: 5px;}
+        
+        .atom-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        .atom {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.8em;
+            color: #0f172a;
+            border: 2px solid rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .bg-h { background: var(--atom-h); }
+        .bg-o { background: var(--atom-o); color: white; }
+        .bg-n { background: var(--atom-n); color: white; }
+
+        .status-banner {
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 8px;
+            background: #334155;
+            color: #94a3b8;
+            transition: all 0.4s ease;
+        }
+
+        .status-balanced {
+            background: #16a34a;
+            color: white;
+            box-shadow: 0 0 20px rgba(22, 163, 74, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Quiz Styles */
+        .quiz-container { background: white; padding: 30px; border-radius: 12px; }
+        .question-block { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .question-text { font-size: 1.2em; font-weight: 600; margin-bottom: 15px; }
+        .options-grid { display: grid; gap: 10px; }
+        .option-btn { padding: 12px 15px; text-align: left; background: var(--secondary); border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1em; }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #eff6ff; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background: #dcfce7; border-color: var(--success); color: #14532d; }
+        .option-btn.incorrect { background: #fee2e2; border-color: var(--error); color: #7f1d1d; }
+        .quiz-feedback { margin-top: 10px; font-weight: bold; display: none; padding: 10px; border-radius: 5px; }
+        .score-display { font-size: 1.5em; font-weight: bold; color: var(--primary); text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Chemical Equation Architect</h1>
+        <p>Step-by-Step Guide & Interactive Balancer</p>
+    </header>
+
+    <div class="card">
+        <h2>Step 1: The Cast of Characters (Chemical Formulas)</h2>
+        <p>Before writing a sentence, you need to know the words. In chemistry, the "words" are chemical formulas.</p>
+        <ul>
+            <li><strong>Symbols:</strong> 1- or 2-letter symbols from the Periodic Table (e.g., H for Hydrogen, Na for Sodium).</li>
+            <li><strong>Subscripts (The small, low numbers):</strong> These tell you exactly how many atoms of that specific element are glued together in a single molecule. Example: In H<sub>2</sub>O, the subscript <sub>2</sub> means there are 2 Hydrogen atoms bonded to 1 Oxygen atom.</li>
+        </ul>
+        <div class="alert-box">
+            <span class="alert-title">CRITICAL RULE: Charge Neutrality</span>
+            <p>When you are constructing the formula for an ionic compound (a metal + a nonmetal), you must ensure the molecule has a <strong>net charge of zero</strong>. You do this by adjusting the subscripts, NOT the coefficients.</p>
+            <p><em>Example:</em> Magnesium is Mg<sup>2+</sup>. Chlorine is Cl<sup>-</sup>. To make them neutral, you need two negative Chlorines to balance the positive two of Magnesium. Therefore, the correct formula is <strong>MgCl<sub>2</sub></strong>.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Step 2: The Stage Directions (State Symbols)</h2>
+        <p>Chemicals behave differently depending on their physical state. We indicate this using small letters in parentheses right after the chemical formula:</p>
+        <ul>
+            <li><strong>(s)</strong> = Solid (like ice, metals, or salt crystals)</li>
+            <li><strong>(l)</strong> = Liquid (pure liquids like liquid water or liquid bromine)</li>
+            <li><strong>(g)</strong> = Gas (like steam, oxygen, or carbon dioxide)</li>
+            <li><strong>(aq)</strong> = Aqueous (meaning the chemical is dissolved in water, like saltwater)</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Step 3: Writing the "Skeleton" Equation</h2>
+        <p>A chemical equation is divided into two halves, separated by an arrow.</p>
+        <ul>
+            <li><strong>Reactants (Left Side):</strong> Your starting ingredients. Separate multiple reactants with a plus sign (+).</li>
+            <li><strong>The Arrow (&rarr;):</strong> Means "yields" or "reacts to produce".</li>
+            <li><strong>Products (Right Side):</strong> The final result of the reaction.</li>
+        </ul>
+        <p><em>Skeleton Equation Example (Unbalanced):</em> H<sub>2</sub>(g) + O<sub>2</sub>(g) &rarr; H<sub>2</sub>O(l)</p>
+    </div>
+
+    <div class="card">
+        <h2>Step 4: The Law of Conservation (Balancing)</h2>
+        <p>You cannot create or destroy matter. If you start a reaction with 2 oxygen atoms, you MUST end with 2 oxygen atoms.</p>
+        <ul>
+            <li><strong>Coefficients (The big numbers in front):</strong> These tell you how many <em>entire molecules</em> you have. <strong>This is the ONLY number you are allowed to change to balance an equation.</strong></li>
+            <li>If you place a 2 in front of water (2H<sub>2</sub>O), it multiplies everything inside the molecule by 2 (giving you 4 Hydrogens and 2 Oxygens).</li>
+        </ul>
+    </div>
+
+    <div class="simulator">
+        <div class="sim-header">
+            <h2>Step 5: Interactive Balancing Lab</h2>
+            <select class="sim-select" id="reaction-select" onchange="loadReaction()">
+                <option value="water">Synthesizing Water (H₂ + O₂ &rarr; H₂O)</option>
+                <option value="ammonia">Synthesizing Ammonia (N₂ + H₂ &rarr; NH₃)</option>
+            </select>
+        </div>
+
+        <div class="equation-builder" id="eq-builder">
+            </div>
+
+        <div class="atom-scale">
+            <div class="scale-side">
+                <div class="scale-title">REACTANTS</div>
+                <div class="atom-container" id="reactants-container"></div>
+            </div>
+            <div class="scale-side">
+                <div class="scale-title">PRODUCTS</div>
+                <div class="atom-container" id="products-container"></div>
+            </div>
+        </div>
+
+        <div class="status-banner" id="status-banner">
+            UNBALANCED
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 40px;">
+        <h2>Step 6: Equation Mastery Quiz</h2>
+        <p>Test your knowledge on formulas, states, and balancing.</p>
+        
+        <div id="quiz-container" class="quiz-container">
+            </div>
+        <div class="score-display" id="quiz-score"></div>
+    </div>
+
+</div>
+
+<script>
+    /* --- INTERACTIVE BALANCER LOGIC --- */
+    const reactions = {
+        water: {
+            reactants: [
+                { id: 'r1', formula: 'H₂', atoms: { h: 2 }, coeff: 1 },
+                { id: 'r2', formula: 'O₂', atoms: { o: 2 }, coeff: 1 }
+            ],
+            products: [
+                { id: 'p1', formula: 'H₂O', atoms: { h: 2, o: 1 }, coeff: 1 }
+            ]
+        },
+        ammonia: {
+            reactants: [
+                { id: 'r1', formula: 'N₂', atoms: { n: 2 }, coeff: 1 },
+                { id: 'r2', formula: 'H₂', atoms: { h: 2 }, coeff: 1 }
+            ],
+            products: [
+                { id: 'p1', formula: 'NH₃', atoms: { n: 1, h: 3 }, coeff: 1 }
+            ]
+        }
+    };
+
+    let currentReaction = 'water';
+
+    function loadReaction() {
+        currentReaction = document.getElementById('reaction-select').value;
+        // Reset coefficients to 1
+        reactions[currentReaction].reactants.forEach(r => r.coeff = 1);
+        reactions[currentReaction].products.forEach(p => p.coeff = 1);
+        renderEquation();
+        updateScale();
+    }
+
+    function changeCoeff(type, index, delta) {
+        let mol = reactions[currentReaction][type][index];
+        if (mol.coeff + delta >= 1 && mol.coeff + delta <= 9) {
+            mol.coeff += delta;
+            renderEquation();
+            updateScale();
+        }
+    }
+
+    function renderEquation() {
+        const builder = document.getElementById('eq-builder');
+        builder.innerHTML = '';
+        const data = reactions[currentReaction];
+
+        // Render Reactants
+        data.reactants.forEach((r, idx) => {
+            builder.appendChild(createMoleculeUI('reactants', idx, r));
+            if (idx < data.reactants.length - 1) {
+                let plus = document.createElement('div');
+                plus.innerText = '+';
+                builder.appendChild(plus);
+            }
+        });
+
+        // Arrow
+        let arrow = document.createElement('div');
+        arrow.innerHTML = '&rarr;';
+        builder.appendChild(arrow);
+
+        // Render Products
+        data.products.forEach((p, idx) => {
+            builder.appendChild(createMoleculeUI('products', idx, p));
+        });
+    }
+
+    function createMoleculeUI(type, index, molData) {
+        const div = document.createElement('div');
+        div.className = 'molecule-group';
+        div.innerHTML = `
+            <div class="stepper">
+                <btn onclick="changeCoeff('${type}', ${index}, -1)">-</btn>
+                <span class="coeff">${molData.coeff}</span>
+                <btn onclick="changeCoeff('${type}', ${index}, 1)">+</btn>
+            </div>
+            <div>${molData.formula}</div>
+        `;
+        return div;
+    }
+
+    function updateScale() {
+        const data = reactions[currentReaction];
+        let rCounts = { h: 0, o: 0, n: 0 };
+        let pCounts = { h: 0, o: 0, n: 0 };
+
+        const rCont = document.getElementById('reactants-container');
+        const pCont = document.getElementById('products-container');
+        rCont.innerHTML = ''; pCont.innerHTML = '';
+
+        // Tally and render Reactants
+        data.reactants.forEach(r => {
+            for (let atom in r.atoms) {
+                let total = r.atoms[atom] * r.coeff;
+                rCounts[atom] += total;
+                for(let i=0; i<total; i++) rCont.appendChild(createAtom(atom));
+            }
+        });
+
+        // Tally and render Products
+        data.products.forEach(p => {
+            for (let atom in p.atoms) {
+                let total = p.atoms[atom] * p.coeff;
+                pCounts[atom] += total;
+                for(let i=0; i<total; i++) pCont.appendChild(createAtom(atom));
+            }
+        });
+
+        checkBalance(rCounts, pCounts);
+    }
+
+    function createAtom(type) {
+        const div = document.createElement('div');
+        div.className = `atom bg-${type}`;
+        div.innerText = type.toUpperCase();
+        return div;
+    }
+
+    function checkBalance(r, p) {
+        let isBalanced = (r.h === p.h && r.o === p.o && r.n === p.n) && (r.h > 0 || r.o > 0 || r.n > 0);
+        const banner = document.getElementById('status-banner');
+        
+        if (isBalanced) {
+            banner.className = 'status-banner status-balanced';
+            banner.innerText = 'SUCCESS: EQUATION BALANCED!';
+        } else {
+            banner.className = 'status-banner';
+            banner.innerText = 'UNBALANCED';
+        }
+    }
+
+
+    /* --- QUIZ LOGIC --- */
+    const quizQuestions = [
+        {
+            q: "According to the rule of charge neutrality, what is the correct formula for Aluminum Oxide? (Aluminum is Al³⁺, Oxygen is O²⁻)",
+            options: ["AlO", "Al₂O₃", "Al₃O₂", "AlO₂"],
+            correct: 1,
+            exp: "Correct! Two Al³⁺ ions (+6 total) balance with three O²⁻ ions (-6 total) to create a net zero charge."
+        },
+        {
+            q: "Which part of a chemical formula are you ALLOWED to change when balancing a chemical equation?",
+            options: ["The subscripts (the small numbers)", "The chemical symbols", "The state symbols", "The coefficients (the large numbers in front)"],
+            correct: 3,
+            exp: "Correct! You can only change the coefficients. Changing subscripts changes the actual identity of the substance."
+        },
+        {
+            q: "What does the state symbol (aq) stand for?",
+            options: ["Aquatic (found in the ocean)", "Aqueous (dissolved in water)", "Aquitaine (a solid mineral)", "Aqua (liquid water)"],
+            correct: 1,
+            exp: "Correct! Aqueous means the substance has been dissolved into a water solvent."
+        },
+        {
+            q: "In the formula 3H₂O, how many TOTAL atoms of Hydrogen are present?",
+            options: ["2", "3", "5", "6"],
+            correct: 3,
+            exp: "Correct! The coefficient 3 multiplies the subscript 2 (3 x 2 = 6 total Hydrogen atoms)."
+        },
+        {
+            q: "Which of the following equations is properly balanced?",
+            options: [
+                "H₂ + O₂ &rarr; H₂O", 
+                "2H₂ + O₂ &rarr; 2H₂O", 
+                "H₂ + 2O₂ &rarr; 2H₂O", 
+                "2H₂ + 2O₂ &rarr; 2H₂O"
+            ],
+            correct: 1,
+            exp: "Correct! 2H₂ + O₂ &rarr; 2H₂O yields 4 Hydrogens and 2 Oxygens on both sides."
+        },
+        {
+            q: "Why do we balance chemical equations?",
+            options: ["To satisfy the Law of Conservation of Mass", "To make them easier to read", "To ensure the charges are neutral", "To change solids into liquids"],
+            correct: 0,
+            exp: "Correct! Matter cannot be created or destroyed, so the number of atoms entering a reaction must equal the number leaving."
+        },
+        {
+            q: "What is the correct skeleton equation for: Solid sodium reacts with chlorine gas to produce solid sodium chloride?",
+            options: [
+                "Na(s) + Cl(g) &rarr; NaCl(s)",
+                "Na(l) + Cl₂(g) &rarr; NaCl(aq)",
+                "Na(s) + Cl₂(g) &rarr; NaCl(s)",
+                "Na(s) + Cl₂(g) &rarr; Na₂Cl(s)"
+            ],
+            correct: 2,
+            exp: "Correct! Sodium is solid Na(s), Chlorine is a diatomic gas Cl₂(g), and Sodium Chloride is solid NaCl(s)."
+        },
+        {
+            q: "Balance this equation: __ N₂ + __ H₂ &rarr; __ NH₃",
+            options: ["1, 2, 3", "2, 3, 2", "1, 3, 2", "1, 1, 1"],
+            correct: 2,
+            exp: "Correct! 1 N₂ + 3 H₂ &rarr; 2 NH₃ balances 2 Nitrogens and 6 Hydrogens on both sides."
+        },
+        {
+            q: "What is the net charge of ANY properly written compound in a chemical equation?",
+            options: ["+1", "-1", "Zero (Neutral)", "It depends on the coefficient"],
+            correct: 2,
+            exp: "Correct! All stable compounds must be written so their internal positive and negative charges cancel out to Zero."
+        },
+        {
+            q: "In a chemical equation, what are the substances on the left side of the arrow called?",
+            options: ["Yields", "Reactants", "Products", "Catalysts"],
+            correct: 1,
+            exp: "Correct! The starting ingredients on the left side are called Reactants."
+        }
+    ];
+
+    let quizScore = 0;
+    let answeredQuestions = 0;
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        quizQuestions.forEach((q, qIndex) => {
+            let block = document.createElement('div');
+            block.className = 'question-block';
+            
+            let html = `<div class="question-text">${qIndex + 1}. ${q.q}</div><div class="options-grid">`;
+            
+            q.options.forEach((opt, oIndex) => {
+                html += `<button class="option-btn" id="btn-${qIndex}-${oIndex}" onclick="submitAnswer(${qIndex}, ${oIndex})">${opt}</button>`;
+            });
+            
+            html += `</div><div class="quiz-feedback" id="feedback-${qIndex}"></div>`;
+            block.innerHTML = html;
+            container.appendChild(block);
+        });
+    }
+
+    function submitAnswer(qIndex, oIndex) {
+        const q = quizQuestions[qIndex];
+        const feedback = document.getElementById(`feedback-${qIndex}`);
+        
+        // Disable all buttons for this question
+        for(let i=0; i<q.options.length; i++) {
+            document.getElementById(`btn-${qIndex}-${i}`).disabled = true;
+        }
+
+        const selectedBtn = document.getElementById(`btn-${qIndex}-${oIndex}`);
+        const correctBtn = document.getElementById(`btn-${qIndex}-${q.correct}`);
+
+        feedback.style.display = 'block';
+
+        if (oIndex === q.correct) {
+            selectedBtn.classList.add('correct');
+            feedback.style.backgroundColor = '#dcfce7';
+            feedback.style.color = '#14532d';
+            feedback.innerHTML = `✅ ${q.exp}`;
+            quizScore++;
+        } else {
+            selectedBtn.classList.add('incorrect');
+            correctBtn.classList.add('correct');
+            feedback.style.backgroundColor = '#fee2e2';
+            feedback.style.color = '#7f1d1d';
+            feedback.innerHTML = `❌ ${q.exp}`;
+        }
+
+        answeredQuestions++;
+        if (answeredQuestions === quizQuestions.length) {
+            document.getElementById('quiz-score').innerText = `Final Score: ${quizScore} / ${quizQuestions.length}`;
+        }
+    }
+
+    // Initialize App
+    loadReaction();
+    renderQuiz();
+
+</script>
+
+</body>
+</html>
