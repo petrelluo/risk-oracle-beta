@@ -32,6 +32,18 @@
         .beaker-glass { border: 4px solid #cbd5e1; border-top: none; border-radius: 0 0 15px 15px; position: relative; display: flex; align-items: flex-end; margin: 0 auto; background: rgba(255,255,255,0.5); }
         .beaker-liquid { width: 100%; border-radius: 0 0 10px 10px; transition: all 0.5s ease; }
         .beaker-label { text-align: center; margin-top: 15px; font-weight: bold; color: #475569; }
+
+        /* Interactive Quiz Styles */
+        .quiz-container { background: #f8fafc; border: 2px dashed #94a3b8; padding: 30px; border-radius: 15px; text-align: center; }
+        .quiz-question { font-size: 1.2em; font-weight: bold; color: #0f172a; margin-bottom: 20px; }
+        .quiz-input { padding: 12px 20px; font-size: 1.1em; border: 2px solid #cbd5e1; border-radius: 8px; width: 200px; text-align: center; margin-right: 10px; outline: none; transition: border-color 0.3s; }
+        .quiz-input:focus { border-color: #3b82f6; }
+        .quiz-btn { padding: 12px 24px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: white; transition: background 0.3s; }
+        .btn-submit { background: #3b82f6; }
+        .btn-submit:hover { background: #2563eb; }
+        .btn-next { background: #10b981; display: none; }
+        .btn-next:hover { background: #059669; }
+        .quiz-feedback { margin-top: 20px; font-weight: bold; font-size: 1.1em; min-height: 25px; }
     </style>
 </head>
 <body>
@@ -188,6 +200,21 @@
     </div>
 </div>
 
+<div class="card">
+    <h2>7. Interactive Memory Refresh</h2>
+    <p>Test your knowledge on the molar roadmap! You will be given 3 random questions. Type in the correct number to proceed.</p>
+    
+    <div class="quiz-container" id="quiz-container">
+        <div class="quiz-question" id="quiz-text">Loading question...</div>
+        <div>
+            <input type="number" id="quiz-input" class="quiz-input" placeholder="Enter number..." step="any">
+            <button id="btn-submit-ans" class="quiz-btn btn-submit" onclick="checkQuizAnswer()">Submit</button>
+            <button id="btn-next-ans" class="quiz-btn btn-next" onclick="loadNextQuiz()">Next Question &rarr;</button>
+        </div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>
+</div>
+
 <script>
     // 1. Dozen vs Mole Comparison
     new Chart(document.getElementById('dozenChart'), {
@@ -234,6 +261,91 @@
             scales: { y: { title: { display: true, text: 'Concentration Level (M)' } } }
         }
     });
+
+    // --- SECTION 7: INTERACTIVE QUIZ LOGIC ---
+    const allQuizProblems = [
+        { text: "You have 36.04 grams of water (H₂O, MM = 18.02 g/mol). How many moles is this?", answer: 2 },
+        { text: "What is the mass in grams of 0.5 moles of Carbon (MM = 12.01 g/mol)? (Round to 1 decimal place)", answer: 6.0 },
+        { text: "You dissolve 116.88 grams of NaCl (MM = 58.44 g/mol) into water to make 2.0 Liters of solution. What is the Molarity?", answer: 1 },
+        { text: "How many grams of Gold (Au, MM = 197.0 g/mol) are in 0.1 moles?", answer: 19.7 },
+        { text: "You have a 3.0 M solution of sugar water in a 0.5 Liter bottle. How many moles of sugar are in it?", answer: 1.5 },
+        { text: "You dilute 0.2 Liters of a 10.0 M stock solution to a final volume of 1.0 Liter. What is the new Molarity?", answer: 2 },
+        { text: "You have 1.2044 x 10²⁴ atoms of Iron. How many moles is this? (Avogadro's = 6.022 x 10²³)", answer: 2 },
+        { text: "How many Liters of water do you need to dissolve 3.0 moles of salt to get exactly a 1.5 M solution?", answer: 2 },
+        { text: "You have 44.01 grams of CO₂ (MM = 44.01 g/mol). How many moles do you have?", answer: 1 },
+        { text: "You start with 0.5 Liters of a 4.0 M solution and add water until the total volume is 2.0 Liters. What is the final Molarity?", answer: 1 }
+    ];
+
+    // Shuffle and pick 3 random questions
+    let selectedProblems = allQuizProblems.sort(() => 0.5 - Math.random()).slice(0, 3);
+    let currentProbIndex = 0;
+
+    function initQuiz() {
+        currentProbIndex = 0;
+        loadNextQuizUI();
+    }
+
+    function loadNextQuizUI() {
+        if (currentProbIndex >= 3) {
+            document.getElementById('quiz-container').innerHTML = `
+                <h3 style='color:#15803d; font-size: 1.5em;'>🎉 Great Job! You completed the memory refresh! 🎉</h3>
+                <p><button class='quiz-btn btn-submit' onclick='location.reload()'>Play Again</button></p>
+            `;
+            return;
+        }
+        document.getElementById('quiz-text').innerText = `Question ${currentProbIndex + 1} of 3: ${selectedProblems[currentProbIndex].text}`;
+        document.getElementById('quiz-input').value = '';
+        document.getElementById('quiz-input').disabled = false;
+        document.getElementById('quiz-feedback').innerText = '';
+        document.getElementById('btn-next-ans').style.display = 'none';
+        document.getElementById('btn-submit-ans').style.display = 'inline-block';
+        document.getElementById('quiz-input').focus();
+    }
+
+    function checkQuizAnswer() {
+        let userAns = parseFloat(document.getElementById('quiz-input').value);
+        let targetAns = selectedProblems[currentProbIndex].answer;
+        let feedback = document.getElementById('quiz-feedback');
+
+        if (isNaN(userAns)) {
+            feedback.innerText = "Please enter a valid number.";
+            feedback.style.color = "#ef4444";
+            return;
+        }
+
+        // Allow a small tolerance (e.g., +/- 0.1) for floating point rounding
+        if (Math.abs(userAns - targetAns) <= 0.1) {
+            feedback.innerText = "✅ Correct! Great job.";
+            feedback.style.color = "#15803d";
+            document.getElementById('quiz-input').disabled = true;
+            document.getElementById('btn-submit-ans').style.display = 'none';
+            document.getElementById('btn-next-ans').style.display = 'inline-block';
+        } else {
+            feedback.innerText = "❌ Incorrect. Try again! (You must get it right to proceed).";
+            feedback.style.color = "#ef4444";
+        }
+    }
+
+    function loadNextQuiz() {
+        currentProbIndex++;
+        loadNextQuizUI();
+    }
+
+    // Allow pressing "Enter" to submit
+    document.getElementById("quiz-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            if (document.getElementById('btn-submit-ans').style.display !== 'none') {
+                checkQuizAnswer();
+            } else {
+                loadNextQuiz();
+            }
+        }
+    });
+
+    // Start the quiz when page loads
+    window.onload = initQuiz;
+
 </script>
 
 </body>
