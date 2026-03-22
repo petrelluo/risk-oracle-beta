@@ -221,14 +221,15 @@
     </header>
 
     <div class="card">
-        <h2>Introduction: The Magic of Chemical Reactions</h2>
-        <p>A <strong>chemical reaction</strong> is the process where matter transforms. It happens by breaking the chemical bonds of your starting ingredients (Reactants), rearranging the atoms, and forming new bonds to create entirely new substances (Products).</p>
-        <p>We use <strong>Chemical Equations</strong> because they are the universal math language of chemistry. They allow us to track exactly <em>what</em> ingredients are used, <em>what state</em> they are in, and exactly <em>how much</em> of each is required.</p>
+        <h2>Introduction: The Ultimate Lego Set</h2>
+        <p>A <strong>chemical reaction</strong> is the amazing process where matter transforms. But to understand how it works, you must understand the golden rule of chemistry: <strong>The Law of Conservation of Mass</strong>.</p>
+        <p>Think of atoms like Lego blocks. When a chemical reaction happens, you do not get any brand new Legos out of nowhere, and none of your old Legos magically disappear. You simply take apart your starting creations (the <strong>Reactants</strong>) and use those <em>exact same blocks</em> to build completely new things (the <strong>Products</strong>).</p>
+        <p>Below is a graph showing the combustion of Methane (CH<sub>4</sub> + 2O<sub>2</sub> &rarr; CO<sub>2</sub> + 2H<sub>2</sub>O). Notice how the chemical substances change completely, but the actual count of every single atom stays exactly the same!</p>
         
         <div class="chart-container">
-            <canvas id="energyChart"></canvas>
+            <canvas id="conservationChart"></canvas>
         </div>
-        <p style="font-size: 0.9em; color: #475569; text-align: center;"><em>The graph above shows the energy journey of an exothermic reaction. Energy goes IN to break bonds (the peak), and energy comes OUT when new bonds form.</em></p>
+        <p style="font-size: 0.9em; color: #475569; text-align: center;"><em>The graph visualizes that no atoms are lost or gained. 1 Carbon, 4 Hydrogens, and 4 Oxygens go in, and that exact same number comes out, just rearranged into entirely new molecules.</em></p>
     </div>
 
     <div class="card">
@@ -269,7 +270,7 @@
 
     <div class="card">
         <h2>Step 4: The Law of Conservation (Balancing)</h2>
-        <p>You cannot create or destroy matter. If you start a reaction with 2 oxygen atoms, you MUST end with 2 oxygen atoms.</p>
+        <p>Because of the Law of Conservation of Mass we learned in the introduction, if you start a reaction with 2 oxygen atoms, you MUST end with 2 oxygen atoms.</p>
         <ul>
             <li><strong>Coefficients (The big numbers in front):</strong> These tell you how many <em>entire molecules</em> you have. <strong>This is the ONLY number you are allowed to change to balance an equation.</strong></li>
             <li>If you place a 2 in front of water (2H<sub>2</sub>O), it multiplies everything inside the molecule by 2 (giving you 4 Hydrogens and 2 Oxygens).</li>
@@ -316,39 +317,55 @@
 </div>
 
 <script>
-    /* --- CHART.JS ENERGY PROFILE --- */
+    /* --- CHART.JS CONSERVATION CHART --- */
     window.onload = function() {
-        const ctx = document.getElementById('energyChart').getContext('2d');
+        const ctx = document.getElementById('conservationChart').getContext('2d');
         new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ['Start (Reactants)', 'Breaking Bonds', 'Transition State', 'Forming Bonds', 'End (Products)'],
-                datasets: [{
-                    label: 'Potential Energy',
-                    data: [40, 65, 90, 45, 15],
-                    borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37, 99, 235, 0.15)',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: ['#1e293b', '#f59e0b', '#ef4444', '#10b981', '#1e293b'],
-                    pointRadius: [6, 0, 0, 0, 6],
-                    pointHoverRadius: 8
-                }]
+                labels: ['Carbon (C) Atoms', 'Hydrogen (H) Atoms', 'Oxygen (O) Atoms'],
+                datasets: [
+                    {
+                        label: 'Reactants (Before Reaction)',
+                        data: [1, 4, 4],
+                        backgroundColor: '#3b82f6',
+                        borderColor: '#1e40af',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Products (After Reaction)',
+                        data: [1, 4, 4],
+                        backgroundColor: '#10b981',
+                        borderColor: '#047857',
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
                 scales: {
                     y: { 
-                        title: { display: true, text: 'Potential Energy', font: {weight: 'bold'} }, 
-                        min: 0, max: 100,
-                        ticks: { display: false }
+                        beginAtZero: true, 
+                        ticks: { stepSize: 1 },
+                        title: { display: true, text: 'Number of Atoms', font: {weight: 'bold'} }
                     },
-                    x: { 
-                        title: { display: true, text: 'Reaction Progress', font: {weight: 'bold'} },
-                        grid: { display: false }
+                    x: {
+                        title: { display: true, text: 'Atom Type', font: {weight: 'bold'} }
+                    }
+                },
+                plugins: {
+                    title: { 
+                        display: true, 
+                        text: 'Atom Count Comparison: Combustion of Methane',
+                        font: { size: 16 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' atom(s)';
+                            }
+                        }
                     }
                 }
             }
