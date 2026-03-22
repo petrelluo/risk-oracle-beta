@@ -26,6 +26,9 @@
             --atom-ca: #14b8a6;
             --atom-cl: #84cc16;
             --atom-c: #1e293b;
+            --atom-zn: #64748b;
+            --atom-al: #94a3b8; /* Aluminum Silver */
+            --atom-cu: #b45309; /* Copper Bronze */
         }
 
         body {
@@ -276,6 +279,9 @@
         .bg-ca { background: var(--atom-ca); color: white; }
         .bg-cl { background: var(--atom-cl); color: white; }
         .bg-c { background: var(--atom-c); color: white; }
+        .bg-zn { background: var(--atom-zn); color: white; }
+        .bg-al { background: var(--atom-al); color: white; }
+        .bg-cu { background: var(--atom-cu); color: white; }
 
         .status-banner {
             margin-top: 20px;
@@ -486,7 +492,7 @@
         <div class="sim-header">
             <h2>Step 6: Interactive Balancing Lab</h2>
             <select class="sim-select" id="reaction-select" onchange="loadReaction()">
-                <option value="water">Synthesis (H₂ + O₂ &rarr; H₂O)</option>
+                <option value="single_replacement">Single Replacement (Al + CuCl₂ &rarr; AlCl₃ + Cu)</option>
                 <option value="ammonia">Synthesis (N₂ + H₂ &rarr; NH₃)</option>
                 <option value="calcium_phosphate">Double Replacement (Na₃PO₄ + CaCl₂ &rarr; Ca₃(PO₄)₂ + NaCl)</option>
             </select>
@@ -584,13 +590,14 @@
 
     /* --- INTERACTIVE BALANCER LOGIC --- */
     const reactions = {
-        water: {
+        single_replacement: {
             reactants: [
-                { id: 'r1', formula: 'H₂', atoms: { h: 2 }, coeff: 1 },
-                { id: 'r2', formula: 'O₂', atoms: { o: 2 }, coeff: 1 }
+                { id: 'r1', formula: 'Al', atoms: { al: 1 }, coeff: 1 },
+                { id: 'r2', formula: 'CuCl₂', atoms: { cu: 1, cl: 2 }, coeff: 1 }
             ],
             products: [
-                { id: 'p1', formula: 'H₂O', atoms: { h: 2, o: 1 }, coeff: 1 }
+                { id: 'p1', formula: 'AlCl₃', atoms: { al: 1, cl: 3 }, coeff: 1 },
+                { id: 'p2', formula: 'Cu', atoms: { cu: 1 }, coeff: 1 }
             ]
         },
         ammonia: {
@@ -614,7 +621,7 @@
         }
     };
 
-    let currentReaction = 'water';
+    let currentReaction = 'single_replacement';
 
     function loadReaction() {
         currentReaction = document.getElementById('reaction-select').value;
@@ -704,7 +711,7 @@
         const div = document.createElement('div');
         div.className = `atom bg-${type}`;
         
-        // Handle two letter atom symbols gracefully (Na, Ca, Cl)
+        // Handle two letter atom symbols gracefully
         let label = type.charAt(0).toUpperCase() + type.slice(1);
         if (label.length > 2) label = label.substring(0,2);
         
