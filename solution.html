@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Study Guide: Solutions & Mixtures</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #f8fafc;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { margin: 0 0 10px 0; font-size: 2.5em; }
+        h2 { color: var(--primary-dark); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-top: 30px; }
+        h3 { color: var(--primary); }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary);
+        }
+
+        .example-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #166534;
+            margin-bottom: 10px;
+            display: block;
+            font-size: 1.1em;
+        }
+
+        .step {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            border-left: 3px solid #86efac;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            border-top: 5px solid var(--primary-dark);
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 15px 20px;
+            font-size: 1em;
+            text-align: left;
+            background: var(--secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+            color: #14532d;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: var(--error);
+            color: #7f1d1d;
+        }
+
+        .feedback-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .btn-next {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: none;
+            float: right;
+        }
+
+        .btn-next:hover {
+            background: var(--primary-dark);
+        }
+
+        .score-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .final-score {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .progress-text {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Chemistry Solutions Mastery</h1>
+        <p>Comprehensive Study Guide & Interactive Practice</p>
+    </header>
+
+    <div class="card">
+        <h2>1. Classifying Mixtures & The Tyndall Effect</h2>
+        <p>A mixture's classification depends heavily on particle size and how it behaves over time.</p>
+        <ul>
+            <li><strong>Solutions (Homogeneous):</strong> Particles are completely dissolved (atomic/molecular size). They never settle, cannot be filtered, and light passes straight through them. <em>(Example: Saltwater, air, brass alloys)</em>.</li>
+            <li><strong>Suspensions (Heterogeneous):</strong> Large particles that temporarily float but will settle to the bottom if left alone. <em>(Example: Muddy water, snow globes)</em>.</li>
+            <li><strong>Colloids (Heterogeneous):</strong> Medium-sized particles that do not settle. Because the particles are larger than molecules, they scatter light. This scattering is known as the <strong>Tyndall Effect</strong>. <em>(Example: Fog, milk, mayonnaise)</em>.</li>
+        </ul>
+        <p><strong>The Golden Rule:</strong> "Like dissolves like." Polar solvents (water) dissolve polar/ionic solutes. Nonpolar solvents (oil) dissolve nonpolar solutes. Mixing polar and nonpolar creates an <em>immiscible</em> mixture (they separate).</p>
+    </div>
+
+    <div class="card">
+        <h2>2. Energetics of the Dissolving Process</h2>
+        <p>When a solute dissolves (solvation/hydration), three distinct energy steps occur. The overall Heat of Solution (&Delta;H<sub>soln</sub>) determines if the liquid gets hot or cold.</p>
+        <ol>
+            <li><strong>Step 1 (Endothermic):</strong> Energy is required to break the bonds holding the solute together.</li>
+            <li><strong>Step 2 (Endothermic):</strong> Energy is required to spread out the solvent molecules to make room.</li>
+            <li><strong>Step 3 (Exothermic):</strong> Energy is released when the solvent and solute attract each other and form new bonds.</li>
+        </ol>
+        <div class="example-box">
+            <span class="example-title">Concept Check: Hot vs. Cold Packs</span>
+            <div class="step"><strong>Exothermic (Hot Pack):</strong> If Step 3 releases MORE energy than Steps 1 & 2 required, the overall reaction releases heat into the water, making the solution feel hot.</div>
+            <div class="step"><strong>Endothermic (Cold Pack):</strong> If Steps 1 & 2 require MORE energy than Step 3 releases, the reaction steals heat from the water, making the solution feel cold.</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. Dissociation & Electrolytes</h2>
+        <p>Substances behave differently regarding electricity when dissolved based on whether they form charged ions.</p>
+        <ul>
+            <li><strong>Strong Electrolytes:</strong> 100% dissociate into ions. Excellent conductors. (Ionic salts, strong acids).</li>
+            <li><strong>Nonelectrolytes:</strong> Dissolve, but stay entirely intact as neutral molecules. Do not conduct. (Sugars, alcohols).</li>
+        </ul>
+        <div class="example-box">
+            <span class="example-title">Sample Problem: Writing Dissociation Equations</span>
+            <p><em>Question: Write the dissociation equation for Aluminum Chloride (AlCl<sub>3</sub>) and determine how many total moles of ions are produced per mole of solid.</em></p>
+            <div class="step">1. Identify the ions: Aluminum is Al<sup>3+</sup> and Chloride is Cl<sup>-</sup>.</div>
+            <div class="step">2. Balance the equation: The subscript 3 becomes a coefficient.</div>
+            <div class="step">3. <strong>Equation:</strong> AlCl<sub>3</sub>(s) &rarr; Al<sup>3+</sup>(aq) + 3Cl<sup>-</sup>(aq)</div>
+            <div class="step">4. <strong>Result:</strong> 1 mole of Al<sup>3+</sup> + 3 moles of Cl<sup>-</sup> = <strong>4 total moles of ions</strong>.</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>4. Solubility & Environmental Factors</h2>
+        <p><strong>Solubility</strong> is the maximum amount of solute that can fit into a solvent. <em>Unsaturated</em> means it can hold more; <em>Saturated</em> means it is exactly full; <em>Supersaturated</em> is a tricked, unstable state holding too much.</p>
+        <table>
+            <tr>
+                <th>Factor</th>
+                <th>Effect on Solid Solutes</th>
+                <th>Effect on Gas Solutes</th>
+            </tr>
+            <tr>
+                <td><strong>Increase Temperature</strong></td>
+                <td>Increases solubility (dissolves more)</td>
+                <td>Decreases solubility (gas escapes)</td>
+            </tr>
+            <tr>
+                <td><strong>Increase Pressure</strong></td>
+                <td>No effect</td>
+                <td>Increases solubility (Henry's Law)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>5. Concentration Math: Molarity, Molality, and Dilution</h2>
+        <p>Concentration measures how "crowded" the solute is.</p>
+        
+        <div class="example-box">
+            <span class="example-title">Sample Problem 1: Molarity (M)</span>
+            <p><em>Formula: M = moles of solute / Liters of solution</em></p>
+            <p><strong>Question:</strong> What is the molarity of 58.44 g of NaCl dissolved in 2.0 L of water? (Molar mass of NaCl = 58.44 g/mol)</p>
+            <div class="step">Step 1 (Convert grams to moles): 58.44 g &divide; 58.44 g/mol = 1.0 mole NaCl.</div>
+            <div class="step">Step 2 (Apply formula): M = 1.0 mol / 2.0 L</div>
+            <div class="step"><strong>Answer:</strong> 0.50 M</div>
+        </div>
+
+        <div class="example-box">
+            <span class="example-title">Sample Problem 2: Molality (m)</span>
+            <p><em>Formula: m = moles of solute / kg of solvent</em> (Used because it doesn't change with temperature!).</p>
+            <p><strong>Question:</strong> You dissolve 0.50 moles of sugar into 250 grams of water. What is the molality?</p>
+            <div class="step">Step 1 (Convert grams to kg): 250 g &divide; 1000 = 0.25 kg water.</div>
+            <div class="step">Step 2 (Apply formula): m = 0.50 mol / 0.25 kg</div>
+            <div class="step"><strong>Answer:</strong> 2.0 m</div>
+        </div>
+
+        <div class="example-box">
+            <span class="example-title">Sample Problem 3: Dilutions</span>
+            <p><em>Formula: M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub></em></p>
+            <p><strong>Question:</strong> You have 100 mL of a 6.0 M stock solution of HCl. You add water until the final volume is 300 mL. What is the new concentration?</p>
+            <div class="step">Step 1 (Plug in values): (6.0 M)(100 mL) = (M<sub>2</sub>)(300 mL)</div>
+            <div class="step">Step 2 (Solve for M<sub>2</sub>): 600 = 300 &times; M<sub>2</sub></div>
+            <div class="step"><strong>Answer:</strong> M<sub>2</sub> = 2.0 M</div>
+        </div>
+    </div>
+
+    <div class="quiz-container" id="quiz-app">
+        <div id="quiz-active">
+            <h2>Interactive Test Prep</h2>
+            <div class="progress-text" id="progress-text">Question 1 of 10</div>
+            <div class="question-text" id="question-text">Loading question...</div>
+            <div class="options-grid" id="options-container">
+                </div>
+            <div class="feedback-box" id="feedback-box"></div>
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question &rarr;</button>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="score-screen" id="score-screen">
+            <h2>Quiz Complete!</h2>
+            <p>Here is how you did:</p>
+            <div class="final-score" id="final-score">0/10</div>
+            <button class="btn-next" style="display:inline-block; float:none;" onclick="restartQuiz()">Retake Quiz</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "You shine a laser pointer through a beaker of liquid and can clearly see the beam of light passing through it. The particles do not settle to the bottom. What is this liquid?",
+            options: ["A true solution", "A suspension", "A colloid", "An alloy"],
+            correct: 2,
+            explanation: "Correct! This is the Tyndall Effect. Colloids have particles large enough to scatter light, but small enough that they don't settle."
+        },
+        {
+            question: "Hexane is a completely nonpolar solvent. According to the rule 'like dissolves like', which of the following will easily dissolve in hexane?",
+            options: ["Sodium chloride (Ionic)", "Water (Polar)", "Vegetable oil (Nonpolar)", "Vinegar (Polar)"],
+            correct: 2,
+            explanation: "Correct! Nonpolar solvents will only dissolve nonpolar solutes like oil. Polar and ionic substances will repel the hexane."
+        },
+        {
+            question: "When dissolving ammonium nitrate in water, the beaker feels incredibly cold to the touch. What does this mean about the energy steps?",
+            options: ["Steps 1 & 2 (breaking apart) required MORE energy than Step 3 released.", "Step 3 (forming bonds) released MORE energy than Steps 1 & 2 required.", "The dissolving process was perfectly balanced.", "The solvent molecules stopped moving."],
+            correct: 0,
+            explanation: "Correct! Because it feels cold, it is an endothermic process. It stole heat from your hand because it required a net input of energy to break the solute/solvent apart."
+        },
+        {
+            question: "A student completely dissolves table sugar (C12H22O11) into a beaker of water. Will this solution conduct electricity?",
+            options: ["Yes, because sugar is a strong electrolyte.", "Yes, because water is a strong electrolyte.", "No, because sugar is a nonelectrolyte and does not form ions.", "No, because sugar is a weak electrolyte."],
+            correct: 2,
+            explanation: "Correct! Covalent compounds like sugar are nonelectrolytes. They dissolve perfectly, but they stay intact as neutral molecules and do not create charged ions."
+        },
+        {
+            question: "What is the correct dissociation equation for Calcium Bromide (CaBr2) dissolving in water?",
+            options: [
+                "CaBr2(s) &rarr; Ca2+(aq) + Br2-(aq)",
+                "CaBr2(s) &rarr; Ca2+(aq) + 2Br-(aq)",
+                "CaBr2(s) &rarr; Ca+(aq) + 2Br-(aq)",
+                "CaBr2(s) &rarr; CaBr2(aq)"
+            ],
+            correct: 1,
+            explanation: "Correct! The ionic compound breaks into one Calcium ion (Ca2+) and TWO separate Bromide ions (Br-)."
+        },
+        {
+            question: "Thermal pollution occurs when power plants dump hot water back into lakes. Why does this harm the fish?",
+            options: ["It decreases the solubility of oxygen gas, causing fish to suffocate.", "It increases the solubility of oxygen gas, causing oxygen toxicity.", "It causes the lake water to become supersaturated with solid minerals.", "It increases the pressure of the lake."],
+            correct: 0,
+            explanation: "Correct! Gas solubility DECREASES as temperature increases. The hot water causes the dissolved oxygen to escape into the atmosphere."
+        },
+        {
+            question: "Calculate the Molarity: You have 0.50 moles of Potassium Nitrate (KNO3) dissolved in 2.5 Liters of solution.",
+            options: ["1.25 M", "5.0 M", "0.20 M", "2.0 M"],
+            correct: 2,
+            explanation: "Correct! Molarity = Moles / Liters. (0.50 moles / 2.5 Liters) = 0.20 M."
+        },
+        {
+            question: "Calculate the Dilution: You start with 50.0 mL of a 10.0 M stock solution. You add water until the final volume is 500.0 mL. What is the new Molarity?",
+            options: ["1.0 M", "5.0 M", "0.10 M", "100.0 M"],
+            correct: 0,
+            explanation: "Correct! Using M1V1 = M2V2: (10.0 M)(50.0 mL) = (M2)(500.0 mL). 500 = 500(M2), so M2 = 1.0 M."
+        },
+        {
+            question: "Why do chemists sometimes prefer to use Molality (m) instead of Molarity (M) for freezing/boiling point experiments?",
+            options: ["Molality is easier to calculate.", "Molarity requires knowing the exact gas pressure.", "Molality is based on the mass of the solvent, which does not expand or contract with temperature changes.", "Molality uses Liters, which is more accurate."],
+            correct: 2,
+            explanation: "Correct! Liquid volumes change slightly as they heat or cool, which alters Molarity. Mass (kg) never changes, making Molality perfectly stable across temperature shifts."
+        },
+        {
+            question: "Colligative properties (like freezing point depression) depend on...",
+            options: ["The specific chemical identity of the solute.", "The physical size of the solute atoms.", "The total number of dissolved solute particles.", "The electronegativity of the solvent."],
+            correct: 2,
+            explanation: "Correct! Colligative properties depend strictly on the RATIO or NUMBER of solute particles in the solvent, regardless of what those particles actually are."
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const feedbackBox = document.getElementById('feedback-box');
+    const btnNext = document.getElementById('btn-next');
+    const progressText = document.getElementById('progress-text');
+    const quizActive = document.getElementById('quiz-active');
+    const scoreScreen = document.getElementById('score-screen');
+    const finalScore = document.getElementById('final-score');
+
+    function loadQuestion() {
+        // Reset UI
+        feedbackBox.style.display = 'none';
+        btnNext.style.display = 'none';
+        optionsContainer.innerHTML = '';
+        
+        const q = quizData[currentQuestion];
+        progressText.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        questionText.innerHTML = q.question;
+
+        q.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerHTML = option;
+            button.onclick = () => checkAnswer(index, button);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function checkAnswer(selectedIndex, selectedButton) {
+        const q = quizData[currentQuestion];
+        const allButtons = optionsContainer.children;
+
+        // Disable all buttons
+        for (let btn of allButtons) {
+            btn.disabled = true;
+        }
+
+        feedbackBox.style.display = 'block';
+
+        if (selectedIndex === q.correct) {
+            selectedButton.classList.add('correct');
+            feedbackBox.style.backgroundColor = '#dcfce7';
+            feedbackBox.style.color = '#14532d';
+            feedbackBox.innerHTML = `<strong>✅ Correct!</strong><br>${q.explanation}`;
+            score++;
+        } else {
+            selectedButton.classList.add('incorrect');
+            allButtons[q.correct].classList.add('correct'); // Show correct answer
+            feedbackBox.style.backgroundColor = '#fee2e2';
+            feedbackBox.style.color = '#7f1d1d';
+            feedbackBox.innerHTML = `<strong>❌ Incorrect.</strong><br>${q.explanation}`;
+        }
+
+        btnNext.style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function showScore() {
+        quizActive.style.display = 'none';
+        scoreScreen.style.display = 'block';
+        finalScore.innerText = `${score} / ${quizData.length}`;
+    }
+
+    function restartQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        quizActive.style.display = 'block';
+        scoreScreen.style.display = 'none';
+        loadQuestion();
+    }
+
+    // Initialize Quiz
+    loadQuestion();
+</script>
+
+</body>
+</html>
