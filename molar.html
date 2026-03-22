@@ -202,7 +202,7 @@
 
 <div class="card">
     <h2>7. Interactive Memory Refresh</h2>
-    <p>Test your knowledge on the molar roadmap! You will be given 3 random questions. Type in the correct number to proceed.</p>
+    <p>Test your knowledge on the molar roadmap! These problems require <strong>multiple steps</strong>. You will be given 3 random questions. Type in the correct number to proceed.</p>
     
     <div class="quiz-container" id="quiz-container">
         <div class="quiz-question" id="quiz-text">Loading question...</div>
@@ -262,18 +262,18 @@
         }
     });
 
-    // --- SECTION 7: INTERACTIVE QUIZ LOGIC ---
+    // --- SECTION 7: INTERACTIVE QUIZ LOGIC (2-STEP PROBLEMS) ---
     const allQuizProblems = [
-        { text: "You have 36.04 grams of water (H₂O, MM = 18.02 g/mol). How many moles is this?", answer: 2 },
-        { text: "What is the mass in grams of 0.5 moles of Carbon (MM = 12.01 g/mol)? (Round to 1 decimal place)", answer: 6.0 },
-        { text: "You dissolve 116.88 grams of NaCl (MM = 58.44 g/mol) into water to make 2.0 Liters of solution. What is the Molarity?", answer: 1 },
-        { text: "How many grams of Gold (Au, MM = 197.0 g/mol) are in 0.1 moles?", answer: 19.7 },
-        { text: "You have a 3.0 M solution of sugar water in a 0.5 Liter bottle. How many moles of sugar are in it?", answer: 1.5 },
-        { text: "You dilute 0.2 Liters of a 10.0 M stock solution to a final volume of 1.0 Liter. What is the new Molarity?", answer: 2 },
-        { text: "You have 1.2044 x 10²⁴ atoms of Iron. How many moles is this? (Avogadro's = 6.022 x 10²³)", answer: 2 },
-        { text: "How many Liters of water do you need to dissolve 3.0 moles of salt to get exactly a 1.5 M solution?", answer: 2 },
-        { text: "You have 44.01 grams of CO₂ (MM = 44.01 g/mol). How many moles do you have?", answer: 1 },
-        { text: "You start with 0.5 Liters of a 4.0 M solution and add water until the total volume is 2.0 Liters. What is the final Molarity?", answer: 1 }
+        { text: "You need to make 0.5 Liters of a 2.0 M solution of NaCl (MM = 58.44 g/mol). How many GRAMS of NaCl do you need?", answer: 58.44 },
+        { text: "You dissolve 116.88 grams of NaCl (MM = 58.44 g/mol) into water to make a 0.5 Liter solution. What is the final Molarity (M)?", answer: 4.0 },
+        { text: "You have 3.011 x 10²³ atoms of Gold (MM = 197.0 g/mol). What is the mass in GRAMS? (Assume Avogadro's = 6.022 x 10²³)", answer: 98.5 },
+        { text: "You have 88.02 grams of CO₂ (MM = 44.01 g/mol). You want to make a 0.5 M solution. How many LITERS of water do you need?", answer: 4.0 },
+        { text: "A 0.25 Liter sample of water contains 1.2044 x 10²⁴ molecules of a pollutant. What is the Molarity? (Assume Avogadro's = 6.022 x 10²³)", answer: 8.0 },
+        { text: "You have 0.1 L of a 10.0 M stock solution of NaCl (MM = 58.44 g/mol). You dilute it to a total volume of 1.0 L. How many GRAMS of NaCl are actually in the diluted solution? (Hint: Dilution doesn't change mass)", answer: 58.44 },
+        { text: "You dissolve 80.0 grams of NaOH (MM = 40.0 g/mol) into 1.0 L of solution. You take 0.5 L of this solution and dilute it to 2.0 L. What is the final Molarity?", answer: 0.5 },
+        { text: "You have 36.04 grams of water (H₂O, MM = 18.02 g/mol). Enter the value of X if the number of molecules is X * 10²³. (Assume Avogadro's = 6.022 x 10²³)", answer: 12.044 },
+        { text: "You have 2.0 Liters of a 0.5 M solution of sugar. Enter the value of X if the total number of sugar molecules is X * 10²³. (Assume Avogadro's = 6.022 x 10²³)", answer: 6.022 },
+        { text: "You have 0.5 Liters of a 2.0 M solution of CaCl₂. Enter the value of X if the total number of individual Chloride (Cl⁻) ions is X * 10²³. (Assume Avogadro's = 6.022 x 10²³)", answer: 12.044 }
     ];
 
     // Shuffle and pick 3 random questions
