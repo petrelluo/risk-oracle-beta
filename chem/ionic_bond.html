@@ -169,6 +169,34 @@
         <h2>Step 2: Ionic Bonding (The Transfer)</h2>
         <p>An ionic bond is the strong electrostatic attraction between oppositely charged ions. It occurs when a metal completely transfers its electron(s) to a nonmetal.</p>
         
+        <h3>The Electron Transfer</h3>
+        <p>Metals have very low ionization energy, making it easy to pull their valence electrons away. Nonmetals have high electronegativity and readily accept those electrons to complete their shell.</p>
+
+        <div class="svg-diagram">
+            <svg width="450" height="180" viewBox="0 0 450 180" xmlns="http://www.w3.org/2000/svg">
+                <rect width="450" height="180" fill="#f8fafc" rx="10" />
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b" />
+                    </marker>
+                </defs>
+                <circle cx="100" cy="100" r="35" fill="none" stroke="#e11d48" stroke-width="3"/>
+                <text x="100" y="106" fill="#e11d48" font-weight="bold" font-size="20" text-anchor="middle">Na</text>
+                <circle cx="100" cy="65" r="6" fill="#f59e0b"/> <circle cx="350" cy="100" r="35" fill="none" stroke="#3b82f6" stroke-width="3"/>
+                <text x="350" y="106" fill="#3b82f6" font-weight="bold" font-size="20" text-anchor="middle">Cl</text>
+                <circle cx="350" cy="65" r="6" fill="#3b82f6"/>
+                <circle cx="375" cy="75" r="6" fill="#3b82f6"/>
+                <circle cx="385" cy="100" r="6" fill="#3b82f6"/>
+                <circle cx="375" cy="125" r="6" fill="#3b82f6"/>
+                <circle cx="350" cy="135" r="6" fill="#3b82f6"/>
+                <circle cx="325" cy="125" r="6" fill="#3b82f6"/>
+                <circle cx="315" cy="100" r="6" fill="#3b82f6"/>
+
+                <path d="M 115 60 Q 225 10 335 60" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+                <text x="225" y="35" fill="#b45309" font-weight="bold" font-size="14" text-anchor="middle">Electron Transfer</text>
+            </svg>
+        </div>
+
         <h3>The Radius Shift</h3>
         <p>When electrons are transferred, physical sizes change dramatically. Metals lose their outer shell and <strong>shrink</strong> (becoming positive cations). Nonmetals gain electrons which repel each other, causing the cloud to <strong>grow</strong> (becoming negative anions).</p>
 
@@ -256,10 +284,10 @@
 
     <div class="card">
         <h2>Step 5: Visualizing the Differences</h2>
-        <p>The macroscopic properties of a substance are entirely dictated by its microscopic bond type. The radar chart below maps out how these three bonds compare across major physical traits.</p>
+        <p>The macroscopic properties of a substance are entirely dictated by its microscopic bond type. The grouped bar chart below makes it easy to compare how these three bonds stack up across major physical traits.</p>
         
         <div class="chart-container" style="height: 400px;">
-            <canvas id="radarChart"></canvas>
+            <canvas id="barChart"></canvas>
         </div>
         <p style="font-size: 0.9em; color: var(--text-light); text-align: center;"><em>Notice how Ionic bonds only conduct as liquids, Metals conduct in both states, and Covalent bonds generally do neither!</em></p>
     </div>
@@ -313,52 +341,42 @@
         }
     });
 
-    // --- CHART 2: Property Radar Chart ---
-    const ctxRadar = document.getElementById('radarChart').getContext('2d');
-    new Chart(ctxRadar, {
-        type: 'radar',
+    // --- CHART 2: Property Bar Chart ---
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
         data: {
             labels: ['Melting Point', 'Conductivity (Solid)', 'Conductivity (Liquid/Aqueous)', 'Malleability'],
             datasets: [
                 {
                     label: 'Ionic (e.g. NaCl)',
                     data: [8, 0, 9, 0],
-                    backgroundColor: 'rgba(225, 29, 72, 0.2)',
-                    borderColor: '#e11d48',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#e11d48'
+                    backgroundColor: '#e11d48',
                 },
                 {
                     label: 'Metallic (e.g. Fe)',
                     data: [7, 10, 10, 9],
-                    backgroundColor: 'rgba(5, 150, 105, 0.2)',
-                    borderColor: '#059669',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#059669'
+                    backgroundColor: '#059669',
                 },
                 {
                     label: 'Basic Covalent (e.g. H₂O)',
                     data: [2, 0, 0, 0],
-                    backgroundColor: 'rgba(202, 138, 4, 0.2)',
-                    borderColor: '#ca8a04',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#ca8a04'
+                    backgroundColor: '#ca8a04',
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                r: {
-                    angleLines: { display: true },
-                    suggestedMin: 0,
-                    suggestedMax: 10,
-                    ticks: { display: false } // Hide the 0-10 numbers
-                }
-            },
             plugins: {
                 title: { display: true, text: 'Macroscopic Property Comparison (Scale 0-10)', font: {size: 16} }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 10,
+                    title: { display: true, text: 'Relative Strength (0-10)', font: {weight: 'bold'} }
+                }
             }
         }
     });
