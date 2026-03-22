@@ -112,6 +112,15 @@
             margin-bottom: 0;
         }
 
+        .rxn-type-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .rxn-type-box h3 { margin-top: 0; font-size: 1.3em; margin-bottom: 10px; }
+        .rxn-type-box .pattern { font-family: monospace; font-size: 1.2em; font-weight: bold; background: rgba(255,255,255,0.6); padding: 5px 10px; border-radius: 5px; display: inline-block; margin-bottom: 10px;}
+
         /* Simulator Styles */
         .simulator {
             background: #1e293b;
@@ -321,9 +330,49 @@
         </ul>
     </div>
 
+    <div class="card">
+        <h2>Step 5: Classifying Chemical Reactions</h2>
+        <p>Just like movies belong to genres (comedy, action, horror), chemical reactions belong to specific categories. Knowing these patterns helps you predict what products will form. Here are the five main types:</p>
+
+        <div class="rxn-type-box" style="background: #eff6ff; border-left: 5px solid #3b82f6;">
+            <h3 style="color: #1e40af;">1. Synthesis (Combination)</h3>
+            <div class="pattern">A + B &rarr; AB</div>
+            <p>Two or more simple substances combine to form a single, more complex product. They "synthesize" something new.</p>
+            <p><em>Example:</em> 2Na(s) + Cl₂(g) &rarr; 2NaCl(s) <em>(Sodium and chlorine combine to make table salt)</em></p>
+        </div>
+
+        <div class="rxn-type-box" style="background: #fef2f2; border-left: 5px solid #ef4444;">
+            <h3 style="color: #991b1b;">2. Decomposition</h3>
+            <div class="pattern">AB &rarr; A + B</div>
+            <p>The exact opposite of synthesis. One complex compound breaks down into two or more simpler substances. This usually requires heat or electricity.</p>
+            <p><em>Example:</em> 2H₂O(l) &rarr; 2H₂(g) + O₂(g) <em>(Water breaking down into hydrogen and oxygen gas)</em></p>
+        </div>
+
+        <div class="rxn-type-box" style="background: #f0fdf4; border-left: 5px solid #10b981;">
+            <h3 style="color: #065f46;">3. Single-Replacement</h3>
+            <div class="pattern">A + BC &rarr; AC + B</div>
+            <p>One active element steps in and "tags out" a less active element in a compound, taking its place.</p>
+            <p><em>Example:</em> Zn(s) + 2HCl(aq) &rarr; ZnCl₂(aq) + H₂(g) <em>(Zinc replaces the Hydrogen in the acid)</em></p>
+        </div>
+
+        <div class="rxn-type-box" style="background: #e0e7ff; border-left: 5px solid #4f46e5;">
+            <h3 style="color: #3730a3;">4. Double-Replacement</h3>
+            <div class="pattern">AB + CD &rarr; AD + CB</div>
+            <p>Two ionic compounds trade partners. The positive ions (A and C) switch places to form two entirely new compounds.</p>
+            <p><em>Example:</em> AgNO₃(aq) + NaCl(aq) &rarr; AgCl(s) + NaNO₃(aq) <em>(Silver and Sodium swap their negative partners)</em></p>
+        </div>
+
+        <div class="rxn-type-box" style="background: #fffbeb; border-left: 5px solid #f59e0b;">
+            <h3 style="color: #b45309;">5. Combustion</h3>
+            <div class="pattern">CₓHₗ + O₂ &rarr; CO₂ + H₂O</div>
+            <p>A substance (usually a hydrocarbon fuel) reacts rapidly with Oxygen gas (O₂), releasing heat and light. If it's a hydrocarbon, the products are almost always Carbon Dioxide and Water.</p>
+            <p><em>Example:</em> CH₄(g) + 2O₂(g) &rarr; CO₂(g) + 2H₂O(g) <em>(Burning methane gas)</em></p>
+        </div>
+    </div>
+
     <div class="simulator">
         <div class="sim-header">
-            <h2>Step 5: Interactive Balancing Lab</h2>
+            <h2>Step 6: Interactive Balancing Lab</h2>
             <select class="sim-select" id="reaction-select" onchange="loadReaction()">
                 <option value="water">Synthesizing Water (H₂ + O₂ &rarr; H₂O)</option>
                 <option value="ammonia">Synthesizing Ammonia (N₂ + H₂ &rarr; NH₃)</option>
@@ -350,8 +399,8 @@
     </div>
 
     <div class="card" style="margin-top: 40px;">
-        <h2>Step 6: Equation Construction & Balancing Quiz</h2>
-        <p>Test your knowledge on formulas, states, and translating words into balanced chemical equations.</p>
+        <h2>Step 7: Equation Construction & Balancing Quiz</h2>
+        <p>Test your knowledge on formulas, states, reaction types, and translating words into balanced chemical equations.</p>
         
         <div id="quiz-container" class="quiz-container">
             </div>
@@ -568,17 +617,18 @@
             correct: 1,
             exp: "Aqueous means the substance has been dissolved into a liquid water solvent."
         },
+        // Reaction Classification Questions
         {
-            q: "In the formula 3H₂O, how many TOTAL atoms of Hydrogen are present?",
-            options: ["2", "3", "5", "6"],
-            correct: 3,
-            exp: "The coefficient 3 multiplies the subscript 2 (3 x 2 = 6 total Hydrogen atoms)."
+            q: "What type of chemical reaction is this: Zn(s) + CuCl₂(aq) &rarr; ZnCl₂(aq) + Cu(s)?",
+            options: ["Synthesis", "Combustion", "Single-Replacement", "Decomposition"],
+            correct: 2,
+            exp: "This is a Single-Replacement reaction. The active Zinc element steps in and 'tags out' the Copper from the compound."
         },
         {
-            q: "Why do we balance chemical equations?",
-            options: ["To satisfy the Law of Conservation of Mass", "To make them easier to read", "To ensure the charges are neutral", "To change solids into liquids"],
-            correct: 0,
-            exp: "Matter cannot be created or destroyed, so the exact number of atoms entering a reaction must equal the number leaving."
+            q: "A reaction always requires Oxygen (O₂) as a reactant and typically produces Carbon Dioxide (CO₂) and Water (H₂O). What type of reaction is it?",
+            options: ["Decomposition", "Double-Replacement", "Synthesis", "Combustion"],
+            correct: 3,
+            exp: "Combustion reactions involve a fuel reacting rapidly with oxygen to release heat, creating CO₂ and H₂O."
         },
         // Translation & Balancing Advanced Questions
         {
@@ -593,15 +643,15 @@
             exp: "Iron(III) is Fe³⁺ and Oxide is O²⁻, making Fe₂O₃. Balancing yields: 4Fe + 3O₂ &rarr; 2Fe₂O₃."
         },
         {
-            q: "Translate and balance: 'Methane gas (CH₄) combusts in oxygen gas to yield carbon dioxide gas and water vapor.'",
+            q: "Translate, classify, and balance: 'Methane gas (CH₄) reacts with oxygen gas to yield carbon dioxide gas and water vapor.'",
             options: [
-                "CH₄(g) + O₂(g) &rarr; CO₂(g) + H₂O(g)",
-                "CH₄(g) + 2O₂(g) &rarr; CO₂(g) + 2H₂O(g)",
-                "2CH₄(g) + O₂(g) &rarr; 2CO₂(g) + H₂O(g)",
-                "CH₄(g) + 3O₂(g) &rarr; CO₂(g) + 3H₂O(g)"
+                "Combustion: CH₄(g) + O₂(g) &rarr; CO₂(g) + H₂O(g)",
+                "Combustion: CH₄(g) + 2O₂(g) &rarr; CO₂(g) + 2H₂O(g)",
+                "Synthesis: 2CH₄(g) + O₂(g) &rarr; 2CO₂(g) + H₂O(g)",
+                "Decomposition: CH₄(g) + 3O₂(g) &rarr; CO₂(g) + 3H₂O(g)"
             ],
             correct: 1,
-            exp: "To balance the 4 Hydrogens in methane, you need 2 waters. That creates 4 total Oxygens on the right, which requires 2 O₂ on the left."
+            exp: "It's Combustion! To balance the 4 Hydrogens in methane, you need 2 waters. That creates 4 total Oxygens on the right, which requires 2 O₂ on the left."
         },
         {
             q: "Translate and balance: 'Aqueous sodium hydroxide reacts with aqueous hydrochloric acid (HCl) to produce aqueous sodium chloride and liquid water.'",
@@ -615,26 +665,26 @@
             exp: "Na⁺ and OH⁻ form NaOH. H⁺ and Cl⁻ form HCl. The products are NaCl and H₂O. The equation is already perfectly balanced with 1:1 ratios!"
         },
         {
-            q: "Translate and balance: 'Solid calcium carbonate decomposes when heated into solid calcium oxide and carbon dioxide gas.'",
+            q: "Translate and classify: 'Solid calcium carbonate decomposes when heated into solid calcium oxide and carbon dioxide gas.'",
             options: [
-                "Ca(CO₃)₂(s) &rarr; CaO(s) + CO₂(g)",
-                "2CaCO₃(s) &rarr; 2CaO(s) + CO₂(g)",
-                "CaCO₃(s) &rarr; CaO(s) + CO₂(g)",
-                "CaCO(s) &rarr; Ca(s) + CO₂(g)"
+                "Synthesis: Ca(CO₃)₂(s) &rarr; CaO(s) + CO₂(g)",
+                "Decomposition: 2CaCO₃(s) &rarr; 2CaO(s) + CO₂(g)",
+                "Decomposition: CaCO₃(s) &rarr; CaO(s) + CO₂(g)",
+                "Combustion: CaCO(s) &rarr; Ca(s) + CO₂(g)"
             ],
             correct: 2,
-            exp: "Ca²⁺ and CO₃²⁻ form CaCO₃. It breaks down into CaO (Ca²⁺ and O²⁻) and CO₂. It is balanced as written."
+            exp: "It's Decomposition (AB &rarr; A + B). Ca²⁺ and CO₃²⁻ form CaCO₃. It breaks down into CaO (Ca²⁺ and O²⁻) and CO₂. It is balanced as written."
         },
         {
-            q: "Translate and balance: 'Aqueous silver nitrate (Ag⁺ and NO₃⁻) reacts with aqueous sodium chloride to form solid silver chloride and aqueous sodium nitrate.'",
+            q: "Translate and classify: 'Aqueous silver nitrate (Ag⁺ and NO₃⁻) reacts with aqueous sodium chloride to form solid silver chloride and aqueous sodium nitrate.'",
             options: [
-                "Ag(NO₃)₂(aq) + NaCl(aq) &rarr; AgCl₂(s) + NaNO₃(aq)",
-                "AgNO₃(aq) + NaCl(aq) &rarr; AgCl(s) + NaNO₃(aq)",
-                "2AgNO₃(aq) + 2NaCl(aq) &rarr; 2AgCl(s) + NaNO₃(aq)",
-                "AgNO₃(aq) + Na₂Cl(aq) &rarr; AgCl(s) + Na₂NO₃(aq)"
+                "Single-Replacement: Ag(NO₃)₂(aq) + NaCl(aq) &rarr; AgCl₂(s) + NaNO₃(aq)",
+                "Double-Replacement: AgNO₃(aq) + NaCl(aq) &rarr; AgCl(s) + NaNO₃(aq)",
+                "Double-Replacement: 2AgNO₃(aq) + 2NaCl(aq) &rarr; 2AgCl(s) + NaNO₃(aq)",
+                "Synthesis: AgNO₃(aq) + Na₂Cl(aq) &rarr; AgCl(s) + Na₂NO₃(aq)"
             ],
             correct: 1,
-            exp: "All ions here (Ag⁺, NO₃⁻, Na⁺, Cl⁻) have a charge of +1 or -1. They pair up in 1:1 ratios, so the skeleton equation is automatically balanced."
+            exp: "It's Double-Replacement! All ions here (Ag⁺, NO₃⁻, Na⁺, Cl⁻) have a charge of +1 or -1. They pair up in 1:1 ratios, so the skeleton equation is automatically balanced."
         }
     ];
 
