@@ -13,6 +13,7 @@
             --text-dark: #0f172a;
             --text-light: #475569;
             --success: #16a34a;
+            --warning: #f59e0b;
             --error: #dc2626;
             --border: #e2e8f0;
             --atom-h: #f1f5f9;
@@ -70,6 +71,16 @@
             color: #b45309;
             margin-bottom: 5px;
             display: block;
+            font-size: 1.1em;
+        }
+
+        .highlight-box {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #10b981;
             font-size: 1.1em;
         }
 
@@ -146,10 +157,11 @@
 
         .molecule-group {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            gap: 15px;
             background: #334155;
-            padding: 15px;
+            padding: 10px 20px;
             border-radius: 10px;
         }
 
@@ -157,7 +169,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 0;
         }
 
         .stepper btn {
@@ -176,7 +188,9 @@
 
         .stepper btn:hover { background: var(--primary-dark); }
         
-        .coeff { color: #fbbf24; font-size: 1.2em; min-width: 30px; text-align: center;}
+        .coeff { color: #fbbf24; font-size: 1.2em; min-width: 20px; text-align: center;}
+
+        .formula-text { font-family: 'Segoe UI', sans-serif; font-size: 1.1em; color: white; }
 
         .atom-scale {
             display: grid;
@@ -219,7 +233,7 @@
         .status-banner {
             margin-top: 20px;
             padding: 15px;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             border-radius: 8px;
             background: #334155;
@@ -228,10 +242,17 @@
         }
 
         .status-balanced {
-            background: #16a34a;
+            background: var(--success);
             color: white;
             box-shadow: 0 0 20px rgba(22, 163, 74, 0.5);
-            transform: scale(1.05);
+            transform: scale(1.02);
+        }
+
+        .status-warning {
+            background: var(--warning);
+            color: white;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+            transform: scale(1.02);
         }
 
         /* Quiz Styles */
@@ -328,6 +349,11 @@
             <li><strong>Coefficients (The big numbers in front):</strong> These tell you how many <em>entire molecules</em> you have. <strong>This is the ONLY number you are allowed to change to balance an equation.</strong></li>
             <li>If you place a 2 in front of water (2H<sub>2</sub>O), it multiplies everything inside the molecule by 2 (giving you 4 Hydrogens and 2 Oxygens).</li>
         </ul>
+        
+        <div class="highlight-box">
+            <strong>The Fully Balanced Equation:</strong><br>
+            <span style="font-family: monospace; font-size: 1.2em;">2H₂(g) + O₂(g) &rarr; 2H₂O(l)</span>
+        </div>
     </div>
 
     <div class="card">
@@ -542,7 +568,7 @@
                 <span class="coeff">${molData.coeff}</span>
                 <btn onclick="changeCoeff('${type}', ${index}, 1)">+</btn>
             </div>
-            <div>${molData.formula}</div>
+            <div class="formula-text">${molData.formula}</div>
         `;
         return div;
     }
@@ -587,8 +613,26 @@
         const banner = document.getElementById('status-banner');
         
         if (isBalanced) {
-            banner.className = 'status-banner status-balanced';
-            banner.innerText = 'SUCCESS: EQUATION BALANCED!';
+            // Check for lowest ratio
+            const data = reactions[currentReaction];
+            let coeffs = [];
+            data.reactants.forEach(react => coeffs.push(react.coeff));
+            data.products.forEach(prod => coeffs.push(prod.coeff));
+            
+            // Calculate Greatest Common Divisor
+            let commonDivisor = coeffs.reduce((acc, val) => {
+                let a = acc, b = val;
+                while (b !== 0) { let temp = b; b = a % b; a = temp; }
+                return a;
+            });
+
+            if (commonDivisor > 1) {
+                banner.className = 'status-banner status-warning';
+                banner.innerHTML = '&#9888; BALANCED, BUT NOT THE LOWEST RATIO (SIMPLIFY COEFFICIENTS)';
+            } else {
+                banner.className = 'status-banner status-balanced';
+                banner.innerText = 'SUCCESS: EQUATION BALANCED!';
+            }
         } else {
             banner.className = 'status-banner';
             banner.innerText = 'UNBALANCED';
