@@ -125,7 +125,7 @@
         p {
             margin-top: 0;
             margin-bottom: 1.5em;
-            text-indent: 2em;
+            text-indent: 2em; /* 首行缩进 */
         }
 
         .sentence {
@@ -166,7 +166,8 @@
             </label>
         </div>
 
-        <div class="text-content" id="textContent"></div>
+        <div class="text-content" id="textContent">
+            </div>
     </div>
 
     <script>
@@ -220,14 +221,15 @@
         const speedValue = document.getElementById('speedValue');
         const loopCheck = document.getElementById('loopCheck');
 
-        // --- 3. 全局状态变量 ---
+        // --- 3. 全局状态变量 (核心 Bug 修复区) ---
         let synth = window.speechSynthesis;
-        let currentUtterance = null;
-        let keepAliveUtterance = null; // 【核心修复】全局变量，防止 Chrome 垃圾回收导致 onend 失效
         let sentencesDOM = []; 
         let currentIndex = 0;
         let state = 'STOPPED'; 
-        let isManualCancel = false;
+        
+        // 【防御性修复机制】
+        let currentSessionId = 0; // 用于丢弃旧请求的 onend 事件
+        let keepAliveArray = [];  // 强引用数组：专门用来防止 Chrome 的垃圾回收杀死语音对象
 
         // --- 4. 核心功能实现 ---
 
@@ -304,15 +306,31 @@
             sentencesDOM.forEach(s => s.classList.remove('highlight'));
         }
 
+        // 高度鲁棒的播放引擎
+        function playFrom(index) {
+            currentSessionId++; // 创建一个新纪元，旧的 onend 事件全部作废
+            synth.cancel();     // 停止任何正在播放的内容
+            
+            currentIndex = index;
+            state = 'PLAYING';
+            updateButtons();
+            
+            // 给 Chrome 引擎 250ms 的喘息时间，防止 cancel 后立即 speak 导致系统卡死
+            setTimeout(() => {
+                if (state === 'PLAYING') {
+                    speakSentence(currentIndex);
+                }
+            }, 250);
+        }
+
+        // 核心单句朗读函数
         function speakSentence(index) {
             if (!sentencesDOM || sentencesDOM.length === 0) return;
 
             // 检查是否读完本篇文章
             if (index >= sentencesDOM.length) {
                 if (loopCheck.checked) {
-                    currentIndex = 0;
-                    // 【修复缓冲】循环时留出一点时间防止引擎卡死
-                    setTimeout(() => speakSentence(0), 500);
+                    playFrom(0); // 循环播放
                 } else {
                     stopPlayback();
                 }
@@ -322,54 +340,55 @@
             removeHighlights();
             const currentSpan = sentencesDOM[index];
             currentSpan.classList.add('highlight');
-            
             currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            currentUtterance = new SpeechSynthesisUtterance(currentSpan.textContent);
-            currentUtterance.lang = 'zh-CN'; 
-            currentUtterance.rate = parseFloat(speedRate.value);
+            let utterance = new SpeechSynthesisUtterance(currentSpan.textContent);
+            utterance.lang = 'zh-CN'; 
+            utterance.rate = parseFloat(speedRate.value);
 
-            // 【核心修复】防止被 Chrome 引擎当成垃圾回收
-            keepAliveUtterance = currentUtterance; 
+            // 【核心防御】：将对象推入数组，防止被浏览器 GC（垃圾回收）清理掉
+            keepAliveArray.push(utterance);
+            // 数组防溢出：只保留最近的 50 句，防止长期循环导致内存泄漏
+            if (keepAliveArray.length > 50) keepAliveArray.shift();
 
-            currentUtterance.onend = function() {
-                if (isManualCancel) {
-                    isManualCancel = false;
-                    return;
-                }
+            // 捕获当前的 Session，确保回调函数执行时，环境没被用户操作打断
+            let capturedSessionId = currentSessionId;
+
+            utterance.onend = function() {
+                // 如果用户点击了停止、调整了语速、或切换了文章，Session ID 会改变，这里直接抛弃旧事件
+                if (capturedSessionId !== currentSessionId) return; 
+                
                 if (state === 'PLAYING') {
                     currentIndex++;
-                    // 【核心修复】加入 100ms 延迟，防止同步调用 speak() 导致引擎超载卡死
+                    // 加上 150ms 延迟，让浏览器处理队列，继续下一句
                     setTimeout(() => {
-                        speakSentence(currentIndex);
-                    }, 100);
+                        if (capturedSessionId === currentSessionId && state === 'PLAYING') {
+                            speakSentence(currentIndex);
+                        }
+                    }, 150);
                 }
             };
 
-            // 【核心修复】容错机制：如果意外出错，强制继续读下一句
-            currentUtterance.onerror = function(e) {
-                console.warn("SpeechSynthesis API Error: ", e);
-                if (isManualCancel) {
-                    isManualCancel = false;
-                    return;
-                }
+            // 容错：如果遇到乱码或其他原因导致引擎报错，直接跳到下一句
+            utterance.onerror = function(e) {
+                console.warn("SpeechSynthesis 遇到小错误，跳过当前句子: ", e);
+                if (capturedSessionId !== currentSessionId) return;
                 if (state === 'PLAYING') {
                     currentIndex++;
-                    setTimeout(() => {
-                        speakSentence(currentIndex);
-                    }, 100);
+                    setTimeout(() => speakSentence(currentIndex), 150);
                 }
             };
 
-            synth.speak(currentUtterance);
+            synth.speak(utterance);
         }
 
         function stopPlayback() {
+            currentSessionId++; // 废弃所有挂起的回调
             state = 'STOPPED';
-            isManualCancel = true;
             synth.cancel();
             removeHighlights();
             currentIndex = 0;
+            keepAliveArray = []; // 清空防回收数组，释放内存
             updateButtons();
         }
 
@@ -377,17 +396,7 @@
 
         playBtn.onclick = () => {
             if (state === 'STOPPED') {
-                state = 'PLAYING';
-                
-                // 【核心修复】在开始前先 clear 一次可能卡在后台的进程
-                synth.cancel();
-                
-                setTimeout(() => {
-                    currentIndex = 0;
-                    speakSentence(currentIndex);
-                    updateButtons();
-                }, 50);
-                
+                playFrom(0); // 从头开始全新会话
             } else if (state === 'PAUSED') {
                 state = 'PLAYING';
                 synth.resume();
@@ -407,18 +416,19 @@
             stopPlayback();
         };
 
+        // 滑块文字实时反馈
         speedRate.oninput = (e) => {
             speedValue.textContent = Number(e.target.value).toFixed(1);
         };
 
+        // 语速改变时，直接重启当前句子
         speedRate.onchange = () => {
             if (state === 'PLAYING') {
-                isManualCancel = true;
-                synth.cancel();
-                setTimeout(() => speakSentence(currentIndex), 100);
+                playFrom(currentIndex);
             }
         };
 
+        // 防止页面关闭/刷新时继续在后台发声
         window.onbeforeunload = () => {
             synth.cancel();
         };
