@@ -210,7 +210,7 @@
         }
         
         .tree-modal-content {
-            max-width: 1100px;
+            max-width: 1200px;
             width: 95%;
         }
         
@@ -227,17 +227,23 @@
         }
 
         /* --- D3 Tree Styling --- */
+        .node {
+            cursor: grab;
+        }
+        .node:active {
+            cursor: grabbing;
+        }
         .node circle {
             fill: #fff;
             stroke: #2b6cb0;
             stroke-width: 2px;
-            cursor: pointer;
             transition: stroke-width 0.2s;
         }
         .node text {
             font-size: 13.5px;
             font-weight: 500;
             fill: #2d3748;
+            pointer-events: none; /* Let drag pass through text to the group */
         }
         .link {
             fill: none;
@@ -425,7 +431,7 @@
                     <button id="close-tree-btn" class="close-btn">&times;</button>
                 </div>
             </div>
-            <p class="instruction" style="text-align: left; margin-top: -10px;">Trace the naming strategy from left to right. Click nodes to expand or collapse.</p>
+            <p class="instruction" style="text-align: left; margin-top: -10px;">Click nodes to expand or collapse. <strong>Drag nodes to freely reposition them.</strong></p>
             
             <div id="tree-content-container"></div>
         </div>
@@ -824,7 +830,7 @@
             }
         }
 
-        // --- NEW: Dynamic D3 Decision Tree Logic ---
+        // --- NEW: Drag-and-Drop D3 Decision Tree Logic ---
         
         const treeData = {
           "name": "Chemical Compound",
@@ -882,27 +888,26 @@
 
         let d3Root;
         let d3UpdateFn;
+        let gLink;
 
         function renderD3Tree() {
-            // Clear previous render
             d3.select("#tree-content-container").selectAll("*").remove();
             
-            // Adjust margins to ensure large leaf text is never cut off
+            // Increased spacing to naturally prevent overlap
             const margin = {top: 40, right: 350, bottom: 40, left: 150}; 
-            const dx = 90;  // Vertical spacing between nodes
-            const dy = 280; // Horizontal spacing between branch levels
+            const dx = 120;  // Increased vertical separation
+            const dy = 380; // Increased horizontal separation to fit wide text
             
             const svg = d3.select("#tree-content-container").append("svg")
                 .style("font", "13px sans-serif")
                 .style("user-select", "none");
 
-            const gLink = svg.append("g")
+            gLink = svg.append("g")
                 .attr("fill", "none")
                 .attr("stroke", "#cbd5e0")
                 .attr("stroke-width", 1.5);
 
             const gNode = svg.append("g")
-                .attr("cursor", "pointer")
                 .attr("pointer-events", "all");
 
             const treemap = d3.tree().nodeSize([dx, dy]);
@@ -911,14 +916,15 @@
             d3Root.x0 = 0;
             d3Root.y0 = 0;
 
-            // Collapse branches initially
+            // Initialize custom drag offsets
             d3Root.descendants().forEach((d, i) => {
                 d.id = i;
+                d.offsetX = 0;
+                d.offsetY = 0;
                 if (d.depth > 0) d._children = d.children;
                 if (d.depth > 0) d.children = null;
             });
 
-            // Expand just the root level by default
             if (d3Root._children) {
                 d3Root.children = d3Root._children;
                 d3Root._children = null;
@@ -942,10 +948,10 @@
                 });
 
                 // Calculate required dimensions
-                const height = right.x - left.x + margin.top + margin.bottom + 120; // Padding for boxes below
-                const width = bottom.y + margin.left + margin.right;
+                const height = right.x - left.x + margin.top + margin.bottom + 150; 
+                const width = bottom.y + margin.left + margin.right + 250; 
                 
-                // Update SVG styles and attributes to force container expansion
+                // Transition SVG size
                 svg.transition()
                     .duration(duration)
                     .attr("width", width)
@@ -954,16 +960,37 @@
                     .style("height", Math.max(650, height) + "px")
                     .attr("viewBox", [-margin.left, left.x - margin.top - 60, width, Math.max(650, height)]);
 
+                // Setup Drag Behavior
+                const drag = d3.drag()
+                    .on("start", function(event, d) {
+                        d3.select(this).raise();
+                    })
+                    .on("drag", function(event, d) {
+                        // In D3 layout: x is vertical, y is horizontal
+                        d.offsetX += event.dx; // horizontal manual offset
+                        d.offsetY += event.dy; // vertical manual offset
+                        
+                        // Update dragged node position immediately
+                        d3.select(this).attr("transform", `translate(${d.y + d.offsetX},${d.x + d.offsetY})`);
+                        
+                        // Update connected links immediately
+                        gLink.selectAll("path.link")
+                            .filter(l => l.target.id === d.id || l.source.id === d.id)
+                            .attr("d", l => diagonalPath(l.source, l.target));
+                    });
+
                 // Update Nodes
                 const node = gNode.selectAll("g.node")
                     .data(nodes, d => d.id);
 
                 const nodeEnter = node.enter().append("g")
                     .attr("class", d => "node " + (d.data.class ? d.data.class : ""))
-                    .attr("transform", d => `translate(${source.y0},${source.x0})`)
+                    .attr("transform", d => `translate(${source.y0 + source.offsetX},${source.x0 + source.offsetY})`)
                     .attr("fill-opacity", 0)
                     .attr("stroke-opacity", 0)
+                    .call(drag) // Attach drag
                     .on("click", (event, d) => {
+                        if (event.defaultPrevented) return; // Prevent expanding when drag finishes
                         d.children = d.children ? null : d._children;
                         update(d);
                     });
@@ -972,9 +999,9 @@
                     .attr("r", 7)
                     .style("fill", d => d._children ? "#bee3f8" : "#fff");
 
-                // Label Text. If it's a leaf node, we shift it UP slightly so it doesn't clash with the box
+                // Label Text. Moved completely clear of the leaf box
                 nodeEnter.append("text")
-                    .attr("dy", d => (!d.children && !d._children && d.data.result) ? "-1em" : "0.31em")
+                    .attr("dy", d => (!d.children && !d._children && d.data.result) ? "-1.5em" : "0.31em")
                     .attr("x", d => d.children || d._children ? -12 : 12)
                     .attr("text-anchor", d => d.children || d._children ? "end" : "start")
                     .attr("font-weight", d => (!d.children && !d._children && d.data.result) ? "bold" : "500")
@@ -982,12 +1009,12 @@
 
                 // Leaf Result Boxes
                 const leafNodes = nodeEnter.filter(d => !d.children && !d._children && d.data.result);
-                const boxW = 300, boxH = 65; 
+                const boxW = 310, boxH = 65; 
                 
-                // Positioned below the text label
+                // Positioned safely below the label
                 const resultGroup = leafNodes.append('g')
                     .attr('class', 'tree-result-box')
-                    .attr('transform', `translate(12, 5)`);
+                    .attr('transform', `translate(15, 8)`);
 
                 resultGroup.append('rect')
                     .attr('width', boxW)
@@ -1008,10 +1035,10 @@
                     .attr('class', 'example-text')
                     .text(d => `Ex: ${d.data.example}`);
 
-                // Transition Nodes
+                // Transition Nodes (includes any manual offsets you created by dragging!)
                 const nodeUpdate = node.merge(nodeEnter).transition()
                     .duration(duration)
-                    .attr("transform", d => `translate(${d.y},${d.x})`)
+                    .attr("transform", d => `translate(${d.y + d.offsetX},${d.x + d.offsetY})`)
                     .attr("fill-opacity", 1)
                     .attr("stroke-opacity", 1);
 
@@ -1021,7 +1048,7 @@
                 // Exit Nodes
                 const nodeExit = node.exit().transition()
                     .duration(duration)
-                    .attr("transform", d => `translate(${source.y},${source.x})`)
+                    .attr("transform", d => `translate(${source.y + source.offsetX},${source.x + source.offsetY})`)
                     .attr("fill-opacity", 0)
                     .attr("stroke-opacity", 0)
                     .remove();
@@ -1033,7 +1060,7 @@
                 const linkEnter = link.enter().append("path")
                     .attr("class", d => 'link' + (d.target.data.class ? ' ' + d.target.data.class : ''))
                     .attr("d", d => {
-                        const o = {x: source.x0, y: source.y0};
+                        const o = {x: source.x0, y: source.y0, offsetX: source.offsetX, offsetY: source.offsetY};
                         return diagonalPath(o, o);
                     });
 
@@ -1055,7 +1082,7 @@
                 link.exit().transition()
                     .duration(duration)
                     .attr("d", d => {
-                        const o = {x: source.x, y: source.y};
+                        const o = {x: source.x, y: source.y, offsetX: source.offsetX, offsetY: source.offsetY};
                         return diagonalPath(o, o);
                     })
                     .remove();
@@ -1066,11 +1093,16 @@
                 });
             };
 
+            // Calculate curves accounting for manual drag offsets
             function diagonalPath(s, d) {
-                return `M ${s.y} ${s.x}
-                        C ${(s.y + d.y) / 2} ${s.x},
-                          ${(s.y + d.y) / 2} ${d.x},
-                          ${d.y} ${d.x}`;
+                const sy = s.y + (s.offsetX || 0);
+                const sx = s.x + (s.offsetY || 0);
+                const dy = d.y + (d.offsetX || 0);
+                const dx = d.x + (d.offsetY || 0);
+                return `M ${sy} ${sx}
+                        C ${(sy + dy) / 2} ${sx},
+                          ${(sy + dy) / 2} ${dx},
+                          ${dy} ${dx}`;
             }
 
             d3UpdateFn(d3Root);
@@ -1109,7 +1141,7 @@
             d3UpdateFn(d3Root);
         });
 
-        // FIXED: Download PDF Logic
+        // Download PDF Logic
         downloadPdfBtn.addEventListener('click', () => {
             const container = document.getElementById('tree-content-container');
             const svgEl = container.querySelector('svg');
