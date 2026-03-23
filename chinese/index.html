@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指南针 - 语音朗读播放器</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text-main: #334155;
+            --highlight: #fef08a; /* 柔和的黄色高亮 */
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .player-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* 控制栏样式 */
+        .controls-bar {
+            background: #e2e8f0;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--primary-hover); }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+
+        input[type="range"] { cursor: pointer; }
+        
+        .loop-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 文本区域样式 */
+        .text-content {
+            padding: 30px 40px;
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #1e293b;
+        }
+
+        p {
+            margin-bottom: 1.5em;
+            text-indent: 2em; /* 首行缩进 */
+        }
+
+        .sentence {
+            transition: background-color 0.2s ease;
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+
+        .sentence.highlight {
+            background-color: var(--highlight);
+            color: #000;
+            box-shadow: 0 0 0 2px var(--highlight);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="player-container">
+        <div class="controls-bar">
+            <button class="btn" id="playBtn">▶ 播放</button>
+            <button class="btn" id="pauseBtn" disabled>⏸ 暂停</button>
+            <button class="btn" id="stopBtn" disabled>⏹ 停止</button>
+            
+            <div class="control-group">
+                <label for="speedRate">语速: <span id="speedValue">1.0</span>x</label>
+                <input type="range" id="speedRate" min="0.5" max="2.0" step="0.1" value="1.0">
+            </div>
+
+            <label class="loop-control">
+                <input type="checkbox" id="loopCheck" checked>
+                循环播放
+            </label>
+        </div>
+
+        <div class="text-content" id="textContent">
+            <p>
+                <span class="sentence">指南针是中国古代“四大发明”之一。</span>
+            </p>
+            <p>
+                <span class="sentence">在指南针发明以前，人们在茫茫大海上航行，只能靠太阳和星星的位置辨认方向，如果遇到阴雨天，就会迷失方向。</span>
+                <span class="sentence">是中国人发明的指南针，帮助人们解决了这个难题。</span>
+            </p>
+            <p>
+                <span class="sentence">指南针是指示方向的仪器。</span>
+                <span class="sentence">早在战国时期，中国人就发现了磁石指示南北的特性，并根据这种特性制成了指示方向的仪器--司南。</span>
+                <span class="sentence">司南由一把光滑的瓷勺和刻着方向的铜盘组成，勺把指示的方向是南方，勺头指示的方向是北方。</span>
+                <span class="sentence">到了宋代，人们把经过人工磁化的指南针和方位盘结合起来，制成了“罗盘”。</span>
+                <span class="sentence">有了罗盘，无论在什么情况下，人们都能准确地辨认方向了。</span>
+            </p>
+            <p>
+                <span class="sentence">北宋时，指南针已开始应用于航海事业上。</span>
+                <span class="sentence">南宋时，指南针经由阿拉伯传到欧洲，当时的阿拉伯人亲切地称指南针为“水手之眼”。</span>
+            </p>
+            <p>
+                <span class="sentence">指南针的发明，给航海事业带来了划时代的影响，世界航运史也由此翻开了新的一页。</span>
+                <span class="sentence">明朝初期郑和率领船队七下西洋，15世纪哥伦布发现新大陆和麦哲伦环绕地球航行等壮举，都是指南针用于航海事业的结果。</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const sentences = document.querySelectorAll('.sentence');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const speedRate = document.getElementById('speedRate');
+        const speedValue = document.getElementById('speedValue');
+        const loopCheck = document.getElementById('loopCheck');
+
+        let synth = window.speechSynthesis;
+        let currentUtterance = null;
+        let currentIndex = 0;
+        let state = 'STOPPED'; // 状态: STOPPED, PLAYING, PAUSED
+        let isManualCancel = false;
+
+        // 更新按钮状态
+        function updateButtons() {
+            if (state === 'STOPPED') {
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+            } else if (state === 'PLAYING') {
+                playBtn.disabled = true;
+                pauseBtn.disabled = false;
+                stopBtn.disabled = false;
+            } else if (state === 'PAUSED') {
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = false;
+            }
+        }
+
+        // 移除所有高亮
+        function removeHighlights() {
+            sentences.forEach(s => s.classList.remove('highlight'));
+        }
+
+        // 朗读特定句子
+        function speakSentence(index) {
+            // 如果读完了最后一句
+            if (index >= sentences.length) {
+                if (loopCheck.checked) {
+                    currentIndex = 0;
+                    speakSentence(0);
+                } else {
+                    stopPlayback();
+                }
+                return;
+            }
+
+            removeHighlights();
+            const currentSpan = sentences[index];
+            currentSpan.classList.add('highlight');
+            
+            // 自动平滑滚动到当前朗读的文本
+            currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            currentUtterance = new SpeechSynthesisUtterance(currentSpan.textContent);
+            currentUtterance.lang = 'zh-CN'; // 设置为中文
+            currentUtterance.rate = parseFloat(speedRate.value);
+
+            // 当一句话读完时，触发下一句
+            currentUtterance.onend = function() {
+                if (isManualCancel) {
+                    isManualCancel = false;
+                    return;
+                }
+                if (state === 'PLAYING') {
+                    currentIndex++;
+                    speakSentence(currentIndex);
+                }
+            };
+
+            synth.speak(currentUtterance);
+        }
+
+        // 停止播放
+        function stopPlayback() {
+            state = 'STOPPED';
+            isManualCancel = true;
+            synth.cancel();
+            removeHighlights();
+            currentIndex = 0;
+            updateButtons();
+        }
+
+        // --- 事件监听 ---
+
+        playBtn.onclick = () => {
+            if (state === 'STOPPED') {
+                state = 'PLAYING';
+                currentIndex = 0;
+                speakSentence(currentIndex);
+            } else if (state === 'PAUSED') {
+                state = 'PLAYING';
+                synth.resume();
+            }
+            updateButtons();
+        };
+
+        pauseBtn.onclick = () => {
+            if (state === 'PLAYING') {
+                state = 'PAUSED';
+                synth.pause();
+                updateButtons();
+            }
+        };
+
+        stopBtn.onclick = () => {
+            stopPlayback();
+        };
+
+        // 实时语速调节显示
+        speedRate.oninput = (e) => {
+            speedValue.textContent = Number(e.target.value).toFixed(1);
+        };
+
+        // 如果在播放过程中更改了语速，重新开始当前句子以应用新语速
+        speedRate.onchange = () => {
+            if (state === 'PLAYING') {
+                isManualCancel = true;
+                synth.cancel();
+                speakSentence(currentIndex); 
+            }
+        };
+
+        // 页面卸载前确保停止语音，防止后台继续播放
+        window.onbeforeunload = () => {
+            synth.cancel();
+        };
+    </script>
+</body>
+</html>
