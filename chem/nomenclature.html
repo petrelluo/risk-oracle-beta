@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical Nomenclature Practice</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -184,7 +185,7 @@
         .mistake-count { font-weight: bold; color: #e53e3e; text-align: center; }
         .empty-state { color: #718096; font-style: italic; margin: 2rem 0; text-align: center; }
 
-        /* --- NEW: Decision Tree Styles --- */
+        /* --- Updated/New: Decision Tree Modal Styles --- */
         .tree-fab {
             position: fixed;
             bottom: 30px;
@@ -206,75 +207,77 @@
             transform: scale(1.08);
             background-color: #1a365d;
         }
+        /* Make tree modal wider to fit horizontal tree */
         .tree-modal-content {
-            max-width: 700px;
+            max-width: 900px;
+            width: 95%;
         }
         
-        /* Interactive Tree Styles */
-        .tree-details {
-            margin-left: 20px;
-            margin-bottom: 8px;
-            border-left: 2px solid #e2e8f0;
-            padding-left: 15px;
-        }
-        .tree-root {
-            margin-left: 0;
-            border-left: none;
-            padding-left: 0;
-        }
-        .tree-summary {
-            cursor: pointer;
-            font-weight: 600;
-            padding: 10px 15px;
-            border-radius: 6px;
-            background-color: #f7fafc;
+        /* Specific container for the D3 tree */
+        #tree-content-container {
+            width: 100%;
+            height: 600px; /* Adjust based on tree complexity */
+            overflow: auto;
             border: 1px solid #e2e8f0;
-            outline: none;
-            transition: background-color 0.2s;
-            list-style: none; /* Hide default arrow */
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            margin-top: 1rem;
+            position: relative;
         }
-        .tree-summary::-webkit-details-marker { display: none; } /* Hide for Safari */
-        .tree-summary::before {
-            content: "▶";
-            font-size: 0.8em;
-            color: #718096;
-            transition: transform 0.2s;
+
+        /* --- D3 Tree Styling --- */
+        .node circle {
+            fill: #fff;
+            stroke: #2b6cb0;
+            stroke-width: 2px;
+            cursor: pointer;
         }
-        details[open] > .tree-summary::before {
-            transform: rotate(90deg);
+        .node text {
+            font-size: 13px;
+            font-weight: 500;
+            fill: #2d3748;
         }
-        .tree-summary:hover {
-            background-color: #edf2f7;
+        .link {
+            fill: none;
+            stroke: #cbd5e0;
+            stroke-width: 1.5px;
+            transition: stroke 0.2s;
+        }
+        .node:hover circle {
+            stroke: #1a365d;
+            stroke-width: 3px;
         }
         
-        /* Final Results boxes */
-        .tree-result {
-            margin: 8px 0 15px 15px;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            color: #2d3748;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        /* Instructions/Final Leaf boxes in the tree */
+        .tree-result-box rect {
+            fill: white;
+            stroke: #cbd5e0;
+            stroke-width: 1px;
+            rx: 6;
+            ry: 6;
         }
-        .tree-result strong { color: #2b6cb0; }
+        .tree-result-box text {
+            font-size: 12px;
+            fill: #4a5568;
+        }
+        .tree-result-box text .example-text {
+            fill: #718096;
+            font-style: italic;
+        }
+        .tree-result-box text .rule-text {
+            font-weight: bold;
+            fill: #2b6cb0;
+        }
 
-        /* Thematic colors for branches */
-        .theme-acid > .tree-summary { background-color: #fff5f5; border-color: #fed7d7; color: #9b2c2c; }
-        .theme-acid > .tree-summary:hover { background-color: #fed7d7; }
-        .theme-acid.tree-details { border-left-color: #fc8181; }
+        /* Branch coloring themes applied to nodes and links dynamically in JS */
+        .branch-acid circle { stroke: #fc8181 !important; }
+        .branch-acid.link { stroke: #fc8181 !important; }
+        
+        .branch-ionic circle { stroke: #63b3ed !important; }
+        .branch-ionic.link { stroke: #63b3ed !important; }
 
-        .theme-ionic > .tree-summary { background-color: #ebf8ff; border-color: #bee3f8; color: #2a4365; }
-        .theme-ionic > .tree-summary:hover { background-color: #bee3f8; }
-        .theme-ionic.tree-details { border-left-color: #63b3ed; }
-
-        .theme-covalent > .tree-summary { background-color: #f0fff4; border-color: #c6f6d5; color: #22543d; }
-        .theme-covalent > .tree-summary:hover { background-color: #c6f6d5; }
-        .theme-covalent.tree-details { border-left-color: #68d391; }
+        .branch-covalent circle { stroke: #68d391 !important; }
+        .branch-covalent.link { stroke: #68d391 !important; }
 
     </style>
 </head>
@@ -406,74 +409,12 @@
     <div id="decision-tree-modal" class="modal-overlay hidden">
         <div class="modal-content tree-modal-content">
             <div class="modal-header">
-                <h2>Naming Strategy Map</h2>
+                <h2>Nomenclature Strategy Map</h2>
                 <button id="close-tree-btn" class="close-btn">&times;</button>
             </div>
-            <p class="instruction" style="text-align: left; margin-top: -10px;">Click the branches below to trace the naming strategy based on the first element in the formula.</p>
+            <p class="instruction" style="text-align: left; margin-top: -10px;">Trace the naming strategy from left to right based on the chemical formula. Click blue nodes to expand or collapse branches.</p>
             
-            <details class="tree-details tree-root" open>
-                <summary class="tree-summary" style="font-size: 1.1rem; background-color: #e2e8f0;">🧪 Look at the first element (Chemical Compound)</summary>
-                
-                <details class="tree-details theme-acid">
-                    <summary class="tree-summary">Starts with "H" (Acid)</summary>
-                    
-                    <details class="tree-details">
-                        <summary class="tree-summary">Does NOT contain Oxygen (Binary Acid)</summary>
-                        <div class="tree-result">
-                            Use prefix <strong>hydro-</strong>, change anion ending to <strong>-ic</strong>, add <strong>acid</strong>.<br>
-                            <em>Example: HCl ➔ Hydrochloric acid</em>
-                        </div>
-                    </details>
-                    
-                    <details class="tree-details">
-                        <summary class="tree-summary">Contains Oxygen (Oxyacid)</summary>
-                        <details class="tree-details">
-                            <summary class="tree-summary">Polyatomic ion ends in <strong>-ate</strong></summary>
-                            <div class="tree-result">
-                                Change ending to <strong>-ic acid</strong> (No hydro- prefix).<br>
-                                <em>Example: HNO₃ (Nitrate) ➔ Nitric acid</em>
-                            </div>
-                        </details>
-                        <details class="tree-details">
-                            <summary class="tree-summary">Polyatomic ion ends in <strong>-ite</strong></summary>
-                            <div class="tree-result">
-                                Change ending to <strong>-ous acid</strong> (No hydro- prefix).<br>
-                                <em>Example: HNO₂ (Nitrite) ➔ Nitrous acid</em>
-                            </div>
-                        </details>
-                    </details>
-                </details>
-
-                <details class="tree-details theme-ionic">
-                    <summary class="tree-summary">Starts with a Metal or NH₄⁺ (Ionic Compound)</summary>
-                    
-                    <details class="tree-details">
-                        <summary class="tree-summary">Metal has a Fixed Charge (Groups 1, 2, Al, Zn, Ag)</summary>
-                        <div class="tree-result">
-                            Name the metal normally. Change nonmetal to <strong>-ide</strong> (or use polyatomic name).<br>
-                            <em>Example: NaCl ➔ Sodium chloride</em>
-                        </div>
-                    </details>
-                    
-                    <details class="tree-details">
-                        <summary class="tree-summary">Metal has a Variable Charge (Transition metals, Sn, Pb)</summary>
-                        <div class="tree-result">
-                            Determine the charge, write it as a <strong>(Roman Numeral)</strong>. Change nonmetal to <strong>-ide</strong>.<br>
-                            <em>Example: FeCl₃ ➔ Iron (III) chloride</em>
-                        </div>
-                    </details>
-                </details>
-
-                <details class="tree-details theme-covalent">
-                    <summary class="tree-summary">Starts with a Nonmetal (Covalent / Molecular)</summary>
-                    <div class="tree-result">
-                        Use <strong>Greek Prefixes</strong> (mono, di, tri, tetra...) to indicate quantity.<br>
-                        Change the second element to <strong>-ide</strong>. (Never use "mono-" on the first element).<br>
-                        <em>Example: CO₂ ➔ Carbon dioxide</em>
-                    </div>
-                </details>
-                
-            </details>
+            <div id="tree-content-container"></div>
         </div>
     </div>
 
@@ -884,6 +825,262 @@
             }
         }
 
+        // --- NEW: D3 Decision Tree Logic ---
+        
+        // Strategy map hierarchy data
+        const treeData = {
+          "name": "Chemical Compound",
+          "children": [
+            {
+              "name": "Starts with 'H' (Acid)",
+              "class": "branch-acid",
+              "children": [
+                {
+                  "name": "No Oxygen (Binary Acid)",
+                  "result": "prefix <hydro-> + root + <-ic acid>",
+                  "example": "HCl ➔ Hydrochloric acid"
+                },
+                {
+                  "name": "Contains Oxygen (Oxyacid)",
+                  "children": [
+                    {
+                      "name": "Polyatomic ion ends in <-ate>",
+                      "result": "root + <-ic acid>",
+                      "example": "HNO₃ (Nitrate) ➔ Nitric acid"
+                    },
+                    {
+                      "name": "Polyatomic ion ends in <-ite>",
+                      "result": "root + <-ous acid>",
+                      "example": "HNO₂ (Nitrite) ➔ Nitrous acid"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Metal + Nonmetal / NH₄⁺ (Ionic)",
+              "class": "branch-ionic",
+              "children": [
+                {
+                  "name": "Fixed Charge Metal (Grps 1, 2, Al, Zn, Ag)",
+                  "result": "Metal + Nonmetal<-ide> or Polyatomic name",
+                  "example": "NaCl ➔ Sodium chloride"
+                },
+                {
+                  "name": "Variable Charge Metal (Transition, Sn, Pb)",
+                  "result": "Metal + (Roman Numeral Charge) + Nonmetal<-ide>",
+                  "example": "FeCl₃ ➔ Iron (III) chloride"
+                }
+              ]
+            },
+            {
+              "name": "Nonmetal + Nonmetal (Covalent)",
+              "class": "branch-covalent",
+              "result": "Use <Greek Prefixes> (mono, di, tri...) and <-ide> end",
+              "example": "CO₂ ➔ Carbon dioxide"
+            }
+          ]
+        };
+
+        // Initialize D3 dimensions (adjust based on container height/width)
+        const margin = {top: 20, right: 120, bottom: 20, left: 120};
+        const width = 1200 - margin.right - margin.left;
+        const height = 600 - margin.top - margin.bottom;
+
+        function renderD3Tree() {
+            // Clear previous render
+            d3.select("#tree-content-container").selectAll("*").remove();
+            
+            // Create SVG and main group element
+            const svg = d3.select("#tree-content-container").append("svg")
+                .attr("width", width + margin.right + margin.left)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            let i = 0;
+            const duration = 750;
+            let root;
+
+            // Declares a tree layout and assigns the size
+            const treemap = d3.tree().size([height, width]);
+
+            // Assigns parent, children, height, depth
+            root = d3.hierarchy(treeData, d => d.children);
+            root.x0 = height / 2;
+            root.y0 = 0;
+
+            // Initially collapse all major branches
+            root.children.forEach(collapseBranch);
+
+            update(root);
+
+            // Collapse node function
+            function collapseBranch(d) {
+                if(d.children) {
+                    d._children = d.children;
+                    d._children.forEach(collapseBranch);
+                    d.children = null;
+                }
+            }
+
+            function update(source) {
+                // Assigns the x and y position for the nodes
+                const treeMapData = treemap(root);
+                const nodes = treeMapData.descendants();
+                const links = treeMapData.descendants().slice(1);
+
+                // Normalize for fixed-depth (distance between parent/child)
+                nodes.forEach(d => d.y = d.depth * 250);
+
+                // --- Nodes ---
+                const node = svg.selectAll('g.node')
+                    .data(nodes, d => d.id || (d.id = ++i));
+
+                // Enter new nodes at parent's previous position
+                const nodeEnter = node.enter().append('g')
+                    .attr('class', d => 'node' + (d.data.class ? ' ' + d.data.class : ''))
+                    .attr("transform", d => "translate(" + source.y0 + "," + source.x0 + ")")
+                    .on('click', clickNode);
+
+                // Add Circle for the nodes
+                nodeEnter.append('circle')
+                    .attr('class', 'node')
+                    .attr('r', 1e-6)
+                    .style("fill", d => d._children ? "#bee3f8" : "#fff"); // Fill blue if collapsible
+
+                // Add labels
+                nodeEnter.append('text')
+                    .attr("dy", ".35em")
+                    .attr("x", d => d.children || d._children ? -13 : 13) // Left of circle if has children, else right
+                    .attr("text-anchor", d => d.children || d._children ? "end" : "start")
+                    .text(d => d.data.name);
+
+                // Add special instruction box for leaf/result nodes
+                const leafNodes = nodeEnter.filter(d => !d.children && !d._children && d.data.result);
+                const boxW = 200, boxH = 65;
+                
+                const resultGroup = leafNodes.append('g')
+                    .attr('class', 'tree-result-box')
+                    .attr('transform', `translate(15, -${boxH/2})`); // Position box to the right
+
+                resultGroup.append('rect')
+                    .attr('width', boxW)
+                    .attr('height', boxH);
+
+                resultGroup.append('text')
+                    .attr('x', 10)
+                    .attr('y', 20)
+                    .attr('dy', '.35em')
+                    .append('tspan')
+                    .attr('class', 'rule-text')
+                    .text('Strategy:')
+                    .append('tspan')
+                    .attr('x', 10)
+                    .attr('y', 35)
+                    .attr('font-weight', 'normal')
+                    .text(d => d.data.result)
+                    .append('tspan')
+                    .attr('x', 10)
+                    .attr('y', 52)
+                    .attr('class', 'example-text')
+                    .text(d => `Example: ${d.data.example}`);
+
+
+                // --- Node Update ---
+                const nodeUpdate = nodeEnter.merge(node);
+
+                // Transition to the proper position and size
+                nodeUpdate.transition()
+                    .duration(duration)
+                    .attr("transform", d => "translate(" + d.y + "," + d.x + ")");
+
+                // Update the circle attributes and style
+                nodeUpdate.select('circle.node')
+                    .attr('r', 10)
+                    .style("fill", d => d._children ? "#bee3f8" : "#fff")
+                    .attr('cursor', 'pointer');
+
+                // --- Node Exit ---
+                const nodeExit = node.exit().transition()
+                    .duration(duration)
+                    .attr("transform", d => "translate(" + source.y + "," + source.x + ")")
+                    .remove();
+
+                nodeExit.select('circle')
+                    .attr('r', 1e-6);
+
+                nodeExit.select('text')
+                    .style('fill-opacity', 1e-6);
+
+
+                // --- Links ---
+                const link = svg.selectAll('path.link')
+                    .data(links, d => d.id);
+
+                // Enter new links at parent's previous position
+                const linkEnter = link.enter().insert('path', "g")
+                    .attr("class", d => 'link' + (d.data.class ? ' ' + d.data.class : ''))
+                    .attr('d', d => {
+                        const o = {x: source.x0, y: source.y0};
+                        return diagonalPath(o, o);
+                    });
+
+                // --- Link Update ---
+                const linkUpdate = linkEnter.merge(link);
+
+                // Transition to proper position
+                linkUpdate.transition()
+                    .duration(duration)
+                    .attr('d', d => diagonalPath(d, d.parent));
+
+                // Inherit class/color from child branch dynamic style applied above
+                linkUpdate.attr("class", d => {
+                    // Trace back up to find the thematic class if needed, or get child's inherent class
+                    let className = 'link';
+                    let current = d;
+                    while(current) {
+                        if(current.data.class) { className += ' ' + current.data.class; break; }
+                        current = current.parent;
+                    }
+                    return className;
+                });
+
+
+                // --- Link Exit ---
+                link.exit().transition()
+                    .duration(duration)
+                    .attr('d', d => {
+                        const o = {x: source.x, y: source.y};
+                        return diagonalPath(o, o);
+                    })
+                    .remove();
+
+                // Store old positions for transition
+                nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+            }
+
+            // Create curved connector path between node and its parent
+            function diagonalPath(s, d) {
+                return `M ${s.y} ${s.x}
+                        C ${(s.y + d.y) / 2} ${s.x},
+                          ${(s.y + d.y) / 2} ${d.x},
+                          ${d.y} ${d.x}`;
+            }
+
+            // Toggle children on click
+            function clickNode(event, d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update(d);
+            }
+        }
+
         // --- Event Listeners ---
         modePracticeBtn.addEventListener('click', () => setAppMode('practice'));
         modeQuizBtn.addEventListener('click', () => setAppMode('quiz'));
@@ -898,7 +1095,10 @@
         tipsBtn.addEventListener('click', openTips);
         
         // NEW: Decision Tree Event Listeners
-        treeFab.addEventListener('click', () => treeModal.classList.remove('hidden'));
+        treeFab.addEventListener('click', () => {
+            treeModal.classList.remove('hidden');
+            renderD3Tree(); // Initialize/render tree when modal opens
+        });
         closeTreeBtn.addEventListener('click', () => treeModal.classList.add('hidden'));
         treeModal.addEventListener('click', (e) => { if(e.target === treeModal) treeModal.classList.add('hidden'); });
 
