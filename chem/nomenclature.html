@@ -210,7 +210,7 @@
         }
         
         .tree-modal-content {
-            max-width: 1100px; /* Made wider for long branches */
+            max-width: 1100px;
             width: 95%;
         }
         
@@ -880,25 +880,21 @@
           ]
         };
 
-        // We declare variables here so 'expandAll' can access them
         let d3Root;
         let d3UpdateFn;
-        let d3SvgNode;
 
         function renderD3Tree() {
             // Clear previous render
             d3.select("#tree-content-container").selectAll("*").remove();
             
-            // Layout params - Increased right margin and vertical spacing to fix overlap
-            const margin = {top: 40, right: 350, bottom: 40, left: 150};
-            const dx = 90;  // Vertical spacing between nodes (increased to fix Oxyacid overlap)
+            // Adjust margins to ensure large leaf text is never cut off
+            const margin = {top: 40, right: 350, bottom: 40, left: 150}; 
+            const dx = 90;  // Vertical spacing between nodes
             const dy = 280; // Horizontal spacing between branch levels
             
             const svg = d3.select("#tree-content-container").append("svg")
                 .style("font", "13px sans-serif")
                 .style("user-select", "none");
-            
-            d3SvgNode = svg; // store for PDF resize
 
             const gLink = svg.append("g")
                 .attr("fill", "none")
@@ -909,7 +905,6 @@
                 .attr("cursor", "pointer")
                 .attr("pointer-events", "all");
 
-            // nodeSize allows the tree to grow dynamically rather than squeezing into a fixed box
             const treemap = d3.tree().nodeSize([dx, dy]);
 
             d3Root = d3.hierarchy(treeData);
@@ -934,12 +929,11 @@
                 const nodes = d3Root.descendants().reverse();
                 const links = d3Root.links();
 
-                // Compute the new tree layout
                 treemap(d3Root);
 
                 let left = d3Root;
                 let right = d3Root;
-                let bottom = d3Root; // Track the maximum horizontal reach
+                let bottom = d3Root; 
                 
                 d3Root.eachBefore(node => {
                     if (node.x < left.x) left = node;
@@ -947,16 +941,18 @@
                     if (node.y > bottom.y) bottom = node;
                 });
 
-                // Calculate required dimensions based on expanded nodes
-                const height = right.x - left.x + margin.top + margin.bottom; 
+                // Calculate required dimensions
+                const height = right.x - left.x + margin.top + margin.bottom + 120; // Padding for boxes below
                 const width = bottom.y + margin.left + margin.right;
                 
-                // Transition SVG dimensions so it never clips and scrollbars appear properly
+                // Update SVG styles and attributes to force container expansion
                 svg.transition()
                     .duration(duration)
                     .attr("width", width)
-                    .attr("height", height)
-                    .attr("viewBox", [-margin.left, left.x - margin.top, width, height]);
+                    .attr("height", Math.max(650, height))
+                    .style("width", width + "px")
+                    .style("height", Math.max(650, height) + "px")
+                    .attr("viewBox", [-margin.left, left.x - margin.top - 60, width, Math.max(650, height)]);
 
                 // Update Nodes
                 const node = gNode.selectAll("g.node")
@@ -976,19 +972,22 @@
                     .attr("r", 7)
                     .style("fill", d => d._children ? "#bee3f8" : "#fff");
 
+                // Label Text. If it's a leaf node, we shift it UP slightly so it doesn't clash with the box
                 nodeEnter.append("text")
-                    .attr("dy", "0.31em")
+                    .attr("dy", d => (!d.children && !d._children && d.data.result) ? "-1em" : "0.31em")
                     .attr("x", d => d.children || d._children ? -12 : 12)
                     .attr("text-anchor", d => d.children || d._children ? "end" : "start")
+                    .attr("font-weight", d => (!d.children && !d._children && d.data.result) ? "bold" : "500")
                     .text(d => d.data.name);
 
                 // Leaf Result Boxes
                 const leafNodes = nodeEnter.filter(d => !d.children && !d._children && d.data.result);
-                const boxW = 280, boxH = 65; // Widened box to fix text truncation
+                const boxW = 300, boxH = 65; 
                 
+                // Positioned below the text label
                 const resultGroup = leafNodes.append('g')
                     .attr('class', 'tree-result-box')
-                    .attr('transform', `translate(15, -${boxH/2})`);
+                    .attr('transform', `translate(12, 5)`);
 
                 resultGroup.append('rect')
                     .attr('width', boxW)
@@ -1110,15 +1109,19 @@
             d3UpdateFn(d3Root);
         });
 
-        // Download PDF Logic using html2pdf.js
+        // FIXED: Download PDF Logic
         downloadPdfBtn.addEventListener('click', () => {
             const container = document.getElementById('tree-content-container');
+            const svgEl = container.querySelector('svg');
             
-            // To prevent cutoff, temporarily disable the height/scroll locks so the element renders fully
-            const originalHeight = container.style.height || '650px';
-            const originalOverflow = container.style.overflow || 'auto';
+            // Save original styles to restore them later
+            const originalHeight = container.style.height;
+            const originalWidth = container.style.width;
+            const originalOverflow = container.style.overflow;
             
-            container.style.height = 'max-content';
+            // Expand container fully to match SVG boundaries so html2canvas captures it all
+            container.style.height = svgEl.getAttribute('height') + 'px';
+            container.style.width = svgEl.getAttribute('width') + 'px';
             container.style.overflow = 'visible';
             
             // Options for PDF rendering
@@ -1126,13 +1129,14 @@
               margin:       0.3,
               filename:     'Nomenclature_Strategy_Map.pdf',
               image:        { type: 'jpeg', quality: 0.98 },
-              html2canvas:  { scale: 2 }, // Higher scale for better text resolution
+              html2canvas:  { scale: 2, scrollX: 0, scrollY: 0 }, 
               jsPDF:        { unit: 'in', format: 'tabloid', orientation: 'landscape' }
             };
 
+            // Generate and then restore state
             html2pdf().set(opt).from(container).save().then(() => {
-                // Restore scroll locks after the PDF generates
                 container.style.height = originalHeight; 
+                container.style.width = originalWidth;
                 container.style.overflow = originalOverflow;
             });
         });
