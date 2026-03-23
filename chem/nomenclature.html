@@ -183,6 +183,99 @@
         .mistakes-table th { background-color: #f7fafc; color: #4a5568; font-weight: bold; }
         .mistake-count { font-weight: bold; color: #e53e3e; text-align: center; }
         .empty-state { color: #718096; font-style: italic; margin: 2rem 0; text-align: center; }
+
+        /* --- NEW: Decision Tree Styles --- */
+        .tree-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #2b6cb0;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .tree-fab:hover {
+            transform: scale(1.08);
+            background-color: #1a365d;
+        }
+        .tree-modal-content {
+            max-width: 700px;
+        }
+        
+        /* Interactive Tree Styles */
+        .tree-details {
+            margin-left: 20px;
+            margin-bottom: 8px;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 15px;
+        }
+        .tree-root {
+            margin-left: 0;
+            border-left: none;
+            padding-left: 0;
+        }
+        .tree-summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            outline: none;
+            transition: background-color 0.2s;
+            list-style: none; /* Hide default arrow */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tree-summary::-webkit-details-marker { display: none; } /* Hide for Safari */
+        .tree-summary::before {
+            content: "▶";
+            font-size: 0.8em;
+            color: #718096;
+            transition: transform 0.2s;
+        }
+        details[open] > .tree-summary::before {
+            transform: rotate(90deg);
+        }
+        .tree-summary:hover {
+            background-color: #edf2f7;
+        }
+        
+        /* Final Results boxes */
+        .tree-result {
+            margin: 8px 0 15px 15px;
+            padding: 12px;
+            background-color: white;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: #2d3748;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .tree-result strong { color: #2b6cb0; }
+
+        /* Thematic colors for branches */
+        .theme-acid > .tree-summary { background-color: #fff5f5; border-color: #fed7d7; color: #9b2c2c; }
+        .theme-acid > .tree-summary:hover { background-color: #fed7d7; }
+        .theme-acid.tree-details { border-left-color: #fc8181; }
+
+        .theme-ionic > .tree-summary { background-color: #ebf8ff; border-color: #bee3f8; color: #2a4365; }
+        .theme-ionic > .tree-summary:hover { background-color: #bee3f8; }
+        .theme-ionic.tree-details { border-left-color: #63b3ed; }
+
+        .theme-covalent > .tree-summary { background-color: #f0fff4; border-color: #c6f6d5; color: #22543d; }
+        .theme-covalent > .tree-summary:hover { background-color: #c6f6d5; }
+        .theme-covalent.tree-details { border-left-color: #68d391; }
+
     </style>
 </head>
 <body>
@@ -310,6 +403,89 @@
         </div>
     </div>
 
+    <div id="decision-tree-modal" class="modal-overlay hidden">
+        <div class="modal-content tree-modal-content">
+            <div class="modal-header">
+                <h2>Naming Strategy Map</h2>
+                <button id="close-tree-btn" class="close-btn">&times;</button>
+            </div>
+            <p class="instruction" style="text-align: left; margin-top: -10px;">Click the branches below to trace the naming strategy based on the first element in the formula.</p>
+            
+            <details class="tree-details tree-root" open>
+                <summary class="tree-summary" style="font-size: 1.1rem; background-color: #e2e8f0;">🧪 Look at the first element (Chemical Compound)</summary>
+                
+                <details class="tree-details theme-acid">
+                    <summary class="tree-summary">Starts with "H" (Acid)</summary>
+                    
+                    <details class="tree-details">
+                        <summary class="tree-summary">Does NOT contain Oxygen (Binary Acid)</summary>
+                        <div class="tree-result">
+                            Use prefix <strong>hydro-</strong>, change anion ending to <strong>-ic</strong>, add <strong>acid</strong>.<br>
+                            <em>Example: HCl ➔ Hydrochloric acid</em>
+                        </div>
+                    </details>
+                    
+                    <details class="tree-details">
+                        <summary class="tree-summary">Contains Oxygen (Oxyacid)</summary>
+                        <details class="tree-details">
+                            <summary class="tree-summary">Polyatomic ion ends in <strong>-ate</strong></summary>
+                            <div class="tree-result">
+                                Change ending to <strong>-ic acid</strong> (No hydro- prefix).<br>
+                                <em>Example: HNO₃ (Nitrate) ➔ Nitric acid</em>
+                            </div>
+                        </details>
+                        <details class="tree-details">
+                            <summary class="tree-summary">Polyatomic ion ends in <strong>-ite</strong></summary>
+                            <div class="tree-result">
+                                Change ending to <strong>-ous acid</strong> (No hydro- prefix).<br>
+                                <em>Example: HNO₂ (Nitrite) ➔ Nitrous acid</em>
+                            </div>
+                        </details>
+                    </details>
+                </details>
+
+                <details class="tree-details theme-ionic">
+                    <summary class="tree-summary">Starts with a Metal or NH₄⁺ (Ionic Compound)</summary>
+                    
+                    <details class="tree-details">
+                        <summary class="tree-summary">Metal has a Fixed Charge (Groups 1, 2, Al, Zn, Ag)</summary>
+                        <div class="tree-result">
+                            Name the metal normally. Change nonmetal to <strong>-ide</strong> (or use polyatomic name).<br>
+                            <em>Example: NaCl ➔ Sodium chloride</em>
+                        </div>
+                    </details>
+                    
+                    <details class="tree-details">
+                        <summary class="tree-summary">Metal has a Variable Charge (Transition metals, Sn, Pb)</summary>
+                        <div class="tree-result">
+                            Determine the charge, write it as a <strong>(Roman Numeral)</strong>. Change nonmetal to <strong>-ide</strong>.<br>
+                            <em>Example: FeCl₃ ➔ Iron (III) chloride</em>
+                        </div>
+                    </details>
+                </details>
+
+                <details class="tree-details theme-covalent">
+                    <summary class="tree-summary">Starts with a Nonmetal (Covalent / Molecular)</summary>
+                    <div class="tree-result">
+                        Use <strong>Greek Prefixes</strong> (mono, di, tri, tetra...) to indicate quantity.<br>
+                        Change the second element to <strong>-ide</strong>. (Never use "mono-" on the first element).<br>
+                        <em>Example: CO₂ ➔ Carbon dioxide</em>
+                    </div>
+                </details>
+                
+            </details>
+        </div>
+    </div>
+
+    <div id="tree-fab" class="tree-fab" title="View Naming Strategy Tree">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="6" y1="3" x2="6" y2="15"></line>
+            <circle cx="18" cy="6" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <path d="M18 9a9 9 0 0 1-9 9"></path>
+        </svg>
+    </div>
+
     <script>
         function formatFormula(formulaStr) {
             if (!formulaStr) return "";
@@ -391,6 +567,11 @@
         const closeCheatSheetBtn = document.getElementById('close-cheat-sheet-btn');
         const cheatSheetTitle = document.getElementById('cheat-sheet-title');
         const cheatSheetContainer = document.getElementById('cheat-sheet-container');
+
+        // NEW: Decision Tree Elements
+        const treeFab = document.getElementById('tree-fab');
+        const treeModal = document.getElementById('decision-tree-modal');
+        const closeTreeBtn = document.getElementById('close-tree-btn');
 
         // --- Core Functions ---
         function initData() {
@@ -716,6 +897,11 @@
         resetBtn.addEventListener('click', resetProgress);
         tipsBtn.addEventListener('click', openTips);
         
+        // NEW: Decision Tree Event Listeners
+        treeFab.addEventListener('click', () => treeModal.classList.remove('hidden'));
+        closeTreeBtn.addEventListener('click', () => treeModal.classList.add('hidden'));
+        treeModal.addEventListener('click', (e) => { if(e.target === treeModal) treeModal.classList.add('hidden'); });
+
         closeTipsBtn.addEventListener('click', () => tipsModal.classList.add('hidden'));
         tipsModal.addEventListener('click', (e) => { if(e.target === tipsModal) tipsModal.classList.add('hidden'); });
         closeCheatSheetBtn.addEventListener('click', () => cheatSheetModal.classList.add('hidden'));
