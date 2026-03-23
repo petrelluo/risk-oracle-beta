@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>指南针 - 语音朗读播放器</title>
+    <title>中文阅读 - 语音朗读播放器</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -11,7 +11,7 @@
             --bg: #f1f5f9;
             --surface: #ffffff;
             --text-main: #334155;
-            --highlight: #fef08a; /* 柔和的黄色高亮 */
+            --highlight: #fef08a;
         }
 
         body {
@@ -31,6 +31,31 @@
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+        }
+
+        /* 顶部文章选择器区域 */
+        .header-bar {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-bottom: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-bar select {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        
+        .header-bar select:focus {
+            border-color: var(--primary);
         }
 
         /* 控制栏样式 */
@@ -91,9 +116,14 @@
             font-size: 1.15rem;
             line-height: 2;
             color: #1e293b;
+            min-height: 300px;
+            max-height: 60vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
         }
 
         p {
+            margin-top: 0;
             margin-bottom: 1.5em;
             text-indent: 2em; /* 首行缩进 */
         }
@@ -114,6 +144,12 @@
 <body>
 
     <div class="player-container">
+        
+        <div class="header-bar">
+            <label for="articleSelect" style="font-weight: bold; white-space: nowrap;">阅读篇目:</label>
+            <select id="articleSelect"></select>
+        </div>
+
         <div class="controls-bar">
             <button class="btn" id="playBtn">▶ 播放</button>
             <button class="btn" id="pauseBtn" disabled>⏸ 暂停</button>
@@ -131,33 +167,53 @@
         </div>
 
         <div class="text-content" id="textContent">
-            <p>
-                <span class="sentence">指南针是中国古代“四大发明”之一。</span>
-            </p>
-            <p>
-                <span class="sentence">在指南针发明以前，人们在茫茫大海上航行，只能靠太阳和星星的位置辨认方向，如果遇到阴雨天，就会迷失方向。</span>
-                <span class="sentence">是中国人发明的指南针，帮助人们解决了这个难题。</span>
-            </p>
-            <p>
-                <span class="sentence">指南针是指示方向的仪器。</span>
-                <span class="sentence">早在战国时期，中国人就发现了磁石指示南北的特性，并根据这种特性制成了指示方向的仪器--司南。</span>
-                <span class="sentence">司南由一把光滑的瓷勺和刻着方向的铜盘组成，勺把指示的方向是南方，勺头指示的方向是北方。</span>
-                <span class="sentence">到了宋代，人们把经过人工磁化的指南针和方位盘结合起来，制成了“罗盘”。</span>
-                <span class="sentence">有了罗盘，无论在什么情况下，人们都能准确地辨认方向了。</span>
-            </p>
-            <p>
-                <span class="sentence">北宋时，指南针已开始应用于航海事业上。</span>
-                <span class="sentence">南宋时，指南针经由阿拉伯传到欧洲，当时的阿拉伯人亲切地称指南针为“水手之眼”。</span>
-            </p>
-            <p>
-                <span class="sentence">指南针的发明，给航海事业带来了划时代的影响，世界航运史也由此翻开了新的一页。</span>
-                <span class="sentence">明朝初期郑和率领船队七下西洋，15世纪哥伦布发现新大陆和麦哲伦环绕地球航行等壮举，都是指南针用于航海事业的结果。</span>
-            </p>
-        </div>
+            </div>
     </div>
 
     <script>
-        const sentences = document.querySelectorAll('.sentence');
+        // --- 1. 数据配置：文章列表 ---
+        const articles = [
+            {
+                title: "指南针 (四大发明)",
+                content: `指南针是中国古代“四大发明”之一。
+在指南针发明以前，人们在茫茫大海上航行，只能靠太阳和星星的位置辨认方向，如果遇到阴雨天，就会迷失方向。是中国人发明的指南针，帮助人们解决了这个难题。
+指南针是指示方向的仪器。早在战国时期，中国人就发现了磁石指示南北的特性，并根据这种特性制成了指示方向的仪器--司南。司南由一把光滑的瓷勺和刻着方向的铜盘组成，勺把指示的方向是南方，勺头指示的方向是北方。到了宋代，人们把经过人工磁化的指南针和方位盘结合起来，制成了“罗盘”。有了罗盘，无论在什么情况下，人们都能准确地辨认方向了。
+北宋时，指南针已开始应用于航海事业上。南宋时，指南针经由阿拉伯传到欧洲，当时的阿拉伯人亲切地称指南针为“水手之眼”。
+指南针的发明，给航海事业带来了划时代的影响，世界航运史也由此翻开了新的一页。明朝初期郑和率领船队七下西洋，15世纪哥伦布发现新大陆和麦哲伦环绕地球航行等壮举，都是指南针用于航海事业的结果。`
+            },
+            {
+                title: "南京之行 (天明与丽莎)",
+                content: `张天明和丽莎上个学期末申请到中国学中文，原来以为时间会来不及，没想到学校竟很快就同意了。两个人可以在中国学习、生活三、四个月，这让他们非常高兴。
+张天明和丽莎先到上海，然后坐高速火车去南京。火车很快，两个小时就到了。天明的表哥开车去火车站接他们。他们就住在姑妈家。
+来中国前，天明的爸爸要他们一定去南京看看他以前的中学，拍几张照片发给他。于是到南京的第二天，一吃过早饭，表哥就带他们去找那个中学。没想到那儿已经变成了一个购物中心，完全不是爸爸说的那个样子了。表哥问了好几个人，谁也说不清楚那个中学搬到哪儿去了。天明想，爸爸总说自己是南京人，可是实际上他熟悉的那个南京已经没有了，今天的南京对他来说其实是一个完全陌生的地方。
+虽然没找到爸爸的中学，但表哥很高兴地说愿意当导游，带他们继续在街上走走，让他们好好看看南京。
+爸爸常常说南京是个很安静的城市，没想到这么热闹！你看到处都是新盖的高楼，大街上挤满了汽车。
+这些年南京的变化的确很大，我以前骑自行车上班，现在也开起车来了。
+这跟我以前想象的中国完全不一样。在上海的时候，要不是到处都是中文，我还以为是在美国呢。
+我爸爸说，他小时候在南京很少看到外国人，可是现在，你看到处都是外国游客啊！
+咱们不也是两个“老外”吗？哈哈！你看马路对面，美国快餐店，日本银行，法国服装店...
+中国的大门打开了，中国融入世界了，这是件好事。
+可是我担心，这样下去，有中国特色的东西会不会越来越少了？
+不会的。南京还是保留了很多有中国特色的东西。比如说建筑，南京最有中国特色的是夫子庙，那儿还有吃的、喝的、玩儿的...
+那咱们现在就去夫子庙，尝尝南京小吃吧。
+好吧！不管中国怎么变，南京怎么变，肚子饿了要吃没变。你们听说过“民以食为天”这句话吗？
+啊？什么？从来没听说过。
+这句话的意思，简单地说就是，“吃”是老百姓生活中最重要的事儿。
+好像挺有道理的。哎，天明，你看，那是什么地方？人那么多，旁边好像还卖吃的、玩儿的，五颜六色，真好看，真热闹！
+那就是夫子庙啊。
+看来，南京人真的是想尽可能保留老南京的特色，老南京的传统啊。
+南京一边是一栋栋高楼大厦，一边是一座座传统建筑，站在这儿，我好像听到了一种声音。
+什么声音？
+历史的脚步声。晚上我给爸爸发一个电子邮件，告诉他中学已经找不到了，再把今天拍的照片发给他看看，不知道他看了会高兴还是会难过。
+哎，我也听到了一种声音。
+什么声音？
+肚子咕噜咕噜叫的声音。走了这么多路，你们好像不累不饿，我这个导游可又渴又饿了。别忘了，“民以食为天”啊！走，吃饭去！`
+            }
+        ];
+
+        // --- 2. DOM 元素获取 ---
+        const articleSelect = document.getElementById('articleSelect');
+        const textContentContainer = document.getElementById('textContent');
         const playBtn = document.getElementById('playBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const stopBtn = document.getElementById('stopBtn');
@@ -165,13 +221,87 @@
         const speedValue = document.getElementById('speedValue');
         const loopCheck = document.getElementById('loopCheck');
 
+        // --- 3. 全局状态变量 ---
         let synth = window.speechSynthesis;
         let currentUtterance = null;
+        let sentencesDOM = []; // 存储当前文章的所有句子DOM元素
         let currentIndex = 0;
-        let state = 'STOPPED'; // 状态: STOPPED, PLAYING, PAUSED
+        let state = 'STOPPED'; // STOPPED, PLAYING, PAUSED
         let isManualCancel = false;
 
-        // 更新按钮状态
+        // --- 4. 核心功能实现 ---
+
+        // 初始化下拉菜单
+        function initSelect() {
+            articles.forEach((article, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = article.title;
+                articleSelect.appendChild(option);
+            });
+            
+            // 监听下拉菜单变化
+            articleSelect.addEventListener('change', (e) => {
+                loadArticle(e.target.value);
+            });
+        }
+
+        // 将纯文本按标点符号智能拆分为带 <span> 的 HTML 结构
+        function parseTextToHTML(rawText) {
+            // 按换行符分割成段落
+            const paragraphs = rawText.split('\n').filter(p => p.trim().length > 0);
+            let htmlString = '';
+
+            paragraphs.forEach(pText => {
+                htmlString += `<p>`;
+                // 使用正则表达式按中文/英文常见句尾标点分割句子，同时保留标点符号
+                // ([。！？；!?;]+) 是一个捕获组，会把标点符号也包含在分割结果的数组中
+                const parts = pText.split(/([。！？；!?;]+)/g);
+                
+                let sentenceBuffer = '';
+                for (let i = 0; i < parts.length; i++) {
+                    const part = parts[i];
+                    if (!part) continue;
+                    
+                    // 如果当前部分是标点符号，将其附加到上一个 buffer 并输出为 span
+                    if (/^[。！？；!?;]+$/.test(part)) {
+                        sentenceBuffer += part;
+                        htmlString += `<span class="sentence">${sentenceBuffer}</span>`;
+                        sentenceBuffer = ''; // 清空 buffer
+                    } else {
+                        // 如果是文本内容
+                        sentenceBuffer += part;
+                        // 如果这是数组的最后一部分且没有标点结尾，也要输出
+                        if (i === parts.length - 1 && sentenceBuffer.trim().length > 0) {
+                            htmlString += `<span class="sentence">${sentenceBuffer}</span>`;
+                            sentenceBuffer = '';
+                        }
+                    }
+                }
+                htmlString += `</p>`;
+            });
+
+            return htmlString;
+        }
+
+        // 加载指定文章
+        function loadArticle(index) {
+            // 1. 停止当前正在播放的音频
+            stopPlayback();
+
+            // 2. 渲染新文章的 HTML
+            const article = articles[index];
+            textContentContainer.innerHTML = parseTextToHTML(article.content);
+
+            // 3. 更新 DOM 引用
+            sentencesDOM = document.querySelectorAll('.sentence');
+            currentIndex = 0;
+            
+            // 4. 重置滚动条到顶部
+            textContentContainer.scrollTop = 0;
+        }
+
+        // 更新按钮状态 UI
         function updateButtons() {
             if (state === 'STOPPED') {
                 playBtn.disabled = false;
@@ -188,15 +318,17 @@
             }
         }
 
-        // 移除所有高亮
         function removeHighlights() {
-            sentences.forEach(s => s.classList.remove('highlight'));
+            sentencesDOM.forEach(s => s.classList.remove('highlight'));
         }
 
-        // 朗读特定句子
+        // 核心朗读函数
         function speakSentence(index) {
-            // 如果读完了最后一句
-            if (index >= sentences.length) {
+            // 防止越界或空文章
+            if (!sentencesDOM || sentencesDOM.length === 0) return;
+
+            // 检查是否读完本篇文章
+            if (index >= sentencesDOM.length) {
                 if (loopCheck.checked) {
                     currentIndex = 0;
                     speakSentence(0);
@@ -207,17 +339,16 @@
             }
 
             removeHighlights();
-            const currentSpan = sentences[index];
+            const currentSpan = sentencesDOM[index];
             currentSpan.classList.add('highlight');
             
-            // 自动平滑滚动到当前朗读的文本
+            // 平滑滚动，使高亮句子保持在可见区域中心
             currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
             currentUtterance = new SpeechSynthesisUtterance(currentSpan.textContent);
-            currentUtterance.lang = 'zh-CN'; // 设置为中文
+            currentUtterance.lang = 'zh-CN'; 
             currentUtterance.rate = parseFloat(speedRate.value);
 
-            // 当一句话读完时，触发下一句
             currentUtterance.onend = function() {
                 if (isManualCancel) {
                     isManualCancel = false;
@@ -232,7 +363,6 @@
             synth.speak(currentUtterance);
         }
 
-        // 停止播放
         function stopPlayback() {
             state = 'STOPPED';
             isManualCancel = true;
@@ -242,7 +372,7 @@
             updateButtons();
         }
 
-        // --- 事件监听 ---
+        // --- 5. 事件绑定 ---
 
         playBtn.onclick = () => {
             if (state === 'STOPPED') {
@@ -268,12 +398,11 @@
             stopPlayback();
         };
 
-        // 实时语速调节显示
+        // 语速滑块事件
         speedRate.oninput = (e) => {
             speedValue.textContent = Number(e.target.value).toFixed(1);
         };
 
-        // 如果在播放过程中更改了语速，重新开始当前句子以应用新语速
         speedRate.onchange = () => {
             if (state === 'PLAYING') {
                 isManualCancel = true;
@@ -282,10 +411,15 @@
             }
         };
 
-        // 页面卸载前确保停止语音，防止后台继续播放
+        // 防止页面关闭/刷新时继续在后台发声
         window.onbeforeunload = () => {
             synth.cancel();
         };
+
+        // --- 6. 初始运行 ---
+        initSelect();
+        loadArticle(0); // 默认加载第一篇文章
+
     </script>
 </body>
 </html>
