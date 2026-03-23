@@ -125,7 +125,7 @@
         p {
             margin-top: 0;
             margin-bottom: 1.5em;
-            text-indent: 2em; /* 首行缩进 */
+            text-indent: 2em;
         }
 
         .sentence {
@@ -166,8 +166,7 @@
             </label>
         </div>
 
-        <div class="text-content" id="textContent">
-            </div>
+        <div class="text-content" id="textContent"></div>
     </div>
 
     <script>
@@ -224,14 +223,14 @@
         // --- 3. 全局状态变量 ---
         let synth = window.speechSynthesis;
         let currentUtterance = null;
-        let sentencesDOM = []; // 存储当前文章的所有句子DOM元素
+        let keepAliveUtterance = null; // 【核心修复】全局变量，防止 Chrome 垃圾回收导致 onend 失效
+        let sentencesDOM = []; 
         let currentIndex = 0;
-        let state = 'STOPPED'; // STOPPED, PLAYING, PAUSED
+        let state = 'STOPPED'; 
         let isManualCancel = false;
 
         // --- 4. 核心功能实现 ---
 
-        // 初始化下拉菜单
         function initSelect() {
             articles.forEach((article, index) => {
                 let option = document.createElement('option');
@@ -240,22 +239,17 @@
                 articleSelect.appendChild(option);
             });
             
-            // 监听下拉菜单变化
             articleSelect.addEventListener('change', (e) => {
                 loadArticle(e.target.value);
             });
         }
 
-        // 将纯文本按标点符号智能拆分为带 <span> 的 HTML 结构
         function parseTextToHTML(rawText) {
-            // 按换行符分割成段落
             const paragraphs = rawText.split('\n').filter(p => p.trim().length > 0);
             let htmlString = '';
 
             paragraphs.forEach(pText => {
                 htmlString += `<p>`;
-                // 使用正则表达式按中文/英文常见句尾标点分割句子，同时保留标点符号
-                // ([。！？；!?;]+) 是一个捕获组，会把标点符号也包含在分割结果的数组中
                 const parts = pText.split(/([。！？；!?;]+)/g);
                 
                 let sentenceBuffer = '';
@@ -263,15 +257,12 @@
                     const part = parts[i];
                     if (!part) continue;
                     
-                    // 如果当前部分是标点符号，将其附加到上一个 buffer 并输出为 span
                     if (/^[。！？；!?;]+$/.test(part)) {
                         sentenceBuffer += part;
                         htmlString += `<span class="sentence">${sentenceBuffer}</span>`;
-                        sentenceBuffer = ''; // 清空 buffer
+                        sentenceBuffer = ''; 
                     } else {
-                        // 如果是文本内容
                         sentenceBuffer += part;
-                        // 如果这是数组的最后一部分且没有标点结尾，也要输出
                         if (i === parts.length - 1 && sentenceBuffer.trim().length > 0) {
                             htmlString += `<span class="sentence">${sentenceBuffer}</span>`;
                             sentenceBuffer = '';
@@ -284,24 +275,15 @@
             return htmlString;
         }
 
-        // 加载指定文章
         function loadArticle(index) {
-            // 1. 停止当前正在播放的音频
             stopPlayback();
-
-            // 2. 渲染新文章的 HTML
             const article = articles[index];
             textContentContainer.innerHTML = parseTextToHTML(article.content);
-
-            // 3. 更新 DOM 引用
             sentencesDOM = document.querySelectorAll('.sentence');
             currentIndex = 0;
-            
-            // 4. 重置滚动条到顶部
             textContentContainer.scrollTop = 0;
         }
 
-        // 更新按钮状态 UI
         function updateButtons() {
             if (state === 'STOPPED') {
                 playBtn.disabled = false;
@@ -322,16 +304,15 @@
             sentencesDOM.forEach(s => s.classList.remove('highlight'));
         }
 
-        // 核心朗读函数
         function speakSentence(index) {
-            // 防止越界或空文章
             if (!sentencesDOM || sentencesDOM.length === 0) return;
 
             // 检查是否读完本篇文章
             if (index >= sentencesDOM.length) {
                 if (loopCheck.checked) {
                     currentIndex = 0;
-                    speakSentence(0);
+                    // 【修复缓冲】循环时留出一点时间防止引擎卡死
+                    setTimeout(() => speakSentence(0), 500);
                 } else {
                     stopPlayback();
                 }
@@ -342,12 +323,14 @@
             const currentSpan = sentencesDOM[index];
             currentSpan.classList.add('highlight');
             
-            // 平滑滚动，使高亮句子保持在可见区域中心
             currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
             currentUtterance = new SpeechSynthesisUtterance(currentSpan.textContent);
             currentUtterance.lang = 'zh-CN'; 
             currentUtterance.rate = parseFloat(speedRate.value);
+
+            // 【核心修复】防止被 Chrome 引擎当成垃圾回收
+            keepAliveUtterance = currentUtterance; 
 
             currentUtterance.onend = function() {
                 if (isManualCancel) {
@@ -356,7 +339,25 @@
                 }
                 if (state === 'PLAYING') {
                     currentIndex++;
-                    speakSentence(currentIndex);
+                    // 【核心修复】加入 100ms 延迟，防止同步调用 speak() 导致引擎超载卡死
+                    setTimeout(() => {
+                        speakSentence(currentIndex);
+                    }, 100);
+                }
+            };
+
+            // 【核心修复】容错机制：如果意外出错，强制继续读下一句
+            currentUtterance.onerror = function(e) {
+                console.warn("SpeechSynthesis API Error: ", e);
+                if (isManualCancel) {
+                    isManualCancel = false;
+                    return;
+                }
+                if (state === 'PLAYING') {
+                    currentIndex++;
+                    setTimeout(() => {
+                        speakSentence(currentIndex);
+                    }, 100);
                 }
             };
 
@@ -377,13 +378,21 @@
         playBtn.onclick = () => {
             if (state === 'STOPPED') {
                 state = 'PLAYING';
-                currentIndex = 0;
-                speakSentence(currentIndex);
+                
+                // 【核心修复】在开始前先 clear 一次可能卡在后台的进程
+                synth.cancel();
+                
+                setTimeout(() => {
+                    currentIndex = 0;
+                    speakSentence(currentIndex);
+                    updateButtons();
+                }, 50);
+                
             } else if (state === 'PAUSED') {
                 state = 'PLAYING';
                 synth.resume();
+                updateButtons();
             }
-            updateButtons();
         };
 
         pauseBtn.onclick = () => {
@@ -398,7 +407,6 @@
             stopPlayback();
         };
 
-        // 语速滑块事件
         speedRate.oninput = (e) => {
             speedValue.textContent = Number(e.target.value).toFixed(1);
         };
@@ -407,18 +415,17 @@
             if (state === 'PLAYING') {
                 isManualCancel = true;
                 synth.cancel();
-                speakSentence(currentIndex); 
+                setTimeout(() => speakSentence(currentIndex), 100);
             }
         };
 
-        // 防止页面关闭/刷新时继续在后台发声
         window.onbeforeunload = () => {
             synth.cancel();
         };
 
         // --- 6. 初始运行 ---
         initSelect();
-        loadArticle(0); // 默认加载第一篇文章
+        loadArticle(0);
 
     </script>
 </body>
