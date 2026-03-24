@@ -142,6 +142,13 @@
 
         .gap { width: 40px; }
         .big-gap { width: 70px; }
+        
+        .partial-charge {
+            position: absolute;
+            top: -25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
 
         /* --- Step 2: 3D VSEPR Explorer --- */
         .vsepr-container {
@@ -206,10 +213,12 @@
         /* --- Step 3 & 4 Tables and Charts --- */
         table {
             width: 100%; border-collapse: collapse; margin-top: 15px; background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background-color: var(--primary); color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
+        .center-text { text-align: center; }
 
         .chart-container {
             position: relative; height: 400px; width: 100%;
@@ -247,9 +256,17 @@
                     <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> HCl (EN Diff = 0.96)</p>
                     <div class="density-map">
                         <div class="cloud-polar"></div>
-                        <div class="atom" style="width:30px; height:30px;">H</div><div class="gap"></div><div class="atom">Cl</div>
+                        <div class="atom" style="width:30px; height:30px; position:relative;">
+                            H
+                            <span class="partial-charge" style="color:#e74c3c;">&delta;⁺</span>
+                        </div>
+                        <div class="gap"></div>
+                        <div class="atom" style="position:relative;">
+                            Cl
+                            <span class="partial-charge" style="color:#2980b9;">&delta;⁻</span>
+                        </div>
                     </div>
-                    <p style="font-size: 0.85rem; color:#666;">Cl is more electronegative, hogging the electrons. The cloud bulges, creating poles (&delta;+ and &delta;-).</p>
+                    <p style="font-size: 0.85rem; color:#666;">Cl is more electronegative, hogging the electrons. The cloud bulges, creating poles (&delta;⁺ and &delta;⁻).</p>
                 </div>
 
                 <div class="bond-box">
@@ -297,6 +314,100 @@
                     </div>
                 </div>
             </div>
+
+            <h3 style="margin-top: 40px; color: var(--primary);">VSEPR Geometry Reference Table</h3>
+            <table>
+                <tr>
+                    <th class="center-text">Steric Number<br><span style="font-size:0.8rem; font-weight:normal;">(Total Domains)</span></th>
+                    <th class="center-text">Bonded Atoms</th>
+                    <th class="center-text">Lone Pairs</th>
+                    <th>Molecular Geometry</th>
+                    <th>Ideal Bond Angle(s)</th>
+                </tr>
+                <tr>
+                    <td class="center-text"><strong>2</strong></td>
+                    <td class="center-text">2</td>
+                    <td class="center-text">0</td>
+                    <td>Linear</td>
+                    <td>180&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text" rowspan="2"><strong>3</strong></td>
+                    <td class="center-text">3</td>
+                    <td class="center-text">0</td>
+                    <td>Trigonal Planar</td>
+                    <td>120&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">2</td>
+                    <td class="center-text">1</td>
+                    <td>Bent</td>
+                    <td>&lt; 120&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text" rowspan="3"><strong>4</strong></td>
+                    <td class="center-text">4</td>
+                    <td class="center-text">0</td>
+                    <td>Tetrahedral</td>
+                    <td>109.5&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">3</td>
+                    <td class="center-text">1</td>
+                    <td>Trigonal Pyramidal</td>
+                    <td>&lt; 109.5&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">2</td>
+                    <td class="center-text">2</td>
+                    <td>Bent</td>
+                    <td>&lt;&lt; 109.5&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text" rowspan="4"><strong>5</strong></td>
+                    <td class="center-text">5</td>
+                    <td class="center-text">0</td>
+                    <td>Trigonal Bipyramidal</td>
+                    <td>90&deg;, 120&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">4</td>
+                    <td class="center-text">1</td>
+                    <td>Seesaw</td>
+                    <td>&lt; 90&deg;, &lt; 120&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">3</td>
+                    <td class="center-text">2</td>
+                    <td>T-shaped</td>
+                    <td>&lt; 90&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">2</td>
+                    <td class="center-text">3</td>
+                    <td>Linear</td>
+                    <td>180&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text" rowspan="3"><strong>6</strong></td>
+                    <td class="center-text">6</td>
+                    <td class="center-text">0</td>
+                    <td>Octahedral</td>
+                    <td>90&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">5</td>
+                    <td class="center-text">1</td>
+                    <td>Square Pyramidal</td>
+                    <td>&lt; 90&deg;</td>
+                </tr>
+                <tr>
+                    <td class="center-text">4</td>
+                    <td class="center-text">2</td>
+                    <td>Square Planar</td>
+                    <td>90&deg;</td>
+                </tr>
+            </table>
         </div>
 
         <div class="step-card">
@@ -319,7 +430,7 @@
                 <tr>
                     <td><strong>Dipole-Dipole</strong></td>
                     <td>Medium</td>
-                    <td>Attraction between the permanent partial charges (&delta;+ and &delta;-) of asymmetrical, polar molecules.</td>
+                    <td>Attraction between the permanent partial charges (&delta;⁺ and &delta;⁻) of asymmetrical, polar molecules.</td>
                     <td>HCl, H<sub>2</sub>S</td>
                 </tr>
                 <tr>
