@@ -61,6 +61,16 @@
             padding-bottom: 10px;
             margin-top: 0;
         }
+        
+        .definition-box {
+            background: #fdfbf7;
+            border-left: 4px solid #f39c12;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .definition-box strong { color: #d35400; }
 
         .interactive-panel {
             background: #f1f5f8;
@@ -86,6 +96,7 @@
             border-radius: 8px;
             text-align: center;
             border: 1px solid #ddd;
+            position: relative;
         }
 
         .bond-box h4 { margin-top: 0; color: var(--primary); }
@@ -148,6 +159,30 @@
             top: -25px;
             font-size: 1.1rem;
             font-weight: bold;
+        }
+
+        /* Electron Styles */
+        .electron-pair {
+            position: absolute;
+            display: flex;
+            gap: 6px;
+            z-index: 3;
+        }
+        .electron-dot {
+            width: 8px; height: 8px;
+            background: #f1c40f;
+            border: 1px solid #d35400;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(241, 196, 15, 0.8);
+        }
+        .transfer-arrow {
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            top: -10px;
+            left: 65px;
+            z-index: 4;
+            pointer-events: none;
         }
 
         /* --- Step 2: 3D VSEPR Explorer --- */
@@ -237,8 +272,14 @@
     <div class="container">
 
         <div class="step-card">
-            <h2>Step 1: Electronegativity & Bond Types</h2>
-            <p>A chemical bond forms when atoms share or transfer electrons. We use <strong>Electronegativity (EN)</strong>—how strongly an atom pulls on electrons—to predict the exact bond type. Below are the electron density maps showing where electrons spend their time in the three main bond types.</p>
+            <h2>Step 1: Bonding Definitions & Bond Types</h2>
+            
+            <div class="definition-box">
+                <p><strong>Covalent Bonds</strong> form when nonmetal atoms <strong>share</strong> their valence electrons to achieve a stable outer shell. Because both atoms want electrons, they compromise by sharing them.</p>
+                <p><strong>Ionic Bonds</strong> form when a metal atom completely <strong>transfers</strong> its valence electrons to a nonmetal atom. This creates oppositely charged ions that strongly attract each other.</p>
+            </div>
+
+            <p>We use <strong>Electronegativity (EN)</strong>—a measure of how strongly an atom pulls on electrons—to predict exactly how the electrons will behave. The yellow dots in the diagrams below represent the valence electrons being bonded.</p>
             
             <div class="bond-examples-grid">
                 <div class="bond-box">
@@ -246,9 +287,14 @@
                     <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Cl₂ (EN Diff = 0.0)</p>
                     <div class="density-map">
                         <div class="cloud-nonpolar"></div>
-                        <div class="atom">Cl</div><div class="gap"></div><div class="atom">Cl</div>
+                        <div class="atom">Cl</div>
+                        <div class="electron-pair" style="left: 50%; transform: translate(-50%, 0);">
+                            <div class="electron-dot"></div><div class="electron-dot"></div>
+                        </div>
+                        <div class="gap"></div>
+                        <div class="atom">Cl</div>
                     </div>
-                    <p style="font-size: 0.85rem; color:#666;">Electrons are shared perfectly equally. The cloud is symmetrical.</p>
+                    <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>shared perfectly equally</strong> right in the middle. The electron cloud is symmetrical.</p>
                 </div>
 
                 <div class="bond-box">
@@ -260,26 +306,41 @@
                             H
                             <span class="partial-charge" style="color:#e74c3c;">&delta;⁺</span>
                         </div>
+                        <div class="electron-pair" style="left: 64%; transform: translate(-50%, 0);">
+                            <div class="electron-dot"></div><div class="electron-dot"></div>
+                        </div>
                         <div class="gap"></div>
                         <div class="atom" style="position:relative;">
                             Cl
                             <span class="partial-charge" style="color:#2980b9;">&delta;⁻</span>
                         </div>
                     </div>
-                    <p style="font-size: 0.85rem; color:#666;">Cl is more electronegative, hogging the electrons. The cloud bulges, creating poles (&delta;⁺ and &delta;⁻).</p>
+                    <p style="font-size: 0.85rem; color:#666;">Cl is more electronegative, <strong>hogging the shared electrons</strong>. This creates permanent partial poles (&delta;⁺ and &delta;⁻).</p>
                 </div>
 
                 <div class="bond-box">
                     <h4>Ionic (Transfer)</h4>
                     <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> NaCl (EN Diff = 2.23)</p>
                     <div class="density-map">
+                        <svg class="transfer-arrow" viewBox="0 0 100 50">
+                            <path d="M 10 30 Q 50 0 85 25" fill="none" stroke="#2c3e50" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+                            <defs>
+                                <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                        
                         <div class="cloud-ionic-1"></div>
                         <div class="cloud-ionic-2"></div>
                         <div class="atom" style="width:30px; height:30px; border-color:#3498db;">Na⁺</div>
                         <div class="big-gap"></div>
-                        <div class="atom" style="border-color:#e74c3c;">Cl⁻</div>
+                        <div class="atom" style="border-color:#e74c3c; position:relative;">
+                            Cl⁻
+                            <div class="electron-dot" style="position:absolute; top: -2px; left: -8px;"></div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.85rem; color:#666;">Electron is completely transferred. Clouds separate into distinct positive and negative ions.</p>
+                    <p style="font-size: 0.85rem; color:#666;">The electron is <strong>completely transferred</strong> from Na to Cl. The clouds separate into distinct ions.</p>
                 </div>
             </div>
         </div>
