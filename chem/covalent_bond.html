@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root {
@@ -134,7 +135,6 @@
         .cloud-polar {
             position: absolute;
             width: 170px; height: 80px;
-            /* A single continuous cloud that envelops both atoms, but is dense on the right and faint on the left */
             background: radial-gradient(ellipse at 70% 50%, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.3) 45%, rgba(52,152,219,0.1) 75%, transparent 100%);
             z-index: 1;
         }
@@ -250,10 +250,16 @@
             width: 100%; border-collapse: collapse; margin-top: 15px; background: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: middle; }
         th { background-color: var(--primary); color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
         .center-text { text-align: center; }
+
+        .svg-shape {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         .chart-container {
             position: relative; height: 400px; width: 100%;
@@ -379,16 +385,18 @@
             <h3 style="margin-top: 40px; color: var(--primary);">VSEPR Geometry Reference Table</h3>
             <table>
                 <tr>
-                    <th class="center-text">Steric Number<br><span style="font-size:0.8rem; font-weight:normal;">(Total Domains)</span></th>
-                    <th class="center-text">Bonded Atoms</th>
+                    <th class="center-text">Steric Number<br><span style="font-size:0.8rem; font-weight:normal;">(Domains)</span></th>
+                    <th class="center-text">Bonded</th>
                     <th class="center-text">Lone Pairs</th>
+                    <th>Shape</th>
                     <th>Molecular Geometry</th>
-                    <th>Ideal Bond Angle(s)</th>
+                    <th>Ideal Bond Angle</th>
                 </tr>
                 <tr>
                     <td class="center-text"><strong>2</strong></td>
                     <td class="center-text">2</td>
                     <td class="center-text">0</td>
+                    <td><div class="svg-shape" data-sn="2" data-bp="2" data-lp="0"></div></td>
                     <td>Linear</td>
                     <td>180&deg;</td>
                 </tr>
@@ -396,12 +404,14 @@
                     <td class="center-text" rowspan="2"><strong>3</strong></td>
                     <td class="center-text">3</td>
                     <td class="center-text">0</td>
+                    <td><div class="svg-shape" data-sn="3" data-bp="3" data-lp="0"></div></td>
                     <td>Trigonal Planar</td>
                     <td>120&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">2</td>
                     <td class="center-text">1</td>
+                    <td><div class="svg-shape" data-sn="3" data-bp="2" data-lp="1"></div></td>
                     <td>Bent</td>
                     <td>&lt; 120&deg;</td>
                 </tr>
@@ -409,18 +419,21 @@
                     <td class="center-text" rowspan="3"><strong>4</strong></td>
                     <td class="center-text">4</td>
                     <td class="center-text">0</td>
+                    <td><div class="svg-shape" data-sn="4" data-bp="4" data-lp="0"></div></td>
                     <td>Tetrahedral</td>
                     <td>109.5&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">3</td>
                     <td class="center-text">1</td>
+                    <td><div class="svg-shape" data-sn="4" data-bp="3" data-lp="1"></div></td>
                     <td>Trigonal Pyramidal</td>
                     <td>&lt; 109.5&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">2</td>
                     <td class="center-text">2</td>
+                    <td><div class="svg-shape" data-sn="4" data-bp="2" data-lp="2"></div></td>
                     <td>Bent</td>
                     <td>&lt;&lt; 109.5&deg;</td>
                 </tr>
@@ -428,24 +441,28 @@
                     <td class="center-text" rowspan="4"><strong>5</strong></td>
                     <td class="center-text">5</td>
                     <td class="center-text">0</td>
+                    <td><div class="svg-shape" data-sn="5" data-bp="5" data-lp="0"></div></td>
                     <td>Trigonal Bipyramidal</td>
                     <td>90&deg;, 120&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">4</td>
                     <td class="center-text">1</td>
+                    <td><div class="svg-shape" data-sn="5" data-bp="4" data-lp="1"></div></td>
                     <td>Seesaw</td>
                     <td>&lt; 90&deg;, &lt; 120&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">3</td>
                     <td class="center-text">2</td>
+                    <td><div class="svg-shape" data-sn="5" data-bp="3" data-lp="2"></div></td>
                     <td>T-shaped</td>
                     <td>&lt; 90&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">2</td>
                     <td class="center-text">3</td>
+                    <td><div class="svg-shape" data-sn="5" data-bp="2" data-lp="3"></div></td>
                     <td>Linear</td>
                     <td>180&deg;</td>
                 </tr>
@@ -453,18 +470,21 @@
                     <td class="center-text" rowspan="3"><strong>6</strong></td>
                     <td class="center-text">6</td>
                     <td class="center-text">0</td>
+                    <td><div class="svg-shape" data-sn="6" data-bp="6" data-lp="0"></div></td>
                     <td>Octahedral</td>
                     <td>90&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">5</td>
                     <td class="center-text">1</td>
+                    <td><div class="svg-shape" data-sn="6" data-bp="5" data-lp="1"></div></td>
                     <td>Square Pyramidal</td>
                     <td>&lt; 90&deg;</td>
                 </tr>
                 <tr>
                     <td class="center-text">4</td>
                     <td class="center-text">2</td>
+                    <td><div class="svg-shape" data-sn="6" data-bp="4" data-lp="2"></div></td>
                     <td>Square Planar</td>
                     <td>90&deg;</td>
                 </tr>
@@ -522,6 +542,67 @@
 
     <script>
         /* =========================================
+           VSEPR 2D SVG Generator for Table
+           ========================================= */
+        function draw2DShape(sn, bp, lp) {
+            // Coordinate mapping mapped onto a 100x100 SVG box
+            const pos = {
+                2: [{x:15, y:50}, {x:85, y:50}],
+                3: [{x:50, y:15}, {x:19, y:67}, {x:81, y:67}],
+                4: [{x:50, y:15}, {x:20, y:75}, {x:80, y:75}, {x:30, y:35}],
+                5: [{x:50, y:15}, {x:50, y:85}, {x:85, y:50}, {x:35, y:65}, {x:15, y:50}],
+                6: [{x:50, y:15}, {x:50, y:85}, {x:20, y:50}, {x:80, y:50}, {x:30, y:35}, {x:70, y:65}]
+            };
+
+            // Order in which atoms are replaced by Lone Pairs based on VSEPR theory
+            let lpIndices = [];
+            if (sn == 3) lpIndices = [0].slice(0, lp);
+            if (sn == 4) lpIndices = [0, 3].slice(0, lp);
+            if (sn == 5) lpIndices = [2, 3, 4].slice(0, lp); // Eq replaced first
+            if (sn == 6) lpIndices = [1, 0].slice(0, lp); // Ax replaced first
+
+            let svg = `<svg width="55" height="55" viewBox="0 0 100 100">`;
+
+            // Draw Bonds
+            pos[sn].forEach((p, i) => {
+                if (!lpIndices.includes(i)) {
+                    svg += `<line x1="50" y1="50" x2="${p.x}" y2="${p.y}" stroke="#bdc3c7" stroke-width="4"/>`;
+                }
+            });
+
+            // Draw Lone Pairs (Rotated Ellipses)
+            pos[sn].forEach((p, i) => {
+                if (lpIndices.includes(i)) {
+                    let dx = p.x - 50;
+                    let dy = p.y - 50;
+                    let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    let cx = 50 + dx * 0.55;
+                    let cy = 50 + dy * 0.55;
+                    svg += `<ellipse cx="${cx}" cy="${cy}" rx="12" ry="20" fill="rgba(241,196,15,0.4)" stroke="#f39c12" stroke-dasharray="2,2" transform="rotate(${angle+90}, ${cx}, ${cy})"/>`;
+                }
+            });
+
+            // Draw Bonded Atoms
+            pos[sn].forEach((p, i) => {
+                if (!lpIndices.includes(i)) {
+                    svg += `<circle cx="${p.x}" cy="${p.y}" r="10" fill="#e74c3c"/>`;
+                }
+            });
+
+            // Draw Central Atom
+            svg += `<circle cx="50" cy="50" r="12" fill="#2c3e50"/></svg>`;
+            return svg;
+        }
+
+        // Inject SVGs into Table
+        document.querySelectorAll('.svg-shape').forEach(el => {
+            const sn = parseInt(el.getAttribute('data-sn'));
+            const bp = parseInt(el.getAttribute('data-bp'));
+            const lp = parseInt(el.getAttribute('data-lp'));
+            el.innerHTML = draw2DShape(sn, bp, lp);
+        });
+
+        /* =========================================
            3D VSEPR Explorer Engine (Three.js)
            ========================================= */
         const canvas = document.getElementById('vseprCanvas');
@@ -531,18 +612,15 @@
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0xfcfcfc);
         
-        // Setup Camera
         const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
         camera.position.z = 12;
 
-        // Setup Controls
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enablePan = false;
         controls.enableZoom = true;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 1.0;
 
-        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -552,21 +630,14 @@
         let moleculeGroup = new THREE.Group();
         scene.add(moleculeGroup);
 
-        // Vector coordinates for VSEPR Geometries (Steric Numbers 2 through 6)
-        // Normalized Vectors. Lone Pairs will be placed at the END of these arrays dynamically.
         const vseprVectors = {
             2: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0) ],
             3: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0.866,-0.5,0), new THREE.Vector3(-0.866,-0.5,0) ],
             4: [ new THREE.Vector3(1,1,1).normalize(), new THREE.Vector3(1,-1,-1).normalize(), new THREE.Vector3(-1,1,-1).normalize(), new THREE.Vector3(-1,-1,1).normalize() ],
-            // SN5: Lone pairs prefer Equatorial. Order: Ax, Ax, Eq, Eq, Eq. 
-            // So if LP takes the end of the array, it fills Equatorial first!
             5: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0), new THREE.Vector3(1,0,0), new THREE.Vector3(-0.5,0,0.866), new THREE.Vector3(-0.5,0,-0.866) ],
-            // SN6: Lone pairs prefer Axial. Order: Eq, Eq, Eq, Eq, Ax, Ax.
-            // So if LP takes the end of the array, it fills Axial first!
             6: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0), new THREE.Vector3(0,0,1), new THREE.Vector3(0,0,-1), new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0) ]
         };
 
-        // Data dictionary for updating UI text
         const shapeData = {
             "2_0": { geom: "Linear", angle: "180&deg;", pol: "Nonpolar" },
             "3_0": { geom: "Trigonal Planar", angle: "120&deg;", pol: "Nonpolar" },
@@ -589,53 +660,39 @@
 
             const sn = bonds + lonePairs;
 
-            // Materials
-            const centerMat = new THREE.MeshPhongMaterial({ color: 0x2c3e50 }); // Dark gray
-            const atomMat = new THREE.MeshPhongMaterial({ color: 0xe74c3c }); // Red
-            const bondMat = new THREE.MeshPhongMaterial({ color: 0xbdc3c7 }); // Light Gray
-            const lpMat = new THREE.MeshPhongMaterial({ color: 0xf1c40f, transparent: true, opacity: 0.6 }); // Yellow Translucent
+            const centerMat = new THREE.MeshPhongMaterial({ color: 0x2c3e50 }); 
+            const atomMat = new THREE.MeshPhongMaterial({ color: 0xe74c3c }); 
+            const bondMat = new THREE.MeshPhongMaterial({ color: 0xbdc3c7 }); 
+            const lpMat = new THREE.MeshPhongMaterial({ color: 0xf1c40f, transparent: true, opacity: 0.6 }); 
 
-            // Draw Center Atom
             const centerMesh = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), centerMat);
             moleculeGroup.add(centerMesh);
 
             if (sn >= 2 && sn <= 6) {
                 const vectors = vseprVectors[sn];
-                
                 for (let i = 0; i < sn; i++) {
                     const dir = vectors[i].clone();
                     const distance = 3.0;
                     const pos = dir.clone().multiplyScalar(distance);
 
-                    // Atoms take the first 'bonds' slots, Lone Pairs take the rest
                     if (i < bonds) {
-                        // Draw outer atom
                         const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
                         atomMesh.position.copy(pos);
                         moleculeGroup.add(atomMesh);
 
-                        // Draw cylinder bond
-                        const bondLength = distance - 1.2; // roughly distance minus radii
-                        const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, bondLength, 16), bondMat);
-                        
-                        // Align cylinder along the vector
-                        const up = new THREE.Vector3(0, 1, 0);
-                        bondMesh.quaternion.setFromUnitVectors(up, dir);
+                        const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, distance - 1.2, 16), bondMat);
+                        bondMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
                         bondMesh.position.copy(dir.clone().multiplyScalar(distance / 2));
                         moleculeGroup.add(bondMesh);
                     } else {
-                        // Draw Lone Pair (stretched sphere / lobe)
                         const lpMesh = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 32), lpMat);
-                        lpMesh.scale.set(1, 1.8, 1); // stretch into lobe
-                        
-                        const up = new THREE.Vector3(0, 1, 0);
-                        lpMesh.quaternion.setFromUnitVectors(up, dir);
+                        lpMesh.scale.set(1, 1.8, 1); 
+                        lpMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
                         lpMesh.position.copy(dir.clone().multiplyScalar(distance * 0.5));
                         moleculeGroup.add(lpMesh);
                     }
                 }
             } else if (sn === 1) {
-                // Diatomic special case
                 const dir = new THREE.Vector3(1,0,0);
                 const pos = dir.clone().multiplyScalar(3.0);
                 const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
@@ -651,7 +708,6 @@
             scene.add(moleculeGroup);
         }
 
-        // Resize handler for 3D canvas
         window.addEventListener('resize', () => {
             const width = canvas.clientWidth;
             const height = canvas.clientHeight;
@@ -662,10 +718,9 @@
             }
         });
 
-        // Animation Loop
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); // enables auto-rotation and mouse drag
+            controls.update(); 
             renderer.render(scene, camera);
         }
         animate();
@@ -681,7 +736,6 @@
             let b = parseInt(bondInput.value);
             let lp = parseInt(lpInput.value);
             
-            // Safety Validation (Max SN = 6)
             if (b + lp > 6) {
                 if (b > 6) b = 6;
                 lp = 6 - b;
@@ -695,13 +749,11 @@
 
             const key = `${b}_${lp}`;
             const info = shapeData[key];
-
             const polBadge = document.getElementById('molPol');
 
             if (info) {
                 document.getElementById('molGeom').innerHTML = info.geom;
                 document.getElementById('bondAngle').innerHTML = info.angle;
-                
                 polBadge.innerText = info.pol;
                 polBadge.className = "result-badge " + (info.pol === "Polar" ? "badge-polar" : "badge-nonpolar");
             } else if (b === 1) {
@@ -711,18 +763,15 @@
                 polBadge.className = "result-badge";
                 polBadge.style.background = "#7f8c8d";
             } else {
-                document.getElementById('molGeom').innerHTML = "Unknown/Unstable";
+                document.getElementById('molGeom').innerHTML = "Unknown";
                 document.getElementById('bondAngle').innerHTML = "N/A";
             }
 
-            // Update 3D Model
             buildMolecule3D(b, lp);
         }
 
         bondInput.addEventListener('change', updateVSEPR);
         lpInput.addEventListener('change', updateVSEPR);
-        
-        // Initial setup
         renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
         updateVSEPR();
 
@@ -732,17 +781,16 @@
            ========================================= */
         document.addEventListener("DOMContentLoaded", function() {
             const ctx = document.getElementById('imfChart').getContext('2d');
-            
             const data = {
                 labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Isopropyl Alcohol', 'Water (H₂O)'],
                 datasets: [{
                     label: 'Boiling Point (°C)',
                     data: [-161, -60, 82.5, 100],
                     backgroundColor: [
-                        'rgba(149, 165, 166, 0.7)', // Gray (LDF)
-                        'rgba(243, 156, 18, 0.7)', // Orange (Dipole)
-                        'rgba(52, 152, 219, 0.7)', // Blue (H-bond)
-                        'rgba(41, 128, 185, 0.9)'  // Dark Blue (H-bond strong)
+                        'rgba(149, 165, 166, 0.7)', 
+                        'rgba(243, 156, 18, 0.7)', 
+                        'rgba(52, 152, 219, 0.7)', 
+                        'rgba(41, 128, 185, 0.9)'  
                     ],
                     borderColor: [
                         'rgba(149, 165, 166, 1)',
@@ -754,7 +802,7 @@
                 }]
             };
 
-            const config = {
+            new Chart(ctx, {
                 type: 'bar',
                 data: data,
                 options: {
@@ -765,29 +813,19 @@
                         tooltip: {
                             callbacks: {
                                 afterLabel: function(context) {
-                                    let imf = "";
-                                    if(context.dataIndex === 0) imf = "Dominant IMF: London Dispersion";
-                                    if(context.dataIndex === 1) imf = "Dominant IMF: Dipole-Dipole";
-                                    if(context.dataIndex >= 2) imf = "Dominant IMF: Hydrogen Bonding";
-                                    return imf;
+                                    if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
+                                    if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
+                                    return "Dominant IMF: Hydrogen Bonding";
                                 }
                             }
                         }
                     },
                     scales: {
-                        y: {
-                            title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} },
-                            grid: { color: '#ecf0f1' }
-                        },
-                        x: {
-                            title: { display: true, text: 'Molecule', font: {weight: 'bold'} },
-                            grid: { display: false }
-                        }
+                        y: { title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} } },
+                        x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } }
                     }
                 }
-            };
-
-            new Chart(ctx, config);
+            });
         });
 
     </script>
