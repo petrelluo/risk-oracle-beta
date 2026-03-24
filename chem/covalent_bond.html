@@ -185,7 +185,7 @@
             pointer-events: none;
         }
 
-        /* --- Step 2: 3D VSEPR Explorer --- */
+        /* --- VSEPR Explorer --- */
         .vsepr-container {
             display: flex;
             gap: 20px;
@@ -245,7 +245,7 @@
         .badge-polar { background: #e74c3c; }
         .badge-nonpolar { background: #27ae60; }
 
-        /* --- Step 3 & 4 Tables and Charts --- */
+        /* --- Tables and Charts --- */
         table {
             width: 100%; border-collapse: collapse; margin-top: 15px; background: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -265,6 +265,14 @@
             position: relative; height: 400px; width: 100%;
             background: white; padding: 20px; border-radius: 8px;
             box-sizing: border-box; border: 1px solid #ddd;
+        }
+
+        .bond-list {
+            list-style-type: none; padding-left: 0;
+        }
+        .bond-list li {
+            background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 10px;
+            border: 1px solid #ddd; border-left: 4px solid var(--secondary);
         }
     </style>
 </head>
@@ -321,7 +329,7 @@
                             <span class="partial-charge" style="color:#2980b9;">&delta;⁻</span>
                         </div>
                     </div>
-                    <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>still shared</strong> (they orbit both atoms), but they spend much more time near the Cl atom, creating poles.</p>
+                    <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>still shared</strong>, but they spend much more time near the Cl atom, creating poles.</p>
                 </div>
 
                 <div class="bond-box">
@@ -352,7 +360,71 @@
         </div>
 
         <div class="step-card">
-            <h2>Step 2: 3D Molecule Shape (VSEPR Theory)</h2>
+            <h2>Step 2: Varieties of Covalent Bonds & Polyatomic Ions</h2>
+            <p>Not all covalent bonds are exactly the same. They can vary based on how many electrons are shared, where those electrons come from, and the overall electrical charge of the bonded group.</p>
+
+            <ul class="bond-list">
+                <li>
+                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">1. Single, Double, and Triple Bonds</h4>
+                    <p style="margin: 0; font-size: 0.95rem;">Atoms can share more than one pair of electrons to reach a stable state. As they share more electrons, the atoms are pulled closer together, making the bond shorter and stronger.</p>
+                    <ul style="margin-top: 5px; font-size: 0.95rem;">
+                        <li><strong>Single Bond:</strong> 1 pair (2 e⁻) shared. Longest and weakest covalent bond. <em>(Ex: H-H)</em></li>
+                        <li><strong>Double Bond:</strong> 2 pairs (4 e⁻) shared. Shorter and stronger. <em>(Ex: O=O)</em></li>
+                        <li><strong>Triple Bond:</strong> 3 pairs (6 e⁻) shared. Shortest and strongest. <em>(Ex: N&equiv;N)</em></li>
+                    </ul>
+                </li>
+                <li>
+                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">2. Coordinate Covalent Bond (Dative Bond)</h4>
+                    <p style="margin: 0; font-size: 0.95rem;">A normal covalent bond forms when each atom contributes one electron to the bond. In a <strong>coordinate covalent bond</strong>, <em>one</em> atom generously contributes <em>both</em> of the shared electrons. Once formed, it behaves exactly like a normal covalent bond. <em>(Ex: Carbon Monoxide, CO)</em></p>
+                </li>
+                <li>
+                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">3. Polyatomic Ions</h4>
+                    <p style="margin: 0; font-size: 0.95rem;">A tightly bound group of atoms held together by <em>covalent bonds</em>, but the entire group has an overall positive or negative charge, meaning it behaves as a single <em>ion</em>. They often contain coordinate covalent bonds and will form ionic bonds with other oppositely charged ions. <em>(Ex: Ammonium NH₄⁺, Sulfate SO₄²⁻)</em></p>
+                </li>
+            </ul>
+
+            <h3 style="margin-top: 30px; color: var(--primary);">Bond Comparison Table</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Electrons Shared</th>
+                    <th>Source of Electrons</th>
+                    <th>Characteristics</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><strong>Single Bond</strong></td>
+                    <td>2 (1 pair)</td>
+                    <td>1 from each atom</td>
+                    <td>Longest, weakest</td>
+                    <td>H₂ (H-H)</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiple Bond (Double/Triple)</strong></td>
+                    <td>4 or 6 (2-3 pairs)</td>
+                    <td>Equal contribution</td>
+                    <td>Shorter, stronger, rigid</td>
+                    <td>O₂ (O=O), N₂ (N&equiv;N)</td>
+                </tr>
+                <tr>
+                    <td><strong>Coordinate Covalent</strong></td>
+                    <td>2 (1 pair)</td>
+                    <td><strong>Both</strong> from one atom</td>
+                    <td>Identical to a single bond once formed</td>
+                    <td>NH₄⁺ (Formation)</td>
+                </tr>
+                <tr>
+                    <td><strong>Polyatomic Ion</strong></td>
+                    <td>Varies</td>
+                    <td>Varies</td>
+                    <td>Has an overall charge; forms ionic bonds with other ions</td>
+                    <td>SO₄²⁻</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step-card">
+            <h2>Step 3: 3D Molecule Shape (VSEPR Theory)</h2>
             <p>Molecules aren't flat—they exist in three dimensions. <strong>VSEPR Theory</strong> states that electron regions (bonds and lone pairs) repel each other to spread out in 3D space. </p>
             <p>Use the explorer below. Notice how adding a <strong>Lone Pair (yellow lobes)</strong> takes up space and pushes the <strong>bonded atoms (red spheres)</strong> closer together!</p>
             
@@ -492,7 +564,7 @@
         </div>
 
         <div class="step-card">
-            <h2>Step 3: Intermolecular Forces (IMFs)</h2>
+            <h2>Step 4: Intermolecular Forces (IMFs)</h2>
             <p>While covalent bonds hold atoms together <em>inside</em> a molecule, <strong>IMFs</strong> are the weaker forces of attraction <em>between</em> separate molecules. There are three main types:</p>
             
             <table>
@@ -524,7 +596,7 @@
         </div>
 
         <div class="step-card">
-            <h2>Step 4: How IMFs Impact Physical Properties</h2>
+            <h2>Step 5: How IMFs Impact Physical Properties</h2>
             <p>To melt or boil a substance, you must add enough heat energy to pull the molecules apart from one another. <strong>The stronger the IMFs, the more energy is needed, resulting in a higher boiling point.</strong></p>
             <p>Conversely, molecules with weak IMFs don't stick together well, allowing them to evaporate easily as a gas (high vapor pressure/volatility).</p>
 
@@ -545,7 +617,6 @@
            VSEPR 2D SVG Generator for Table
            ========================================= */
         function draw2DShape(sn, bp, lp) {
-            // Coordinate mapping mapped onto a 100x100 SVG box
             const pos = {
                 2: [{x:15, y:50}, {x:85, y:50}],
                 3: [{x:50, y:15}, {x:19, y:67}, {x:81, y:67}],
@@ -554,23 +625,20 @@
                 6: [{x:50, y:15}, {x:50, y:85}, {x:20, y:50}, {x:80, y:50}, {x:30, y:35}, {x:70, y:65}]
             };
 
-            // Order in which atoms are replaced by Lone Pairs based on VSEPR theory
             let lpIndices = [];
             if (sn == 3) lpIndices = [0].slice(0, lp);
             if (sn == 4) lpIndices = [0, 3].slice(0, lp);
-            if (sn == 5) lpIndices = [2, 3, 4].slice(0, lp); // Eq replaced first
-            if (sn == 6) lpIndices = [1, 0].slice(0, lp); // Ax replaced first
+            if (sn == 5) lpIndices = [2, 3, 4].slice(0, lp); 
+            if (sn == 6) lpIndices = [1, 0].slice(0, lp); 
 
             let svg = `<svg width="55" height="55" viewBox="0 0 100 100">`;
 
-            // Draw Bonds
             pos[sn].forEach((p, i) => {
                 if (!lpIndices.includes(i)) {
                     svg += `<line x1="50" y1="50" x2="${p.x}" y2="${p.y}" stroke="#bdc3c7" stroke-width="4"/>`;
                 }
             });
 
-            // Draw Lone Pairs (Rotated Ellipses)
             pos[sn].forEach((p, i) => {
                 if (lpIndices.includes(i)) {
                     let dx = p.x - 50;
@@ -582,19 +650,16 @@
                 }
             });
 
-            // Draw Bonded Atoms
             pos[sn].forEach((p, i) => {
                 if (!lpIndices.includes(i)) {
                     svg += `<circle cx="${p.x}" cy="${p.y}" r="10" fill="#e74c3c"/>`;
                 }
             });
 
-            // Draw Central Atom
             svg += `<circle cx="50" cy="50" r="12" fill="#2c3e50"/></svg>`;
             return svg;
         }
 
-        // Inject SVGs into Table
         document.querySelectorAll('.svg-shape').forEach(el => {
             const sn = parseInt(el.getAttribute('data-sn'));
             const bp = parseInt(el.getAttribute('data-bp'));
