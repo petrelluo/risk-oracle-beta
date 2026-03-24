@@ -130,19 +130,19 @@
             z-index: 1;
         }
 
-        /* Cloud specifically for HCl (Asymmetrical) */
+        /* FIXED: Cloud specifically for HCl (Asymmetrical but SHARED) */
         .cloud-polar {
             position: absolute;
-            width: 160px; height: 80px;
-            background: radial-gradient(ellipse at 70% 50%, rgba(231,76,60,0.6) 0%, rgba(52,152,219,0.2) 70%, transparent 100%);
+            width: 170px; height: 80px;
+            /* A single continuous cloud that envelops both atoms, but is dense on the right and faint on the left */
+            background: radial-gradient(ellipse at 70% 50%, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.3) 45%, rgba(52,152,219,0.1) 75%, transparent 100%);
             z-index: 1;
-            left: 50px;
         }
 
         /* Cloud specifically for NaCl (Separated) */
         .cloud-ionic-1 {
             position: absolute; width: 60px; height: 60px;
-            background: radial-gradient(circle at center, rgba(52,152,219,0.2) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(52,152,219,0.15) 0%, transparent 70%);
             left: 60px; z-index: 1;
         }
         .cloud-ionic-2 {
