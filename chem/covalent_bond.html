@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root {
@@ -44,7 +43,7 @@
         .container {
             max-width: 1000px;
             margin: 40px auto;
-            padding: 0 20px;
+            padding: 0 20px 100px;
         }
 
         .step-card {
@@ -289,72 +288,6 @@
             background: white; padding: 20px; border-radius: 8px;
             box-sizing: border-box; border: 1px solid #ddd;
         }
-        
-        .button-group {
-            text-align: center; margin-bottom: 40px;
-        }
-        .primary-btn {
-            background-color: #3182ce; color: white; border: none; padding: 12px 24px;
-            font-size: 1.1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; font-weight: bold;
-        }
-        .primary-btn:hover { background-color: #2b6cb0; }
-        
-        .secondary { background-color: #e2e8f0; color: #4a5568; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;}
-        .secondary:hover { background-color: #cbd5e0; }
-
-        /* --- Modals --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center;
-            align-items: center; z-index: 1000;
-        }
-        .hidden { display: none !important; }
-        .modal-content {
-            background: white; padding: 2rem; border-radius: 12px;
-            text-align: left; max-height: 90vh; overflow-y: auto;
-        }
-        .tree-modal-content { max-width: 1200px; width: 95%; }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1rem;
-        }
-        .modal-header h2 { margin: 0; color: #1a365d; font-size: 1.5rem; }
-        .close-btn { background: none; border: none; font-size: 1.5rem; color: #a0aec0; cursor: pointer; padding: 0; }
-        .close-btn:hover { color: #4a5568; background: none; }
-        
-        .tree-header-controls { display: flex; gap: 10px; align-items: center; }
-
-        /* D3 Map Styles */
-        #tree-content-container {
-            width: 100%; height: 650px; overflow: auto; border: 1px solid #e2e8f0;
-            background-color: #fcfcfc; border-radius: 8px; margin-top: 1rem; position: relative;
-        }
-        .node { cursor: grab; }
-        .node:active { cursor: grabbing; }
-        .node circle { fill: #fff; stroke: #2b6cb0; stroke-width: 2px; transition: stroke-width 0.2s; }
-        .node text { font-size: 13.5px; font-weight: 500; fill: #2d3748; pointer-events: none; }
-        .link { fill: none; stroke: #cbd5e0; stroke-width: 1.5px; }
-        .node:hover circle { stroke: #1a365d; stroke-width: 3.5px; }
-        .tree-result-box rect { fill: white; stroke: #cbd5e0; stroke-width: 1px; rx: 6; ry: 6; }
-        .tree-result-box text { font-size: 12.5px; fill: #4a5568; }
-        .tree-result-box text .example-text { fill: #718096; font-style: italic; }
-        .tree-result-box text .rule-text { font-weight: bold; fill: #2b6cb0; }
-        
-        .branch-acid circle { stroke: #fc8181 !important; }
-        .branch-acid.link { stroke: #fc8181 !important; }
-        .branch-ionic circle { stroke: #63b3ed !important; }
-        .branch-ionic.link { stroke: #63b3ed !important; }
-        .branch-covalent circle { stroke: #68d391 !important; }
-        .branch-covalent.link { stroke: #68d391 !important; }
-        
-        .tree-fab {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background-color: #2b6cb0; color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.4); cursor: pointer;
-            z-index: 999; transition: transform 0.2s, background-color 0.2s;
-        }
-        .tree-fab:hover { transform: scale(1.08); background-color: #1a365d; }
     </style>
 </head>
 <body>
@@ -801,20 +734,30 @@
 
         <div class="step-card">
             <h2>Step 6: How IMFs Impact Physical Properties</h2>
-            <p>The strength of Intermolecular Forces directly controls the physical properties of a substance, especially its boiling point and vapor pressure.</p>
+            <p>The strength of Intermolecular Forces directly controls the physical properties of a substance, especially its phase transitions (melting and boiling) and vapor pressure.</p>
 
-            <h4 style="color: var(--primary); margin-bottom:5px;">1. Boiling Point (Direct Relationship)</h4>
-            <p style="margin-top:0;">To melt or boil a substance, you must add enough heat energy to pull the molecules apart from one another. <strong>The stronger the IMFs, the more energy is needed, resulting in a higher boiling point.</strong></p>
+            <h4 style="color: var(--primary); margin-bottom:5px;">1. Melting Point (Direct Relationship)</h4>
+            <p style="margin-top:0;">In a solid, molecules are locked into a rigid crystal lattice by their IMFs. To melt the solid into a liquid, you must add thermal energy to overcome these attractions. <strong>The stronger the IMFs, the higher the melting point.</strong></p>
+
+            <div class="interactive-panel" style="margin-bottom: 30px;">
+                <h3>Melting Point vs. Dominant IMF</h3>
+                <p>Notice how water's strong hydrogen bonds keep it solid (ice) at much higher temperatures than nonpolar methane.</p>
+                <div class="chart-container">
+                    <canvas id="mpChart"></canvas>
+                </div>
+            </div>
+
+            <h4 style="color: var(--primary); margin-bottom:5px;">2. Boiling Point (Direct Relationship)</h4>
+            <p style="margin-top:0;">To boil a liquid into a gas, you must add enough heat to completely pull the molecules apart from one another. Just like melting, <strong>stronger IMFs result in a higher boiling point.</strong></p>
 
             <div class="interactive-panel" style="margin-bottom: 30px;">
                 <h3>Boiling Point vs. Dominant IMF</h3>
-                <p>Hover over the bars to see how stronger IMFs lead to higher boiling points.</p>
                 <div class="chart-container">
                     <canvas id="imfChart"></canvas>
                 </div>
             </div>
 
-            <h4 style="color: var(--primary); margin-bottom:5px;">2. Vapor Pressure (Inverse Relationship)</h4>
+            <h4 style="color: var(--primary); margin-bottom:5px;">3. Vapor Pressure (Inverse Relationship)</h4>
             <div class="definition-box" style="border-left-color: #9b59b6; margin-top: 10px;">
                 <p style="margin-top:0;"><strong>Vapor Pressure</strong> is the pressure exerted by a gas that has evaporated from a liquid in a closed container. It measures how easily a substance evaporates (its volatility).</p>
                 <p style="margin-bottom:0;"><strong>The Rule:</strong> IMFs and Vapor Pressure have an <strong>inverse relationship</strong>. Molecules with weak IMFs don't stick together well, allowing them to escape easily into the gas phase (HIGH vapor pressure). Molecules with strong IMFs hold onto each other tightly, preventing evaporation (LOW vapor pressure).</p>
@@ -829,31 +772,6 @@
             </div>
         </div>
 
-        <div class="button-group">
-            <button id="open-tree-btn" class="primary-btn">🧪 Open Nomenclature Strategy Map</button>
-        </div>
-
-    </div>
-
-    <div id="decision-tree-modal" class="modal-overlay hidden">
-        <div class="modal-content tree-modal-content">
-            <div class="modal-header">
-                <h2>Nomenclature Strategy Map</h2>
-                <div class="tree-header-controls">
-                    <button id="expand-all-btn" class="secondary">Expand All</button>
-                    <button id="download-pdf-btn" class="primary-btn">Download PDF</button>
-                    <button id="close-tree-btn" class="close-btn">&times;</button>
-                </div>
-            </div>
-            <p style="margin-top: -10px;">Click nodes to expand or collapse. <strong>Drag nodes to freely reposition them.</strong></p>
-            <div id="tree-content-container"></div>
-        </div>
-    </div>
-
-    <div id="tree-fab" class="tree-fab" title="View Strategy Tree">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path>
-        </svg>
     </div>
 
     <script>
@@ -1019,139 +937,110 @@
         renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); updateVSEPR();
 
         /* =========================================
-           Chart.js Bar Charts (IMFs vs BP & VP)
+           Chart.js Bar Charts (IMFs vs MP, BP & VP)
            ========================================= */
         document.addEventListener("DOMContentLoaded", function() {
-            // Boiling Point Chart
+
+            // Shared color palette based on IMFs
+            const colors = {
+                ldf: { bg: 'rgba(149, 165, 166, 0.7)', border: 'rgba(149, 165, 166, 1)' },
+                dipole: { bg: 'rgba(243, 156, 18, 0.7)', border: 'rgba(243, 156, 18, 1)' },
+                hbond: { bg: 'rgba(52, 152, 219, 0.7)', border: 'rgba(52, 152, 219, 1)' },
+                hbondStrong: { bg: 'rgba(41, 128, 185, 0.9)', border: 'rgba(41, 128, 185, 1)' }
+            };
+
+            const commonOptions = {
+                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }
+            };
+
+            // 1. Melting Point Chart
+            new Chart(document.getElementById('mpChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Water (H₂O)'],
+                    datasets: [{
+                        label: 'Melting Point (°C)', 
+                        data: [-182, -82, 0],
+                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbondStrong.bg],
+                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbondStrong.border], 
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
+                                    if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
+                                    return "Dominant IMF: Hydrogen Bonding";
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { title: { display: true, text: 'Melting Point (°C)', font: {weight: 'bold'} } }, 
+                        x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
+                    }
+                }
+            });
+
+            // 2. Boiling Point Chart
             new Chart(document.getElementById('imfChart').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Isopropyl Alcohol', 'Water (H₂O)'],
                     datasets: [{
-                        label: 'Boiling Point (°C)', data: [-161, -60, 82.5, 100],
-                        backgroundColor: ['rgba(149, 165, 166, 0.7)', 'rgba(243, 156, 18, 0.7)', 'rgba(52, 152, 219, 0.7)', 'rgba(41, 128, 185, 0.9)'],
-                        borderColor: ['rgba(149, 165, 166, 1)', 'rgba(243, 156, 18, 1)', 'rgba(52, 152, 219, 1)', 'rgba(41, 128, 185, 1)'], borderWidth: 1
+                        label: 'Boiling Point (°C)', 
+                        data: [-161, -60, 82.5, 100],
+                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
+                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border], 
+                        borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-                    scales: { y: { title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} } }, x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } } }
+                    ...commonOptions,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
+                                    if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
+                                    return "Dominant IMF: Hydrogen Bonding";
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} } }, 
+                        x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
+                    }
                 }
             });
 
-            // Vapor Pressure Chart
+            // 3. Vapor Pressure Chart
             new Chart(document.getElementById('vpChart').getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['Diethyl Ether (LDF/Weak Dipole)', 'Acetone (Dipole-Dipole)', 'Ethanol (H-Bonding)', 'Water (Strong H-Bonding)'],
                     datasets: [{
-                        label: 'Vapor Pressure at 25°C (kPa)', data: [71.6, 30.6, 7.9, 3.2],
-                        backgroundColor: ['rgba(149, 165, 166, 0.7)', 'rgba(243, 156, 18, 0.7)', 'rgba(52, 152, 219, 0.7)', 'rgba(41, 128, 185, 0.9)'],
-                        borderColor: ['rgba(149, 165, 166, 1)', 'rgba(243, 156, 18, 1)', 'rgba(52, 152, 219, 1)', 'rgba(41, 128, 185, 1)'], borderWidth: 1
+                        label: 'Vapor Pressure at 25°C (kPa)', 
+                        data: [71.6, 30.6, 7.9, 3.2],
+                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
+                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border], 
+                        borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-                    scales: { y: { title: { display: true, text: 'Vapor Pressure (kPa)', font: {weight: 'bold'} } }, x: { title: { display: true, text: 'Liquid Molecule', font: {weight: 'bold'} }, grid: { display: false } } }
+                    ...commonOptions,
+                    scales: { 
+                        y: { title: { display: true, text: 'Vapor Pressure (kPa)', font: {weight: 'bold'} } }, 
+                        x: { title: { display: true, text: 'Liquid Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
+                    }
                 }
-            });
-        });
-
-        /* =========================================
-           D3 Decision Tree Strategy Map Logic
-           ========================================= */
-        const treeModal = document.getElementById('decision-tree-modal'), treeFab = document.getElementById('tree-fab');
-        const openTreeBtn = document.getElementById('open-tree-btn'), closeTreeBtn = document.getElementById('close-tree-btn');
-        const expandAllBtn = document.getElementById('expand-all-btn'), downloadPdfBtn = document.getElementById('download-pdf-btn');
-
-        const treeData = {
-          "name": "Chemical Compound",
-          "children": [
-            { "name": "Starts with 'H' (Acid)", "class": "branch-acid", "children": [
-                { "name": "No Oxygen (Binary Acid)", "result": "prefix <hydro-> + root + <-ic acid>", "example": "HCl ➔ Hydrochloric acid" },
-                { "name": "Contains Oxygen (Oxyacid)", "children": [
-                    { "name": "Polyatomic ends in <-ate>", "result": "root + <-ic acid>", "example": "HNO₃ ➔ Nitric acid" },
-                    { "name": "Polyatomic ends in <-ite>", "result": "root + <-ous acid>", "example": "HNO₂ ➔ Nitrous acid" }
-                  ]}
-              ]},
-            { "name": "Metal + Nonmetal (Ionic)", "class": "branch-ionic", "children": [
-                { "name": "Fixed Charge Metal", "result": "Metal + Nonmetal<-ide>", "example": "NaCl ➔ Sodium chloride" },
-                { "name": "Variable Charge Metal", "result": "Metal (Roman Numeral) + Nonmetal-ide", "example": "FeCl₃ ➔ Iron (III) chloride" }
-              ]},
-            { "name": "Nonmetal + Nonmetal (Covalent)", "class": "branch-covalent", "result": "Use <Greek Prefixes> and <-ide> end", "example": "CO₂ ➔ Carbon dioxide" }
-          ]
-        };
-
-        let d3Root, d3UpdateFn, gLink;
-
-        function renderD3Tree() {
-            if(document.getElementById("tree-content-container").innerHTML !== "") return; 
-            const margin = {top: 40, right: 350, bottom: 40, left: 150}, dx = 120, dy = 380; 
-            const svg = d3.select("#tree-content-container").append("svg").style("font", "13px sans-serif").style("user-select", "none");
-            gLink = svg.append("g").attr("fill", "none").attr("stroke", "#cbd5e0").attr("stroke-width", 1.5);
-            const gNode = svg.append("g").attr("pointer-events", "all");
-            const treemap = d3.tree().nodeSize([dx, dy]);
-
-            d3Root = d3.hierarchy(treeData); d3Root.x0 = 0; d3Root.y0 = 0;
-            d3Root.descendants().forEach((d, i) => { d.id = i; d.offsetX = 0; d.offsetY = 0; if (d.depth > 0) d._children = d.children; if (d.depth > 0) d.children = null; });
-            if (d3Root._children) { d3Root.children = d3Root._children; d3Root._children = null; }
-
-            d3UpdateFn = function update(source) {
-                const duration = 400, nodes = d3Root.descendants().reverse(), links = d3Root.links();
-                treemap(d3Root);
-
-                let left = d3Root, right = d3Root, bottom = d3Root; 
-                d3Root.eachBefore(node => { if (node.x < left.x) left = node; if (node.x > right.x) right = node; if (node.y > bottom.y) bottom = node; });
-
-                const height = right.x - left.x + margin.top + margin.bottom + 150, width = bottom.y + margin.left + margin.right + 250; 
-                svg.transition().duration(duration).attr("width", width).attr("height", Math.max(650, height)).style("width", width + "px").style("height", Math.max(650, height) + "px").attr("viewBox", [-margin.left, left.x - margin.top - 60, width, Math.max(650, height)]);
-
-                const drag = d3.drag().on("start", function() { d3.select(this).raise(); }).on("drag", function(event, d) {
-                        d.offsetX += event.dx; d.offsetY += event.dy; 
-                        d3.select(this).attr("transform", `translate(${d.y + d.offsetX},${d.x + d.offsetY})`);
-                        gLink.selectAll("path.link").filter(l => l.target.id === d.id || l.source.id === d.id).attr("d", l => diagonalPath(l.source, l.target));
-                    });
-
-                const node = gNode.selectAll("g.node").data(nodes, d => d.id);
-                const nodeEnter = node.enter().append("g").attr("class", d => "node " + (d.data.class || "")).attr("transform", d => `translate(${source.y0 + source.offsetX},${source.x0 + source.offsetY})`).attr("fill-opacity", 0).attr("stroke-opacity", 0).call(drag) 
-                    .on("click", (event, d) => { if (event.defaultPrevented) return; d.children = d.children ? null : d._children; update(d); });
-
-                nodeEnter.append("circle").attr("r", 7).style("fill", d => d._children ? "#bee3f8" : "#fff");
-                nodeEnter.append("text").attr("dy", d => (!d.children && !d._children && d.data.result) ? "-1.5em" : "0.31em").attr("x", d => d.children || d._children ? -12 : 12).attr("text-anchor", d => d.children || d._children ? "end" : "start").attr("font-weight", d => (!d.children && !d._children && d.data.result) ? "bold" : "500").text(d => d.data.name);
-
-                const leafNodes = nodeEnter.filter(d => !d.children && !d._children && d.data.result);
-                const resultGroup = leafNodes.append('g').attr('class', 'tree-result-box').attr('transform', `translate(15, 8)`);
-                resultGroup.append('rect').attr('width', 310).attr('height', 65);
-                resultGroup.append('text').attr('x', 10).attr('y', 20).append('tspan').attr('class', 'rule-text').text('Strategy: ').append('tspan').attr('font-weight', 'normal').text(d => d.data.result).append('tspan').attr('x', 10).attr('y', 45).attr('class', 'example-text').text(d => `Ex: ${d.data.example}`);
-
-                const nodeUpdate = node.merge(nodeEnter).transition().duration(duration).attr("transform", d => `translate(${d.y + d.offsetX},${d.x + d.offsetY})`).attr("fill-opacity", 1).attr("stroke-opacity", 1);
-                nodeUpdate.select("circle").style("fill", d => d._children ? "#bee3f8" : "#fff");
-                node.exit().transition().duration(duration).attr("transform", d => `translate(${source.y + source.offsetX},${source.x + source.offsetY})`).attr("fill-opacity", 0).attr("stroke-opacity", 0).remove();
-
-                const link = gLink.selectAll("path").data(links, d => d.target.id);
-                const linkEnter = link.enter().append("path").attr("class", d => 'link' + (d.target.data.class ? ' ' + d.target.data.class : '')).attr("d", d => diagonalPath({x: source.x0, y: source.y0, offsetX: source.offsetX, offsetY: source.offsetY}, {x: source.x0, y: source.y0, offsetX: source.offsetX, offsetY: source.offsetY}));
-                linkEnter.merge(link).attr("class", d => { let className = 'link', current = d.target; while(current) { if(current.data.class) { className += ' ' + current.data.class; break; } current = current.parent; } return className; });
-                link.merge(linkEnter).transition().duration(duration).attr("d", d => diagonalPath(d.source, d.target));
-                link.exit().transition().duration(duration).attr("d", d => diagonalPath({x: source.x, y: source.y, offsetX: source.offsetX, offsetY: source.offsetY}, {x: source.x, y: source.y, offsetX: source.offsetX, offsetY: source.offsetY})).remove();
-                d3Root.eachBefore(d => { d.x0 = d.x; d.y0 = d.y; });
-            };
-
-            function diagonalPath(s, d) { return `M ${s.y + (s.offsetX || 0)} ${s.x + (s.offsetY || 0)} C ${(s.y + (s.offsetX || 0) + d.y + (d.offsetX || 0)) / 2} ${s.x + (s.offsetY || 0)}, ${(s.y + (s.offsetX || 0) + d.y + (d.offsetX || 0)) / 2} ${d.x + (d.offsetY || 0)}, ${d.y + (d.offsetX || 0)} ${d.x + (d.offsetY || 0)}`; }
-            d3UpdateFn(d3Root);
-        }
-
-        function openTree() { treeModal.classList.remove('hidden'); renderD3Tree(); }
-        treeFab.addEventListener('click', openTree); openTreeBtn.addEventListener('click', openTree);
-        closeTreeBtn.addEventListener('click', () => treeModal.classList.add('hidden'));
-        treeModal.addEventListener('click', (e) => { if(e.target === treeModal) treeModal.classList.add('hidden'); });
-        expandAllBtn.addEventListener('click', () => { if (!d3Root || !d3UpdateFn) return; d3Root.eachBefore(d => { if (d._children) { d.children = d._children; d._children = null; } }); d3UpdateFn(d3Root); });
-
-        downloadPdfBtn.addEventListener('click', () => {
-            const container = document.getElementById('tree-content-container'), svgEl = container.querySelector('svg');
-            const originalHeight = container.style.height, originalWidth = container.style.width, originalOverflow = container.style.overflow;
-            container.style.height = svgEl.getAttribute('height') + 'px'; container.style.width = svgEl.getAttribute('width') + 'px'; container.style.overflow = 'visible';
-            html2pdf().set({ margin: 0.3, filename: 'Nomenclature_Strategy_Map.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, scrollX: 0, scrollY: 0 }, jsPDF: { unit: 'in', format: 'tabloid', orientation: 'landscape' } }).from(container).save().then(() => {
-                container.style.height = originalHeight; container.style.width = originalWidth; container.style.overflow = originalOverflow;
             });
         });
     </script>
