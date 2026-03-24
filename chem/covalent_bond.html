@@ -123,7 +123,6 @@
             z-index: 2;
         }
 
-        /* Cloud specifically for Cl2 (Symmetrical) */
         .cloud-nonpolar {
             position: absolute;
             width: 140px; height: 70px;
@@ -131,7 +130,6 @@
             z-index: 1;
         }
 
-        /* Cloud specifically for HCl (Asymmetrical but SHARED) */
         .cloud-polar {
             position: absolute;
             width: 170px; height: 80px;
@@ -139,7 +137,6 @@
             z-index: 1;
         }
 
-        /* Cloud specifically for NaCl (Separated) */
         .cloud-ionic-1 {
             position: absolute; width: 60px; height: 60px;
             background: radial-gradient(circle at center, rgba(52,152,219,0.15) 0%, transparent 70%);
@@ -161,7 +158,6 @@
             font-weight: bold;
         }
 
-        /* Electron Styles */
         .electron-pair {
             position: absolute;
             display: flex;
@@ -388,35 +384,76 @@
                 <tr>
                     <th>Type</th>
                     <th>Electrons Shared</th>
-                    <th>Source of Electrons</th>
+                    <th class="center-text">Source of Electrons</th>
                     <th>Characteristics</th>
                     <th>Example</th>
                 </tr>
                 <tr>
                     <td><strong>Single Bond</strong></td>
-                    <td>2 (1 pair)</td>
-                    <td>1 from each atom</td>
+                    <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
+                    <td class="center-text">
+                        <svg width="100" height="30" viewBox="0 0 100 30">
+                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+                            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
+                            <circle cx="45" cy="15" r="3.5" fill="#3498db"/>
+                            <circle cx="55" cy="15" r="3.5" fill="#e74c3c"/>
+                        </svg>
+                        <br><span style="font-size:0.8rem; color:#666;">1 from each atom</span>
+                    </td>
                     <td>Longest, weakest</td>
                     <td>H₂ (H-H)</td>
                 </tr>
                 <tr>
-                    <td><strong>Multiple Bond (Double/Triple)</strong></td>
-                    <td>4 or 6 (2-3 pairs)</td>
-                    <td>Equal contribution</td>
+                    <td><strong>Multiple Bond<br>(Double)</strong></td>
+                    <td class="center-text">4<br><span style="font-size:0.8rem">(2 pairs)</span></td>
+                    <td class="center-text">
+                        <svg width="100" height="30" viewBox="0 0 100 30">
+                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+                            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
+                            <circle cx="45" cy="10" r="3.5" fill="#3498db"/>
+                            <circle cx="55" cy="10" r="3.5" fill="#e74c3c"/>
+                            <circle cx="45" cy="20" r="3.5" fill="#3498db"/>
+                            <circle cx="55" cy="20" r="3.5" fill="#e74c3c"/>
+                        </svg>
+                        <br><span style="font-size:0.8rem; color:#666;">Equal contribution</span>
+                    </td>
                     <td>Shorter, stronger, rigid</td>
-                    <td>O₂ (O=O), N₂ (N&equiv;N)</td>
+                    <td>O₂ (O=O)</td>
                 </tr>
                 <tr>
                     <td><strong>Coordinate Covalent</strong></td>
-                    <td>2 (1 pair)</td>
-                    <td><strong>Both</strong> from one atom</td>
+                    <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
+                    <td class="center-text">
+                        <svg width="100" height="30" viewBox="0 0 100 30">
+                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+                            <circle cx="75" cy="15" r="10" fill="#95a5a6"/>
+                            <circle cx="43" cy="15" r="3.5" fill="#3498db"/>
+                            <circle cx="50" cy="15" r="3.5" fill="#3498db"/>
+                            <path d="M 45 6 L 60 15 L 45 24" fill="none" stroke="#2980b9" stroke-width="1.5"/>
+                        </svg>
+                        <br><span style="font-size:0.8rem; color:#666;"><strong>Both</strong> from one atom</span>
+                    </td>
                     <td>Identical to a single bond once formed</td>
                     <td>NH₄⁺ (Formation)</td>
                 </tr>
                 <tr>
                     <td><strong>Polyatomic Ion</strong></td>
-                    <td>Varies</td>
-                    <td>Varies</td>
+                    <td class="center-text">Varies</td>
+                    <td class="center-text">
+                        <svg width="100" height="35" viewBox="0 0 100 35">
+                            <path d="M 20 2 L 10 2 L 10 33 L 20 33" fill="none" stroke="#333" stroke-width="1.5"/>
+                            <path d="M 80 2 L 90 2 L 90 33 L 80 33" fill="none" stroke="#333" stroke-width="1.5"/>
+                            <text x="93" y="15" font-size="14" font-weight="bold" fill="#e74c3c">-</text>
+                            
+                            <circle cx="35" cy="18" r="7" fill="#e74c3c"/>
+                            <circle cx="65" cy="18" r="7" fill="#3498db"/>
+                            <circle cx="50" cy="18" r="7" fill="#9b59b6"/>
+                            
+                            <line x1="42" y1="18" x2="43" y2="18" stroke="#333" stroke-width="2"/>
+                            <line x1="57" y1="18" x2="58" y2="18" stroke="#333" stroke-width="2"/>
+                        </svg>
+                        <br><span style="font-size:0.8rem; color:#666;">Covalently bonded group</span>
+                    </td>
                     <td>Has an overall charge; forms ionic bonds with other ions</td>
                     <td>SO₄²⁻</td>
                 </tr>
