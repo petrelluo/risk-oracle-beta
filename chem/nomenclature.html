@@ -279,6 +279,8 @@
         /* Branch coloring themes applied to nodes and links */
         .branch-acid circle { stroke: #fc8181 !important; }
         .branch-acid.link { stroke: #fc8181 !important; }
+        .branch-base circle { stroke: #b794f4 !important; }
+        .branch-base.link { stroke: #b794f4 !important; }
         .branch-ionic circle { stroke: #63b3ed !important; }
         .branch-ionic.link { stroke: #63b3ed !important; }
         .branch-covalent circle { stroke: #68d391 !important; }
@@ -860,6 +862,12 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "Ends with 'OH' (Base)",
+              "class": "branch-base",
+              "result": "Metal (Roman Numeral if needed) + <hydroxide>",
+              "example": "Cu(OH)₂ ➔ Copper(II) hydroxide"
             },
             {
               "name": "Metal + Nonmetal / NH₄⁺ (Ionic)",
