@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root {
@@ -80,7 +81,7 @@
             border: 1px solid #e1e8ed;
         }
 
-        /* --- Step 1: Electron Density Maps --- */
+        /* --- Step 1 & 5: Electron Density & Polarity Maps --- */
         .bond-examples-grid {
             display: flex;
             gap: 20px;
@@ -102,7 +103,7 @@
         .bond-box h4 { margin-top: 0; color: var(--primary); }
 
         .density-map {
-            height: 100px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -288,6 +289,72 @@
             background: white; padding: 20px; border-radius: 8px;
             box-sizing: border-box; border: 1px solid #ddd;
         }
+        
+        .button-group {
+            text-align: center; margin-bottom: 40px;
+        }
+        .primary-btn {
+            background-color: #3182ce; color: white; border: none; padding: 12px 24px;
+            font-size: 1.1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; font-weight: bold;
+        }
+        .primary-btn:hover { background-color: #2b6cb0; }
+        
+        .secondary { background-color: #e2e8f0; color: #4a5568; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;}
+        .secondary:hover { background-color: #cbd5e0; }
+
+        /* --- Modals --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center;
+            align-items: center; z-index: 1000;
+        }
+        .hidden { display: none !important; }
+        .modal-content {
+            background: white; padding: 2rem; border-radius: 12px;
+            text-align: left; max-height: 90vh; overflow-y: auto;
+        }
+        .tree-modal-content { max-width: 1200px; width: 95%; }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1rem;
+        }
+        .modal-header h2 { margin: 0; color: #1a365d; font-size: 1.5rem; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; color: #a0aec0; cursor: pointer; padding: 0; }
+        .close-btn:hover { color: #4a5568; background: none; }
+        
+        .tree-header-controls { display: flex; gap: 10px; align-items: center; }
+
+        /* D3 Map Styles */
+        #tree-content-container {
+            width: 100%; height: 650px; overflow: auto; border: 1px solid #e2e8f0;
+            background-color: #fcfcfc; border-radius: 8px; margin-top: 1rem; position: relative;
+        }
+        .node { cursor: grab; }
+        .node:active { cursor: grabbing; }
+        .node circle { fill: #fff; stroke: #2b6cb0; stroke-width: 2px; transition: stroke-width 0.2s; }
+        .node text { font-size: 13.5px; font-weight: 500; fill: #2d3748; pointer-events: none; }
+        .link { fill: none; stroke: #cbd5e0; stroke-width: 1.5px; }
+        .node:hover circle { stroke: #1a365d; stroke-width: 3.5px; }
+        .tree-result-box rect { fill: white; stroke: #cbd5e0; stroke-width: 1px; rx: 6; ry: 6; }
+        .tree-result-box text { font-size: 12.5px; fill: #4a5568; }
+        .tree-result-box text .example-text { fill: #718096; font-style: italic; }
+        .tree-result-box text .rule-text { font-weight: bold; fill: #2b6cb0; }
+        
+        .branch-acid circle { stroke: #fc8181 !important; }
+        .branch-acid.link { stroke: #fc8181 !important; }
+        .branch-ionic circle { stroke: #63b3ed !important; }
+        .branch-ionic.link { stroke: #63b3ed !important; }
+        .branch-covalent circle { stroke: #68d391 !important; }
+        .branch-covalent.link { stroke: #68d391 !important; }
+        
+        .tree-fab {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background-color: #2b6cb0; color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.4); cursor: pointer;
+            z-index: 999; transition: transform 0.2s, background-color 0.2s;
+        }
+        .tree-fab:hover { transform: scale(1.08); background-color: #1a365d; }
     </style>
 </head>
 <body>
@@ -701,8 +768,69 @@
         </div>
 
         <div class="step-card">
-            <h2>Step 5: Intermolecular Forces (IMFs)</h2>
-            <p>While covalent bonds hold atoms together <em>inside</em> a molecule, <strong>IMFs</strong> are the weaker forces of attraction <em>between</em> separate molecules. There are three main types:</p>
+            <h2>Step 5: Molecular Polarity & Intermolecular Forces (IMFs)</h2>
+
+            <h3 style="color: var(--primary);">Part A: Molecular Polarity</h3>
+            <p>Before we can determine how molecules interact with each other, we must figure out if the <em>entire molecule</em> is polar or nonpolar. This depends on both the <strong>bond types</strong> (Step 1) and the <strong>3D shape</strong> (Step 4).</p>
+
+            <div class="bond-examples-grid">
+                <div class="bond-box">
+                    <h4>Nonpolar Molecule (Symmetrical)</h4>
+                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Carbon Dioxide (CO₂)</p>
+                    <div class="density-map">
+                        <svg width="200" height="80" viewBox="0 0 200 80">
+                            <text x="30" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+                            <line x1="50" y1="40" x2="85" y2="40" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="92" y="48" font-size="20" font-weight="bold" fill="#2c3e50">C</text>
+                            <line x1="110" y1="40" x2="145" y2="40" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="152" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+                            
+                            <line x1="85" y1="20" x2="40" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+                            <line x1="110" y1="20" x2="155" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+                            
+                            <line x1="80" y1="15" x2="80" y2="25" stroke="#e74c3c" stroke-width="2"/>
+                            <line x1="115" y1="15" x2="115" y2="25" stroke="#e74c3c" stroke-width="2"/>
+                            
+                            <defs>
+                                <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+                    <p style="font-size: 0.85rem; color:#666;">Even though the C=O bonds are polar, the linear shape is perfectly symmetrical. The dipole arrows pull in opposite directions and <strong>cancel out</strong>. The molecule is nonpolar.</p>
+                </div>
+                
+                <div class="bond-box">
+                    <h4>Polar Molecule (Asymmetrical)</h4>
+                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Water (H₂O)</p>
+                    <div class="density-map">
+                        <svg width="200" height="100" viewBox="0 0 200 100">
+                            <text x="92" y="40" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+                            <line x1="85" y1="50" x2="60" y2="80" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="110" y1="50" x2="135" y2="80" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="45" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+                            <text x="140" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+                            
+                            <line x1="60" y1="65" x2="80" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+                            <line x1="135" y1="65" x2="115" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+                            
+                            <line x1="98" y1="70" x2="98" y2="10" stroke="#3498db" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#arrow-blue)"/>
+                            <text x="105" y="25" font-size="12" fill="#3498db" font-weight="bold">Net Dipole</text>
+
+                            <defs>
+                                <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
+                                </marker>
+                            </defs>
+                        </svg>
+                    </div>
+                    <p style="font-size: 0.85rem; color:#666;">The bent shape is asymmetrical. The polar bonds pull oxygen's way and <strong>do not cancel</strong>. This creates a net dipole (a permanently positive and negative end).</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px; color: var(--primary);">Part B: Intermolecular Forces (IMFs)</h3>
+            <p>Now that we know if a molecule is polar or nonpolar, we can determine its IMFs. While covalent bonds hold atoms together <em>inside</em> a molecule, <strong>IMFs</strong> are the weaker forces of attraction <em>between</em> separate molecules. There are three main types:</p>
             
             <table>
                 <tr>
@@ -714,20 +842,20 @@
                 <tr>
                     <td><strong>London Dispersion (LDF)</strong></td>
                     <td>Weakest</td>
-                    <td>Temporary shifting of electrons. Exists in ALL molecules, but is the <em>only</em> force in nonpolar molecules. Gets stronger with larger atoms.</td>
-                    <td>CH<sub>4</sub>, Cl<sub>2</sub></td>
+                    <td>Temporary shifting of electrons. Exists in ALL molecules, but is the <em>only</em> force in <strong>nonpolar</strong> molecules. Gets stronger with larger atoms.</td>
+                    <td>CH₄, Cl₂</td>
                 </tr>
                 <tr>
                     <td><strong>Dipole-Dipole</strong></td>
                     <td>Medium</td>
-                    <td>Attraction between the permanent partial charges (&delta;⁺ and &delta;⁻) of asymmetrical, polar molecules.</td>
-                    <td>HCl, H<sub>2</sub>S</td>
+                    <td>Attraction between the permanent partial charges (&delta;⁺ and &delta;⁻) of asymmetrical, <strong>polar</strong> molecules.</td>
+                    <td>HCl, H₂S</td>
                 </tr>
                 <tr>
                     <td><strong>Hydrogen Bonding</strong></td>
                     <td>Strongest</td>
                     <td>A very strong dipole interaction when Hydrogen is directly bonded to a highly electronegative atom (<strong>N, O, or F</strong>).</td>
-                    <td>H<sub>2</sub>O, NH<sub>3</sub></td>
+                    <td>H₂O, NH₃</td>
                 </tr>
             </table>
         </div>
