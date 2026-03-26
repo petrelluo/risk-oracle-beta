@@ -13,6 +13,10 @@
             --text-main: #334155;
             --highlight: #fef08a;
             --tab-bg: #e2e8f0;
+            --success: #10b981;
+            --success-hover: #059669;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
         }
 
         body {
@@ -45,10 +49,10 @@
 
         .tab-btn {
             flex: 1;
-            padding: 15px;
+            padding: 15px 10px;
             border: none;
             background: none;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #64748b;
             cursor: pointer;
@@ -132,6 +136,12 @@
             background: #eff6ff;
         }
 
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: var(--success-hover); }
+        
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: var(--danger-hover); }
+
         .control-group {
             display: flex;
             align-items: center;
@@ -182,7 +192,7 @@
             box-shadow: 0 0 0 2px var(--highlight);
         }
 
-        /* 词汇闪卡区域样式 (词汇模式) */
+        /* 词汇闪卡区域样式 (词汇模式 & 测验模式) */
         .vocab-content {
             padding: 40px;
             min-height: 350px;
@@ -202,6 +212,10 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .v-word {
@@ -253,6 +267,24 @@
             text-align: center;
         }
 
+        /* 测验进度条 */
+        .quiz-progress-container {
+            width: 100%;
+            max-width: 500px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            height: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -263,8 +295,9 @@
     <div class="player-container">
         
         <div class="tabs">
-            <button class="tab-btn active" id="tab-reading">📖 文章阅读 (Reading)</button>
-            <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习 (Vocabulary)</button>
+            <button class="tab-btn active" id="tab-reading">📖 文章阅读</button>
+            <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习</button>
+            <button class="tab-btn" id="tab-quiz">🧠 记忆测验</button>
         </div>
 
         <div id="section-reading">
@@ -298,10 +331,10 @@
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <label class="checkbox-control" style="color: var(--primary);">
                         <input type="checkbox" id="autoPlayVocab" checked>
-                        🔊 切换时自动发音 (Auto-play Audio)
+                        🔊 切换时发音 (Auto-play)
                     </label>
                     <label class="checkbox-control" style="color: var(--primary);">
-                        <input type="checkbox" id="autoAdvanceVocab">
+                        <input type="checkbox" id="autoAdvanceVocab" checked>
                         🔄 自动连播 (Auto-Advance)
                     </label>
                 </div>
@@ -325,6 +358,45 @@
                     <span class="v-progress" id="vProgress">1 / 13</span>
                     <button class="btn btn-outline" id="vNextBtn">下一个 (Next) ➡️</button>
                     <button class="btn" id="vPlayBtn" style="margin-left: 10px;">🔊 朗读 (Play)</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-quiz" class="hidden">
+            <div class="controls-bar" style="justify-content: center; background:#f8fafc; flex-direction: column; gap: 5px;">
+                <div style="font-size: 1.15rem; font-weight: bold; color: var(--text-main);">
+                    掌握进度 (Mastered Progress): <span id="qMasteredCount" style="color: var(--success);">0</span> / <span id="qTotalCount">13</span>
+                </div>
+                <div class="quiz-progress-container">
+                    <div class="quiz-progress-bar" id="qProgressBar"></div>
+                </div>
+            </div>
+
+            <div class="vocab-content">
+                <div class="vocab-card" id="qCard">
+                    <div id="qCompleteMessage" class="hidden" style="font-size: 1.4rem; color: var(--success); font-weight: bold;">
+                        🎉 恭喜！您已掌握所有词汇！<br>(Congratulations! All vocabulary mastered!)
+                    </div>
+                    
+                    <div id="qContentArea">
+                        <div class="v-word" id="qWord" style="margin-bottom: 20px;">多彩多姿</div>
+                        
+                        <div id="qAnswerArea" class="hidden">
+                            <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin-bottom: 20px;">
+                            <div class="v-pinyin" id="qPinyin">duō cǎi duō zī</div>
+                            <div class="v-meaning" id="qMeaning">Colorful and diverse; rich and varied.</div>
+                            <div class="v-example" id="qExample">例句：大自然的生活多彩多姿。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vocab-controls" id="qControlsQuestion">
+                    <button class="btn" id="qShowBtn" style="font-size: 1.1rem; padding: 10px 24px;">👁️ 显示答案 (Show Answer)</button>
+                </div>
+                
+                <div class="vocab-controls hidden" id="qControlsAnswer">
+                    <button class="btn btn-danger" id="qForgotBtn" style="font-size: 1.1rem; padding: 10px 24px;">❌ 没记住 (Forgot)</button>
+                    <button class="btn btn-success" id="qGotItBtn" style="font-size: 1.1rem; padding: 10px 24px;">✅ 记住了 (Got it)</button>
                 </div>
             </div>
         </div>
@@ -375,163 +447,9 @@
 肚子咕噜咕噜叫的声音。走了这么多路，你们好像不累不饿，我这个导游可又渴又饿了。别忘了，“民以食为天”啊！走，吃饭去！`
             },
             {
-                title: "环保与大自然 (天明一行人的周末)",
+                title: "环保与大自然",
                 content: `张天明他们四个人来北京已经两三个月了，天气也逐渐暖和了。他们每天上课的上课，找工作的找工作，半个月没见面了，更没有机会接近大自然。今天是星期六，大家都想轻松轻松，天明建议去爬山，丽莎和雪梅不反对，柯林也觉得这个建议不错，他说正好他的新朋友马克也想去。
-可是怎么去呢？坐出租车吧，太贵，而且也没意思；坐公交车吧，人太多，太挤。柯林想出了一个主意，骑自行车！大家马上就同意了，觉得骑自行车又能锻炼身体，又省钱，而且有益于环境保护。
-他们早上很早就出发了。骑了很长的一段路以后，有点热，也有点累，就下了车，一边推着车，一边聊了起来。
-这儿的空气真新鲜！
-对，比城里好多了。到处都是绿色，看起来真舒服！
-哎呀，渴死了，...你们看，一瓶水都喝完了！这儿有回收垃圾桶吗？空瓶子不能随便乱扔。
-对，我们应该注意环保，回收垃圾桶就在树下边。
-我好久没买瓶装水了。我们班有的同学建议，为了保护绿色的地球，自己带水喝，不买瓶装水。
-这个建议不错。哎，你们看，那边房子上有些亮亮的东西，是什么？
-是利用太阳能发电吧？我在美国也见过。
-利用太阳能，太好了！
-要是自行车也能利用太阳能发电，那多酷啊！
-现在世界上很多国家都在闹能源危机，太阳能可是取之不尽的啊！
-别忘了，风能也是取之不尽的。
-如果全世界都利用太阳能和风能，那能节约多少石油和煤啊！而且...
-环保！哈哈...
-我听说中国政府规定办公室和公共场所，冬天暖气温度不能高于摄氏20度，夏天空调不能低于26度。
-这个规定我举双手赞成。你们还记得吗？我们美国学校的教室，冬天穿衬衫还出汗，夏天穿毛衣还冷得不得了。
-可不是吗，太浪费了。
-我听说现在不少人去餐厅吃饭自带餐具，不用一次性的。
-这个做法非常好。拿一次性筷子来说吧，每年要砍多少树啊？
-除了上餐馆自带筷子，买东西也得自己带包了。
-对，现在中国超市不给塑料袋，要自己买，所以很多人都自己带包，这样一年不知道能减少多少白色污染！
-还有汽车，不但要用很多能源，而且还减对空气造成严重污染。
-大家都应该像我们这样，少开车，多骑车、多走路，又环保节能、又有益于健康。哈哈...
-对，地球是我们的家，我们应该好好保护它！
-我们应该从小地方做起，比如随手关灯，节约用水。还要让大家知道，如果再继续浪费能源，继续污染环境，后果会不堪设想。
-好！同意！
-哎，你们看，说着看着，都到了山下了。咱们开始爬山吧，看谁先到山上！加油！`
-            },
-            {
-                title: "中国历史",
-                content: `丽莎这个学期除了中文课以外还选了一门中国历史课。中国是世界文明古国之一，有文字记载的历史就有四千多年。为了对中国历史有更多的了解，她请李文带她去中国国家博物馆参观。张天明和柯林对中国历史也有兴趣，听说丽莎要参观博物馆，也要跟她们一起去。李文很高兴地答应了。
-中国国家博物馆很大，中国历史虽然只是其中的一部分，可是也不是几个小时就能参观完的。李文建议今天只看几个朝代，以后再慢慢参观。丽莎他们觉得这个建议很好。
-你们都是学生，我先给你们介绍中国历史上最重要的一位教育家。你们知道是谁吗？
-是孔子吧？
-对。孔子是中国历史上最伟大的教育家和思想家，到现在对中国教育还有很大的影响。
-我们学校还有孔子学院呢。
-是吗？听说世界各国已经建立了几百个孔子学院了。
-我有一件T恤衫上有孔子的一句话：“有朋自远方来，不亦说乎”。
-我在中文课上也学过这句话。
-现在我们来到秦朝的展厅。秦始皇是中国的第一个皇帝。
-我在历史课上学到，秦始皇对统一中国有很大的贡献。
-对，他还统一了文字。
-还让老百姓修长城。
-秦始皇做的事情都对吗？
-他杀了几百个读书人，烧了很多古书，是吗？
-他还让千千万万的人给他修宫殿、修坟墓。
-你们说的都很对。你们看，这就是秦始皇的兵马俑，他死了以后还让千千万万的“兵马”保护他。
-秦朝时间不长，下一个重要的朝代是汉朝。汉朝在秦朝的基础上，使统一的中国在政治、经济各个方面都有很大的发展。汉族这个称呼就是从汉朝开始的。
-“丝绸之路”也跟汉朝有关系吧？
-对，跟西方进行贸易是从汉朝开始的。
-你们看，我们来到唐朝了。我爸爸跟我说中国唐诗最有名。
-对，唐朝出现了很多大诗人。你学过谁的诗？
-我学过李白的诗。
-李白是唐朝最有名的诗人之一。还有，那时由于唐朝经济、文化非常发达，很多外国留学生来留学。
-跟我们一样。
-你们知道吗，在历史上，中国科学技术曾经是很先进的。
-你是说四大发明吗？
-我知道，是造纸、火药、指南针、活字印刷。
-对，造纸、火药发明得较早。活字印刷是宋朝发明的，指南针也是宋朝发展到了很高的水平。
-我们现在来到中国最后一个朝代：清朝。
-为什么是最后一个？
-因为孙中山领导革命，建立了中华民国，再也没有皇帝了。
-我们真不简单，一两个小时就走过了几千年。
-我好像听到一个声音。
-什么声音？
-历史的脚步声。
-我也听到一个声音。
-你要说肚子叫的...
-对了。
-你们在说什么呀？`
-            },
-            {
-                title: "中国的节日",
-                content: `学期结束了，柯林决定到北京继续学中文，而林雪梅想在北京实习和找工作。去北京前，他们先飞到杭州雪梅家看父母，在杭州呆了几天以后，来到了北京雪梅的舅舅家。
-雪梅的舅舅是律师，舅妈是大学教授。他们把时间都放在自己的事业上，不想要孩子，生活在二人世界里。他们住的小区环境很好，房子是一套三房两厅两卫的公寓，家具都很新、很漂亮，每个房间都很干净，住起来很舒服。
-今天是除夕，也是春节的前一天。舅妈正在忙着做年夜饭，舅舅在旁边帮忙，看得出来，舅舅和舅妈的感情很好。
-柯林看见墙上贴着一张不大的红纸，纸上写着一个汉字，他认识，那是“幸福”的“福”子，可是贴倒了。
-奇怪，雪梅，这个“福”字怎么贴错了，“福”字倒了。
-没贴错，“福倒了”，“福到了”，你想意思多好啊！
-噢，我懂了，懂了，真有意思！
-雪梅，柯林，来、来、来，快坐下，吃饭了。
-现在很多家庭过年过节都到餐馆订餐，又好吃、又方便。雪梅上周末告诉我们你们要来，我本来也想在餐馆订餐，可是给几家比较好的饭馆打电话，家家都说没有位子了，没办法，只好在家里吃了。
-我妈妈常说舅妈菜做得好，我早就想吃舅妈做的菜了。
-在家里吃才好呢，有家庭气氛！
-对，我同意你们的看法。大家都不喝酒，来，我们以茶代酒，举起杯来，欢迎你们来北京！
-为你们在新的一年里找工作顺利、学习进步干杯！
-为舅舅、舅妈的事业成功干杯！
-为舅舅、舅妈的身体健康干杯！
-看，电视上春节晚会开始了！我们一边吃饭一边看吧。 
-柯林，现在很多很多中国家庭都像我们一样，一边吃年夜饭，一边看春节晚会。
-是吗？有好看的电视，又有好吃的菜，太棒了！舅妈做的清蒸鱼又嫩又香，真好吃。
-这才是地道的清蒸鱼。你知道吗？年夜饭一定要有鱼，而且不能都吃了，要剩下一些。
-为什么？那不是浪费吗？
-你没听说过吗？“年年有鱼，年年有余”呀。“鱼”跟“余”发音一样，“余”有“剩下”的意思。
-“年年有鱼，年年有余”，是“剩下钱”吗？哈，中文真有意思。哎，中国还有好几个传统节日，吃的东西都不一样，对吧？
-对。农历五月初五端午节...
-吃粽子!
-八月十五中秋节...
-吃月饼。
-中秋节有点像美国的感恩节，是一家人团圆的节日。还有正月十五元宵节...
-吃那个圆圆、白白的东西...
-元宵节，吃元宵嘛！
-对了，对了，我想起来了，元宵。
-你们看，电视里在倒计时了。“十、九、八、七、六、五、四、三、二、一。”十二点了，新的一年开始了！
-舅舅、舅妈，我们给你们拜年了！
-大家过年好！
-舅舅、舅妈过年好！恭喜发财！
-发财、发财、大家发财。过年了，舅舅、舅妈给你们红包。
-谢谢！谢谢！...外边怎么这么热闹？
-过春节要放鞭炮。我们也买了很多，咱们也出去放吧。
-雪梅，你给天明发个短信拜年吧。 
-好。不过，我想先给爸爸妈妈打手机拜年，再给天明、丽莎发短信拜年。
-好吧。舅舅，舅妈，咱们走吧！
-柯林，你和舅舅去吧。我去准备准备，等你们放完鞭炮回来，咱们一起吃饺子。
-什么？还吃？`
-            },
-            {
-                title: "男女平等",
-                content: `在历史上，中国是一个重男轻女的社会，妇女的家庭地位和社会地位都比男人低得多。1950年以后，情况逐渐发生了变化。特别是在城市里，女孩子和男孩子一样有受教育和参加工作的机会，妇女的社会地位也有了很大的提高。
-但是改革开放以来，在某些企业和事业单位，又出现了男女不平等的现象。比如，找工作的时候，妇女常常比男人更困难；一些工厂和公司还没有做到男女同工同酬。当然，也有一些女性，无论在工作上还是收入上，都超过一般男人。不过他们在女性中毕竟只是少数。
-现在在一般中国家庭中，很多夫妻都是互相体贴、互相照顾，所以，家庭可能是现在中国社会男女最平等的地方。拿林雪梅的舅舅来说吧，他是个大球迷，只有在看电视里的足球赛的时候才表现出一点儿“大男子主义”，什么家务都不做。可是比赛一结束，他就忙着帮舅妈做饭、洗碗，又成了一位“模范丈夫”。
-舅舅，今天怎么您洗碗呀？
-哈哈，因为我洗碗洗得比你舅妈干净啊。
-我来洗吧！我洗碗也是洗得很干净的。
-别、别、别，你们从云南旅游回来，就忙着找工作、面试，还没休息过来呢。再说，你舅舅呀，昨天晚上看球看到夜里一点，今天还不得好好表现表现？
-舅舅，您是不是得了那种病，叫什么“气管炎”？
-柯林，你的中文水平真不错，连这个都知道。不过不是“气管炎”，而是“妻管严”。“妻”是“妻子”的“妻”。
-对、对、对，“气管炎”是一种病。
-你小心，“妻管严”可比“气管炎”厉害多了。你将来千万可别得这种病。
-舅舅，看您说的。对了，昨天晚上是什么比赛啊？
-男子足球赛，北京队对上海队。
-那有什么好看的？我最讨厌那些男足队员了，平常骄傲得不得了，可是比赛的时候老输球。所以，我只看中国女足，她们比男足棒多了。
-不错，女足是比男足成绩好，可是我听说女足队员挣的钱不到男足的十分之一，真不公平。
-别忘了，他们的收入是由市场经济来决定的。美国职业女篮队员的薪水跟职业男篮比，也少多了。
-哎，别老说中国男足输球了。我刚看到网上的消息说，中国男足昨天赢了世界冠军队。
-我不相信，网上乱说的吧？
-好像是真的。网上说，这次中国男足踢得不错，比分一直是0比0。比赛结束前一分钟，中国男足才踢进一球，以1比0赢了比赛。
-没想到，真的没想到，太棒了！那这个世界冠军队是巴西队还是意大利队？
-中国乒乓球女队。
-啊？
-肯定是什么人在开男足的玩笑！
-哈哈哈...`
-            },
-            {
-                title: "AP阅读片段整合",
-                content: `中国人很喜欢花儿，种花和赏花是人们日常的消遣。在诗人和画家的笔下，花儿更是多彩多姿。一年四季里，许多种的花儿先后开放。春到人间时，百花争妍，其中最娇艳的是牡丹。到了夏天，池塘里的荷花盛开。等到秋风吹起，叶子落了，只有菊花不怕风霜。而在冰天雪地的冬天，梅花在风雪之中傲然挺立。画家把松竹梅画在一起，成为“岁寒三友”，也正因为梅花很能代表中国人不屈不挠的精神。
-绿茶能净化人体的血液，防止皮肤老化，降低胆固醇和血压，强化毛细管，并可作为利尿剂。日本人潜心研究，证实绿茶的功能及疗效。他们确信，每天饮用大量绿茶是日本人长寿的主要原因之一。
-从前中国人在盖房子的时候，都要先请人看风水。这虽然是迷信，也并非没有道理。例如说，中国人的房子喜欢坐北朝南，窗户也是向南开。这样的房子，可以接受冬天的阳光和夏天的清风。冬暖夏凉，住在里面一定非常的舒服。
-[美联社旧金山二十三日电] 在过去的两周中，全国范围内的汽油价格平均下降了一角二分，创三年来最低价格记录。不过，人们不应期待这种情形会持续很久。专家说，经济形势在短期内，不太可能有大幅回升，而零售商为保持盈利，将被迫提高油价，因此，油价预期下月回升。
-中国人最懂得消遣的艺术。从前的读书人以琴棋书画作为消遣。琴棋书画都是艺术，在重视道德的中国人看来，艺术品的好坏，意味着作者人格的高低。所以，弹琴、下棋、写字和绘画，都代表着一个人的修养。在中国来看，弹琴是脱俗的，能净化心灵。下棋能磨练一个人的耐性。书法最能表现个性和修养。至于绘画，则用来表现自己的想象。
-我的房子是租来的，但是我很满意。因为房顶漏了，水龙头坏了，我都不用担心，打个电话给房东，房东就派人来修理。我更不用害怕收到地价税单。我的车子是部十三年的本田，但是我很满意。因为有它代步，可免去风吹雨打，随便停在路边，不用害怕会被人偷走。人生不过短短数十个寒暑，何苦想不开，不如快快乐乐过一生，所以”知足常乐“是我一向的座右铭。
-[本报记者旧金山湾区报道] 美洲同源总会表示，爱达荷州境内有一歧视华裔字眼的山名，经由美洲同源会向当局争取后，已经更名。该会主任表示，爱达荷有一个山名称为“青峰"(Chink Peak)，而Chink是对华人有侮辱性的称呼，该会要求改为"华人之峰" (Chinese Peak)，经由与当地的华人团体联合行动，终于得到最后胜利。山名的更改，已经正式记载在美国地理名字的记录上。资料如下：封顶为海拔六千七百九十一尺，位于骆驼背山的西南，传说有华裔在山峰死去而得名。
-中餐的色、香和味，堪称世界烹饪之最。还有中餐的取名艺术也可全球称冠。"全家福"指的是荤什锦，"霸王别姬"原是著名剧目，如今借用到宴席上，指的是老母鸡炖甲鱼汤。给菜取个恰如其分的好名字，是一门学问。命名的好，能增添不少情趣，还能增进食欲，有益享乐和健康。你听说过“猪八戒踢皮球”这道菜吗？恐怕菜谱上找不到 ，因为他是很普通、很粗俗的一道家常菜，就是红烧猪脚和卤蛋。
-[中央社柏林七日电] 德国失业人口快速上升，失业问题日趋严重。而且约有百分之三十的失业人口，情愿领取失业救济，也不想或不认真再找工作，由于德国的社会福利政策和相关法律，可以让失业者依靠国家救济，仍可安稳度日，因而导致不少失业者不想再找工作。此外，劳工局介绍工作的方向和手段，常与失业者的实际需求脱节，也是造成失业人口居高不下的原因之一。`
+可是怎么去呢？坐出租车吧，太贵，而且也没意思；坐公交车吧，人太多，太挤。柯林想出了一个主意，骑自行车！大家马上就同意了，觉得骑自行车又能锻炼身体，又省钱，而且有益于环境保护。`
             }
         ];
 
@@ -559,8 +477,11 @@
         // Tabs
         const tabReadingBtn = document.getElementById('tab-reading');
         const tabVocabBtn = document.getElementById('tab-vocab');
+        const tabQuizBtn = document.getElementById('tab-quiz');
+        
         const sectionReading = document.getElementById('section-reading');
         const sectionVocab = document.getElementById('section-vocab');
+        const sectionQuiz = document.getElementById('section-quiz');
 
         // Reading Elements
         const articleSelect = document.getElementById('articleSelect');
@@ -582,9 +503,27 @@
         const vPlayBtn = document.getElementById('vPlayBtn');
         const vProgress = document.getElementById('vProgress');
         const autoPlayVocab = document.getElementById('autoPlayVocab');
-        const autoAdvanceVocab = document.getElementById('autoAdvanceVocab'); // 新增：自动连播复选框
+        const autoAdvanceVocab = document.getElementById('autoAdvanceVocab'); 
         const vocabSpeedRate = document.getElementById('vocabSpeedRate');
         const vocabSpeedValue = document.getElementById('vocabSpeedValue');
+
+        // Quiz Elements
+        const qMasteredCount = document.getElementById('qMasteredCount');
+        const qTotalCount = document.getElementById('qTotalCount');
+        const qProgressBar = document.getElementById('qProgressBar');
+        const qCompleteMessage = document.getElementById('qCompleteMessage');
+        const qContentArea = document.getElementById('qContentArea');
+        const qWord = document.getElementById('qWord');
+        const qAnswerArea = document.getElementById('qAnswerArea');
+        const qPinyin = document.getElementById('qPinyin');
+        const qMeaning = document.getElementById('qMeaning');
+        const qExample = document.getElementById('qExample');
+        
+        const qControlsQuestion = document.getElementById('qControlsQuestion');
+        const qControlsAnswer = document.getElementById('qControlsAnswer');
+        const qShowBtn = document.getElementById('qShowBtn');
+        const qForgotBtn = document.getElementById('qForgotBtn');
+        const qGotItBtn = document.getElementById('qGotItBtn');
 
         // ==========================================
         // 3. 全局状态变量
@@ -600,49 +539,150 @@
 
         // Vocab State
         let currentVocabIndex = 0;
-        let currentVocabSessionId = 0; // 新增：用于跟踪单词连播的状态，防止旧播放器触发跳转
+        let currentVocabSessionId = 0; 
+
+        // Quiz State (Spaced Repetition System)
+        // box 0: new/forgotten, box 1, 2, 3: learning, box 4: mastered
+        let quizData = vocabulary.map((v, index) => ({
+            ...v,
+            originalIndex: index,
+            box: 0, 
+            nextTime: 0 
+        }));
+        let currentQuizItem = null;
 
         // ==========================================
         // 4. Tabs 切换逻辑
         // ==========================================
         function switchTab(mode) {
-            // 切换前，无论在哪个模式，都强制停止发音
             stopReadingPlayback();
             synth.cancel();
-            currentVocabSessionId++; // 新增：切换标签时停止任何正在进行的词汇连播
+            currentVocabSessionId++; // 中断任何正在进行的词汇连播
+
+            // 隐藏所有
+            tabReadingBtn.classList.remove('active');
+            tabVocabBtn.classList.remove('active');
+            tabQuizBtn.classList.remove('active');
+            sectionReading.classList.add('hidden');
+            sectionVocab.classList.add('hidden');
+            sectionQuiz.classList.add('hidden');
 
             if (mode === 'reading') {
                 tabReadingBtn.classList.add('active');
-                tabVocabBtn.classList.remove('active');
                 sectionReading.classList.remove('hidden');
-                sectionVocab.classList.add('hidden');
-                
-                // 同步阅读语速与词汇语速
                 speedRate.value = vocabSpeedRate.value;
                 speedValue.textContent = speedRate.value;
-            } else {
+            } else if (mode === 'vocab') {
                 tabVocabBtn.classList.add('active');
-                tabReadingBtn.classList.remove('active');
                 sectionVocab.classList.remove('hidden');
-                sectionReading.classList.add('hidden');
-                
-                // 同步词汇语速与阅读语速
                 vocabSpeedRate.value = speedRate.value;
                 vocabSpeedValue.textContent = vocabSpeedRate.value;
-                
-                // 渲染当前词汇
-                renderVocabCard(true); // 传入true代表这是切换过来的
+                renderVocabCard(true); 
+            } else if (mode === 'quiz') {
+                tabQuizBtn.classList.add('active');
+                sectionQuiz.classList.remove('hidden');
+                renderQuizCard();
             }
         }
 
         tabReadingBtn.onclick = () => switchTab('reading');
         tabVocabBtn.onclick = () => switchTab('vocab');
+        tabQuizBtn.onclick = () => switchTab('quiz');
 
         // ==========================================
-        // 5. 词汇学习 (Vocabulary) 核心功能
+        // 5. 记忆测验 (Quiz - SRS) 核心功能
+        // ==========================================
+        function renderQuizCard() {
+            // 1. 计算进度
+            const total = quizData.length;
+            const mastered = quizData.filter(item => item.box >= 4).length;
+            
+            qMasteredCount.textContent = mastered;
+            qTotalCount.textContent = total;
+            qProgressBar.style.width = `${(mastered / total) * 100}%`;
+
+            // 2. 检查是否全部掌握
+            if (mastered === total) {
+                qContentArea.classList.add('hidden');
+                qControlsQuestion.classList.add('hidden');
+                qControlsAnswer.classList.add('hidden');
+                qCompleteMessage.classList.remove('hidden');
+                return;
+            }
+
+            // 3. 选择下一个要复习的词汇
+            const now = Date.now();
+            let unmastered = quizData.filter(item => item.box < 4);
+            let dueCards = unmastered.filter(item => item.nextTime <= now);
+            
+            // 如果当前没有到期的卡片，为了避免用户等待，直接取下一个即将到期的
+            if (dueCards.length === 0) {
+                unmastered.sort((a, b) => a.nextTime - b.nextTime);
+                currentQuizItem = unmastered[0];
+            } else {
+                // 如果有到期的，优先复习最久未复习的 (nextTime 最小的)
+                dueCards.sort((a, b) => a.nextTime - b.nextTime);
+                currentQuizItem = dueCards[0];
+            }
+
+            // 4. 更新 UI 状态 (显示问题，隐藏答案)
+            qWord.textContent = currentQuizItem.word;
+            qPinyin.textContent = currentQuizItem.pinyin;
+            qMeaning.textContent = currentQuizItem.meaning;
+            qExample.textContent = `例句：${currentQuizItem.example}`;
+
+            qAnswerArea.classList.add('hidden');
+            qControlsQuestion.classList.remove('hidden');
+            qControlsAnswer.classList.add('hidden');
+        }
+
+        qShowBtn.onclick = () => {
+            // 显示答案
+            qAnswerArea.classList.remove('hidden');
+            qControlsQuestion.classList.add('hidden');
+            qControlsAnswer.classList.remove('hidden');
+            
+            // 测验模式下显示答案时自动朗读一次
+            synth.cancel();
+            let wordUtt = new SpeechSynthesisUtterance(currentQuizItem.word);
+            let exUtt = new SpeechSynthesisUtterance(currentQuizItem.example);
+            wordUtt.lang = 'zh-CN'; exUtt.lang = 'zh-CN';
+            wordUtt.rate = parseFloat(speedRate.value); exUtt.rate = parseFloat(speedRate.value);
+            synth.speak(wordUtt);
+            synth.speak(exUtt);
+        };
+
+        qForgotBtn.onclick = () => {
+            // 忘记了，重置盒子，10秒后再次复习
+            currentQuizItem.box = 0;
+            currentQuizItem.nextTime = Date.now() + 10 * 1000; 
+            renderQuizCard();
+        };
+
+        qGotItBtn.onclick = () => {
+            // 记住了，提升盒子等级，设定下一次复习时间
+            currentQuizItem.box++;
+            const now = Date.now();
+            
+            // 简单的间隔重复时间线设定 (为了演示效果，间隔设置较短)
+            if (currentQuizItem.box === 1) {
+                currentQuizItem.nextTime = now + 15 * 1000; // 15秒后
+            } else if (currentQuizItem.box === 2) {
+                currentQuizItem.nextTime = now + 45 * 1000; // 45秒后
+            } else if (currentQuizItem.box === 3) {
+                currentQuizItem.nextTime = now + 120 * 1000; // 2分钟后
+            } 
+            // 如果 box 达到 4，则标记为已掌握 (在 renderQuizCard 中过滤)
+            
+            renderQuizCard();
+        };
+
+
+        // ==========================================
+        // 6. 词汇学习 (Vocabulary) 核心功能
         // ==========================================
         function renderVocabCard(isTabSwitch = false) {
-            currentVocabSessionId++; // 新增：渲染新卡片时，取消旧的自动跳转计时器
+            currentVocabSessionId++; 
 
             const vocab = vocabulary[currentVocabIndex];
             vWord.textContent = vocab.word;
@@ -652,10 +692,8 @@
             
             vProgress.textContent = `${currentVocabIndex + 1} / ${vocabulary.length}`;
 
-            // 控制按钮状态
             vPrevBtn.disabled = (currentVocabIndex === 0);
             
-            // 自动播放音频 (如果开启了切换自动发音，或者开启了自动连播)
             if (autoPlayVocab.checked || autoAdvanceVocab.checked) {
                 playVocabAudio();
             }
@@ -663,64 +701,49 @@
 
         function playVocabAudio() {
             currentVocabSessionId++; 
-            let capturedSessionId = currentVocabSessionId; // 捕获当前播放会话ID
+            let capturedSessionId = currentVocabSessionId; 
 
-            synth.cancel(); // 停止先前的语音
+            synth.cancel(); 
             const vocab = vocabulary[currentVocabIndex];
             const rate = parseFloat(vocabSpeedRate.value);
 
-            // 1. 读单词
             let wordUtt = new SpeechSynthesisUtterance(vocab.word);
-            wordUtt.lang = 'zh-CN';
-            wordUtt.rate = rate;
+            wordUtt.lang = 'zh-CN'; wordUtt.rate = rate;
 
-            // 2. 读例句
             let exUtt = new SpeechSynthesisUtterance(vocab.example);
-            exUtt.lang = 'zh-CN';
-            exUtt.rate = rate;
+            exUtt.lang = 'zh-CN'; exUtt.rate = rate;
 
-            // 新增：当例句读完后，检测是否开启了自动连播
             exUtt.onend = function() {
-                if (capturedSessionId !== currentVocabSessionId) return; // 确保是当前会话
+                if (capturedSessionId !== currentVocabSessionId) return; 
                 
                 if (autoAdvanceVocab.checked) {
-                    // 延迟 1.5 秒后跳转到下一个词，给用户思考缓冲时间
                     setTimeout(() => {
-                        if (capturedSessionId !== currentVocabSessionId) return; // 再次检查是否被中断
-                        if (!autoAdvanceVocab.checked) return; // 检查是否在延迟期间被关闭
+                        if (capturedSessionId !== currentVocabSessionId) return; 
+                        if (!autoAdvanceVocab.checked) return; 
                         
-                        // 自动跳转到下一个，如果到了最后，循环到第一个
                         if (currentVocabIndex < vocabulary.length - 1) {
                             currentVocabIndex++;
                         } else {
-                            currentVocabIndex = 0; // 自动循环到开头
+                            currentVocabIndex = 0; 
                         }
                         renderVocabCard();
                     }, 1500);
                 }
             };
 
-            // 容错处理：如果发音引擎出错，确保自动连播不会断掉
             exUtt.onerror = function(e) {
-                console.warn("Vocab SpeechSynthesis error: ", e);
                 if (capturedSessionId !== currentVocabSessionId) return;
-                
                 if (autoAdvanceVocab.checked) {
                     setTimeout(() => {
                         if (capturedSessionId !== currentVocabSessionId) return;
                         if (!autoAdvanceVocab.checked) return;
-                        
-                        if (currentVocabIndex < vocabulary.length - 1) {
-                            currentVocabIndex++;
-                        } else {
-                            currentVocabIndex = 0;
-                        }
+                        if (currentVocabIndex < vocabulary.length - 1) currentVocabIndex++;
+                        else currentVocabIndex = 0;
                         renderVocabCard();
                     }, 1500);
                 }
             };
 
-            // 连续播放单词和例句
             synth.speak(wordUtt);
             synth.speak(exUtt);
         }
@@ -733,34 +756,28 @@
         };
 
         vNextBtn.onclick = () => {
-            // 手动点击下一个
             if (currentVocabIndex < vocabulary.length - 1) {
                 currentVocabIndex++;
             } else {
-                currentVocabIndex = 0; // 允许手动循环
+                currentVocabIndex = 0; 
             }
             renderVocabCard();
         };
 
-        vPlayBtn.onclick = () => {
-            playVocabAudio();
-        };
+        vPlayBtn.onclick = () => playVocabAudio();
 
-        vocabSpeedRate.oninput = (e) => {
-            vocabSpeedValue.textContent = Number(e.target.value).toFixed(1);
-        };
+        vocabSpeedRate.oninput = (e) => vocabSpeedValue.textContent = Number(e.target.value).toFixed(1);
 
-        // 新增：监听自动连播复选框状态改变
         autoAdvanceVocab.addEventListener('change', (e) => {
             if (e.target.checked) {
-                playVocabAudio(); // 勾选时立即开始播放当前词并启动连播流程
+                playVocabAudio(); 
             } else {
-                currentVocabSessionId++; // 取消勾选时，打断当前的连播计时器
+                currentVocabSessionId++; 
             }
         });
 
         // ==========================================
-        // 6. 文章阅读 (Reading) 核心功能 
+        // 7. 文章阅读 (Reading) 核心功能 
         // ==========================================
         function initSelect() {
             articles.forEach((article, index) => {
@@ -839,9 +856,7 @@
             updateReadingButtons();
             
             setTimeout(() => {
-                if (readState === 'PLAYING') {
-                    speakReadingSentence(currentReadIndex);
-                }
+                if (readState === 'PLAYING') speakReadingSentence(currentReadIndex);
             }, 250);
         }
 
@@ -849,11 +864,8 @@
             if (!sentencesDOM || sentencesDOM.length === 0) return;
 
             if (index >= sentencesDOM.length) {
-                if (loopCheck.checked) {
-                    playReadingFrom(0); 
-                } else {
-                    stopReadingPlayback();
-                }
+                if (loopCheck.checked) playReadingFrom(0); 
+                else stopReadingPlayback();
                 return;
             }
 
@@ -884,7 +896,6 @@
             };
 
             utterance.onerror = function(e) {
-                console.warn("SpeechSynthesis 遇到小错误，跳过当前句子: ", e);
                 if (capturedSessionId !== currentSessionId) return;
                 if (readState === 'PLAYING') {
                     currentReadIndex++;
@@ -905,49 +916,31 @@
             updateReadingButtons();
         }
 
-        // Reading Button Events
         playBtn.onclick = () => {
-            if (readState === 'STOPPED') {
-                playReadingFrom(0); 
-            } else if (readState === 'PAUSED') {
-                readState = 'PLAYING';
-                synth.resume();
-                updateReadingButtons();
+            if (readState === 'STOPPED') playReadingFrom(0); 
+            else if (readState === 'PAUSED') {
+                readState = 'PLAYING'; synth.resume(); updateReadingButtons();
             }
         };
-
         pauseBtn.onclick = () => {
             if (readState === 'PLAYING') {
-                readState = 'PAUSED';
-                synth.pause();
-                updateReadingButtons();
+                readState = 'PAUSED'; synth.pause(); updateReadingButtons();
             }
         };
+        stopBtn.onclick = () => stopReadingPlayback();
 
-        stopBtn.onclick = () => {
-            stopReadingPlayback();
-        };
+        speedRate.oninput = (e) => speedValue.textContent = Number(e.target.value).toFixed(1);
+        speedRate.onchange = () => { if (readState === 'PLAYING') playReadingFrom(currentReadIndex); };
 
-        speedRate.oninput = (e) => {
-            speedValue.textContent = Number(e.target.value).toFixed(1);
-        };
-
-        speedRate.onchange = () => {
-            if (readState === 'PLAYING') {
-                playReadingFrom(currentReadIndex);
-            }
-        };
-
-        window.onbeforeunload = () => {
-            synth.cancel();
-        };
+        window.onbeforeunload = () => synth.cancel();
 
         // ==========================================
-        // 7. 初始运行
+        // 8. 初始运行
         // ==========================================
         initSelect();
-        loadArticle(0); // 默认加载第一篇文章
-        renderVocabCard(false); // 预加载第一张单词卡片（不播放）
+        loadArticle(0); 
+        renderVocabCard(false); 
+        renderQuizCard(); // 初始化测验数据
 
     </script>
 </body>
