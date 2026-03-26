@@ -151,6 +151,38 @@
       min-height: 1.2em;
     }
 
+    .mastery-progress-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .mastery-progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .mastery-progress-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .mastery-progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--secondary), #34d399);
+      transition: width 0.25s ease;
+    }
+
     /* Quiz & Review CSS */
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
     .score-display { font-size: 1.2rem; color: var(--primary); }
@@ -207,6 +239,7 @@
       <option value="4">Group 5 (401 - 500)</option>
       <option value="5">Group 6 (501 - 600)</option>
       <option value="6">Group 7 (601+)</option>
+      <option value="notebook">Notebook</option>
     </select>
   </div>
 </header>
@@ -231,6 +264,11 @@
     <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
     <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
   </div>
+  <div class="controls" style="margin-top: 10px;">
+    <button class="btn-nav" id="btn-toggle-notebook" onclick="toggleNotebookForCurrentWord()">📒 Add to Notebook</button>
+    <button class="btn-nav" onclick="openNotebookGroup()">Open Notebook</button>
+  </div>
+  <div id="notebook-status" style="text-align: center; margin-top: 8px; color: var(--text-light); font-weight: 600;"></div>
   <div class="autoplay-timer-wrap">
     <span class="autoplay-timer-label">Sleep timer</span>
     <select id="autoplay-timer-select" class="autoplay-timer-select" aria-label="Autoplay sleep timer">
@@ -251,6 +289,16 @@
   <div class="quiz-header">
     <span id="quiz-score" class="score-display">Score: 0</span>
     <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="if(currentQuizWord) speakTextAsync(currentQuizWord.word)">🔊</button>
+  </div>
+
+  <div class="mastery-progress-card">
+    <div class="mastery-progress-head">
+      <span>Mastery Progress</span>
+      <span id="quiz-mastery-text">0 / 0 mastered</span>
+    </div>
+    <div class="mastery-progress-track">
+      <div class="mastery-progress-fill" id="quiz-mastery-fill"></div>
+    </div>
   </div>
 
   <div class="srs-status" id="srs-status"></div>
@@ -1335,11 +1383,18 @@
     });
 
     vocabState = vocabState.map(item => {
-      if (item.easiness === undefined) {
+      let nextItem = item;
+
+      if (nextItem.easiness === undefined) {
         stateUpdated = true;
-        return { ...item, easiness: 2.5, repetitions: 0 };
+        nextItem = { ...nextItem, easiness: 2.5, repetitions: 0 };
       }
-      return item;
+      if (nextItem.isNotebook === undefined) {
+        stateUpdated = true;
+        nextItem = { ...nextItem, isNotebook: false };
+      }
+
+      return nextItem;
     });
     if (stateUpdated) saveState();
   }
@@ -1351,7 +1406,8 @@
       nextReview: Date.now(),
       mistakes: 0,
       easiness: 2.5,
-      repetitions: 0
+      repetitions: 0,
+      isNotebook: false
     };
   }
 
@@ -1373,6 +1429,92 @@
     else scoreEl.classList.remove('negative');
   }
 
+  function getCurrentFlashcardItem() {
+    const activePool = getActiveVocab();
+    if (!activePool.length) return null;
+    if (fcIndex >= activePool.length) fcIndex = 0;
+    return activePool[fcIndex] || null;
+  }
+
+  function clampFlashcardIndex() {
+    const activePool = getActiveVocab();
+    if (!activePool.length) {
+      fcIndex = 0;
+      return;
+    }
+    if (fcIndex >= activePool.length) fcIndex = activePool.length - 1;
+    if (fcIndex < 0) fcIndex = 0;
+  }
+
+  function updateNotebookButtonState() {
+    const btn = document.getElementById('btn-toggle-notebook');
+    const status = document.getElementById('notebook-status');
+    if (!btn || !status) return;
+
+    const item = getCurrentFlashcardItem();
+    if (!item) {
+      btn.textContent = "📒 Add to Notebook";
+      btn.disabled = true;
+      status.textContent = "";
+      return;
+    }
+
+    btn.disabled = false;
+    if (item.isNotebook) {
+      btn.textContent = currentGroupIndex === 'notebook' ? "🗑️ Remove from Notebook" : "📒 Remove from Notebook";
+      status.textContent = "Saved in Notebook";
+    } else {
+      btn.textContent = "📒 Add to Notebook";
+      status.textContent = "Not in Notebook";
+    }
+  }
+
+  function openNotebookGroup() {
+    currentGroupIndex = 'notebook';
+    document.getElementById('groupSelect').value = 'notebook';
+    fcIndex = 0;
+    if (currentMode === 'dashboard') {
+      renderDashboard();
+    } else if (currentMode === 'quiz' || currentMode === 'review') {
+      loadNextQuestion();
+    } else {
+      updateFlashcardUI();
+    }
+  }
+
+  function toggleNotebookForCurrentWord() {
+    const item = getCurrentFlashcardItem();
+    if (!item) return;
+
+    item.isNotebook = !item.isNotebook;
+    saveState();
+
+    if (currentGroupIndex === 'notebook' && !item.isNotebook) {
+      clampFlashcardIndex();
+    }
+
+    if (currentMode === 'dashboard') renderDashboard();
+    if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
+    updateFlashcardUI();
+  }
+
+  function updateQuizMasteryProgress() {
+    const activePool = getActiveVocab();
+    const total = activePool.length;
+    const mastered = activePool.filter(w => w.interval >= 60).length;
+    const pct = total ? Math.round((mastered / total) * 100) : 0;
+
+    const fill = document.getElementById('quiz-mastery-fill');
+    const textEl = document.getElementById('quiz-mastery-text');
+
+    if (fill) fill.style.width = `${pct}%`;
+    if (textEl) {
+      textEl.textContent = total
+        ? `${mastered} / ${total} mastered (${pct}%)`
+        : `0 / 0 mastered`;
+    }
+  }
+
   // --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
@@ -1385,6 +1527,7 @@
   // Helper function that dynamically restricts the vocab deck to the selected block
   function getActiveVocab() {
     if (currentGroupIndex === 'all') return vocabState;
+    if (currentGroupIndex === 'notebook') return vocabState.filter(item => item.isNotebook);
     const start = parseInt(currentGroupIndex) * 100;
     return vocabState.slice(start, start + 100);
   }
@@ -1476,13 +1619,17 @@
     setTimeout(() => {
       const activePool = getActiveVocab();
       if(activePool.length === 0) {
-        document.getElementById('wordDisplay').textContent = "No words in this group.";
-        document.getElementById('defDisplay').textContent = "Please select another group or add new words.";
+        document.getElementById('wordDisplay').textContent = currentGroupIndex === 'notebook' ? "Your notebook is empty." : "No words in this group.";
+        document.getElementById('defDisplay').textContent = currentGroupIndex === 'notebook'
+          ? "Add words from Flashcards to build a notebook you can replay anytime."
+          : "Please select another group or add new words.";
         document.getElementById('exDisplay').innerHTML = "";
         document.getElementById('fc-progress').textContent = "0 of 0";
+        updateNotebookButtonState();
         return; // Exit the function early
       }
 
+      clampFlashcardIndex();
       const item = activePool[fcIndex];
       document.getElementById('wordDisplay').textContent = item.word;
       document.getElementById('defDisplay').textContent = item.definition;
@@ -1491,6 +1638,7 @@
       item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
       document.getElementById('exDisplay').innerHTML = exHTML;
       document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
+      updateNotebookButtonState();
     }, 150);
   }
 
@@ -1760,6 +1908,7 @@
   // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
   function loadNextQuestion() {
     updateScoreDisplay();
+    updateQuizMasteryProgress();
     document.getElementById('feedbackText').textContent = "";
     document.getElementById('btnNextQuiz').style.display = "none";
     document.getElementById('quizInstruction').style.display = 'block';
@@ -1822,6 +1971,7 @@
   }
 
   function showEmptyState(msg) {
+    updateQuizMasteryProgress();
     document.getElementById('quizWordDisplay').style.display = 'none';
     document.getElementById('quizInstruction').style.display = 'none';
     document.getElementById('optionsContainer').style.display = 'none';
@@ -1876,6 +2026,7 @@
 
     saveState();
     updateScoreDisplay();
+    updateQuizMasteryProgress();
     document.getElementById('btnNextQuiz').style.display = "block";
   }
 
@@ -1890,6 +2041,7 @@
   });
 
   // Start app
+  updateQuizMasteryProgress();
   updateFlashcardUI();
 
 </script>
