@@ -43,7 +43,7 @@
         /* Tabs */
         .tabs {
             display: flex;
-            flex-wrap: wrap; /* Added for extra tabs */
+            flex-wrap: wrap;
             background: #e5e7eb;
             border-radius: 12px;
             padding: 5px;
@@ -52,7 +52,7 @@
         }
 
         .tab-btn {
-            flex: 1 1 calc(33% - 5px); /* Responsive sizing */
+            flex: 1 1 calc(33% - 5px);
             padding: 10px;
             text-align: center;
             border: none;
@@ -92,12 +92,14 @@
         /* Controls */
         .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         button { padding: 12px 20px; font-size: 1rem; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-nav { background-color: white; color: var(--text-main); border: 2px solid #e5e7eb; flex: 1; }
+        .btn-nav { background-color: white; color: var(--text-main); border: 2px solid #e5e7eb; flex: 1; min-width: 120px;}
         .btn-nav:hover { background-color: #f9fafb; }
         .btn-audio { background-color: var(--primary); color: white; width: 100%; }
         .btn-audio:hover { background-color: var(--primary-hover); }
         .btn-submit { background-color: var(--secondary); color: white; width: 100%; margin-top: 10px; }
         .btn-submit:hover { background-color: #059669; }
+        .btn-autoplay-active { background-color: var(--secondary); color: white; border-color: var(--secondary); }
+        .btn-autoplay-active:hover { background-color: #059669; }
 
         /* Quiz & Review CSS */
         .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
@@ -161,8 +163,9 @@
         </div>
         <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--text-light);" id="fc-progress">Card 1 of 50</div>
         <div class="controls">
-            <button class="btn-audio" onclick="speakWord(vocabState[fcIndex].word)"><span>🔊</span> Listen to Word</button>
-            <button class="btn-nav" onclick="prevCard()">&larr; Previous</button>
+            <button class="btn-audio" onclick="readCurrentCard()"><span>🔊</span> Listen to Card</button>
+            <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
+            <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
             <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
         </div>
     </div>
@@ -170,7 +173,7 @@
     <div id="quiz-mode" class="mode-container">
         <div class="quiz-header">
             <span id="quiz-score" class="score-display">Score: 0</span>
-            <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="speakWord(currentQuizWord.word)">🔊</button>
+            <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="speakTextAsync(currentQuizWord.word)">🔊</button>
         </div>
         
         <div class="srs-status" id="srs-status"></div>
@@ -252,12 +255,10 @@
         // --- APP STATE & LOCAL STORAGE ---
         let vocabState = JSON.parse(localStorage.getItem('vocabStatePro'));
         
-        // Initialize or migrate existing state to include new SM-2 properties
         if (!vocabState || vocabState.length === 0) {
             vocabState = rawVocabData.map(createNewItemState);
             saveState();
         } else {
-            // Migration script: if an old item lacks the 'easiness' prop, add the new properties
             let stateUpdated = false;
             vocabState = vocabState.map(item => {
                 if (item.easiness === undefined) {
@@ -275,8 +276,8 @@
                 interval: 0, 
                 nextReview: Date.now(),
                 mistakes: 0,
-                easiness: 2.5,     // SM-2 Easiness Factor
-                repetitions: 0     // SM-2 Consecutive correct answers
+                easiness: 2.5,     
+                repetitions: 0     
             };
         }
 
@@ -299,6 +300,10 @@
 
         // --- NAVIGATION ---
         function setMode(mode) {
+            // Stop audio/autoplay if switching tabs
+            stopAutoplay();
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
             currentMode = mode;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -324,7 +329,7 @@
             const now = Date.now();
             const total = vocabState.length;
             const due = vocabState.filter(w => w.nextReview <= now).length;
-            const mastered = vocabState.filter(w => w.interval >= 60).length; // 60+ min interval considered mastered
+            const mastered = vocabState.filter(w => w.interval >= 60).length;
             const struggling = vocabState.filter(w => w.mistakes > 2).length;
 
             document.getElementById('stat-total').textContent = total;
@@ -349,7 +354,6 @@
             vocabState.push(newItem);
             saveState();
 
-            // Reset form and show success
             document.getElementById('addWordForm').reset();
             const msg = document.getElementById('addSuccessMsg');
             msg.style.display = 'block';
@@ -358,7 +362,12 @@
 
         // --- FLASHCARD LOGIC ---
         const flashcardElement = document.getElementById('flashcard');
-        flashcardElement.addEventListener('click', () => flashcardElement.classList.toggle('is-flipped'));
+        
+        // Manual flip interrupts autoplay
+        flashcardElement.addEventListener('click', () => {
+            if(isAutoplaying) stopAutoplay();
+            flashcardElement.classList.toggle('is-flipped');
+        });
 
         function updateFlashcardUI() {
             flashcardElement.classList.remove('is-flipped');
@@ -375,8 +384,119 @@
             }, 150);
         }
 
-        function nextCard() { fcIndex = (fcIndex + 1) % vocabState.length; updateFlashcardUI(); }
-        function prevCard() { fcIndex = (fcIndex - 1 + vocabState.length) % vocabState.length; updateFlashcardUI(); }
+        function nextCard() { 
+            if(isAutoplaying && !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
+                stopAutoplay(); // Manual nav breaks autoplay unless triggered by script
+            }
+            fcIndex = (fcIndex + 1) % vocabState.length; 
+            updateFlashcardUI(); 
+        }
+        
+        function prevCard() { 
+            stopAutoplay();
+            fcIndex = (fcIndex - 1 + vocabState.length) % vocabState.length; 
+            updateFlashcardUI(); 
+        }
+
+        // --- AUDIO & AUTOPLAY LOGIC ---
+        let isAutoplaying = false;
+
+        // Async wrapper for speech synthesis to allow sequential playing
+        function speakTextAsync(text) {
+            return new Promise(resolve => {
+                if (!('speechSynthesis' in window)) return resolve();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85; 
+                utterance.lang = 'en-US';
+                
+                utterance.onend = resolve;
+                utterance.onerror = resolve; // Resolve anyway so loop doesn't get stuck
+                
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        // Reads the current card details manually
+        async function readCurrentCard() {
+            stopAutoplay();
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            
+            const item = vocabState[fcIndex];
+            await speakTextAsync(item.word);
+            await speakTextAsync(item.definition);
+            for (let ex of item.examples) {
+                await speakTextAsync(ex);
+            }
+        }
+
+        function stopAutoplay() {
+            isAutoplaying = false;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const btn = document.getElementById('btn-autoplay');
+            btn.textContent = "▶️ Autoplay";
+            btn.classList.remove('btn-autoplay-active');
+            btn.classList.remove('active-loop'); // Removes script-trigger flag
+        }
+
+        function toggleAutoplay() {
+            if (isAutoplaying) {
+                stopAutoplay();
+            } else {
+                isAutoplaying = true;
+                const btn = document.getElementById('btn-autoplay');
+                btn.textContent = "⏹️ Stop";
+                btn.classList.add('btn-autoplay-active');
+                runAutoplayLoop();
+            }
+        }
+
+        // The main autoplay sequence
+        async function runAutoplayLoop() {
+            if (!isAutoplaying) return;
+            const item = vocabState[fcIndex];
+            
+            // 1. Ensure card is on front
+            if (flashcardElement.classList.contains('is-flipped')) {
+                flashcardElement.classList.remove('is-flipped');
+                await new Promise(r => setTimeout(r, 400)); // wait for flip animation
+            }
+            
+            if (!isAutoplaying) return;
+
+            // 2. Speak Word and pause
+            await speakTextAsync(item.word);
+            await new Promise(r => setTimeout(r, 1000)); // Pause for user to think
+            
+            if (!isAutoplaying) return;
+
+            // 3. Flip Card automatically
+            flashcardElement.classList.add('is-flipped');
+            await new Promise(r => setTimeout(r, 600)); // Wait for flip animation
+            
+            if (!isAutoplaying) return;
+
+            // 4. Speak Definition and Examples
+            await speakTextAsync(item.definition);
+            for (let ex of item.examples) {
+                if (!isAutoplaying) return;
+                await speakTextAsync(ex);
+            }
+
+            // 5. Pause before moving to next card
+            await new Promise(r => setTimeout(r, 1500));
+            
+            if (!isAutoplaying) return;
+
+            // 6. Go to next card and repeat loop
+            document.getElementById('btn-autoplay').classList.add('active-loop'); // Flag to allow nextCard() without stopping
+            nextCard();
+            
+            // Give UI time to render front of next card before starting speech again
+            setTimeout(() => {
+                if(isAutoplaying) runAutoplayLoop();
+            }, 500);
+        }
 
         // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
         function loadNextQuestion() {
@@ -400,7 +520,6 @@
                 pool = vocabState.filter(w => w.nextReview <= Date.now());
                 
                 if (pool.length === 0) {
-                    // clone array before sorting so we don't mess up flashcard order
                     let tempState = [...vocabState]; 
                     tempState.sort((a, b) => a.nextReview - b.nextReview);
                     pool = [tempState[0]];
@@ -452,23 +571,21 @@
             const wordRef = vocabState.find(w => w.word === currentQuizWord.word);
 
             if(selectedText === currentQuizWord.definition) {
-                // CORRECT - Apply SM-2 Logic (Adapted for minutes instead of days)
                 sessionScore++;
                 selectedBtn.classList.add('correct');
                 feedback.textContent = "✅ Correct! +1 Point";
                 feedback.style.color = "var(--secondary)";
                 
-                // SM-2 Interval Calculation
                 if (wordRef.repetitions === 0) {
-                    wordRef.interval = 1; // 1 minute
+                    wordRef.interval = 1; 
                 } else if (wordRef.repetitions === 1) {
-                    wordRef.interval = 6; // 6 minutes
+                    wordRef.interval = 6; 
                 } else {
                     wordRef.interval = Math.ceil(wordRef.interval * wordRef.easiness);
                 }
                 
                 wordRef.repetitions++;
-                wordRef.easiness = Math.max(1.3, wordRef.easiness + 0.1); // Slightly easier
+                wordRef.easiness = Math.max(1.3, wordRef.easiness + 0.1); 
                 wordRef.nextReview = Date.now() + (wordRef.interval * 60000); 
                 
                 if(currentMode === 'review' && wordRef.mistakes > 0) {
@@ -476,34 +593,21 @@
                     feedback.textContent += " (Mistake resolved!)";
                 }
             } else {
-                // INCORRECT
                 sessionScore--;
                 selectedBtn.classList.add('incorrect');
                 feedback.textContent = "❌ Incorrect. -1 Point";
                 feedback.style.color = "var(--danger)";
                 
-                // SM-2 Reset
                 wordRef.repetitions = 0;
                 wordRef.interval = 1; 
-                wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.2); // Make it harder
-                wordRef.nextReview = Date.now(); // Due immediately
+                wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.2); 
+                wordRef.nextReview = Date.now(); 
                 wordRef.mistakes++;
             }
 
             saveState();
             updateScoreDisplay();
             document.getElementById('btnNextQuiz').style.display = "block";
-        }
-
-        // --- AUDIO LOGIC ---
-        function speakWord(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); 
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.85; 
-                utterance.lang = 'en-US';
-                window.speechSynthesis.speak(utterance);
-            }
         }
 
         // Start app
