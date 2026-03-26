@@ -123,6 +123,34 @@
     .btn-autoplay-active { background-color: var(--secondary); color: white; border-color: var(--secondary); }
     .btn-autoplay-active:hover { background-color: #059669; }
 
+    .autoplay-timer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .autoplay-timer-label {
+      font-size: 0.9rem;
+      color: #374151;
+      font-weight: 600;
+    }
+    .autoplay-timer-select {
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      background: #fff;
+      color: #111827;
+      min-width: 120px;
+    }
+    .autoplay-timer-status {
+      font-size: 0.85rem;
+      color: #6b7280;
+      min-height: 1.2em;
+    }
+
     /* Quiz & Review CSS */
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
     .score-display { font-size: 1.2rem; color: var(--primary); }
@@ -202,6 +230,20 @@
     <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
     <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
     <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
+  </div>
+  <div class="autoplay-timer-wrap">
+    <span class="autoplay-timer-label">Sleep timer</span>
+    <select id="autoplay-timer-select" class="autoplay-timer-select" aria-label="Autoplay sleep timer">
+      <option value="0">Off</option>
+      <option value="300">5 min</option>
+      <option value="600">10 min</option>
+      <option value="900">15 min</option>
+      <option value="1200">20 min</option>
+      <option value="1800">30 min</option>
+      <option value="2700">45 min</option>
+      <option value="3600">60 min</option>
+    </select>
+    <span id="autoplay-timer-status" class="autoplay-timer-status"></span>
   </div>
 </div>
 
@@ -1475,9 +1517,79 @@
   let autoplayRunId = 0;
   let wakeLockSentinel = null;
   let shouldResumeAutoplayAfterReturn = false;
+  let autoplayTimerTimeout = null;
+  let autoplayTimerInterval = null;
+  let autoplayStopAt = null;
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function formatRemainingTimer(ms) {
+    const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  function clearAutoplayTimerHandles() {
+    if (autoplayTimerTimeout) {
+      clearTimeout(autoplayTimerTimeout);
+      autoplayTimerTimeout = null;
+    }
+    if (autoplayTimerInterval) {
+      clearInterval(autoplayTimerInterval);
+      autoplayTimerInterval = null;
+    }
+  }
+
+  function updateAutoplayTimerStatus() {
+    const statusEl = document.getElementById('autoplay-timer-status');
+    if (!statusEl) return;
+
+    if (!isAutoplaying || !autoplayStopAt) {
+      statusEl.textContent = '';
+      return;
+    }
+
+    const remaining = autoplayStopAt - Date.now();
+    if (remaining <= 0) {
+      statusEl.textContent = 'Stopping soon…';
+      return;
+    }
+
+    statusEl.textContent = `Stops in ${formatRemainingTimer(remaining)}`;
+  }
+
+  async function expireAutoplayTimer() {
+    clearAutoplayTimerHandles();
+    autoplayStopAt = null;
+    await stopAutoplay();
+  }
+
+  function startAutoplayTimer() {
+    clearAutoplayTimerHandles();
+
+    const selectEl = document.getElementById('autoplay-timer-select');
+    if (!selectEl) return;
+
+    const durationSeconds = Number(selectEl.value || 0);
+    if (!durationSeconds || durationSeconds <= 0) {
+      autoplayStopAt = null;
+      updateAutoplayTimerStatus();
+      return;
+    }
+
+    autoplayStopAt = Date.now() + durationSeconds * 1000;
+    updateAutoplayTimerStatus();
+
+    autoplayTimerInterval = setInterval(() => {
+      updateAutoplayTimerStatus();
+    }, 1000);
+
+    autoplayTimerTimeout = setTimeout(() => {
+      expireAutoplayTimer();
+    }, durationSeconds * 1000);
   }
 
   async function requestWakeLock() {
@@ -1567,6 +1679,8 @@
     isAutoplaying = false;
     autoplayRunId++;
     shouldResumeAutoplayAfterReturn = false;
+    clearAutoplayTimerHandles();
+    autoplayStopAt = null;
 
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     await releaseWakeLock();
@@ -1575,6 +1689,7 @@
     btn.textContent = "▶️ Autoplay";
     btn.classList.remove('btn-autoplay-active');
     btn.classList.remove('active-loop');
+    updateAutoplayTimerStatus();
   }
 
   async function toggleAutoplay() {
@@ -1589,6 +1704,7 @@
       btn.textContent = "⏹️ Stop";
       btn.classList.add('btn-autoplay-active');
 
+      startAutoplayTimer();
       await requestWakeLock();
       runAutoplayLoop(autoplayRunId);
     }
@@ -1762,6 +1878,16 @@
     updateScoreDisplay();
     document.getElementById('btnNextQuiz').style.display = "block";
   }
+
+  document.getElementById('autoplay-timer-select')?.addEventListener('change', () => {
+    if (isAutoplaying) {
+      startAutoplayTimer();
+    } else {
+      autoplayStopAt = null;
+      clearAutoplayTimerHandles();
+      updateAutoplayTimerStatus();
+    }
+  });
 
   // Start app
   updateFlashcardUI();
