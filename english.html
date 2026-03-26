@@ -275,6 +275,8 @@
   </div>
 </div>
 
+<audio id="silentAudio" src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlIFByb2R1Y3Rpb25z fosse del suono" loop muted playsinline></audio>
+
 <script>
   // =========================================================================
   // RAW DATA - ORGANIZED INTO GROUPS OF 100
@@ -1028,7 +1030,6 @@
   { word: "commissar", definition: "A strict or dictatorial leader.", examples: ["The new boss acts like a commissar."] },
   { word: "rejoinder", definition: "A reply, especially a sharp or witty one.", examples: ["She always has a quick rejoinder ready."] },
   { word: "grisly", definition: "Causing horror or disgust.", examples: ["The police discovered a grisly scene."] },
-  { word: "touch a nerve", definition: "To provoke a sensitive or emotional reaction.", examples: ["My comment about his ex-girlfriend clearly touched a nerve."] },
   { word: "ethnography", definition: "The scientific description of the customs of individual peoples and cultures.", examples: ["The anthropologist conducted an ethnography of the remote tribe."] },
   { word: "behoove", definition: "It is a duty or responsibility for someone to do something; it is incumbent on.", examples: ["It would behoove you to study hard for this exam."] },
   { word: "kowtow", definition: "To act in an excessively subservient manner.", examples: ["He refused to kowtow to the demanding boss."] },
@@ -1473,6 +1474,7 @@
 
   // --- AUDIO & AUTOPLAY LOGIC ---
   let isAutoplaying = false;
+  const silentAudio = document.getElementById('silentAudio');
 
   function speakTextAsync(text) {
     return new Promise(resolve => {
@@ -1506,6 +1508,7 @@
   function stopAutoplay() {
     isAutoplaying = false;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    silentAudio.pause(); // Pause the silent audio
     const btn = document.getElementById('btn-autoplay');
     btn.textContent = "▶️ Autoplay";
     btn.classList.remove('btn-autoplay-active');
@@ -1517,6 +1520,7 @@
       stopAutoplay();
     } else {
       isAutoplaying = true;
+      silentAudio.play().catch(e => console.error("Error playing silent audio:", e)); // Play silent audio
       const btn = document.getElementById('btn-autoplay');
       btn.textContent = "⏹️ Stop";
       btn.classList.add('btn-autoplay-active');
