@@ -163,11 +163,11 @@
 <header>
   <h1>Vocab Master Pro</h1>
   <div class="tabs">
-    <button class="tab-btn active" onclick="setMode('flashcard')">Flashcards</button>
-    <button class="tab-btn" onclick="setMode('quiz')">SRS Quiz</button>
-    <button class="tab-btn" onclick="setMode('review')">Mistakes</button>
-    <button class="tab-btn" onclick="setMode('dashboard')">Dashboard</button>
-    <button class="tab-btn" onclick="setMode('add')">Add Word</button>
+    <button class="tab-btn active" id="tab-flashcard">Flashcards</button>
+    <button class="tab-btn" id="tab-quiz">SRS Quiz</button>
+    <button class="tab-btn" id="tab-review">Mistakes</button>
+    <button class="tab-btn" id="tab-dashboard">Dashboard</button>
+    <button class="tab-btn" id="tab-add">Add Word</button>
   </div>
   <div class="group-selector-container">
     <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
@@ -176,7 +176,9 @@
       <option value="0">Group 1 (1 - 100)</option>
       <option value="1">Group 2 (101 - 200)</option>
       <option value="2">Group 3 (201 - 300)</option>
-      <option value="3">Group 4 (301+)</option>
+      <option value="3">Group 4 (301 - 400)</option>
+      <option value="4">Group 5 (401 - 500)</option>
+      <option value="5">Group 6 (501+)</option>
     </select>
   </div>
 </header>
@@ -249,21 +251,21 @@
 <div id="add-mode" class="mode-container">
   <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
     <h2 style="margin-top: 0; color: var(--primary); text-align: center;">Add Custom Word</h2>
-    <form id="addWordForm" onsubmit="addCustomWord(event)">
+    <form id="addWordForm">
       <div class="form-group">
-        <label>Vocabulary Word</label>
+        <label for="newWord">Vocabulary Word</label>
         <input type="text" id="newWord" required placeholder="e.g., ephemeral">
       </div>
       <div class="form-group">
-        <label>Definition</label>
+        <label for="newDef">Definition</label>
         <textarea id="newDef" rows="3" required placeholder="Lasting for a very short time."></textarea>
       </div>
       <div class="form-group">
-        <label>Example Sentence 1</label>
+        <label for="newEx1">Example Sentence 1</label>
         <input type="text" id="newEx1" required placeholder="Fashions are ephemeral.">
       </div>
       <div class="form-group">
-        <label>Example Sentence 2 (Optional)</label>
+        <label for="newEx2">Example Sentence 2 (Optional)</label>
         <input type="text" id="newEx2" placeholder="...">
       </div>
       <button type="submit" class="btn-submit">Add to Deck ➕</button>
@@ -584,7 +586,7 @@
   { word: "earthling", definition: "An inhabitant of the earth (often used in sci-fi).", examples: ["The alien ambassador greeted the earthlings peacefully."] },
   { word: "Machiavellian", definition: "Cunning, scheming, and unscrupulous, especially in politics.", examples: ["His Machiavellian tactics allowed him to seize control of the board."] },
 
-  // --- GROUP 4 (Words 301+) ---
+  // --- GROUP 4 (Words 301 - 400) ---
   { word: "haptic", definition: "Relating to the sense of touch, in particular relating to technology.", examples: ["The phone uses haptic feedback to simulate the feeling of pressing a button."] },
   { word: "janky", definition: "Of poor quality, unreliable, or functioning poorly.", examples: ["I need a new laptop; this old one is incredibly janky."] },
   { word: "manspreading", definition: "The practice of a man sitting with his legs wide apart, taking up multiple seats.", examples: ["The subway was crowded, but he was still manspreading across two seats."] },
@@ -633,7 +635,486 @@
   { word: "lord over", definition: "To act in a domineering, arrogant manner toward someone.", examples: ["He used his newfound wealth to lord over his old friends."] },
   { word: "the luck of the draw", definition: "The outcome of chance rather than something you can control.", examples: ["Getting the easiest questions on the test was just the luck of the draw."] },
   { word: "soft touch", definition: "Someone who is easily persuaded or manipulated.", examples: ["He's a soft touch when it comes to lending money to his family."] },
-  { word: "plodder", definition: "Someone who works slowly and steadily, but uninspiredly.", examples: ["He's not a creative genius, just a reliable plodder who gets the job done."] }
+  { word: "plodder", definition: "Someone who works slowly and steadily, but uninspiredly.", examples: ["He's not a creative genius, just a reliable plodder who gets the job done."] },
+  { word: "proffer", definition: "To offer something to someone.", examples: ["He proffered a hand in friendship."] },
+  { word: "a good judge of character", definition: "Someone who can accurately assess people's personalities.", examples: ["My father is a good judge of character; he knew my new friend was trouble."] },
+  { word: "pulverize", definition: "To crush into a fine powder.", examples: ["The machine pulverizes rocks into dust."] },
+  { word: "cinch", definition: "Something that is very easy to do.", examples: ["After weeks of practice, the test was a cinch."] },
+  { word: "get back on the horse", definition: "To try again after a failure.", examples: ["You can't give up after one rejection; you have to get back on the horse."] },
+  { word: "hereditary", definition: "Passed down from parents to children.", examples: ["Baldness can be hereditary."] },
+  { word: "flaky", definition: "Unreliable; not keeping promises.", examples: ["He's too flaky to be a good team member."] },
+  { word: "ragtime", definition: "A style of early jazz music with a syncopated melody.", examples: ["He played a classic ragtime tune on the piano."] },
+  { word: "mansplain", definition: "(Of a man) to explain something to someone, typically a woman, in a condescending or overconfident manner.", examples: ["He started to mansplain the rules of the game to the female coach."] },
+  { word: "get under one's skin", definition: "To annoy or irritate someone.", examples: ["His constant humming really gets under my skin."] },
+  { word: "muscle through", definition: "To endure or overcome a difficult situation with sheer force or determination.", examples: ["It's a tough week, but we just have to muscle through it."] },
+  { word: "in for a penny, in for a pound", definition: "Once committed to something, one should see it through to the end.", examples: ["I've already invested too much to quit now. In for a penny, in for a pound."] },
+  { word: "heinous", definition: "Utterly odious or wicked.", examples: ["The serial killer committed heinous crimes."] },
+  { word: "pilfer", definition: "To steal things of little value.", examples: ["He was caught pilfering office supplies."] },
+  { word: "rancid", definition: "(Of foods containing fat or oil) smelling or tasting unpleasant as a result of being old and stale.", examples: ["The butter had gone rancid."] },
+  { word: "dystonia", definition: "A movement disorder in which a person's muscles contract uncontrollably.", examples: ["She was diagnosed with dystonia, which caused painful muscle spasms."] },
+  { word: "occult", definition: "Mystical, supernatural, or magical powers, practices, or phenomena.", examples: ["She has a deep interest in the occult."] },
+  { word: "solidarity", definition: "Unity or agreement of feeling or action, especially among individuals with a common interest.", examples: ["The workers showed solidarity by going on strike together."] },
+  { word: "hokey", definition: "Corny, sentimental, or artificial.", examples: ["The movie's ending was a bit hokey for my taste."] },
+  { word: "bozo", definition: "A stupid or insignificant person.", examples: ["Don't be a bozo; read the instructions first."] },
+  { word: "outfox", definition: "To outwit or deceive someone.", examples: ["The clever detective managed to outfox the criminal."] },
+  { word: "pearl of wisdom", definition: "A wise saying.", examples: ["My grandmother offered a pearl of wisdom: 'This too shall pass.'"] },
+  { word: "speak one's mind", definition: "To say what one really thinks.", examples: ["She's not afraid to speak her mind, even if it's unpopular."] },
+  { word: "tokenism", definition: "The practice of making only a perfunctory or symbolic effort to do a particular thing.", examples: ["Hiring one woman for the board was criticized as mere tokenism."] },
+  { word: "act out", definition: "To express one's feelings through disruptive behavior.", examples: ["The child started acting out after his parents' divorce."] },
+  { word: "act up", definition: "(Of a person or machine) to misbehave or malfunction.", examples: ["My old car starts to act up in cold weather."] },
+  { word: "spineless", definition: "Lacking courage or determination.", examples: ["His spineless refusal to stand up for his beliefs was disappointing."] },
+  { word: "on retainer", definition: "The state of being paid to be available for work.", examples: ["The company keeps a lawyer on retainer."] },
+  { word: "all too often", definition: "Happening very frequently, more than is desirable.", examples: ["All too often, people forget to save their work."] },
+  { word: "catch a break", definition: "To get a lucky opportunity.", examples: ["After months of searching, he finally caught a break and got a job."] },
+  { word: "metastasize", definition: "(Of a cancer) to spread to other sites in the body.", examples: ["The cancer had metastasized to the liver."] },
+  { word: "live in the moment", definition: "To focus on the present.", examples: ["Try to stop worrying about the future and just live in the moment."] },
+  { word: "do one's bidding", definition: "To obey someone's commands.", examples: ["The evil queen had an army of minions to do her bidding."] },
+  { word: "salve", definition: "An ointment used to promote healing of the skin or as protection.", examples: ["She applied a salve to the burn."] },
+  { word: "expunge", definition: "To erase or remove completely.", examples: ["He had his criminal record expunged."] },
+  { word: "flame out", definition: "To fail spectacularly.", examples: ["The promising startup flamed out after just one year."] },
+  { word: "prognosis", definition: "The likely course of a disease or ailment.", examples: ["The doctor's prognosis was that the patient would make a full recovery."] },
+  { word: "ginormous", definition: "Extremely large.", examples: ["He lives in a ginormous mansion."] },
+  { word: "retract", definition: "To draw or be drawn back or back in.", examples: ["The cat retracted its claws."] },
+  { word: "opposites attract", definition: "The idea that people with different personalities are drawn to each other.", examples: ["They are a classic case of opposites attract; he's quiet and she's outgoing."] },
+  { word: "at the finish line", definition: "At the very end of a process or competition.", examples: ["After years of hard work, she was finally at the finish line of her PhD."] },
+  { word: "out of sorts", definition: "In a bad mood; irritable.", examples: ["He's been out of sorts all day."] },
+  { word: "hospice", definition: "A home providing care for the sick or terminally ill.", examples: ["His grandmother spent her final days in a hospice."] },
+  { word: "get one's arm twisted", definition: "To be persuaded to do something one is reluctant to do.", examples: ["I didn't want to go, but he twisted my arm."] },
+  { word: "lean into", definition: "To embrace or accept something challenging or uncomfortable.", examples: ["Instead of avoiding the conflict, you should lean into it."] },
+  { word: "crinkle", definition: "To form small folds or wrinkles.", examples: ["He crinkled his nose in disgust."] },
+  { word: "beyond a shadow of a doubt", definition: "With absolute certainty.", examples: ["He was, beyond a shadow of a doubt, the best candidate for the job."] },
+  { word: "wicked witch", definition: "A classic villainous character in fairy tales.", examples: ["The Wicked Witch of the West is a famous movie villain."] },
+  { word: "hard-ass", definition: "A tough, demanding person.", examples: ["My new boss is a real hard-ass."] },
+  { word: "battered", definition: "Damaged by repeated blows or punishment.", examples: ["The boxer was battered after the long fight."] },
+  { word: "heart in one's mouth", definition: "Feeling extremely nervous or frightened.", examples: ["My heart was in my mouth as I waited for the results."] },
+  { word: "take one's eyes off the ball", definition: "To lose focus on what is important.", examples: ["The company took its eyes off the ball and lost market share."] },
+  { word: "douchebag", definition: "A contemptible or obnoxious person.", examples: ["He's a complete douchebag for how he treated her."] },
+  { word: "white whale", definition: "An obsession that is difficult or impossible to achieve.", examples: ["For the detective, catching the killer became his white whale."] },
+  { word: "for dear life", definition: "With desperate urgency.", examples: ["She held on for dear life as the roller coaster went upside down."] },
+  { word: "off the wall", definition: "Bizarre, eccentric, or unconventional.", examples: ["His sense of humor is a little off the wall."] },
+  { word: "disarming", definition: "(Of a manner or behavior) having the effect of allaying suspicion or hostility, especially through charm.", examples: ["She has a disarming smile."] },
+  { word: "gag", definition: "To choke or retch.", examples: ["The smell of the garbage made me gag."] },
+  { word: "down and out", definition: "Having no money, job, or place to live.", examples: ["He was down and out after losing his job."] },
+  { word: "on a mission", definition: "Acting with great purpose and determination.", examples: ["She was on a mission to find the perfect gift."] },
+  { word: "snitches get stitches", definition: "A threat indicating that informing on others will result in physical harm.", examples: ["The gang's motto was 'snitches get stitches.'"] },
+  { word: "sticky", definition: "(Of a situation) difficult to deal with.", examples: ["He found himself in a sticky situation when he lied to his boss."] },
+
+  // --- GROUP 5 (Words 401 - 500) ---
+  { word: "hoagie", definition: "A submarine sandwich.", examples: ["I'm going to get a hoagie for lunch."] },
+  { word: "shady", definition: "Of doubtful honesty or legality.", examples: ["He was involved in some shady business deals."] },
+  { word: "rack one's brain", definition: "To think very hard.", examples: ["I racked my brain, but I couldn't remember his name."] },
+  { word: "partake", definition: "To join in an activity.", examples: ["She was happy to partake in the celebration."] },
+  { word: "tell a tale", definition: "To tell a story, often one that is not true.", examples: ["He's known for telling tall tales."] },
+  { word: "aplomb", definition: "Self-confidence or assurance, especially in a demanding situation.", examples: ["She handled the crisis with great aplomb."] },
+  { word: "hold up one's end of a bargain", definition: "To do one's part of an agreement.", examples: ["I held up my end of the bargain; now it's your turn."] },
+  { word: "snazzy", definition: "Stylish and attractive.", examples: ["He wore a snazzy new suit to the party."] },
+  { word: "high-handed", definition: "Using power or authority without considering the feelings of others.", examples: ["His high-handed management style made him unpopular."] },
+  { word: "launder", definition: "To conceal the origins of (money obtained illegally).", examples: ["The criminals laundered the money through a series of shell companies."] },
+  { word: "benefactor", definition: "A person who gives money or other help to a person or cause.", examples: ["An anonymous benefactor donated a million dollars to the hospital."] },
+  { word: "preoccupied", definition: "Engrossed in thought; distracted.", examples: ["She was too preoccupied with her own thoughts to notice him."] },
+  { word: "sublimate", definition: "To divert the expression of an instinctual desire to a more socially acceptable form.", examples: ["He sublimated his aggressive impulses by playing sports."] },
+  { word: "ravenous", definition: "Extremely hungry.", examples: ["After the hike, I was ravenous."] },
+  { word: "corporal punishment", definition: "Physical punishment, such as caning or flogging.", examples: ["Many schools have banned corporal punishment."] },
+  { word: "leave someone to his or her own devices", definition: "To allow someone to do as they please without supervision.", examples: ["The parents left the teenagers to their own devices for the weekend."] },
+  { word: "gobsmacked", definition: "Utterly astonished; astounded.", examples: ["I was gobsmacked when I heard she had won the lottery."] },
+  { word: "walk the talk", definition: "To do what one said one would do; to act in a way that is consistent with one's words.", examples: ["A good leader must walk the talk."] },
+  { word: "intersperse", definition: "To scatter among or between other things; place here and there.", examples: ["The documentary interspersed interviews with archival footage."] },
+  { word: "triangulate", definition: "To use the positions of two or more points to determine the position of a third.", examples: ["They were able to triangulate the location of the cell phone."] },
+  { word: "phantom", definition: "A ghost or a figment of the imagination.", examples: ["He felt a phantom pain in his amputated leg."] },
+  { word: "riffraff", definition: "Disreputable or undesirable people.", examples: ["The exclusive club did not want to associate with the riffraff."] },
+  { word: "redress", definition: "To remedy or set right (an undesirable or unfair situation).", examples: ["He sought redress for the injustice he had suffered."] },
+  { word: "shake up", definition: "To cause a major change in an organization or system.", examples: ["The new CEO is planning to shake up the company."] },
+  { word: "spring something on someone", definition: "To surprise someone with something.", examples: ["He sprang the news on me that he was moving to another country."] },
+  { word: "confection", definition: "A dish or delicacy made with sweet ingredients.", examples: ["The bakery sold a variety of delicious confections."] },
+  { word: "hold the purse strings", definition: "To have control of expenditure.", examples: ["My mom holds the purse strings in our family."] },
+  { word: "living wage", definition: "A wage that is high enough to maintain a normal standard of living.", examples: ["They are campaigning for a living wage for all workers."] },
+  { word: "sever ties with someone", definition: "To end a relationship or connection with someone.", examples: ["She severed all ties with her ex-husband."] },
+  { word: "fit as a fiddle", definition: "In very good health.", examples: ["My grandfather is 90 years old, but he's as fit as a fiddle."] },
+  { word: "at death's door", definition: "Very close to dying.", examples: ["He was at death's door after the accident."] },
+  { word: "second wind", definition: "A new burst of energy after feeling exhausted.", examples: ["I was about to give up, but then I got a second wind."] },
+  { word: "give someone a clean bill of health", definition: "To declare that someone is healthy.", examples: ["The doctor gave him a clean bill of health."] },
+  { word: "have one's work cut out for one", definition: "To be faced with a difficult task.", examples: ["With three exams next week, she has her work cut out for her."] },
+  { word: "splash out", definition: "To spend a lot of money on something.", examples: ["They splashed out on a luxury vacation."] },
+  { word: "ahead of the pack", definition: "More successful than one's competitors.", examples: ["Our company is ahead of the pack in terms of innovation."] },
+  { word: "out of one's depth", definition: "In a situation that is too difficult to handle.", examples: ["I felt out of my depth in the advanced physics class."] },
+  { word: "iron in the fire", definition: "One of several activities or projects in which a person is engaged.", examples: ["She has several irons in the fire, including a new book and a movie deal."] },
+  { word: "backroom deal", definition: "An agreement made in secret.", examples: ["The politicians were accused of making a backroom deal."] },
+  { word: "on the up and up", definition: "Honest and legitimate.", examples: ["I trust him; I believe he's on the up and up."] },
+  { word: "have a bee in one's bonnet", definition: "To be obsessed with an idea.", examples: ["She has a bee in her bonnet about recycling."] },
+  { word: "blow a gasket", definition: "To become very angry.", examples: ["He blew a gasket when he saw the dent in his car."] },
+  { word: "get off scot-free", definition: "To escape punishment completely.", examples: ["He got off scot-free because of a legal loophole."] },
+  { word: "greener pasture", definition: "A better or more promising situation.", examples: ["He left his job for greener pastures."] },
+  { word: "snap up", definition: "To buy or take something quickly.", examples: ["Fans snapped up the concert tickets in minutes."] },
+  { word: "make a break for", definition: "To run towards something in an attempt to escape.", examples: ["The prisoner made a break for the fence."] },
+  { word: "big cheese", definition: "An important or influential person.", examples: ["He's the big cheese in this company."] },
+  { word: "take a breather", definition: "To take a short break.", examples: ["Let's take a breather before we continue."] },
+  { word: "corner a market", definition: "To dominate a particular market.", examples: ["The company has cornered the market for electric cars."] },
+  { word: "full plate", definition: "A schedule or workload that is filled to capacity.", examples: ["I can't take on any more projects; I have a full plate."] },
+  { word: "put your finger on something", definition: "To identify the exact reason for something.", examples: ["I can't quite put my finger on what's wrong with this picture."] },
+  { word: "small fry", definition: "People or things of little importance.", examples: ["The police are not interested in the small fry; they want the drug lord."] },
+  { word: "top of mind", definition: "The first thing that comes to mind.", examples: ["When people think of smartphones, our brand is top of mind."] },
+  { word: "flying start", definition: "A very good beginning.", examples: ["The project got off to a flying start."] },
+  { word: "under the gun", definition: "Under pressure to do something.", examples: ["We're under the gun to finish this report by Friday."] },
+  { word: "play hardball", definition: "To be firm and determined to get what one wants.", examples: ["The company is playing hardball in the negotiations."] },
+  { word: "under the table", definition: "(Of a payment) made secretly or illegally.", examples: ["He was paid under the table in cash."] },
+  { word: "stinking rich", definition: "Extremely wealthy.", examples: ["He's stinking rich from his investments."] },
+  { word: "shoot from the hip", definition: "To speak or act without thinking.", examples: ["He has a tendency to shoot from the hip, which often gets him into trouble."] },
+  { word: "pay through the nose", definition: "To pay an excessive amount for something.", examples: ["We paid through the nose for our hotel room."] },
+  { word: "card up one's sleeve", definition: "A secret plan or advantage.", examples: ["He still has a card up his sleeve."] },
+  { word: "two-faced", definition: "Insincere and deceitful.", examples: ["I can't believe she was so two-faced."] },
+  { word: "whole hog", definition: "To the fullest extent possible.", examples: ["They went whole hog on the wedding decorations."] },
+  { word: "harebrained", definition: "Crazy and unlikely to succeed.", examples: ["He came up with a harebrained scheme to get rich quick."] },
+  { word: "blackball", definition: "To reject (someone, typically a candidate for membership in a private club), secretly.", examples: ["He was blackballed from the country club."] },
+  { word: "pull the wool over one's eyes", definition: "To deceive someone.", examples: ["He tried to pull the wool over my eyes, but I knew he was lying."] },
+  { word: "stay on the good side of someone", definition: "To remain in someone's favor.", examples: ["You should stay on the good side of the boss."] },
+  { word: "have one's ear", definition: "To have influence with someone.", examples: ["She has the president's ear."] },
+  { word: "take someone to the cleaners", definition: "To win a lot of someone's money, or to swindle them.", examples: ["He took me to the cleaners in our poker game."] },
+  { word: "close up shop", definition: "To cease trading or operating.", examples: ["The store closed up shop for good."] },
+  { word: "living within one's means", definition: "Spending no more money than one earns.", examples: ["It's important to live within your means."] },
+  { word: "to the fore", definition: "To or into a position of prominence.", examples: ["Several new issues have come to the fore."] },
+  { word: "grand larceny", definition: "Theft of personal property having a value above a legally specified amount.", examples: ["He was charged with grand larceny."] },
+  { word: "cognizant", definition: "Having knowledge or being aware of.", examples: ["You should be cognizant of the risks involved."] },
+  { word: "take the leap", definition: "To commit to a course of action, especially one that is risky.", examples: ["She decided to take the leap and start her own business."] },
+  { word: "flat-footed", definition: "Unprepared.", examples: ["The question caught him flat-footed."] },
+  { word: "renounce", definition: "To formally declare one's abandonment of (a claim, right, or possession).", examples: ["He renounced his citizenship."] },
+  { word: "ironclad", definition: "Impossible to contradict, weaken, or change.", examples: ["He has an ironclad alibi."] },
+  { word: "stroke of luck", definition: "A fortunate occurrence that could not have been predicted or expected.", examples: ["Finding that money was a real stroke of luck."] },
+  { word: "vertigo", definition: "A sensation of whirling and loss of balance.", examples: ["Looking down from the tall building gave me vertigo."] },
+  { word: "keep one's nose to the grindstone", definition: "To work hard and continuously.", examples: ["She kept her nose to the grindstone and finished her degree in three years."] },
+  { word: "talk someone off a cliff", definition: "To persuade someone not to do something drastic.", examples: ["He was about to quit his job, but his friend talked him off a cliff."] },
+  { word: "put the cart before the horse", definition: "To do things in the wrong order.", examples: ["Buying a wedding dress before you're engaged is putting the cart before the horse."] },
+  { word: "catwalk", definition: "A narrow walkway, especially one high above the ground.", examples: ["The models strutted down the catwalk."] },
+  { word: "tote", definition: "To carry, wield, or convey (something heavy or awkward).", examples: ["She was toting a large bag of groceries."] },
+  { word: "get off the hamster wheel", definition: "To escape a monotonous, repetitive, or unfulfilling routine.", examples: ["He quit his boring job to get off the hamster wheel."] },
+  { word: "by a mile", definition: "By a large amount.", examples: ["She was the best candidate for the job by a mile."] },
+  { word: "down the pike", definition: "In the future.", examples: ["There are more changes coming down the pike."] },
+  { word: "go off on a tangent", definition: "To diverge from the main subject.", examples: ["The professor went off on a tangent about his travels."] },
+  { word: "lexicon", definition: "The vocabulary of a person, language, or branch of knowledge.", examples: ["He has an impressive lexicon."] },
+  { word: "have big shoes to fill", definition: "To have to meet a high standard set by a predecessor.", examples: ["The new CEO has big shoes to fill."] },
+  { word: "a plum in your mouth", definition: "Speaking with an upper-class accent.", examples: ["He spoke with a plum in his mouth."] },
+  { word: "like a ripe plum", definition: "Ready to be taken or enjoyed.", examples: ["The company was like a ripe plum, ready for a takeover."] },
+  { word: "write someone off", definition: "To dismiss someone as insignificant or a failure.", examples: ["Don't write him off just yet; he might surprise you."] },
+  { word: "grind away", definition: "To work hard at something for a long time.", examples: ["She's been grinding away at her novel for years."] },
+  { word: "work one's fingers to the bone", definition: "To work extremely hard.", examples: ["She worked her fingers to the bone to provide for her family."] },
+  { word: "trudge through", definition: "To walk slowly and with heavy steps, typically due to exhaustion or difficult conditions.", examples: ["We had to trudge through the snow to get home."] },
+  { word: "on the grind", definition: "Working hard.", examples: ["He's always on the grind, trying to make a better life for himself."] },
+  { word: "saber rattling", definition: "The display or threat of military force.", examples: ["The country's saber rattling has its neighbors worried."] },
+  { word: "recrimination", definition: "An accusation in response to one from someone else.", examples: ["The discussion descended into a series of bitter recriminations."] },
+  { word: "axiomatic", definition: "Self-evident or unquestionable.", examples: ["It is axiomatic that a circle is round."] },
+  { word: "kick one's feet up", definition: "To relax.", examples: ["After a long day, I just want to kick my feet up and watch TV."] },
+  { word: "regurgitate", definition: "To bring (swallowed food) up again to the mouth.", examples: ["The bird regurgitated food for its chicks."] },
+  { word: "in the trenches", definition: "Involved in the main, most difficult, or most active part of a job or conflict.", examples: ["The social workers are in the trenches, dealing with the city's most vulnerable people."] },
+
+  // --- GROUP 6 (Words 501+) ---
+  { word: "clear the decks", definition: "To get ready for action by removing obstructions.", examples: ["We need to clear the decks before the new project starts."] },
+  { word: "slip one's mind", definition: "To be forgotten.", examples: ["I'm sorry I forgot your birthday; it completely slipped my mind."] },
+  { word: "cheap laugh", definition: "A laugh or amusement obtained by a simple or crude joke.", examples: ["He's always going for the cheap laugh."] },
+  { word: "hotsy-totsy", definition: "Perfectly satisfactory; fine.", examples: ["Everything is hotsy-totsy."] },
+  { word: "bulls eye", definition: "The center of a target.", examples: ["He hit the bull's eye with his first shot."] },
+  { word: "blow someone or something out of the water", definition: "To defeat or destroy someone or something completely.", examples: ["Our new product will blow the competition out of the water."] },
+  { word: "subject matter", definition: "The topic dealt with or the subject represented in a debate, exposition, or work of art.", examples: ["The subject matter of the book is very controversial."] },
+  { word: "psyche", definition: "The human soul, mind, or spirit.", examples: ["The trauma had a lasting effect on his psyche."] },
+  { word: "populist", definition: "A person, especially a politician, who strives to appeal to ordinary people who feel that their concerns are disregarded by established elite groups.", examples: ["The populist candidate won the election."] },
+  { word: "carte blanche", definition: "Complete freedom to act as one wishes or thinks best.", examples: ["The director was given carte blanche to make the movie he wanted."] },
+  { word: "ballast", definition: "Heavy material, such as gravel, sand, iron, or lead, placed low in a vessel to improve its stability.", examples: ["The ship took on ballast to improve its stability."] },
+  { word: "ring the cash register", definition: "To make a sale; to generate revenue.", examples: ["Our new ad campaign is really ringing the cash register."] },
+  { word: "lick one's wounds", definition: "To recover from a defeat or humiliation.", examples: ["After losing the election, he went home to lick his wounds."] },
+  { word: "hurl", definition: "To throw (an object) with great force.", examples: ["He hurled the rock into the river."] },
+  { word: "pop into one's head", definition: "(Of a thought or idea) to occur to one suddenly.", examples: ["A great idea just popped into my head."] },
+  { word: "shoot oneself in the foot", definition: "To foolishly harm one's own cause.", examples: ["He shot himself in the foot by lying to the police."] },
+  { word: "pep in one's step", definition: "A lively and energetic way of walking.", examples: ["She has a real pep in her step today."] },
+  { word: "open book", definition: "A person or thing that is easy to understand.", examples: ["My life is an open book."] },
+  { word: "fractal", definition: "A curve or geometric figure, each part of which has the same statistical character as the whole.", examples: ["Snowflakes have a fractal pattern."] },
+  { word: "key off", definition: "To base one's actions or ideas on something.", examples: ["The music keyed off the dancer's movements."] },
+  { word: "tiger in one's tank", definition: "Energy and enthusiasm.", examples: ["He's got a tiger in his tank today."] },
+  { word: "periscope", definition: "An apparatus consisting of a tube attached to a set of mirrors or prisms, by which an observer can see things that are otherwise out of sight.", examples: ["The submarine raised its periscope."] },
+  { word: "lighten up", definition: "To become less serious.", examples: ["Lighten up! It was just a joke."] },
+  { word: "loosen up", definition: "To relax.", examples: ["You need to loosen up and have some fun."] },
+  { word: "contraceptive", definition: "A device or drug serving to prevent pregnancy.", examples: ["She's on a contraceptive pill."] },
+  { word: "over the hill", definition: "Past one's prime.", examples: ["He's not over the hill yet; he still has a lot to offer."] },
+  { word: "sepsis", definition: "A life-threatening condition that arises when the body's response to an infection injures its own tissues and organs.", examples: ["The patient died of sepsis."] },
+  { word: "identify with", definition: "To feel that one is similar to someone and can understand them or their situation.", examples: ["I can identify with her struggles."] },
+  { word: "spazz out", definition: "To lose physical or emotional control.", examples: ["He spazzed out when he heard the news."] },
+  { word: "pick apart", definition: "To criticize someone or something in a detailed and typically unkind way.", examples: ["She picked apart his every word."] },
+  { word: "pivotal", definition: "Of crucial importance in relation to the development or success of something else.", examples: ["This is a pivotal moment in our company's history."] },
+  { word: "bucking bronco", definition: "A wild horse that jumps and kicks violently.", examples: ["He was thrown from the bucking bronco."] },
+  { word: "veer off course", definition: "To change direction suddenly.", examples: ["The ship veered off course in the storm."] },
+  { word: "aerial", definition: "Existing, happening, or operating in the air.", examples: ["The movie featured some stunning aerial photography."] },
+  { word: "stir the pot", definition: "To cause trouble; to make a situation more tense or complicated.", examples: ["He loves to stir the pot by spreading rumors."] },
+  { word: "be on the lookout for", definition: "To be watching carefully for someone or something.", examples: ["Be on the lookout for a man in a red hat."] },
+  { word: "white glove", definition: "(Of a service) involving very careful and attentive treatment.", examples: ["They offer a white-glove delivery service."] },
+  { word: "live on/off the fat of the land", definition: "To live in great comfort and luxury.", examples: ["He's been living off the fat of the land since he won the lottery."] },
+  { word: "white label product", definition: "A product or service produced by one company that other companies rebrand to make it appear as if they had made it.", examples: ["We sell a white-label version of their software."] },
+  { word: "backstop", definition: "A person or thing at the rear of something, intended to prevent it from going further.", examples: ["The fence serves as a backstop for the baseball field."] },
+  { word: "corpus", definition: "A collection of written texts, especially the entire works of a particular author or a body of writing on a particular subject.", examples: ["The corpus of Shakespeare's works is vast."] },
+  { word: "hair raising", definition: "Extremely frightening.", examples: ["It was a hair-raising experience."] },
+  { word: "ad lib", definition: "To speak or perform in public without previously preparing one's words.", examples: ["The comedian was great at ad-libbing."] },
+  { word: "schmooze", definition: "To talk informally with someone, especially in a way that is not sincere, in order to gain an advantage.", examples: ["He spent the evening schmoozing with potential investors."] },
+  { word: "hightail", definition: "To move or travel fast.", examples: ["We had to hightail it out of there when the police arrived."] },
+  { word: "crummy", definition: "Of poor quality; shabby.", examples: ["This is a crummy hotel."] },
+  { word: "run-on sentence", definition: "A sentence in which two or more independent clauses are joined without an appropriate punctuation or conjunction.", examples: ["Your essay is full of run-on sentences."] },
+  { word: "a nail in one's coffin", definition: "An action or event that helps to bring about someone's or something's downfall.", examples: ["The scandal was the final nail in his coffin."] },
+  { word: "throw a wet blanket on something", definition: "To spoil someone's enthusiasm for something.", examples: ["He threw a wet blanket on our plans by pointing out all the things that could go wrong."] },
+  { word: "evince", definition: "To reveal the presence of (a quality or feeling).", examples: ["He evinced a deep interest in the subject."] },
+  { word: "success breeds success", definition: "Success leads to further success.", examples: ["In this business, success breeds success."] },
+  { word: "lay something on thick", definition: "To praise or flatter someone excessively.", examples: ["He was laying it on thick to get a promotion."] },
+  { word: "waterlogged", definition: "Saturated with or full of water.", examples: ["The ground was waterlogged after the heavy rain."] },
+  { word: "catch some rays", definition: "To sunbathe.", examples: ["I'm going to the beach to catch some rays."] },
+  { word: "take the wheel", definition: "To take control of a situation.", examples: ["It's time for you to take the wheel."] },
+  { word: "keener", definition: "A person who is extremely eager or enthusiastic.", examples: ["She's a real keener; she's always the first to volunteer."] },
+  { word: "rinky dink", definition: "Unimpressive and of poor quality.", examples: ["This is a rinky-dink operation."] },
+  { word: "chintzy", definition: "Cheap and of poor quality.", examples: ["The decorations were chintzy."] },
+  { word: "head honcho", definition: "The person in charge.", examples: ["I need to speak to the head honcho."] },
+  { word: "scarf down", definition: "To eat something quickly and greedily.", examples: ["He scarfed down the pizza in minutes."] },
+  { word: "come up trumps", definition: "To produce a good, unexpected result.", examples: ["He came up trumps with a brilliant idea."] },
+  { word: "knuckle down", definition: "To apply oneself seriously to a task.", examples: ["It's time to knuckle down and study for the exam."] },
+  { word: "catch some Zs", definition: "To sleep.", examples: ["I need to catch some Zs before my flight."] },
+  { word: "smoke and mirrors", definition: "Deception and illusion.", examples: ["The company's success was all smoke and mirrors."] },
+  { word: "kick the bucket", definition: "To die.", examples: ["He kicked the bucket at the age of 90."] },
+  { word: "keep your fingers on the pulse of", definition: "To stay up-to-date with the latest developments.", examples: ["It's important to keep your fingers on the pulse of the industry."] },
+  { word: "boot off", definition: "To force (someone) to leave a computer system or network.", examples: ["The administrator booted him off the server."] },
+  { word: "spin a tale", definition: "To tell a story, especially a long and complicated one.", examples: ["He spun a tale about his adventures in Africa."] },
+  { word: "semblance", definition: "The outward appearance or apparent form of something, especially when the reality is different.", examples: ["She tried to project some semblance of calm."] },
+  { word: "put a bow on something", definition: "To finish something up nicely.", examples: ["Let's put a bow on this project and send it to the client."] },
+  { word: "hellfire", definition: "The fire of hell, often used to describe intense heat or passion.", examples: ["He preached a sermon full of hellfire and brimstone."] },
+  { word: "picket", definition: "A person or group of people standing outside a place of work or other venue, protesting something or trying to persuade others not to enter during a strike.", examples: ["The workers formed a picket line outside the factory."] },
+  { word: "interloper", definition: "A person who becomes involved in a place or situation where they are not wanted or are considered not to belong.", examples: ["She felt like an interloper at the exclusive party."] },
+  { word: "vacuous", definition: "Having or showing a lack of thought or intelligence; mindless.", examples: ["He made a vacuous remark."] },
+  { word: "savant", definition: "A learned person, especially a distinguished scientist.", examples: ["He is a musical savant."] },
+  { word: "preachy", definition: "Having or showing a tendency to give moral advice in a tedious or self-righteous way.", examples: ["Her tone was a little too preachy for my taste."] },
+  { word: "sink one's teeth", definition: "To become completely engaged or absorbed in something.", examples: ["I can't wait to sink my teeth into this new project."] },
+  { word: "put in a word for someone", definition: "To say something in support of someone.", examples: ["I'll put in a good word for you with the boss."] },
+  { word: "punch a clock", definition: "To record the time of one's arrival at or departure from work.", examples: ["He was tired of punching a clock every day."] },
+  { word: "no dice", definition: "Used to refuse a request or indicate that there is no chance of success.", examples: ["I asked for a raise, but the boss said no dice."] },
+  { word: "no can do", definition: "I cannot do it.", examples: ["Sorry, no can do."] },
+  { word: "loaded", definition: "Having a lot of money.", examples: ["He's loaded."] },
+  { word: "in the groove", definition: "Performing very well or smoothly.", examples: ["The band is really in the groove tonight."] },
+  { word: "abomination", definition: "A thing that causes disgust or hatred.", examples: ["The new building is an architectural abomination."] },
+  { word: "golden child", definition: "A favored or highly successful person.", examples: ["He was the golden child of the family."] },
+  { word: "jingle", definition: "A short slogan, verse, or tune designed to be easily remembered.", examples: ["That commercial has a catchy jingle."] },
+  { word: "ditty", definition: "A short, simple song.", examples: ["He hummed a little ditty as he worked."] },
+  { word: "in a rut", definition: "In a settled or established pattern of behavior that is hard to break.", examples: ["I feel like I'm in a rut with my career."] },
+  { word: "dig in one's heels", definition: "To refuse to yield or compromise.", examples: ["He dug in his heels and refused to change his mind."] },
+  { word: "tight as a drum", definition: "Very tight or secure.", examples: ["The security at the event was tight as a drum."] },
+  { word: "prognostication", definition: "The action of foretelling or prophesying future events.", examples: ["His gloomy prognostications proved to be accurate."] },
+  { word: "lackey", definition: "A servant, especially a liveried footman or manservant.", examples: ["He treated his employees like lackeys."] },
+  { word: "stake out", definition: "A period of secret surveillance of a building or an area by police in order to observe someone's activities.", examples: ["The police set up a stakeout near the suspect's house."] },
+  { word: "look under the hood", definition: "To examine the underlying details or workings of something.", examples: ["Before we invest, we need to look under the hood of their financial statements."] },
+  { word: "gearhead", definition: "An enthusiast or expert in a particular field, especially automotive or mechanical.", examples: ["He's a real gearhead and spends all his free time working on cars."] },
+  { word: "clemency", definition: "Mercy; lenience.", examples: ["The governor granted clemency to the prisoners."] },
+  { word: "in one's good graces", definition: "In a state of being liked or approved of by someone.", examples: ["I'm trying to stay in the boss's good graces."] },
+  { word: "pull a job", definition: "To commit a crime, especially a robbery.", examples: ["They were planning to pull a bank job."] },
+  { word: "all-timer", definition: "One of the greatest of all time.", examples: ["That catch was an all-timer."] },
+  { word: "home stretch", definition: "The final part of a race or journey.", examples: ["We're in the home stretch now; just a few more miles to go."] },
+  { word: "upstate", definition: "The northern part of a state, especially New York.", examples: ["They bought a cabin upstate."] },
+  { word: "run one's mouth", definition: "To talk excessively or indiscreetly.", examples: ["He's always running his mouth about things he doesn't understand."] },
+  { word: "make a run for", definition: "To attempt to escape by running.", examples: ["The thief made a run for the door."] },
+  { word: "like hell you are", definition: "Used to strongly contradict or disagree with someone.", examples: ["'I'm going to the party.' 'Like hell you are!'"] },
+  { word: "the old days", definition: "The past.", examples: ["We used to have so much fun in the old days."] },
+  { word: "death wish", definition: "A desire for death, typically manifesting itself in dangerous or self-destructive behavior.", examples: ["Driving that fast on icy roads is like having a death wish."] },
+  { word: "cunning", definition: "Having or showing skill in achieving one's ends by deceit or evasion.", examples: ["He was a cunning politician."] },
+  { word: "corpse", definition: "A dead body.", examples: ["The police found a corpse in the woods."] },
+  { word: "Interpol", definition: "The International Criminal Police Organization.", examples: ["Interpol issued an arrest warrant for the suspect."] },
+  { word: "kicker", definition: "An unexpected and often unpleasant twist.", examples: ["The kicker is that I have to work all weekend to pay for it."] },
+  { word: "slick", definition: "Done or operating in an impressively smooth, efficient, and apparently effortless way.", examples: ["That was a slick presentation."] },
+  { word: "dodgy", definition: "Dishonest or unreliable.", examples: ["I wouldn't trust him; he seems a bit dodgy."] },
+  { word: "draw a blank", definition: "To fail to remember something.", examples: ["I tried to recall his name, but I drew a blank."] },
+  { word: "don't fire until you see the whites of their eyes", definition: "Wait until the last possible moment before taking action.", examples: ["The commander told his troops, 'Don't fire until you see the whites of their eyes.'"] },
+  { word: "offhand", definition: "Without previous thought or consideration.", examples: ["I can't tell you offhand; I'll have to check my notes."] },
+  { word: "turn one's back on", definition: "To ignore or reject someone or something.", examples: ["He turned his back on his former friends when he became famous."] },
+  { word: "dyed in the wool", definition: "Unchanging in a particular belief or opinion; inveterate.", examples: ["He is a dyed-in-the-wool conservative."] },
+  { word: "knockout", definition: "An extremely attractive or impressive person or thing.", examples: ["She looked like a knockout in that dress."] },
+  { word: "in a funk", definition: "In a depressed or sad mood.", examples: ["He's been in a funk ever since he lost his job."] },
+  { word: "starting gun", definition: "The signal to begin something.", examples: ["The announcement served as the starting gun for the election campaign."] },
+  { word: "stick a fork in it", definition: "To indicate that something is finished or done.", examples: ["Stick a fork in me, I'm done."] },
+  { word: "vendetta", definition: "A prolonged, bitter quarrel with or campaign against someone.", examples: ["He waged a personal vendetta against his rival."] },
+  { word: "pronto", definition: "Promptly; quickly.", examples: ["I need those files, pronto!"] },
+  { word: "ineffectual", definition: "Not producing any or the desired effect.", examples: ["His attempts to fix the problem were ineffectual."] },
+  { word: "take a chainsaw to", definition: "To make drastic or brutal cuts or changes to something.", examples: ["The new management team took a chainsaw to the company's budget."] },
+  { word: "hit someone up", definition: "To contact someone, often to ask for something.", examples: ["Hit me up if you need a ride."] },
+  { word: "confer", definition: "To have discussions; exchange opinions.", examples: ["The judges conferred before announcing their decision."] },
+  { word: "steamroll", definition: "To proceed forcefully and without regard for opposition.", examples: ["The company steamrolled over the objections of the local residents."] },
+  { word: "non starter", definition: "An idea, plan, or person with no chance of success.", examples: ["That proposal is a complete non-starter."] },
+  { word: "balls to the wall", definition: "With maximum effort or speed.", examples: ["We've been going balls to the wall trying to finish this project."] },
+  { word: "christen", definition: "To use for the first time.", examples: ["We christened the new grill by cooking hot dogs."] },
+  { word: "rug-pull", definition: "A malicious maneuver in the cryptocurrency industry where crypto developers abandon a project and run away with investors' funds.", examples: ["Many investors lost money in the recent rug-pull."] },
+  { word: "maul", definition: "To wound (a person or animal) by scratching and tearing.", examples: ["The hiker was badly mauled by a bear."] },
+  { word: "buckle", definition: "To bend and give way under a pressure or strain.", examples: ["His knees buckled under the heavy weight."] },
+  { word: "ho-hum", definition: "Boring or mundane.", examples: ["It was a rather ho-hum party."] },
+  { word: "caboose", definition: "A car on a freight train for use by the train crew, typically at the rear of the train.", examples: ["The children waved at the conductor in the caboose."] },
+  { word: "beyond one's means", definition: "Costing more than one can afford.", examples: ["They were living beyond their means and accumulated a lot of debt."] },
+  { word: "countermand", definition: "To revoke (an order).", examples: ["The general countermanded his previous order."] },
+  { word: "strawman", definition: "An intentionally misrepresented proposition that is set up because it is easier to defeat than an opponent's real argument.", examples: ["His argument was a classic strawman."] },
+  { word: "leap of faith", definition: "An act of believing in or attempting something whose existence or outcome cannot be proved.", examples: ["Starting a new business requires a leap of faith."] },
+  { word: "almanac", definition: "An annual calendar containing important dates and statistical information such as astronomical data and tide tables.", examples: ["Farmers used to rely heavily on the almanac."] },
+  { word: "maroon", definition: "To leave (someone) trapped and isolated in an inaccessible place, especially an island.", examples: ["The sailors were marooned on a desert island."] },
+  { word: "buy into", definition: "To accept the truth of something.", examples: ["I don't buy into that conspiracy theory."] },
+  { word: "springboard", definition: "A thing that lends impetus or assistance to a particular action, enterprise, or development.", examples: ["Her first job served as a springboard for her career."] },
+  { word: "blow by blow", definition: "A detailed account of an event.", examples: ["He gave us a blow-by-blow description of the game."] },
+  { word: "blight", definition: "A thing that spoils or damages something.", examples: ["The abandoned factory was a blight on the neighborhood."] },
+  { word: "cerebral", definition: "Intellectual rather than emotional or physical.", examples: ["The movie was too cerebral for my taste."] },
+  { word: "blow in the wind", definition: "To be uncertain or undecided.", examples: ["The answer is blowing in the wind."] },
+  { word: "red herring", definition: "A clue or piece of information that is, or is intended to be, misleading or distracting.", examples: ["The detective realized the mysterious footprint was just a red herring."] },
+  { word: "doozy", definition: "Something outstanding or unique of its kind.", examples: ["That storm was a real doozy."] },
+  { word: "diva", definition: "A famous female opera singer; a self-important person who is temperamental and difficult to please.", examples: ["She acted like a total diva when her demands weren't met."] },
+  { word: "guidepost", definition: "A post with a sign on it giving directions to travelers; a guiding principle.", examples: ["The Constitution serves as a guidepost for our legal system."] },
+  { word: "doubletalk", definition: "Language that is deliberately ambiguous or evasive.", examples: ["The politician's speech was full of doubletalk."] },
+  { word: "vintage", definition: "Denoting something of high quality, especially something from the past or characteristic of the best period of a person's work.", examples: ["He drives a vintage car."] },
+  { word: "crotchety", definition: "Irritable.", examples: ["The old man was known for being crotchety."] },
+  { word: "countervail", definition: "To offset the effect of (something) by countering it with something of equal force.", examples: ["The positive aspects of the plan countervail its negative consequences."] },
+  { word: "cough up", definition: "To give something, especially money, reluctantly.", examples: ["He finally coughed up the money he owed me."] },
+  { word: "ride the coattails of", definition: "To use someone else's success to achieve your own.", examples: ["He rode his famous father's coattails to a successful career in politics."] },
+  { word: "impassionate", definition: "Filled with or showing great emotion.", examples: ["She made an impassionate plea for peace."] },
+  { word: "plug the hole", definition: "To fix a problem or stop a leak.", examples: ["We need to find a way to plug the hole in our budget."] },
+  { word: "viscosity", definition: "The state of being thick, sticky, and semifluid in consistency, due to internal friction.", examples: ["The oil had a high viscosity."] },
+  { word: "viscous", definition: "Having a thick, sticky consistency between solid and liquid; having a high viscosity.", examples: ["Lava is a viscous substance."] },
+  { word: "full-bodied", definition: "Having a rich, substantial flavor.", examples: ["This is a full-bodied red wine."] },
+  { word: "motion", definition: "A formal proposal put to a legislature or committee.", examples: ["The member put forward a motion to adjourn the meeting."] },
+  { word: "wallop", definition: "To strike or hit very hard.", examples: ["The boxer walloped his opponent."] },
+  { word: "batten down the hatches", definition: "To prepare for a difficult situation.", examples: ["With the storm approaching, it's time to batten down the hatches."] },
+  { word: "hellscape", definition: "A very unpleasant or desolate place or environment.", examples: ["The war-torn city was a literal hellscape."] },
+  { word: "tempestuous", definition: "Characterized by strong and turbulent or conflicting emotion.", examples: ["They had a tempestuous relationship."] },
+  { word: "arraign", definition: "To call or bring (someone) before a court to answer a criminal charge.", examples: ["He was arraigned on charges of fraud."] },
+  { word: "bridle", definition: "To show resentment or anger.", examples: ["She bridled at the suggestion that she was incompetent."] },
+  { word: "jump the shark", definition: "(Of a television series or movie) to reach a point at which far-fetched events are included merely for the sake of novelty, indicative of a decline in quality.", examples: ["I think that show finally jumped the shark this season."] },
+  { word: "the tail wagging the dog", definition: "A situation where a small or minor part of something controls the whole.", examples: ["The minority party had so much influence, it was a case of the tail wagging the dog."] },
+  { word: "keep at bay", definition: "To prevent someone or something from coming too close or causing harm.", examples: ["The medicine helped keep the infection at bay."] },
+  { word: "run for the hills", definition: "To flee in panic.", examples: ["When the market crashed, many investors ran for the hills."] },
+  { word: "take someone under the wing of", definition: "To protect and guide someone.", examples: ["The experienced pilot took the rookie under his wing."] },
+  { word: "splitting hairs", definition: "Making unnecessarily fine distinctions.", examples: ["Arguing about whether it was 3:00 or 3:01 is just splitting hairs."] },
+  { word: "whac-a-mole", definition: "A situation in which a problem is repeatedly resolved only to reappear elsewhere.", examples: ["Fixing bugs in this old software is like playing whac-a-mole."] },
+  { word: "dead meat", definition: "In serious trouble.", examples: ["If my parents find out I crashed the car, I'm dead meat."] },
+  { word: "loosey-goosey", definition: "Relaxed and informal.", examples: ["He has a very loosey-goosey approach to management."] },
+  { word: "mind blender", definition: "Something that is very confusing or disorienting.", examples: ["That movie was a total mind blender."] },
+  { word: "defray", definition: "To provide money to pay (a cost or expense).", examples: ["The grant helped to defray the costs of his research."] },
+  { word: "plow ahead", definition: "To continue to do something in a determined way in spite of difficulties.", examples: ["Despite the bad weather, they decided to plow ahead with the plan."] },
+  { word: "in the offing", definition: "Likely to happen or appear soon.", examples: ["A storm seems to be in the offing."] },
+  { word: "in the making", definition: "In the process of being created or formed.", examples: ["The movie was years in the making."] },
+  { word: "people who live in glass houses shouldn't throw stones", definition: "You shouldn't criticize others when you have similar faults of your own.", examples: ["He criticized her spending habits, but people who live in glass houses shouldn't throw stones."] },
+  { word: "befitting", definition: "Appropriate to the occasion.", examples: ["He gave a speech befitting the solemn occasion."] },
+  { word: "frenetic", definition: "Fast and energetic in a rather wild and uncontrolled way.", examples: ["The city has a frenetic pace of life."] },
+  { word: "wry", definition: "Using or expressing dry, especially mocking, humor.", examples: ["He gave a wry smile."] },
+  { word: "joust", definition: "To compete closely for superiority.", examples: ["The two candidates jousted for the lead in the polls."] },
+  { word: "punch below one's weight", definition: "To perform worse than one is capable of.", examples: ["Our team has been punching below its weight this season."] },
+  { word: "scare the dickens out of", definition: "To frighten someone very much.", examples: ["That horror movie scared the dickens out of me."] },
+  { word: "canary", definition: "A person or thing that serves as an early warning of danger.", examples: ["The declining sales figures were a canary in the coal mine."] },
+  { word: "thematic", definition: "Having or relating to subjects or a particular subject.", examples: ["The exhibition was organized by thematic areas."] },
+  { word: "mother ship", definition: "The central or main organization from which others are derived.", examples: ["The local branches report back to the mother ship in London."] },
+  { word: "there's more than one way to skin a cat", definition: "There is more than one way to achieve a goal.", examples: ["If this plan doesn't work, we'll try something else; there's more than one way to skin a cat."] },
+  { word: "cosign", definition: "To endorse or support something.", examples: ["I can't cosign that decision."] },
+  { word: "seminal", definition: "Of a work, event, moment, or figure strongly influencing later developments.", examples: ["His seminal book on economics changed the field entirely."] },
+  { word: "oxymoron", definition: "A figure of speech in which apparently contradictory terms appear in conjunction.", examples: ["'Deafening silence' is an example of an oxymoron."] },
+  { word: "full throated", definition: "Unrestrained and vocal.", examples: ["He gave a full-throated defense of his actions."] },
+  { word: "balk", definition: "To hesitate or be unwilling to accept an idea or undertaking.", examples: ["The employees balked at the proposed pay cuts."] },
+  { word: "clamber", definition: "To climb, move, or get in or out of something in an awkward and laborious way, typically using both hands and feet.", examples: ["The children clambered over the rocks."] },
+  { word: "tattle", definition: "To report someone's wrongdoing to an authority figure.", examples: ["The little boy threatened to tattle on his sister for breaking the vase."] },
+  { word: "conclave", definition: "A private meeting.", examples: ["The cardinals gathered in conclave to elect a new pope."] },
+  { word: "salvo", definition: "A simultaneous discharge of artillery or other guns in a battle.", examples: ["The ship fired a salvo at the enemy."] },
+  { word: "credence", definition: "Belief in or acceptance of something as true.", examples: ["I don't give much credence to his story."] },
+  { word: "besmirch", definition: "To damage the reputation of (someone or something) in the opinion of others.", examples: ["He accused his opponent of trying to besmirch his good name."] },
+  { word: "pint-sized", definition: "Very small.", examples: ["She drives a pint-sized car."] },
+  { word: "ratify", definition: "To sign or give formal consent to (a treaty, contract, or agreement), making it officially valid.", examples: ["The senate must ratify the treaty."] },
+  { word: "gild", definition: "To cover thinly with gold.", examples: ["The picture frame was intricately gilded."] },
+  { word: "corral", definition: "To gather together and confine (a group of people or things).", examples: ["The teachers struggled to corral the excited children."] },
+  { word: "ember", definition: "A small piece of burning or glowing coal or wood in a dying fire.", examples: ["The fire was reduced to glowing embers."] },
+  { word: "carnal", definition: "Relating to physical, especially sexual, needs and activities.", examples: ["The novel explores carnal desires."] },
+  { word: "riffraff", definition: "Disreputable or undesirable people.", examples: ["The exclusive club did not want to associate with the riffraff."] },
+  { word: "in one fell swoop", definition: "All at once.", examples: ["He lost all his money in one fell swoop."] },
+  { word: "commissar", definition: "A strict or dictatorial leader.", examples: ["The new boss acts like a commissar."] },
+  { word: "rejoinder", definition: "A reply, especially a sharp or witty one.", examples: ["She always has a quick rejoinder ready."] },
+  { word: "grisly", definition: "Causing horror or disgust.", examples: ["The police discovered a grisly scene."] },
+  { word: "touch a nerve", definition: "To provoke a sensitive or emotional reaction.", examples: ["My comment about his ex-girlfriend clearly touched a nerve."] },
+  { word: "ethnography", definition: "The scientific description of the customs of individual peoples and cultures.", examples: ["The anthropologist conducted an ethnography of the remote tribe."] },
+  { word: "behoove", definition: "It is a duty or responsibility for someone to do something; it is incumbent on.", examples: ["It would behoove you to study hard for this exam."] },
+  { word: "kowtow", definition: "To act in an excessively subservient manner.", examples: ["He refused to kowtow to the demanding boss."] },
+  { word: "rapture", definition: "A feeling of intense pleasure or joy.", examples: ["She listened to the music with rapture."] },
+  { word: "pluck a nerve", definition: "To cause someone to feel a strong emotion.", examples: ["The speech plucked a nerve with the audience."] },
+  { word: "deep-seated", definition: "Firmly established at a deep level.", examples: ["He has a deep-seated fear of flying."] },
+  { word: "shove off", definition: "To leave.", examples: ["It's getting late; I should shove off."] },
+  { word: "heady", definition: "Intoxicating.", examples: ["The heady aroma of the flowers filled the room."] },
+  { word: "wily", definition: "Skilled at gaining an advantage, especially deceitfully.", examples: ["The wily fox escaped the trap."] },
+  { word: "acolyte", definition: "An assistant or follower.", examples: ["The famous author was surrounded by a group of devoted acolytes."] },
+  { word: "interstitial", definition: "Of, forming, or occupying interstices.", examples: ["The fluid was found in the interstitial spaces."] },
+  { word: "snafu", definition: "A confused or chaotic state; a mess.", examples: ["The airline's scheduling system suffered a major snafu."] },
+  { word: "seethe", definition: "To be filled with intense but unexpressed anger.", examples: ["He seethed with frustration after the unfair meeting."] },
+  { word: "gambit", definition: "A device, action, or opening remark, typically one entailing a degree of risk, that is calculated to gain an advantage.", examples: ["His opening gambit at the negotiation table took everyone by surprise."] },
+  { word: "buffet", definition: "To strike repeatedly and violently.", examples: ["The small plane was buffeted by the strong winds."] },
+  { word: "tenor", definition: "The general meaning, sense, or content of something.", examples: ["The overall tenor of the report was positive."] },
+  { word: "air cover", definition: "Support or protection, especially from criticism.", examples: ["The CEO provided air cover for the controversial project."] },
+  { word: "rub someone the wrong way", definition: "To irritate or annoy someone.", examples: ["His arrogant attitude really rubbed me the wrong way."] },
+  { word: "double back", definition: "To turn and go back in the direction from which one has come.", examples: ["We realized we were going the wrong way and had to double back."] },
+  { word: "iris", definition: "The colored part of the eye.", examples: ["She has beautiful blue irises."] },
+  { word: "sock away", definition: "To save money.", examples: ["She managed to sock away a significant amount for retirement."] },
+  { word: "testy", definition: "Easily irritated; impatient and somewhat bad-tempered.", examples: ["He gets testy if he doesn't have his morning coffee."] },
+  { word: "bob's your uncle", definition: "Used to indicate that something will be easily achieved.", examples: ["Just follow the instructions, and Bob's your uncle, it's done!"] },
+  { word: "off to a solid start", definition: "Beginning well.", examples: ["The new business is off to a solid start."] },
+  { word: "a feather in one's cap", definition: "An achievement to be proud of.", examples: ["Winning that award is a real feather in her cap."] },
+  { word: "satirical", definition: "Containing or using satire.", examples: ["The magazine published a satirical article about the politicians."] },
+  { word: "befuddling", definition: "Confusing or perplexing.", examples: ["The instructions were completely befuddling."] },
+  { word: "nexus", definition: "A connection or series of connections linking two or more things.", examples: ["The university is a nexus of research and innovation."] },
+  { word: "flub", definition: "To botch or bungle (something).", examples: ["He flubbed his lines during the play."] },
+  { word: "tentative", definition: "Not certain or fixed; provisional.", examples: ["They made a tentative agreement."] },
+  { word: "machination", definition: "A plot or scheme.", examples: ["The villain's machinations were finally exposed."] },
+  { word: "personify", definition: "To represent (a quality or concept) by a figure in human form.", examples: ["He personifies kindness."] },
+  { word: "travail", definition: "Painful or laborious effort.", examples: ["The pioneers endured many travails on their journey."] },
+  { word: "stick to your knitting", definition: "To do what one knows best.", examples: ["The company decided to stick to its knitting instead of diversifying."] },
+  { word: "circumscribe", definition: "To restrict (something) within limits.", examples: ["Their movements were strictly circumscribed."] },
+  { word: "slow roll", definition: "To intentionally delay a process.", examples: ["The committee slow-rolled the approval process."] },
+  { word: "come with the territory", definition: "To be an unavoidable part of a situation.", examples: ["Long hours come with the territory when you start a new business."] },
+  { word: "take a liking", definition: "To begin to like someone or something.", examples: ["He took a liking to the new employee right away."] },
+  { word: "beat the pants off", definition: "To defeat decisively.", examples: ["Our team beat the pants off the opponents."] },
+  { word: "send chills down one's spine", definition: "To cause someone to feel suddenly very frightened.", examples: ["That ghost story sent chills down my spine."] },
+  { word: "the pick of the litter", definition: "The best choice or item among a group.", examples: ["She always gets the pick of the litter when it comes to new projects."] },
+  { word: "one-two punch", definition: "A combination of two powerful actions.", examples: ["The marketing campaign delivered a one-two punch of television and social media ads."] },
+  { word: "soup up something", definition: "To make something more powerful or appealing.", examples: ["He souped up his old car with a new engine."] },
+  { word: "sop up", definition: "To absorb liquid.", examples: ["Use this towel to sop up the spill."] },
+  { word: "contentious", definition: "Causing or likely to cause an argument; controversial.", examples: ["The new policy has become a highly contentious issue."] },
+  { word: "boondoggle", definition: "Work or activity that is wasteful or pointless but gives the appearance of having value.", examples: ["The government project was criticized as a massive boondoggle."] },
+  { word: "gushing", definition: "Expressing praise or enthusiasm in a very strong, enthusiastic way.", examples: ["The reviews were incredibly gushing."] },
+  { word: "line one's pockets", definition: "To make money dishonestly.", examples: ["The corrupt politician was accused of lining his pockets."] },
+  { word: "annex", definition: "To append or add as an extra or subordinate part, especially to a document.", examples: ["The document annexed to the contract contained additional terms."] },
+  { word: "net net", definition: "The bottom line; the final result.", examples: ["Net net, we saved money by switching suppliers."] },
+  { word: "slip up", definition: "To make a mistake.", examples: ["I slipped up and forgot to call him back."] },
+  { word: "anthropology", definition: "The study of human societies and cultures and their development.", examples: ["She majored in anthropology in college."] },
+  { word: "philanderer", definition: "A man who readily or frequently enters into casual sexual relationships with women.", examples: ["He was known as a wealthy philanderer."] },
+  { word: "one up", definition: "To gain an advantage over someone.", examples: ["He's always trying to one-up his colleagues."] },
+  { word: "run off", definition: "To leave quickly.", examples: ["The dog ran off when it saw the cat."] },
+  { word: "grovel", definition: "To act in an obsequious manner in order to obtain someone's forgiveness or favor.", examples: ["He was forced to grovel to get his job back."] },
+  { word: "smore", definition: "A sweet snack consisting of a chocolate bar and toasted marshmallows sandwiched between graham crackers.", examples: ["We made smores over the campfire."] },
+  { word: "judge not", definition: "Do not judge others.", examples: ["Judge not, lest ye be judged."] },
+  { word: "all's well that ends well", definition: "An event that has a good ending even if things went wrong along the way.", examples: ["The road trip was a disaster, but we got there safely, so all's well that ends well."] },
+  { word: "smitten", definition: "Very much in love.", examples: ["He was completely smitten with her from the moment they met."] },
+  { word: "seal the deal", definition: "To reach an agreement.", examples: ["A firm handshake helped seal the deal."] },
+  { word: "scoundrel", definition: "A dishonest or unscrupulous person.", examples: ["He's a notorious scoundrel who cheats people out of their money."] },
+  { word: "within an inch of one's life", definition: "Very nearly to the point of death.", examples: ["The victim was beaten within an inch of his life."] },
+  { word: "dish out", definition: "To distribute or dispense something, often casually or indiscriminately.", examples: ["He's always dishing out unsolicited advice."] },
+  { word: "a kick in the pants", definition: "Something that motivates someone to action.", examples: ["Failing that test was the kick in the pants I needed to start studying."] },
+  { word: "feel out", definition: "To carefully investigate or assess a situation or someone's opinion.", examples: ["I'm going to feel out the market before making an offer."] },
+  { word: "get a handle on something", definition: "To understand or figure out something.", examples: ["I'm finally getting a handle on this new software."] },
+  { word: "deduce", definition: "To arrive at a fact or a conclusion by reasoning.", examples: ["From the evidence, the detective deduced that the suspect was guilty."] },
+  { word: "be hot for someone", definition: "To be sexually attracted to someone.", examples: ["He's been hot for her for months."] },
+  { word: "forfeit", definition: "To lose or be deprived of (property or a right or privilege) as a penalty for wrongdoing.", examples: ["If you cancel now, you forfeit your deposit."] },
+  { word: "shoebox", definition: "A box in which a pair of shoes is sold, or a very small room or apartment.", examples: ["He lives in a tiny shoebox apartment in the city."] },
+  { word: "hit up", definition: "To contact someone.", examples: ["Hit me up later if you want to hang out."] },
+  { word: "cut someone out", definition: "To exclude someone.", examples: ["I felt like they cut me out of the decision-making process."] },
+  { word: "on the defensive", definition: "Acting in a way that shows one feels attacked or criticized.", examples: ["His comments immediately put her on the defensive."] },
+  { word: "microscopic", definition: "So small as to be visible only with a microscope.", examples: ["The bacteria are microscopic."] },
+  { word: "get a shot at", definition: "To have an opportunity to do something.", examples: ["I finally got a shot at the promotion."] },
+  { word: "c'est la vie", definition: "That's life; such is life.", examples: ["The car broke down, but c'est la vie."] },
+  { word: "bid someone adieu", definition: "To say goodbye to someone.", examples: ["It was time to bid our friends adieu and head home."] },
+  { word: "live-in", definition: "(Of an employee or partner) residing in the home where they work or with the person they are in a relationship with.", examples: ["They hired a live-in nanny."] },
+  { word: "have a confession to make", definition: "To have something to admit.", examples: ["I have a confession to make: I ate the last piece of cake."] },
+  { word: "contraception", definition: "The deliberate use of artificial methods or other techniques to prevent pregnancy as a consequence of sexual intercourse.", examples: ["Access to affordable contraception is an important issue."] },
+  { word: "tack on", definition: "To add something extra.", examples: ["The hotel tacked on several hidden fees to our bill."] },
+  { word: "entreaty", definition: "An earnest or humble request.", examples: ["The king ignored their entreaties for mercy."] },
+  { word: "cast a shadow over", definition: "To make a situation seem less hopeful and more likely to end badly.", examples: ["The recent scandal has cast a shadow over his campaign."] },
+  { word: "neither here nor there", definition: "Of no importance or relevance.", examples: ["His opinion is neither here nor there."] },
+  { word: "crescendo", definition: "A gradual increase in loudness in a piece of music, or the loudest point reached in a gradually increasing sound.", examples: ["The music built to a dramatic crescendo."] },
+  { word: "inglorious", definition: "Causing shame or a loss of honor.", examples: ["It was an inglorious end to his career."] },
+  { word: "hark", definition: "Listen.", examples: ["Hark! The herald angels sing."] },
+  { word: "appease", definition: "To pacify or placate (someone) by acceding to their demands.", examples: ["The manager tried to appease the angry customers by offering refunds."] },
+  { word: "mercenary", definition: "A professional soldier hired to serve in a foreign army, or primarily concerned with making money at the expense of ethics.", examples: ["He was accused of having mercenary motives."] },
+  { word: "live on the edge", definition: "To have an adventurous or perilous lifestyle.", examples: ["He loves skydiving; he really lives on the edge."] }
   ];
   // =========================================================================
 
@@ -710,14 +1191,16 @@
   }
 
   // --- NAVIGATION ---
-  function setMode(mode) {
+  function setMode(mode, targetId) {
     // Stop audio/autoplay if switching tabs
     stopAutoplay();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
     currentMode = mode;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (targetId) {
+        document.getElementById(targetId).classList.add('active');
+    }
 
     document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
 
@@ -734,6 +1217,12 @@
       document.getElementById('add-mode').classList.add('active');
     }
   }
+
+  document.getElementById('tab-flashcard').addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
+  document.getElementById('tab-quiz').addEventListener('click', function() { setMode('quiz', 'tab-quiz'); });
+  document.getElementById('tab-review').addEventListener('click', function() { setMode('review', 'tab-review'); });
+  document.getElementById('tab-dashboard').addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
+  document.getElementById('tab-add').addEventListener('click', function() { setMode('add', 'tab-add'); });
 
   // --- DASHBOARD LOGIC ---
   function renderDashboard() {
@@ -752,6 +1241,8 @@
   }
 
   // --- ADD WORD LOGIC ---
+  document.getElementById('addWordForm').addEventListener('submit', addCustomWord);
+
   function addCustomWord(e) {
     e.preventDefault();
 
@@ -809,6 +1300,7 @@
       stopAutoplay();
     }
     const activePool = getActiveVocab();
+    if (activePool.length === 0) return;
     fcIndex = (fcIndex + 1) % activePool.length;
     updateFlashcardUI();
   }
@@ -816,6 +1308,7 @@
   function prevCard() {
     stopAutoplay();
     const activePool = getActiveVocab();
+    if (activePool.length === 0) return;
     fcIndex = (fcIndex - 1 + activePool.length) % activePool.length;
     updateFlashcardUI();
   }
@@ -843,6 +1336,7 @@
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
     const activePool = getActiveVocab();
+    if (activePool.length === 0) return;
     const item = activePool[fcIndex];
     await speakTextAsync(item.word);
     await speakTextAsync(item.definition);
@@ -875,6 +1369,10 @@
   async function runAutoplayLoop() {
     if (!isAutoplaying) return;
     const activePool = getActiveVocab();
+    if (activePool.length === 0) {
+        stopAutoplay();
+        return;
+    }
     const item = activePool[fcIndex];
 
     if (flashcardElement.classList.contains('is-flipped')) {
@@ -916,8 +1414,8 @@
     document.getElementById('quizInstruction').style.display = 'block';
 
     const activePool = getActiveVocab();
-    let pool = [];
-    let statusText = "";
+    let pool;
+    let statusText;
 
     if (currentMode === 'review') {
       pool = activePool.filter(w => w.mistakes > 0);
@@ -932,10 +1430,15 @@
       pool = activePool.filter(w => w.nextReview <= Date.now());
 
       if (pool.length === 0) {
-        let tempState = [...activePool];
-        tempState.sort((a, b) => a.nextReview - b.nextReview);
-        pool = [tempState[0]];
-        statusText = "Working Ahead (No reviews currently due in this group)";
+          if (activePool.length > 0) {
+              let tempState = [...activePool];
+              tempState.sort((a, b) => a.nextReview - b.nextReview);
+              pool = [tempState[0]];
+              statusText = "Working Ahead (No reviews currently due in this group)";
+          } else {
+              showEmptyState("There are no words in this group to quiz.");
+              return;
+          }
       } else {
         statusText = `Spaced Repetition: ${pool.length} word(s) due`;
       }
@@ -949,8 +1452,9 @@
     document.getElementById('quizWordDisplay').textContent = currentQuizWord.word;
 
     let options = [currentQuizWord.definition];
-    while(options.length < 4 && activePool.length >= 4) {
-      let randomDef = activePool[Math.floor(Math.random() * activePool.length)].definition;
+    const tempPool = [...activePool];
+    while(options.length < 4 && tempPool.length >= 4) {
+      let randomDef = tempPool[Math.floor(Math.random() * tempPool.length)].definition;
       if(!options.includes(randomDef)) options.push(randomDef);
     }
     options.sort(() => Math.random() - 0.5);
