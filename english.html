@@ -285,6 +285,37 @@
       box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
     }
 
+    #quiz-mode {
+      padding-bottom: 120px;
+    }
+
+    .quiz-header,
+    .mastery-progress-card,
+    .srs-status,
+    .quiz-word,
+    #quizInstruction,
+    .options-grid,
+    .quiz-feedback {
+      scroll-margin-top: 12px;
+      scroll-margin-bottom: 110px;
+    }
+
+    .quiz-feedback {
+      position: sticky;
+      bottom: 10px;
+      z-index: 20;
+      background: rgba(243, 244, 246, 0.96);
+      backdrop-filter: blur(4px);
+      padding: 12px 0 calc(8px + env(safe-area-inset-bottom));
+      margin-top: 16px;
+    }
+
+    .btn-next-quiz {
+      width: min(100%, 420px);
+      margin: 0 auto;
+      display: none;
+    }
+
     /* Quiz & Review CSS */
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
     .score-display { font-size: 1.2rem; color: var(--primary); }
@@ -1628,7 +1659,19 @@
   function updateQuizMasteryProgress() {
     const activePool = getActiveVocab();
     const total = activePool.length;
-    const mastered = activePool.filter(w => w.interval >= 60).length;
+
+    // "Mastered" here means the learner has demonstrated stable recall,
+    // not just long intervals. This makes progress move earlier and feel meaningful.
+    const mastered = activePool.filter(w =>
+      (Number(w.repetitions || 0) >= 3) ||
+      (Number(w.interval || 0) >= 10)
+    ).length;
+
+    const learning = activePool.filter(w =>
+      !((Number(w.repetitions || 0) >= 3) || (Number(w.interval || 0) >= 10)) &&
+      ((Number(w.repetitions || 0) > 0) || (Number(w.interval || 0) > 0))
+    ).length;
+
     const pct = total ? Math.round((mastered / total) * 100) : 0;
 
     const fill = document.getElementById('quiz-mastery-fill');
@@ -1637,7 +1680,7 @@
     if (fill) fill.style.width = `${pct}%`;
     if (textEl) {
       textEl.textContent = total
-        ? `${mastered} / ${total} mastered (${pct}%)`
+        ? `${mastered} / ${total} mastered (${pct}%) · ${learning} learning`
         : `0 / 0 mastered`;
     }
   }
@@ -2232,6 +2275,10 @@
     document.getElementById('btnNextQuiz').style.display = "none";
     document.getElementById('quizInstruction').style.display = 'block';
 
+    setTimeout(() => {
+      document.getElementById('quizWordDisplay')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 30);
+
     const activePool = getActiveVocab();
     let pool;
     let statusText;
@@ -2346,7 +2393,13 @@
     saveState();
     updateScoreDisplay();
     updateQuizMasteryProgress();
-    document.getElementById('btnNextQuiz').style.display = "block";
+
+    const nextBtn = document.getElementById('btnNextQuiz');
+    nextBtn.style.display = "block";
+
+    setTimeout(() => {
+      nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
   }
 
   document.getElementById('autoplay-timer-select')?.addEventListener('change', () => {
