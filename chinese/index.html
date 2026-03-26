@@ -295,10 +295,16 @@
 
         <div id="section-vocab" class="hidden">
             <div class="controls-bar" style="justify-content: space-between; background:#f8fafc;">
-                <label class="checkbox-control" style="color: var(--primary);">
-                    <input type="checkbox" id="autoPlayVocab" checked>
-                    🔊 切换时自动发音 (Auto-play Audio)
-                </label>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <label class="checkbox-control" style="color: var(--primary);">
+                        <input type="checkbox" id="autoPlayVocab" checked>
+                        🔊 切换时自动发音 (Auto-play Audio)
+                    </label>
+                    <label class="checkbox-control" style="color: var(--primary);">
+                        <input type="checkbox" id="autoAdvanceVocab">
+                        🔄 自动连播 (Auto-Advance)
+                    </label>
+                </div>
                 
                 <div class="control-group">
                     <label for="vocabSpeedRate">语速: <span id="vocabSpeedValue">1.0</span>x</label>
@@ -393,7 +399,7 @@
 这个做法非常好。拿一次性筷子来说吧，每年要砍多少树啊？
 除了上餐馆自带筷子，买东西也得自己带包了。
 对，现在中国超市不给塑料袋，要自己买，所以很多人都自己带包，这样一年不知道能减少多少白色污染！
-还有汽车，不但要用很多能源，而且还对空气造成严重污染。
+还有汽车，不但要用很多能源，而且还减对空气造成严重污染。
 大家都应该像我们这样，少开车，多骑车、多走路，又环保节能、又有益于健康。哈哈...
 对，地球是我们的家，我们应该好好保护它！
 我们应该从小地方做起，比如随手关灯，节约用水。还要让大家知道，如果再继续浪费能源，继续污染环境，后果会不堪设想。
@@ -576,6 +582,7 @@
         const vPlayBtn = document.getElementById('vPlayBtn');
         const vProgress = document.getElementById('vProgress');
         const autoPlayVocab = document.getElementById('autoPlayVocab');
+        const autoAdvanceVocab = document.getElementById('autoAdvanceVocab'); // 新增：自动连播复选框
         const vocabSpeedRate = document.getElementById('vocabSpeedRate');
         const vocabSpeedValue = document.getElementById('vocabSpeedValue');
 
@@ -593,6 +600,7 @@
 
         // Vocab State
         let currentVocabIndex = 0;
+        let currentVocabSessionId = 0; // 新增：用于跟踪单词连播的状态，防止旧播放器触发跳转
 
         // ==========================================
         // 4. Tabs 切换逻辑
@@ -601,6 +609,7 @@
             // 切换前，无论在哪个模式，都强制停止发音
             stopReadingPlayback();
             synth.cancel();
+            currentVocabSessionId++; // 新增：切换标签时停止任何正在进行的词汇连播
 
             if (mode === 'reading') {
                 tabReadingBtn.classList.add('active');
@@ -622,7 +631,7 @@
                 vocabSpeedValue.textContent = vocabSpeedRate.value;
                 
                 // 渲染当前词汇
-                renderVocabCard(true); // 传入true代表这是切换过来的，自动播放看配置
+                renderVocabCard(true); // 传入true代表这是切换过来的
             }
         }
 
@@ -633,6 +642,8 @@
         // 5. 词汇学习 (Vocabulary) 核心功能
         // ==========================================
         function renderVocabCard(isTabSwitch = false) {
+            currentVocabSessionId++; // 新增：渲染新卡片时，取消旧的自动跳转计时器
+
             const vocab = vocabulary[currentVocabIndex];
             vWord.textContent = vocab.word;
             vPinyin.textContent = vocab.pinyin;
@@ -643,15 +654,17 @@
 
             // 控制按钮状态
             vPrevBtn.disabled = (currentVocabIndex === 0);
-            vNextBtn.disabled = (currentVocabIndex === vocabulary.length - 1);
-
-            // 自动播放音频
-            if (autoPlayVocab.checked) {
+            
+            // 自动播放音频 (如果开启了切换自动发音，或者开启了自动连播)
+            if (autoPlayVocab.checked || autoAdvanceVocab.checked) {
                 playVocabAudio();
             }
         }
 
         function playVocabAudio() {
+            currentVocabSessionId++; 
+            let capturedSessionId = currentVocabSessionId; // 捕获当前播放会话ID
+
             synth.cancel(); // 停止先前的语音
             const vocab = vocabulary[currentVocabIndex];
             const rate = parseFloat(vocabSpeedRate.value);
@@ -666,7 +679,48 @@
             exUtt.lang = 'zh-CN';
             exUtt.rate = rate;
 
-            // 为了让单词和例句之间有一点自然停顿，不把它们放在一个字符串里，而是使用两个连续的Utterance队列
+            // 新增：当例句读完后，检测是否开启了自动连播
+            exUtt.onend = function() {
+                if (capturedSessionId !== currentVocabSessionId) return; // 确保是当前会话
+                
+                if (autoAdvanceVocab.checked) {
+                    // 延迟 1.5 秒后跳转到下一个词，给用户思考缓冲时间
+                    setTimeout(() => {
+                        if (capturedSessionId !== currentVocabSessionId) return; // 再次检查是否被中断
+                        if (!autoAdvanceVocab.checked) return; // 检查是否在延迟期间被关闭
+                        
+                        // 自动跳转到下一个，如果到了最后，循环到第一个
+                        if (currentVocabIndex < vocabulary.length - 1) {
+                            currentVocabIndex++;
+                        } else {
+                            currentVocabIndex = 0; // 自动循环到开头
+                        }
+                        renderVocabCard();
+                    }, 1500);
+                }
+            };
+
+            // 容错处理：如果发音引擎出错，确保自动连播不会断掉
+            exUtt.onerror = function(e) {
+                console.warn("Vocab SpeechSynthesis error: ", e);
+                if (capturedSessionId !== currentVocabSessionId) return;
+                
+                if (autoAdvanceVocab.checked) {
+                    setTimeout(() => {
+                        if (capturedSessionId !== currentVocabSessionId) return;
+                        if (!autoAdvanceVocab.checked) return;
+                        
+                        if (currentVocabIndex < vocabulary.length - 1) {
+                            currentVocabIndex++;
+                        } else {
+                            currentVocabIndex = 0;
+                        }
+                        renderVocabCard();
+                    }, 1500);
+                }
+            };
+
+            // 连续播放单词和例句
             synth.speak(wordUtt);
             synth.speak(exUtt);
         }
@@ -679,10 +733,13 @@
         };
 
         vNextBtn.onclick = () => {
+            // 手动点击下一个
             if (currentVocabIndex < vocabulary.length - 1) {
                 currentVocabIndex++;
-                renderVocabCard();
+            } else {
+                currentVocabIndex = 0; // 允许手动循环
             }
+            renderVocabCard();
         };
 
         vPlayBtn.onclick = () => {
@@ -692,6 +749,15 @@
         vocabSpeedRate.oninput = (e) => {
             vocabSpeedValue.textContent = Number(e.target.value).toFixed(1);
         };
+
+        // 新增：监听自动连播复选框状态改变
+        autoAdvanceVocab.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                playVocabAudio(); // 勾选时立即开始播放当前词并启动连播流程
+            } else {
+                currentVocabSessionId++; // 取消勾选时，打断当前的连播计时器
+            }
+        });
 
         // ==========================================
         // 6. 文章阅读 (Reading) 核心功能 
