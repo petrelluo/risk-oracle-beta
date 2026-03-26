@@ -285,6 +285,70 @@
       box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
     }
 
+    .group-wordlist-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .group-wordlist-summary {
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .group-wordlist-panel {
+      margin: 16px 0 10px;
+    }
+    .group-wordlist-card {
+      background: white;
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .group-wordlist-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .group-wordlist-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .group-wordlist-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .group-wordlist-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .group-wordlist-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+      border-color: #cbd5e1;
+    }
+    .group-wordlist-word {
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+    .group-wordlist-meta {
+      color: var(--text-light);
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
     #quiz-mode {
       padding-bottom: 120px;
     }
@@ -314,6 +378,21 @@
       width: min(100%, 420px);
       margin: 0 auto;
       display: none;
+    }
+
+    .quiz-word-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .quiz-notebook-status {
+      color: var(--text-light);
+      font-weight: 600;
+      min-height: 1.2em;
     }
 
     /* Quiz & Review CSS */
@@ -376,7 +455,21 @@
       <option value="custom">Added Words</option>
     </select>
   </div>
+  <div class="group-wordlist-bar">
+    <button type="button" class="btn-nav" id="btn-toggle-group-list" onclick="toggleGroupWordList()">Show Words in This Group</button>
+    <span id="group-wordlist-summary" class="group-wordlist-summary"></span>
+  </div>
 </header>
+
+<div id="group-wordlist-panel" class="group-wordlist-panel" style="display:none;">
+  <div class="group-wordlist-card">
+    <div class="group-wordlist-head">
+      <div class="group-wordlist-title" id="group-wordlist-title">Words in This Group</div>
+      <button type="button" class="btn-nav" onclick="toggleGroupWordList(false)">Hide</button>
+    </div>
+    <div id="group-wordlist-content" class="group-wordlist-content"></div>
+  </div>
+</div>
 
 <div class="global-search-wrap">
   <div class="global-search-card">
@@ -448,6 +541,10 @@
 
   <div class="srs-status" id="srs-status"></div>
   <div class="quiz-word" id="quizWordDisplay">Word</div>
+  <div class="quiz-word-actions">
+    <button type="button" class="btn-nav" id="btn-quiz-notebook" onclick="toggleNotebookForCurrentQuizWord()">📒 Add to Notebook</button>
+    <span id="quiz-notebook-status" class="quiz-notebook-status"></span>
+  </div>
   <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
 
   <div class="options-grid" id="optionsContainer"></div>
@@ -1572,6 +1669,8 @@
   let currentMode = 'flashcard';
   let currentGroupIndex = 'all'; // Controls the 100-word blocks
   let fcIndex = 0;
+  let isGroupWordListOpen = false;
+  let flashcardOrderMap = {};
   let sessionScore = parseInt(localStorage.getItem('vocabScore')) || 0;
   let currentQuizWord = null;
 
@@ -1631,6 +1730,8 @@
     currentGroupIndex = 'notebook';
     document.getElementById('groupSelect').value = 'notebook';
     fcIndex = 0;
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
     if (currentMode === 'dashboard') {
       renderDashboard();
     } else if (currentMode === 'quiz' || currentMode === 'review') {
@@ -1654,6 +1755,8 @@
     if (currentMode === 'dashboard') renderDashboard();
     if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
     updateFlashcardUI();
+    if (isGroupWordListOpen) buildGroupWordList();
+    else updateGroupWordListSummary();
   }
 
   function updateQuizMasteryProgress() {
@@ -1821,6 +1924,8 @@
       currentGroupIndex = 'all';
     }
     document.getElementById('groupSelect').value = currentGroupIndex;
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
 
     currentMode = 'flashcard';
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1842,18 +1947,166 @@
     found.isNotebook = !found.isNotebook;
     saveState();
     lookupWordInVocab();
+    updateQuizNotebookButtonState();
+    if (typeof runGlobalSearch === 'function') {
+      const globalSearchInput = document.getElementById('globalSearchInput');
+      if (globalSearchInput && globalSearchInput.value.trim()) {
+        runGlobalSearch();
+      }
+    }
     if (currentMode === 'flashcard') updateFlashcardUI();
-    if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
+    if (currentMode === 'dashboard') renderDashboard();
+    if (isGroupWordListOpen) buildGroupWordList();
+    else updateGroupWordListSummary();
+  }
+
+  function updateQuizNotebookButtonState() {
+    const btn = document.getElementById('btn-quiz-notebook');
+    const status = document.getElementById('quiz-notebook-status');
+
+    if (!btn || !status) return;
+
+    if (!currentQuizWord) {
+      btn.disabled = true;
+      btn.textContent = "📒 Add to Notebook";
+      status.textContent = "";
+      return;
+    }
+
+    btn.disabled = false;
+    if (currentQuizWord.isNotebook) {
+      btn.textContent = "🗑️ Remove from Notebook";
+      status.textContent = "Saved in Notebook";
+    } else {
+      btn.textContent = "📒 Add to Notebook";
+      status.textContent = "Not in Notebook";
+    }
+  }
+
+  function toggleNotebookForCurrentQuizWord() {
+    if (!currentQuizWord) return;
+    currentQuizWord.isNotebook = !currentQuizWord.isNotebook;
+    saveState();
+    updateQuizNotebookButtonState();
+
+    if (typeof lookupWordInVocab === 'function') {
+      const lookupInput = document.getElementById('lookupWordInput');
+      if (lookupInput && lookupInput.value.trim() && normalizeWord(lookupInput.value) === normalizeWord(currentQuizWord.word)) {
+        lookupWordInVocab();
+      }
+    }
+    if (typeof runGlobalSearch === 'function') {
+      const globalSearchInput = document.getElementById('globalSearchInput');
+      if (globalSearchInput && globalSearchInput.value.trim() && normalizeWord(globalSearchInput.value) === normalizeWord(currentQuizWord.word)) {
+        runGlobalSearch();
+      }
+    }
+    if (currentMode === 'flashcard') updateFlashcardUI();
     if (currentMode === 'dashboard') renderDashboard();
   }
 
-  // --- GROUPING LOGIC ---
+  function getCurrentGroupLabel() {
+    const select = document.getElementById('groupSelect');
+    if (!select) return 'Current Group';
+    const option = select.options[select.selectedIndex];
+    return option ? option.textContent.trim() : 'Current Group';
+  }
+
+  function updateGroupWordListSummary() {
+    const summary = document.getElementById('group-wordlist-summary');
+    if (!summary) return;
+    const count = getActiveVocab().length;
+    summary.textContent = count === 1 ? '1 word' : `${count} words`;
+  }
+
+  function buildGroupWordList() {
+    const panel = document.getElementById('group-wordlist-panel');
+    const title = document.getElementById('group-wordlist-title');
+    const content = document.getElementById('group-wordlist-content');
+    const btn = document.getElementById('btn-toggle-group-list');
+    if (!panel || !title || !content || !btn) return;
+
+    const activePool = getActiveVocab();
+    title.textContent = `${getCurrentGroupLabel()} · Word List`;
+    updateGroupWordListSummary();
+
+    if (!isGroupWordListOpen) {
+      panel.style.display = 'none';
+      btn.textContent = 'Show Words in This Group';
+      return;
+    }
+
+    panel.style.display = 'block';
+    btn.textContent = 'Hide Words in This Group';
+
+    if (!activePool.length) {
+      content.innerHTML = `<div class="lookup-empty">No words in this group.</div>`;
+      return;
+    }
+
+    content.innerHTML = activePool.map((item, idx) => {
+      const flags = [];
+      if (item.isCustom) flags.push('Added');
+      if (item.isNotebook) flags.push('Notebook');
+      const metaParts = [];
+      if (item.definition) metaParts.push(escapeHtml(item.definition));
+      if (flags.length) metaParts.push(flags.join(' · '));
+      return `
+        <div class="group-wordlist-item" onclick="openWordFromGroupList(${idx})">
+          <div class="group-wordlist-word">${escapeHtml(item.word)}</div>
+          <div class="group-wordlist-meta">${metaParts.join(' · ')}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function toggleGroupWordList(forceState) {
+    if (typeof forceState === 'boolean') {
+      isGroupWordListOpen = forceState;
+    } else {
+      isGroupWordListOpen = !isGroupWordListOpen;
+    }
+    buildGroupWordList();
+  }
+
+  function openWordFromGroupList(index) {
+    const activePool = getActiveVocab();
+    if (!activePool.length) return;
+    fcIndex = Math.max(0, Math.min(index, activePool.length - 1));
+    setMode('flashcard', 'tab-flashcard');
+    setTimeout(() => {
+      document.getElementById('flashcard-mode')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 30);
+  }
+
+  
+  function getGroupKey() {
+    return currentGroupIndex;
+  }
+
+  function getFlashcardOrder(activePool) {
+    const key = getGroupKey();
+    if (!flashcardOrderMap[key] || flashcardOrderMap[key].length !== activePool.length) {
+      const order = activePool.map((_, i) => i);
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      flashcardOrderMap[key] = order;
+    }
+    return flashcardOrderMap[key];
+  }
+
+// --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
     fcIndex = 0;
+    flashcardOrderMap[currentGroupIndex] = null;
     if (currentMode === 'flashcard') updateFlashcardUI();
     if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
     if (currentMode === 'dashboard') renderDashboard();
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
   }
 
   // Helper function that dynamically restricts the vocab deck to the selected block
@@ -1880,6 +2133,7 @@
     document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
 
     if (mode === 'flashcard') {
+      flashcardOrderMap[currentGroupIndex] = null;
       document.getElementById('flashcard-mode').classList.add('active');
       updateFlashcardUI();
     } else if (mode === 'quiz' || mode === 'review') {
@@ -1893,6 +2147,9 @@
       const lookupInput = document.getElementById('lookupWordInput');
       if (lookupInput) lookupInput.focus();
     }
+
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
   }
 
   document.getElementById('tab-flashcard').addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
@@ -1951,6 +2208,8 @@
 
     currentGroupIndex = 'custom';
     document.getElementById('groupSelect').value = 'custom';
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
 
     const globalSearchInput = document.getElementById('globalSearchInput');
     const globalSearchResult = document.getElementById('globalSearchResult');
@@ -1958,6 +2217,8 @@
     if (globalSearchResult) {
       globalSearchResult.innerHTML = `<div class="lookup-empty">Added <strong>${escapeHtml(newItem.word)}</strong> to your full vocab list and Added Words.</div>`;
     }
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
   }
 
   // --- FLASHCARD LOGIC ---
@@ -1992,7 +2253,8 @@
       }
 
       clampFlashcardIndex();
-      const item = activePool[fcIndex];
+      const order = getFlashcardOrder(activePool);
+    const item = activePool[order[fcIndex]];
       document.getElementById('wordDisplay').textContent = item.word;
       document.getElementById('defDisplay').textContent = item.definition;
 
@@ -2177,7 +2439,8 @@
 
     const activePool = getActiveVocab();
     if (activePool.length === 0) return;
-    const item = activePool[fcIndex];
+    const order = getFlashcardOrder(activePool);
+    const item = activePool[order[fcIndex]];
     await speakTextAsync(item.word);
     await speakTextAsync(item.definition);
     for (let ex of item.examples) {
@@ -2228,7 +2491,8 @@
         await stopAutoplay();
         return;
     }
-    const item = activePool[fcIndex];
+    const order = getFlashcardOrder(activePool);
+    const item = activePool[order[fcIndex]];
 
     if (flashcardElement.classList.contains('is-flipped')) {
       flashcardElement.classList.remove('is-flipped');
@@ -2274,6 +2538,7 @@
     document.getElementById('feedbackText').textContent = "";
     document.getElementById('btnNextQuiz').style.display = "none";
     document.getElementById('quizInstruction').style.display = 'block';
+    updateQuizNotebookButtonState();
 
     setTimeout(() => {
       document.getElementById('quizWordDisplay')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2338,7 +2603,10 @@
 
   function showEmptyState(msg) {
     updateQuizMasteryProgress();
+    currentQuizWord = null;
+    updateQuizNotebookButtonState();
     document.getElementById('quizWordDisplay').style.display = 'none';
+    document.querySelector('.quiz-word-actions').style.display = 'none';
     document.getElementById('quizInstruction').style.display = 'none';
     document.getElementById('optionsContainer').style.display = 'none';
     document.getElementById('srs-status').innerHTML = `<div class="empty-state">${msg}</div>`;
@@ -2428,6 +2696,8 @@
 
   // Start app
   updateQuizMasteryProgress();
+  updateQuizNotebookButtonState();
+  updateGroupWordListSummary();
   updateFlashcardUI();
 
 </script>
