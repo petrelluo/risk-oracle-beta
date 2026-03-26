@@ -183,6 +183,73 @@
       transition: width 0.25s ease;
     }
 
+    .lookup-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .lookup-title {
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+    .lookup-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .lookup-row input {
+      flex: 1 1 280px;
+      min-width: 220px;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+    .lookup-row input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+    }
+    .lookup-result {
+      margin-top: 12px;
+      min-height: 28px;
+    }
+    .lookup-result-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .lookup-result-word {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .lookup-result-def {
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .lookup-result-examples {
+      color: var(--text-light);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .lookup-result-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .lookup-empty {
+      color: var(--text-light);
+      font-weight: 600;
+      padding: 8px 2px;
+    }
+
     /* Quiz & Review CSS */
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
     .score-display { font-size: 1.2rem; color: var(--primary); }
@@ -240,6 +307,7 @@
       <option value="5">Group 6 (501 - 600)</option>
       <option value="6">Group 7 (601+)</option>
       <option value="notebook">Notebook</option>
+      <option value="custom">Added Words</option>
     </select>
   </div>
 </header>
@@ -341,6 +409,14 @@
 <div id="add-mode" class="mode-container">
   <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
     <h2 style="margin-top: 0; color: var(--primary); text-align: center;">Add Custom Word</h2>
+    <div class="lookup-card" style="margin-bottom: 18px;">
+      <div class="lookup-title">Check My Vocab</div>
+      <div class="lookup-row">
+        <input type="text" id="lookupWordInput" placeholder="Enter a word to search your vocab list..." />
+        <button type="button" class="btn-nav" onclick="lookupWordInVocab()">Lookup</button>
+      </div>
+      <div id="lookupResult" class="lookup-result"></div>
+    </div>
     <form id="addWordForm">
       <div class="form-group">
         <label for="newWord">Vocabulary Word</label>
@@ -1393,6 +1469,10 @@
         stateUpdated = true;
         nextItem = { ...nextItem, isNotebook: false };
       }
+      if (nextItem.isCustom === undefined) {
+        stateUpdated = true;
+        nextItem = { ...nextItem, isCustom: false };
+      }
 
       return nextItem;
     });
@@ -1407,7 +1487,8 @@
       mistakes: 0,
       easiness: 2.5,
       repetitions: 0,
-      isNotebook: false
+      isNotebook: false,
+      isCustom: !!item.isCustom
     };
   }
 
@@ -1515,6 +1596,129 @@
     }
   }
 
+  function normalizeWord(value) {
+    return (value || '').trim().toLowerCase();
+  }
+
+  function findWordInVocab(value) {
+    const normalized = normalizeWord(value);
+    if (!normalized) return null;
+    return vocabState.find(item => normalizeWord(item.word) === normalized) || null;
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function escapeJsSingleQuoted(str) {
+    return String(str ?? '')
+      .replace(/\/g, '\\')
+      .replace(/'/g, "\'");
+  }
+
+  function fillAddWordForm(word) {
+    const input = document.getElementById('newWord');
+    if (input) {
+      input.value = word || '';
+      input.focus();
+    }
+  }
+
+  function renderLookupResult(html) {
+    const el = document.getElementById('lookupResult');
+    if (el) el.innerHTML = html;
+  }
+
+  function addLookupWordToForm(word) {
+    fillAddWordForm(word);
+    renderLookupResult(`<div class="lookup-empty">Ready to add <strong>${escapeHtml(word)}</strong>. Please complete the definition and examples below.</div>`);
+  }
+
+  function lookupWordInVocab() {
+    const input = document.getElementById('lookupWordInput');
+    const raw = input ? input.value.trim() : '';
+    if (!raw) {
+      renderLookupResult('<div class="lookup-empty">Please enter a word first.</div>');
+      return;
+    }
+
+    const found = findWordInVocab(raw);
+    if (found) {
+      const examplesHtml = (found.examples || [])
+        .filter(Boolean)
+        .map(ex => `<div>• ${escapeHtml(ex)}</div>`)
+        .join('');
+      const escapedWord = escapeJsSingleQuoted(found.word);
+      const actionLabel = found.isNotebook ? 'Remove from Notebook' : 'Add to Notebook';
+
+      renderLookupResult(`
+        <div class="lookup-result-card">
+          <div class="lookup-result-word">${escapeHtml(found.word)}</div>
+          <div class="lookup-result-def">${escapeHtml(found.definition)}</div>
+          <div class="lookup-result-examples">${examplesHtml || '<div>No examples saved.</div>'}</div>
+          <div class="lookup-result-actions">
+            <button type="button" class="btn-nav" onclick="jumpToWordInFlashcards('${escapedWord}')">Open in Flashcards</button>
+            <button type="button" class="btn-nav" onclick="toggleNotebookByWord('${escapedWord}')">${actionLabel}</button>
+          </div>
+        </div>
+      `);
+      return;
+    }
+
+    const escapedRaw = escapeJsSingleQuoted(raw);
+    renderLookupResult(`
+      <div class="lookup-result-card">
+        <div class="lookup-empty"><strong>${escapeHtml(raw)}</strong> is not in your vocab list.</div>
+        <div class="lookup-result-actions" style="margin-top: 10px;">
+          <button type="button" class="btn-nav" onclick="addLookupWordToForm('${escapedRaw}')">Yes, add this word</button>
+        </div>
+      </div>
+    `);
+  }
+
+  function jumpToWordInFlashcards(word) {
+    const found = findWordInVocab(word);
+    if (!found) return;
+
+    if (found.isCustom) {
+      currentGroupIndex = 'custom';
+    } else if (found.isNotebook) {
+      currentGroupIndex = 'notebook';
+    } else {
+      currentGroupIndex = 'all';
+    }
+    document.getElementById('groupSelect').value = currentGroupIndex;
+
+    currentMode = 'flashcard';
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    const flashBtn = document.getElementById('tab-flashcard');
+    if (flashBtn) flashBtn.classList.add('active');
+
+    document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
+    document.getElementById('flashcard-mode').classList.add('active');
+
+    const activePool = getActiveVocab();
+    const idx = activePool.findIndex(item => normalizeWord(item.word) === normalizeWord(word));
+    fcIndex = idx >= 0 ? idx : 0;
+    updateFlashcardUI();
+  }
+
+  function toggleNotebookByWord(word) {
+    const found = findWordInVocab(word);
+    if (!found) return;
+    found.isNotebook = !found.isNotebook;
+    saveState();
+    lookupWordInVocab();
+    if (currentMode === 'flashcard') updateFlashcardUI();
+    if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
+    if (currentMode === 'dashboard') renderDashboard();
+  }
+
   // --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
@@ -1528,6 +1732,7 @@
   function getActiveVocab() {
     if (currentGroupIndex === 'all') return vocabState;
     if (currentGroupIndex === 'notebook') return vocabState.filter(item => item.isNotebook);
+    if (currentGroupIndex === 'custom') return vocabState.filter(item => item.isCustom);
     const start = parseInt(currentGroupIndex) * 100;
     return vocabState.slice(start, start + 100);
   }
@@ -1557,6 +1762,8 @@
       renderDashboard();
     } else if (mode === 'add') {
       document.getElementById('add-mode').classList.add('active');
+      const lookupInput = document.getElementById('lookupWordInput');
+      if (lookupInput) lookupInput.focus();
     }
   }
 
@@ -1596,14 +1803,26 @@
     const examples = [ex1];
     if (ex2) examples.push(ex2);
 
-    const newItem = createNewItemState({ word, definition, examples });
+    const newItem = createNewItemState({ word, definition, examples, isCustom: true });
     vocabState.push(newItem);
     saveState();
 
     document.getElementById('addWordForm').reset();
+    const lookupInput = document.getElementById('lookupWordInput');
+    const lookupResult = document.getElementById('lookupResult');
+    if (lookupInput) lookupInput.value = '';
+    if (lookupResult) lookupResult.innerHTML = '';
+
     const msg = document.getElementById('addSuccessMsg');
+    msg.textContent = `Word "${newItem.word}" added to Added Words.`;
     msg.style.display = 'block';
-    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    setTimeout(() => {
+      msg.style.display = 'none';
+      msg.textContent = 'Word added successfully!';
+    }, 3000);
+
+    currentGroupIndex = 'custom';
+    document.getElementById('groupSelect').value = 'custom';
   }
 
   // --- FLASHCARD LOGIC ---
@@ -1619,10 +1838,18 @@
     setTimeout(() => {
       const activePool = getActiveVocab();
       if(activePool.length === 0) {
-        document.getElementById('wordDisplay').textContent = currentGroupIndex === 'notebook' ? "Your notebook is empty." : "No words in this group.";
-        document.getElementById('defDisplay').textContent = currentGroupIndex === 'notebook'
+        const emptyTitle = currentGroupIndex === 'notebook'
+          ? "Your notebook is empty."
+          : currentGroupIndex === 'custom'
+            ? "No added words yet."
+            : "No words in this group.";
+        const emptyBody = currentGroupIndex === 'notebook'
           ? "Add words from Flashcards to build a notebook you can replay anytime."
-          : "Please select another group or add new words.";
+          : currentGroupIndex === 'custom'
+            ? "Use Add Custom Word to save your own words. They will appear here automatically."
+            : "Please select another group or add new words.";
+        document.getElementById('wordDisplay').textContent = emptyTitle;
+        document.getElementById('defDisplay').textContent = emptyBody;
         document.getElementById('exDisplay').innerHTML = "";
         document.getElementById('fc-progress').textContent = "0 of 0";
         updateNotebookButtonState();
@@ -2037,6 +2264,13 @@
       autoplayStopAt = null;
       clearAutoplayTimerHandles();
       updateAutoplayTimerStatus();
+    }
+  });
+
+  document.getElementById('lookupWordInput')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      lookupWordInVocab();
     }
   });
 
