@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -274,8 +273,6 @@
     <div id="addSuccessMsg" class="success-msg">Word added successfully!</div>
   </div>
 </div>
-
-<audio id="silentAudio" src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlIFByb2R1Y3Rpb25z fosse del suono" loop muted playsinline></audio>
 
 <script>
   // =========================================================================
@@ -1030,6 +1027,7 @@
   { word: "commissar", definition: "A strict or dictatorial leader.", examples: ["The new boss acts like a commissar."] },
   { word: "rejoinder", definition: "A reply, especially a sharp or witty one.", examples: ["She always has a quick rejoinder ready."] },
   { word: "grisly", definition: "Causing horror or disgust.", examples: ["The police discovered a grisly scene."] },
+  { word: "touch a nerve", definition: "To provoke a sensitive or emotional reaction.", examples: ["My comment about his ex-girlfriend clearly touched a nerve."] },
   { word: "ethnography", definition: "The scientific description of the customs of individual peoples and cultures.", examples: ["The anthropologist conducted an ethnography of the remote tribe."] },
   { word: "behoove", definition: "It is a duty or responsibility for someone to do something; it is incumbent on.", examples: ["It would behoove you to study hard for this exam."] },
   { word: "kowtow", definition: "To act in an excessively subservient manner.", examples: ["He refused to kowtow to the demanding boss."] },
@@ -1474,7 +1472,67 @@
 
   // --- AUDIO & AUTOPLAY LOGIC ---
   let isAutoplaying = false;
-  const silentAudio = document.getElementById('silentAudio');
+  let autoplayRunId = 0;
+  let wakeLockSentinel = null;
+  let shouldResumeAutoplayAfterReturn = false;
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function requestWakeLock() {
+    try {
+      if (!('wakeLock' in navigator)) return false;
+      if (document.visibilityState !== 'visible') return false;
+
+      wakeLockSentinel = await navigator.wakeLock.request('screen');
+
+      wakeLockSentinel.addEventListener('release', () => {
+        wakeLockSentinel = null;
+      });
+
+      return true;
+    } catch (err) {
+      console.warn('Wake Lock request failed:', err);
+      wakeLockSentinel = null;
+      return false;
+    }
+  }
+
+  async function releaseWakeLock() {
+    try {
+      if (wakeLockSentinel) {
+        await wakeLockSentinel.release();
+        wakeLockSentinel = null;
+      }
+    } catch (err) {
+      console.warn('Wake Lock release failed:', err);
+    }
+  }
+
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible') {
+      if (isAutoplaying) {
+        await requestWakeLock();
+
+        if (shouldResumeAutoplayAfterReturn) {
+          shouldResumeAutoplayAfterReturn = false;
+
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+          }
+
+          setTimeout(() => {
+            if (isAutoplaying) runAutoplayLoop(autoplayRunId);
+          }, 300);
+        }
+      }
+    } else {
+      if (isAutoplaying) {
+        shouldResumeAutoplayAfterReturn = true;
+      }
+    }
+  });
 
   function speakTextAsync(text) {
     return new Promise(resolve => {
@@ -1492,7 +1550,7 @@
   }
 
   async function readCurrentCard() {
-    stopAutoplay();
+    await stopAutoplay();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
     const activePool = getActiveVocab();
@@ -1505,66 +1563,81 @@
     }
   }
 
-  function stopAutoplay() {
+  async function stopAutoplay() {
     isAutoplaying = false;
+    autoplayRunId++;
+    shouldResumeAutoplayAfterReturn = false;
+
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    silentAudio.pause(); // Pause the silent audio
+    await releaseWakeLock();
+
     const btn = document.getElementById('btn-autoplay');
     btn.textContent = "▶️ Autoplay";
     btn.classList.remove('btn-autoplay-active');
     btn.classList.remove('active-loop');
   }
 
-  function toggleAutoplay() {
+  async function toggleAutoplay() {
     if (isAutoplaying) {
-      stopAutoplay();
+      await stopAutoplay();
     } else {
       isAutoplaying = true;
-      silentAudio.play().catch(e => console.error("Error playing silent audio:", e)); // Play silent audio
+      shouldResumeAutoplayAfterReturn = false;
+      autoplayRunId++;
+
       const btn = document.getElementById('btn-autoplay');
       btn.textContent = "⏹️ Stop";
       btn.classList.add('btn-autoplay-active');
-      runAutoplayLoop();
+
+      await requestWakeLock();
+      runAutoplayLoop(autoplayRunId);
     }
   }
 
-  async function runAutoplayLoop() {
-    if (!isAutoplaying) return;
+  async function runAutoplayLoop(runId = autoplayRunId) {
+    if (!isAutoplaying || runId !== autoplayRunId) return;
+
     const activePool = getActiveVocab();
     if (activePool.length === 0) {
-        stopAutoplay();
+        await stopAutoplay();
         return;
     }
     const item = activePool[fcIndex];
 
     if (flashcardElement.classList.contains('is-flipped')) {
       flashcardElement.classList.remove('is-flipped');
-      await new Promise(r => setTimeout(r, 400));
+      await sleep(400);
+      if (!isAutoplaying || runId !== autoplayRunId) return;
     }
 
-    if (!isAutoplaying) return;
     await speakTextAsync(item.word);
-    await new Promise(r => setTimeout(r, 1000));
+    if (!isAutoplaying || runId !== autoplayRunId) return;
 
-    if (!isAutoplaying) return;
+    await sleep(1000);
+    if (!isAutoplaying || runId !== autoplayRunId) return;
+
     flashcardElement.classList.add('is-flipped');
-    await new Promise(r => setTimeout(r, 600));
+    await sleep(600);
+    if (!isAutoplaying || runId !== autoplayRunId) return;
 
-    if (!isAutoplaying) return;
     await speakTextAsync(item.definition);
+    if (!isAutoplaying || runId !== autoplayRunId) return;
+
     for (let ex of item.examples) {
-      if (!isAutoplaying) return;
+      if (!isAutoplaying || runId !== autoplayRunId) return;
       await speakTextAsync(ex);
     }
 
-    await new Promise(r => setTimeout(r, 1500));
-    if (!isAutoplaying) return;
+    await sleep(1500);
+    if (!isAutoplaying || runId !== autoplayRunId) return;
 
     document.getElementById('btn-autoplay').classList.add('active-loop');
     nextCard();
 
     setTimeout(() => {
-      if(isAutoplaying) runAutoplayLoop();
+      if (isAutoplaying && runId === autoplayRunId) {
+        runAutoplayLoop(runId);
+      }
     }, 500);
   }
 
