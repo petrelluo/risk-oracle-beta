@@ -2,1025 +2,1031 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocab Master Pro: SRS & Quiz</title>
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --bg: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-light: #4b5563;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocab Master Pro: SRS & Quiz</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-light: #4b5563;
+    }
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 600px;
-        }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 600px;
+    }
 
-        h1 { margin: 0 0 15px 0; color: var(--primary); }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            background: #e5e7eb;
-            border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 15px;
-            gap: 5px;
-        }
+    h1 { margin: 0 0 15px 0; color: var(--primary); }
 
-        .tab-btn {
-            flex: 1 1 calc(33% - 5px);
-            padding: 10px;
-            text-align: center;
-            border: none;
-            background: transparent;
-            font-weight: bold;
-            color: var(--text-light);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
+    /* Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background: #e5e7eb;
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 15px;
+      gap: 5px;
+    }
 
-        .tab-btn.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    .tab-btn {
+      flex: 1 1 calc(33% - 5px);
+      padding: 10px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      font-weight: bold;
+      color: var(--text-light);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
 
-        /* Group Selector */
-        .group-selector-container {
-            background: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+    .tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-        .group-selector-container select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-            font-weight: bold;
-            color: var(--primary);
-            outline: none;
-            cursor: pointer;
-        }
+    /* Group Selector */
+    .group-selector-container {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-        /* Container visibility */
-        .mode-container { display: none; width: 100%; max-width: 600px; }
-        .mode-container.active { display: block; }
+    .group-selector-container select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 2px solid #e5e7eb;
+      font-weight: bold;
+      color: var(--primary);
+      outline: none;
+      cursor: pointer;
+    }
 
-        /* Flashcard CSS */
-        .scene { width: 100%; height: 380px; perspective: 1000px; margin-bottom: 20px; }
-        .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
-        .card.is-flipped { transform: rotateY(180deg); }
-        .card-face {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; box-sizing: border-box; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; overflow-y: auto;
-        }
-        .card-front { background-color: var(--card-bg); border: 2px solid #e5e7eb; }
-        .card-back { background-color: var(--primary); color: white; transform: rotateY(180deg); }
-        .word { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
-        .definition { font-size: 1.2rem; line-height: 1.4; margin-bottom: 20px; font-weight: bold;}
-        .examples { font-size: 1rem; line-height: 1.5; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
-        .hint { font-size: 0.9rem; color: var(--text-light); margin-top: auto; }
+    /* Container visibility */
+    .mode-container { display: none; width: 100%; max-width: 600px; }
+    .mode-container.active { display: block; }
 
-        /* Controls */
-        .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        button { padding: 12px 20px; font-size: 1rem; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-nav { background-color: white; color: var(--text-main); border: 2px solid #e5e7eb; flex: 1; min-width: 120px;}
-        .btn-nav:hover { background-color: #f9fafb; }
-        .btn-audio { background-color: var(--primary); color: white; width: 100%; }
-        .btn-audio:hover { background-color: var(--primary-hover); }
-        .btn-submit { background-color: var(--secondary); color: white; width: 100%; margin-top: 10px; }
-        .btn-submit:hover { background-color: #059669; }
-        .btn-autoplay-active { background-color: var(--secondary); color: white; border-color: var(--secondary); }
-        .btn-autoplay-active:hover { background-color: #059669; }
+    /* Flashcard CSS */
+    .scene { width: 100%; height: 380px; perspective: 1000px; margin-bottom: 20px; }
+    .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; cursor: pointer; }
+    .card.is-flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; box-sizing: border-box; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; overflow-y: auto;
+    }
+    .card-front { background-color: var(--card-bg); border: 2px solid #e5e7eb; }
+    .card-back { background-color: var(--primary); color: white; transform: rotateY(180deg); }
+    .word { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
+    .definition { font-size: 1.2rem; line-height: 1.4; margin-bottom: 20px; font-weight: bold;}
+    .examples { font-size: 1rem; line-height: 1.5; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
+    .hint { font-size: 0.9rem; color: var(--text-light); margin-top: auto; }
 
-        /* Quiz & Review CSS */
-        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-        .score-display { font-size: 1.2rem; color: var(--primary); }
-        .score-display.negative { color: var(--danger); }
-        
-        .quiz-word { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 20px; color: var(--primary); text-transform: capitalize; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
-        
-        .srs-status { font-size: 0.9rem; color: var(--warning); text-align: center; margin-top: -10px; margin-bottom: 15px; font-weight: bold; }
-        
-        .options-grid { display: grid; gap: 10px; }
-        .option-btn { background: white; border: 2px solid #e5e7eb; padding: 15px; text-align: left; font-size: 1rem; color: var(--text-main); transition: all 0.2s; line-height: 1.4; border-radius: 10px;}
-        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #f5f3ff; transform: translateY(-2px); }
-        .option-btn.correct { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
-        .option-btn.incorrect { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
-        .option-btn:disabled { cursor: not-allowed; transform: none; }
-        
-        .quiz-feedback { text-align: center; margin-top: 20px; min-height: 60px; }
-        .btn-next-quiz { background-color: var(--primary); color: white; margin: 10px auto; display: none; padding: 15px 30px; font-size: 1.1rem; }
-        
-        .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    /* Controls */
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    button { padding: 12px 20px; font-size: 1rem; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-nav { background-color: white; color: var(--text-main); border: 2px solid #e5e7eb; flex: 1; min-width: 120px;}
+    .btn-nav:hover { background-color: #f9fafb; }
+    .btn-audio { background-color: var(--primary); color: white; width: 100%; }
+    .btn-audio:hover { background-color: var(--primary-hover); }
+    .btn-submit { background-color: var(--secondary); color: white; width: 100%; margin-top: 10px; }
+    .btn-submit:hover { background-color: #059669; }
+    .btn-autoplay-active { background-color: var(--secondary); color: white; border-color: var(--secondary); }
+    .btn-autoplay-active:hover { background-color: #059669; }
 
-        /* Forms & Dashboard CSS */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
-        
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-        .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-        .stat-label { font-size: 0.85rem; color: var(--text-light); font-weight: bold; text-transform: uppercase; }
-        .success-msg { color: var(--secondary); font-weight: bold; text-align: center; display: none; margin-top: 15px; padding: 10px; background: #d1fae5; border-radius: 8px;}
-    </style>
+    /* Quiz & Review CSS */
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: bold; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+    .score-display { font-size: 1.2rem; color: var(--primary); }
+    .score-display.negative { color: var(--danger); }
+
+    .quiz-word { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 20px; color: var(--primary); text-transform: capitalize; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
+
+    .srs-status { font-size: 0.9rem; color: var(--warning); text-align: center; margin-top: -10px; margin-bottom: 15px; font-weight: bold; }
+
+    .options-grid { display: grid; gap: 10px; }
+    .option-btn { background: white; border: 2px solid #e5e7eb; padding: 15px; text-align: left; font-size: 1rem; color: var(--text-main); transition: all 0.2s; line-height: 1.4; border-radius: 10px;}
+    .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #f5f3ff; transform: translateY(-2px); }
+    .option-btn.correct { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
+    .option-btn.incorrect { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+    .option-btn:disabled { cursor: not-allowed; transform: none; }
+
+    .quiz-feedback { text-align: center; margin-top: 20px; min-height: 60px; }
+    .btn-next-quiz { background-color: var(--primary); color: white; margin: 10px auto; display: none; padding: 15px 30px; font-size: 1.1rem; }
+
+    .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+    /* Forms & Dashboard CSS */
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+    .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: inherit; font-size: 1rem; box-sizing: border-box; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
+    .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .stat-value { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+    .stat-label { font-size: 0.85rem; color: var(--text-light); font-weight: bold; text-transform: uppercase; }
+    .success-msg { color: var(--secondary); font-weight: bold; text-align: center; display: none; margin-top: 15px; padding: 10px; background: #d1fae5; border-radius: 8px;}
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Vocab Master Pro</h1>
-        <div class="tabs">
-            <button class="tab-btn active" onclick="setMode('flashcard')">Flashcards</button>
-            <button class="tab-btn" onclick="setMode('quiz')">SRS Quiz</button>
-            <button class="tab-btn" onclick="setMode('review')">Mistakes</button>
-            <button class="tab-btn" onclick="setMode('dashboard')">Dashboard</button>
-            <button class="tab-btn" onclick="setMode('add')">Add Word</button>
-        </div>
-        <div class="group-selector-container">
-            <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
-            <select id="groupSelect" onchange="changeGroup()">
-                <option value="all">All Words</option>
-                <option value="0">Group 1 (1 - 100)</option>
-                <option value="1">Group 2 (101 - 200)</option>
-                <option value="2">Group 3 (201 - 300)</option>
-                <option value="3">Group 4 (301+)</option>
-            </select>
-        </div>
-    </header>
+<header>
+  <h1>Vocab Master Pro</h1>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="setMode('flashcard')">Flashcards</button>
+    <button class="tab-btn" onclick="setMode('quiz')">SRS Quiz</button>
+    <button class="tab-btn" onclick="setMode('review')">Mistakes</button>
+    <button class="tab-btn" onclick="setMode('dashboard')">Dashboard</button>
+    <button class="tab-btn" onclick="setMode('add')">Add Word</button>
+  </div>
+  <div class="group-selector-container">
+    <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
+    <select id="groupSelect" onchange="changeGroup()">
+      <option value="all">All Words</option>
+      <option value="0">Group 1 (1 - 100)</option>
+      <option value="1">Group 2 (101 - 200)</option>
+      <option value="2">Group 3 (201 - 300)</option>
+      <option value="3">Group 4 (301+)</option>
+    </select>
+  </div>
+</header>
 
-    <div id="flashcard-mode" class="mode-container active">
-        <div class="scene">
-            <div class="card" id="flashcard">
-                <div class="card-face card-front">
-                    <div class="word" id="wordDisplay">Loading...</div>
-                    <div class="hint">Click anywhere on card to flip</div>
-                </div>
-                <div class="card-face card-back">
-                    <div class="definition" id="defDisplay">Definition goes here...</div>
-                    <div class="examples" id="exDisplay">"Example sentences go here..."</div>
-                </div>
-            </div>
-        </div>
-        <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--text-light);" id="fc-progress">Card 1 of 50</div>
-        <div class="controls">
-            <button class="btn-audio" onclick="readCurrentCard()"><span>🔊</span> Listen to Card</button>
-            <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
-            <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
-            <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
-        </div>
+<div id="flashcard-mode" class="mode-container active">
+  <div class="scene">
+    <div class="card" id="flashcard">
+      <div class="card-face card-front">
+        <div class="word" id="wordDisplay">Loading...</div>
+        <div class="hint">Click anywhere on card to flip</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="definition" id="defDisplay">Definition goes here...</div>
+        <div class="examples" id="exDisplay">"Example sentences go here..."</div>
+      </div>
     </div>
+  </div>
+  <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--text-light);" id="fc-progress">Card 1 of 50</div>
+  <div class="controls">
+    <button class="btn-audio" onclick="readCurrentCard()"><span>🔊</span> Listen to Card</button>
+    <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
+    <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
+    <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
+  </div>
+</div>
 
-    <div id="quiz-mode" class="mode-container">
-        <div class="quiz-header">
-            <span id="quiz-score" class="score-display">Score: 0</span>
-            <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="if(currentQuizWord) speakTextAsync(currentQuizWord.word)">🔊</button>
-        </div>
-        
-        <div class="srs-status" id="srs-status"></div>
-        <div class="quiz-word" id="quizWordDisplay">Word</div>
-        <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
-        
-        <div class="options-grid" id="optionsContainer"></div>
+<div id="quiz-mode" class="mode-container">
+  <div class="quiz-header">
+    <span id="quiz-score" class="score-display">Score: 0</span>
+    <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="if(currentQuizWord) speakTextAsync(currentQuizWord.word)">🔊</button>
+  </div>
 
-        <div class="quiz-feedback">
-            <div id="feedbackText" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;"></div>
-            <button class="btn-next-quiz" id="btnNextQuiz" onclick="loadNextQuestion()">Next Question &rarr;</button>
-        </div>
+  <div class="srs-status" id="srs-status"></div>
+  <div class="quiz-word" id="quizWordDisplay">Word</div>
+  <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
+
+  <div class="options-grid" id="optionsContainer"></div>
+
+  <div class="quiz-feedback">
+    <div id="feedbackText" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;"></div>
+    <button class="btn-next-quiz" id="btnNextQuiz" onclick="loadNextQuestion()">Next Question &rarr;</button>
+  </div>
+</div>
+
+<div id="dashboard-mode" class="mode-container">
+  <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+    <h2 style="margin-top: 0; color: var(--text-main);">Learning Progress</h2>
+    <p style="color: var(--text-light); margin-bottom: 0;">Overview for your selected study group.</p>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-total">0</div>
+      <div class="stat-label">Total Words</div>
     </div>
-
-    <div id="dashboard-mode" class="mode-container">
-        <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
-            <h2 style="margin-top: 0; color: var(--text-main);">Learning Progress</h2>
-            <p style="color: var(--text-light); margin-bottom: 0;">Overview for your selected study group.</p>
-        </div>
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="stat-total">0</div>
-                <div class="stat-label">Total Words</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="stat-due" style="color: var(--warning);">0</div>
-                <div class="stat-label">Due for Review</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="stat-mastered" style="color: var(--secondary);">0</div>
-                <div class="stat-label">Mastered (1hr+)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="stat-struggling" style="color: var(--danger);">0</div>
-                <div class="stat-label">Struggling</div>
-            </div>
-        </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-due" style="color: var(--warning);">0</div>
+      <div class="stat-label">Due for Review</div>
     </div>
-
-    <div id="add-mode" class="mode-container">
-        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <h2 style="margin-top: 0; color: var(--primary); text-align: center;">Add Custom Word</h2>
-            <form id="addWordForm" onsubmit="addCustomWord(event)">
-                <div class="form-group">
-                    <label>Vocabulary Word</label>
-                    <input type="text" id="newWord" required placeholder="e.g., ephemeral">
-                </div>
-                <div class="form-group">
-                    <label>Definition</label>
-                    <textarea id="newDef" rows="3" required placeholder="Lasting for a very short time."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Example Sentence 1</label>
-                    <input type="text" id="newEx1" required placeholder="Fashions are ephemeral.">
-                </div>
-                <div class="form-group">
-                    <label>Example Sentence 2 (Optional)</label>
-                    <input type="text" id="newEx2" placeholder="...">
-                </div>
-                <button type="submit" class="btn-submit">Add to Deck ➕</button>
-            </form>
-            <div id="addSuccessMsg" class="success-msg">Word added successfully!</div>
-        </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-mastered" style="color: var(--secondary);">0</div>
+      <div class="stat-label">Mastered (1hr+)</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-struggling" style="color: var(--danger);">0</div>
+      <div class="stat-label">Struggling</div>
+    </div>
+  </div>
+</div>
 
-    <script>
-        // =========================================================================
-        // RAW DATA - ORGANIZED INTO GROUPS OF 100
-        // =========================================================================
-        const rawVocabData = [
-            // --- GROUP 1 (Words 1 - 100) ---
-            { word: "victory lap", definition: "A celebratory circuit or appearance after a win or success.", examples: ["After closing the deal, the CEO took a victory lap around the office."] },
-            { word: "subdued", definition: "Quiet, reflective, or depressed; soft and restrained.", examples: ["She wore a subdued gray dress to the somber event."] },
-            { word: "wishy washy", definition: "Feeble or bland in character; lacking clear, firm decisions.", examples: ["His wishy-washy answers made the hiring manager doubt his skills."] },
-            { word: "in a bid", definition: "In an attempt or effort to achieve something.", examples: ["In a bid to win the election, the candidate promised tax cuts."] },
-            { word: "level-headed", definition: "Calm and sensible, especially in difficult situations.", examples: ["During the fire drill, she remained level-headed."] },
-            { word: "hellacious", definition: "Very great, bad, or overwhelming; extraordinarily difficult.", examples: ["The commute home during the blizzard was a hellacious experience."] },
-            { word: "telegenic", definition: "Having an appearance or manner that is highly attractive on television.", examples: ["The news anchor was incredibly telegenic."] },
-            { word: "shake the cage", definition: "To cause a disturbance, provoke, or challenge the status quo.", examples: ["The new director isn't afraid to shake the cage."] },
-            { word: "accredited", definition: "Officially recognized or authorized.", examples: ["The university is accredited by the national board of education."] },
-            { word: "rattle off", definition: "To say, perform, or produce something quickly and easily.", examples: ["She could rattle off all the state capitals from memory."] },
-            { word: "long-winded", definition: "Continuing at tedious length.", examples: ["His long-winded speech put half the audience to sleep."] },
-            { word: "bring home the bacon", definition: "To earn a living for one's family or to achieve success.", examples: ["Since her husband lost his job, she's the one bringing home the bacon."] },
-            { word: "burn the candle at both ends", definition: "To overwork oneself, usually by going to bed late and waking up early.", examples: ["You can't burn the candle at both ends without getting exhausted."] },
-            { word: "hold on to one's hat", definition: "Used to tell someone to prepare for a big surprise or a fast ride.", examples: ["Hold on to your hat, because this news is going to shock you."] },
-            { word: "saline", definition: "Containing or impregnated with salt.", examples: ["The nurse used a saline solution to clean the wound."] },
-            { word: "nippy", definition: "Chilly or biting (referring to the weather).", examples: ["It's a bit nippy outside, so you should wear a jacket."] },
-            { word: "stuck-up", definition: "Conceited, snobbish, or aloof.", examples: ["People thought she was stuck-up, but she was actually just very shy."] },
-            { word: "butt out", definition: "To mind one's own business or to stop interfering.", examples: ["I told my brother to butt out of my personal life."] },
-            { word: "lower one's sights", definition: "To reduce one's expectations or standards.", examples: ["When he couldn't get into an Ivy League school, he had to lower his sights."] },
-            { word: "groggy", definition: "Dazed, weak, or unsteady, especially from illness or sleep.", examples: ["I always feel groggy when I first wake up from a nap."] },
-            { word: "nervous tics", definition: "Involuntary, repetitive movements or sounds caused by anxiety.", examples: ["Biting his nails was one of his nervous tics before public speaking."] },
-            { word: "downtrodden", definition: "Oppressed or treated badly by people in power.", examples: ["The charity aims to help the downtrodden citizens of the city."] },
-            { word: "stand on one's two feet", definition: "To be independent and self-sufficient.", examples: ["It's time you moved out and learned to stand on your own two feet."] },
-            { word: "over the hump", definition: "Past the most difficult or dangerous part of a process.", examples: ["Once we finish this massive report, we'll finally be over the hump."] },
-            { word: "scraggly", definition: "Ragged, thin, or untidy in form or appearance.", examples: ["He grew a scraggly beard during his month-long camping trip."] },
-            { word: "doll up", definition: "To dress elegantly or elaborately.", examples: ["She dolled herself up for the charity gala."] },
-            { word: "drop the act", definition: "To stop pretending or behaving deceptively.", examples: ["We know you're not actually upset, so you can drop the act."] },
-            { word: "shot in the dark", definition: "A guess or attempt that has very little chance of succeeding.", examples: ["Finding the missing ring in the sand is a shot in the dark."] },
-            { word: "die on the vine", definition: "To fail or be abandoned before being fully developed.", examples: ["Without proper funding, the brilliant project died on the vine."] },
-            { word: "patsy", definition: "A person who is easily taken advantage of, especially by being blamed for something.", examples: ["They set him up to be the patsy for the bank robbery."] },
-            { word: "bottle up", definition: "To repress or conceal one's emotions.", examples: ["It's unhealthy to bottle up your feelings of anger."] },
-            { word: "clip one's wings", definition: "To restrict someone's freedom or power.", examples: ["Taking away his car keys definitely clipped his wings."] },
-            { word: "one's head between one's legs", definition: "A posture of submission, shame, or despair.", examples: ["After losing the match, he sat with his head between his legs."] },
-            { word: "flounce", definition: "To go or move in an exaggeratedly impatient or angry manner.", examples: ["She flounced out of the room after the argument."] },
-            { word: "class act", definition: "Someone who shows impressive behavior, excellence, or style.", examples: ["Even in defeat, the tennis player was a true class act."] },
-            { word: "take the sting out of", definition: "To make something less unpleasant or painful.", examples: ["His sincere apology took the sting out of his harsh criticism."] },
-            { word: "course of action", definition: "A procedure adopted to deal with a situation.", examples: ["We need to determine the best course of action to fix this bug."] },
-            { word: "diamond in the rough", definition: "A person or thing with great potential but lacking refinement.", examples: ["That rookie pitcher is a diamond in the rough."] },
-            { word: "put someone on a pedestal", definition: "To admire someone greatly, often blindly or unthinkingly.", examples: ["It's unfair to put celebrities on a pedestal; they make mistakes too."] },
-            { word: "running on fumes", definition: "To continue operating with almost no energy or resources left.", examples: ["By the end of the 12-hour shift, the nurses were running on fumes."] },
-            { word: "belle of the ball", definition: "The most beautiful or popular woman at a social event.", examples: ["In her stunning red dress, she was the belle of the ball."] },
-            { word: "alter ego", definition: "A person's secondary or alternative personality.", examples: ["Superman is the alter ego of the mild-mannered Clark Kent."] },
-            { word: "take the bullet", definition: "To accept blame, responsibility, or punishment to protect someone else.", examples: ["The manager took the bullet for his team's costly mistake."] },
-            { word: "stone cold", definition: "Completely devoid of emotion or warmth.", examples: ["He delivered the terrible news with a stone-cold expression."] },
-            { word: "hoity-toity", definition: "Haughty, snobbish, or self-important.", examples: ["They refused to eat at the diner, preferring some hoity-toity restaurant."] },
-            { word: "let oneself go", definition: "To stop caring about one's appearance or behavior.", examples: ["After the breakup, he really let himself go and stopped exercising."] },
-            { word: "the right hand doesn't know what the left is doing", definition: "A situation where different parts of an organization fail to communicate.", examples: ["We received two conflicting emails; clearly the right hand doesn't know what the left is doing."] },
-            { word: "take down a notch", definition: "To humble someone or deflate their ego.", examples: ["Her recent failure certainly took her down a notch."] },
-            { word: "ice out", definition: "To completely ignore or exclude someone.", examples: ["After the disagreement, the entire friend group iced him out."] },
-            { word: "pull one's chain", definition: "To tease, joke with, or intentionally mislead someone.", examples: ["Don't get upset, I was just pulling your chain!"] },
-            { word: "Luddite", definition: "A person opposed to new technology or ways of working.", examples: ["My grandfather is a bit of a Luddite and refuses to use a smartphone."] },
-            { word: "punch out", definition: "To officially record the time one leaves work.", examples: ["Make sure you punch out before heading home for the weekend."] },
-            { word: "black out", definition: "To lose consciousness temporarily.", examples: ["The sudden drop in blood pressure caused her to black out."] },
-            { word: "drink like a fish", definition: "To consume large amounts of alcoholic beverages.", examples: ["At the wedding reception, he drank like a fish."] },
-            { word: "on the nose", definition: "Exactly correct, precise, or overly literal.", examples: ["Her prediction about the stock market crash was right on the nose."] },
-            { word: "bone-dry", definition: "Completely lacking moisture.", examples: ["After the drought, the riverbed was bone-dry."] },
-            { word: "celibate", definition: "Abstaining from marriage and sexual relations.", examples: ["Monks take a vow to remain celibate for life."] },
-            { word: "come into one's own", definition: "To become fully effective, successful, or recognized.", examples: ["She really came into her own after being promoted to manager."] },
-            { word: "put down", definition: "To insult, humiliate, or belittle someone.", examples: ["He always tries to put down his coworkers to make himself look better."] },
-            { word: "out in the cold", definition: "Ignored, neglected, or excluded from a group or activity.", examples: ["When the company merged, many old employees were left out in the cold."] },
-            { word: "go off on somebody", definition: "To suddenly express intense anger toward someone.", examples: ["The customer went off on the cashier for no apparent reason."] },
-            { word: "hubbub", definition: "A chaotic noise caused by a crowd of people; an uproar.", examples: ["I couldn't hear you over the hubbub of the party."] },
-            { word: "puzzle out", definition: "To solve a confusing or difficult problem through careful thought.", examples: ["It took me hours to puzzle out the cryptic instructions."] },
-            { word: "flabbergast", definition: "To surprise someone greatly; to astonish.", examples: ["The price of the luxury car completely flabbergasted me."] },
-            { word: "chiseled", definition: "Having clear, strong, and well-defined features.", examples: ["The actor is famous for his chiseled jawline."] },
-            { word: "sciatica", definition: "Pain radiating along the sciatic nerve, which runs down the lower back and leg.", examples: ["His sciatica flared up after lifting the heavy boxes."] },
-            { word: "get caught up", definition: "To become involved in something, often without intending to.", examples: ["I didn't mean to stay late, but I got caught up in my work."] },
-            { word: "cut up", definition: "To behave playfully or boisterously; to joke around.", examples: ["The students were cutting up in the back of the classroom."] },
-            { word: "pay the dues", definition: "To earn one's position or success through hard work and experience.", examples: ["Before becoming a head chef, she had to pay her dues as a line cook."] },
-            { word: "break a sweat", definition: "To exert oneself physically or mentally.", examples: ["He finished the math puzzle without even breaking a sweat."] },
-            { word: "unseemly", definition: "Not proper or appropriate; not in good taste.", examples: ["It was unseemly of him to argue with the bride at her wedding."] },
-            { word: "keep one's wits about one", definition: "To remain calm and observant in a difficult situation.", examples: ["You need to keep your wits about you when driving in heavy snow."] },
-            { word: "rough up", definition: "To treat someone with physical violence.", examples: ["The gangsters threatened to rough him up if he didn't pay."] },
-            { word: "put stock in", definition: "To trust or attach importance to something.", examples: ["I don't put much stock in astrological predictions."] },
-            { word: "compartmentalization", definition: "The division of something into sections or categories, often mentally.", examples: ["His mental compartmentalization helped him separate work stress from family life."] },
-            { word: "put a gun to one's head", definition: "To force someone to do something under extreme pressure.", examples: ["I wouldn't buy that stock unless you put a gun to my head."] },
-            { word: "jazzed", definition: "Very excited, energetic, or enthusiastic.", examples: ["I am really jazzed about our upcoming vacation to Hawaii."] },
-            { word: "word to the wise", definition: "A helpful piece of advice or a warning.", examples: ["Word to the wise: don't bring up politics at Thanksgiving dinner."] },
-            { word: "lean toward", definition: "To tend to prefer or support a particular opinion or course of action.", examples: ["I lean toward taking the highway instead of the back roads."] },
-            { word: "back to the wall", definition: "In a difficult situation with very few options for escape.", examples: ["With the deadline tomorrow, our team really has its back to the wall."] },
-            { word: "will call", definition: "A service or window where customers can pick up pre-purchased tickets.", examples: ["You can pick up your concert tickets at the will call window."] },
-            { word: "be raring to go", definition: "To be very eager and enthusiastic to start something.", examples: ["After a good night's sleep, the kids were raring to go to the theme park."] },
-            { word: "lead the charge", definition: "To take an active, leading role in a campaign or effort.", examples: ["Our company is leading the charge in renewable energy solutions."] },
-            { word: "high-strung", definition: "Very nervous, tense, or sensitive.", examples: ["The high-strung racehorse spooked easily at loud noises."] },
-            { word: "hold down the fort", definition: "To take responsibility for a place while someone is away.", examples: ["I'll hold down the fort at the office while you're at the conference."] },
-            { word: "put one's hand in one's pocket", definition: "To spend or contribute one's own money.", examples: ["We need everyone to put their hand in their pocket to fund this charity."] },
-            { word: "body-shaming", definition: "The act of mocking or criticizing someone's physical appearance.", examples: ["The magazine faced backlash for body-shaming the actress."] },
-            { word: "come to a head", definition: "To reach a crisis point or critical stage.", examples: ["The tension between the two managers finally came to a head yesterday."] },
-            { word: "to a T", definition: "Exactly; to perfection.", examples: ["That tailored suit fits him to a T."] },
-            { word: "make a face", definition: "To distort one's facial features to express disgust or amusement.", examples: ["The toddler made a face when he tasted the sour lemon."] },
-            { word: "take the edge", definition: "To lessen the severity or intensity of something.", examples: ["A warm cup of tea helped take the edge off her anxiety."] },
-            { word: "paper over", definition: "To conceal or cover up a problem rather than fixing it.", examples: ["You can't just paper over these massive financial errors."] },
-            { word: "what have you", definition: "And other similar things; et cetera.", examples: ["They sell tools, garden supplies, hardware, and what have you."] },
-            { word: "the whole nine yards", definition: "Everything possible or available; the entirety.", examples: ["When he cooks dinner, he goes the whole nine yards with appetizers and dessert."] },
-            { word: "blow the wind", definition: "To observe how a situation is developing before making a decision.", examples: ["Let's wait and see which way the wind blows before we invest."] },
-            { word: "suffice to say", definition: "Used to indicate that one could say more, but what follows is enough.", examples: ["Suffice to say, the blind date was a complete disaster."] },
-            { word: "tap into", definition: "To gain access to a resource or to manage to use something advantageously.", examples: ["We need to tap into the younger demographic to increase sales."] },
-            { word: "gainfully", definition: "In a way that provides profitable or paid work.", examples: ["He has been gainfully employed at the factory for ten years."] },
-            { word: "diametrically", definition: "In complete opposition; absolutely.", examples: ["Their political views are diametrically opposed."] },
-            { word: "hold water", definition: "To be valid, sound, or capable of being proven true.", examples: ["His excuse for being late simply doesn't hold water."] },
-            { word: "in the back of one's head", definition: "Stored in one's mind as a thought, though not actively being focused on.", examples: ["In the back of my head, I knew I was forgetting something important."] },
+<div id="add-mode" class="mode-container">
+  <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h2 style="margin-top: 0; color: var(--primary); text-align: center;">Add Custom Word</h2>
+    <form id="addWordForm" onsubmit="addCustomWord(event)">
+      <div class="form-group">
+        <label>Vocabulary Word</label>
+        <input type="text" id="newWord" required placeholder="e.g., ephemeral">
+      </div>
+      <div class="form-group">
+        <label>Definition</label>
+        <textarea id="newDef" rows="3" required placeholder="Lasting for a very short time."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Example Sentence 1</label>
+        <input type="text" id="newEx1" required placeholder="Fashions are ephemeral.">
+      </div>
+      <div class="form-group">
+        <label>Example Sentence 2 (Optional)</label>
+        <input type="text" id="newEx2" placeholder="...">
+      </div>
+      <button type="submit" class="btn-submit">Add to Deck ➕</button>
+    </form>
+    <div id="addSuccessMsg" class="success-msg">Word added successfully!</div>
+  </div>
+</div>
 
-            // --- GROUP 2 (Words 101 - 200) ---
-            { word: "goggle", definition: "To look with wide open eyes, typically in amazement.", examples: ["The tourists goggled at the sheer size of the monument."] },
-            { word: "gargle", definition: "To wash one's mouth and throat with a liquid kept in motion by exhaling through it.", examples: ["She had to gargle with warm salt water to soothe her throat."] },
-            { word: "balls and strikes", definition: "The basic parameters or strict rules of a situation, metaphorically calling things exactly as they are.", examples: ["A judge is just supposed to call balls and strikes, not make the laws."] },
-            { word: "chalk up", definition: "To ascribe or attribute something to a particular cause.", examples: ["We can chalk up that error to simple inexperience."] },
-            { word: "optician", definition: "A person qualified to make and supply eyeglasses and contact lenses.", examples: ["The optician adjusted the frames so they fit comfortably on my nose."] },
-            { word: "profess", definition: "To claim or assert something openly, often insincerely.", examples: ["He professed his loyalty, but his actions said otherwise."] },
-            { word: "green shoots", definition: "Signs of growth or renewal, especially in an economic recovery.", examples: ["The market is finally showing green shoots after a long recession."] },
-            { word: "beat to the punch", definition: "To do or achieve something before someone else can.", examples: ["I wanted to buy that rare book, but another collector beat me to the punch."] },
-            { word: "shell game", definition: "A deceptive scheme or trick.", examples: ["The company's accounting practices were nothing more than a financial shell game."] },
-            { word: "drink the kool-aid", definition: "To accept a philosophy or blindly follow a leader without questioning.", examples: ["He completely drank the kool-aid and believes everything the charismatic founder says."] },
-            { word: "drop-dead", definition: "Stunningly attractive or impressive.", examples: ["She walked in wearing a drop-dead gorgeous gown."] },
-            { word: "in a league of its own", definition: "Far superior to everything else of its kind.", examples: ["When it comes to battery life, this new phone is in a league of its own."] },
-            { word: "lock horns", definition: "To engage in a conflict or argument.", examples: ["The two politicians frequently lock horns over fiscal policy."] },
-            { word: "riff", definition: "A short, repeated musical phrase, or a quick, clever remark.", examples: ["The guitarist played a catchy riff that became the song's hook."] },
-            { word: "spare the rod, spoil the child", definition: "A proverb meaning children should be physically punished to learn good behavior.", examples: ["My strict grandfather always believed in 'spare the rod, spoil the child'."] },
-            { word: "fits and starts", definition: "Irregular intervals of action and inaction.", examples: ["The project progressed in fits and starts due to constant budget cuts."] },
-            { word: "a center of excellence", definition: "A team or entity that provides leadership, best practices, research, or training for a focus area.", examples: ["They established a center of excellence for artificial intelligence research."] },
-            { word: "loom large", definition: "To have a great importance or threatening influence.", examples: ["The upcoming deadline continues to loom large over the development team."] },
-            { word: "bell the cat", definition: "To perform a very dangerous or very difficult task.", examples: ["Everyone agreed the boss needed to be told, but no one wanted to bell the cat."] },
-            { word: "bend one's arm", definition: "To persuade or force someone to do something they are reluctant to do.", examples: ["I didn't want to go to the party, but my friends bent my arm."] },
-            { word: "lay odds", definition: "To be so sure of something that one is willing to bet on it.", examples: ["I'd lay odds that he's going to be late again today."] },
-            { word: "frazzle", definition: "To cause to feel completely exhausted and stressed.", examples: ["The constant ringing of the phones started to frazzle the receptionist."] },
-            { word: "cut one's teeth", definition: "To gain one's first experience in a particular career or field.", examples: ["He cut his teeth on local politics before running for state senate."] },
-            { word: "chasten", definition: "To discipline, punish, or subdue.", examples: ["The severe reprimand seemed to chasten the rowdy employee."] },
-            { word: "cease and desist", definition: "A legal order or warning to stop an illegal activity.", examples: ["The company was hit with a cease and desist letter over copyright infringement."] },
-            { word: "smoking gun", definition: "Incontestable evidence of a crime or fault.", examples: ["The deleted emails proved to be the smoking gun in the investigation."] },
-            { word: "stalwart", definition: "Loyal, reliable, and hardworking.", examples: ["She has been a stalwart supporter of the charity for over two decades."] },
-            { word: "moot point", definition: "An issue that is debatable or no longer relevant.", examples: ["Since we already missed the flight, arguing about who packed the bags is a moot point."] },
-            { word: "clobber", definition: "To hit forcefully or defeat comprehensively.", examples: ["Our team got completely clobbered in the final game of the season."] },
-            { word: "sieve", definition: "A utensil with wire mesh used for straining, or someone who can't keep a secret.", examples: ["Don't tell him your plans; his mind is like a sieve."] },
-            { word: "take it on the chin", definition: "To accept misfortune or defeat bravely and without complaining.", examples: ["When the market crashed, investors just had to take it on the chin."] },
-            { word: "bemoan", definition: "To express deep grief or distress over something.", examples: ["It's useless to bemoan the lack of funding without offering a solution."] },
-            { word: "take a stand", definition: "To publicly assert one's opinion or defend a position.", examples: ["The community decided to take a stand against the new highway project."] },
-            { word: "overture", definition: "An introduction to something more substantial, or a proposal to start negotiations.", examples: ["The government made peace overtures to the rebel leaders."] },
-            { word: "interlocutor", definition: "A person who takes part in a dialogue or conversation.", examples: ["She served as the official interlocutor during the diplomatic talks."] },
-            { word: "pointedly", definition: "In a direct and unambiguous way, often indicating criticism.", examples: ["He pointedly ignored my question and changed the subject."] },
-            { word: "bet the farm", definition: "To risk everything on a single venture.", examples: ["They are betting the farm on this new product launch being a success."] },
-            { word: "on one's toes", definition: "Alert and ready to respond to whatever happens.", brought examples: ["Working in the emergency room really keeps you on your toes."] },
-            { word: "upstander", definition: "A person who speaks or acts in support of an individual or cause, particularly when someone is being attacked.", examples: ["Instead of just watching, be an upstander and stop the bullying."] },
-            { word: "drubbing", definition: "A thorough defeat or severe beating.", examples: ["The incumbent mayor took a drubbing in the recent election."] },
-            { word: "dignitary", definition: "A person considered to be important because of high rank or office.", examples: ["Several foreign dignitaries attended the royal wedding."] },
-            { word: "stand pat", definition: "To refuse to change one's opinions or decisions.", examples: ["Despite the pressure, the committee decided to stand pat on their ruling."] },
-            { word: "beckon", definition: "To make a gesture to encourage someone to come nearer or follow.", examples: ["The glowing sign seemed to beckon tired travelers into the diner."] },
-            { word: "roll with the punches", definition: "To adapt to difficulties and keep going.", examples: ["In the startup world, you just have to learn to roll with the punches."] },
-            { word: "on the off chance", definition: "Because of a slight possibility that something may happen.", examples: ["I brought my umbrella on the off chance it rains later."] },
-            { word: "inimical", definition: "Tending to obstruct or harm; unfriendly.", examples: ["Such strict policies are inimical to a creative work environment."] },
-            { word: "indubitably", definition: "Without a doubt; unquestionable.", examples: ["He is indubitably the best chess player in the tournament."] },
-            { word: "misogynist", definition: "A person who dislikes, despises, or is strongly prejudiced against women.", examples: ["The author was criticized for the misogynist undertones in his novels."] },
-            { word: "cast a pall", definition: "To create a gloomy, depressing, or tense atmosphere.", examples: ["The sudden bad news cast a pall over the holiday party."] },
-            { word: "hit the mother lode", definition: "To find a large amount of something valuable.", examples: ["We hit the mother lode when we found that antique shop."] },
-            { word: "about-face", definition: "A complete reversal of direction or attitude.", examples: ["The senator did an about-face and supported the bill he previously opposed."] },
-            { word: "eponymous", definition: "Giving one's name to a tribe, place, or book.", examples: ["Walt Disney created his eponymous entertainment empire from scratch."] },
-            { word: "hang out to dry", definition: "To abandon someone in a difficult situation without support.", examples: ["When the scandal broke, the CEO hung his deputies out to dry."] },
-            { word: "waste not, want not", definition: "If you use your resources carefully, you will never be in need.", examples: ["She saves all her fabric scraps, living by the motto 'waste not, want not'."] },
-            { word: "mushy", definition: "Excessively emotional or sentimental.", examples: ["I can't stand those mushy romantic comedies."] },
-            { word: "skin in the game", definition: "Having a personal investment or stake in a venture.", examples: ["Investors want founders who have their own skin in the game."] },
-            { word: "appellation", definition: "A name or title.", examples: ["The city earned the appellation 'The Big Apple'."] },
-            { word: "basket case", definition: "A person or thing that is useless or unable to cope due to stress.", examples: ["By Friday afternoon, I'm usually a complete basket case."] },
-            { word: "dowdy", definition: "Unfashionable and unstylish in appearance.", examples: ["She replaced her dowdy old wardrobe with modern designer clothes."] },
-            { word: "muck around", definition: "To spend time doing things that are not useful or serious.", examples: ["Stop mucking around and finish your homework!"] },
-            { word: "throw someone off the scent", definition: "To distract someone or lead them in the wrong direction.", examples: ["The thief left false clues to throw the detectives off the scent."] },
-            { word: "snappy", definition: "Clever, quick, and neat; or irritable.", examples: ["He is known for his snappy dialogue and sharp wit."] },
-            { word: "hold a candle to", definition: "To be remotely comparable in quality or skill.", examples: ["That sequel doesn't even hold a candle to the original movie."] },
-            { word: "ooze", definition: "To slowly seep or flow out, or to give a powerful impression of a quality.", examples: ["The charismatic leader seemed to ooze confidence."] },
-            { word: "tattle", definition: "To report someone's wrongdoing to an authority figure.", examples: ["The little boy threatened to tattle on his sister for breaking the vase."] },
-            { word: "highway robbery", definition: "Extortionate charging for a product or service.", examples: ["Charging $10 for a bottle of water at the concert is highway robbery."] },
-            { word: "snob", definition: "A person with an exaggerated respect for high social position or wealth.", examples: ["He's such a coffee snob that he won't drink anything from a chain store."] },
-            { word: "solitaire", definition: "A single gem set alone, or a card game played by oneself.", examples: ["He proposed with a beautiful diamond solitaire ring."] },
-            { word: "skeevy", definition: "Unpleasant, sleazy, or morally questionable.", examples: ["I wouldn't stay in that skeevy motel if you paid me."] },
-            { word: "exude", definition: "To discharge slowly, or to display an emotion or quality strongly.", examples: ["The seasoned executive exuded authority and calm."] },
-            { word: "bestow", definition: "To confer or present an honor, right, or gift.", examples: ["The university will bestow an honorary degree upon the famous scientist."] },
-            { word: "caricature", definition: "A picture or description in which characteristics are exaggerated for comic effect.", examples: ["The political cartoonist drew a hilarious caricature of the mayor."] },
-            { word: "catch you on the flippity flip", definition: "A humorous, informal way of saying 'see you later'.", examples: ["Alright, I'm heading out. Catch you on the flippity flip!"] },
-            { word: "like the wind", definition: "Very quickly or fast.", examples: ["As soon as the bell rang, the kids ran like the wind out the door."] },
-            { word: "inscrutable", definition: "Impossible to understand or interpret.", examples: ["The poker player's expression remained completely inscrutable."] },
-            { word: "mollycoddle", definition: "To treat someone very indulgently or protectively.", examples: ["You can't mollycoddle the trainees; they need real-world experience."] },
-            { word: "overbearing", definition: "Unpleasantly or arrogantly domineering.", examples: ["Her overbearing boss micromanaged every aspect of her work."] },
-            { word: "take to someone", definition: "To begin to like someone.", examples: ["The stray dog immediately took to my younger brother."] },
-            { word: "promulgate", definition: "To promote or make widely known an idea or cause.", examples: ["The organization aims to promulgate the principles of free speech."] },
-            { word: "slingshot", definition: "To accelerate rapidly by utilizing the momentum of something else.", examples: ["The spaceship used Jupiter's gravity to slingshot toward the outer solar system."] },
-            { word: "ungainly", definition: "Clumsy; awkward; unwieldy.", examples: ["The teenager was tall and ungainly, constantly tripping over his own feet."] },
-            { word: "toe the line", definition: "To accept the authority or policies of a particular group.", examples: ["If you want to stay in this political party, you have to toe the line."] },
-            { word: "vigilante", definition: "A member of a self-appointed group of citizens who undertake law enforcement.", examples: ["Batman operates as a vigilante outside the bounds of the police force."] },
-            { word: "countenance", definition: "A person's face or facial expression, or to admit as acceptable.", examples: ["His calm countenance hid the panic he was truly feeling."] },
-            { word: "sadistic", definition: "Deriving pleasure from inflicting pain, suffering, or humiliation on others.", examples: ["The villain in the movie had a cruel, sadistic streak."] },
-            { word: "doggedly", definition: "In a manner that shows tenacity and grim persistence.", examples: ["She doggedly pursued her dream of becoming a doctor despite numerous setbacks."] },
-            { word: "comport", definition: "To conduct oneself or behave in a specified manner.", examples: ["The ambassador comported himself with incredible dignity during the crisis."] },
-            { word: "cleave", definition: "To split or sever something, OR to stick fast to.", examples: ["The lumberjack used an axe to cleave the log in two."] },
-            { word: "litmus test", definition: "A decisively indicative test of a principle or condition.", examples: ["The upcoming vote will be a true litmus test of the governor's popularity."] },
-            { word: "hang one's hat on", definition: "To depend or rely on something.", examples: ["His incredible speed is the one skill he can really hang his hat on."] },
-            { word: "hearken", definition: "To listen, or to bring to mind a past event.", examples: ["The vintage dress hearkens back to the fashion of the 1950s."] },
-            { word: "against the grain", definition: "Contrary to the natural inclination or feeling of someone or something.", examples: ["It goes against the grain for him to lie to his parents."] },
-            { word: "harp on", definition: "To talk or complain about something repeatedly and tediously.", examples: ["My boss won't stop harping on the importance of punctuality."] },
-            { word: "in one's wheelhouse", definition: "Within a person's area of expertise or interest.", examples: ["Writing Python scripts is definitely in my wheelhouse."] },
-            { word: "the wheels fell off the wagon", definition: "Everything went wrong; a complete failure occurred.", examples: ["We were doing great until Q3, and then the wheels fell off the wagon."] },
-            { word: "home in on", definition: "To direct attention or focus precisely on a target.", examples: ["The missile is designed to home in on radar signals."] },
-            { word: "the thin end of the wedge", definition: "An action that seems unimportant but will lead to more serious developments.", examples: ["Allowing workers to arrive late once is the thin end of the wedge."] },
-            { word: "levity", definition: "Humor or frivolity, especially the treatment of a serious matter with humor.", examples: ["He tried to introduce some levity into the tense boardroom meeting."] },
-            { word: "on one's dime", definition: "Paid for by someone.", examples: ["You can't make personal international calls on the company's dime."] },
-            { word: "disservice", definition: "A harmful action; an ill turn.", examples: ["You do yourself a disservice by not studying for the exam."] },
+<script>
+  // =========================================================================
+  // RAW DATA - ORGANIZED INTO GROUPS OF 100
+  // =========================================================================
+  const rawVocabData = [
+    // --- GROUP 1 (Words 1 - 100) ---
+    { word: "victory lap", definition: "A celebratory circuit or appearance after a win or success.", examples: ["After closing the deal, the CEO took a victory lap around the office."] },
+    { word: "subdued", definition: "Quiet, reflective, or depressed; soft and restrained.", examples: ["She wore a subdued gray dress to the somber event."] },
+    { word: "wishy washy", definition: "Feeble or bland in character; lacking clear, firm decisions.", examples: ["His wishy-washy answers made the hiring manager doubt his skills."] },
+    { word: "in a bid", definition: "In an attempt or effort to achieve something.", examples: ["In a bid to win the election, the candidate promised tax cuts."] },
+    { word: "level-headed", definition: "Calm and sensible, especially in difficult situations.", examples: ["During the fire drill, she remained level-headed."] },
+    { word: "hellacious", definition: "Very great, bad, or overwhelming; extraordinarily difficult.", examples: ["The commute home during the blizzard was a hellacious experience."] },
+    { word: "telegenic", definition: "Having an appearance or manner that is highly attractive on television.", examples: ["The news anchor was incredibly telegenic."] },
+    { word: "shake the cage", definition: "To cause a disturbance, provoke, or challenge the status quo.", examples: ["The new director isn't afraid to shake the cage."] },
+    { word: "accredited", definition: "Officially recognized or authorized.", examples: ["The university is accredited by the national board of education."] },
+    { word: "rattle off", definition: "To say, perform, or produce something quickly and easily.", examples: ["She could rattle off all the state capitals from memory."] },
+    { word: "long-winded", definition: "Continuing at tedious length.", examples: ["His long-winded speech put half the audience to sleep."] },
+    { word: "bring home the bacon", definition: "To earn a living for one's family or to achieve success.", examples: ["Since her husband lost his job, she's the one bringing home the bacon."] },
+    { word: "burn the candle at both ends", definition: "To overwork oneself, usually by going to bed late and waking up early.", examples: ["You can't burn the candle at both ends without getting exhausted."] },
+    { word: "hold on to one's hat", definition: "Used to tell someone to prepare for a big surprise or a fast ride.", examples: ["Hold on to your hat, because this news is going to shock you."] },
+    { word: "saline", definition: "Containing or impregnated with salt.", examples: ["The nurse used a saline solution to clean the wound."] },
+    { word: "nippy", definition: "Chilly or biting (referring to the weather).", examples: ["It's a bit nippy outside, so you should wear a jacket."] },
+    { word: "stuck-up", definition: "Conceited, snobbish, or aloof.", examples: ["People thought she was stuck-up, but she was actually just very shy."] },
+    { word: "butt out", definition: "To mind one's own business or to stop interfering.", examples: ["I told my brother to butt out of my personal life."] },
+    { word: "lower one's sights", definition: "To reduce one's expectations or standards.", examples: ["When he couldn't get into an Ivy League school, he had to lower his sights."] },
+    { word: "groggy", definition: "Dazed, weak, or unsteady, especially from illness or sleep.", examples: ["I always feel groggy when I first wake up from a nap."] },
+    { word: "nervous tics", definition: "Involuntary, repetitive movements or sounds caused by anxiety.", examples: ["Biting his nails was one of his nervous tics before public speaking."] },
+    { word: "downtrodden", definition: "Oppressed or treated badly by people in power.", examples: ["The charity aims to help the downtrodden citizens of the city."] },
+    { word: "stand on one's two feet", definition: "To be independent and self-sufficient.", examples: ["It's time you moved out and learned to stand on your own two feet."] },
+    { word: "over the hump", definition: "Past the most difficult or dangerous part of a process.", examples: ["Once we finish this massive report, we'll finally be over the hump."] },
+    { word: "scraggly", definition: "Ragged, thin, or untidy in form or appearance.", examples: ["He grew a scraggly beard during his month-long camping trip."] },
+    { word: "doll up", definition: "To dress elegantly or elaborately.", examples: ["She dolled herself up for the charity gala."] },
+    { word: "drop the act", definition: "To stop pretending or behaving deceptively.", examples: ["We know you're not actually upset, so you can drop the act."] },
+    { word: "shot in the dark", definition: "A guess or attempt that has very little chance of succeeding.", examples: ["Finding the missing ring in the sand is a shot in the dark."] },
+    { word: "die on the vine", definition: "To fail or be abandoned before being fully developed.", examples: ["Without proper funding, the brilliant project died on the vine."] },
+    { word: "patsy", definition: "A person who is easily taken advantage of, especially by being blamed for something.", examples: ["They set him up to be the patsy for the bank robbery."] },
+    { word: "bottle up", definition: "To repress or conceal one's emotions.", examples: ["It's unhealthy to bottle up your feelings of anger."] },
+    { word: "clip one's wings", definition: "To restrict someone's freedom or power.", examples: ["Taking away his car keys definitely clipped his wings."] },
+    { word: "one's head between one's legs", definition: "A posture of submission, shame, or despair.", examples: ["After losing the match, he sat with his head between his legs."] },
+    { word: "flounce", definition: "To go or move in an exaggeratedly impatient or angry manner.", examples: ["She flounced out of the room after the argument."] },
+    { word: "class act", definition: "Someone who shows impressive behavior, excellence, or style.", examples: ["Even in defeat, the tennis player was a true class act."] },
+    { word: "take the sting out of", definition: "To make something less unpleasant or painful.", examples: ["His sincere apology took the sting out of his harsh criticism."] },
+    { word: "course of action", definition: "A procedure adopted to deal with a situation.", examples: ["We need to determine the best course of action to fix this bug."] },
+    { word: "diamond in the rough", definition: "A person or thing with great potential but lacking refinement.", examples: ["That rookie pitcher is a diamond in the rough."] },
+    { word: "put someone on a pedestal", definition: "To admire someone greatly, often blindly or unthinkingly.", examples: ["It's unfair to put celebrities on a pedestal; they make mistakes too."] },
+    { word: "running on fumes", definition: "To continue operating with almost no energy or resources left.", examples: ["By the end of the 12-hour shift, the nurses were running on fumes."] },
+    { word: "belle of the ball", definition: "The most beautiful or popular woman at a social event.", examples: ["In her stunning red dress, she was the belle of the ball."] },
+    { word: "alter ego", definition: "A person's secondary or alternative personality.", examples: ["Superman is the alter ego of the mild-mannered Clark Kent."] },
+    { word: "take the bullet", definition: "To accept blame, responsibility, or punishment to protect someone else.", examples: ["The manager took the bullet for his team's costly mistake."] },
+    { word: "stone cold", definition: "Completely devoid of emotion or warmth.", examples: ["He delivered the terrible news with a stone-cold expression."] },
+    { word: "hoity-toity", definition: "Haughty, snobbish, or self-important.", examples: ["They refused to eat at the diner, preferring some hoity-toity restaurant."] },
+    { word: "let oneself go", definition: "To stop caring about one's appearance or behavior.", examples: ["After the breakup, he really let himself go and stopped exercising."] },
+    { word: "the right hand doesn't know what the left is doing", definition: "A situation where different parts of an organization fail to communicate.", examples: ["We received two conflicting emails; clearly the right hand doesn't know what the left is doing."] },
+    { word: "take down a notch", definition: "To humble someone or deflate their ego.", examples: ["Her recent failure certainly took her down a notch."] },
+    { word: "ice out", definition: "To completely ignore or exclude someone.", examples: ["After the disagreement, the entire friend group iced him out."] },
+    { word: "pull one's chain", definition: "To tease, joke with, or intentionally mislead someone.", examples: ["Don't get upset, I was just pulling your chain!"] },
+    { word: "Luddite", definition: "A person opposed to new technology or ways of working.", examples: ["My grandfather is a bit of a Luddite and refuses to use a smartphone."] },
+    { word: "punch out", definition: "To officially record the time one leaves work.", examples: ["Make sure you punch out before heading home for the weekend."] },
+    { word: "black out", definition: "To lose consciousness temporarily.", examples: ["The sudden drop in blood pressure caused her to black out."] },
+    { word: "drink like a fish", definition: "To consume large amounts of alcoholic beverages.", examples: ["At the wedding reception, he drank like a fish."] },
+    { word: "on the nose", definition: "Exactly correct, precise, or overly literal.", examples: ["Her prediction about the stock market crash was right on the nose."] },
+    { word: "bone-dry", definition: "Completely lacking moisture.", examples: ["After the drought, the riverbed was bone-dry."] },
+    { word: "celibate", definition: "Abstaining from marriage and sexual relations.", examples: ["Monks take a vow to remain celibate for life."] },
+    { word: "come into one's own", definition: "To become fully effective, successful, or recognized.", examples: ["She really came into her own after being promoted to manager."] },
+    { word: "put down", definition: "To insult, humiliate, or belittle someone.", examples: ["He always tries to put down his coworkers to make himself look better."] },
+    { word: "out in the cold", definition: "Ignored, neglected, or excluded from a group or activity.", examples: ["When the company merged, many old employees were left out in the cold."] },
+    { word: "go off on somebody", definition: "To suddenly express intense anger toward someone.", examples: ["The customer went off on the cashier for no apparent reason."] },
+    { word: "hubbub", definition: "A chaotic noise caused by a crowd of people; an uproar.", examples: ["I couldn't hear you over the hubbub of the party."] },
+    { word: "puzzle out", definition: "To solve a confusing or difficult problem through careful thought.", examples: ["It took me hours to puzzle out the cryptic instructions."] },
+    { word: "flabbergast", definition: "To surprise someone greatly; to astonish.", examples: ["The price of the luxury car completely flabbergasted me."] },
+    { word: "chiseled", definition: "Having clear, strong, and well-defined features.", examples: ["The actor is famous for his chiseled jawline."] },
+    { word: "sciatica", definition: "Pain radiating along the sciatic nerve, which runs down the lower back and leg.", examples: ["His sciatica flared up after lifting the heavy boxes."] },
+    { word: "get caught up", definition: "To become involved in something, often without intending to.", examples: ["I didn't mean to stay late, but I got caught up in my work."] },
+    { word: "cut up", definition: "To behave playfully or boisterously; to joke around.", examples: ["The students were cutting up in the back of the classroom."] },
+    { word: "pay the dues", definition: "To earn one's position or success through hard work and experience.", examples: ["Before becoming a head chef, she had to pay her dues as a line cook."] },
+    { word: "break a sweat", definition: "To exert oneself physically or mentally.", examples: ["He finished the math puzzle without even breaking a sweat."] },
+    { word: "unseemly", definition: "Not proper or appropriate; not in good taste.", examples: ["It was unseemly of him to argue with the bride at her wedding."] },
+    { word: "keep one's wits about one", definition: "To remain calm and observant in a difficult situation.", examples: ["You need to keep your wits about you when driving in heavy snow."] },
+    { word: "rough up", definition: "To treat someone with physical violence.", examples: ["The gangsters threatened to rough him up if he didn't pay."] },
+    { word: "put stock in", definition: "To trust or attach importance to something.", examples: ["I don't put much stock in astrological predictions."] },
+    { word: "compartmentalization", definition: "The division of something into sections or categories, often mentally.", examples: ["His mental compartmentalization helped him separate work stress from family life."] },
+    { word: "put a gun to one's head", definition: "To force someone to do something under extreme pressure.", examples: ["I wouldn't buy that stock unless you put a gun to my head."] },
+    { word: "jazzed", definition: "Very excited, energetic, or enthusiastic.", examples: ["I am really jazzed about our upcoming vacation to Hawaii."] },
+    { word: "word to the wise", definition: "A helpful piece of advice or a warning.", examples: ["Word to the wise: don't bring up politics at Thanksgiving dinner."] },
+    { word: "lean toward", definition: "To tend to prefer or support a particular opinion or course of action.", examples: ["I lean toward taking the highway instead of the back roads."] },
+    { word: "back to the wall", definition: "In a difficult situation with very few options for escape.", examples: ["With the deadline tomorrow, our team really has its back to the wall."] },
+    { word: "will call", definition: "A service or window where customers can pick up pre-purchased tickets.", examples: ["You can pick up your concert tickets at the will call window."] },
+    { word: "be raring to go", definition: "To be very eager and enthusiastic to start something.", examples: ["After a good night's sleep, the kids were raring to go to the theme park."] },
+    { word: "lead the charge", definition: "To take an active, leading role in a campaign or effort.", examples: ["Our company is leading the charge in renewable energy solutions."] },
+    { word: "high-strung", definition: "Very nervous, tense, or sensitive.", examples: ["The high-strung racehorse spooked easily at loud noises."] },
+    { word: "hold down the fort", definition: "To take responsibility for a place while someone is away.", examples: ["I'll hold down the fort at the office while you're at the conference."] },
+    { word: "put one's hand in one's pocket", definition: "To spend or contribute one's own money.", examples: ["We need everyone to put their hand in their pocket to fund this charity."] },
+    { word: "body-shaming", definition: "The act of mocking or criticizing someone's physical appearance.", examples: ["The magazine faced backlash for body-shaming the actress."] },
+    { word: "come to a head", definition: "To reach a crisis point or critical stage.", examples: ["The tension between the two managers finally came to a head yesterday."] },
+    { word: "to a T", definition: "Exactly; to perfection.", examples: ["That tailored suit fits him to a T."] },
+    { word: "make a face", definition: "To distort one's facial features to express disgust or amusement.", examples: ["The toddler made a face when he tasted the sour lemon."] },
+    { word: "take the edge", definition: "To lessen the severity or intensity of something.", examples: ["A warm cup of tea helped take the edge off her anxiety."] },
+    { word: "paper over", definition: "To conceal or cover up a problem rather than fixing it.", examples: ["You can't just paper over these massive financial errors."] },
+    { word: "what have you", definition: "And other similar things; et cetera.", examples: ["They sell tools, garden supplies, hardware, and what have you."] },
+    { word: "the whole nine yards", definition: "Everything possible or available; the entirety.", examples: ["When he cooks dinner, he goes the whole nine yards with appetizers and dessert."] },
+    { word: "blow the wind", definition: "To observe how a situation is developing before making a decision.", examples: ["Let's wait and see which way the wind blows before we invest."] },
+    { word: "suffice to say", definition: "Used to indicate that one could say more, but what follows is enough.", examples: ["Suffice to say, the blind date was a complete disaster."] },
+    { word: "tap into", definition: "To gain access to a resource or to manage to use something advantageously.", examples: ["We need to tap into the younger demographic to increase sales."] },
+    { word: "gainfully", definition: "In a way that provides profitable or paid work.", examples: ["He has been gainfully employed at the factory for ten years."] },
+    { word: "diametrically", definition: "In complete opposition; absolutely.", examples: ["Their political views are diametrically opposed."] },
+    { word: "hold water", definition: "To be valid, sound, or capable of being proven true.", examples: ["His excuse for being late simply doesn't hold water."] },
+    { word: "in the back of one's head", definition: "Stored in one's mind as a thought, though not actively being focused on.", examples: ["In the back of my head, I knew I was forgetting something important."] },
 
-            // --- GROUP 3 (Words 201 - 300) ---
-            { word: "on the ropes", definition: "In a state of near defeat or ruin.", examples: ["After losing their biggest client, the agency was on the ropes."] },
-            { word: "bereave", definition: "To be deprived of a loved one through a profound absence, especially due to death.", examples: ["The sudden accident bereaved the family of their beloved father."] },
-            { word: "put the pedal to the metal", definition: "To drive as fast as possible or to work with maximum effort.", examples: ["We need to put the pedal to the metal to meet this deadline."] },
-            { word: "keep one's head on a swivel", definition: "To remain highly alert and constantly aware of one's surroundings.", examples: ["When walking through that dangerous neighborhood, keep your head on a swivel."] },
-            { word: "right up one's alley", definition: "Perfectly suited to someone's interests or abilities.", examples: ["That documentary about early aviation is right up your alley."] },
-            { word: "kiss of death", definition: "An action or event that causes certain failure or ruin.", examples: ["Raising prices now would be the kiss of death for our startup."] },
-            { word: "intractable", definition: "Hard to control or deal with; stubborn.", examples: ["The economy faces intractable problems that won't be fixed overnight."] },
-            { word: "over the edge", definition: "Into a state of mental breakdown or extreme behavior.", examples: ["The stress of the audit finally pushed the accountant over the edge."] },
-            { word: "tidbit", definition: "A small piece of tasty food or a small and particularly interesting item of gossip.", examples: ["She offered a fascinating tidbit of information about the merger."] },
-            { word: "wimpy", definition: "Weak, cowardly, or ineffectual.", examples: ["He gave a wimpy excuse for not showing up to help us move."] },
-            { word: "call a spade a spade", definition: "To speak plainly and directly about something, even if unpleasant.", examples: ["Let's call a spade a spade: this marketing strategy is a disaster."] },
-            { word: "name names", definition: "To publicly reveal the identities of people involved in a wrongdoing.", examples: ["Under pressure from the committee, the witness finally began to name names."] },
-            { word: "make no bones", definition: "To state a fact clearly and unambiguously.", examples: ["He made no bones about his dissatisfaction with the new management."] },
-            { word: "parlay", definition: "To turn an initial stake or winning into a greater amount.", examples: ["She managed to parlay a small inheritance into a real estate empire."] },
-            { word: "diamond hands", definition: "Holding a financial asset tightly despite extreme market volatility.", examples: ["Despite the massive dip in share price, he showed diamond hands and didn't sell."] },
-            { word: "set up shop", definition: "To establish a business or a base of operations.", examples: ["The tech giant plans to set up shop in Austin next year."] },
-            { word: "cacophony", definition: "A harsh, discordant mixture of sounds.", examples: ["The construction site outside my window was a cacophony of drills and hammers."] },
-            { word: "call one's shots", definition: "To predict an achievement beforehand and then execute it.", examples: ["Like Babe Ruth pointing to the stands, the CEO loves to call his shots."] },
-            { word: "noncommittal", definition: "Not expressing or revealing a definite opinion or course of action.", examples: ["The governor gave a noncommittal response regarding the controversial bill."] },
-            { word: "shoehorn", definition: "To force into an inadequate space or a tight situation.", examples: ["They tried to shoehorn five dense topics into a 30-minute presentation."] },
-            { word: "have a target on one's back", definition: "To be the focus of criticism, attacks, or intense scrutiny.", examples: ["As the reigning champion, she definitely has a target on her back this season."] },
-            { word: "button up", definition: "To finalize or secure something tightly.", examples: ["We just need to button up a few legal details before signing the contract."] },
-            { word: "run water through the pipes", definition: "To test a system or process to see if it works correctly.", examples: ["Let's run a small test campaign first just to run water through the pipes."] },
-            { word: "slow burn", definition: "A gradual building of anger, emotion, or narrative tension.", examples: ["The movie is a slow burn, but the climax is absolutely worth the wait."] },
-            { word: "albatross", definition: "A heavy burden of guilt or an obstacle to success.", examples: ["The failing division became an albatross around the company's neck."] },
-            { word: "slap in the face", definition: "An unexpected rejection, insult, or disappointment.", examples: ["Being passed over for the promotion was a real slap in the face."] },
-            { word: "gore", definition: "Blood that has been shed, especially as a result of violence.", examples: ["The horror movie was filled with excessive blood and gore."] },
-            { word: "pound out", definition: "To produce something quickly and vigorously, like typing.", examples: ["He managed to pound out a 10-page essay the night before it was due."] },
-            { word: "upstanding", definition: "Honest, respectable, and of good character.", examples: ["She is an upstanding member of the local community."] },
-            { word: "cutting", definition: "Capable of wounding the feelings; harsh or hurtful.", examples: ["He made a cutting remark about her lack of experience."] },
-            { word: "one-hit wonder", definition: "A performer or entity known for only a single fleeting success.", examples: ["The band from the 90s was a classic one-hit wonder."] },
-            { word: "stupendous", definition: "Extremely impressive.", examples: ["The gymnast completed a stupendous routine that won her the gold."] },
-            { word: "pull no punches", definition: "To be completely honest and direct, even if it causes offense.", examples: ["The critic pulled no punches when reviewing the terrible sequel."] },
-            { word: "confectionery", definition: "Sweets, candies, and chocolates collectively.", examples: ["The bakery is famous for its elaborate sugar confectionery."] },
-            { word: "enthrall", definition: "To capture the fascinated attention of.", examples: ["The magician's illusions managed to enthrall the entire audience."] },
-            { word: "sticker shock", definition: "Astonishment or dismay experienced upon seeing the high price of an item.", examples: ["We had major sticker shock when we looked at the prices of new cars."] },
-            { word: "thread the needle", definition: "To navigate a complex or narrow path safely.", examples: ["The quarterback managed to thread the needle between two defenders."] },
-            { word: "recant", definition: "To say that one no longer holds an opinion or belief.", examples: ["Under pressure from the church, Galileo was forced to recant his theories."] },
-            { word: "gravitas", definition: "Dignity, seriousness, or solemnity of manner.", examples: ["A news anchor needs to have enough gravitas to deliver serious news."] },
-            { word: "lineage", definition: "Lineal descent from an ancestor; ancestry or pedigree.", examples: ["The purebred dog comes from a championship lineage."] },
-            { word: "run hot and cold", definition: "To alternate between enthusiasm and apathy.", examples: ["His interest in the project runs hot and cold depending on the day."] },
-            { word: "faint of heart", definition: "Lacking the courage to face something difficult or scary.", examples: ["This intense roller coaster is not for the faint of heart."] },
-            { word: "credo", definition: "A statement of the beliefs or aims which guide someone's actions.", examples: ["'Customer first' has always been our corporate credo."] },
-            { word: "stick the landing", definition: "To execute the final part of a complex action perfectly.", examples: ["The movie was great, but the messy finale failed to stick the landing."] },
-            { word: "with guns blazing", definition: "Proceeding with aggressive, unrestrained energy or force.", examples: ["The lawyer entered the courtroom with guns blazing, ready for a fight."] },
-            { word: "proverbial", definition: "Well known, especially so as to be stereotypical.", examples: ["He ended up up the proverbial creek without a paddle."] },
-            { word: "in full swing", definition: "At the highest level of activity or operation.", examples: ["By 10 PM, the New Year's Eve party was in full swing."] },
-            { word: "chalk out", definition: "To plan or sketch something out roughly.", examples: ["Let's chalk out a rough schedule for the conference."] },
-            { word: "domesticity", definition: "Home or family life.", examples: ["After years of traveling, he finally settled down and embraced domesticity."] },
-            { word: "extemporaneous", definition: "Spoken or done without preparation.", examples: ["She gave a brilliant extemporaneous speech at the award ceremony."] },
-            { word: "schmutz", definition: "Dirt, smudge, or an unidentifiable substance.", examples: ["You've got a little schmutz on your collar."] },
-            { word: "catapult", definition: "To hurl or launch something in a specified direction.", examples: ["That viral video really catapulted him to stardom."] },
-            { word: "impressionable", definition: "Easily influenced due to a lack of critical ability.", examples: ["Teenagers are often highly impressionable to peer pressure."] },
-            { word: "risqué", definition: "Slightly indecent and liable to shock.", examples: ["The comedian's risqué jokes made a few people in the audience uncomfortable."] },
-            { word: "on point", definition: "Relevant, appropriate, and perfectly executed.", examples: ["Her analysis of the market trends was completely on point."] },
-            { word: "a fly in the ointment", definition: "A minor irritation that spoils the success or enjoyment of something.", examples: ["The only fly in the ointment was the lack of parking at the venue."] },
-            { word: "at the drop of a hat", definition: "Without any hesitation; instantly.", examples: ["He would quit his job at the drop of a hat if he won the lottery."] },
-            { word: "in the grip of", definition: "Experiencing something unpleasant that cannot be stopped.", examples: ["The city was in the grip of a severe winter storm."] },
-            { word: "have the wind at your back", definition: "To be in a favorable situation where things are progressing easily.", examples: ["With the economy booming, the incumbent president has the wind at his back."] },
-            { word: "run a tight ship", definition: "To manage an organization with strict discipline and efficiency.", examples: ["The principal runs a tight ship; lateness is absolutely not tolerated."] },
-            { word: "resuscitate", definition: "To revive someone from unconsciousness or apparent death.", examples: ["The paramedics managed to resuscitate the victim at the scene."] },
-            { word: "key in on", definition: "To pay special attention to or focus heavily upon.", examples: ["We need to key in on our primary demographic to increase sales."] },
-            { word: "imbibe", definition: "To drink alcohol, or to absorb ideas or knowledge.", examples: ["They went to the pub to imbibe a few pints of beer."] },
-            { word: "bamboozle", definition: "To fool or cheat someone.", examples: ["The con artist managed to bamboozle the elderly couple out of their savings."] },
-            { word: "get someone in the mix", definition: "To involve someone in a situation, activity, or group.", examples: ["We need to get the design team in the mix before we finalize the product."] },
-            { word: "travesty", definition: "A false, absurd, or distorted representation of something.", examples: ["The unfair verdict was an absolute travesty of justice."] },
-            { word: "straddle", definition: "To sit or stand with one leg on either side of something.", examples: ["He tried to straddle the fence between the two arguing factions."] },
-            { word: "mutter", definition: "To say something in a low or barely audible voice.", examples: ["She began to mutter complaints under her breath."] },
-            { word: "free spirit", definition: "An independent or uninhibited person.", examples: ["As a true free spirit, she traveled the world with no fixed itinerary."] },
-            { word: "rowdy", definition: "Noisy and disorderly.", examples: ["The bartender had to kick out a group of rowdy patrons."] },
-            { word: "monkey on one's back", definition: "A persistent burden or problem, often referring to an addiction.", examples: ["He finally paid off his debt and got that monkey off his back."] },
-            { word: "ass-backwards", definition: "Done in a way that is completely wrong or contrary to common sense.", examples: ["Building the roof before the walls is just ass-backwards."] },
-            { word: "kryptonite", definition: "Something that can seriously weaken or harm a particular person or thing.", examples: ["Chocolate cake is my absolute kryptonite when I'm on a diet."] },
-            { word: "get in one's hair", definition: "To annoy or bother someone constantly.", examples: ["The kids were getting in my hair, so I sent them outside to play."] },
-            { word: "flounder", definition: "To struggle clumsily or to be in serious difficulty.", examples: ["Without a clear strategy, the startup began to flounder."] },
-            { word: "keep one's cards close to the vest", definition: "To be secretive and cautious about one's intentions.", examples: ["The CEO is keeping his cards close to the vest regarding the upcoming merger."] },
-            { word: "dead in the water", definition: "Unable to function or progress; completely failed.", examples: ["Without the investor's funding, the project is dead in the water."] },
-            { word: "corsage", definition: "A small bouquet of flowers worn on a woman's dress or wrist.", examples: ["He bought his date a beautiful orchid corsage for the prom."] },
-            { word: "dance with the devil", definition: "To engage in risky, reckless, or immoral behavior.", examples: ["By taking bribes from the cartel, the politician was dancing with the devil."] },
-            { word: "strike while the iron is hot", definition: "To take advantage of an opportunity as soon as it exists.", examples: ["The housing market is up, so we need to strike while the iron is hot and sell."] },
-            { word: "hit one's mark", definition: "To achieve one's goal or perform exactly as planned.", examples: ["The actor hit his mark perfectly during the complex tracking shot."] },
-            { word: "over one's head", definition: "Beyond someone's ability to understand or deal with.", examples: ["Advanced calculus is completely over my head."] },
-            { word: "make one's mark", definition: "To attain recognition or a position of influence.", examples: ["She wants to make her mark in the competitive world of fashion."] },
-            { word: "down in the mouth", definition: "Looking unhappy or depressed.", examples: ["You look a bit down in the mouth today. Is everything okay?"] },
-            { word: "gripping", definition: "Firmly holding the attention or interest; thrilling.", examples: ["The thriller novel was so gripping I read it in one sitting."] },
-            { word: "cut and run", definition: "To quickly escape from a difficult situation.", examples: ["When the police sirens wailed, the burglars decided to cut and run."] },
-            { word: "daft", definition: "Silly, foolish, or eccentric.", examples: ["Don't be daft, you can't wear a swimsuit to a formal dinner."] },
-            { word: "slink", definition: "To move smoothly and quietly with gliding steps, often in a stealthy way.", examples: ["The embarrassed cat slinked out of the room."] },
-            { word: "cloistered", definition: "Kept away from the outside world; sheltered.", examples: ["The monks lived a quiet, cloistered life in the monastery."] },
-            { word: "take the weight off one's feet", definition: "To sit down and rest.", examples: ["Come in, take the weight off your feet and I'll make you some tea."] },
-            { word: "rustle up", definition: "To quickly prepare or gather something, often food.", examples: ["I can probably rustle up some sandwiches for lunch."] },
-            { word: "swaddle", definition: "To wrap closely in garments or cloth, especially a baby.", examples: ["The nurse showed the new parents how to tightly swaddle the infant."] },
-            { word: "touch a nerve", definition: "To provoke a sensitive or emotional reaction.", examples: ["My comment about his ex-girlfriend clearly touched a nerve."] },
-            { word: "put one's foot down", definition: "To adopt a firm policy or take a strong stand against something.", examples: ["When he asked to borrow the car again, his father finally put his foot down."] },
-            { word: "life is catching up with someone", definition: "The consequences of past actions or aging are beginning to be felt.", examples: ["After years of heavy smoking, life is finally catching up with him."] },
-            { word: "not bat an eye", definition: "To show no reaction or surprise.", examples: ["He didn't bat an eye when the mechanic handed him the massive repair bill."] },
-            { word: "slushy", definition: "Covered in partially melted snow, or overly sentimental.", examples: ["The roads are going to be very slushy and dangerous tomorrow."] },
-            { word: "racket", definition: "A loud noise, or an illegal or dishonest scheme.", examples: ["The mafia ran a protection racket in the neighborhood."] },
-            { word: "earthling", definition: "An inhabitant of the earth (often used in sci-fi).", examples: ["The alien ambassador greeted the earthlings peacefully."] },
-            { word: "Machiavellian", definition: "Cunning, scheming, and unscrupulous, especially in politics.", examples: ["His Machiavellian tactics allowed him to seize control of the board."] },
+    // --- GROUP 2 (Words 101 - 200) ---
+    { word: "goggle", definition: "To look with wide open eyes, typically in amazement.", examples: ["The tourists goggled at the sheer size of the monument."] },
+    { word: "gargle", definition: "To wash one's mouth and throat with a liquid kept in motion by exhaling through it.", examples: ["She had to gargle with warm salt water to soothe her throat."] },
+    { word: "balls and strikes", definition: "The basic parameters or strict rules of a situation, metaphorically calling things exactly as they are.", examples: ["A judge is just supposed to call balls and strikes, not make the laws."] },
+    { word: "chalk up", definition: "To ascribe or attribute something to a particular cause.", examples: ["We can chalk up that error to simple inexperience."] },
+    { word: "optician", definition: "A person qualified to make and supply eyeglasses and contact lenses.", examples: ["The optician adjusted the frames so they fit comfortably on my nose."] },
+    { word: "profess", definition: "To claim or assert something openly, often insincerely.", examples: ["He professed his loyalty, but his actions said otherwise."] },
+    { word: "green shoots", definition: "Signs of growth or renewal, especially in an economic recovery.", examples: ["The market is finally showing green shoots after a long recession."] },
+    { word: "beat to the punch", definition: "To do or achieve something before someone else can.", examples: ["I wanted to buy that rare book, but another collector beat me to the punch."] },
+    { word: "shell game", definition: "A deceptive scheme or trick.", examples: ["The company's accounting practices were nothing more than a financial shell game."] },
+    { word: "drink the kool-aid", definition: "To accept a philosophy or blindly follow a leader without questioning.", examples: ["He completely drank the kool-aid and believes everything the charismatic founder says."] },
+    { word: "drop-dead", definition: "Stunningly attractive or impressive.", examples: ["She walked in wearing a drop-dead gorgeous gown."] },
+    { word: "in a league of its own", definition: "Far superior to everything else of its kind.", examples: ["When it comes to battery life, this new phone is in a league of its own."] },
+    { word: "lock horns", definition: "To engage in a conflict or argument.", examples: ["The two politicians frequently lock horns over fiscal policy."] },
+    { word: "riff", definition: "A short, repeated musical phrase, or a quick, clever remark.", examples: ["The guitarist played a catchy riff that became the song's hook."] },
+    { word: "spare the rod, spoil the child", definition: "A proverb meaning children should be physically punished to learn good behavior.", examples: ["My strict grandfather always believed in 'spare the rod, spoil the child'."] },
+    { word: "fits and starts", definition: "Irregular intervals of action and inaction.", examples: ["The project progressed in fits and starts due to constant budget cuts."] },
+    { word: "a center of excellence", definition: "A team or entity that provides leadership, best practices, research, or training for a focus area.", examples: ["They established a center of excellence for artificial intelligence research."] },
+    { word: "loom large", definition: "To have a great importance or threatening influence.", examples: ["The upcoming deadline continues to loom large over the development team."] },
+    { word: "bell the cat", definition: "To perform a very dangerous or very difficult task.", examples: ["Everyone agreed the boss needed to be told, but no one wanted to bell the cat."] },
+    { word: "bend one's arm", definition: "To persuade or force someone to do something they are reluctant to do.", examples: ["I didn't want to go to the party, but my friends bent my arm."] },
+    { word: "lay odds", definition: "To be so sure of something that one is willing to bet on it.", examples: ["I'd lay odds that he's going to be late again today."] },
+    { word: "frazzle", definition: "To cause to feel completely exhausted and stressed.", examples: ["The constant ringing of the phones started to frazzle the receptionist."] },
+    { word: "cut one's teeth", definition: "To gain one's first experience in a particular career or field.", examples: ["He cut his teeth on local politics before running for state senate."] },
+    { word: "chasten", definition: "To discipline, punish, or subdue.", examples: ["The severe reprimand seemed to chasten the rowdy employee."] },
+    { word: "cease and desist", definition: "A legal order or warning to stop an illegal activity.", examples: ["The company was hit with a cease and desist letter over copyright infringement."] },
+    { word: "smoking gun", definition: "Incontestable evidence of a crime or fault.", examples: ["The deleted emails proved to be the smoking gun in the investigation."] },
+    { word: "stalwart", definition: "Loyal, reliable, and hardworking.", examples: ["She has been a stalwart supporter of the charity for over two decades."] },
+    { word: "moot point", definition: "An issue that is debatable or no longer relevant.", examples: ["Since we already missed the flight, arguing about who packed the bags is a moot point."] },
+    { word: "clobber", definition: "To hit forcefully or defeat comprehensively.", examples: ["Our team got completely clobbered in the final game of the season."] },
+    { word: "sieve", definition: "A utensil with wire mesh used for straining, or someone who can't keep a secret.", examples: ["Don't tell him your plans; his mind is like a sieve."] },
+    { word: "take it on the chin", definition: "To accept misfortune or defeat bravely and without complaining.", examples: ["When the market crashed, investors just had to take it on the chin."] },
+    { word: "bemoan", definition: "To express deep grief or distress over something.", examples: ["It's useless to bemoan the lack of funding without offering a solution."] },
+    { word: "take a stand", definition: "To publicly assert one's opinion or defend a position.", examples: ["The community decided to take a stand against the new highway project."] },
+    { word: "overture", definition: "An introduction to something more substantial, or a proposal to start negotiations.", examples: ["The government made peace overtures to the rebel leaders."] },
+    { word: "interlocutor", definition: "A person who takes part in a dialogue or conversation.", examples: ["She served as the official interlocutor during the diplomatic talks."] },
+    { word: "pointedly", definition: "In a direct and unambiguous way, often indicating criticism.", examples: ["He pointedly ignored my question and changed the subject."] },
+    { word: "bet the farm", definition: "To risk everything on a single venture.", examples: ["They are betting the farm on this new product launch being a success."] },
+    { word: "on one's toes", definition: "Alert and ready to respond to whatever happens.", examples: ["Working in the emergency room really keeps you on your toes."] },
+  { word: "upstander", definition: "A person who speaks or acts in support of an individual or cause, particularly when someone is being attacked.", examples: ["Instead of just watching, be an upstander and stop the bullying."] },
+  { word: "drubbing", definition: "A thorough defeat or severe beating.", examples: ["The incumbent mayor took a drubbing in the recent election."] },
+  { word: "dignitary", definition: "A person considered to be important because of high rank or office.", examples: ["Several foreign dignitaries attended the royal wedding."] },
+  { word: "stand pat", definition: "To refuse to change one's opinions or decisions.", examples: ["Despite the pressure, the committee decided to stand pat on their ruling."] },
+  { word: "beckon", definition: "To make a gesture to encourage someone to come nearer or follow.", examples: ["The glowing sign seemed to beckon tired travelers into the diner."] },
+  { word: "roll with the punches", definition: "To adapt to difficulties and keep going.", examples: ["In the startup world, you just have to learn to roll with the punches."] },
+  { word: "on the off chance", definition: "Because of a slight possibility that something may happen.", examples: ["I brought my umbrella on the off chance it rains later."] },
+  { word: "inimical", definition: "Tending to obstruct or harm; unfriendly.", examples: ["Such strict policies are inimical to a creative work environment."] },
+  { word: "indubitably", definition: "Without a doubt; unquestionable.", examples: ["He is indubitably the best chess player in the tournament."] },
+  { word: "misogynist", definition: "A person who dislikes, despises, or is strongly prejudiced against women.", examples: ["The author was criticized for the misogynist undertones in his novels."] },
+  { word: "cast a pall", definition: "To create a gloomy, depressing, or tense atmosphere.", examples: ["The sudden bad news cast a pall over the holiday party."] },
+  { word: "hit the mother lode", definition: "To find a large amount of something valuable.", examples: ["We hit the mother lode when we found that antique shop."] },
+  { word: "about-face", definition: "A complete reversal of direction or attitude.", examples: ["The senator did an about-face and supported the bill he previously opposed."] },
+  { word: "eponymous", definition: "Giving one's name to a tribe, place, or book.", examples: ["Walt Disney created his eponymous entertainment empire from scratch."] },
+  { word: "hang out to dry", definition: "To abandon someone in a difficult situation without support.", examples: ["When the scandal broke, the CEO hung his deputies out to dry."] },
+  { word: "waste not, want not", definition: "If you use your resources carefully, you will never be in need.", examples: ["She saves all her fabric scraps, living by the motto 'waste not, want not'."] },
+  { word: "mushy", definition: "Excessively emotional or sentimental.", examples: ["I can't stand those mushy romantic comedies."] },
+  { word: "skin in the game", definition: "Having a personal investment or stake in a venture.", examples: ["Investors want founders who have their own skin in the game."] },
+  { word: "appellation", definition: "A name or title.", examples: ["The city earned the appellation 'The Big Apple'."] },
+  { word: "basket case", definition: "A person or thing that is useless or unable to cope due to stress.", examples: ["By Friday afternoon, I'm usually a complete basket case."] },
+  { word: "dowdy", definition: "Unfashionable and unstylish in appearance.", examples: ["She replaced her dowdy old wardrobe with modern designer clothes."] },
+  { word: "muck around", definition: "To spend time doing things that are not useful or serious.", examples: ["Stop mucking around and finish your homework!"] },
+  { word: "throw someone off the scent", definition: "To distract someone or lead them in the wrong direction.", examples: ["The thief left false clues to throw the detectives off the scent."] },
+  { word: "snappy", definition: "Clever, quick, and neat; or irritable.", examples: ["He is known for his snappy dialogue and sharp wit."] },
+  { word: "hold a candle to", definition: "To be remotely comparable in quality or skill.", examples: ["That sequel doesn't even hold a candle to the original movie."] },
+  { word: "ooze", definition: "To slowly seep or flow out, or to give a powerful impression of a quality.", examples: ["The charismatic leader seemed to ooze confidence."] },
+  { word: "tattle", definition: "To report someone's wrongdoing to an authority figure.", examples: ["The little boy threatened to tattle on his sister for breaking the vase."] },
+  { word: "highway robbery", definition: "Extortionate charging for a product or service.", examples: ["Charging $10 for a bottle of water at the concert is highway robbery."] },
+  { word: "snob", definition: "A person with an exaggerated respect for high social position or wealth.", examples: ["He's such a coffee snob that he won't drink anything from a chain store."] },
+  { word: "solitaire", definition: "A single gem set alone, or a card game played by oneself.", examples: ["He proposed with a beautiful diamond solitaire ring."] },
+  { word: "skeevy", definition: "Unpleasant, sleazy, or morally questionable.", examples: ["I wouldn't stay in that skeevy motel if you paid me."] },
+  { word: "exude", definition: "To discharge slowly, or to display an emotion or quality strongly.", examples: ["The seasoned executive exuded authority and calm."] },
+  { word: "bestow", definition: "To confer or present an honor, right, or gift.", examples: ["The university will bestow an honorary degree upon the famous scientist."] },
+  { word: "caricature", definition: "A picture or description in which characteristics are exaggerated for comic effect.", examples: ["The political cartoonist drew a hilarious caricature of the mayor."] },
+  { word: "catch you on the flippity flip", definition: "A humorous, informal way of saying 'see you later'.", examples: ["Alright, I'm heading out. Catch you on the flippity flip!"] },
+  { word: "like the wind", definition: "Very quickly or fast.", examples: ["As soon as the bell rang, the kids ran like the wind out the door."] },
+  { word: "inscrutable", definition: "Impossible to understand or interpret.", examples: ["The poker player's expression remained completely inscrutable."] },
+  { word: "mollycoddle", definition: "To treat someone very indulgently or protectively.", examples: ["You can't mollycoddle the trainees; they need real-world experience."] },
+  { word: "overbearing", definition: "Unpleasantly or arrogantly domineering.", examples: ["Her overbearing boss micromanaged every aspect of her work."] },
+  { word: "take to someone", definition: "To begin to like someone.", examples: ["The stray dog immediately took to my younger brother."] },
+  { word: "promulgate", definition: "To promote or make widely known an idea or cause.", examples: ["The organization aims to promulgate the principles of free speech."] },
+  { word: "slingshot", definition: "To accelerate rapidly by utilizing the momentum of something else.", examples: ["The spaceship used Jupiter's gravity to slingshot toward the outer solar system."] },
+  { word: "ungainly", definition: "Clumsy; awkward; unwieldy.", examples: ["The teenager was tall and ungainly, constantly tripping over his own feet."] },
+  { word: "toe the line", definition: "To accept the authority or policies of a particular group.", examples: ["If you want to stay in this political party, you have to toe the line."] },
+  { word: "vigilante", definition: "A member of a self-appointed group of citizens who undertake law enforcement.", examples: ["Batman operates as a vigilante outside the bounds of the police force."] },
+  { word: "countenance", definition: "A person's face or facial expression, or to admit as acceptable.", examples: ["His calm countenance hid the panic he was truly feeling."] },
+  { word: "sadistic", definition: "Deriving pleasure from inflicting pain, suffering, or humiliation on others.", examples: ["The villain in the movie had a cruel, sadistic streak."] },
+  { word: "doggedly", definition: "In a manner that shows tenacity and grim persistence.", examples: ["She doggedly pursued her dream of becoming a doctor despite numerous setbacks."] },
+  { word: "comport", definition: "To conduct oneself or behave in a specified manner.", examples: ["The ambassador comported himself with incredible dignity during the crisis."] },
+  { word: "cleave", definition: "To split or sever something, OR to stick fast to.", examples: ["The lumberjack used an axe to cleave the log in two."] },
+  { word: "litmus test", definition: "A decisively indicative test of a principle or condition.", examples: ["The upcoming vote will be a true litmus test of the governor's popularity."] },
+  { word: "hang one's hat on", definition: "To depend or rely on something.", examples: ["His incredible speed is the one skill he can really hang his hat on."] },
+  { word: "hearken", definition: "To listen, or to bring to mind a past event.", examples: ["The vintage dress hearkens back to the fashion of the 1950s."] },
+  { word: "against the grain", definition: "Contrary to the natural inclination or feeling of someone or something.", examples: ["It goes against the grain for him to lie to his parents."] },
+  { word: "harp on", definition: "To talk or complain about something repeatedly and tediously.", examples: ["My boss won't stop harping on the importance of punctuality."] },
+  { word: "in one's wheelhouse", definition: "Within a person's area of expertise or interest.", examples: ["Writing Python scripts is definitely in my wheelhouse."] },
+  { word: "the wheels fell off the wagon", definition: "Everything went wrong; a complete failure occurred.", examples: ["We were doing great until Q3, and then the wheels fell off the wagon."] },
+  { word: "home in on", definition: "To direct attention or focus precisely on a target.", examples: ["The missile is designed to home in on radar signals."] },
+  { word: "the thin end of the wedge", definition: "An action that seems unimportant but will lead to more serious developments.", examples: ["Allowing workers to arrive late once is the thin end of the wedge."] },
+  { word: "levity", definition: "Humor or frivolity, especially the treatment of a serious matter with humor.", examples: ["He tried to introduce some levity into the tense boardroom meeting."] },
+  { word: "on one's dime", definition: "Paid for by someone.", examples: ["You can't make personal international calls on the company's dime."] },
+  { word: "disservice", definition: "A harmful action; an ill turn.", examples: ["You do yourself a disservice by not studying for the exam."] },
 
-            // --- GROUP 4 (Words 301+) ---
-            { word: "haptic", definition: "Relating to the sense of touch, in particular relating to technology.", examples: ["The phone uses haptic feedback to simulate the feeling of pressing a button."] },
-            { word: "janky", definition: "Of poor quality, unreliable, or functioning poorly.", examples: ["I need a new laptop; this old one is incredibly janky."] },
-            { word: "manspreading", definition: "The practice of a man sitting with his legs wide apart, taking up multiple seats.", examples: ["The subway was crowded, but he was still manspreading across two seats."] },
-            { word: "off-brand", definition: "Not of a recognized or widely known brand; or out of character.", examples: ["His sudden outburst was very off-brand for such a usually calm person."] },
-            { word: "finicky", definition: "Fussy about one's needs or requirements.", examples: ["Toddlers are notoriously finicky eaters."] },
-            { word: "dox", definition: "To publish private or identifying information about someone on the internet.", examples: ["The hacker threatened to dox the journalists who exposed the scam."] },
-            { word: "cloak-and-dagger", definition: "Involving mystery, secrecy, or espionage.", examples: ["The spy novel was filled with cloak-and-dagger operations in Cold War Berlin."] },
-            { word: "waylay", definition: "To stop or interrupt someone and detain them in conversation or trouble.", examples: ["I was trying to leave the office, but I was waylaid by my chatty coworker."] },
-            { word: "burlap", definition: "A coarse, woven fabric made from jute, hemp, or similar fiber.", examples: ["Potatoes are often sold in heavy burlap sacks."] },
-            { word: "dispensation", definition: "Exemption from a rule or usual requirement.", examples: ["He received special dispensation to take the exam a day late."] },
-            { word: "podiatrist", definition: "A medical professional devoted to the treatment of disorders of the foot.", examples: ["The podiatrist recommended custom orthotics for her fallen arches."] },
-            { word: "deign", definition: "To do something that one considers to be beneath one's dignity.", examples: ["The wealthy socialite didn't even deign to reply to the email."] },
-            { word: "palliative", definition: "Relieving pain or alleviating a problem without dealing with the underlying cause.", examples: ["The medicine is merely palliative; it won't actually cure the disease."] },
-            { word: "lance the boil", definition: "To confront a difficult situation directly to release the tension.", examples: ["We need to sit down and lance the boil regarding this HR dispute."] },
-            { word: "debride", definition: "To remove damaged tissue or foreign objects from a wound.", examples: ["The surgeon had to surgically debride the burn wound to prevent infection."] },
-            { word: "swing and a miss", definition: "An unsuccessful attempt at something.", examples: ["His attempt at a joke was a complete swing and a miss."] },
-            { word: "phone it in", definition: "To perform a task with minimal effort or enthusiasm.", examples: ["The actor was clearly just phoning it in for the paycheck."] },
-            { word: "pariah", definition: "An outcast.", examples: ["After the embezzlement scandal, he became a social pariah."] },
-            { word: "inflammatory", definition: "Arousing anger or violent feelings.", examples: ["The politician's inflammatory speech incited a riot."] },
-            { word: "swanky", definition: "Stylishly luxurious and expensive.", examples: ["We stayed at a swanky hotel in downtown Manhattan."] },
-            { word: "rub elbows", definition: "To associate or mingle with people, especially socially prominent ones.", examples: ["The gala was a chance to rub elbows with Hollywood elites."] },
-            { word: "concession", definition: "A thing that is granted, especially in response to demands.", examples: ["The union won several important concessions from management."] },
-            { word: "trifecta", definition: "A run of three wins or grand events.", examples: ["He hit the academic trifecta: valedictorian, class president, and a full scholarship."] },
-            { word: "on the spectrum", definition: "Referring to someone who has autism spectrum disorder.", examples: ["The school provides specialized support for students on the spectrum."] },
-            { word: "unrequited", definition: "A feeling (especially love) not returned or rewarded.", examples: ["He suffered from unrequited love for his best friend for years."] },
-            { word: "egotistical", definition: "Excessively conceited or absorbed in oneself.", examples: ["The egotistical director refused to listen to anyone else's ideas."] },
-            { word: "anorexic", definition: "Relating to or suffering from the eating disorder anorexia.", examples: ["The fashion industry has faced criticism for promoting anorexic body types."] },
-            { word: "punchline", definition: "The final phrase or sentence of a joke, providing the humor.", examples: ["He completely forgot the punchline and ruined the joke."] },
-            { word: "go around", definition: "To be sufficient for everyone, or to circulate.", examples: ["There isn't enough pizza to go around."] },
-            { word: "hardy", definition: "Robust; capable of enduring difficult conditions.", examples: ["These hardy plants can survive freezing winter temperatures."] },
-            { word: "congenital", definition: "Present from birth (especially a disease or physical abnormality).", examples: ["The baby underwent surgery to correct a congenital heart defect."] },
-            { word: "take something under advisement", definition: "To carefully consider a piece of information or advice.", examples: ["The judge said she would take the lawyer's motion under advisement."] },
-            { word: "lesion", definition: "A region in an organ or tissue which has suffered damage.", examples: ["The MRI revealed a small lesion on the patient's liver."] },
-            { word: "scrub", definition: "To cancel or abandon something.", examples: ["NASA had to scrub the launch due to bad weather."] },
-            { word: "all's well that ends well", definition: "An event that has a good ending even if things went wrong along the way.", examples: ["The road trip was a disaster, but we got there safely, so all's well that ends well."] },
-            { word: "snarky", definition: "Critical or mocking in an indirect or sarcastic way.", examples: ["She left a snarky comment on his social media post."] },
-            { word: "catnip", definition: "Something highly attractive to a specific group of people.", examples: ["The promise of free tech gear is absolute catnip for developers."] },
-            { word: "iron out the kinks", definition: "To solve the minor problems or difficulties with a new system.", examples: ["We need a beta testing phase to iron out the kinks in the software."] },
-            { word: "bellow", definition: "To emit a deep loud roar, typically in pain or anger.", examples: ["The angry coach began to bellow at the referee."] },
-            { word: "run past", definition: "To tell someone about an idea or plan to get their opinion.", examples: ["Can I run this proposal past you before I send it to the client?"] },
-            { word: "fallible", definition: "Capable of making mistakes or being erroneous.", examples: ["Even the most sophisticated AI systems are fallible."] },
-            { word: "set the wheels in motion", definition: "To do something that will cause a series of actions to start.", examples: ["Signing the contract set the wheels in motion for the merger."] },
-            { word: "hardened", definition: "Having become callous, unfeeling, or invulnerable through experience.", examples: ["He was a hardened detective who had seen it all."] },
-            { word: "beyond the call of duty", definition: "More than is required or expected in a job or role.", examples: ["Working all weekend to fix the server was truly beyond the call of duty."] },
-            { word: "take point", definition: "To assume the primary role in an operation or initiative.", examples: ["Sarah is going to take point on organizing the charity gala."] },
-            { word: "lord over", definition: "To act in a domineering, arrogant manner toward someone.", examples: ["He used his newfound wealth to lord over his old friends."] },
-            { word: "the luck of the draw", definition: "The outcome of chance rather than something you can control.", examples: ["Getting the easiest questions on the test was just the luck of the draw."] },
-            { word: "soft touch", definition: "Someone who is easily persuaded or manipulated.", examples: ["He's a soft touch when it comes to lending money to his family."] },
-            { word: "plodder", definition: "Someone who works slowly and steadily, but uninspiredly.", examples: ["He's not a creative genius, just a reliable plodder who gets the job done."] }
-        ];
-        // =========================================================================
+  // --- GROUP 3 (Words 201 - 300) ---
+  { word: "on the ropes", definition: "In a state of near defeat or ruin.", examples: ["After losing their biggest client, the agency was on the ropes."] },
+  { word: "bereave", definition: "To be deprived of a loved one through a profound absence, especially due to death.", examples: ["The sudden accident bereaved the family of their beloved father."] },
+  { word: "put the pedal to the metal", definition: "To drive as fast as possible or to work with maximum effort.", examples: ["We need to put the pedal to the metal to meet this deadline."] },
+  { word: "keep one's head on a swivel", definition: "To remain highly alert and constantly aware of one's surroundings.", examples: ["When walking through that dangerous neighborhood, keep your head on a swivel."] },
+  { word: "right up one's alley", definition: "Perfectly suited to someone's interests or abilities.", examples: ["That documentary about early aviation is right up your alley."] },
+  { word: "kiss of death", definition: "An action or event that causes certain failure or ruin.", examples: ["Raising prices now would be the kiss of death for our startup."] },
+  { word: "intractable", definition: "Hard to control or deal with; stubborn.", examples: ["The economy faces intractable problems that won't be fixed overnight."] },
+  { word: "over the edge", definition: "Into a state of mental breakdown or extreme behavior.", examples: ["The stress of the audit finally pushed the accountant over the edge."] },
+  { word: "tidbit", definition: "A small piece of tasty food or a small and particularly interesting item of gossip.", examples: ["She offered a fascinating tidbit of information about the merger."] },
+  { word: "wimpy", definition: "Weak, cowardly, or ineffectual.", examples: ["He gave a wimpy excuse for not showing up to help us move."] },
+  { word: "call a spade a spade", definition: "To speak plainly and directly about something, even if unpleasant.", examples: ["Let's call a spade a spade: this marketing strategy is a disaster."] },
+  { word: "name names", definition: "To publicly reveal the identities of people involved in a wrongdoing.", examples: ["Under pressure from the committee, the witness finally began to name names."] },
+  { word: "make no bones", definition: "To state a fact clearly and unambiguously.", examples: ["He made no bones about his dissatisfaction with the new management."] },
+  { word: "parlay", definition: "To turn an initial stake or winning into a greater amount.", examples: ["She managed to parlay a small inheritance into a real estate empire."] },
+  { word: "diamond hands", definition: "Holding a financial asset tightly despite extreme market volatility.", examples: ["Despite the massive dip in share price, he showed diamond hands and didn't sell."] },
+  { word: "set up shop", definition: "To establish a business or a base of operations.", examples: ["The tech giant plans to set up shop in Austin next year."] },
+  { word: "cacophony", definition: "A harsh, discordant mixture of sounds.", examples: ["The construction site outside my window was a cacophony of drills and hammers."] },
+  { word: "call one's shots", definition: "To predict an achievement beforehand and then execute it.", examples: ["Like Babe Ruth pointing to the stands, the CEO loves to call his shots."] },
+  { word: "noncommittal", definition: "Not expressing or revealing a definite opinion or course of action.", examples: ["The governor gave a noncommittal response regarding the controversial bill."] },
+  { word: "shoehorn", definition: "To force into an inadequate space or a tight situation.", examples: ["They tried to shoehorn five dense topics into a 30-minute presentation."] },
+  { word: "have a target on one's back", definition: "To be the focus of criticism, attacks, or intense scrutiny.", examples: ["As the reigning champion, she definitely has a target on her back this season."] },
+  { word: "button up", definition: "To finalize or secure something tightly.", examples: ["We just need to button up a few legal details before signing the contract."] },
+  { word: "run water through the pipes", definition: "To test a system or process to see if it works correctly.", examples: ["Let's run a small test campaign first just to run water through the pipes."] },
+  { word: "slow burn", definition: "A gradual building of anger, emotion, or narrative tension.", examples: ["The movie is a slow burn, but the climax is absolutely worth the wait."] },
+  { word: "albatross", definition: "A heavy burden of guilt or an obstacle to success.", examples: ["The failing division became an albatross around the company's neck."] },
+  { word: "slap in the face", definition: "An unexpected rejection, insult, or disappointment.", examples: ["Being passed over for the promotion was a real slap in the face."] },
+  { word: "gore", definition: "Blood that has been shed, especially as a result of violence.", examples: ["The horror movie was filled with excessive blood and gore."] },
+  { word: "pound out", definition: "To produce something quickly and vigorously, like typing.", examples: ["He managed to pound out a 10-page essay the night before it was due."] },
+  { word: "upstanding", definition: "Honest, respectable, and of good character.", examples: ["She is an upstanding member of the local community."] },
+  { word: "cutting", definition: "Capable of wounding the feelings; harsh or hurtful.", examples: ["He made a cutting remark about her lack of experience."] },
+  { word: "one-hit wonder", definition: "A performer or entity known for only a single fleeting success.", examples: ["The band from the 90s was a classic one-hit wonder."] },
+  { word: "stupendous", definition: "Extremely impressive.", examples: ["The gymnast completed a stupendous routine that won her the gold."] },
+  { word: "pull no punches", definition: "To be completely honest and direct, even if it causes offense.", examples: ["The critic pulled no punches when reviewing the terrible sequel."] },
+  { word: "confectionery", definition: "Sweets, candies, and chocolates collectively.", examples: ["The bakery is famous for its elaborate sugar confectionery."] },
+  { word: "enthrall", definition: "To capture the fascinated attention of.", examples: ["The magician's illusions managed to enthrall the entire audience."] },
+  { word: "sticker shock", definition: "Astonishment or dismay experienced upon seeing the high price of an item.", examples: ["We had major sticker shock when we looked at the prices of new cars."] },
+  { word: "thread the needle", definition: "To navigate a complex or narrow path safely.", examples: ["The quarterback managed to thread the needle between two defenders."] },
+  { word: "recant", definition: "To say that one no longer holds an opinion or belief.", examples: ["Under pressure from the church, Galileo was forced to recant his theories."] },
+  { word: "gravitas", definition: "Dignity, seriousness, or solemnity of manner.", examples: ["A news anchor needs to have enough gravitas to deliver serious news."] },
+  { word: "lineage", definition: "Lineal descent from an ancestor; ancestry or pedigree.", examples: ["The purebred dog comes from a championship lineage."] },
+  { word: "run hot and cold", definition: "To alternate between enthusiasm and apathy.", examples: ["His interest in the project runs hot and cold depending on the day."] },
+  { word: "faint of heart", definition: "Lacking the courage to face something difficult or scary.", examples: ["This intense roller coaster is not for the faint of heart."] },
+  { word: "credo", definition: "A statement of the beliefs or aims which guide someone's actions.", examples: ["'Customer first' has always been our corporate credo."] },
+  { word: "stick the landing", definition: "To execute the final part of a complex action perfectly.", examples: ["The movie was great, but the messy finale failed to stick the landing."] },
+  { word: "with guns blazing", definition: "Proceeding with aggressive, unrestrained energy or force.", examples: ["The lawyer entered the courtroom with guns blazing, ready for a fight."] },
+  { word: "proverbial", definition: "Well known, especially so as to be stereotypical.", examples: ["He ended up up the proverbial creek without a paddle."] },
+  { word: "in full swing", definition: "At the highest level of activity or operation.", examples: ["By 10 PM, the New Year's Eve party was in full swing."] },
+  { word: "chalk out", definition: "To plan or sketch something out roughly.", examples: ["Let's chalk out a rough schedule for the conference."] },
+  { word: "domesticity", definition: "Home or family life.", examples: ["After years of traveling, he finally settled down and embraced domesticity."] },
+  { word: "extemporaneous", definition: "Spoken or done without preparation.", examples: ["She gave a brilliant extemporaneous speech at the award ceremony."] },
+  { word: "schmutz", definition: "Dirt, smudge, or an unidentifiable substance.", examples: ["You've got a little schmutz on your collar."] },
+  { word: "catapult", definition: "To hurl or launch something in a specified direction.", examples: ["That viral video really catapulted him to stardom."] },
+  { word: "impressionable", definition: "Easily influenced due to a lack of critical ability.", examples: ["Teenagers are often highly impressionable to peer pressure."] },
+  { word: "risqué", definition: "Slightly indecent and liable to shock.", examples: ["The comedian's risqué jokes made a few people in the audience uncomfortable."] },
+  { word: "on point", definition: "Relevant, appropriate, and perfectly executed.", examples: ["Her analysis of the market trends was completely on point."] },
+  { word: "a fly in the ointment", definition: "A minor irritation that spoils the success or enjoyment of something.", examples: ["The only fly in the ointment was the lack of parking at the venue."] },
+  { word: "at the drop of a hat", definition: "Without any hesitation; instantly.", examples: ["He would quit his job at the drop of a hat if he won the lottery."] },
+  { word: "in the grip of", definition: "Experiencing something unpleasant that cannot be stopped.", examples: ["The city was in the grip of a severe winter storm."] },
+  { word: "have the wind at your back", definition: "To be in a favorable situation where things are progressing easily.", examples: ["With the economy booming, the incumbent president has the wind at his back."] },
+  { word: "run a tight ship", definition: "To manage an organization with strict discipline and efficiency.", examples: ["The principal runs a tight ship; lateness is absolutely not tolerated."] },
+  { word: "resuscitate", definition: "To revive someone from unconsciousness or apparent death.", examples: ["The paramedics managed to resuscitate the victim at the scene."] },
+  { word: "key in on", definition: "To pay special attention to or focus heavily upon.", examples: ["We need to key in on our primary demographic to increase sales."] },
+  { word: "imbibe", definition: "To drink alcohol, or to absorb ideas or knowledge.", examples: ["They went to the pub to imbibe a few pints of beer."] },
+  { word: "bamboozle", definition: "To fool or cheat someone.", examples: ["The con artist managed to bamboozle the elderly couple out of their savings."] },
+  { word: "get someone in the mix", definition: "To involve someone in a situation, activity, or group.", examples: ["We need to get the design team in the mix before we finalize the product."] },
+  { word: "travesty", definition: "A false, absurd, or distorted representation of something.", examples: ["The unfair verdict was an absolute travesty of justice."] },
+  { word: "straddle", definition: "To sit or stand with one leg on either side of something.", examples: ["He tried to straddle the fence between the two arguing factions."] },
+  { word: "mutter", definition: "To say something in a low or barely audible voice.", examples: ["She began to mutter complaints under her breath."] },
+  { word: "free spirit", definition: "An independent or uninhibited person.", examples: ["As a true free spirit, she traveled the world with no fixed itinerary."] },
+  { word: "rowdy", definition: "Noisy and disorderly.", examples: ["The bartender had to kick out a group of rowdy patrons."] },
+  { word: "monkey on one's back", definition: "A persistent burden or problem, often referring to an addiction.", examples: ["He finally paid off his debt and got that monkey off his back."] },
+  { word: "ass-backwards", definition: "Done in a way that is completely wrong or contrary to common sense.", examples: ["Building the roof before the walls is just ass-backwards."] },
+  { word: "kryptonite", definition: "Something that can seriously weaken or harm a particular person or thing.", examples: ["Chocolate cake is my absolute kryptonite when I'm on a diet."] },
+  { word: "get in one's hair", definition: "To annoy or bother someone constantly.", examples: ["The kids were getting in my hair, so I sent them outside to play."] },
+  { word: "flounder", definition: "To struggle clumsily or to be in serious difficulty.", examples: ["Without a clear strategy, the startup began to flounder."] },
+  { word: "keep one's cards close to the vest", definition: "To be secretive and cautious about one's intentions.", examples: ["The CEO is keeping his cards close to the vest regarding the upcoming merger."] },
+  { word: "dead in the water", definition: "Unable to function or progress; completely failed.", examples: ["Without the investor's funding, the project is dead in the water."] },
+  { word: "corsage", definition: "A small bouquet of flowers worn on a woman's dress or wrist.", examples: ["He bought his date a beautiful orchid corsage for the prom."] },
+  { word: "dance with the devil", definition: "To engage in risky, reckless, or immoral behavior.", examples: ["By taking bribes from the cartel, the politician was dancing with the devil."] },
+  { word: "strike while the iron is hot", definition: "To take advantage of an opportunity as soon as it exists.", examples: ["The housing market is up, so we need to strike while the iron is hot and sell."] },
+  { word: "hit one's mark", definition: "To achieve one's goal or perform exactly as planned.", examples: ["The actor hit his mark perfectly during the complex tracking shot."] },
+  { word: "over one's head", definition: "Beyond someone's ability to understand or deal with.", examples: ["Advanced calculus is completely over my head."] },
+  { word: "make one's mark", definition: "To attain recognition or a position of influence.", examples: ["She wants to make her mark in the competitive world of fashion."] },
+  { word: "down in the mouth", definition: "Looking unhappy or depressed.", examples: ["You look a bit down in the mouth today. Is everything okay?"] },
+  { word: "gripping", definition: "Firmly holding the attention or interest; thrilling.", examples: ["The thriller novel was so gripping I read it in one sitting."] },
+  { word: "cut and run", definition: "To quickly escape from a difficult situation.", examples: ["When the police sirens wailed, the burglars decided to cut and run."] },
+  { word: "daft", definition: "Silly, foolish, or eccentric.", examples: ["Don't be daft, you can't wear a swimsuit to a formal dinner."] },
+  { word: "slink", definition: "To move smoothly and quietly with gliding steps, often in a stealthy way.", examples: ["The embarrassed cat slinked out of the room."] },
+  { word: "cloistered", definition: "Kept away from the outside world; sheltered.", examples: ["The monks lived a quiet, cloistered life in the monastery."] },
+  { word: "take the weight off one's feet", definition: "To sit down and rest.", examples: ["Come in, take the weight off your feet and I'll make you some tea."] },
+  { word: "rustle up", definition: "To quickly prepare or gather something, often food.", examples: ["I can probably rustle up some sandwiches for lunch."] },
+  { word: "swaddle", definition: "To wrap closely in garments or cloth, especially a baby.", examples: ["The nurse showed the new parents how to tightly swaddle the infant."] },
+  { word: "touch a nerve", definition: "To provoke a sensitive or emotional reaction.", examples: ["My comment about his ex-girlfriend clearly touched a nerve."] },
+  { word: "put one's foot down", definition: "To adopt a firm policy or take a strong stand against something.", examples: ["When he asked to borrow the car again, his father finally put his foot down."] },
+  { word: "life is catching up with someone", definition: "The consequences of past actions or aging are beginning to be felt.", examples: ["After years of heavy smoking, life is finally catching up with him."] },
+  { word: "not bat an eye", definition: "To show no reaction or surprise.", examples: ["He didn't bat an eye when the mechanic handed him the massive repair bill."] },
+  { word: "slushy", definition: "Covered in partially melted snow, or overly sentimental.", examples: ["The roads are going to be very slushy and dangerous tomorrow."] },
+  { word: "racket", definition: "A loud noise, or an illegal or dishonest scheme.", examples: ["The mafia ran a protection racket in the neighborhood."] },
+  { word: "earthling", definition: "An inhabitant of the earth (often used in sci-fi).", examples: ["The alien ambassador greeted the earthlings peacefully."] },
+  { word: "Machiavellian", definition: "Cunning, scheming, and unscrupulous, especially in politics.", examples: ["His Machiavellian tactics allowed him to seize control of the board."] },
 
-        // --- APP STATE & LOCAL STORAGE ---
-        let vocabState = JSON.parse(localStorage.getItem('vocabStatePro'));
-        
-        if (!vocabState || vocabState.length === 0) {
-            vocabState = rawVocabData.map(createNewItemState);
-            saveState();
-        } else {
-            // Merge logic to seamlessly add the new words without deleting prior progress
-            let stateUpdated = false;
-            rawVocabData.forEach(rawItem => {
-                const exists = vocabState.find(v => v.word === rawItem.word);
-                if (!exists) {
-                    vocabState.push(createNewItemState(rawItem));
-                    stateUpdated = true;
-                }
-            });
+  // --- GROUP 4 (Words 301+) ---
+  { word: "haptic", definition: "Relating to the sense of touch, in particular relating to technology.", examples: ["The phone uses haptic feedback to simulate the feeling of pressing a button."] },
+  { word: "janky", definition: "Of poor quality, unreliable, or functioning poorly.", examples: ["I need a new laptop; this old one is incredibly janky."] },
+  { word: "manspreading", definition: "The practice of a man sitting with his legs wide apart, taking up multiple seats.", examples: ["The subway was crowded, but he was still manspreading across two seats."] },
+  { word: "off-brand", definition: "Not of a recognized or widely known brand; or out of character.", examples: ["His sudden outburst was very off-brand for such a usually calm person."] },
+  { word: "finicky", definition: "Fussy about one's needs or requirements.", examples: ["Toddlers are notoriously finicky eaters."] },
+  { word: "dox", definition: "To publish private or identifying information about someone on the internet.", examples: ["The hacker threatened to dox the journalists who exposed the scam."] },
+  { word: "cloak-and-dagger", definition: "Involving mystery, secrecy, or espionage.", examples: ["The spy novel was filled with cloak-and-dagger operations in Cold War Berlin."] },
+  { word: "waylay", definition: "To stop or interrupt someone and detain them in conversation or trouble.", examples: ["I was trying to leave the office, but I was waylaid by my chatty coworker."] },
+  { word: "burlap", definition: "A coarse, woven fabric made from jute, hemp, or similar fiber.", examples: ["Potatoes are often sold in heavy burlap sacks."] },
+  { word: "dispensation", definition: "Exemption from a rule or usual requirement.", examples: ["He received special dispensation to take the exam a day late."] },
+  { word: "podiatrist", definition: "A medical professional devoted to the treatment of disorders of the foot.", examples: ["The podiatrist recommended custom orthotics for her fallen arches."] },
+  { word: "deign", definition: "To do something that one considers to be beneath one's dignity.", examples: ["The wealthy socialite didn't even deign to reply to the email."] },
+  { word: "palliative", definition: "Relieving pain or alleviating a problem without dealing with the underlying cause.", examples: ["The medicine is merely palliative; it won't actually cure the disease."] },
+  { word: "lance the boil", definition: "To confront a difficult situation directly to release the tension.", examples: ["We need to sit down and lance the boil regarding this HR dispute."] },
+  { word: "debride", definition: "To remove damaged tissue or foreign objects from a wound.", examples: ["The surgeon had to surgically debride the burn wound to prevent infection."] },
+  { word: "swing and a miss", definition: "An unsuccessful attempt at something.", examples: ["His attempt at a joke was a complete swing and a miss."] },
+  { word: "phone it in", definition: "To perform a task with minimal effort or enthusiasm.", examples: ["The actor was clearly just phoning it in for the paycheck."] },
+  { word: "pariah", definition: "An outcast.", examples: ["After the embezzlement scandal, he became a social pariah."] },
+  { word: "inflammatory", definition: "Arousing anger or violent feelings.", examples: ["The politician's inflammatory speech incited a riot."] },
+  { word: "swanky", definition: "Stylishly luxurious and expensive.", examples: ["We stayed at a swanky hotel in downtown Manhattan."] },
+  { word: "rub elbows", definition: "To associate or mingle with people, especially socially prominent ones.", examples: ["The gala was a chance to rub elbows with Hollywood elites."] },
+  { word: "concession", definition: "A thing that is granted, especially in response to demands.", examples: ["The union won several important concessions from management."] },
+  { word: "trifecta", definition: "A run of three wins or grand events.", examples: ["He hit the academic trifecta: valedictorian, class president, and a full scholarship."] },
+  { word: "on the spectrum", definition: "Referring to someone who has autism spectrum disorder.", examples: ["The school provides specialized support for students on the spectrum."] },
+  { word: "unrequited", definition: "A feeling (especially love) not returned or rewarded.", examples: ["He suffered from unrequited love for his best friend for years."] },
+  { word: "egotistical", definition: "Excessively conceited or absorbed in oneself.", examples: ["The egotistical director refused to listen to anyone else's ideas."] },
+  { word: "anorexic", definition: "Relating to or suffering from the eating disorder anorexia.", examples: ["The fashion industry has faced criticism for promoting anorexic body types."] },
+  { word: "punchline", definition: "The final phrase or sentence of a joke, providing the humor.", examples: ["He completely forgot the punchline and ruined the joke."] },
+  { word: "go around", definition: "To be sufficient for everyone, or to circulate.", examples: ["There isn't enough pizza to go around."] },
+  { word: "hardy", definition: "Robust; capable of enduring difficult conditions.", examples: ["These hardy plants can survive freezing winter temperatures."] },
+  { word: "congenital", definition: "Present from birth (especially a disease or physical abnormality).", examples: ["The baby underwent surgery to correct a congenital heart defect."] },
+  { word: "take something under advisement", definition: "To carefully consider a piece of information or advice.", examples: ["The judge said she would take the lawyer's motion under advisement."] },
+  { word: "lesion", definition: "A region in an organ or tissue which has suffered damage.", examples: ["The MRI revealed a small lesion on the patient's liver."] },
+  { word: "scrub", definition: "To cancel or abandon something.", examples: ["NASA had to scrub the launch due to bad weather."] },
+  { word: "all's well that ends well", definition: "An event that has a good ending even if things went wrong along the way.", examples: ["The road trip was a disaster, but we got there safely, so all's well that ends well."] },
+  { word: "snarky", definition: "Critical or mocking in an indirect or sarcastic way.", examples: ["She left a snarky comment on his social media post."] },
+  { word: "catnip", definition: "Something highly attractive to a specific group of people.", examples: ["The promise of free tech gear is absolute catnip for developers."] },
+  { word: "iron out the kinks", definition: "To solve the minor problems or difficulties with a new system.", examples: ["We need a beta testing phase to iron out the kinks in the software."] },
+  { word: "bellow", definition: "To emit a deep loud roar, typically in pain or anger.", examples: ["The angry coach began to bellow at the referee."] },
+  { word: "run past", definition: "To tell someone about an idea or plan to get their opinion.", examples: ["Can I run this proposal past you before I send it to the client?"] },
+  { word: "fallible", definition: "Capable of making mistakes or being erroneous.", examples: ["Even the most sophisticated AI systems are fallible."] },
+  { word: "set the wheels in motion", definition: "To do something that will cause a series of actions to start.", examples: ["Signing the contract set the wheels in motion for the merger."] },
+  { word: "hardened", definition: "Having become callous, unfeeling, or invulnerable through experience.", examples: ["He was a hardened detective who had seen it all."] },
+  { word: "beyond the call of duty", definition: "More than is required or expected in a job or role.", examples: ["Working all weekend to fix the server was truly beyond the call of duty."] },
+  { word: "take point", definition: "To assume the primary role in an operation or initiative.", examples: ["Sarah is going to take point on organizing the charity gala."] },
+  { word: "lord over", definition: "To act in a domineering, arrogant manner toward someone.", examples: ["He used his newfound wealth to lord over his old friends."] },
+  { word: "the luck of the draw", definition: "The outcome of chance rather than something you can control.", examples: ["Getting the easiest questions on the test was just the luck of the draw."] },
+  { word: "soft touch", definition: "Someone who is easily persuaded or manipulated.", examples: ["He's a soft touch when it comes to lending money to his family."] },
+  { word: "plodder", definition: "Someone who works slowly and steadily, but uninspiredly.", examples: ["He's not a creative genius, just a reliable plodder who gets the job done."] }
+  ];
+  // =========================================================================
 
-            vocabState = vocabState.map(item => {
-                if (item.easiness === undefined) {
-                    stateUpdated = true;
-                    return { ...item, easiness: 2.5, repetitions: 0 };
-                }
-                return item;
-            });
-            if (stateUpdated) saveState();
-        }
+  // --- APP STATE & LOCAL STORAGE ---
+  let vocabState = JSON.parse(localStorage.getItem('vocabStatePro'));
 
-        function createNewItemState(item) {
-            return {
-                ...item,
-                interval: 0, 
-                nextReview: Date.now(),
-                mistakes: 0,
-                easiness: 2.5,     
-                repetitions: 0     
-            };
-        }
+  if (!vocabState || vocabState.length === 0) {
+    vocabState = rawVocabData.map(createNewItemState);
+    saveState();
+  } else {
+    // Merge logic to seamlessly add the new words without deleting prior progress
+    let stateUpdated = false;
+    rawVocabData.forEach(rawItem => {
+      const exists = vocabState.find(v => v.word === rawItem.word);
+      if (!exists) {
+        vocabState.push(createNewItemState(rawItem));
+        stateUpdated = true;
+      }
+    });
 
-        let currentMode = 'flashcard'; 
-        let currentGroupIndex = 'all'; // Controls the 100-word blocks
-        let fcIndex = 0;
-        let sessionScore = parseInt(localStorage.getItem('vocabScore')) || 0;
-        let currentQuizWord = null;
+    vocabState = vocabState.map(item => {
+      if (item.easiness === undefined) {
+        stateUpdated = true;
+        return { ...item, easiness: 2.5, repetitions: 0 };
+      }
+      return item;
+    });
+    if (stateUpdated) saveState();
+  }
 
-        function saveState() {
-            localStorage.setItem('vocabStatePro', JSON.stringify(vocabState));
-            localStorage.setItem('vocabScore', sessionScore);
-        }
+  function createNewItemState(item) {
+    return {
+      ...item,
+      interval: 0,
+      nextReview: Date.now(),
+      mistakes: 0,
+      easiness: 2.5,
+      repetitions: 0
+    };
+  }
 
-        function updateScoreDisplay() {
-            const scoreEl = document.getElementById('quiz-score');
-            scoreEl.textContent = `Score: ${sessionScore}`;
-            if(sessionScore < 0) scoreEl.classList.add('negative');
-            else scoreEl.classList.remove('negative');
-        }
+  let currentMode = 'flashcard';
+  let currentGroupIndex = 'all'; // Controls the 100-word blocks
+  let fcIndex = 0;
+  let sessionScore = parseInt(localStorage.getItem('vocabScore')) || 0;
+  let currentQuizWord = null;
 
-        // --- GROUPING LOGIC ---
-        function changeGroup() {
-            currentGroupIndex = document.getElementById('groupSelect').value;
-            fcIndex = 0;
-            if (currentMode === 'flashcard') updateFlashcardUI();
-            if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
-            if (currentMode === 'dashboard') renderDashboard();
-        }
+  function saveState() {
+    localStorage.setItem('vocabStatePro', JSON.stringify(vocabState));
+    localStorage.setItem('vocabScore', sessionScore.toString());
+  }
 
-        // Helper function that dynamically restricts the vocab deck to the selected block
-        function getActiveVocab() {
-            if (currentGroupIndex === 'all') return vocabState;
-            const start = parseInt(currentGroupIndex) * 100;
-            return vocabState.slice(start, start + 100);
-        }
+  function updateScoreDisplay() {
+    const scoreEl = document.getElementById('quiz-score');
+    scoreEl.textContent = `Score: ${sessionScore}`;
+    if(sessionScore < 0) scoreEl.classList.add('negative');
+    else scoreEl.classList.remove('negative');
+  }
 
-        // --- NAVIGATION ---
-        function setMode(mode) {
-            // Stop audio/autoplay if switching tabs
-            stopAutoplay();
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  // --- GROUPING LOGIC ---
+  function changeGroup() {
+    currentGroupIndex = document.getElementById('groupSelect').value;
+    fcIndex = 0;
+    if (currentMode === 'flashcard') updateFlashcardUI();
+    if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
+    if (currentMode === 'dashboard') renderDashboard();
+  }
 
-            currentMode = mode;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+  // Helper function that dynamically restricts the vocab deck to the selected block
+  function getActiveVocab() {
+    if (currentGroupIndex === 'all') return vocabState;
+    const start = parseInt(currentGroupIndex) * 100;
+    return vocabState.slice(start, start + 100);
+  }
 
-            document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
-            
-            if (mode === 'flashcard') {
-                document.getElementById('flashcard-mode').classList.add('active');
-                updateFlashcardUI();
-            } else if (mode === 'quiz' || mode === 'review') {
-                document.getElementById('quiz-mode').classList.add('active');
-                loadNextQuestion();
-            } else if (mode === 'dashboard') {
-                document.getElementById('dashboard-mode').classList.add('active');
-                renderDashboard();
-            } else if (mode === 'add') {
-                document.getElementById('add-mode').classList.add('active');
-            }
-        }
+  // --- NAVIGATION ---
+  function setMode(mode) {
+    // Stop audio/autoplay if switching tabs
+    stopAutoplay();
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-        // --- DASHBOARD LOGIC ---
-        function renderDashboard() {
-            const now = Date.now();
-            const activePool = getActiveVocab();
-            
-            const total = activePool.length;
-            const due = activePool.filter(w => w.nextReview <= now).length;
-            const mastered = activePool.filter(w => w.interval >= 60).length;
-            const struggling = activePool.filter(w => w.mistakes > 2).length;
+    currentMode = mode;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
 
-            document.getElementById('stat-total').textContent = total;
-            document.getElementById('stat-due').textContent = due;
-            document.getElementById('stat-mastered').textContent = mastered;
-            document.getElementById('stat-struggling').textContent = struggling;
-        }
+    document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
 
-        // --- ADD WORD LOGIC ---
-        function addCustomWord(e) {
-            e.preventDefault();
-            
-            const word = document.getElementById('newWord').value.trim();
-            const definition = document.getElementById('newDef').value.trim();
-            const ex1 = document.getElementById('newEx1').value.trim();
-            const ex2 = document.getElementById('newEx2').value.trim();
-            
-            const examples = [ex1];
-            if (ex2) examples.push(ex2);
+    if (mode === 'flashcard') {
+      document.getElementById('flashcard-mode').classList.add('active');
+      updateFlashcardUI();
+    } else if (mode === 'quiz' || mode === 'review') {
+      document.getElementById('quiz-mode').classList.add('active');
+      loadNextQuestion();
+    } else if (mode === 'dashboard') {
+      document.getElementById('dashboard-mode').classList.add('active');
+      renderDashboard();
+    } else if (mode === 'add') {
+      document.getElementById('add-mode').classList.add('active');
+    }
+  }
 
-            const newItem = createNewItemState({ word, definition, examples });
-            vocabState.push(newItem);
-            saveState();
+  // --- DASHBOARD LOGIC ---
+  function renderDashboard() {
+    const now = Date.now();
+    const activePool = getActiveVocab();
 
-            document.getElementById('addWordForm').reset();
-            const msg = document.getElementById('addSuccessMsg');
-            msg.style.display = 'block';
-            setTimeout(() => { msg.style.display = 'none'; }, 3000);
-        }
+    const total = activePool.length;
+    const due = activePool.filter(w => w.nextReview <= now).length;
+    const mastered = activePool.filter(w => w.interval >= 60).length;
+    const struggling = activePool.filter(w => w.mistakes > 2).length;
 
-        // --- FLASHCARD LOGIC ---
-        const flashcardElement = document.getElementById('flashcard');
-        
-        flashcardElement.addEventListener('click', () => {
-            if(isAutoplaying) stopAutoplay();
-            flashcardElement.classList.toggle('is-flipped');
-        });
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-due').textContent = due;
+    document.getElementById('stat-mastered').textContent = mastered;
+    document.getElementById('stat-struggling').textContent = struggling;
+  }
 
-        function updateFlashcardUI() {
-            flashcardElement.classList.remove('is-flipped');
-            setTimeout(() => {
-                const activePool = getActiveVocab();
-                if(activePool.length === 0) return;
-                
-                const item = activePool[fcIndex];
-                document.getElementById('wordDisplay').textContent = item.word;
-                document.getElementById('defDisplay').textContent = item.definition;
-                
-                let exHTML = "";
-                item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
-                document.getElementById('exDisplay').innerHTML = exHTML;
-                document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
-            }, 150);
-        }
+  // --- ADD WORD LOGIC ---
+  function addCustomWord(e) {
+    e.preventDefault();
 
-        function nextCard() { 
-            if(isAutoplaying && !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
-                stopAutoplay(); 
-            }
-            const activePool = getActiveVocab();
-            fcIndex = (fcIndex + 1) % activePool.length; 
-            updateFlashcardUI(); 
-        }
-        
-        function prevCard() { 
-            stopAutoplay();
-            const activePool = getActiveVocab();
-            fcIndex = (fcIndex - 1 + activePool.length) % activePool.length; 
-            updateFlashcardUI(); 
-        }
+    const word = document.getElementById('newWord').value.trim();
+    const definition = document.getElementById('newDef').value.trim();
+    const ex1 = document.getElementById('newEx1').value.trim();
+    const ex2 = document.getElementById('newEx2').value.trim();
 
-        // --- AUDIO & AUTOPLAY LOGIC ---
-        let isAutoplaying = false;
+    const examples = [ex1];
+    if (ex2) examples.push(ex2);
 
-        function speakTextAsync(text) {
-            return new Promise(resolve => {
-                if (!('speechSynthesis' in window)) return resolve();
-                
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.85; 
-                utterance.lang = 'en-US';
-                
-                utterance.onend = resolve;
-                utterance.onerror = resolve; 
-                
-                window.speechSynthesis.speak(utterance);
-            });
-        }
+    const newItem = createNewItemState({ word, definition, examples });
+    vocabState.push(newItem);
+    saveState();
 
-        async function readCurrentCard() {
-            stopAutoplay();
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            
-            const activePool = getActiveVocab();
-            const item = activePool[fcIndex];
-            await speakTextAsync(item.word);
-            await speakTextAsync(item.definition);
-            for (let ex of item.examples) {
-                await speakTextAsync(ex);
-            }
-        }
+    document.getElementById('addWordForm').reset();
+    const msg = document.getElementById('addSuccessMsg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+  }
 
-        function stopAutoplay() {
-            isAutoplaying = false;
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            const btn = document.getElementById('btn-autoplay');
-            btn.textContent = "▶️ Autoplay";
-            btn.classList.remove('btn-autoplay-active');
-            btn.classList.remove('active-loop'); 
-        }
+  // --- FLASHCARD LOGIC ---
+  const flashcardElement = document.getElementById('flashcard');
 
-        function toggleAutoplay() {
-            if (isAutoplaying) {
-                stopAutoplay();
-            } else {
-                isAutoplaying = true;
-                const btn = document.getElementById('btn-autoplay');
-                btn.textContent = "⏹️ Stop";
-                btn.classList.add('btn-autoplay-active');
-                runAutoplayLoop();
-            }
-        }
+  flashcardElement.addEventListener('click', () => {
+    if(isAutoplaying) stopAutoplay();
+    flashcardElement.classList.toggle('is-flipped');
+  });
 
-        async function runAutoplayLoop() {
-            if (!isAutoplaying) return;
-            const activePool = getActiveVocab();
-            const item = activePool[fcIndex];
-            
-            if (flashcardElement.classList.contains('is-flipped')) {
-                flashcardElement.classList.remove('is-flipped');
-                await new Promise(r => setTimeout(r, 400)); 
-            }
-            
-            if (!isAutoplaying) return;
-            await speakTextAsync(item.word);
-            await new Promise(r => setTimeout(r, 1000)); 
-            
-            if (!isAutoplaying) return;
-            flashcardElement.classList.add('is-flipped');
-            await new Promise(r => setTimeout(r, 600)); 
-            
-            if (!isAutoplaying) return;
-            await speakTextAsync(item.definition);
-            for (let ex of item.examples) {
-                if (!isAutoplaying) return;
-                await speakTextAsync(ex);
-            }
+  function updateFlashcardUI() {
+    flashcardElement.classList.remove('is-flipped');
+    setTimeout(() => {
+      const activePool = getActiveVocab();
+      if(activePool.length === 0) {
+        document.getElementById('wordDisplay').textContent = "No words in this group.";
+        document.getElementById('defDisplay').textContent = "Please select another group or add new words.";
+        document.getElementById('exDisplay').innerHTML = "";
+        document.getElementById('fc-progress').textContent = "0 of 0";
+        return; // Exit the function early
+      }
 
-            await new Promise(r => setTimeout(r, 1500));
-            if (!isAutoplaying) return;
+      const item = activePool[fcIndex];
+      document.getElementById('wordDisplay').textContent = item.word;
+      document.getElementById('defDisplay').textContent = item.definition;
 
-            document.getElementById('btn-autoplay').classList.add('active-loop'); 
-            nextCard();
-            
-            setTimeout(() => {
-                if(isAutoplaying) runAutoplayLoop();
-            }, 500);
-        }
+      let exHTML = "";
+      item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
+      document.getElementById('exDisplay').innerHTML = exHTML;
+      document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
+    }, 150);
+  }
 
-        // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
-        function loadNextQuestion() {
-            updateScoreDisplay();
-            document.getElementById('feedbackText').textContent = "";
-            document.getElementById('btnNextQuiz').style.display = "none";
-            document.getElementById('quizInstruction').style.display = 'block';
-            
-            const activePool = getActiveVocab();
-            let pool = [];
-            let statusText = "";
+  function nextCard() {
+    if(isAutoplaying && !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
+      stopAutoplay();
+    }
+    const activePool = getActiveVocab();
+    fcIndex = (fcIndex + 1) % activePool.length;
+    updateFlashcardUI();
+  }
 
-            if (currentMode === 'review') {
-                pool = activePool.filter(w => w.mistakes > 0);
-                pool.sort((a, b) => b.mistakes - a.mistakes); 
-                statusText = "Reviewing Your Mistakes";
-                
-                if (pool.length === 0) {
-                    showEmptyState("You have no mistakes to review in this group! Excellent job.");
-                    return;
-                }
-            } else {
-                pool = activePool.filter(w => w.nextReview <= Date.now());
-                
-                if (pool.length === 0) {
-                    let tempState = [...activePool]; 
-                    tempState.sort((a, b) => a.nextReview - b.nextReview);
-                    pool = [tempState[0]];
-                    statusText = "Working Ahead (No reviews currently due in this group)";
-                } else {
-                    statusText = `Spaced Repetition: ${pool.length} word(s) due`;
-                }
-            }
+  function prevCard() {
+    stopAutoplay();
+    const activePool = getActiveVocab();
+    fcIndex = (fcIndex - 1 + activePool.length) % activePool.length;
+    updateFlashcardUI();
+  }
 
-            document.getElementById('srs-status').textContent = statusText;
-            document.getElementById('quizWordDisplay').style.display = 'block';
-            document.getElementById('optionsContainer').style.display = 'grid';
+  // --- AUDIO & AUTOPLAY LOGIC ---
+  let isAutoplaying = false;
 
-            currentQuizWord = pool[0];
-            document.getElementById('quizWordDisplay').textContent = currentQuizWord.word;
+  function speakTextAsync(text) {
+    return new Promise(resolve => {
+      if (!('speechSynthesis' in window)) return resolve();
 
-            let options = [currentQuizWord.definition];
-            while(options.length < 4 && activePool.length >= 4) {
-                let randomDef = activePool[Math.floor(Math.random() * activePool.length)].definition;
-                if(!options.includes(randomDef)) options.push(randomDef);
-            }
-            options.sort(() => Math.random() - 0.5);
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.85;
+      utterance.lang = 'en-US';
 
-            const container = document.getElementById('optionsContainer');
-            container.innerHTML = "";
-            options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = "option-btn";
-                btn.textContent = opt;
-                btn.onclick = () => checkAnswer(btn, opt);
-                container.appendChild(btn);
-            });
-        }
+      utterance.onend = resolve;
+      utterance.onerror = resolve;
 
-        function showEmptyState(msg) {
-            document.getElementById('quizWordDisplay').style.display = 'none';
-            document.getElementById('quizInstruction').style.display = 'none';
-            document.getElementById('optionsContainer').style.display = 'none';
-            document.getElementById('srs-status').innerHTML = `<div class="empty-state">${msg}</div>`;
-        }
+      window.speechSynthesis.speak(utterance);
+    });
+  }
 
-        function checkAnswer(selectedBtn, selectedText) {
-            const buttons = document.querySelectorAll('.option-btn');
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                if(btn.textContent === currentQuizWord.definition) btn.classList.add('correct');
-            });
+  async function readCurrentCard() {
+    stopAutoplay();
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-            const feedback = document.getElementById('feedbackText');
-            // Update in the main storage array
-            const wordRef = vocabState.find(w => w.word === currentQuizWord.word);
+    const activePool = getActiveVocab();
+    const item = activePool[fcIndex];
+    await speakTextAsync(item.word);
+    await speakTextAsync(item.definition);
+    for (let ex of item.examples) {
+      await speakTextAsync(ex);
+    }
+  }
 
-            if(selectedText === currentQuizWord.definition) {
-                sessionScore++;
-                selectedBtn.classList.add('correct');
-                feedback.textContent = "✅ Correct! +1 Point";
-                feedback.style.color = "var(--secondary)";
-                
-                if (wordRef.repetitions === 0) {
-                    wordRef.interval = 1; 
-                } else if (wordRef.repetitions === 1) {
-                    wordRef.interval = 6; 
-                } else {
-                    wordRef.interval = Math.ceil(wordRef.interval * wordRef.easiness);
-                }
-                
-                wordRef.repetitions++;
-                wordRef.easiness = Math.max(1.3, wordRef.easiness + 0.1); 
-                wordRef.nextReview = Date.now() + (wordRef.interval * 60000); 
-                
-                if(currentMode === 'review' && wordRef.mistakes > 0) {
-                    wordRef.mistakes--; 
-                    feedback.textContent += " (Mistake resolved!)";
-                }
-            } else {
-                sessionScore--;
-                selectedBtn.classList.add('incorrect');
-                feedback.textContent = "❌ Incorrect. -1 Point";
-                feedback.style.color = "var(--danger)";
-                
-                wordRef.repetitions = 0;
-                wordRef.interval = 1; 
-                wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.2); 
-                wordRef.nextReview = Date.now(); 
-                wordRef.mistakes++;
-            }
+  function stopAutoplay() {
+    isAutoplaying = false;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    const btn = document.getElementById('btn-autoplay');
+    btn.textContent = "▶️ Autoplay";
+    btn.classList.remove('btn-autoplay-active');
+    btn.classList.remove('active-loop');
+  }
 
-            saveState();
-            updateScoreDisplay();
-            document.getElementById('btnNextQuiz').style.display = "block";
-        }
+  function toggleAutoplay() {
+    if (isAutoplaying) {
+      stopAutoplay();
+    } else {
+      isAutoplaying = true;
+      const btn = document.getElementById('btn-autoplay');
+      btn.textContent = "⏹️ Stop";
+      btn.classList.add('btn-autoplay-active');
+      runAutoplayLoop();
+    }
+  }
 
-        // Start app
-        updateFlashcardUI();
+  async function runAutoplayLoop() {
+    if (!isAutoplaying) return;
+    const activePool = getActiveVocab();
+    const item = activePool[fcIndex];
 
-    </script>
+    if (flashcardElement.classList.contains('is-flipped')) {
+      flashcardElement.classList.remove('is-flipped');
+      await new Promise(r => setTimeout(r, 400));
+    }
+
+    if (!isAutoplaying) return;
+    await speakTextAsync(item.word);
+    await new Promise(r => setTimeout(r, 1000));
+
+    if (!isAutoplaying) return;
+    flashcardElement.classList.add('is-flipped');
+    await new Promise(r => setTimeout(r, 600));
+
+    if (!isAutoplaying) return;
+    await speakTextAsync(item.definition);
+    for (let ex of item.examples) {
+      if (!isAutoplaying) return;
+      await speakTextAsync(ex);
+    }
+
+    await new Promise(r => setTimeout(r, 1500));
+    if (!isAutoplaying) return;
+
+    document.getElementById('btn-autoplay').classList.add('active-loop');
+    nextCard();
+
+    setTimeout(() => {
+      if(isAutoplaying) runAutoplayLoop();
+    }, 500);
+  }
+
+  // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
+  function loadNextQuestion() {
+    updateScoreDisplay();
+    document.getElementById('feedbackText').textContent = "";
+    document.getElementById('btnNextQuiz').style.display = "none";
+    document.getElementById('quizInstruction').style.display = 'block';
+
+    const activePool = getActiveVocab();
+    let pool = [];
+    let statusText = "";
+
+    if (currentMode === 'review') {
+      pool = activePool.filter(w => w.mistakes > 0);
+      pool.sort((a, b) => b.mistakes - a.mistakes);
+      statusText = "Reviewing Your Mistakes";
+
+      if (pool.length === 0) {
+        showEmptyState("You have no mistakes to review in this group! Excellent job.");
+        return;
+      }
+    } else {
+      pool = activePool.filter(w => w.nextReview <= Date.now());
+
+      if (pool.length === 0) {
+        let tempState = [...activePool];
+        tempState.sort((a, b) => a.nextReview - b.nextReview);
+        pool = [tempState[0]];
+        statusText = "Working Ahead (No reviews currently due in this group)";
+      } else {
+        statusText = `Spaced Repetition: ${pool.length} word(s) due`;
+      }
+    }
+
+    document.getElementById('srs-status').textContent = statusText;
+    document.getElementById('quizWordDisplay').style.display = 'block';
+    document.getElementById('optionsContainer').style.display = 'grid';
+
+    currentQuizWord = pool[0];
+    document.getElementById('quizWordDisplay').textContent = currentQuizWord.word;
+
+    let options = [currentQuizWord.definition];
+    while(options.length < 4 && activePool.length >= 4) {
+      let randomDef = activePool[Math.floor(Math.random() * activePool.length)].definition;
+      if(!options.includes(randomDef)) options.push(randomDef);
+    }
+    options.sort(() => Math.random() - 0.5);
+
+    const container = document.getElementById('optionsContainer');
+    container.innerHTML = "";
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = "option-btn";
+      btn.textContent = opt;
+      btn.onclick = () => checkAnswer(btn, opt);
+      container.appendChild(btn);
+    });
+  }
+
+  function showEmptyState(msg) {
+    document.getElementById('quizWordDisplay').style.display = 'none';
+    document.getElementById('quizInstruction').style.display = 'none';
+    document.getElementById('optionsContainer').style.display = 'none';
+    document.getElementById('srs-status').innerHTML = `<div class="empty-state">${msg}</div>`;
+  }
+
+  function checkAnswer(selectedBtn, selectedText) {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      if(btn.textContent === currentQuizWord.definition) btn.classList.add('correct');
+    });
+
+    const feedback = document.getElementById('feedbackText');
+    // Update in the main storage array
+    const wordRef = vocabState.find(w => w.word === currentQuizWord.word);
+
+    if(selectedText === currentQuizWord.definition) {
+      sessionScore++;
+      selectedBtn.classList.add('correct');
+      feedback.textContent = "✅ Correct! +1 Point";
+      feedback.style.color = "var(--secondary)";
+
+      if (wordRef.repetitions === 0) {
+        wordRef.interval = 1;
+      } else if (wordRef.repetitions === 1) {
+        wordRef.interval = 6;
+      } else {
+        wordRef.interval = Math.ceil(wordRef.interval * wordRef.easiness);
+      }
+
+      wordRef.repetitions++;
+      wordRef.easiness = Math.max(1.3, wordRef.easiness + 0.1);
+      wordRef.nextReview = Date.now() + (wordRef.interval * 60000);
+
+      if(currentMode === 'review' && wordRef.mistakes > 0) {
+        wordRef.mistakes--;
+        feedback.textContent += " (Mistake resolved!)";
+      }
+    } else {
+      sessionScore--;
+      selectedBtn.classList.add('incorrect');
+      feedback.textContent = "❌ Incorrect. -1 Point";
+      feedback.style.color = "var(--danger)";
+
+      wordRef.repetitions = 0;
+      wordRef.interval = 1;
+      wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.2);
+      wordRef.nextReview = Date.now();
+      wordRef.mistakes++;
+    }
+
+    saveState();
+    updateScoreDisplay();
+    document.getElementById('btnNextQuiz').style.display = "block";
+  }
+
+  // Start app
+  updateFlashcardUI();
+
+</script>
 </body>
 </html>
