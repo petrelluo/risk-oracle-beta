@@ -1,0 +1,65 @@
+========================================================
+  Reach Estimate: Spec A — Young Mobile US (18-24, Instagram)
+========================================================
+  Targeting Spec:
+    user_os: ["iOS","Android"]
+    age_min: 18
+    genders: [1 (Male), 2 (Female)]
+    geo_locations: {"countries":["US"]}
+    interests: [{"id":"6003139266461","name":"Technology"},{"id":"6003020834693","name":"Business"}]
+    publisher_platforms: ["instagram"]
+    education_statuses: [2 (In College (Undergrad)), 3 (College Graduate)]
+    age_max: 24
+--------------------------------------------------------
+
+Reach Estimate (via /reachestimate):
+  Raw Response: {"data":{"users_lower_bound":1600000,"users_upper_bound":1900000,"estimate_ready":true}}
+  Estimate Ready:          true
+  Users:                   N/A
+  Users (Lower Bound):     1600000
+  Users (Upper Bound):     1900000
+  Bid Estimations:         N/A
+
+========================================================
+  Reach Estimate: Spec B — Mid-Age Professional UK+US (30-50, Facebook)
+========================================================
+  Targeting Spec:
+    user_os: ["iOS","Android"]
+    age_min: 30
+    genders: [1 (Male)]
+    geo_locations: {"countries":["US","GB"]}
+    interests: [{"id":"6003020834693","name":"Business"}]
+    publisher_platforms: ["facebook"]
+    education_statuses: [7 (In Grad School), 9 (Master's Degree)]
+    age_max: 50
+--------------------------------------------------------
+
+Reach Estimate (via /reachestimate):
+  Raw Response: {"data":{"users_lower_bound":909000,"users_upper_bound":1100000,"estimate_ready":true}}
+  Estimate Ready:          true
+  Users:                   N/A
+  Users (Lower Bound):     909000
+  Users (Upper Bound):     1100000
+  Bid Estimations:         N/A
+
+========================================================
+  Reach Estimate: Spec C — Broad Multi-Platform Global (25-44, Female)
+========================================================
+  Targeting Spec:
+    user_os: ["iOS","Android"]
+    age_min: 25
+    genders: [2 (Female)]
+    geo_locations: {"countries":["US","GB","CA","AU"]}
+    interests: [{"id":"6003139266461","name":"Technology"},{"id":"6003020834693","name":"Business"}]
+    publisher_platforms: ["instagram","facebook"]
+    education_statuses: [2 (In College (Undergrad)), 3 (College Graduate), 7 (In Grad School), 9 (Master's Degree)]
+    age_max: 44
+--------------------------------------------------------
+
+Reach Estimate (via /reachestimate):
+  Raw Response: {"data":{"users_lower_bound":19900000,"users_upper_bound":23400000,"estimate_ready":true}}
+  Estimate Ready:          true
+  Users:                   N/A
+  Users (Lower Bound):     19900000
+  Users (Upper Bound):     23400000
+  Bid Estimations:         N/A
