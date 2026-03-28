@@ -132,12 +132,30 @@
         button.danger { background-color: #fed7d7; color: #c53030; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;}
         button.danger:hover { background-color: #feb2b2; }
 
-        .tips-btn {
-            position: absolute; top: 20px; right: 20px; background-color: #edf2f7;
-            color: #2b6cb0; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid #cbd5e0;
-            border-radius: 6px; cursor: pointer; font-weight: bold;
+        .header-actions {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
-        .tips-btn:hover { background-color: #e2e8f0; }
+        .tips-btn, .pdf-btn {
+            background-color: #edf2f7;
+            color: #2b6cb0;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.9rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .tips-btn:hover, .pdf-btn:hover { background-color: #e2e8f0; }
+        .pdf-btn svg { width: 16px; height: 16px; }
         
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -283,12 +301,76 @@
             padding: 0.5rem 0.8rem;
             font-size: 0.85rem;
         }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                display: block;
+            }
+            .card {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+                padding: 1rem;
+            }
+            .header-actions,
+            .mode-toggle,
+            .controls-container,
+            .btn-group,
+            .tree-fab,
+            #practice-stats,
+            #quiz-stats,
+            #feedback,
+            #answer-input,
+            #question-prompt,
+            #target,
+            #main-instruction,
+            #mistakes-screen,
+            #quiz-end-screen,
+            #decision-tree-modal,
+            #cheat-sheet-modal,
+            #tips-modal .modal-header button,
+            #toggle-rules-btn,
+            #current-tip-box {
+                display: none !important;
+            }
+            #tips-modal {
+                position: static;
+                display: block !important;
+                background: none;
+                width: 100%;
+                height: auto;
+            }
+            #tips-modal .modal-content {
+                max-width: 100%;
+                width: 100%;
+                max-height: none;
+                overflow: visible;
+                border-radius: 0;
+                padding: 0;
+            }
+            #all-rules {
+                display: block !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="card" id="quiz-screen">
-        <button id="tips-btn" class="tips-btn">💡 Tips</button>
+        <div class="header-actions">
+            <button id="download-guide-btn" class="pdf-btn" title="Download printable naming guide PDF" aria-label="Download printable naming guide PDF">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <path d="M14 2v6h6"></path>
+                    <path d="M12 12v6"></path>
+                    <path d="M9 15l3 3 3-3"></path>
+                </svg>
+                PDF
+            </button>
+            <button id="tips-btn" class="tips-btn">💡 Tips</button>
+        </div>
         <h1>Chemical Nomenclature Practice</h1>
         
         <div class="mode-toggle">
@@ -603,6 +685,12 @@
                         <li>Do not use <strong>-ic acid</strong> for anions ending in <strong>-ite</strong>; those become <strong>-ous acid</strong>.</li>
                         <li>For molecular compounds, remember the second element always ends in <strong>-ide</strong>.</li>
                     </ul>
+
+                <div class="rule-item">
+                    <h4>14. Very common polyatomic ions to memorize</h4>
+                    <p>These ions appear constantly in ionic compounds, bases, and acids. Memorizing them makes naming much faster because their names usually stay unchanged inside larger compounds.</p>
+                    <div id="common-polyatomic-table"></div>
+                </div>
                 </div>
             </div>
         </div>
@@ -693,6 +781,7 @@
         const mistakesContainer = document.getElementById('mistakes-container');
         const tipsModal = document.getElementById('tips-modal');
         const tipsBtn = document.getElementById('tips-btn');
+        const downloadGuideBtn = document.getElementById('download-guide-btn');
         const closeTipsBtn = document.getElementById('close-tips-btn');
         const toggleRulesBtn = document.getElementById('toggle-rules-btn');
         const allRulesContainer = document.getElementById('all-rules');
@@ -710,6 +799,75 @@
         const quizProgressEl = document.getElementById('quiz-progress');
         const quizScoreEl = document.getElementById('quiz-score');
         const quizFinalScoreEl = document.getElementById('quiz-final-score');
+
+
+        function buildCommonPolyatomicTable() {
+            const container = document.getElementById('common-polyatomic-table');
+            if (!container) return;
+            const commonIons = [
+                ['Ammonium', 'NH4^+'],
+                ['Hydroxide', 'OH^-'],
+                ['Nitrate', 'NO3^-'],
+                ['Nitrite', 'NO2^-'],
+                ['Sulfate', 'SO4^2-'],
+                ['Sulfite', 'SO3^2-'],
+                ['Carbonate', 'CO3^2-'],
+                ['Hydrogen carbonate (bicarbonate)', 'HCO3^-'],
+                ['Phosphate', 'PO4^3-'],
+                ['Phosphite', 'PO3^3-'],
+                ['Acetate', 'C2H3O2^-'],
+                ['Cyanide', 'CN^-'],
+                ['Chromate', 'CrO4^2-'],
+                ['Dichromate', 'Cr2O7^2-'],
+                ['Permanganate', 'MnO4^-'],
+                ['Chlorate', 'ClO3^-'],
+                ['Chlorite', 'ClO2^-'],
+                ['Perchlorate', 'ClO4^-'],
+                ['Hypochlorite', 'ClO^-']
+            ];
+            let html = '<table class="rule-table"><thead><tr><th>Name</th><th>Formula</th><th>Pattern to notice</th></tr></thead><tbody>';
+            commonIons.forEach(([name, formula]) => {
+                let note = '';
+                const lower = name.toLowerCase();
+                if (lower.includes('perchlorate')) note = '"per-" means one more oxygen than chlorate';
+                else if (lower.includes('hypochlorite')) note = '"hypo-" + "-ite" means the fewest oxygens';
+                else if (lower.includes('hydrogen carbonate')) note = 'Has an extra H compared with carbonate';
+                else if (lower.includes('ate')) note = '"-ate" usually means more oxygen than "-ite"';
+                else if (lower.includes('ite')) note = '"-ite" usually means one less oxygen than "-ate"';
+                else note = 'Keep this ion name unchanged inside compounds';
+                html += `<tr><td>${name}</td><td><strong>${formatFormula(formula)}</strong></td><td>${note}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function downloadNamingGuidePDF() {
+            const printWrapper = document.createElement('div');
+            printWrapper.style.padding = '20px';
+            printWrapper.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            printWrapper.style.color = '#1f2937';
+            printWrapper.style.backgroundColor = '#ffffff';
+            printWrapper.style.width = '1000px';
+
+            const rulesHTML = document.getElementById('all-rules').innerHTML;
+            printWrapper.innerHTML = `
+                <div style="border-bottom: 2px solid #cbd5e0; padding-bottom: 12px; margin-bottom: 20px;">
+                    <h1 style="margin: 0; color: #1a365d; font-size: 28px;">Chemical Nomenclature Guide</h1>
+                    <p style="margin: 8px 0 0 0; color: #4a5568; font-size: 15px;">Printable reference sheet with naming rules, suffixes and prefixes, and very common polyatomic ions.</p>
+                </div>
+                <div>${rulesHTML}</div>
+            `;
+
+            const opt = {
+                margin: [0.35, 0.35, 0.35, 0.35],
+                filename: 'Chemical_Nomenclature_Guide.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(printWrapper).save();
+        }
 
         function initData() {
             const savedData = localStorage.getItem('chemistryQuizData');
@@ -1219,6 +1377,7 @@
         backBtn.addEventListener('click', hideMistakes);
         resetBtn.addEventListener('click', resetProgress);
         tipsBtn.addEventListener('click', openTips);
+        downloadGuideBtn.addEventListener('click', downloadNamingGuidePDF);
         treeFab.addEventListener('click', () => { treeModal.classList.remove('hidden'); renderD3Tree(); });
         closeTreeBtn.addEventListener('click', () => treeModal.classList.add('hidden'));
         expandAllBtn.addEventListener('click', () => {
@@ -1238,6 +1397,7 @@
         directionSelect.addEventListener('change', handleFilterChange);
         inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !inputEl.disabled) checkAnswer(); });
 
+        buildCommonPolyatomicTable();
         initData();
         setAppMode('practice');
     </script>
