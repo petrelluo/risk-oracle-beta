@@ -1025,6 +1025,291 @@
     </div>
   </div>
 
+  <!-- ── STEP 7: PUTTING IT ALL TOGETHER ── -->
+  <div class="step-card">
+    <h2>Step 7: Putting It All Together — Molecule Summary Table</h2>
+    <p>This table connects everything you have learned. For each example molecule, trace the logic from left to right: the <strong>Lewis (electron dot) structure</strong> tells you how electrons are arranged → the <strong>VSEPR shape</strong> tells you the 3D geometry → the <strong>polarity</strong> follows from shape and bond types → the <strong>dominant IMF</strong> follows from polarity.</p>
+
+    <div style="overflow-x: auto;">
+    <table style="min-width: 860px;">
+      <thead>
+        <tr>
+          <th style="width:120px;">Molecule</th>
+          <th style="width:170px; text-align:center;">Electron Dot (Lewis) Structure</th>
+          <th style="width:140px; text-align:center;">3D Model Shape</th>
+          <th style="width:100px;">Shape &amp; Bond Angle</th>
+          <th style="width:90px; text-align:center;">Molecular Polarity</th>
+          <th style="width:110px;">Dominant IMF</th>
+          <th>Key Reasoning</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- H2O -->
+        <tr>
+          <td><strong>Water<br>H₂O</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="150" height="90" viewBox="0 0 150 90">
+              <!-- O with 2 lone pairs -->
+              <text x="62" y="44" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+              <!-- lone pair top-left -->
+              <circle cx="52" cy="26" r="3.5" fill="#e74c3c"/><circle cx="62" cy="22" r="3.5" fill="#e74c3c"/>
+              <!-- lone pair top-right -->
+              <circle cx="78" cy="22" r="3.5" fill="#e74c3c"/><circle cx="88" cy="26" r="3.5" fill="#e74c3c"/>
+              <!-- bonds to H -->
+              <line x1="60" y1="50" x2="28" y2="76" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="90" y1="50" x2="122" y2="76" stroke="#2c3e50" stroke-width="3"/>
+              <text x="12" y="90" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="122" y="90" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;">2 bonding pairs + <strong>2 lone pairs</strong> on O</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="120" height="80" viewBox="0 0 120 80">
+              <!-- bent shape top-down view -->
+              <circle cx="60" cy="30" r="14" fill="#3498db" opacity="0.85"/>
+              <text x="54" y="36" font-size="13" font-weight="bold" fill="white">O</text>
+              <line x1="50" y1="42" x2="25" y2="68" stroke="#555" stroke-width="2.5"/>
+              <line x1="70" y1="42" x2="95" y2="68" stroke="#555" stroke-width="2.5"/>
+              <circle cx="20" cy="72" r="10" fill="#e74c3c" opacity="0.85"/>
+              <text x="15" y="77" font-size="12" font-weight="bold" fill="white">H</text>
+              <circle cx="100" cy="72" r="10" fill="#e74c3c" opacity="0.85"/>
+              <text x="95" y="77" font-size="12" font-weight="bold" fill="white">H</text>
+              <!-- lone pair indicators -->
+              <ellipse cx="42" cy="18" rx="9" ry="6" fill="#f39c12" opacity="0.55" transform="rotate(-20 42 18)"/>
+              <ellipse cx="78" cy="18" rx="9" ry="6" fill="#f39c12" opacity="0.55" transform="rotate(20 78 18)"/>
+            </svg>
+          </td>
+          <td><strong>Bent</strong><br>~104.5°<br><span style="font-size:0.8rem; color:#666;">(2 lone pairs compress angle)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-polar">Polar</span><br><span style="font-size:0.78rem; color:#666;">Asymmetric; dipoles do not cancel</span></td>
+          <td style="color:#2980b9; font-weight:bold;">Hydrogen Bonding</td>
+          <td style="font-size:0.88rem;">H is directly bonded to highly electronegative O. The 2 lone pairs on O create a powerful attraction to the δ⁺ H of a neighbouring molecule. This gives water an unusually high boiling point (100 °C).</td>
+        </tr>
+
+        <!-- CO2 -->
+        <tr style="background:#f9f9f9;">
+          <td><strong>Carbon Dioxide<br>CO₂</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="170" height="80" viewBox="0 0 170 80">
+              <!-- left O lone pairs -->
+              <circle cx="18" cy="28" r="3.5" fill="#e74c3c"/><circle cx="28" cy="22" r="3.5" fill="#e74c3c"/>
+              <circle cx="18" cy="56" r="3.5" fill="#e74c3c"/><circle cx="28" cy="62" r="3.5" fill="#e74c3c"/>
+              <text x="32" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+              <!-- double bonds -->
+              <line x1="55" y1="35" x2="80" y2="35" stroke="#2c3e50" stroke-width="2.5"/>
+              <line x1="55" y1="44" x2="80" y2="44" stroke="#2c3e50" stroke-width="2.5"/>
+              <text x="87" y="48" font-size="20" font-weight="bold" fill="#2c3e50">C</text>
+              <line x1="108" y1="35" x2="133" y2="35" stroke="#2c3e50" stroke-width="2.5"/>
+              <line x1="108" y1="44" x2="133" y2="44" stroke="#2c3e50" stroke-width="2.5"/>
+              <text x="138" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+              <!-- right O lone pairs -->
+              <circle cx="148" cy="22" r="3.5" fill="#e74c3c"/><circle cx="158" cy="28" r="3.5" fill="#e74c3c"/>
+              <circle cx="148" cy="62" r="3.5" fill="#e74c3c"/><circle cx="158" cy="56" r="3.5" fill="#e74c3c"/>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;"><strong>2 double bonds</strong> on C; 2 lone pairs on each O</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="140" height="50" viewBox="0 0 140 50">
+              <circle cx="15" cy="25" r="13" fill="#3498db" opacity="0.85"/>
+              <text x="9" y="30" font-size="12" font-weight="bold" fill="white">O</text>
+              <line x1="28" y1="25" x2="50" y2="25" stroke="#555" stroke-width="2.5"/>
+              <line x1="28" y1="20" x2="50" y2="20" stroke="#555" stroke-width="2"/>
+              <circle cx="62" cy="25" r="13" fill="#27ae60" opacity="0.85"/>
+              <text x="57" y="30" font-size="12" font-weight="bold" fill="white">C</text>
+              <line x1="75" y1="25" x2="97" y2="25" stroke="#555" stroke-width="2.5"/>
+              <line x1="75" y1="20" x2="97" y2="20" stroke="#555" stroke-width="2"/>
+              <circle cx="110" cy="25" r="13" fill="#3498db" opacity="0.85"/>
+              <text x="104" y="30" font-size="12" font-weight="bold" fill="white">O</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:4px;">Linear; 180°</div>
+          </td>
+          <td><strong>Linear</strong><br>180°<br><span style="font-size:0.8rem; color:#666;">(no lone pairs on centre; both sides identical)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-nonpolar">Nonpolar</span><br><span style="font-size:0.78rem; color:#666;">Polar bonds cancel perfectly</span></td>
+          <td style="color:#7f8c8d; font-weight:bold;">London Dispersion</td>
+          <td style="font-size:0.88rem;">Although each C=O bond is polar, the linear geometry means both dipoles point in exactly opposite directions and cancel. The molecule has zero net dipole → only LDF acts between CO₂ molecules → low boiling point (−78 °C, sublimes).</td>
+        </tr>
+
+        <!-- NH3 -->
+        <tr>
+          <td><strong>Ammonia<br>NH₃</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="150" height="100" viewBox="0 0 150 100">
+              <!-- N lone pair on top -->
+              <circle cx="65" cy="10" r="3.5" fill="#e74c3c"/><circle cx="77" cy="10" r="3.5" fill="#e74c3c"/>
+              <text x="60" y="44" font-size="20" font-weight="bold" fill="#2c3e50">N</text>
+              <!-- three bonds -->
+              <line x1="60" y1="50" x2="20" y2="80" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="73" y1="52" x2="73" y2="85" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="85" y1="50" x2="122" y2="80" stroke="#2c3e50" stroke-width="3"/>
+              <text x="5"  y="98" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="64" y="100" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="118" y="98" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;">3 bonding pairs + <strong>1 lone pair</strong> on N</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="110" height="90" viewBox="0 0 110 90">
+              <!-- Trigonal pyramidal -->
+              <circle cx="55" cy="22" r="14" fill="#9b59b6" opacity="0.85"/>
+              <text x="49" y="28" font-size="13" font-weight="bold" fill="white">N</text>
+              <!-- lone pair cap -->
+              <ellipse cx="55" cy="8" rx="10" ry="7" fill="#f39c12" opacity="0.55"/>
+              <!-- bonds down -->
+              <line x1="44" y1="34" x2="15" y2="72" stroke="#555" stroke-width="2.5"/>
+              <line x1="55" y1="36" x2="55" y2="76" stroke="#555" stroke-width="2.5"/>
+              <line x1="66" y1="34" x2="95" y2="72" stroke="#555" stroke-width="2.5"/>
+              <circle cx="10" cy="78" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="6" y="83" font-size="11" font-weight="bold" fill="white">H</text>
+              <circle cx="55" cy="82" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="51" y="87" font-size="11" font-weight="bold" fill="white">H</text>
+              <circle cx="100" cy="78" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="96" y="83" font-size="11" font-weight="bold" fill="white">H</text>
+            </svg>
+          </td>
+          <td><strong>Trigonal Pyramidal</strong><br>&lt;109.5°<br><span style="font-size:0.8rem; color:#666;">(1 lone pair pushes bonds down)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-polar">Polar</span><br><span style="font-size:0.78rem; color:#666;">Net dipole points toward N</span></td>
+          <td style="color:#2980b9; font-weight:bold;">Hydrogen Bonding</td>
+          <td style="font-size:0.88rem;">H is directly bonded to N (qualifies for H-bonding). The 1 lone pair on N distorts the tetrahedral geometry into a pyramid, making the molecule asymmetric and polar. Strong H-bonding between NH₃ molecules raises its boiling point to −33 °C (higher than expected for its size).</td>
+        </tr>
+
+        <!-- CH4 -->
+        <tr style="background:#f9f9f9;">
+          <td><strong>Methane<br>CH₄</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="150" height="100" viewBox="0 0 150 100">
+              <!-- C centre -->
+              <text x="62" y="54" font-size="20" font-weight="bold" fill="#2c3e50">C</text>
+              <!-- 4 bonds (no lone pairs) -->
+              <line x1="62" y1="42" x2="62" y2="12" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="62" y1="60" x2="62" y2="88" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="58" y1="50" x2="20" y2="50" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="86" y1="50" x2="120" y2="50" stroke="#2c3e50" stroke-width="3"/>
+              <text x="56" y="10" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="56" y="100" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="4"  y="57" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+              <text x="121" y="57" font-size="18" font-weight="bold" fill="#2c3e50">H</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;"><strong>4 bonding pairs</strong>; no lone pairs on C</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="100" height="90" viewBox="0 0 100 90">
+              <!-- tetrahedral suggestion -->
+              <circle cx="50" cy="38" r="14" fill="#27ae60" opacity="0.85"/>
+              <text x="44" y="44" font-size="13" font-weight="bold" fill="white">C</text>
+              <line x1="40" y1="30" x2="16" y2="10" stroke="#555" stroke-width="2.5"/>
+              <line x1="60" y1="30" x2="84" y2="10" stroke="#555" stroke-width="2.5"/>
+              <line x1="40" y1="50" x2="16" y2="78" stroke="#555" stroke-width="2.5"/>
+              <line x1="60" y1="50" x2="84" y2="78" stroke="#555" stroke-width="2.5"/>
+              <circle cx="10" cy="6" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="6"  y="11" font-size="11" font-weight="bold" fill="white">H</text>
+              <circle cx="90" cy="6" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="86" y="11" font-size="11" font-weight="bold" fill="white">H</text>
+              <circle cx="10" cy="84" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="6"  y="89" font-size="11" font-weight="bold" fill="white">H</text>
+              <circle cx="90" cy="84" r="9" fill="#e74c3c" opacity="0.85"/>
+              <text x="86" y="89" font-size="11" font-weight="bold" fill="white">H</text>
+            </svg>
+          </td>
+          <td><strong>Tetrahedral</strong><br>109.5°<br><span style="font-size:0.8rem; color:#666;">(4 identical bonds; perfectly symmetric)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-nonpolar">Nonpolar</span><br><span style="font-size:0.78rem; color:#666;">4 equal dipoles cancel symmetrically</span></td>
+          <td style="color:#7f8c8d; font-weight:bold;">London Dispersion</td>
+          <td style="font-size:0.88rem;">No lone pairs means the 4 C–H bonds are arranged in a perfect tetrahedron. The slightly polar C–H dipoles point outward symmetrically and cancel. With only weak LDF, methane boils at −161 °C and is a gas at room temperature.</td>
+        </tr>
+
+        <!-- HCl -->
+        <tr>
+          <td><strong>Hydrogen Chloride<br>HCl</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="150" height="70" viewBox="0 0 150 70">
+              <!-- lone pairs on Cl -->
+              <circle cx="104" cy="18" r="3.5" fill="#e74c3c"/><circle cx="116" cy="14" r="3.5" fill="#e74c3c"/>
+              <circle cx="104" cy="54" r="3.5" fill="#e74c3c"/><circle cx="116" cy="58" r="3.5" fill="#e74c3c"/>
+              <circle cx="128" cy="32" r="3.5" fill="#e74c3c"/><circle cx="128" cy="42" r="3.5" fill="#e74c3c"/>
+              <text x="20" y="44" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+              <line x1="43" y1="37" x2="70" y2="37" stroke="#2c3e50" stroke-width="3"/>
+              <text x="76" y="44" font-size="20" font-weight="bold" fill="#2c3e50">Cl</text>
+              <text x="12" y="20" font-size="11" font-weight="bold" fill="#e74c3c">δ⁺</text>
+              <text x="76" y="16" font-size="11" font-weight="bold" fill="#3498db">δ⁻</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;">1 bonding pair; <strong>3 lone pairs</strong> on Cl</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="130" height="50" viewBox="0 0 130 50">
+              <circle cx="20" cy="25" r="12" fill="#e74c3c" opacity="0.85"/>
+              <text x="15" y="30" font-size="12" font-weight="bold" fill="white">H</text>
+              <line x1="32" y1="25" x2="76" y2="25" stroke="#555" stroke-width="2.5"/>
+              <circle cx="90" cy="25" r="16" fill="#27ae60" opacity="0.85"/>
+              <text x="82" y="31" font-size="12" font-weight="bold" fill="white">Cl</text>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:4px;">Linear (diatomic); 180°</div>
+          </td>
+          <td><strong>Linear</strong><br>180°<br><span style="font-size:0.8rem; color:#666;">(diatomic; only one bond)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-polar">Polar</span><br><span style="font-size:0.78rem; color:#666;">EN difference ≈ 0.96; single dipole cannot cancel</span></td>
+          <td style="color:#e74c3c; font-weight:bold;">Dipole-Dipole</td>
+          <td style="font-size:0.88rem;">Cl is more electronegative than H (ΔEN ≈ 0.96), creating a permanent δ⁺ on H and δ⁻ on Cl. A diatomic molecule with a single bond can never cancel its own dipole. Adjacent HCl molecules line up δ⁻↔δ⁺, giving dipole-dipole as the dominant IMF. (H is not bonded to N, O, or F, so no H-bonding.)</td>
+        </tr>
+
+        <!-- BF3 -->
+        <tr style="background:#f9f9f9;">
+          <td><strong>Boron Trifluoride<br>BF₃</strong></td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="160" height="110" viewBox="0 0 160 110">
+              <!-- B centre (incomplete octet) -->
+              <text x="68" y="52" font-size="20" font-weight="bold" fill="#2c3e50">B</text>
+              <!-- 3 bonds -->
+              <line x1="73" y1="38" x2="73" y2="10" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="60" y1="57" x2="22"  y2="80" stroke="#2c3e50" stroke-width="3"/>
+              <line x1="87" y1="57" x2="120" y2="80" stroke="#2c3e50" stroke-width="3"/>
+              <!-- F atoms with lone pairs -->
+              <text x="62" y="8"  font-size="18" font-weight="bold" fill="#9b59b6">F</text>
+              <circle cx="50" cy="6" r="3" fill="#e74c3c"/><circle cx="58" cy="2" r="3" fill="#e74c3c"/>
+              <circle cx="80" cy="2" r="3" fill="#e74c3c"/><circle cx="88" cy="6" r="3" fill="#e74c3c"/>
+              <text x="10"  y="98" font-size="18" font-weight="bold" fill="#9b59b6">F</text>
+              <circle cx="4"  cy="84" r="3" fill="#e74c3c"/><circle cx="10" cy="78" r="3" fill="#e74c3c"/>
+              <circle cx="2"  cy="96" r="3" fill="#e74c3c"/><circle cx="8"  cy="102" r="3" fill="#e74c3c"/>
+              <text x="114" y="98" font-size="18" font-weight="bold" fill="#9b59b6">F</text>
+              <circle cx="110" cy="78" r="3" fill="#e74c3c"/><circle cx="118" cy="84" r="3" fill="#e74c3c"/>
+              <circle cx="110" cy="102" r="3" fill="#e74c3c"/><circle cx="118" cy="96" r="3" fill="#e74c3c"/>
+            </svg>
+            <div style="font-size:0.75rem; color:#666; margin-top:2px;"><strong>3 bonding pairs</strong>; no lone pairs on B (only 6 e⁻ around B)</div>
+          </td>
+          <td style="text-align:center; padding:10px 6px;">
+            <svg width="120" height="90" viewBox="0 0 120 90">
+              <!-- trigonal planar -->
+              <circle cx="60" cy="38" r="14" fill="#f39c12" opacity="0.85"/>
+              <text x="55" y="44" font-size="13" font-weight="bold" fill="white">B</text>
+              <line x1="60" y1="24" x2="60" y2="6" stroke="#555" stroke-width="2.5"/>
+              <line x1="48" y1="46" x2="18" y2="76" stroke="#555" stroke-width="2.5"/>
+              <line x1="72" y1="46" x2="102" y2="76" stroke="#555" stroke-width="2.5"/>
+              <circle cx="60" cy="2"  r="9" fill="#9b59b6" opacity="0.85"/>
+              <text x="56" y="7"  font-size="11" font-weight="bold" fill="white">F</text>
+              <circle cx="12" cy="80" r="9" fill="#9b59b6" opacity="0.85"/>
+              <text x="8"  y="85" font-size="11" font-weight="bold" fill="white">F</text>
+              <circle cx="108" cy="80" r="9" fill="#9b59b6" opacity="0.85"/>
+              <text x="104" y="85" font-size="11" font-weight="bold" fill="white">F</text>
+            </svg>
+          </td>
+          <td><strong>Trigonal Planar</strong><br>120°<br><span style="font-size:0.8rem; color:#666;">(no lone pairs on B; 3 bonds spread flat)</span></td>
+          <td style="text-align:center;"><span class="result-badge badge-nonpolar">Nonpolar</span><br><span style="font-size:0.78rem; color:#666;">3 equal dipoles cancel in the plane</span></td>
+          <td style="color:#7f8c8d; font-weight:bold;">London Dispersion</td>
+          <td style="font-size:0.88rem;">B has only 6 valence electrons (incomplete octet) — an exception to the octet rule. The 3 B–F bonds are highly polar individually, but the trigonal planar shape is perfectly symmetrical: the three dipoles are spaced 120° apart and cancel. Net dipole = 0 → nonpolar → only LDF between molecules.</td>
+        </tr>
+
+      </tbody>
+    </table>
+    </div>
+
+    <div class="definition-box" style="margin-top:28px; border-left-color:#3498db;">
+      <p style="margin:0;"><strong>How to read this table from left to right:</strong></p>
+      <ol style="margin:8px 0 0 0; padding-left:22px; font-size:0.95rem;">
+        <li><strong>Count electrons → draw Lewis structure.</strong> This shows bonding pairs and lone pairs.</li>
+        <li><strong>Count domains (bonds + lone pairs on centre) → apply VSEPR → get shape &amp; angle.</strong> Lone pairs compress bond angles.</li>
+        <li><strong>Ask: do the polar bonds cancel?</strong> If the shape is symmetric (linear, trigonal planar, tetrahedral) and outer atoms are identical → nonpolar. If asymmetric or lone pairs distort the shape → polar.</li>
+        <li><strong>Polarity determines IMF:</strong> Nonpolar → LDF only. Polar → Dipole-Dipole + LDF. H bonded to N/O/F → Hydrogen Bonding (strongest).</li>
+      </ol>
+    </div>
+  </div>
+
   <!-- ── PRACTICE QUESTIONS ── -->
   <div class="step-card" id="practice-section">
     <h2>Practice Questions</h2>
