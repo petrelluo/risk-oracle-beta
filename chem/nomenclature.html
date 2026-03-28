@@ -475,7 +475,7 @@
             <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View Complete Naming Guide</button>
             <div id="guide-actions" class="guide-actions">
                 <div class="guide-note">Printable when the full guide is open.</div>
-                <button id="download-guide-btn" class="pdf-btn" title="Download printable naming guide PDF" aria-label="Download printable naming guide PDF">
+                <button id="download-guide-btn" class="pdf-btn" title="Print or save naming guide as PDF" aria-label="Print or save naming guide as PDF">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <path d="M14 2v6h6"></path>
@@ -879,76 +879,71 @@
             container.innerHTML = html;
         }
 
-        async function downloadNamingGuidePDF() {
-            const existing = document.getElementById('pdf-print-wrapper');
-            if (existing) existing.remove();
-
+        function getPrintableGuideHTML() {
             const sourceGuide = document.getElementById('all-rules');
-            if (!sourceGuide) return;
+            if (!sourceGuide) return '';
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemical Nomenclature Guide</title>
+<style>
+    @page { size: auto; margin: 0.55in; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1f2937; margin: 0; }
+    .print-wrap { max-width: 900px; margin: 0 auto; }
+    h1 { margin: 0; color: #1a365d; font-size: 28px; }
+    h4 { margin: 0 0 8px 0; color: #2d3748; font-size: 18px; }
+    p, li { font-size: 13px; line-height: 1.45; color: #374151; }
+    .header { border-bottom: 2px solid #cbd5e0; padding-bottom: 12px; margin-bottom: 20px; }
+    .subhead { margin: 8px 0 0 0; color: #4a5568; font-size: 14px; }
+    .rule-item { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; page-break-inside: avoid; break-inside: avoid; }
+    .rule-item:last-child { border-bottom: none; }
+    .rule-table { width: 100%; border-collapse: collapse; margin-top: 8px; table-layout: fixed; }
+    .rule-table th, .rule-table td { border: 1px solid #d1d5db; padding: 7px 8px; text-align: left; vertical-align: top; font-size: 12px; line-height: 1.35; word-break: break-word; overflow-wrap: anywhere; }
+    .rule-table th { background: #f8fafc; color: #334155; }
+    sub { font-size: 0.7em; }
+    sup { font-size: 0.7em; color: #b91c1c; }
+    ul { margin-top: 8px; padding-left: 20px; }
+    .print-hint { margin-top: 14px; font-size: 12px; color: #6b7280; }
+</style>
+</head>
+<body>
+    <div class="print-wrap">
+        <div class="header">
+            <h1>Chemical Nomenclature Guide</h1>
+            <p class="subhead">Printable reference sheet with naming rules, suffixes and prefixes, the decision path, and very common polyatomic ions.</p>
+            <p class="print-hint">Use your browser's destination setting to choose “Save as PDF” or print to paper.</p>
+        </div>
+        <div>${sourceGuide.innerHTML}</div>
+    </div>
+</body>
+</html>`;
+        }
 
-            const printWrapper = document.createElement('div');
-            printWrapper.id = 'pdf-print-wrapper';
-            printWrapper.style.position = 'fixed';
-            printWrapper.style.left = '-20000px';
-            printWrapper.style.top = '0';
-            printWrapper.style.width = '760px';
-            printWrapper.style.padding = '28px';
-            printWrapper.style.boxSizing = 'border-box';
-            printWrapper.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-            printWrapper.style.color = '#1f2937';
-            printWrapper.style.backgroundColor = '#ffffff';
-            printWrapper.style.opacity = '1';
-            printWrapper.style.visibility = 'visible';
-            printWrapper.style.display = 'block';
-            printWrapper.style.pointerEvents = 'none';
-            printWrapper.style.zIndex = '-1';
-            printWrapper.innerHTML = `
-                <style>
-                    #pdf-print-wrapper h1 { margin: 0; color: #1a365d; font-size: 28px; }
-                    #pdf-print-wrapper h4 { margin: 0 0 8px 0; color: #2d3748; font-size: 18px; }
-                    #pdf-print-wrapper p, #pdf-print-wrapper li { font-size: 13px; line-height: 1.45; color: #374151; }
-                    #pdf-print-wrapper .rule-item { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; page-break-inside: avoid; break-inside: avoid; }
-                    #pdf-print-wrapper .rule-item:last-child { border-bottom: none; }
-                    #pdf-print-wrapper .rule-table { width: 100%; border-collapse: collapse; margin-top: 8px; table-layout: fixed; }
-                    #pdf-print-wrapper .rule-table th, #pdf-print-wrapper .rule-table td {
-                        border: 1px solid #d1d5db; padding: 7px 8px; text-align: left; vertical-align: top;
-                        font-size: 12px; line-height: 1.35; word-break: break-word; overflow-wrap: anywhere;
-                    }
-                    #pdf-print-wrapper .rule-table th { background: #f8fafc; color: #334155; }
-                    #pdf-print-wrapper sub { font-size: 0.7em; }
-                    #pdf-print-wrapper sup { font-size: 0.7em; color: #b91c1c; }
-                    #pdf-print-wrapper ul { margin-top: 8px; padding-left: 20px; }
-                </style>
-                <div style="border-bottom: 2px solid #cbd5e0; padding-bottom: 12px; margin-bottom: 20px;">
-                    <h1>Chemical Nomenclature Guide</h1>
-                    <p style="margin: 8px 0 0 0; color: #4a5568; font-size: 14px;">Printable reference sheet with naming rules, suffixes and prefixes, the decision path, and very common polyatomic ions.</p>
-                </div>
-                <div>${sourceGuide.innerHTML}</div>
-            `;
-            document.body.appendChild(printWrapper);
+        function downloadNamingGuidePDF() {
+            const printableHTML = getPrintableGuideHTML();
+            if (!printableHTML) return;
 
-            const opt = {
-                margin: [0.35, 0.35, 0.35, 0.35],
-                filename: 'Chemical_Nomenclature_Guide.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,
-                    backgroundColor: '#ffffff',
-                    windowWidth: 820,
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF: { unit: 'in', format: 'legal', orientation: 'portrait' },
-                pagebreak: { mode: ['css', 'legacy'] }
+            const printWindow = window.open('', '_blank', 'width=980,height=900');
+            if (!printWindow) {
+                alert('Please allow pop-ups for this page so the guide can open for printing or saving as PDF.');
+                return;
+            }
+
+            printWindow.document.open();
+            printWindow.document.write(printableHTML);
+            printWindow.document.close();
+
+            const triggerPrint = () => {
+                printWindow.focus();
+                setTimeout(() => {
+                    printWindow.print();
+                }, 300);
             };
 
-            try {
-                await new Promise(resolve => setTimeout(resolve, 250));
-                await html2pdf().set(opt).from(printWrapper).save();
-            } finally {
-                printWrapper.remove();
-            }
+            if (printWindow.document.readyState === 'complete') triggerPrint();
+            else printWindow.addEventListener('load', triggerPrint, { once: true });
         }
 
         function initData() {
