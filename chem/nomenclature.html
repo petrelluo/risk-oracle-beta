@@ -888,8 +888,8 @@
 
             const printWrapper = document.createElement('div');
             printWrapper.id = 'pdf-print-wrapper';
-            printWrapper.style.position = 'absolute';
-            printWrapper.style.left = '0';
+            printWrapper.style.position = 'fixed';
+            printWrapper.style.left = '-20000px';
             printWrapper.style.top = '0';
             printWrapper.style.width = '760px';
             printWrapper.style.padding = '28px';
@@ -897,7 +897,9 @@
             printWrapper.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
             printWrapper.style.color = '#1f2937';
             printWrapper.style.backgroundColor = '#ffffff';
-            printWrapper.style.opacity = '0.01';
+            printWrapper.style.opacity = '1';
+            printWrapper.style.visibility = 'visible';
+            printWrapper.style.display = 'block';
             printWrapper.style.pointerEvents = 'none';
             printWrapper.style.zIndex = '-1';
             printWrapper.innerHTML = `
@@ -942,7 +944,7 @@
             };
 
             try {
-                await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                await new Promise(resolve => setTimeout(resolve, 250));
                 await html2pdf().set(opt).from(printWrapper).save();
             } finally {
                 printWrapper.remove();
