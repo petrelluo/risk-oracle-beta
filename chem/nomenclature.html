@@ -92,14 +92,12 @@
         }
         .filter-select:focus { border-color: #3182ce; }
         
-        /* Subtle Link Button */
         .subtle-link {
             background: none; border: none; color: #718096; text-decoration: underline;
             font-size: 0.85rem; cursor: pointer; padding: 0; margin-top: -5px; transition: color 0.2s;
         }
         .subtle-link:hover { color: #2b6cb0; }
 
-        /* Stats Header Styles */
         .stats-row {
             display: flex; justify-content: center; gap: 15px; margin-bottom: 1.5rem; flex-wrap: wrap;
         }
@@ -114,7 +112,6 @@
         #question-prompt { font-size: 1.1rem; margin-bottom: 0.5rem; color: #4a5568; }
         #target { font-size: 1.6rem; font-weight: bold; color: #2b6cb0; margin-bottom: 1.5rem; min-height: 38px; }
         
-        /* Subscript and Superscript adjustments */
         sub { font-size: 0.65em; bottom: -0.25em; }
         sup { font-size: 0.65em; top: -0.4em; color: #e53e3e; }
         
@@ -124,7 +121,6 @@
         }
         input[type="text"]:focus { border-color: #3182ce; }
         
-        /* Button Styles */
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
         button.primary-btn {
             background-color: #3182ce; color: white; border: none; padding: 0.75rem 1.5rem;
@@ -136,7 +132,6 @@
         button.danger { background-color: #fed7d7; color: #c53030; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;}
         button.danger:hover { background-color: #feb2b2; }
 
-        /* Modals */
         .tips-btn {
             position: absolute; top: 20px; right: 20px; background-color: #edf2f7;
             color: #2b6cb0; padding: 0.5rem 0.75rem; font-size: 0.9rem; border: 1px solid #cbd5e0;
@@ -186,7 +181,7 @@
         .mistake-count { font-weight: bold; color: #e53e3e; text-align: center; }
         .empty-state { color: #718096; font-style: italic; margin: 2rem 0; text-align: center; }
 
-        /* --- Decision Tree Modal Styles --- */
+        /* Decision Tree Modal Styles */
         .tree-fab {
             position: fixed;
             bottom: 30px;
@@ -214,7 +209,6 @@
             width: 95%;
         }
         
-        /* Container for D3 Tree */
         #tree-content-container {
             width: 100%;
             height: 650px; 
@@ -226,13 +220,9 @@
             position: relative;
         }
 
-        /* --- D3 Tree Styling --- */
-        .node {
-            cursor: grab;
-        }
-        .node:active {
-            cursor: grabbing;
-        }
+        /* D3 Tree Styling */
+        .node { cursor: grab; }
+        .node:active { cursor: grabbing; }
         .node circle {
             fill: #fff;
             stroke: #2b6cb0;
@@ -243,7 +233,7 @@
             font-size: 13.5px;
             font-weight: 500;
             fill: #2d3748;
-            pointer-events: none; /* Let drag pass through text to the group */
+            pointer-events: none;
         }
         .link {
             fill: none;
@@ -255,7 +245,6 @@
             stroke-width: 3.5px;
         }
         
-        /* Instructions/Final Leaf boxes in the tree */
         .tree-result-box rect {
             fill: white;
             stroke: #cbd5e0;
@@ -276,7 +265,6 @@
             fill: #2b6cb0;
         }
 
-        /* Branch coloring themes applied to nodes and links */
         .branch-acid circle { stroke: #fc8181 !important; }
         .branch-acid.link { stroke: #fc8181 !important; }
         .branch-base circle { stroke: #b794f4 !important; }
@@ -286,7 +274,6 @@
         .branch-covalent circle { stroke: #68d391 !important; }
         .branch-covalent.link { stroke: #68d391 !important; }
 
-        /* Header controls */
         .tree-header-controls {
             display: flex;
             gap: 10px;
@@ -400,24 +387,30 @@
             <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View Complete Naming Guide</button>
             <div id="all-rules" class="all-rules-container">
                 <div class="rule-item">
-                    <h4>1. Polyatomic Ions</h4>
-                    <p>These are tightly bound groups of atoms that behave as a unit and carry a charge. When a formula requires more than one of a polyatomic ion, place it in parentheses with the subscript outside (e.g., <strong>Al₂(SO₄)₃</strong>).</p>
+                    <h4>1. The Suffix "-ide"</h4>
+                    <p>Used for <strong>binary compounds</strong> (only two elements). For ionic compounds, the nonmetal ending is changed to -ide. 
+                    <em>Example: Sodium Chlor<strong>ide</strong> (NaCl).</em> In molecular compounds, the second element also ends in -ide. 
+                    <em>Example: Carbon diox<strong>ide</strong> (CO₂).</em></p>
                 </div>
                 <div class="rule-item">
-                    <h4>2. Binary Ionic Compounds</h4>
-                    <p>Formed by a metal (cation) and a nonmetal (anion). Name the metal normally, and change the ending of the nonmetal to <strong>"-ide"</strong>. To write the formula, determine the typical charges based on their periodic table group and balance them to zero.</p>
+                    <h4>2. Polyatomic Suffixes "-ate" and "-ite"</h4>
+                    <p>Used for <strong>Oxyanions</strong> (polyatomic ions containing oxygen). 
+                    The <strong>"-ate"</strong> ending is used for the ion with <em>more</em> oxygen atoms, while <strong>"-ite"</strong> is used for the ion with <em>fewer</em> oxygen atoms.
+                    <br><em>Examples: Sulf<strong>ate</strong> (SO₄²⁻) vs Sulf<strong>ite</strong> (SO₃²⁻); Nitr<strong>ate</strong> (NO₃⁻) vs Nitr<strong>ite</strong> (NO₂⁻).</em></p>
                 </div>
                 <div class="rule-item">
-                    <h4>3. Transition Metals (Stock System)</h4>
+                    <h4>3. Acids and Suffixes</h4>
+                    <p>When naming acids based on polyatomic ions:
+                    <ul>
+                        <li><strong>-ate</strong> becomes <strong>-ic acid</strong> (<em>I "ate" something "ic"-ky</em>).</li>
+                        <li><strong>-ite</strong> becomes <strong>-ous acid</strong> (<em>Spr-ite is delici-ous</em>).</li>
+                        <li><strong>-ide</strong> (binary) becomes <strong>hydro-___-ic acid</strong>.</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="rule-item">
+                    <h4>4. Transition Metals (Stock System)</h4>
                     <p>Transition metals can form ions with different charges. A Roman numeral indicates the exact positive charge of the metal ion.</p>
-                </div>
-                <div class="rule-item">
-                    <h4>4. Covalent (Molecular) Compounds</h4>
-                    <p>Formed by two nonmetals sharing electrons. Greek prefixes are used to specify the exact number of atoms of each element. The second element ends in <strong>"-ide"</strong>.</p>
-                </div>
-                <div class="rule-item">
-                    <h4>5. Acids</h4>
-                    <p>Compounds beginning with Hydrogen. Binary acids (H + nonmetal) use "hydro-" + "-ic acid". Oxyacids (H + polyatomic ion) change "-ate" to "-ic acid" and "-ite" to "-ous acid".</p>
                 </div>
             </div>
         </div>
@@ -434,7 +427,6 @@
                 </div>
             </div>
             <p class="instruction" style="text-align: left; margin-top: -10px;">Click nodes to expand or collapse. <strong>Drag nodes to freely reposition them.</strong></p>
-            
             <div id="tree-content-container"></div>
         </div>
     </div>
@@ -474,15 +466,13 @@
 
         const polyatomicIonsDict = { "sulfate": "SO₄²⁻", "sulfite": "SO₃²⁻", "nitrate": "NO₃⁻", "nitrite": "NO₂⁻", "carbonate": "CO₃²⁻", "hydroxide": "OH⁻", "phosphate": "PO₄³⁻", "phosphite": "PO₃³⁻", "chlorate": "ClO₃⁻", "chlorite": "ClO₂⁻", "perchlorate": "ClO₄⁻", "cyanide": "CN⁻", "acetate": "C₂H₃O₂⁻", "chromate": "CrO₄²⁻", "oxalate": "C₂O₄²⁻", "ammonium": "NH₄⁺", "permanganate": "MnO₄⁻" };
 
-        let appMode = 'practice'; // 'practice' or 'quiz'
+        let appMode = 'practice';
         let appData = { deck: [], mistakes: {}, score: 0 };
         let currentCategory = "Everything";
         let currentDirection = "both";
         let currentCard = null;
-        
         let quizState = { questions: [], currentIndex: 0, score: 0 };
 
-        // DOM Elements
         const quizScreen = document.getElementById('quiz-screen');
         const mistakesScreen = document.getElementById('mistakes-screen');
         const quizEndScreen = document.getElementById('quiz-end-screen');
@@ -496,23 +486,19 @@
         const resetBtn = document.getElementById('reset-btn');
         const retakeQuizBtn = document.getElementById('retake-quiz-btn');
         const exitQuizBtn = document.getElementById('exit-quiz-btn');
-        
         const modePracticeBtn = document.getElementById('mode-practice-btn');
         const modeQuizBtn = document.getElementById('mode-quiz-btn');
         const practiceControls = document.getElementById('practice-controls');
         const practiceStats = document.getElementById('practice-stats');
         const quizStats = document.getElementById('quiz-stats');
-
         const categorySelect = document.getElementById('category-select');
         const directionSelect = document.getElementById('direction-select');
-        
         const feedbackEl = document.getElementById('feedback');
         const scoreEl = document.getElementById('score');
         const masteryCountEl = document.getElementById('mastery-count');
         const masteryTotalEl = document.getElementById('mastery-total');
         const masteryContainer = document.getElementById('mastery-container');
         const mistakesContainer = document.getElementById('mistakes-container');
-        
         const tipsModal = document.getElementById('tips-modal');
         const tipsBtn = document.getElementById('tips-btn');
         const closeTipsBtn = document.getElementById('close-tips-btn');
@@ -520,20 +506,19 @@
         const allRulesContainer = document.getElementById('all-rules');
         const tipTitle = document.getElementById('tip-title');
         const tipText = document.getElementById('tip-text');
-
         const cheatSheetModal = document.getElementById('cheat-sheet-modal');
         const closeCheatSheetBtn = document.getElementById('close-cheat-sheet-btn');
         const cheatSheetTitle = document.getElementById('cheat-sheet-title');
         const cheatSheetContainer = document.getElementById('cheat-sheet-container');
-
-        // Decision Tree Elements
         const treeFab = document.getElementById('tree-fab');
         const treeModal = document.getElementById('decision-tree-modal');
         const closeTreeBtn = document.getElementById('close-tree-btn');
         const expandAllBtn = document.getElementById('expand-all-btn');
         const downloadPdfBtn = document.getElementById('download-pdf-btn');
+        const quizProgressEl = document.getElementById('quiz-progress');
+        const quizScoreEl = document.getElementById('quiz-score');
+        const quizFinalScoreEl = document.getElementById('quiz-final-score');
 
-        // --- Core Functions ---
         function initData() {
             const savedData = localStorage.getItem('chemistryQuizData');
             if (savedData) {
@@ -557,12 +542,10 @@
 
         function saveData() { localStorage.setItem('chemistryQuizData', JSON.stringify(appData)); }
 
-        // --- Mode Switching ---
         function setAppMode(mode) {
             appMode = mode;
             feedbackEl.textContent = ""; 
             inputEl.value = "";
-            
             if (mode === 'practice') {
                 modePracticeBtn.classList.add('active');
                 modeQuizBtn.classList.remove('active');
@@ -594,13 +577,11 @@
         function startQuiz() {
             quizScreen.classList.remove('hidden');
             quizEndScreen.classList.add('hidden');
-            
             let allCards = [...appData.deck];
             shuffleArray(allCards);
             quizState.questions = allCards.slice(0, 25);
             quizState.currentIndex = 0;
             quizState.score = 0;
-            
             quizProgressEl.textContent = quizState.currentIndex + 1;
             quizScoreEl.textContent = quizState.score;
             loadQuizQuestion();
@@ -610,9 +591,7 @@
             feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = "";
             inputEl.disabled = false; submitBtn.disabled = false;
             inputEl.focus();
-            
             currentCard = quizState.questions[quizState.currentIndex];
-            
             if (currentCard.askFor === "formula") {
                 promptEl.textContent = "What is the formula for:";
                 targetEl.innerHTML = currentCard.item.name;
@@ -628,7 +607,6 @@
             quizFinalScoreEl.textContent = quizState.score;
         }
 
-        // --- Practice Logic ---
         function getActiveDeck() {
             let deck = appData.deck;
             if (currentCategory !== "Everything") deck = deck.filter(card => card.item.category === currentCategory);
@@ -641,10 +619,8 @@
             const activeDeck = getActiveDeck();
             const totalCards = activeDeck.length;
             const masteredCards = activeDeck.filter(card => card.weight === 1).length;
-            
             masteryTotalEl.textContent = totalCards;
             masteryCountEl.textContent = masteredCards;
-            
             if (masteredCards === totalCards && totalCards > 0) masteryContainer.classList.add('mastery-complete');
             else masteryContainer.classList.remove('mastery-complete');
         }
@@ -661,22 +637,18 @@
             feedbackEl.textContent = ""; feedbackEl.className = ""; inputEl.value = "";
             inputEl.disabled = false; submitBtn.disabled = false;
             inputEl.focus();
-
             const activeDeck = getActiveDeck();
             if (activeDeck.length === 0) {
                 promptEl.textContent = ""; targetEl.innerHTML = "No questions match these filters.";
                 inputEl.disabled = true; submitBtn.disabled = true; return;
             }
-
             let totalWeight = activeDeck.reduce((sum, card) => sum + card.weight, 0);
             let randomNum = Math.random() * totalWeight;
-            
             for (let card of activeDeck) {
                 randomNum -= card.weight;
                 if (randomNum <= 0) { currentCard = card; break; }
             }
             if (!currentCard) currentCard = activeDeck[0]; 
-
             if (currentCard.askFor === "formula") {
                 promptEl.textContent = "What is the formula for:";
                 targetEl.innerHTML = currentCard.item.name;
@@ -686,16 +658,12 @@
             }
         }
 
-        // --- Shared Checking Logic ---
         function checkAnswer() {
             const userAnswer = inputEl.value.trim();
             if (userAnswer === "") return; 
-
             inputEl.disabled = true; submitBtn.disabled = true;
-
             const targetFormula = currentCard.item.formula;
             const correctAnswer = currentCard.askFor === "formula" ? targetFormula : currentCard.item.name;
-            
             const cleanUserAnswer = userAnswer.replace(/\^.*/, '').toLowerCase();
             const cleanCorrectAnswer = correctAnswer.replace(/\^.*/, '').toLowerCase();
             const isCorrect = cleanUserAnswer === cleanCorrectAnswer;
@@ -703,7 +671,6 @@
             if (isCorrect) {
                 appData.score++;
                 currentCard.weight = Math.max(1, currentCard.weight - 3);
-                
                 if (appMode === 'practice') {
                     scoreEl.textContent = appData.score; 
                     updateMasteryDisplay();
@@ -711,10 +678,8 @@
                     quizState.score++;
                     quizScoreEl.textContent = quizState.score;
                 }
-                
                 feedbackEl.innerHTML = "Correct! Well done."; feedbackEl.className = "correct";
                 saveData(); 
-                
                 setTimeout(() => {
                     if (appMode === 'practice') generateQuestion();
                     else {
@@ -723,26 +688,20 @@
                         else { quizProgressEl.textContent = quizState.currentIndex + 1; loadQuizQuestion(); }
                     }
                 }, 1200);
-
             } else {
                 appData.score--; currentCard.weight += 15;
                 if (appMode === 'practice') scoreEl.textContent = appData.score; 
-                
                 const displayCorrectAnswer = currentCard.askFor === "formula" ? formatFormula(correctAnswer) : correctAnswer;
                 feedbackEl.innerHTML = `Incorrect. The correct answer is: ${displayCorrectAnswer}`; feedbackEl.className = "incorrect";
-
                 const qTargetDisplay = currentCard.askFor === "name" ? formatFormula(targetFormula) : currentCard.item.name;
                 const questionAskedHtml = `${promptEl.textContent} <strong>${qTargetDisplay}</strong>`;
                 const questionKey = `${promptEl.textContent} ${qTargetDisplay}`; 
-
                 if (!appData.mistakes[questionKey]) {
                     appData.mistakes[questionKey] = { questionHtml: questionAskedHtml, correctAnswer: correctAnswer, isFormula: currentCard.askFor === "formula", count: 0 };
                 }
                 appData.mistakes[questionKey].count++;
-                
                 if (appMode === 'practice') updateMasteryDisplay(); 
                 saveData(); 
-                
                 setTimeout(() => {
                     if (appMode === 'practice') generateQuestion();
                     else {
@@ -754,7 +713,6 @@
             }
         }
 
-        // --- Modals & Views ---
         function openCheatSheet() {
             const activeCategoryList = currentCategory === "Everything" ? chemicals : chemicals.filter(c => c.category === currentCategory);
             let tableHTML = `<table class="rule-table"><thead><tr><th>Formula</th><th>Name</th></tr></thead><tbody>`;
@@ -762,7 +720,6 @@
                 tableHTML += `<tr><td><strong>${formatFormula(chem.formula)}</strong></td><td>${chem.name}</td></tr>`;
             });
             tableHTML += `</tbody></table>`;
-            
             cheatSheetTitle.textContent = currentCategory === "Everything" ? "All Compounds List" : `${currentCategory} List`;
             cheatSheetContainer.innerHTML = tableHTML;
             cheatSheetModal.classList.remove('hidden');
@@ -773,21 +730,15 @@
             const category = currentCard.item.category;
             const chemName = currentCard.item.name.toLowerCase();
 
-            if (category === "Acids") return { title: "Relevant Rule: Acids", text: "Acids begin with Hydrogen. Binary acids (H + nonmetal) use 'hydro-' + '-ic acid'. Oxyacids (H + polyatomic ion) change '-ate' to '-ic acid' and '-ite' to '-ous acid'." };
-            if (category === "Bases") return { title: "Relevant Rule: Bases", text: "Bases contain the **Hydroxide (OH⁻)** polyatomic ion paired with a metal. Name the metal normally, then add 'hydroxide'." };
-            if (/\([ivx]+\)/i.test(chemName)) return { title: "Relevant Rule: Transition Metals", text: "Because transition metals can have multiple charges, the Roman numeral in parentheses indicates the exact positive charge of the metal ion (e.g., Iron(III) means Fe³⁺). Cross this charge with the nonmetal's charge to balance the formula." };
-            
-            let foundIon = null;
-            for (const [ionName, ionFormula] of Object.entries(polyatomicIonsDict)) {
-                if (chemName.includes(ionName)) { foundIon = { name: ionName, formula: ionFormula }; break; }
-            }
-            if (foundIon || category === "Polyatomic Ions" || category === "Ternary Ionic Compounds") {
-                const ionText = foundIon ? ` Specifically, it uses the **${foundIon.name}** ion, which has the formula and charge of **${foundIon.formula}**.` : "";
-                return { title: "Relevant Rule: Polyatomic Ions", text: `This compound contains a polyatomic ion.${ionText} Remember: If you need more than one of these ions to balance the chemical charge, you must put it in parentheses!` };
-            }
-            if (category === "Binary Molecular Compounds") return { title: "Relevant Rule: Covalent (Molecular) Compounds", text: "These are formed by two nonmetals. Greek prefixes (mono, di, tri, tetra, penta, etc.) tell you exactly how many atoms of each element are present. You don't need to balance charges here, just read the prefixes!" };
+            if (chemName.endsWith("ide") && category === "Binary Ionic Compounds") return { title: "Suffix: -ide", text: "Compounds ending in **-ide** are usually binary (two elements). The first is a metal, and the second is a nonmetal with its ending changed to -ide. <br>Ex: NaCl = Sodium Chlor**ide**." };
+            if (chemName.endsWith("ate")) return { title: "Suffix: -ate", text: "Compounds ending in **-ate** contain a polyatomic ion with more oxygen atoms. <br>Ex: NaNO₃ = Sodium Nitr**ate**." };
+            if (chemName.endsWith("ite")) return { title: "Suffix: -ite", text: "Compounds ending in **-ite** contain a polyatomic ion with fewer oxygen atoms. <br>Ex: NaNO₂ = Sodium Nitr**ite**." };
 
-            return { title: "Relevant Rule: Binary Ionic Compounds", text: "Formed by a standard metal and a nonmetal. Determine the typical ionic charges from their periodic table group (e.g., Group 1 is +1, Halogens are -1) and cross them to balance the formula to zero." };
+            if (category === "Acids") return { title: "Relevant Rule: Acids", text: "Acids begin with Hydrogen. Binary acids (ending in -ide) use 'hydro-' + '-ic acid'. Oxyacids: '-ate' becomes '-ic acid' and '-ite' becomes '-ous acid'." };
+            if (category === "Bases") return { title: "Relevant Rule: Bases", text: "Bases contain the **Hydroxide (OH⁻)** polyatomic ion paired with a metal. Name the metal normally, then add 'hydroxide'." };
+            if (/\([ivx]+\)/i.test(chemName)) return { title: "Relevant Rule: Transition Metals", text: "The Roman numeral indicates the positive charge of the metal ion (e.g., Iron(III) means Fe³⁺)." };
+            
+            return { title: "Relevant Rule: Binary Ionic Compounds", text: "Formed by a standard metal and a nonmetal. Use periodic group charges to balance the formula." };
         }
 
         function openTips() {
@@ -811,12 +762,10 @@
         function showMistakes() {
             quizScreen.classList.add('hidden'); mistakesScreen.classList.remove('hidden');
             const sortedMistakes = Object.values(appData.mistakes).sort((a, b) => b.count - a.count); 
-            
             if (sortedMistakes.length === 0) {
                 mistakesContainer.innerHTML = '<p class="empty-state">No mistakes recorded yet! Keep up the good work.</p>'; return;
             }
             let tableHTML = `<table class="mistakes-table"><thead><tr><th>Question</th><th>Correct Answer</th><th style="text-align: center;">Misses</th></tr></thead><tbody>`;
-            
             sortedMistakes.forEach(mistake => {
                 const displayAnswer = mistake.isFormula ? formatFormula(mistake.correctAnswer) : mistake.correctAnswer;
                 tableHTML += `<tr><td>${mistake.questionHtml}</td><td><strong>${displayAnswer}</strong></td><td class="mistake-count">${mistake.count}</td></tr>`;
@@ -832,8 +781,6 @@
             }
         }
 
-        // --- NEW: Drag-and-Drop D3 Decision Tree Logic ---
-        
         const treeData = {
           "name": "Chemical Compound",
           "children": [
@@ -842,7 +789,7 @@
               "class": "branch-acid",
               "children": [
                 {
-                  "name": "No Oxygen (Binary Acid)",
+                  "name": "Suffix '-ide' (Binary Acid)",
                   "result": "prefix <hydro-> + root + <-ic acid>",
                   "example": "HCl ➔ Hydrochloric acid"
                 },
@@ -850,12 +797,12 @@
                   "name": "Contains Oxygen (Oxyacid)",
                   "children": [
                     {
-                      "name": "Polyatomic ion ends in <-ate>",
+                      "name": "Suffix '-ate' (More O)",
                       "result": "root + <-ic acid>",
                       "example": "HNO₃ (Nitrate) ➔ Nitric acid"
                     },
                     {
-                      "name": "Polyatomic ion ends in <-ite>",
+                      "name": "Suffix '-ite' (Less O)",
                       "result": "root + <-ous acid>",
                       "example": "HNO₂ (Nitrite) ➔ Nitrous acid"
                     }
@@ -866,29 +813,29 @@
             {
               "name": "Ends with 'OH' (Base)",
               "class": "branch-base",
-              "result": "Metal (Roman Numeral if needed) + <hydroxide>",
+              "result": "Metal + <hydroxide>",
               "example": "Cu(OH)₂ ➔ Copper(II) hydroxide"
             },
             {
-              "name": "Metal + Nonmetal / NH₄⁺ (Ionic)",
+              "name": "Metal + Nonmetal (Ionic)",
               "class": "branch-ionic",
               "children": [
                 {
-                  "name": "Fixed Charge Metal (Grps 1, 2, Al, Zn, Ag)",
-                  "result": "Metal + Nonmetal<-ide> or Polyatomic name",
+                  "name": "Binary (Suffix '-ide')",
+                  "result": "Metal + Nonmetal<-ide>",
                   "example": "NaCl ➔ Sodium chloride"
                 },
                 {
-                  "name": "Variable Charge Metal (Transition, Sn, Pb)",
-                  "result": "Metal (Roman Numeral) + Nonmetal-ide",
-                  "example": "FeCl₃ ➔ Iron (III) chloride"
+                  "name": "Polyatomic (Suffix '-ate'/'-ite')",
+                  "result": "Metal + Polyatomic name",
+                  "example": "FeSO₄ ➔ Iron (II) sulfate"
                 }
               ]
             },
             {
               "name": "Nonmetal + Nonmetal (Covalent)",
               "class": "branch-covalent",
-              "result": "Use <Greek Prefixes> (mono, di, tri...) and <-ide> end",
+              "result": "Greek Prefixes + Suffix <-ide>",
               "example": "CO₂ ➔ Carbon dioxide"
             }
           ]
@@ -900,31 +847,22 @@
 
         function renderD3Tree() {
             d3.select("#tree-content-container").selectAll("*").remove();
-            
-            // Increased spacing to naturally prevent overlap
             const margin = {top: 40, right: 350, bottom: 40, left: 150}; 
-            const dx = 120;  // Increased vertical separation
-            const dy = 380; // Increased horizontal separation to fit wide text
-            
+            const dx = 120; 
+            const dy = 380; 
             const svg = d3.select("#tree-content-container").append("svg")
                 .style("font", "13px sans-serif")
                 .style("user-select", "none");
-
             gLink = svg.append("g")
                 .attr("fill", "none")
                 .attr("stroke", "#cbd5e0")
                 .attr("stroke-width", 1.5);
-
             const gNode = svg.append("g")
                 .attr("pointer-events", "all");
-
             const treemap = d3.tree().nodeSize([dx, dy]);
-
             d3Root = d3.hierarchy(treeData);
             d3Root.x0 = 0;
             d3Root.y0 = 0;
-
-            // Initialize custom drag offsets
             d3Root.descendants().forEach((d, i) => {
                 d.id = i;
                 d.offsetX = 0;
@@ -932,34 +870,25 @@
                 if (d.depth > 0) d._children = d.children;
                 if (d.depth > 0) d.children = null;
             });
-
             if (d3Root._children) {
                 d3Root.children = d3Root._children;
                 d3Root._children = null;
             }
-
             d3UpdateFn = function update(source) {
                 const duration = 400;
                 const nodes = d3Root.descendants().reverse();
                 const links = d3Root.links();
-
                 treemap(d3Root);
-
                 let left = d3Root;
                 let right = d3Root;
                 let bottom = d3Root; 
-                
                 d3Root.eachBefore(node => {
                     if (node.x < left.x) left = node;
                     if (node.x > right.x) right = node;
                     if (node.y > bottom.y) bottom = node;
                 });
-
-                // Calculate required dimensions
                 const height = right.x - left.x + margin.top + margin.bottom + 150; 
                 const width = bottom.y + margin.left + margin.right + 250; 
-                
-                // Transition SVG size
                 svg.transition()
                     .duration(duration)
                     .attr("width", width)
@@ -968,233 +897,112 @@
                     .style("height", Math.max(650, height) + "px")
                     .attr("viewBox", [-margin.left, left.x - margin.top - 60, width, Math.max(650, height)]);
 
-                // Setup Drag Behavior
                 const drag = d3.drag()
-                    .on("start", function(event, d) {
-                        d3.select(this).raise();
-                    })
+                    .on("start", function(event, d) { d3.select(this).raise(); })
                     .on("drag", function(event, d) {
-                        // In D3 layout: x is vertical, y is horizontal
-                        d.offsetX += event.dx; // horizontal manual offset
-                        d.offsetY += event.dy; // vertical manual offset
-                        
-                        // Update dragged node position immediately
+                        d.offsetX += event.dx;
+                        d.offsetY += event.dy;
                         d3.select(this).attr("transform", `translate(${d.y + d.offsetX},${d.x + d.offsetY})`);
-                        
-                        // Update connected links immediately
                         gLink.selectAll("path.link")
                             .filter(l => l.target.id === d.id || l.source.id === d.id)
                             .attr("d", l => diagonalPath(l.source, l.target));
                     });
 
-                // Update Nodes
                 const node = gNode.selectAll("g.node")
                     .data(nodes, d => d.id);
-
                 const nodeEnter = node.enter().append("g")
                     .attr("class", d => "node " + (d.data.class ? d.data.class : ""))
                     .attr("transform", d => `translate(${source.y0 + source.offsetX},${source.x0 + source.offsetY})`)
                     .attr("fill-opacity", 0)
                     .attr("stroke-opacity", 0)
-                    .call(drag) // Attach drag
+                    .call(drag)
                     .on("click", (event, d) => {
-                        if (event.defaultPrevented) return; // Prevent expanding when drag finishes
+                        if (event.defaultPrevented) return;
                         d.children = d.children ? null : d._children;
                         update(d);
                     });
-
                 nodeEnter.append("circle")
                     .attr("r", 7)
                     .style("fill", d => d._children ? "#bee3f8" : "#fff");
-
-                // Label Text. Moved completely clear of the leaf box
                 nodeEnter.append("text")
                     .attr("dy", d => (!d.children && !d._children && d.data.result) ? "-1.5em" : "0.31em")
                     .attr("x", d => d.children || d._children ? -12 : 12)
                     .attr("text-anchor", d => d.children || d._children ? "end" : "start")
                     .attr("font-weight", d => (!d.children && !d._children && d.data.result) ? "bold" : "500")
                     .text(d => d.data.name);
-
-                // Leaf Result Boxes
                 const leafNodes = nodeEnter.filter(d => !d.children && !d._children && d.data.result);
                 const boxW = 310, boxH = 65; 
-                
-                // Positioned safely below the label
                 const resultGroup = leafNodes.append('g')
                     .attr('class', 'tree-result-box')
                     .attr('transform', `translate(15, 8)`);
-
-                resultGroup.append('rect')
-                    .attr('width', boxW)
-                    .attr('height', boxH);
-
-                resultGroup.append('text')
-                    .attr('x', 10)
-                    .attr('y', 20)
-                    .append('tspan')
-                    .attr('class', 'rule-text')
-                    .text('Strategy: ')
-                    .append('tspan')
-                    .attr('font-weight', 'normal')
-                    .text(d => d.data.result)
-                    .append('tspan')
-                    .attr('x', 10)
-                    .attr('y', 45)
-                    .attr('class', 'example-text')
-                    .text(d => `Ex: ${d.data.example}`);
-
-                // Transition Nodes (includes any manual offsets you created by dragging!)
+                resultGroup.append('rect').attr('width', boxW).attr('height', boxH);
+                resultGroup.append('text').attr('x', 10).attr('y', 20)
+                    .append('tspan').attr('class', 'rule-text').text('Strategy: ')
+                    .append('tspan').attr('font-weight', 'normal').text(d => d.data.result)
+                    .append('tspan').attr('x', 10).attr('y', 45).attr('class', 'example-text').text(d => `Ex: ${d.data.example}`);
                 const nodeUpdate = node.merge(nodeEnter).transition()
                     .duration(duration)
                     .attr("transform", d => `translate(${d.y + d.offsetX},${d.x + d.offsetY})`)
                     .attr("fill-opacity", 1)
                     .attr("stroke-opacity", 1);
-
-                nodeUpdate.select("circle")
-                    .style("fill", d => d._children ? "#bee3f8" : "#fff");
-
-                // Exit Nodes
-                const nodeExit = node.exit().transition()
-                    .duration(duration)
+                nodeUpdate.select("circle").style("fill", d => d._children ? "#bee3f8" : "#fff");
+                const nodeExit = node.exit().transition().duration(duration)
                     .attr("transform", d => `translate(${source.y + source.offsetX},${source.x + source.offsetY})`)
-                    .attr("fill-opacity", 0)
-                    .attr("stroke-opacity", 0)
-                    .remove();
-
-                // Update Links
-                const link = gLink.selectAll("path")
-                    .data(links, d => d.target.id);
-
+                    .attr("fill-opacity", 0).attr("stroke-opacity", 0).remove();
+                const link = gLink.selectAll("path").data(links, d => d.target.id);
                 const linkEnter = link.enter().append("path")
                     .attr("class", d => 'link' + (d.target.data.class ? ' ' + d.target.data.class : ''))
                     .attr("d", d => {
                         const o = {x: source.x0, y: source.y0, offsetX: source.offsetX, offsetY: source.offsetY};
                         return diagonalPath(o, o);
                     });
-
-                // Inherit class/color from child branch dynamic style
-                linkEnter.merge(link).attr("class", d => {
-                    let className = 'link';
-                    let current = d.target;
-                    while(current) {
-                        if(current.data.class) { className += ' ' + current.data.class; break; }
-                        current = current.parent;
-                    }
-                    return className;
-                });
-
-                link.merge(linkEnter).transition()
-                    .duration(duration)
-                    .attr("d", d => diagonalPath(d.source, d.target));
-
-                link.exit().transition()
-                    .duration(duration)
-                    .attr("d", d => {
-                        const o = {x: source.x, y: source.y, offsetX: source.offsetX, offsetY: source.offsetY};
-                        return diagonalPath(o, o);
-                    })
-                    .remove();
-
-                d3Root.eachBefore(d => {
-                    d.x0 = d.x;
-                    d.y0 = d.y;
-                });
+                link.merge(linkEnter).transition().duration(duration).attr("d", d => diagonalPath(d.source, d.target));
+                link.exit().transition().duration(duration).attr("d", d => {
+                    const o = {x: source.x, y: source.y, offsetX: source.offsetX, offsetY: source.offsetY};
+                    return diagonalPath(o, o);
+                }).remove();
+                d3Root.eachBefore(d => { d.x0 = d.x; d.y0 = d.y; });
             };
 
-            // Calculate curves accounting for manual drag offsets
             function diagonalPath(s, d) {
                 const sy = s.y + (s.offsetX || 0);
                 const sx = s.x + (s.offsetY || 0);
                 const dy = d.y + (d.offsetX || 0);
                 const dx = d.x + (d.offsetY || 0);
-                return `M ${sy} ${sx}
-                        C ${(sy + dy) / 2} ${sx},
-                          ${(sy + dy) / 2} ${dx},
-                          ${dy} ${dx}`;
+                return `M ${sy} ${sx} C ${(sy + dy) / 2} ${sx}, ${(sy + dy) / 2} ${dx}, ${dy} ${dx}`;
             }
-
             d3UpdateFn(d3Root);
         }
 
-        // --- Event Listeners ---
         modePracticeBtn.addEventListener('click', () => setAppMode('practice'));
         modeQuizBtn.addEventListener('click', () => setAppMode('quiz'));
         retakeQuizBtn.addEventListener('click', () => startQuiz());
         exitQuizBtn.addEventListener('click', () => { quizEndScreen.classList.add('hidden'); setAppMode('practice'); });
-        
         submitBtn.addEventListener('click', checkAnswer);
         reviewBtn.addEventListener('click', showMistakes);
         viewCategoryBtn.addEventListener('click', openCheatSheet);
         backBtn.addEventListener('click', hideMistakes);
         resetBtn.addEventListener('click', resetProgress);
         tipsBtn.addEventListener('click', openTips);
-        
-        // Modal toggles
-        treeFab.addEventListener('click', () => {
-            treeModal.classList.remove('hidden');
-            renderD3Tree();
-        });
+        treeFab.addEventListener('click', () => { treeModal.classList.remove('hidden'); renderD3Tree(); });
         closeTreeBtn.addEventListener('click', () => treeModal.classList.add('hidden'));
-        treeModal.addEventListener('click', (e) => { if(e.target === treeModal) treeModal.classList.add('hidden'); });
-
-        // Expand All Logic
         expandAllBtn.addEventListener('click', () => {
-            if (!d3Root || !d3UpdateFn) return;
-            d3Root.eachBefore(d => {
-                if (d._children) {
-                    d.children = d._children;
-                    d._children = null;
-                }
-            });
+            d3Root.eachBefore(d => { if (d._children) { d.children = d._children; d._children = null; } });
             d3UpdateFn(d3Root);
         });
-
-        // Download PDF Logic
         downloadPdfBtn.addEventListener('click', () => {
             const container = document.getElementById('tree-content-container');
             const svgEl = container.querySelector('svg');
-            
-            // Save original styles to restore them later
-            const originalHeight = container.style.height;
-            const originalWidth = container.style.width;
-            const originalOverflow = container.style.overflow;
-            
-            // Expand container fully to match SVG boundaries so html2canvas captures it all
-            container.style.height = svgEl.getAttribute('height') + 'px';
-            container.style.width = svgEl.getAttribute('width') + 'px';
-            container.style.overflow = 'visible';
-            
-            // Options for PDF rendering
-            const opt = {
-              margin:       0.3,
-              filename:     'Nomenclature_Strategy_Map.pdf',
-              image:        { type: 'jpeg', quality: 0.98 },
-              html2canvas:  { scale: 2, scrollX: 0, scrollY: 0 }, 
-              jsPDF:        { unit: 'in', format: 'tabloid', orientation: 'landscape' }
-            };
-
-            // Generate and then restore state
-            html2pdf().set(opt).from(container).save().then(() => {
-                container.style.height = originalHeight; 
-                container.style.width = originalWidth;
-                container.style.overflow = originalOverflow;
-            });
+            const opt = { margin: 0.3, filename: 'Nomenclature_Strategy_Map.pdf', jsPDF: { unit: 'in', format: 'tabloid', orientation: 'landscape' } };
+            html2pdf().set(opt).from(container).save();
         });
-
         closeTipsBtn.addEventListener('click', () => tipsModal.classList.add('hidden'));
-        tipsModal.addEventListener('click', (e) => { if(e.target === tipsModal) tipsModal.classList.add('hidden'); });
         closeCheatSheetBtn.addEventListener('click', () => cheatSheetModal.classList.add('hidden'));
-        cheatSheetModal.addEventListener('click', (e) => { if(e.target === cheatSheetModal) cheatSheetModal.classList.add('hidden'); });
-        
         toggleRulesBtn.addEventListener('click', toggleAllRules);
         categorySelect.addEventListener('change', handleFilterChange);
         directionSelect.addEventListener('change', handleFilterChange);
-        
-        inputEl.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter' && !inputEl.disabled) checkAnswer();
-        });
+        inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter' && !inputEl.disabled) checkAnswer(); });
 
-        // Start App
         initData();
         setAppMode('practice');
     </script>
