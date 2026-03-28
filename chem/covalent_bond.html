@@ -1,1176 +1,1827 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covalent Bonding & Intermolecular Forces</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --background: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Covalent Bonding & Intermolecular Forces</title>
 
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header p { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #333333;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px 100px;
-        }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
 
-        .step-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border-top: 5px solid var(--secondary);
-        }
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
-        h2 {
-            color: var(--primary);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-        
-        .definition-box {
-            background: #fdfbf7;
-            border-left: 4px solid #f39c12;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 0 8px 8px 0;
-        }
+    header h1 { margin: 0; font-size: 2.5rem; }
+    header p { font-size: 1.2rem; opacity: 0.8; margin-top: 10px; }
 
-        .definition-box strong { color: #d35400; }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px 100px;
+    }
 
-        .interactive-panel {
-            background: #f1f5f8;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid #e1e8ed;
-        }
+    .step-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--secondary);
+    }
 
-        /* --- Step 1 & 5: Electron Density & Polarity Maps --- */
-        .bond-examples-grid {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
+    h2 {
+      color: var(--primary);
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
 
-        .bond-box {
-            flex: 1;
-            min-width: 250px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-            position: relative;
-        }
+    .definition-box {
+      background: #fdfbf7;
+      border-left: 4px solid #f39c12;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 0 8px 8px 0;
+    }
 
-        .bond-box h4 { margin-top: 0; color: var(--primary); }
+    .definition-box strong { color: #d35400; }
 
-        .density-map {
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            position: relative;
-        }
+    .interactive-panel {
+      background: #f1f5f8;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid #e1e8ed;
+    }
 
-        .atom {
-            width: 40px; height: 40px;
-            background: #fff;
-            border: 2px solid #333;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            z-index: 2;
-        }
+    /* --- Step 1 & 5: Electron Density & Polarity Maps --- */
+    .bond-examples-grid {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
 
-        .cloud-nonpolar {
-            position: absolute;
-            width: 140px; height: 70px;
-            background: radial-gradient(ellipse at center, rgba(52,152,219,0.5) 0%, rgba(52,152,219,0.1) 70%, transparent 100%);
-            z-index: 1;
-        }
+    .bond-box {
+      flex: 1;
+      min-width: 250px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+      position: relative;
+    }
 
-        .cloud-polar {
-            position: absolute;
-            width: 170px; height: 80px;
-            background: radial-gradient(ellipse at 70% 50%, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.3) 45%, rgba(52,152,219,0.1) 75%, transparent 100%);
-            z-index: 1;
-        }
+    .bond-box h4 { margin-top: 0; color: var(--primary); }
 
-        .cloud-ionic-1 {
-            position: absolute; width: 60px; height: 60px;
-            background: radial-gradient(circle at center, rgba(52,152,219,0.15) 0%, transparent 70%);
-            left: 60px; z-index: 1;
-        }
-        .cloud-ionic-2 {
-            position: absolute; width: 90px; height: 90px;
-            background: radial-gradient(circle at center, rgba(231,76,60,0.7) 0%, transparent 70%);
-            right: 50px; z-index: 1;
-        }
+    .density-map {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      position: relative;
+    }
 
-        .gap { width: 40px; }
-        .big-gap { width: 70px; }
-        
-        .partial-charge {
-            position: absolute;
-            top: -25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+    .atom {
+      width: 40px; height: 40px;
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      z-index: 2;
+    }
 
-        .electron-pair {
-            position: absolute;
-            display: flex;
-            gap: 6px;
-            z-index: 3;
-        }
-        .electron-dot {
-            width: 8px; height: 8px;
-            background: #f1c40f;
-            border: 1px solid #d35400;
-            border-radius: 50%;
-            box-shadow: 0 0 5px rgba(241, 196, 15, 0.8);
-        }
-        .transfer-arrow {
-            position: absolute;
-            width: 100px;
-            height: 50px;
-            top: -10px;
-            left: 65px;
-            z-index: 4;
-            pointer-events: none;
-        }
+    .cloud-nonpolar {
+      position: absolute;
+      width: 140px; height: 70px;
+      background: radial-gradient(ellipse at center, rgba(52,152,219,0.5) 0%, rgba(52,152,219,0.1) 70%, transparent 100%);
+      z-index: 1;
+    }
 
-        /* --- Step 2 & 3: Lists and Lewis Diagrams --- */
-        .bond-list {
-            list-style-type: none; padding-left: 0;
-        }
-        .bond-list li {
-            background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 10px;
-            border: 1px solid #ddd; border-left: 4px solid var(--secondary);
-        }
-        .lewis-step-list {
-            margin-top: 15px;
-            padding-left: 25px;
-        }
-        .lewis-step-list li {
-            margin-bottom: 10px;
-            font-size: 1.05rem;
-        }
-        .math-text {
-            display: inline-block;
-            background: #eee;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-weight: bold;
-            color: #c0392b;
-            margin: 5px 0;
-        }
+    .cloud-polar {
+      position: absolute;
+      width: 170px; height: 80px;
+      background: radial-gradient(ellipse at 70% 50%, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.3) 45%, rgba(52,152,219,0.1) 75%, transparent 100%);
+      z-index: 1;
+    }
 
-        /* --- VSEPR Explorer --- */
-        .vsepr-container {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+    .cloud-ionic-1 {
+      position: absolute; width: 60px; height: 60px;
+      background: radial-gradient(circle at center, rgba(52,152,219,0.15) 0%, transparent 70%);
+      left: 60px; z-index: 1;
+    }
+    .cloud-ionic-2 {
+      position: absolute; width: 90px; height: 90px;
+      background: radial-gradient(circle at center, rgba(231,76,60,0.7) 0%, transparent 70%);
+      right: 50px; z-index: 1;
+    }
 
-        .vsepr-canvas-wrapper {
-            flex: 2;
-            min-width: 300px;
-            height: 400px;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            overflow: hidden;
-            position: relative;
-        }
+    .gap { width: 40px; }
+    .big-gap { width: 70px; }
 
-        #vseprCanvas { width: 100%; height: 100%; display: block; outline: none; }
-        
-        .drag-hint {
-            position: absolute;
-            bottom: 10px; right: 10px;
-            background: rgba(0,0,0,0.6);
-            color: white; font-size: 0.8rem;
-            padding: 5px 10px; border-radius: 4px;
-            pointer-events: none;
-        }
+    .partial-charge {
+      position: absolute;
+      top: -25px;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
 
-        .vsepr-controls {
-            flex: 1;
-            min-width: 250px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+    .electron-pair {
+      position: absolute;
+      display: flex;
+      gap: 6px;
+      z-index: 3;
+    }
+    .electron-dot {
+      width: 8px; height: 8px;
+      background: #f1c40f;
+      border: 1px solid #d35400;
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(241, 196, 15, 0.8);
+    }
+    .transfer-arrow {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      top: -10px;
+      left: 65px;
+      z-index: 4;
+      pointer-events: none;
+    }
 
-        .control-group { display: flex; flex-direction: column; }
-        .control-group label { font-weight: bold; margin-bottom: 5px; color: var(--primary); }
-        .control-group input {
-            padding: 10px; border-radius: 5px;
-            border: 1px solid #ccc; font-size: 1.1rem;
-        }
+    /* --- Step 2 & 3: Lists and Lewis Diagrams --- */
+    .bond-list {
+      list-style-type: none; padding-left: 0;
+    }
+    .bond-list li {
+      background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 10px;
+      border: 1px solid #ddd; border-left: 4px solid var(--secondary);
+    }
+    .lewis-step-list {
+      margin-top: 15px;
+      padding-left: 25px;
+    }
+    .lewis-step-list li {
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+    }
+    .math-text {
+      display: inline-block;
+      background: #eee;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-weight: bold;
+      color: #c0392b;
+      margin: 5px 0;
+    }
 
-        .vsepr-info {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            margin-top: 10px;
-        }
+    /* --- VSEPR Explorer --- */
+    .vsepr-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-        .vsepr-info p { margin: 8px 0; font-size: 1.05rem; }
-        .result-badge {
-            display: inline-block; padding: 4px 10px; border-radius: 15px;
-            color: white; font-weight: bold; font-size: 0.9rem;
-        }
-        .badge-polar { background: #e74c3c; }
-        .badge-nonpolar { background: #27ae60; }
+    .vsepr-canvas-wrapper {
+      flex: 2;
+      min-width: 300px;
+      height: 400px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      position: relative;
+    }
 
-        /* --- Tables and Dashboards --- */
-        table {
-            width: 100%; border-collapse: collapse; margin-top: 15px; background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: middle; }
-        th { background-color: var(--primary); color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        .center-text { text-align: center; }
+    #vseprCanvas { width: 100%; height: 100%; display: block; outline: none; }
 
-        .svg-shape {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .drag-hint {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      background: rgba(0,0,0,0.6);
+      color: white; font-size: 0.8rem;
+      padding: 5px 10px; border-radius: 4px;
+      pointer-events: none;
+    }
 
-        .chart-container {
-            position: relative; height: 350px; width: 100%;
-            background: white; padding: 20px; border-radius: 8px;
-            box-sizing: border-box; border: 1px solid #ddd;
-        }
-        
-        .button-group {
-            text-align: center; margin-bottom: 40px;
-        }
-        .primary-btn {
-            background-color: #3182ce; color: white; border: none; padding: 12px 24px;
-            font-size: 1.1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; font-weight: bold;
-        }
-        .primary-btn:hover { background-color: #2b6cb0; }
-        
-        .secondary { background-color: #e2e8f0; color: #4a5568; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;}
-        .secondary:hover { background-color: #cbd5e0; }
+    .vsepr-controls {
+      flex: 1;
+      min-width: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-        /* --- Modals --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center;
-            align-items: center; z-index: 1000;
-        }
-        .hidden { display: none !important; }
-        .modal-content {
-            background: white; padding: 2rem; border-radius: 12px;
-            text-align: left; max-height: 90vh; overflow-y: auto;
-        }
-        .tree-modal-content { max-width: 1200px; width: 95%; }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1rem;
-        }
-        .modal-header h2 { margin: 0; color: #1a365d; font-size: 1.5rem; }
-        .close-btn { background: none; border: none; font-size: 1.5rem; color: #a0aec0; cursor: pointer; padding: 0; }
-        .close-btn:hover { color: #4a5568; background: none; }
-        
-        .tree-header-controls { display: flex; gap: 10px; align-items: center; }
+    .control-group { display: flex; flex-direction: column; }
+    .control-group label { font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+    .control-group input {
+      padding: 10px; border-radius: 5px;
+      border: 1px solid #ccc; font-size: 1.1rem;
+    }
 
-        /* D3 Map Styles */
-        #tree-content-container {
-            width: 100%; height: 650px; overflow: auto; border: 1px solid #e2e8f0;
-            background-color: #fcfcfc; border-radius: 8px; margin-top: 1rem; position: relative;
-        }
-        .node { cursor: grab; }
-        .node:active { cursor: grabbing; }
-        .node circle { fill: #fff; stroke: #2b6cb0; stroke-width: 2px; transition: stroke-width 0.2s; }
-        .node text { font-size: 13.5px; font-weight: 500; fill: #2d3748; pointer-events: none; }
-        .link { fill: none; stroke: #cbd5e0; stroke-width: 1.5px; }
-        .node:hover circle { stroke: #1a365d; stroke-width: 3.5px; }
-        .tree-result-box rect { fill: white; stroke: #cbd5e0; stroke-width: 1px; rx: 6; ry: 6; }
-        .tree-result-box text { font-size: 12.5px; fill: #4a5568; }
-        .tree-result-box text .example-text { fill: #718096; font-style: italic; }
-        .tree-result-box text .rule-text { font-weight: bold; fill: #2b6cb0; }
-        
-        .branch-acid circle { stroke: #fc8181 !important; }
-        .branch-acid.link { stroke: #fc8181 !important; }
-        .branch-ionic circle { stroke: #63b3ed !important; }
-        .branch-ionic.link { stroke: #63b3ed !important; }
-        .branch-covalent circle { stroke: #68d391 !important; }
-        .branch-covalent.link { stroke: #68d391 !important; }
-        
-        .tree-fab {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background-color: #2b6cb0; color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.4); cursor: pointer;
-            z-index: 999; transition: transform 0.2s, background-color 0.2s;
-        }
-        .tree-fab:hover { transform: scale(1.08); background-color: #1a365d; }
-    </style>
+    .vsepr-info {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+    }
+
+    .vsepr-info p { margin: 8px 0; font-size: 1.05rem; }
+    .result-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 15px;
+      color: white; font-weight: bold; font-size: 0.9rem;
+    }
+    .badge-polar { background: #e74c3c; }
+    .badge-nonpolar { background: #27ae60; }
+
+    /* --- Tables and Dashboards --- */
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 15px; background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: middle; }
+    th { background-color: var(--primary); color: white; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    .center-text { text-align: center; }
+
+    .svg-shape {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chart-container {
+      position: relative; height: 350px; width: 100%;
+      background: white; padding: 20px; border-radius: 8px;
+      box-sizing: border-box; border: 1px solid #ddd;
+    }
+
+    .button-group {
+      text-align: center; margin-bottom: 40px;
+    }
+    .primary-btn {
+      background-color: #3182ce; color: white; border: none; padding: 12px 24px;
+      font-size: 1.1rem; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; font-weight: bold;
+    }
+    .primary-btn:hover { background-color: #2b6cb0; }
+
+    .secondary { background-color: #e2e8f0; color: #4a5568; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;}
+    .secondary:hover { background-color: #cbd5e0; }
+
+    /* --- Modals --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center;
+      align-items: center; z-index: 1000;
+    }
+    .hidden { display: none !important; }
+    .modal-content {
+      background: white; padding: 2rem; border-radius: 12px;
+      text-align: left; max-height: 90vh; overflow-y: auto;
+    }
+    .tree-modal-content { max-width: 1200px; width: 95%; }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1rem;
+    }
+    .modal-header h2 { margin: 0; color: #1a365d; font-size: 1.5rem; }
+    .close-btn { background: none; border: none; font-size: 1.5rem; color: #a0aec0; cursor: pointer; padding: 0; }
+    .close-btn:hover { color: #4a5568; background: none; }
+
+    .tree-header-controls { display: flex; gap: 10px; align-items: center; }
+
+    /* D3 Map Styles */
+    #tree-content-container {
+      width: 100%; height: 650px; overflow: auto; border: 1px solid #e2e8f0;
+      background-color: #fcfcfc; border-radius: 8px; margin-top: 1rem; position: relative;
+    }
+    .node { cursor: grab; }
+    .node:active { cursor: grabbing; }
+    .node circle { fill: #fff; stroke: #2b6cb0; stroke-width: 2px; transition: stroke-width 0.2s; }
+    .node text { font-size: 13.5px; font-weight: 500; fill: #2d3748; pointer-events: none; }
+    .link { fill: none; stroke: #cbd5e0; stroke-width: 1.5px; }
+    .node:hover circle { stroke: #1a365d; stroke-width: 3.5px; }
+    .tree-result-box rect { fill: white; stroke: #cbd5e0; stroke-width: 1px; rx: 6; ry: 6; }
+    .tree-result-box text { font-size: 12.5px; fill: #4a5568; }
+    .tree-result-box text .example-text { fill: #718096; font-style: italic; }
+    .tree-result-box text .rule-text { font-weight: bold; fill: #2b6cb0; }
+
+    .branch-acid circle { stroke: #fc8181 !important; }
+    .branch-acid.link { stroke: #fc8181 !important; }
+    .branch-ionic circle { stroke: #63b3ed !important; }
+    .branch-ionic.link { stroke: #63b3ed !important; }
+    .branch-covalent circle { stroke: #68d391 !important; }
+    .branch-covalent.link { stroke: #68d391 !important; }
+
+    .tree-fab {
+      position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+      background-color: #2b6cb0; color: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(43, 108, 176, 0.4); cursor: pointer;
+      z-index: 999; transition: transform 0.2s, background-color 0.2s;
+    }
+    .tree-fab:hover { transform: scale(1.08); background-color: #1a365d; }
+
+    /* ── Tooltip ── */
+    .tip-box {
+      position: fixed; z-index: 9999; pointer-events: none;
+      background: #1a202c; color: #e2e8f0;
+      padding: 9px 13px; border-radius: 8px;
+      font-size: 0.85rem; max-width: 240px; line-height: 1.5;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    [data-tip] { cursor: help; }
+
+    /* ── Animated electron dots ── */
+    @keyframes orbit-center {
+      0%   { transform: translate(-50%,0) translateX(-8px); }
+      50%  { transform: translate(-50%,0) translateX(8px); }
+      100% { transform: translate(-50%,0) translateX(-8px); }
+    }
+    @keyframes orbit-right {
+      0%   { transform: translate(-50%,0) translateX(4px); }
+      50%  { transform: translate(-50%,0) translateX(16px); }
+      100% { transform: translate(-50%,0) translateX(4px); }
+    }
+    .anim-nonpolar .electron-pair { animation: orbit-center 1.8s ease-in-out infinite; }
+    .anim-polar    .electron-pair { animation: orbit-right  1.8s ease-in-out infinite; }
+
+    @keyframes transfer-e {
+      0%,15%   { left: 20%; opacity: 1; }
+      50%      { left: 75%; opacity: 1; }
+      65%,100% { left: 75%; opacity: 0.9; }
+    }
+    .anim-ionic .electron-pair { animation: transfer-e 2.5s ease-in-out infinite; }
+
+    /* ── Quiz ── */
+    .quiz-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+    }
+    .quiz-score-badge {
+      background: var(--primary); color: white;
+      padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 1rem;
+    }
+    .quiz-progress {
+      font-size: 0.9rem; color: #666;
+    }
+    .quiz-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: 10px;
+      padding: 22px 24px; margin-bottom: 20px;
+      border-left: 5px solid var(--secondary);
+      transition: border-color 0.3s;
+    }
+    .quiz-card.correct  { border-left-color: #27ae60; background: #f0fff4; }
+    .quiz-card.wrong    { border-left-color: #e74c3c; background: #fff5f5; }
+    .quiz-question {
+      font-size: 1rem; font-weight: 600; color: #2c3e50; margin: 0 0 16px 0;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 9px; }
+    .quiz-option {
+      background: #f7fafc; border: 2px solid #e2e8f0;
+      border-radius: 8px; padding: 10px 14px;
+      cursor: pointer; font-size: 0.95rem; text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .quiz-option:hover:not(:disabled) { border-color: var(--secondary); background: #ebf8ff; }
+    .quiz-option.correct-ans { border-color: #27ae60; background: #c6f6d5; font-weight: bold; }
+    .quiz-option.wrong-ans   { border-color: #e74c3c; background: #fed7d7; }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-feedback {
+      margin-top: 12px; padding: 10px 14px; border-radius: 6px;
+      font-size: 0.92rem; line-height: 1.55; display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.fb-correct { background: #c6f6d5; color: #22543d; }
+    .quiz-feedback.fb-wrong   { background: #fed7d7; color: #742a2a; }
+    .quiz-summary {
+      text-align: center; padding: 30px; background: white;
+      border-radius: 12px; border: 2px solid var(--secondary);
+      display: none;
+    }
+    .quiz-summary h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 8px; }
+    .quiz-summary .final-score { font-size: 2.5rem; font-weight: bold; color: var(--secondary); }
+    .quiz-restart-btn {
+      margin-top: 16px; padding: 10px 28px;
+      background: var(--secondary); color: white; border: none;
+      border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
+    }
+    .quiz-restart-btn:hover { background: #2980b9; }
+    .anim-canvas { display: block; width: 100%; border-radius: 8px; background: #f8f9fa; }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Covalent Bonding & IMFs</h1>
-        <p>A Step-by-Step Interactive Tutorial</p>
-    </header>
+<header>
+  <h1>Covalent Bonding & IMFs</h1>
+  <p>A Step-by-Step Interactive Tutorial</p>
+</header>
 
-    <div class="container">
+<div class="container">
 
-        <div class="step-card">
-            <h2>Step 1: Bonding Definitions & Bond Types</h2>
-            
-            <div class="definition-box">
-                <p><strong>Covalent Bonds</strong> form when nonmetal atoms <strong>share</strong> their valence electrons to achieve a stable outer shell. Because both atoms want electrons, they compromise by sharing them.</p>
-                <p><strong>Ionic Bonds</strong> form when a metal atom completely <strong>transfers</strong> its valence electrons to a nonmetal atom. This creates oppositely charged ions that strongly attract each other.</p>
-            </div>
+  <div class="step-card">
+    <h2>Step 1: Bonding Definitions & Bond Types</h2>
 
-            <p>We use <strong>Electronegativity (EN)</strong>—a measure of how strongly an atom pulls on electrons—to predict exactly how the electrons will behave. The yellow dots in the diagrams below represent the valence electrons being bonded.</p>
-            
-            <div class="bond-examples-grid">
-                <div class="bond-box">
-                    <h4>Nonpolar Covalent</h4>
-                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Cl₂ (EN Diff = 0.0)</p>
-                    <div class="density-map">
-                        <div class="cloud-nonpolar"></div>
-                        <div class="atom">Cl</div>
-                        <div class="electron-pair" style="left: 50%; transform: translate(-50%, 0);">
-                            <div class="electron-dot"></div><div class="electron-dot"></div>
-                        </div>
-                        <div class="gap"></div>
-                        <div class="atom">Cl</div>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>shared perfectly equally</strong> right in the middle. The electron cloud is symmetrical.</p>
-                </div>
-
-                <div class="bond-box">
-                    <h4>Polar Covalent</h4>
-                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> HCl (EN Diff = 0.96)</p>
-                    <div class="density-map">
-                        <div class="cloud-polar"></div>
-                        <div class="atom" style="width:30px; height:30px; position:relative;">
-                            H
-                            <span class="partial-charge" style="color:#e74c3c;">&delta;⁺</span>
-                        </div>
-                        <div class="electron-pair" style="left: 58%; transform: translate(-50%, 0);">
-                            <div class="electron-dot"></div><div class="electron-dot"></div>
-                        </div>
-                        <div class="gap"></div>
-                        <div class="atom" style="position:relative;">
-                            Cl
-                            <span class="partial-charge" style="color:#2980b9;">&delta;⁻</span>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>still shared</strong>, but they spend much more time near the Cl atom, creating poles.</p>
-                </div>
-
-                <div class="bond-box">
-                    <h4>Ionic (Transfer)</h4>
-                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> NaCl (EN Diff = 2.23)</p>
-                    <div class="density-map">
-                        <svg class="transfer-arrow" viewBox="0 0 100 50">
-                            <path d="M 10 30 Q 50 0 85 25" fill="none" stroke="#2c3e50" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
-                            <defs>
-                                <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                    <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
-                                </marker>
-                            </defs>
-                        </svg>
-                        
-                        <div class="cloud-ionic-1"></div>
-                        <div class="cloud-ionic-2"></div>
-                        <div class="atom" style="width:30px; height:30px; border-color:#3498db;">Na⁺</div>
-                        <div class="big-gap"></div>
-                        <div class="atom" style="border-color:#e74c3c; position:relative;">
-                            Cl⁻
-                            <div class="electron-dot" style="position:absolute; top: -2px; left: -8px;"></div>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">The electron is <strong>completely transferred</strong> from Na to Cl. The clouds separate into distinct ions.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <h2>Step 2: Varieties of Covalent Bonds & Polyatomic Ions</h2>
-            <p>Not all covalent bonds are exactly the same. They can vary based on how many electrons are shared, where those electrons come from, and the overall electrical charge of the bonded group.</p>
-
-            <ul class="bond-list">
-                <li>
-                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">1. Single, Double, and Triple Bonds</h4>
-                    <p style="margin: 0; font-size: 0.95rem;">Atoms can share more than one pair of electrons to reach a stable state. As they share more electrons, the atoms are pulled closer together, making the bond shorter and stronger.</p>
-                    <ul style="margin-top: 5px; font-size: 0.95rem;">
-                        <li><strong>Single Bond:</strong> 1 pair (2 e⁻) shared. Longest and weakest. <em>(Ex: H-H)</em></li>
-                        <li><strong>Double Bond:</strong> 2 pairs (4 e⁻) shared. Shorter and stronger. <em>(Ex: O=O)</em></li>
-                        <li><strong>Triple Bond:</strong> 3 pairs (6 e⁻) shared. Shortest and strongest. <em>(Ex: N&equiv;N)</em></li>
-                    </ul>
-                </li>
-                <li>
-                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">2. Coordinate Covalent Bond (Dative Bond)</h4>
-                    <p style="margin: 0; font-size: 0.95rem;">A normal covalent bond forms when each atom contributes one electron. In a <strong>coordinate covalent bond</strong>, <em>one</em> atom generously contributes <em>both</em> of the shared electrons. Once formed, it behaves exactly like a normal covalent bond. <em>(Ex: Carbon Monoxide, CO)</em></p>
-                </li>
-                <li>
-                    <h4 style="margin: 0 0 5px 0; color: var(--primary);">3. Polyatomic Ions</h4>
-                    <p style="margin: 0; font-size: 0.95rem;">A tightly bound group of atoms held together by <em>covalent bonds</em>, but the entire group has an overall charge, meaning it behaves as a single <em>ion</em>. They form ionic bonds with other oppositely charged ions. <em>(Ex: Ammonium NH₄⁺, Sulfate SO₄²⁻)</em></p>
-                </li>
-            </ul>
-
-            <h3 style="margin-top: 30px; color: var(--primary);">Bond Comparison Table</h3>
-            <table>
-                <tr>
-                    <th>Type</th>
-                    <th>Electrons Shared</th>
-                    <th class="center-text">Source of Electrons</th>
-                    <th>Characteristics</th>
-                    <th>Example</th>
-                </tr>
-                <tr>
-                    <td><strong>Single Bond</strong></td>
-                    <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
-                    <td class="center-text">
-                        <svg width="100" height="30" viewBox="0 0 100 30">
-                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
-                            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
-                            <circle cx="45" cy="15" r="3.5" fill="#3498db"/>
-                            <circle cx="55" cy="15" r="3.5" fill="#e74c3c"/>
-                        </svg>
-                        <br><span style="font-size:0.8rem; color:#666;">1 from each atom</span>
-                    </td>
-                    <td>Longest, weakest</td>
-                    <td>H₂ (H-H)</td>
-                </tr>
-                <tr>
-                    <td><strong>Multiple Bond<br>(Double)</strong></td>
-                    <td class="center-text">4<br><span style="font-size:0.8rem">(2 pairs)</span></td>
-                    <td class="center-text">
-                        <svg width="100" height="30" viewBox="0 0 100 30">
-                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
-                            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
-                            <circle cx="45" cy="10" r="3.5" fill="#3498db"/>
-                            <circle cx="55" cy="10" r="3.5" fill="#e74c3c"/>
-                            <circle cx="45" cy="20" r="3.5" fill="#3498db"/>
-                            <circle cx="55" cy="20" r="3.5" fill="#e74c3c"/>
-                        </svg>
-                        <br><span style="font-size:0.8rem; color:#666;">Equal contribution</span>
-                    </td>
-                    <td>Shorter, stronger, rigid</td>
-                    <td>O₂ (O=O)</td>
-                </tr>
-                <tr>
-                    <td><strong>Coordinate Covalent</strong></td>
-                    <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
-                    <td class="center-text">
-                        <svg width="100" height="30" viewBox="0 0 100 30">
-                            <circle cx="25" cy="15" r="10" fill="#3498db"/>
-                            <circle cx="75" cy="15" r="10" fill="#95a5a6"/>
-                            <circle cx="43" cy="15" r="3.5" fill="#3498db"/>
-                            <circle cx="50" cy="15" r="3.5" fill="#3498db"/>
-                            <path d="M 45 6 L 60 15 L 45 24" fill="none" stroke="#2980b9" stroke-width="1.5"/>
-                        </svg>
-                        <br><span style="font-size:0.8rem; color:#666;"><strong>Both</strong> from one atom</span>
-                    </td>
-                    <td>Identical to a single bond once formed</td>
-                    <td>NH₄⁺</td>
-                </tr>
-                <tr>
-                    <td><strong>Polyatomic Ion</strong></td>
-                    <td class="center-text">Varies</td>
-                    <td class="center-text">
-                        <svg width="100" height="35" viewBox="0 0 100 35">
-                            <path d="M 20 2 L 10 2 L 10 33 L 20 33" fill="none" stroke="#333" stroke-width="1.5"/>
-                            <path d="M 80 2 L 90 2 L 90 33 L 80 33" fill="none" stroke="#333" stroke-width="1.5"/>
-                            <text x="93" y="15" font-size="14" font-weight="bold" fill="#e74c3c">-</text>
-                            <circle cx="35" cy="18" r="7" fill="#e74c3c"/>
-                            <circle cx="65" cy="18" r="7" fill="#3498db"/>
-                            <circle cx="50" cy="18" r="7" fill="#9b59b6"/>
-                            <line x1="42" y1="18" x2="43" y2="18" stroke="#333" stroke-width="2"/>
-                            <line x1="57" y1="18" x2="58" y2="18" stroke="#333" stroke-width="2"/>
-                        </svg>
-                        <br><span style="font-size:0.8rem; color:#666;">Covalently bonded group</span>
-                    </td>
-                    <td>Has an overall charge</td>
-                    <td>SO₄²⁻</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="step-card">
-            <h2>Step 3: Drawing Electron Dot (Lewis) Structures</h2>
-            <p>A Lewis Structure is a 2D drawing that shows exactly how valence electrons are distributed in a molecule. To draw them perfectly every time, follow these 5 steps:</p>
-            
-            <ol class="lewis-step-list">
-                <li><strong>Count total valence electrons:</strong> Add up the valence electrons for all atoms. If it's an anion (negative), add extra electrons. If it's a cation (positive), subtract electrons.</li>
-                <li><strong>Determine the Central Atom:</strong> Usually the least electronegative element. <em>(Note: Hydrogen is NEVER in the center).</em></li>
-                <li><strong>Draw Single Bonds:</strong> Draw a line connecting the central atom to each outer atom. Each line represents 2 shared electrons. Subtract these from your total.</li>
-                <li><strong>Fill Outer Octets:</strong> Distribute remaining electrons as lone pairs (dots) around the outer atoms until they are happy (8 for an octet, 2 for H's duet).</li>
-                <li><strong>Check the Central Atom:</strong> Place any leftover electrons on the central atom. If the central atom does NOT have a full octet, erase a lone pair from an outer atom and turn it into a <strong>double or triple bond</strong> to share it.</li>
-            </ol>
-
-            <div class="bond-examples-grid">
-                <div class="bond-box">
-                    <h4>Example 1: Water (H₂O)</h4>
-                    <span class="math-text">2(1) + 6 = 8 e⁻ Total</span>
-                    <div style="display:flex; justify-content:center; margin:15px 0;">
-                        <svg width="150" height="80" viewBox="0 0 150 80">
-                            <text x="20" y="48" font-size="24" font-weight="bold" fill="#2c3e50">H</text>
-                            <line x1="45" y1="40" x2="65" y2="40" stroke="#2c3e50" stroke-width="3"/>
-                            <text x="75" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
-                            <line x1="100" y1="40" x2="120" y2="40" stroke="#2c3e50" stroke-width="3"/>
-                            <text x="130" y="48" font-size="24" font-weight="bold" fill="#2c3e50">H</text>
-                            <circle cx="80" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="90" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="80" cy="62" r="3.5" fill="#e74c3c"/>
-                            <circle cx="90" cy="62" r="3.5" fill="#e74c3c"/>
-                        </svg>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">After drawing single bonds, the remaining 4 electrons sit on Oxygen as <strong>lone pairs</strong>.</p>
-                </div>
-
-                <div class="bond-box">
-                    <h4>Example 2: Carbon Dioxide (CO₂)</h4>
-                    <span class="math-text">4 + 2(6) = 16 e⁻ Total</span>
-                    <div style="display:flex; justify-content:center; margin:15px 0;">
-                        <svg width="180" height="80" viewBox="0 0 180 80">
-                            <text x="30" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
-                            <line x1="58" y1="36" x2="82" y2="36" stroke="#2c3e50" stroke-width="3"/>
-                            <line x1="58" y1="44" x2="82" y2="44" stroke="#2c3e50" stroke-width="3"/>
-                            <text x="92" y="48" font-size="24" font-weight="bold" fill="#2c3e50">C</text>
-                            <line x1="118" y1="36" x2="142" y2="36" stroke="#2c3e50" stroke-width="3"/>
-                            <line x1="118" y1="44" x2="142" y2="44" stroke="#2c3e50" stroke-width="3"/>
-                            <text x="152" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
-                            <circle cx="35" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="45" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="35" cy="62" r="3.5" fill="#e74c3c"/>
-                            <circle cx="45" cy="62" r="3.5" fill="#e74c3c"/>
-                            <circle cx="157" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="167" cy="18" r="3.5" fill="#e74c3c"/>
-                            <circle cx="157" cy="62" r="3.5" fill="#e74c3c"/>
-                            <circle cx="167" cy="62" r="3.5" fill="#e74c3c"/>
-                        </svg>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">There aren't enough electrons to give Carbon an octet, so Oxygen shares more to make <strong>double bonds</strong>.</p>
-                </div>
-
-                <div class="bond-box">
-                    <h4>Example 3: Cyanide Ion (CN⁻)</h4>
-                    <span class="math-text">4 + 5 + 1(ion) = 10 e⁻ Total</span>
-                    <div style="display:flex; justify-content:center; margin:15px 0;">
-                        <svg width="170" height="80" viewBox="0 0 170 80">
-                            <path d="M 30 10 L 20 10 L 20 70 L 30 70" fill="none" stroke="#333" stroke-width="2"/>
-                            <path d="M 120 10 L 130 10 L 130 70 L 120 70" fill="none" stroke="#333" stroke-width="2"/>
-                            <text x="135" y="25" font-size="20" font-weight="bold" fill="#e74c3c">-</text>
-                            
-                            <text x="45" y="48" font-size="24" font-weight="bold" fill="#2c3e50">C</text>
-                            <line x1="70" y1="32" x2="90" y2="32" stroke="#2c3e50" stroke-width="3"/>
-                            <line x1="70" y1="40" x2="90" y2="40" stroke="#2c3e50" stroke-width="3"/>
-                            <line x1="70" y1="48" x2="90" y2="48" stroke="#2c3e50" stroke-width="3"/>
-                            <text x="100" y="48" font-size="24" font-weight="bold" fill="#2c3e50">N</text>
-                            
-                            <circle cx="32" cy="40" r="3.5" fill="#e74c3c"/>
-                            <circle cx="40" cy="40" r="3.5" fill="#e74c3c"/>
-                            
-                            <circle cx="120" cy="40" r="3.5" fill="#e74c3c"/>
-                            <circle cx="128" cy="40" r="3.5" fill="#e74c3c"/>
-                        </svg>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">A <strong>triple bond</strong> is required to satisfy both octets. The brackets and minus sign denote the polyatomic ion.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="step-card">
-            <h2>Step 4: 3D Molecule Shape (VSEPR Theory)</h2>
-            <p>Once you draw a Lewis Structure, you can determine its real 3D shape! <strong>VSEPR Theory</strong> states that electron regions (bonds and lone pairs) repel each other to spread out in 3D space.</p>
-            <p>Use the explorer below. Notice how adding a <strong>Lone Pair (yellow lobes)</strong> takes up space and pushes the <strong>bonded atoms (red spheres)</strong> closer together!</p>
-            
-            <div class="interactive-panel vsepr-container">
-                <div class="vsepr-canvas-wrapper">
-                    <canvas id="vseprCanvas"></canvas>
-                    <div class="drag-hint">Left Click + Drag to Rotate</div>
-                </div>
-
-                <div class="vsepr-controls">
-                    <div class="control-group">
-                        <label for="bondCount">Bonded Atoms (1-6):</label>
-                        <input type="number" id="bondCount" min="1" max="6" value="2">
-                    </div>
-                    <div class="control-group">
-                        <label for="lpCount">Lone Pairs (0-3):</label>
-                        <input type="number" id="lpCount" min="0" max="3" value="0">
-                    </div>
-                    
-                    <div class="vsepr-info">
-                        <p><strong>Total Domains:</strong> <span id="stericNum">2</span></p>
-                        <p><strong>Geometry:</strong> <span id="molGeom">Linear</span></p>
-                        <p><strong>Bond Angle:</strong> <span id="bondAngle">180&deg;</span></p>
-                        <p><strong>Overall Polarity:</strong> <span id="molPol" class="result-badge badge-nonpolar">Nonpolar</span></p>
-                        <p style="font-size:0.8rem; color:#7f8c8d; margin-top:10px;">*Assuming all outer atoms are identical.</p>
-                    </div>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 40px; color: var(--primary);">VSEPR Geometry Reference Table</h3>
-            <table>
-                <tr>
-                    <th class="center-text">Steric Number<br><span style="font-size:0.8rem; font-weight:normal;">(Domains)</span></th>
-                    <th class="center-text">Bonded</th>
-                    <th class="center-text">Lone Pairs</th>
-                    <th>Shape</th>
-                    <th>Molecular Geometry</th>
-                    <th>Ideal Bond Angle</th>
-                </tr>
-                <tr>
-                    <td class="center-text"><strong>2</strong></td>
-                    <td class="center-text">2</td>
-                    <td class="center-text">0</td>
-                    <td><div class="svg-shape" data-sn="2" data-bp="2" data-lp="0"></div></td>
-                    <td>Linear</td>
-                    <td>180&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text" rowspan="2"><strong>3</strong></td>
-                    <td class="center-text">3</td>
-                    <td class="center-text">0</td>
-                    <td><div class="svg-shape" data-sn="3" data-bp="3" data-lp="0"></div></td>
-                    <td>Trigonal Planar</td>
-                    <td>120&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">2</td>
-                    <td class="center-text">1</td>
-                    <td><div class="svg-shape" data-sn="3" data-bp="2" data-lp="1"></div></td>
-                    <td>Bent</td>
-                    <td>&lt; 120&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text" rowspan="3"><strong>4</strong></td>
-                    <td class="center-text">4</td>
-                    <td class="center-text">0</td>
-                    <td><div class="svg-shape" data-sn="4" data-bp="4" data-lp="0"></div></td>
-                    <td>Tetrahedral</td>
-                    <td>109.5&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">3</td>
-                    <td class="center-text">1</td>
-                    <td><div class="svg-shape" data-sn="4" data-bp="3" data-lp="1"></div></td>
-                    <td>Trigonal Pyramidal</td>
-                    <td>&lt; 109.5&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">2</td>
-                    <td class="center-text">2</td>
-                    <td><div class="svg-shape" data-sn="4" data-bp="2" data-lp="2"></div></td>
-                    <td>Bent</td>
-                    <td>&lt;&lt; 109.5&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text" rowspan="4"><strong>5</strong></td>
-                    <td class="center-text">5</td>
-                    <td class="center-text">0</td>
-                    <td><div class="svg-shape" data-sn="5" data-bp="5" data-lp="0"></div></td>
-                    <td>Trigonal Bipyramidal</td>
-                    <td>90&deg;, 120&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">4</td>
-                    <td class="center-text">1</td>
-                    <td><div class="svg-shape" data-sn="5" data-bp="4" data-lp="1"></div></td>
-                    <td>Seesaw</td>
-                    <td>&lt; 90&deg;, &lt; 120&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">3</td>
-                    <td class="center-text">2</td>
-                    <td><div class="svg-shape" data-sn="5" data-bp="3" data-lp="2"></div></td>
-                    <td>T-shaped</td>
-                    <td>&lt; 90&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">2</td>
-                    <td class="center-text">3</td>
-                    <td><div class="svg-shape" data-sn="5" data-bp="2" data-lp="3"></div></td>
-                    <td>Linear</td>
-                    <td>180&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text" rowspan="3"><strong>6</strong></td>
-                    <td class="center-text">6</td>
-                    <td class="center-text">0</td>
-                    <td><div class="svg-shape" data-sn="6" data-bp="6" data-lp="0"></div></td>
-                    <td>Octahedral</td>
-                    <td>90&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">5</td>
-                    <td class="center-text">1</td>
-                    <td><div class="svg-shape" data-sn="6" data-bp="5" data-lp="1"></div></td>
-                    <td>Square Pyramidal</td>
-                    <td>&lt; 90&deg;</td>
-                </tr>
-                <tr>
-                    <td class="center-text">4</td>
-                    <td class="center-text">2</td>
-                    <td><div class="svg-shape" data-sn="6" data-bp="4" data-lp="2"></div></td>
-                    <td>Square Planar</td>
-                    <td>90&deg;</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="step-card">
-            <h2>Step 5: Molecular Polarity & Intermolecular Forces (IMFs)</h2>
-
-            <h3 style="color: var(--primary);">Part A: Molecular Polarity</h3>
-            <p>Before we can determine how molecules interact with each other, we must figure out if the <em>entire molecule</em> is polar or nonpolar. This depends on both the <strong>bond types</strong> (Step 1) and the <strong>3D shape</strong> (Step 4).</p>
-
-            <div class="bond-examples-grid">
-                <div class="bond-box">
-                    <h4>Nonpolar Molecule (Symmetrical)</h4>
-                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Carbon Dioxide (CO₂)</p>
-                    <div class="density-map">
-                        <svg width="200" height="80" viewBox="0 0 200 80">
-                            <text x="30" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
-                            <line x1="50" y1="40" x2="85" y2="40" stroke="#2c3e50" stroke-width="2"/>
-                            <text x="92" y="48" font-size="20" font-weight="bold" fill="#2c3e50">C</text>
-                            <line x1="110" y1="40" x2="145" y2="40" stroke="#2c3e50" stroke-width="2"/>
-                            <text x="152" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
-                            
-                            <line x1="85" y1="20" x2="40" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
-                            <line x1="110" y1="20" x2="155" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
-                            
-                            <line x1="80" y1="15" x2="80" y2="25" stroke="#e74c3c" stroke-width="2"/>
-                            <line x1="115" y1="15" x2="115" y2="25" stroke="#e74c3c" stroke-width="2"/>
-                            
-                            <defs>
-                                <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
-                                </marker>
-                            </defs>
-                        </svg>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">Even though the C=O bonds are polar, the linear shape is perfectly symmetrical. The dipole arrows pull in opposite directions and <strong>cancel out</strong>. The molecule is nonpolar.</p>
-                </div>
-                
-                <div class="bond-box">
-                    <h4>Polar Molecule (Asymmetrical)</h4>
-                    <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Water (H₂O)</p>
-                    <div class="density-map">
-                        <svg width="200" height="100" viewBox="0 0 200 100">
-                            <text x="92" y="40" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
-                            <line x1="85" y1="50" x2="60" y2="80" stroke="#2c3e50" stroke-width="2"/>
-                            <line x1="110" y1="50" x2="135" y2="80" stroke="#2c3e50" stroke-width="2"/>
-                            <text x="45" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
-                            <text x="140" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
-                            
-                            <line x1="60" y1="65" x2="80" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
-                            <line x1="135" y1="65" x2="115" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
-                            
-                            <line x1="98" y1="70" x2="98" y2="10" stroke="#3498db" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#arrow-blue)"/>
-                            <text x="105" y="25" font-size="12" fill="#3498db" font-weight="bold">Net Dipole</text>
-
-                            <defs>
-                                <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                    <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
-                                </marker>
-                            </defs>
-                        </svg>
-                    </div>
-                    <p style="font-size: 0.85rem; color:#666;">The bent shape is asymmetrical. The polar bonds pull oxygen's way and <strong>do not cancel</strong>. This creates a net dipole (a permanently positive and negative end).</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 40px; color: var(--primary);">Part B: Intermolecular Forces (IMFs)</h3>
-            <p>Now that we know if a molecule is polar or nonpolar, we can determine its IMFs. While covalent bonds hold atoms together <em>inside</em> a molecule, <strong>IMFs</strong> are the weaker forces of attraction <em>between</em> separate molecules. There are three main types:</p>
-            
-            <table>
-                <tr>
-                    <th>IMF Type</th>
-                    <th>Strength</th>
-                    <th>What causes it?</th>
-                    <th>Example</th>
-                </tr>
-                <tr>
-                    <td><strong>London Dispersion (LDF)</strong></td>
-                    <td>Weakest</td>
-                    <td>Temporary shifting of electrons. Exists in ALL molecules, but is the <em>only</em> force in <strong>nonpolar</strong> molecules. Gets stronger with larger atoms.</td>
-                    <td>CH₄, Cl₂</td>
-                </tr>
-                <tr>
-                    <td><strong>Dipole-Dipole</strong></td>
-                    <td>Medium</td>
-                    <td>Attraction between the permanent partial charges (&delta;⁺ and &delta;⁻) of asymmetrical, <strong>polar</strong> molecules.</td>
-                    <td>HCl, H₂S</td>
-                </tr>
-                <tr>
-                    <td><strong>Hydrogen Bonding</strong></td>
-                    <td>Strongest</td>
-                    <td>A very strong dipole interaction when Hydrogen is directly bonded to a highly electronegative atom (<strong>N, O, or F</strong>).</td>
-                    <td>H₂O, NH₃</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="step-card">
-            <h2>Step 6: How IMFs Impact Physical Properties</h2>
-            <p>The strength of Intermolecular Forces directly controls the physical properties of a substance, especially its phase transitions (melting and boiling) and vapor pressure.</p>
-
-            <h4 style="color: var(--primary); margin-bottom:5px;">1. Melting Point (Direct Relationship)</h4>
-            <p style="margin-top:0;">In a solid, molecules are locked into a rigid crystal lattice by their IMFs. To melt the solid into a liquid, you must add thermal energy to overcome these attractions. <strong>The stronger the IMFs, the higher the melting point.</strong></p>
-
-            <div class="interactive-panel" style="margin-bottom: 30px;">
-                <h3>Melting Point vs. Dominant IMF</h3>
-                <p>Notice how water's strong hydrogen bonds keep it solid (ice) at much higher temperatures than nonpolar methane.</p>
-                <div class="chart-container">
-                    <canvas id="mpChart"></canvas>
-                </div>
-            </div>
-
-            <h4 style="color: var(--primary); margin-bottom:5px;">2. Boiling Point (Direct Relationship)</h4>
-            <p style="margin-top:0;">To boil a liquid into a gas, you must add enough heat to completely pull the molecules apart from one another. Just like melting, <strong>stronger IMFs result in a higher boiling point.</strong></p>
-
-            <div class="interactive-panel" style="margin-bottom: 30px;">
-                <h3>Boiling Point vs. Dominant IMF</h3>
-                <div class="chart-container">
-                    <canvas id="imfChart"></canvas>
-                </div>
-            </div>
-
-            <h4 style="color: var(--primary); margin-bottom:5px;">3. Vapor Pressure (Inverse Relationship)</h4>
-            <div class="definition-box" style="border-left-color: #9b59b6; margin-top: 10px;">
-                <p style="margin-top:0;"><strong>Vapor Pressure</strong> is the pressure exerted by a gas that has evaporated from a liquid in a closed container. It measures how easily a substance evaporates (its volatility).</p>
-                <p style="margin-bottom:0;"><strong>The Rule:</strong> IMFs and Vapor Pressure have an <strong>inverse relationship</strong>. Molecules with weak IMFs don't stick together well, allowing them to escape easily into the gas phase (HIGH vapor pressure). Molecules with strong IMFs hold onto each other tightly, preventing evaporation (LOW vapor pressure).</p>
-            </div>
-
-            <div class="interactive-panel">
-                <h3>Vapor Pressure vs. Dominant IMF (at 25&deg;C)</h3>
-                <p>Notice how water, with its strong hydrogen bonds, has a very low vapor pressure compared to the weaker dipole interactions of acetone.</p>
-                <div class="chart-container">
-                    <canvas id="vpChart"></canvas>
-                </div>
-            </div>
-        </div>
-
+    <div class="definition-box">
+      <p><strong>Covalent Bonds</strong> form when nonmetal atoms <strong>share</strong> their valence electrons to achieve a stable outer shell. Because both atoms want electrons, they compromise by sharing them.</p>
+      <p><strong>Ionic Bonds</strong> form when a metal atom completely <strong>transfers</strong> its valence electrons to a nonmetal atom. This creates oppositely charged ions that strongly attract each other.</p>
     </div>
 
-    <script>
-        /* =========================================
-           VSEPR 2D SVG Generator for Table
-           ========================================= */
-        function draw2DShape(sn, bp, lp) {
-            const pos = {
-                2: [{x:15, y:50}, {x:85, y:50}],
-                3: [{x:50, y:15}, {x:19, y:67}, {x:81, y:67}],
-                4: [{x:50, y:15}, {x:20, y:75}, {x:80, y:75}, {x:30, y:35}],
-                5: [{x:50, y:15}, {x:50, y:85}, {x:85, y:50}, {x:35, y:65}, {x:15, y:50}],
-                6: [{x:50, y:15}, {x:50, y:85}, {x:20, y:50}, {x:80, y:50}, {x:30, y:35}, {x:70, y:65}]
-            };
+    <p>We use <strong>Electronegativity (EN)</strong>—a measure of how strongly an atom pulls on electrons—to predict exactly how the electrons will behave. The yellow dots in the diagrams below represent the valence electrons being bonded.</p>
 
-            let lpIndices = [];
-            if (sn == 3) lpIndices = [0].slice(0, lp);
-            if (sn == 4) lpIndices = [0, 3].slice(0, lp);
-            if (sn == 5) lpIndices = [2, 3, 4].slice(0, lp); 
-            if (sn == 6) lpIndices = [1, 0].slice(0, lp); 
+    <!-- Covalent Bond Diagram -->
+    <div style="background:#f1f5f8; border-radius:10px; padding:20px; margin:20px 0; border:1px solid #e1e8ed;">
+      <h4 style="margin:0 0 14px 0; color:var(--primary); text-align:center;">How a Covalent Bond Forms: H₂ (Hydrogen)</h4>
+      <canvas id="h2Canvas" class="anim-canvas" height="110" data-tip="Watch the electrons (yellow dots) orbit each atom, then merge into a shared bond in the overlapping region — that shared pair IS the covalent bond."></canvas>
+      <p style="font-size:0.85rem; color:#555; text-align:center; margin:12px 0 0 0;">Both hydrogen atoms <strong>share their single electron</strong>. Each now "sees" 2 electrons — a full, stable outer shell (duet). This shared pair is the <strong>covalent bond</strong>.</p>
+    </div>
 
-            let svg = `<svg width="55" height="55" viewBox="0 0 100 100">`;
+    <div class="bond-examples-grid">
+      <div class="bond-box anim-nonpolar" data-tip="Nonpolar covalent: identical atoms share electrons equally. Watch the electron pair hover symmetrically at the centre — neither atom pulls harder.">
+        <h4>Nonpolar Covalent</h4>
+        <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Cl₂ (EN Diff = 0.0)</p>
+        <div class="density-map">
+          <div class="cloud-nonpolar"></div>
+          <div class="atom">Cl</div>
+          <div class="electron-pair" style="left: 50%; transform: translate(-50%, 0);">
+            <div class="electron-dot"></div><div class="electron-dot"></div>
+          </div>
+          <div class="gap"></div>
+          <div class="atom">Cl</div>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>shared perfectly equally</strong> right in the middle. The electron cloud is symmetrical.</p>
+      </div>
 
-            pos[sn].forEach((p, i) => {
-                if (!lpIndices.includes(i)) svg += `<line x1="50" y1="50" x2="${p.x}" y2="${p.y}" stroke="#bdc3c7" stroke-width="4"/>`;
-            });
+      <div class="bond-box anim-polar" data-tip="Polar covalent: Cl is more electronegative than H, so the electron pair drifts toward Cl — creating partial negative (δ⁻) and positive (δ⁺) ends.">
+        <h4>Polar Covalent</h4>
+        <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> HCl (EN Diff = 0.96)</p>
+        <div class="density-map">
+          <div class="cloud-polar"></div>
+          <div class="atom" style="width:30px; height:30px; position:relative;">
+            H
+            <span class="partial-charge" style="color:#e74c3c;">&delta;⁺</span>
+          </div>
+          <div class="electron-pair" style="left: 58%; transform: translate(-50%, 0);">
+            <div class="electron-dot"></div><div class="electron-dot"></div>
+          </div>
+          <div class="gap"></div>
+          <div class="atom" style="position:relative;">
+            Cl
+            <span class="partial-charge" style="color:#2980b9;">&delta;⁻</span>
+          </div>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">Electrons are <strong>still shared</strong>, but they spend much more time near the Cl atom, creating poles.</p>
+      </div>
 
-            pos[sn].forEach((p, i) => {
-                if (lpIndices.includes(i)) {
-                    let dx = p.x - 50, dy = p.y - 50;
-                    let angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                    let cx = 50 + dx * 0.55, cy = 50 + dy * 0.55;
-                    svg += `<ellipse cx="${cx}" cy="${cy}" rx="12" ry="20" fill="rgba(241,196,15,0.4)" stroke="#f39c12" stroke-dasharray="2,2" transform="rotate(${angle+90}, ${cx}, ${cy})"/>`;
-                }
-            });
+      <div class="bond-box anim-ionic" data-tip="Ionic: the electron is fully transferred from Na to Cl. Na becomes Na⁺ and Cl becomes Cl⁻ — oppositely charged ions that attract each other strongly.">
+        <h4>Ionic (Transfer)</h4>
+        <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> NaCl (EN Diff = 2.23)</p>
+        <div class="density-map">
+          <svg class="transfer-arrow" viewBox="0 0 100 50">
+            <path d="M 10 30 Q 50 0 85 25" fill="none" stroke="#2c3e50" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+              </marker>
+            </defs>
+          </svg>
 
-            pos[sn].forEach((p, i) => {
-                if (!lpIndices.includes(i)) svg += `<circle cx="${p.x}" cy="${p.y}" r="10" fill="#e74c3c"/>`;
-            });
+          <div class="cloud-ionic-1"></div>
+          <div class="cloud-ionic-2"></div>
+          <div class="atom" style="width:30px; height:30px; border-color:#3498db;">Na⁺</div>
+          <div class="big-gap"></div>
+          <div class="atom" style="border-color:#e74c3c; position:relative;">
+            Cl⁻
+            <div class="electron-dot" style="position:absolute; top: -2px; left: -8px;"></div>
+          </div>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">The electron is <strong>completely transferred</strong> from Na to Cl. The clouds separate into distinct ions.</p>
+      </div>
+    </div>
+  </div>
 
-            svg += `<circle cx="50" cy="50" r="12" fill="#2c3e50"/></svg>`;
-            return svg;
+  <div class="step-card">
+    <h2>Step 2: Varieties of Covalent Bonds & Polyatomic Ions</h2>
+    <p>Not all covalent bonds are exactly the same. They can vary based on how many electrons are shared, where those electrons come from, and the overall electrical charge of the bonded group.</p>
+
+    <ul class="bond-list">
+      <li>
+        <h4 style="margin: 0 0 5px 0; color: var(--primary);">1. Single, Double, and Triple Bonds</h4>
+        <p style="margin: 0; font-size: 0.95rem;">Atoms can share more than one pair of electrons to reach a stable state. As they share more electrons, the atoms are pulled closer together, making the bond shorter and stronger.</p>
+        <ul style="margin-top: 5px; font-size: 0.95rem;">
+          <li><strong>Single Bond:</strong> 1 pair (2 e⁻) shared. Longest and weakest. <em>(Ex: H-H)</em></li>
+          <li><strong>Double Bond:</strong> 2 pairs (4 e⁻) shared. Shorter and stronger. <em>(Ex: O=O)</em></li>
+          <li><strong>Triple Bond:</strong> 3 pairs (6 e⁻) shared. Shortest and strongest. <em>(Ex: N&equiv;N)</em></li>
+        </ul>
+      </li>
+      <li>
+        <h4 style="margin: 0 0 5px 0; color: var(--primary);">2. Coordinate Covalent Bond (Dative Bond)</h4>
+        <p style="margin: 0; font-size: 0.95rem;">A normal covalent bond forms when each atom contributes one electron. In a <strong>coordinate covalent bond</strong>, <em>one</em> atom generously contributes <em>both</em> of the shared electrons. Once formed, it behaves exactly like a normal covalent bond. <em>(Ex: Carbon Monoxide, CO)</em></p>
+      </li>
+      <li>
+        <h4 style="margin: 0 0 5px 0; color: var(--primary);">3. Polyatomic Ions</h4>
+        <p style="margin: 0; font-size: 0.95rem;">A tightly bound group of atoms held together by <em>covalent bonds</em>, but the entire group has an overall charge, meaning it behaves as a single <em>ion</em>. They form ionic bonds with other oppositely charged ions. <em>(Ex: Ammonium NH₄⁺, Sulfate SO₄²⁻)</em></p>
+      </li>
+    </ul>
+
+    <h3 style="margin-top: 30px; color: var(--primary);">Bond Comparison Table</h3>
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Electrons Shared</th>
+        <th class="center-text">Source of Electrons</th>
+        <th>Characteristics</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td><strong>Single Bond</strong></td>
+        <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
+        <td class="center-text">
+          <svg width="100" height="30" viewBox="0 0 100 30">
+            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
+            <circle cx="45" cy="15" r="3.5" fill="#3498db"/>
+            <circle cx="55" cy="15" r="3.5" fill="#e74c3c"/>
+          </svg>
+          <br><span style="font-size:0.8rem; color:#666;">1 from each atom</span>
+        </td>
+        <td>Longest, weakest</td>
+        <td>H₂ (H-H)</td>
+      </tr>
+      <tr>
+        <td><strong>Multiple Bond<br>(Double)</strong></td>
+        <td class="center-text">4<br><span style="font-size:0.8rem">(2 pairs)</span></td>
+        <td class="center-text">
+          <svg width="100" height="30" viewBox="0 0 100 30">
+            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+            <circle cx="75" cy="15" r="10" fill="#e74c3c"/>
+            <circle cx="45" cy="10" r="3.5" fill="#3498db"/>
+            <circle cx="55" cy="10" r="3.5" fill="#e74c3c"/>
+            <circle cx="45" cy="20" r="3.5" fill="#3498db"/>
+            <circle cx="55" cy="20" r="3.5" fill="#e74c3c"/>
+          </svg>
+          <br><span style="font-size:0.8rem; color:#666;">Equal contribution</span>
+        </td>
+        <td>Shorter, stronger, rigid</td>
+        <td>O₂ (O=O)</td>
+      </tr>
+      <tr>
+        <td><strong>Coordinate Covalent</strong></td>
+        <td class="center-text">2<br><span style="font-size:0.8rem">(1 pair)</span></td>
+        <td class="center-text">
+          <svg width="100" height="30" viewBox="0 0 100 30">
+            <circle cx="25" cy="15" r="10" fill="#3498db"/>
+            <circle cx="75" cy="15" r="10" fill="#95a5a6"/>
+            <circle cx="43" cy="15" r="3.5" fill="#3498db"/>
+            <circle cx="50" cy="15" r="3.5" fill="#3498db"/>
+            <path d="M 45 6 L 60 15 L 45 24" fill="none" stroke="#2980b9" stroke-width="1.5"/>
+          </svg>
+          <br><span style="font-size:0.8rem; color:#666;"><strong>Both</strong> from one atom</span>
+        </td>
+        <td>Identical to a single bond once formed</td>
+        <td>NH₄⁺</td>
+      </tr>
+      <tr>
+        <td><strong>Polyatomic Ion</strong></td>
+        <td class="center-text">Varies</td>
+        <td class="center-text">
+          <svg width="100" height="35" viewBox="0 0 100 35">
+            <path d="M 20 2 L 10 2 L 10 33 L 20 33" fill="none" stroke="#333" stroke-width="1.5"/>
+            <path d="M 80 2 L 90 2 L 90 33 L 80 33" fill="none" stroke="#333" stroke-width="1.5"/>
+            <text x="93" y="15" font-size="14" font-weight="bold" fill="#e74c3c">-</text>
+            <circle cx="35" cy="18" r="7" fill="#e74c3c"/>
+            <circle cx="65" cy="18" r="7" fill="#3498db"/>
+            <circle cx="50" cy="18" r="7" fill="#9b59b6"/>
+            <line x1="42" y1="18" x2="43" y2="18" stroke="#333" stroke-width="2"/>
+            <line x1="57" y1="18" x2="58" y2="18" stroke="#333" stroke-width="2"/>
+          </svg>
+          <br><span style="font-size:0.8rem; color:#666;">Covalently bonded group</span>
+        </td>
+        <td>Has an overall charge</td>
+        <td>SO₄²⁻</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="step-card">
+    <h2>Step 3: Drawing Electron Dot (Lewis) Structures</h2>
+    <p>A Lewis Structure is a 2D drawing that shows exactly how valence electrons are distributed in a molecule. To draw them perfectly every time, follow these 5 steps:</p>
+
+    <ol class="lewis-step-list">
+      <li><strong>Count total valence electrons:</strong> Add up the valence electrons for all atoms. If it's an anion (negative), add extra electrons. If it's a cation (positive), subtract electrons.</li>
+      <li><strong>Determine the Central Atom:</strong> Usually the least electronegative element. <em>(Note: Hydrogen is NEVER in the center).</em></li>
+      <li><strong>Draw Single Bonds:</strong> Draw a line connecting the central atom to each outer atom. Each line represents 2 shared electrons. Subtract these from your total.</li>
+      <li><strong>Fill Outer Octets:</strong> Distribute remaining electrons as lone pairs (dots) around the outer atoms until they are happy (8 for an octet, 2 for H's duet).</li>
+      <li><strong>Check the Central Atom:</strong> Place any leftover electrons on the central atom. If the central atom does NOT have a full octet, erase a lone pair from an outer atom and turn it into a <strong>double or triple bond</strong> to share it.</li>
+    </ol>
+
+    <div class="bond-examples-grid">
+      <div class="bond-box">
+        <h4>Example 1: Water (H₂O)</h4>
+        <span class="math-text">2(1) + 6 = 8 e⁻ Total</span>
+        <div style="display:flex; justify-content:center; margin:15px 0;">
+          <svg width="150" height="80" viewBox="0 0 150 80">
+            <text x="20" y="48" font-size="24" font-weight="bold" fill="#2c3e50">H</text>
+            <line x1="45" y1="40" x2="65" y2="40" stroke="#2c3e50" stroke-width="3"/>
+            <text x="75" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
+            <line x1="100" y1="40" x2="120" y2="40" stroke="#2c3e50" stroke-width="3"/>
+            <text x="130" y="48" font-size="24" font-weight="bold" fill="#2c3e50">H</text>
+            <circle cx="80" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="90" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="80" cy="62" r="3.5" fill="#e74c3c"/>
+            <circle cx="90" cy="62" r="3.5" fill="#e74c3c"/>
+          </svg>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">After drawing single bonds, the remaining 4 electrons sit on Oxygen as <strong>lone pairs</strong>.</p>
+      </div>
+
+      <div class="bond-box">
+        <h4>Example 2: Carbon Dioxide (CO₂)</h4>
+        <span class="math-text">4 + 2(6) = 16 e⁻ Total</span>
+        <div style="display:flex; justify-content:center; margin:15px 0;">
+          <svg width="180" height="80" viewBox="0 0 180 80">
+            <text x="30" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
+            <line x1="58" y1="36" x2="82" y2="36" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="58" y1="44" x2="82" y2="44" stroke="#2c3e50" stroke-width="3"/>
+            <text x="92" y="48" font-size="24" font-weight="bold" fill="#2c3e50">C</text>
+            <line x1="118" y1="36" x2="142" y2="36" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="118" y1="44" x2="142" y2="44" stroke="#2c3e50" stroke-width="3"/>
+            <text x="152" y="48" font-size="24" font-weight="bold" fill="#2c3e50">O</text>
+            <circle cx="35" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="45" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="35" cy="62" r="3.5" fill="#e74c3c"/>
+            <circle cx="45" cy="62" r="3.5" fill="#e74c3c"/>
+            <circle cx="157" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="167" cy="18" r="3.5" fill="#e74c3c"/>
+            <circle cx="157" cy="62" r="3.5" fill="#e74c3c"/>
+            <circle cx="167" cy="62" r="3.5" fill="#e74c3c"/>
+          </svg>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">There aren't enough electrons to give Carbon an octet, so Oxygen shares more to make <strong>double bonds</strong>.</p>
+      </div>
+
+      <div class="bond-box">
+        <h4>Example 3: Cyanide Ion (CN⁻)</h4>
+        <span class="math-text">4 + 5 + 1(ion) = 10 e⁻ Total</span>
+        <div style="display:flex; justify-content:center; margin:15px 0;">
+          <svg width="170" height="80" viewBox="0 0 170 80">
+            <path d="M 30 10 L 20 10 L 20 70 L 30 70" fill="none" stroke="#333" stroke-width="2"/>
+            <path d="M 120 10 L 130 10 L 130 70 L 120 70" fill="none" stroke="#333" stroke-width="2"/>
+            <text x="135" y="25" font-size="20" font-weight="bold" fill="#e74c3c">-</text>
+
+            <text x="45" y="48" font-size="24" font-weight="bold" fill="#2c3e50">C</text>
+            <line x1="70" y1="32" x2="90" y2="32" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="70" y1="40" x2="90" y2="40" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="70" y1="48" x2="90" y2="48" stroke="#2c3e50" stroke-width="3"/>
+            <text x="100" y="48" font-size="24" font-weight="bold" fill="#2c3e50">N</text>
+
+            <circle cx="32" cy="40" r="3.5" fill="#e74c3c"/>
+            <circle cx="40" cy="40" r="3.5" fill="#e74c3c"/>
+
+            <circle cx="120" cy="40" r="3.5" fill="#e74c3c"/>
+            <circle cx="128" cy="40" r="3.5" fill="#e74c3c"/>
+          </svg>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">A <strong>triple bond</strong> is required to satisfy both octets. The brackets and minus sign denote the polyatomic ion.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <h2>Step 4: 3D Molecule Shape (VSEPR Theory)</h2>
+    <p>Once you draw a Lewis Structure, you can determine its real 3D shape! <strong>VSEPR Theory</strong> states that electron regions (bonds and lone pairs) repel each other to spread out in 3D space.</p>
+    <p>Use the explorer below. Notice how adding a <strong>Lone Pair (yellow lobes)</strong> takes up space and pushes the <strong>bonded atoms (red spheres)</strong> closer together!</p>
+
+    <div class="interactive-panel vsepr-container">
+      <div class="vsepr-canvas-wrapper">
+        <canvas id="vseprCanvas"></canvas>
+        <div class="drag-hint">Left Click + Drag to Rotate</div>
+      </div>
+
+      <div class="vsepr-controls">
+        <div class="control-group">
+          <label for="bondCount">Bonded Atoms (1-6):</label>
+          <input type="number" id="bondCount" min="1" max="6" value="2">
+        </div>
+        <div class="control-group">
+          <label for="lpCount">Lone Pairs (0-3):</label>
+          <input type="number" id="lpCount" min="0" max="3" value="0">
+        </div>
+
+        <div class="vsepr-info">
+          <p><strong>Total Domains:</strong> <span id="stericNum">2</span></p>
+          <p><strong>Geometry:</strong> <span id="molGeom">Linear</span></p>
+          <p><strong>Bond Angle:</strong> <span id="bondAngle">180&deg;</span></p>
+          <p><strong>Overall Polarity:</strong> <span id="molPol" class="result-badge badge-nonpolar">Nonpolar</span></p>
+          <p style="font-size:0.8rem; color:#7f8c8d; margin-top:10px;">*Assuming all outer atoms are identical.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 40px; color: var(--primary);">VSEPR Geometry Reference Table</h3>
+    <table>
+      <tr>
+        <th class="center-text">Steric Number<br><span style="font-size:0.8rem; font-weight:normal;">(Domains)</span></th>
+        <th class="center-text">Bonded</th>
+        <th class="center-text">Lone Pairs</th>
+        <th>Shape</th>
+        <th>Molecular Geometry</th>
+        <th>Ideal Bond Angle</th>
+      </tr>
+      <tr>
+        <td class="center-text"><strong>2</strong></td>
+        <td class="center-text">2</td>
+        <td class="center-text">0</td>
+        <td><div class="svg-shape" data-sn="2" data-bp="2" data-lp="0"></div></td>
+        <td>Linear</td>
+        <td>180&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text" rowspan="2"><strong>3</strong></td>
+        <td class="center-text">3</td>
+        <td class="center-text">0</td>
+        <td><div class="svg-shape" data-sn="3" data-bp="3" data-lp="0"></div></td>
+        <td>Trigonal Planar</td>
+        <td>120&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">2</td>
+        <td class="center-text">1</td>
+        <td><div class="svg-shape" data-sn="3" data-bp="2" data-lp="1"></div></td>
+        <td>Bent</td>
+        <td>&lt; 120&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text" rowspan="3"><strong>4</strong></td>
+        <td class="center-text">4</td>
+        <td class="center-text">0</td>
+        <td><div class="svg-shape" data-sn="4" data-bp="4" data-lp="0"></div></td>
+        <td>Tetrahedral</td>
+        <td>109.5&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">3</td>
+        <td class="center-text">1</td>
+        <td><div class="svg-shape" data-sn="4" data-bp="3" data-lp="1"></div></td>
+        <td>Trigonal Pyramidal</td>
+        <td>&lt; 109.5&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">2</td>
+        <td class="center-text">2</td>
+        <td><div class="svg-shape" data-sn="4" data-bp="2" data-lp="2"></div></td>
+        <td>Bent</td>
+        <td>&lt;&lt; 109.5&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text" rowspan="4"><strong>5</strong></td>
+        <td class="center-text">5</td>
+        <td class="center-text">0</td>
+        <td><div class="svg-shape" data-sn="5" data-bp="5" data-lp="0"></div></td>
+        <td>Trigonal Bipyramidal</td>
+        <td>90&deg;, 120&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">4</td>
+        <td class="center-text">1</td>
+        <td><div class="svg-shape" data-sn="5" data-bp="4" data-lp="1"></div></td>
+        <td>Seesaw</td>
+        <td>&lt; 90&deg;, &lt; 120&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">3</td>
+        <td class="center-text">2</td>
+        <td><div class="svg-shape" data-sn="5" data-bp="3" data-lp="2"></div></td>
+        <td>T-shaped</td>
+        <td>&lt; 90&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">2</td>
+        <td class="center-text">3</td>
+        <td><div class="svg-shape" data-sn="5" data-bp="2" data-lp="3"></div></td>
+        <td>Linear</td>
+        <td>180&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text" rowspan="3"><strong>6</strong></td>
+        <td class="center-text">6</td>
+        <td class="center-text">0</td>
+        <td><div class="svg-shape" data-sn="6" data-bp="6" data-lp="0"></div></td>
+        <td>Octahedral</td>
+        <td>90&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">5</td>
+        <td class="center-text">1</td>
+        <td><div class="svg-shape" data-sn="6" data-bp="5" data-lp="1"></div></td>
+        <td>Square Pyramidal</td>
+        <td>&lt; 90&deg;</td>
+      </tr>
+      <tr>
+        <td class="center-text">4</td>
+        <td class="center-text">2</td>
+        <td><div class="svg-shape" data-sn="6" data-bp="4" data-lp="2"></div></td>
+        <td>Square Planar</td>
+        <td>90&deg;</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="step-card">
+    <h2>Step 5: Molecular Polarity & Intermolecular Forces (IMFs)</h2>
+
+    <h3 style="color: var(--primary);">Part A: Molecular Polarity</h3>
+    <p>Before we can determine how molecules interact with each other, we must figure out if the <em>entire molecule</em> is polar or nonpolar. This depends on both the <strong>bond types</strong> (Step 1) and the <strong>3D shape</strong> (Step 4).</p>
+
+    <div class="bond-examples-grid">
+      <div class="bond-box">
+        <h4>Nonpolar Molecule (Symmetrical)</h4>
+        <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Carbon Dioxide (CO₂)</p>
+        <div class="density-map">
+          <svg width="200" height="80" viewBox="0 0 200 80">
+            <text x="30" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+            <line x1="50" y1="40" x2="85" y2="40" stroke="#2c3e50" stroke-width="2"/>
+            <text x="92" y="48" font-size="20" font-weight="bold" fill="#2c3e50">C</text>
+            <line x1="110" y1="40" x2="145" y2="40" stroke="#2c3e50" stroke-width="2"/>
+            <text x="152" y="48" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+
+            <line x1="85" y1="20" x2="40" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+            <line x1="110" y1="20" x2="155" y2="20" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+            <line x1="80" y1="15" x2="80" y2="25" stroke="#e74c3c" stroke-width="2"/>
+            <line x1="115" y1="15" x2="115" y2="25" stroke="#e74c3c" stroke-width="2"/>
+
+            <defs>
+              <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">Even though the C=O bonds are polar, the linear shape is perfectly symmetrical. The dipole arrows pull in opposite directions and <strong>cancel out</strong>. The molecule is nonpolar.</p>
+      </div>
+
+      <div class="bond-box">
+        <h4>Polar Molecule (Asymmetrical)</h4>
+        <p style="font-size: 0.9rem; margin:0;"><strong>Ex:</strong> Water (H₂O)</p>
+        <div class="density-map">
+          <svg width="200" height="100" viewBox="0 0 200 100">
+            <text x="92" y="40" font-size="20" font-weight="bold" fill="#2c3e50">O</text>
+            <line x1="85" y1="50" x2="60" y2="80" stroke="#2c3e50" stroke-width="2"/>
+            <line x1="110" y1="50" x2="135" y2="80" stroke="#2c3e50" stroke-width="2"/>
+            <text x="45" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+            <text x="140" y="95" font-size="20" font-weight="bold" fill="#2c3e50">H</text>
+
+            <line x1="60" y1="65" x2="80" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+            <line x1="135" y1="65" x2="115" y2="40" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+            <line x1="98" y1="70" x2="98" y2="10" stroke="#3498db" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#arrow-blue)"/>
+            <text x="105" y="25" font-size="12" fill="#3498db" font-weight="bold">Net Dipole</text>
+
+            <defs>
+              <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <p style="font-size: 0.85rem; color:#666;">The bent shape is asymmetrical. The polar bonds pull oxygen's way and <strong>do not cancel</strong>. This creates a net dipole (a permanently positive and negative end).</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 40px; color: var(--primary);">Part B: Intermolecular Forces (IMFs)</h3>
+    <p>Now that we know if a molecule is polar or nonpolar, we can determine its IMFs. While covalent bonds hold atoms together <em>inside</em> a molecule, <strong>IMFs</strong> are the weaker forces of attraction <em>between</em> separate molecules. There are three main types:</p>
+
+    <table>
+      <tr>
+        <th>IMF Type</th>
+        <th>Strength</th>
+        <th>What causes it?</th>
+        <th>Example</th>
+      </tr>
+      <tr>
+        <td><strong>London Dispersion (LDF)</strong></td>
+        <td>Weakest</td>
+        <td>Temporary shifting of electrons. Exists in ALL molecules, but is the <em>only</em> force in <strong>nonpolar</strong> molecules. Gets stronger with larger atoms.</td>
+        <td>CH₄, Cl₂</td>
+      </tr>
+      <tr>
+        <td><strong>Dipole-Dipole</strong></td>
+        <td>Medium</td>
+        <td>Attraction between the permanent partial charges (&delta;⁺ and &delta;⁻) of asymmetrical, <strong>polar</strong> molecules.</td>
+        <td>HCl, H₂S</td>
+      </tr>
+      <tr>
+        <td><strong>Hydrogen Bonding</strong></td>
+        <td>Strongest</td>
+        <td>A very strong dipole interaction when Hydrogen is directly bonded to a highly electronegative atom (<strong>N, O, or F</strong>).</td>
+        <td>H₂O, NH₃</td>
+      </tr>
+    </table>
+
+    <!-- IMF Diagrams -->
+    <h4 style="margin-top:30px; color:var(--primary);">IMF Diagrams</h4>
+    <div class="bond-examples-grid">
+
+      <!-- London Dispersion -->
+      <div class="bond-box" data-tip="London Dispersion: electrons randomly shift inside a nonpolar molecule, creating a fleeting dipole that induces the opposite dipole in a neighbour. Stronger in larger, more polarisable atoms.">
+        <h4 style="color:#7f8c8d;">London Dispersion (LDF)</h4>
+        <p style="font-size:0.82rem; margin:0 0 6px 0; color:#555;">Ex: Cl₂ molecules</p>
+        <canvas id="ldfCanvas" class="anim-canvas" height="120"></canvas>
+        <p style="font-size:0.82rem; color:#666; margin:6px 0 0 0;">A temporary, random shift of electrons creates a fleeting δ⁻/δ⁺ that induces the same in a nearby molecule. Present in <strong>all</strong> molecules.</p>
+      </div>
+
+      <!-- Dipole-Dipole -->
+      <div class="bond-box" data-tip="Dipole-Dipole: permanent partial charges in polar molecules align so δ⁻ ends face δ⁺ ends — like tiny bar magnets. Stronger than LDF, but weaker than hydrogen bonding.">
+        <h4 style="color:#e74c3c;">Dipole-Dipole</h4>
+        <p style="font-size:0.82rem; margin:0 0 6px 0; color:#555;">Ex: HCl molecules</p>
+        <canvas id="ddCanvas" class="anim-canvas" height="120"></canvas>
+        <p style="font-size:0.82rem; color:#666; margin:6px 0 0 0;">The <strong>permanent</strong> δ⁻ end of one polar molecule lines up and attracts the δ⁺ end of the next. Requires a permanently polar molecule.</p>
+      </div>
+
+      <!-- Hydrogen Bonding -->
+      <div class="bond-box" data-tip="Hydrogen Bonding: H bonded directly to N, O, or F creates an intense δ⁺. The lone pair on a neighbouring N/O/F is powerfully attracted. This is why water has such unusual properties (high boiling point, surface tension).">
+        <h4 style="color:#2980b9;">Hydrogen Bonding</h4>
+        <p style="font-size:0.82rem; margin:0 0 6px 0; color:#555;">Ex: H₂O molecules</p>
+        <canvas id="hbCanvas" class="anim-canvas" height="120"></canvas>
+        <p style="font-size:0.82rem; color:#666; margin:6px 0 0 0;">The tiny, bare H atom bonded to O creates an <strong>intense δ⁺</strong>. A lone pair on a neighbouring O is powerfully attracted to it — much stronger than regular dipole-dipole.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="step-card">
+    <h2>Step 6: How IMFs Impact Physical Properties</h2>
+    <p>The strength of Intermolecular Forces directly controls the physical properties of a substance, especially its phase transitions (melting and boiling) and vapor pressure.</p>
+
+    <h4 style="color: var(--primary); margin-bottom:5px;">1. Melting Point (Direct Relationship)</h4>
+    <p style="margin-top:0;">In a solid, molecules are locked into a rigid crystal lattice by their IMFs. To melt the solid into a liquid, you must add thermal energy to overcome these attractions. <strong>The stronger the IMFs, the higher the melting point.</strong></p>
+
+    <div class="interactive-panel" style="margin-bottom: 30px;">
+      <h3>Melting Point vs. Dominant IMF</h3>
+      <p>Notice how water's strong hydrogen bonds keep it solid (ice) at much higher temperatures than nonpolar methane.</p>
+      <div class="chart-container">
+        <canvas id="mpChart"></canvas>
+      </div>
+    </div>
+
+    <h4 style="color: var(--primary); margin-bottom:5px;">2. Boiling Point (Direct Relationship)</h4>
+    <p style="margin-top:0;">To boil a liquid into a gas, you must add enough heat to completely pull the molecules apart from one another. Just like melting, <strong>stronger IMFs result in a higher boiling point.</strong></p>
+
+    <div class="interactive-panel" style="margin-bottom: 30px;">
+      <h3>Boiling Point vs. Dominant IMF</h3>
+      <div class="chart-container">
+        <canvas id="imfChart"></canvas>
+      </div>
+    </div>
+
+    <h4 style="color: var(--primary); margin-bottom:5px;">3. Vapor Pressure (Inverse Relationship)</h4>
+    <div class="definition-box" style="border-left-color: #9b59b6; margin-top: 10px;">
+      <p style="margin-top:0;"><strong>Vapor Pressure</strong> is the pressure exerted by a gas that has evaporated from a liquid in a closed container. It measures how easily a substance evaporates (its volatility).</p>
+      <p style="margin-bottom:0;"><strong>The Rule:</strong> IMFs and Vapor Pressure have an <strong>inverse relationship</strong>. Molecules with weak IMFs don't stick together well, allowing them to escape easily into the gas phase (HIGH vapor pressure). Molecules with strong IMFs hold onto each other tightly, preventing evaporation (LOW vapor pressure).</p>
+    </div>
+
+    <div class="interactive-panel">
+      <h3>Vapor Pressure vs. Dominant IMF (at 25&deg;C)</h3>
+      <p>Notice how water, with its strong hydrogen bonds, has a very low vapor pressure compared to the weaker dipole interactions of acetone.</p>
+      <div class="chart-container">
+        <canvas id="vpChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRACTICE QUESTIONS ── -->
+  <div class="step-card" id="practice-section">
+    <h2>Practice Questions</h2>
+    <p>Test your understanding of the whole tutorial. Click <strong>Show Answer</strong> to reveal each explanation.</p>
+
+    <div id="pq-list"></div>
+  </div>
+
+</div>
+
+<script>
+  /* ─────────────────────────────────────────
+     QUIZ SYSTEM
+     ───────────────────────────────────────── */
+  const quizData = [
+    {
+      q: "What is the fundamental difference between a covalent bond and an ionic bond?",
+      opts: [
+        "Covalent bonds are always stronger than ionic bonds",
+        "Covalent bonds involve sharing electrons; ionic bonds involve transferring electrons",
+        "Ionic bonds only form between two nonmetals",
+        "Covalent bonds require a metal and a nonmetal"
+      ],
+      correct: 1,
+      explanation: "<strong>Covalent bond:</strong> atoms <em>share</em> valence electrons. <strong>Ionic bond:</strong> one atom completely <em>transfers</em> electrons to the other, forming oppositely charged ions. The key distinction is <em>share vs. transfer</em>."
+    },
+    {
+      q: "Classify H–Cl: electronegativity difference ≈ 0.96. What type of bond is this?",
+      opts: [
+        "Nonpolar covalent — electrons are shared equally",
+        "Ionic — the electron is fully transferred",
+        "Polar covalent — electrons are shared unequally",
+        "Metallic — electrons move freely"
+      ],
+      correct: 2,
+      explanation: "ΔEN of 0.96 falls in the polar covalent range (0.5–1.7). Cl pulls the shared electrons closer to itself, creating δ⁺ on H and δ⁻ on Cl."
+    },
+    {
+      q: "A triple bond (e.g. N≡N) shares how many electron pairs? How does it compare to a single bond?",
+      opts: [
+        "1 pair; it is longer and weaker than a single bond",
+        "2 pairs; it is the same strength as a single bond",
+        "3 pairs; it is shorter and stronger than a single bond",
+        "4 pairs; it is longer but stronger"
+      ],
+      correct: 2,
+      explanation: "A triple bond shares <strong>3 pairs (6 electrons)</strong>. More shared electrons pull the atoms closer together, making the bond <strong>shorter</strong> and requiring much more energy to break — i.e. <strong>stronger</strong>."
+    },
+    {
+      q: "In the Lewis structure of NH₃, how many lone pairs does nitrogen have?",
+      opts: [
+        "0 lone pairs",
+        "1 lone pair",
+        "2 lone pairs",
+        "3 lone pairs"
+      ],
+      correct: 1,
+      explanation: "Total valence e⁻: 5 (N) + 3×1 (H) = 8. Three single bonds use 6 e⁻. The remaining 2 e⁻ sit on N as <strong>1 lone pair</strong>. So N has 3 bonding pairs and 1 lone pair."
+    },
+    {
+      q: "Why is the H–O–H bond angle in water ~104.5° instead of the tetrahedral 109.5°?",
+      opts: [
+        "Water has a linear electron geometry",
+        "Lone pairs repel more strongly than bonding pairs, compressing the angle",
+        "Oxygen is too small to support a wider angle",
+        "There are only 2 bonding domains around oxygen"
+      ],
+      correct: 1,
+      explanation: "Water's steric number is 4 (2 bonds + 2 lone pairs → tetrahedral electron geometry). However, <strong>lone pairs repel more strongly than bond pairs</strong>, squeezing the H–O–H angle down from 109.5° to ~104.5°. The molecular shape is <em>bent</em>."
+    },
+    {
+      q: "CO₂ has polar C=O bonds. Why is the overall molecule nonpolar?",
+      opts: [
+        "C=O bonds are actually nonpolar because carbon and oxygen have similar sizes",
+        "The linear shape makes the two equal dipoles point in opposite directions and cancel",
+        "CO₂ is a nonpolar molecule because it has no lone pairs",
+        "CO₂ is actually polar — it has a net dipole moment"
+      ],
+      correct: 1,
+      explanation: "CO₂ is <strong>linear</strong>. The two C=O dipoles are equal in magnitude but point in opposite directions, so they <strong>cancel out</strong>. Net dipole = 0. Molecular polarity depends on both bond polarity <em>and</em> 3D shape."
+    },
+    {
+      q: "Which intermolecular force is present in EVERY substance, including nonpolar ones?",
+      opts: [
+        "Hydrogen bonding",
+        "Dipole-dipole forces",
+        "London dispersion forces",
+        "Ionic attraction"
+      ],
+      correct: 2,
+      explanation: "<strong>London Dispersion Forces (LDF)</strong> exist in all molecules because all molecules have electrons that can shift momentarily, creating temporary dipoles. Polar molecules have additional forces on top of LDF."
+    },
+    {
+      q: "Water boils at 100 °C; H₂S boils at −60 °C. Why is water's boiling point so much higher?",
+      opts: [
+        "Water molecules are lighter, so they need more energy to move",
+        "H₂S has more electrons and therefore stronger London forces",
+        "Water has hydrogen bonding (H–O), which is far stronger than H₂S's dipole-dipole and LDF",
+        "Water is nonpolar, while H₂S is polar"
+      ],
+      correct: 2,
+      explanation: "H is bonded directly to O (highly electronegative) in water → <strong>hydrogen bonding</strong>. H₂S doesn't qualify (S is not electronegative enough) and relies only on weaker dipole-dipole + LDF. Stronger IMFs require more energy to overcome → higher boiling point."
+    },
+    {
+      q: "A liquid has a very high vapor pressure at room temperature. What does this reveal?",
+      opts: [
+        "It has strong IMFs and is difficult to evaporate",
+        "It has weak IMFs and evaporates easily (highly volatile)",
+        "It must have hydrogen bonding",
+        "It is likely a solid at room temperature"
+      ],
+      correct: 1,
+      explanation: "High vapor pressure → molecules escape into the gas phase easily → <strong>weak IMFs</strong> (they don't hold onto each other strongly). IMF strength and vapor pressure have an <strong>inverse relationship</strong>."
+    },
+    {
+      q: "What is the dominant IMF in HF?",
+      opts: [
+        "London dispersion forces only",
+        "Dipole-dipole forces",
+        "Hydrogen bonding",
+        "Ionic bonding"
+      ],
+      correct: 2,
+      explanation: "H is bonded directly to F — one of the three atoms (N, O, F) that qualify for <strong>hydrogen bonding</strong>. F is the most electronegative element, making the H extremely δ⁺. This is the strongest IMF type."
+    }
+  ];
+
+  let quizScore = 0;
+  let quizAnswered = 0;
+
+  function buildQuiz() {
+    quizScore = 0; quizAnswered = 0;
+    const container = document.getElementById('pq-list');
+    container.innerHTML = '';
+
+    // Header
+    const header = document.createElement('div');
+    header.className = 'quiz-header';
+    header.innerHTML = `
+      <div class="quiz-progress" id="quiz-progress">Question 1 of ${quizData.length}</div>
+      <div class="quiz-score-badge">Score: <span id="quiz-score-val">0</span> / ${quizData.length}</div>
+    `;
+    container.appendChild(header);
+
+    quizData.forEach((item, qi) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.id = `qcard-${qi}`;
+
+      const optHtml = item.opts.map((opt, oi) =>
+        `<button class="quiz-option" onclick="answerQuiz(${qi},${oi})">${String.fromCharCode(65+oi)}. ${opt}</button>`
+      ).join('');
+
+      card.innerHTML = `
+        <p class="quiz-question">${qi+1}. ${item.q}</p>
+        <div class="quiz-options" id="opts-${qi}">${optHtml}</div>
+        <div class="quiz-feedback" id="fb-${qi}"></div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Summary block
+    const summary = document.createElement('div');
+    summary.className = 'quiz-summary';
+    summary.id = 'quiz-summary';
+    summary.innerHTML = `
+      <h3>Quiz Complete!</h3>
+      <div class="final-score" id="final-score-display"></div>
+      <p id="final-msg" style="font-size:1.05rem; color:#555; margin-top:8px;"></p>
+      <button class="quiz-restart-btn" onclick="buildQuiz()">Try Again</button>
+    `;
+    container.appendChild(summary);
+  }
+
+  function answerQuiz(qi, oi) {
+    const item = quizData[qi];
+    const opts = document.querySelectorAll(`#opts-${qi} .quiz-option`);
+    const fb = document.getElementById(`fb-${qi}`);
+    const card = document.getElementById(`qcard-${qi}`);
+
+    // Disable all buttons for this question
+    opts.forEach(b => b.disabled = true);
+    opts[item.correct].classList.add('correct-ans');
+
+    const isCorrect = oi === item.correct;
+    if (!isCorrect) opts[oi].classList.add('wrong-ans');
+
+    fb.className = `quiz-feedback show ${isCorrect ? 'fb-correct' : 'fb-wrong'}`;
+    fb.innerHTML = (isCorrect ? '✅ Correct! ' : '❌ Not quite. ') + item.explanation;
+    card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+    if (isCorrect) quizScore++;
+    quizAnswered++;
+
+    document.getElementById('quiz-score-val').textContent = quizScore;
+    document.getElementById('quiz-progress').textContent =
+      `${quizAnswered} of ${quizData.length} answered`;
+
+    if (quizAnswered === quizData.length) {
+      setTimeout(() => {
+        const summary = document.getElementById('quiz-summary');
+        const pct = Math.round(quizScore / quizData.length * 100);
+        document.getElementById('final-score-display').textContent = `${quizScore} / ${quizData.length}`;
+        const msg = pct === 100 ? '🎉 Perfect score! Outstanding work.' :
+                    pct >= 70  ? '👍 Great job! Review any wrong answers above.' :
+                                 '📖 Keep studying — try again after reviewing the tutorial!';
+        document.getElementById('final-msg').textContent = msg;
+        summary.style.display = 'block';
+        summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    }
+  }
+
+  buildQuiz();
+
+  /* ─────────────────────────────────────────
+     TOOLTIP SYSTEM
+     ───────────────────────────────────────── */
+  const tipBox = document.createElement('div');
+  tipBox.className = 'tip-box';
+  document.body.appendChild(tipBox);
+
+  document.querySelectorAll('[data-tip]').forEach(el => {
+    el.addEventListener('mouseenter', e => {
+      tipBox.textContent = el.getAttribute('data-tip');
+      tipBox.style.opacity = '1';
+      moveTip(e);
+    });
+    el.addEventListener('mousemove', moveTip);
+    el.addEventListener('mouseleave', () => { tipBox.style.opacity = '0'; });
+  });
+
+  function moveTip(e) {
+    const x = e.clientX + 14, y = e.clientY + 14;
+    const bw = tipBox.offsetWidth, bh = tipBox.offsetHeight;
+    tipBox.style.left = (x + bw > window.innerWidth  ? x - bw - 28 : x) + 'px';
+    tipBox.style.top  = (y + bh > window.innerHeight ? y - bh - 28 : y) + 'px';
+  }
+
+  /* ─────────────────────────────────────────
+     H₂ BOND FORMATION CANVAS ANIMATION
+     ───────────────────────────────────────── */
+  (function() {
+    const canvas = document.getElementById('h2Canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+
+    function resize() {
+      W = canvas.offsetWidth; H = 110;
+      canvas.width = W; canvas.height = H;
+    }
+    resize();
+    window.addEventListener('resize', () => { resize(); });
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      t += 0.012;
+
+      const phase = (Math.sin(t * 0.5) + 1) / 2; // 0 = apart, 1 = bonded
+      const cx = W / 2, cy = H / 2;
+      const maxSep = Math.min(W * 0.28, 120);
+      const sep = maxSep * (1 - phase * 0.45); // atoms approach
+
+      // Overlap glow
+      const overlapAlpha = phase * 0.5;
+      const grad = ctx.createRadialGradient(cx, cy, 2, cx, cy, sep * 0.7);
+      grad.addColorStop(0, `rgba(99,179,237,${overlapAlpha})`);
+      grad.addColorStop(1, 'rgba(99,179,237,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.ellipse(cx, cy, sep * 0.75, 26, 0, 0, Math.PI * 2); ctx.fill();
+
+      // Draw two H atoms
+      [[cx - sep, cy], [cx + sep, cy]].forEach(([ax, ay], ai) => {
+        ctx.beginPath();
+        ctx.arc(ax, ay, 28, 0, Math.PI * 2);
+        ctx.fillStyle = '#dbeafe'; ctx.fill();
+        ctx.strokeStyle = '#3498db'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 16px Segoe UI';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('H', ax, ay);
+
+        // Electron orbiting each atom, converging toward center
+        const angle = t * 2.2 + ai * Math.PI;
+        const orbitR = 22 * (1 - phase * 0.55);
+        const ex = ax + Math.cos(angle) * orbitR * (ai === 0 ? 1 : -1);
+        const ey = ay + Math.sin(angle) * orbitR * 0.5;
+        ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#f1c40f'; ctx.fill();
+        ctx.strokeStyle = '#d35400'; ctx.lineWidth = 1; ctx.stroke();
+      });
+
+      // Label
+      ctx.font = '11px Segoe UI'; ctx.fillStyle = '#666';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      const label = phase < 0.3 ? 'Separate H atoms — 1 electron each' :
+                    phase < 0.7 ? 'Atoms approaching — electrons begin to share' :
+                                  'H–H bond formed — shared electron pair';
+      ctx.fillText(label, cx, 2);
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ─────────────────────────────────────────
+     IMF CANVAS ANIMATIONS
+     ───────────────────────────────────────── */
+
+  // ── London Dispersion ──
+  (function() {
+    const canvas = document.getElementById('ldfCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resize() { W = canvas.offsetWidth; H = 120; canvas.width = W; canvas.height = H; }
+    resize(); window.addEventListener('resize', resize);
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      t += 0.018;
+      const cy = H / 2;
+      const unit = W / 5;
+
+      // Electron cloud shift for mol 1: oscillates left-right
+      const shift1 = Math.sin(t) * 10;
+      // Mol 2 shifts opposite (induced), but with delay
+      const shift2 = -Math.sin(t - 0.8) * 8;
+
+      function drawMol(cx, eShift, label1, label2) {
+        // Cloud ellipse
+        ctx.beginPath(); ctx.ellipse(cx, cy, unit * 0.95, 22, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(236,240,241,0.9)'; ctx.fill();
+        ctx.strokeStyle = '#bdc3c7'; ctx.lineWidth = 1.5; ctx.stroke();
+
+        // Left atom
+        ctx.beginPath(); ctx.arc(cx - unit * 0.38, cy, 15, 0, Math.PI * 2);
+        const lGrad = ctx.createRadialGradient(cx - unit*0.38 + eShift*0.4, cy, 1, cx - unit*0.38, cy, 15);
+        lGrad.addColorStop(0, '#bfdbfe'); lGrad.addColorStop(1, '#dbeafe');
+        ctx.fillStyle = lGrad; ctx.fill();
+        ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('Cl', cx - unit * 0.38, cy);
+
+        // Right atom
+        ctx.beginPath(); ctx.arc(cx + unit * 0.38, cy, 15, 0, Math.PI * 2);
+        const rGrad = ctx.createRadialGradient(cx + unit*0.38 + eShift*0.4, cy, 1, cx + unit*0.38, cy, 15);
+        rGrad.addColorStop(0, '#bfdbfe'); rGrad.addColorStop(1, '#dbeafe');
+        ctx.fillStyle = rGrad; ctx.fill();
+        ctx.strokeStyle = '#7f8c8d'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.fillText('Cl', cx + unit * 0.38, cy);
+
+        // Electron cloud centroid dot (shows shift)
+        ctx.beginPath(); ctx.arc(cx + eShift, cy, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#f1c40f'; ctx.fill();
+
+        // δ labels
+        const intensity = Math.abs(eShift) / 12;
+        ctx.font = `bold ${9 + intensity*3|0}px Segoe UI`;
+        ctx.fillStyle = eShift < 0 ? '#e74c3c' : '#2980b9';
+        ctx.fillText(eShift < 0 ? 'δ⁻' : 'δ⁺', cx - unit*0.38, cy - 22);
+        ctx.fillStyle = eShift < 0 ? '#2980b9' : '#e74c3c';
+        ctx.fillText(eShift < 0 ? 'δ⁺' : 'δ⁻', cx + unit*0.38, cy - 22);
+      }
+
+      const m1x = unit * 1.3, m2x = unit * 3.7;
+      drawMol(m1x, shift1);
+      drawMol(m2x, shift2);
+
+      // Dashed attraction arrow between molecules
+      const gap = m2x - unit*0.95 - (m1x + unit*0.95);
+      const midX = (m1x + unit*0.95 + m2x - unit*0.95) / 2;
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = '#f39c12'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(m1x + unit*0.95, cy); ctx.lineTo(m2x - unit*0.95, cy); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = '9px Segoe UI'; ctx.fillStyle = '#d35400'; ctx.textAlign = 'center';
+      ctx.fillText('induced', midX, cy - 8);
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── Dipole-Dipole ──
+  (function() {
+    const canvas = document.getElementById('ddCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resize() { W = canvas.offsetWidth; H = 120; canvas.width = W; canvas.height = H; }
+    resize(); window.addEventListener('resize', resize);
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      t += 0.016;
+
+      // Molecules gently oscillate (vibrate in place)
+      const osc = Math.sin(t * 1.5) * 3;
+      const cy = H / 2;
+
+      function drawHCl(hx, hy) {
+        // H atom (small, red tint)
+        ctx.beginPath(); ctx.arc(hx, hy, 12, 0, Math.PI * 2);
+        ctx.fillStyle = '#fde8e8'; ctx.fill();
+        ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 11px Segoe UI';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('H', hx, hy);
+        ctx.fillStyle = '#e74c3c'; ctx.font = '10px Segoe UI'; ctx.fillText('δ⁺', hx, hy - 20);
+
+        // Bond line
+        ctx.beginPath(); ctx.moveTo(hx + 12, hy); ctx.lineTo(hx + 28, hy);
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2; ctx.stroke();
+
+        // Cl atom (larger, blue tint)
+        ctx.beginPath(); ctx.arc(hx + 44, hy, 17, 0, Math.PI * 2);
+        ctx.fillStyle = '#dbeafe'; ctx.fill();
+        ctx.strokeStyle = '#2980b9'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 12px Segoe UI'; ctx.fillText('Cl', hx + 44, hy);
+        ctx.fillStyle = '#2980b9'; ctx.font = '10px Segoe UI'; ctx.fillText('δ⁻', hx + 44, hy - 24);
+      }
+
+      const gap = W * 0.14;
+      const m1x = W * 0.08 + osc, m2x = W * 0.53 + osc * 0.5;
+      drawHCl(m1x, cy); drawHCl(m2x, cy);
+
+      // Attraction dashes between Cl of mol1 and H of mol2
+      const cl1x = m1x + 44 + 17, hx2 = m2x;
+      const midX = (cl1x + hx2) / 2;
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = '#f39c12'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(cl1x, cy); ctx.lineTo(hx2 - 12, cy); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrow head
+      ctx.beginPath(); ctx.moveTo(hx2 - 12, cy);
+      ctx.lineTo(hx2 - 20, cy - 5); ctx.lineTo(hx2 - 20, cy + 5); ctx.closePath();
+      ctx.fillStyle = '#f39c12'; ctx.fill();
+
+      ctx.font = '9px Segoe UI'; ctx.fillStyle = '#d35400'; ctx.textAlign = 'center';
+      ctx.fillText('attract', midX, cy - 10);
+      ctx.font = '9px Segoe UI'; ctx.fillStyle = '#888';
+      ctx.fillText('δ⁻  ···  δ⁺', midX, cy + 16);
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── Hydrogen Bonding ──
+  (function() {
+    const canvas = document.getElementById('hbCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resize() { W = canvas.offsetWidth; H = 120; canvas.width = W; canvas.height = H; }
+    resize(); window.addEventListener('resize', resize);
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      t += 0.016;
+
+      const pulse = (Math.sin(t * 2) + 1) / 2; // 0-1 for H-bond pulse
+      const cx = W / 2;
+
+      // ── Water molecule 1 (left) ──
+      const o1x = cx * 0.48, o1y = H / 2;
+      // O atom
+      ctx.beginPath(); ctx.arc(o1x, o1y, 18, 0, Math.PI * 2);
+      ctx.fillStyle = '#d5f5e3'; ctx.fill();
+      ctx.strokeStyle = '#27ae60'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 13px Segoe UI'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('O', o1x, o1y);
+      ctx.fillStyle = '#2980b9'; ctx.font = '10px Segoe UI'; ctx.fillText('δ⁻', o1x - 22, o1y - 16);
+
+      // H atoms of mol 1
+      [[o1x - 28, o1y - 22], [o1x - 28, o1y + 22]].forEach(([hx, hy]) => {
+        ctx.beginPath(); ctx.moveTo(o1x - 17, hx < o1x ? o1y - 10 : o1y + 10); ctx.lineTo(hx + 10, hy);
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(hx, hy, 10, 0, Math.PI * 2);
+        ctx.fillStyle = '#fde8e8'; ctx.fill(); ctx.strokeStyle = '#e74c3c'; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 10px Segoe UI'; ctx.fillText('H', hx, hy);
+        ctx.fillStyle = '#e74c3c'; ctx.font = '9px Segoe UI'; ctx.fillText('δ⁺', hx - 14, hy);
+      });
+
+      // ── Water molecule 2 (right) ──
+      const o2x = cx * 1.52, o2y = H / 2;
+      ctx.beginPath(); ctx.arc(o2x, o2y, 18, 0, Math.PI * 2);
+      ctx.fillStyle = '#d5f5e3'; ctx.fill();
+      ctx.strokeStyle = '#27ae60'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 13px Segoe UI'; ctx.fillText('O', o2x, o2y);
+      ctx.fillStyle = '#2980b9'; ctx.font = '10px Segoe UI'; ctx.fillText('δ⁻', o2x + 18, o2y - 16);
+
+      [[o2x + 28, o2y - 22], [o2x + 28, o2y + 22]].forEach(([hx, hy]) => {
+        ctx.beginPath(); ctx.moveTo(o2x + 17, hx > o2x ? o2y - 10 : o2y + 10); ctx.lineTo(hx - 10, hy);
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(hx, hy, 10, 0, Math.PI * 2);
+        ctx.fillStyle = '#fde8e8'; ctx.fill(); ctx.strokeStyle = '#e74c3c'; ctx.stroke();
+        ctx.fillStyle = '#2c3e50'; ctx.font = 'bold 10px Segoe UI'; ctx.fillText('H', hx, hy);
+        ctx.fillStyle = '#e74c3c'; ctx.font = '9px Segoe UI'; ctx.fillText('δ⁺', hx + 12, hy);
+      });
+
+      // ── Hydrogen Bond (dashed, pulsing) between O of mol1 and nearest H of mol2 ──
+      // Connect right side of O1 to left side of O2
+      const hbAlpha = 0.4 + pulse * 0.6;
+      const hbWidth = 1.5 + pulse * 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = `rgba(41,128,185,${hbAlpha})`; ctx.lineWidth = hbWidth;
+      ctx.beginPath(); ctx.moveTo(o1x + 18, o1y); ctx.lineTo(o2x - 18, o2y); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label
+      const midX2 = (o1x + o2x) / 2;
+      ctx.font = `bold ${9 + pulse * 2 | 0}px Segoe UI`;
+      ctx.fillStyle = `rgba(41,128,185,${0.6 + pulse * 0.4})`;
+      ctx.textAlign = 'center'; ctx.fillText('H-bond', midX2, o1y - 26);
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+</script>
+
+<script>
+  /* =========================================
+     VSEPR 2D SVG Generator for Table
+     ========================================= */
+  function draw2DShape(sn, bp, lp) {
+    const pos = {
+      2: [{x:15, y:50}, {x:85, y:50}],
+      3: [{x:50, y:15}, {x:19, y:67}, {x:81, y:67}],
+      4: [{x:50, y:15}, {x:20, y:75}, {x:80, y:75}, {x:30, y:35}],
+      5: [{x:50, y:15}, {x:50, y:85}, {x:85, y:50}, {x:35, y:65}, {x:15, y:50}],
+      6: [{x:50, y:15}, {x:50, y:85}, {x:20, y:50}, {x:80, y:50}, {x:30, y:35}, {x:70, y:65}]
+    };
+
+    let lpIndices = [];
+    if (sn == 3) lpIndices = [0].slice(0, lp);
+    if (sn == 4) lpIndices = [0, 3].slice(0, lp);
+    if (sn == 5) lpIndices = [2, 3, 4].slice(0, lp);
+    if (sn == 6) lpIndices = [1, 0].slice(0, lp);
+
+    let svg = `<svg width="55" height="55" viewBox="0 0 100 100">`;
+
+    pos[sn].forEach((p, i) => {
+      if (!lpIndices.includes(i)) svg += `<line x1="50" y1="50" x2="${p.x}" y2="${p.y}" stroke="#bdc3c7" stroke-width="4"/>`;
+    });
+
+    pos[sn].forEach((p, i) => {
+      if (lpIndices.includes(i)) {
+        let dx = p.x - 50, dy = p.y - 50;
+        let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        let cx = 50 + dx * 0.55, cy = 50 + dy * 0.55;
+        svg += `<ellipse cx="${cx}" cy="${cy}" rx="12" ry="20" fill="rgba(241,196,15,0.4)" stroke="#f39c12" stroke-dasharray="2,2" transform="rotate(${angle+90}, ${cx}, ${cy})"/>`;
+      }
+    });
+
+    pos[sn].forEach((p, i) => {
+      if (!lpIndices.includes(i)) svg += `<circle cx="${p.x}" cy="${p.y}" r="10" fill="#e74c3c"/>`;
+    });
+
+    svg += `<circle cx="50" cy="50" r="12" fill="#2c3e50"/></svg>`;
+    return svg;
+  }
+
+  document.querySelectorAll('.svg-shape').forEach(el => {
+    el.innerHTML = draw2DShape(parseInt(el.getAttribute('data-sn')), parseInt(el.getAttribute('data-bp')), parseInt(el.getAttribute('data-lp')));
+  });
+
+  /* =========================================
+     3D VSEPR Explorer Engine (Three.js)
+     ========================================= */
+  const canvas = document.getElementById('vseprCanvas');
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xfcfcfc);
+  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.z = 12;
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enablePan = false; controls.enableZoom = true; controls.autoRotate = true; controls.autoRotateSpeed = 1.0;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(10, 20, 15);
+  scene.add(dirLight);
+
+  let moleculeGroup = new THREE.Group();
+  scene.add(moleculeGroup);
+
+  const vseprVectors = {
+    2: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0) ],
+    3: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0.866,-0.5,0), new THREE.Vector3(-0.866,-0.5,0) ],
+    4: [ new THREE.Vector3(1,1,1).normalize(), new THREE.Vector3(1,-1,-1).normalize(), new THREE.Vector3(-1,1,-1).normalize(), new THREE.Vector3(-1,-1,1).normalize() ],
+    5: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0), new THREE.Vector3(1,0,0), new THREE.Vector3(-0.5,0,0.866), new THREE.Vector3(-0.5,0,-0.866) ],
+    6: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0), new THREE.Vector3(0,0,1), new THREE.Vector3(0,0,-1), new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0) ]
+  };
+
+  const shapeData = {
+    "2_0": { geom: "Linear", angle: "180&deg;", pol: "Nonpolar" }, "3_0": { geom: "Trigonal Planar", angle: "120&deg;", pol: "Nonpolar" },
+    "2_1": { geom: "Bent", angle: "&lt; 120&deg;", pol: "Polar" }, "4_0": { geom: "Tetrahedral", angle: "109.5&deg;", pol: "Nonpolar" },
+    "3_1": { geom: "Trigonal Pyramidal", angle: "&lt; 109.5&deg;", pol: "Polar" }, "2_2": { geom: "Bent", angle: "&lt;&lt; 109.5&deg;", pol: "Polar" },
+    "5_0": { geom: "Trigonal Bipyramidal", angle: "90&deg;, 120&deg;", pol: "Nonpolar" }, "4_1": { geom: "Seesaw", angle: "&lt; 90&deg;, &lt; 120&deg;", pol: "Polar" },
+    "3_2": { geom: "T-shaped", angle: "&lt; 90&deg;", pol: "Polar" }, "2_3": { geom: "Linear", angle: "180&deg;", pol: "Nonpolar" },
+    "6_0": { geom: "Octahedral", angle: "90&deg;", pol: "Nonpolar" }, "5_1": { geom: "Square Pyramidal", angle: "&lt; 90&deg;", pol: "Polar" },
+    "4_2": { geom: "Square Planar", angle: "90&deg;", pol: "Nonpolar" }
+  };
+
+  function buildMolecule3D(bonds, lonePairs) {
+    scene.remove(moleculeGroup);
+    moleculeGroup = new THREE.Group();
+    const sn = bonds + lonePairs;
+
+    const centerMat = new THREE.MeshPhongMaterial({ color: 0x2c3e50 });
+    const atomMat = new THREE.MeshPhongMaterial({ color: 0xe74c3c });
+    const bondMat = new THREE.MeshPhongMaterial({ color: 0xbdc3c7 });
+    const lpMat = new THREE.MeshPhongMaterial({ color: 0xf1c40f, transparent: true, opacity: 0.6 });
+
+    moleculeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), centerMat));
+
+    if (sn >= 2 && sn <= 6) {
+      const vectors = vseprVectors[sn];
+      for (let i = 0; i < sn; i++) {
+        const dir = vectors[i].clone(), distance = 3.0, pos = dir.clone().multiplyScalar(distance);
+        if (i < bonds) {
+          const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
+          atomMesh.position.copy(pos);
+          moleculeGroup.add(atomMesh);
+          const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, distance - 1.2, 16), bondMat);
+          bondMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+          bondMesh.position.copy(dir.clone().multiplyScalar(distance / 2));
+          moleculeGroup.add(bondMesh);
+        } else {
+          const lpMesh = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 32), lpMat);
+          lpMesh.scale.set(1, 1.8, 1);
+          lpMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+          lpMesh.position.copy(dir.clone().multiplyScalar(distance * 0.5));
+          moleculeGroup.add(lpMesh);
         }
+      }
+    } else if (sn === 1) {
+      const dir = new THREE.Vector3(1,0,0), pos = dir.clone().multiplyScalar(3.0);
+      const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
+      atomMesh.position.copy(pos); moleculeGroup.add(atomMesh);
+      const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 2.0, 16), bondMat);
+      bondMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+      bondMesh.position.copy(dir.clone().multiplyScalar(1.5)); moleculeGroup.add(bondMesh);
+    }
+    scene.add(moleculeGroup);
+  }
 
-        document.querySelectorAll('.svg-shape').forEach(el => {
-            el.innerHTML = draw2DShape(parseInt(el.getAttribute('data-sn')), parseInt(el.getAttribute('data-bp')), parseInt(el.getAttribute('data-lp')));
-        });
+  window.addEventListener('resize', () => {
+    const width = canvas.clientWidth, height = canvas.clientHeight;
+    if (canvas.width !== width || canvas.width !== height) {
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height; camera.updateProjectionMatrix();
+    }
+  });
 
-        /* =========================================
-           3D VSEPR Explorer Engine (Three.js)
-           ========================================= */
-        const canvas = document.getElementById('vseprCanvas');
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xfcfcfc);
-        const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-        camera.position.z = 12;
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enablePan = false; controls.enableZoom = true; controls.autoRotate = true; controls.autoRotateSpeed = 1.0;
+  function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
+  animate();
 
-        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(10, 20, 15);
-        scene.add(dirLight);
+  /* =========================================
+     VSEPR UI Logic
+     ========================================= */
+  const bondInput = document.getElementById('bondCount'), lpInput = document.getElementById('lpCount');
+  function updateVSEPR() {
+    let b = parseInt(bondInput.value), lp = parseInt(lpInput.value);
+    if (b + lp > 6) { if (b > 6) b = 6; lp = 6 - b; lpInput.value = lp; bondInput.value = b; }
+    if (b < 1) { bondInput.value = 1; b = 1; }
+    document.getElementById('stericNum').innerText = b + lp;
 
-        let moleculeGroup = new THREE.Group();
-        scene.add(moleculeGroup);
+    const info = shapeData[`${b}_${lp}`], polBadge = document.getElementById('molPol');
+    if (info) {
+      document.getElementById('molGeom').innerHTML = info.geom; document.getElementById('bondAngle').innerHTML = info.angle;
+      polBadge.innerText = info.pol; polBadge.className = "result-badge " + (info.pol === "Polar" ? "badge-polar" : "badge-nonpolar");
+    } else if (b === 1) {
+      document.getElementById('molGeom').innerHTML = "Linear"; document.getElementById('bondAngle').innerHTML = "N/A";
+      polBadge.innerText = "Depends on Atoms"; polBadge.className = "result-badge"; polBadge.style.background = "#7f8c8d";
+    }
+    buildMolecule3D(b, lp);
+  }
+  bondInput.addEventListener('change', updateVSEPR); lpInput.addEventListener('change', updateVSEPR);
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); updateVSEPR();
 
-        const vseprVectors = {
-            2: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0) ],
-            3: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0.866,-0.5,0), new THREE.Vector3(-0.866,-0.5,0) ],
-            4: [ new THREE.Vector3(1,1,1).normalize(), new THREE.Vector3(1,-1,-1).normalize(), new THREE.Vector3(-1,1,-1).normalize(), new THREE.Vector3(-1,-1,1).normalize() ],
-            5: [ new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0), new THREE.Vector3(1,0,0), new THREE.Vector3(-0.5,0,0.866), new THREE.Vector3(-0.5,0,-0.866) ],
-            6: [ new THREE.Vector3(1,0,0), new THREE.Vector3(-1,0,0), new THREE.Vector3(0,0,1), new THREE.Vector3(0,0,-1), new THREE.Vector3(0,1,0), new THREE.Vector3(0,-1,0) ]
-        };
+  /* =========================================
+     Chart.js Bar Charts (IMFs vs MP, BP & VP)
+     ========================================= */
+  document.addEventListener("DOMContentLoaded", function() {
 
-        const shapeData = {
-            "2_0": { geom: "Linear", angle: "180&deg;", pol: "Nonpolar" }, "3_0": { geom: "Trigonal Planar", angle: "120&deg;", pol: "Nonpolar" },
-            "2_1": { geom: "Bent", angle: "&lt; 120&deg;", pol: "Polar" }, "4_0": { geom: "Tetrahedral", angle: "109.5&deg;", pol: "Nonpolar" },
-            "3_1": { geom: "Trigonal Pyramidal", angle: "&lt; 109.5&deg;", pol: "Polar" }, "2_2": { geom: "Bent", angle: "&lt;&lt; 109.5&deg;", pol: "Polar" },
-            "5_0": { geom: "Trigonal Bipyramidal", angle: "90&deg;, 120&deg;", pol: "Nonpolar" }, "4_1": { geom: "Seesaw", angle: "&lt; 90&deg;, &lt; 120&deg;", pol: "Polar" },
-            "3_2": { geom: "T-shaped", angle: "&lt; 90&deg;", pol: "Polar" }, "2_3": { geom: "Linear", angle: "180&deg;", pol: "Nonpolar" },
-            "6_0": { geom: "Octahedral", angle: "90&deg;", pol: "Nonpolar" }, "5_1": { geom: "Square Pyramidal", angle: "&lt; 90&deg;", pol: "Polar" },
-            "4_2": { geom: "Square Planar", angle: "90&deg;", pol: "Nonpolar" }
-        };
+    // Shared color palette based on IMFs
+    const colors = {
+      ldf: { bg: 'rgba(149, 165, 166, 0.7)', border: 'rgba(149, 165, 166, 1)' },
+      dipole: { bg: 'rgba(243, 156, 18, 0.7)', border: 'rgba(243, 156, 18, 1)' },
+      hbond: { bg: 'rgba(52, 152, 219, 0.7)', border: 'rgba(52, 152, 219, 1)' },
+      hbondStrong: { bg: 'rgba(41, 128, 185, 0.9)', border: 'rgba(41, 128, 185, 1)' }
+    };
 
-        function buildMolecule3D(bonds, lonePairs) {
-            scene.remove(moleculeGroup);
-            moleculeGroup = new THREE.Group();
-            const sn = bonds + lonePairs;
+    const commonOptions = {
+      responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }
+    };
 
-            const centerMat = new THREE.MeshPhongMaterial({ color: 0x2c3e50 }); 
-            const atomMat = new THREE.MeshPhongMaterial({ color: 0xe74c3c }); 
-            const bondMat = new THREE.MeshPhongMaterial({ color: 0xbdc3c7 }); 
-            const lpMat = new THREE.MeshPhongMaterial({ color: 0xf1c40f, transparent: true, opacity: 0.6 }); 
-
-            moleculeGroup.add(new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), centerMat));
-
-            if (sn >= 2 && sn <= 6) {
-                const vectors = vseprVectors[sn];
-                for (let i = 0; i < sn; i++) {
-                    const dir = vectors[i].clone(), distance = 3.0, pos = dir.clone().multiplyScalar(distance);
-                    if (i < bonds) {
-                        const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
-                        atomMesh.position.copy(pos);
-                        moleculeGroup.add(atomMesh);
-                        const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, distance - 1.2, 16), bondMat);
-                        bondMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
-                        bondMesh.position.copy(dir.clone().multiplyScalar(distance / 2));
-                        moleculeGroup.add(bondMesh);
-                    } else {
-                        const lpMesh = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 32), lpMat);
-                        lpMesh.scale.set(1, 1.8, 1); 
-                        lpMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
-                        lpMesh.position.copy(dir.clone().multiplyScalar(distance * 0.5));
-                        moleculeGroup.add(lpMesh);
-                    }
-                }
-            } else if (sn === 1) {
-                const dir = new THREE.Vector3(1,0,0), pos = dir.clone().multiplyScalar(3.0);
-                const atomMesh = new THREE.Mesh(new THREE.SphereGeometry(0.9, 32, 32), atomMat);
-                atomMesh.position.copy(pos); moleculeGroup.add(atomMesh);
-                const bondMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 2.0, 16), bondMat);
-                bondMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
-                bondMesh.position.copy(dir.clone().multiplyScalar(1.5)); moleculeGroup.add(bondMesh);
+    // 1. Melting Point Chart
+    new Chart(document.getElementById('mpChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Water (H₂O)'],
+        datasets: [{
+          label: 'Melting Point (°C)',
+          data: [-182, -82, 0],
+          backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbondStrong.bg],
+          borderColor: [colors.ldf.border, colors.dipole.border, colors.hbondStrong.border],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              afterLabel: function(context) {
+                if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
+                if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
+                return "Dominant IMF: Hydrogen Bonding";
+              }
             }
-            scene.add(moleculeGroup);
+          }
+        },
+        scales: {
+          y: { title: { display: true, text: 'Melting Point (°C)', font: {weight: 'bold'} } },
+          x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } }
         }
+      }
+    });
 
-        window.addEventListener('resize', () => {
-            const width = canvas.clientWidth, height = canvas.clientHeight;
-            if (canvas.width !== width || canvas.width !== height) {
-                renderer.setSize(width, height, false);
-                camera.aspect = width / height; camera.updateProjectionMatrix();
+    // 2. Boiling Point Chart
+    new Chart(document.getElementById('imfChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Isopropyl Alcohol', 'Water (H₂O)'],
+        datasets: [{
+          label: 'Boiling Point (°C)',
+          data: [-161, -60, 82.5, 100],
+          backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
+          borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        ...commonOptions,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              afterLabel: function(context) {
+                if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
+                if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
+                return "Dominant IMF: Hydrogen Bonding";
+              }
             }
-        });
-
-        function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
-        animate();
-
-        /* =========================================
-           VSEPR UI Logic
-           ========================================= */
-        const bondInput = document.getElementById('bondCount'), lpInput = document.getElementById('lpCount');
-        function updateVSEPR() {
-            let b = parseInt(bondInput.value), lp = parseInt(lpInput.value);
-            if (b + lp > 6) { if (b > 6) b = 6; lp = 6 - b; lpInput.value = lp; bondInput.value = b; }
-            if (b < 1) { bondInput.value = 1; b = 1; }
-            document.getElementById('stericNum').innerText = b + lp;
-
-            const info = shapeData[`${b}_${lp}`], polBadge = document.getElementById('molPol');
-            if (info) {
-                document.getElementById('molGeom').innerHTML = info.geom; document.getElementById('bondAngle').innerHTML = info.angle;
-                polBadge.innerText = info.pol; polBadge.className = "result-badge " + (info.pol === "Polar" ? "badge-polar" : "badge-nonpolar");
-            } else if (b === 1) {
-                document.getElementById('molGeom').innerHTML = "Linear"; document.getElementById('bondAngle').innerHTML = "N/A";
-                polBadge.innerText = "Depends on Atoms"; polBadge.className = "result-badge"; polBadge.style.background = "#7f8c8d";
-            }
-            buildMolecule3D(b, lp);
+          }
+        },
+        scales: {
+          y: { title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} } },
+          x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } }
         }
-        bondInput.addEventListener('change', updateVSEPR); lpInput.addEventListener('change', updateVSEPR);
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); updateVSEPR();
+      }
+    });
 
-        /* =========================================
-           Chart.js Bar Charts (IMFs vs MP, BP & VP)
-           ========================================= */
-        document.addEventListener("DOMContentLoaded", function() {
-
-            // Shared color palette based on IMFs
-            const colors = {
-                ldf: { bg: 'rgba(149, 165, 166, 0.7)', border: 'rgba(149, 165, 166, 1)' },
-                dipole: { bg: 'rgba(243, 156, 18, 0.7)', border: 'rgba(243, 156, 18, 1)' },
-                hbond: { bg: 'rgba(52, 152, 219, 0.7)', border: 'rgba(52, 152, 219, 1)' },
-                hbondStrong: { bg: 'rgba(41, 128, 185, 0.9)', border: 'rgba(41, 128, 185, 1)' }
-            };
-
-            const commonOptions = {
-                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }
-            };
-
-            // 1. Melting Point Chart
-            new Chart(document.getElementById('mpChart').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Water (H₂O)'],
-                    datasets: [{
-                        label: 'Melting Point (°C)', 
-                        data: [-182, -82, 0],
-                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbondStrong.bg],
-                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbondStrong.border], 
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    ...commonOptions,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
-                                    if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
-                                    return "Dominant IMF: Hydrogen Bonding";
-                                }
-                            }
-                        }
-                    },
-                    scales: { 
-                        y: { title: { display: true, text: 'Melting Point (°C)', font: {weight: 'bold'} } }, 
-                        x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
-                    }
-                }
-            });
-
-            // 2. Boiling Point Chart
-            new Chart(document.getElementById('imfChart').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Methane (CH₄)', 'Hydrogen Sulfide (H₂S)', 'Isopropyl Alcohol', 'Water (H₂O)'],
-                    datasets: [{
-                        label: 'Boiling Point (°C)', 
-                        data: [-161, -60, 82.5, 100],
-                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
-                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border], 
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    ...commonOptions,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                afterLabel: function(context) {
-                                    if(context.dataIndex === 0) return "Dominant IMF: London Dispersion";
-                                    if(context.dataIndex === 1) return "Dominant IMF: Dipole-Dipole";
-                                    return "Dominant IMF: Hydrogen Bonding";
-                                }
-                            }
-                        }
-                    },
-                    scales: { 
-                        y: { title: { display: true, text: 'Boiling Point (°C)', font: {weight: 'bold'} } }, 
-                        x: { title: { display: true, text: 'Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
-                    }
-                }
-            });
-
-            // 3. Vapor Pressure Chart
-            new Chart(document.getElementById('vpChart').getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Diethyl Ether (LDF/Weak Dipole)', 'Acetone (Dipole-Dipole)', 'Ethanol (H-Bonding)', 'Water (Strong H-Bonding)'],
-                    datasets: [{
-                        label: 'Vapor Pressure at 25°C (kPa)', 
-                        data: [71.6, 30.6, 7.9, 3.2],
-                        backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
-                        borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border], 
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    ...commonOptions,
-                    scales: { 
-                        y: { title: { display: true, text: 'Vapor Pressure (kPa)', font: {weight: 'bold'} } }, 
-                        x: { title: { display: true, text: 'Liquid Molecule', font: {weight: 'bold'} }, grid: { display: false } } 
-                    }
-                }
-            });
-        });
-    </script>
+    // 3. Vapor Pressure Chart
+    new Chart(document.getElementById('vpChart').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Diethyl Ether (LDF/Weak Dipole)', 'Acetone (Dipole-Dipole)', 'Ethanol (H-Bonding)', 'Water (Strong H-Bonding)'],
+        datasets: [{
+          label: 'Vapor Pressure at 25°C (kPa)',
+          data: [71.6, 30.6, 7.9, 3.2],
+          backgroundColor: [colors.ldf.bg, colors.dipole.bg, colors.hbond.bg, colors.hbondStrong.bg],
+          borderColor: [colors.ldf.border, colors.dipole.border, colors.hbond.border, colors.hbondStrong.border],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        ...commonOptions,
+        scales: {
+          y: { title: { display: true, text: 'Vapor Pressure (kPa)', font: {weight: 'bold'} } },
+          x: { title: { display: true, text: 'Liquid Molecule', font: {weight: 'bold'} }, grid: { display: false } }
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>
