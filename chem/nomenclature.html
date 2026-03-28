@@ -179,6 +179,21 @@
         .tip-box p { margin-bottom: 0; font-size: 0.95rem; line-height: 1.5; }
         
         .all-rules-container { display: none; margin-top: 1.5rem; }
+
+        .guide-actions {
+            display: none;
+            margin: 1rem 0 1.25rem;
+            gap: 10px;
+            justify-content: flex-end;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .guide-actions.visible { display: flex; }
+        .guide-note {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-right: auto;
+        }
         .rule-item { margin-bottom: 1.5rem; border-bottom: 1px solid #edf2f7; padding-bottom: 1rem;}
         .rule-item:last-child { border-bottom: none; }
         .rule-item h4 { margin: 0 0 0.5rem 0; color: #2d3748; font-size: 1.1rem; }
@@ -360,15 +375,6 @@
 
     <div class="card" id="quiz-screen">
         <div class="header-actions">
-            <button id="download-guide-btn" class="pdf-btn" title="Download printable naming guide PDF" aria-label="Download printable naming guide PDF">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <path d="M14 2v6h6"></path>
-                    <path d="M12 12v6"></path>
-                    <path d="M9 15l3 3 3-3"></path>
-                </svg>
-                PDF
-            </button>
             <button id="tips-btn" class="tips-btn">💡 Tips</button>
         </div>
         <h1>Chemical Nomenclature Practice</h1>
@@ -467,6 +473,18 @@
                 <p id="tip-text">Rule description goes here.</p>
             </div>
             <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View Complete Naming Guide</button>
+            <div id="guide-actions" class="guide-actions">
+                <div class="guide-note">Printable when the full guide is open.</div>
+                <button id="download-guide-btn" class="pdf-btn" title="Download printable naming guide PDF" aria-label="Download printable naming guide PDF">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <path d="M14 2v6h6"></path>
+                        <path d="M12 12v6"></path>
+                        <path d="M9 15l3 3 3-3"></path>
+                    </svg>
+                    Printable PDF
+                </button>
+            </div>
             <div id="all-rules" class="all-rules-container">
                 <div class="rule-item">
                     <h4>1. Start by identifying the type of compound</h4>
@@ -642,7 +660,25 @@
                 </div>
 
                 <div class="rule-item">
-                    <h4>11. Formula writing tips for practice</h4>
+                    <h4>11. Quick decision path that matches the strategy tree</h4>
+                    <p>Use this mini-checklist exactly like the decision tree so you can decide the naming system before you start naming.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Ask yourself</th><th>If yes</th><th>Go to this rule</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Does it start with H and behave as an acid in water?</td><td>It is an acid</td><td>Use Rule 9 for <strong>hydro- / -ic / -ous</strong></td></tr>
+                            <tr><td>Does it contain OH<sup>-</sup> with a metal?</td><td>It is usually a base</td><td>Use Rule 10: metal + hydroxide</td></tr>
+                            <tr><td>Does it contain a metal or NH<sub>4</sub><sup>+</sup>?</td><td>It is ionic</td><td>Use Rules 2–6</td></tr>
+                            <tr><td>Is it only nonmetals?</td><td>It is molecular / covalent</td><td>Use Rules 7–8</td></tr>
+                            <tr><td>Do you see parentheses around a group?</td><td>There is probably a repeated polyatomic ion</td><td>Use Rules 4–6 and 12</td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Fast pattern reminders:</strong> binary ionic usually ends in <strong>-ide</strong>; oxyanion families often use <strong>-ate / -ite / per- / hypo-</strong>; molecular compounds use prefixes such as <strong>di-, tri-, tetra-</strong>.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>12. Formula writing tips for practice</h4>
                     <p>When converting a name to a formula:</p>
                     <table class="rule-table">
                         <thead>
@@ -658,7 +694,7 @@
                 </div>
 
                 <div class="rule-item">
-                    <h4>12. Quick comparison guide</h4>
+                    <h4>13. Quick comparison guide</h4>
                     <table class="rule-table">
                         <thead>
                             <tr><th>Pattern</th><th>Name cue</th><th>Example</th></tr>
@@ -675,7 +711,7 @@
                 </div>
 
                 <div class="rule-item">
-                    <h4>13. Common mistakes to avoid</h4>
+                    <h4>14. Common mistakes to avoid</h4>
                     <p>Use these checks while practicing:</p>
                     <ul>
                         <li>Do not use prefixes for ionic compounds.</li>
@@ -685,9 +721,10 @@
                         <li>Do not use <strong>-ic acid</strong> for anions ending in <strong>-ite</strong>; those become <strong>-ous acid</strong>.</li>
                         <li>For molecular compounds, remember the second element always ends in <strong>-ide</strong>.</li>
                     </ul>
+                </div>
 
                 <div class="rule-item">
-                    <h4>14. Very common polyatomic ions to memorize</h4>
+                    <h4>15. Very common polyatomic ions to memorize</h4>
                     <p>These ions appear constantly in ionic compounds, bases, and acids. Memorizing them makes naming much faster because their names usually stay unchanged inside larger compounds.</p>
                     <div id="common-polyatomic-table"></div>
                 </div>
@@ -785,6 +822,7 @@
         const closeTipsBtn = document.getElementById('close-tips-btn');
         const toggleRulesBtn = document.getElementById('toggle-rules-btn');
         const allRulesContainer = document.getElementById('all-rules');
+        const guideActions = document.getElementById('guide-actions');
         const tipTitle = document.getElementById('tip-title');
         const tipText = document.getElementById('tip-text');
         const cheatSheetModal = document.getElementById('cheat-sheet-modal');
@@ -842,31 +880,59 @@
         }
 
         function downloadNamingGuidePDF() {
+            const existing = document.getElementById('pdf-print-wrapper');
+            if (existing) existing.remove();
+
             const printWrapper = document.createElement('div');
-            printWrapper.style.padding = '20px';
+            printWrapper.id = 'pdf-print-wrapper';
+            printWrapper.style.position = 'fixed';
+            printWrapper.style.left = '-10000px';
+            printWrapper.style.top = '0';
+            printWrapper.style.width = '760px';
+            printWrapper.style.padding = '28px';
+            printWrapper.style.boxSizing = 'border-box';
             printWrapper.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
             printWrapper.style.color = '#1f2937';
             printWrapper.style.backgroundColor = '#ffffff';
-            printWrapper.style.width = '1000px';
-
-            const rulesHTML = document.getElementById('all-rules').innerHTML;
             printWrapper.innerHTML = `
+                <style>
+                    #pdf-print-wrapper h1 { margin: 0; color: #1a365d; font-size: 28px; }
+                    #pdf-print-wrapper h4 { margin: 0 0 8px 0; color: #2d3748; font-size: 18px; }
+                    #pdf-print-wrapper p, #pdf-print-wrapper li { font-size: 13px; line-height: 1.45; color: #374151; }
+                    #pdf-print-wrapper .rule-item { margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; page-break-inside: avoid; }
+                    #pdf-print-wrapper .rule-item:last-child { border-bottom: none; }
+                    #pdf-print-wrapper .rule-table { width: 100%; border-collapse: collapse; margin-top: 8px; table-layout: fixed; }
+                    #pdf-print-wrapper .rule-table th, #pdf-print-wrapper .rule-table td {
+                        border: 1px solid #d1d5db; padding: 7px 8px; text-align: left; vertical-align: top;
+                        font-size: 12px; line-height: 1.35; word-break: break-word; overflow-wrap: anywhere;
+                    }
+                    #pdf-print-wrapper .rule-table th { background: #f8fafc; color: #334155; }
+                    #pdf-print-wrapper sub { font-size: 0.7em; }
+                    #pdf-print-wrapper sup { font-size: 0.7em; color: #b91c1c; }
+                    #pdf-print-wrapper ul { margin-top: 8px; padding-left: 20px; }
+                </style>
                 <div style="border-bottom: 2px solid #cbd5e0; padding-bottom: 12px; margin-bottom: 20px;">
-                    <h1 style="margin: 0; color: #1a365d; font-size: 28px;">Chemical Nomenclature Guide</h1>
-                    <p style="margin: 8px 0 0 0; color: #4a5568; font-size: 15px;">Printable reference sheet with naming rules, suffixes and prefixes, and very common polyatomic ions.</p>
+                    <h1>Chemical Nomenclature Guide</h1>
+                    <p style="margin: 8px 0 0 0; color: #4a5568; font-size: 14px;">Printable reference sheet with naming rules, suffixes and prefixes, the decision path, and very common polyatomic ions.</p>
                 </div>
-                <div>${rulesHTML}</div>
+                <div>${document.getElementById('all-rules').innerHTML}</div>
             `;
+            document.body.appendChild(printWrapper);
 
             const opt = {
                 margin: [0.35, 0.35, 0.35, 0.35],
                 filename: 'Chemical_Nomenclature_Guide.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+                html2canvas: { scale: 2, useCORS: true, windowWidth: 760, scrollX: 0, scrollY: 0 },
+                jsPDF: { unit: 'in', format: 'legal', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'] }
             };
-            html2pdf().set(opt).from(printWrapper).save();
+
+            html2pdf().set(opt).from(printWrapper).save().then(() => {
+                printWrapper.remove();
+            }).catch(() => {
+                printWrapper.remove();
+            });
         }
 
         function initData() {
@@ -1139,17 +1205,23 @@
             tipTitle.textContent = rule.title;
             tipText.innerHTML = rule.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             allRulesContainer.style.display = 'none';
+            guideActions.classList.remove('visible');
             toggleRulesBtn.textContent = 'View Complete Naming Guide';
             tipsModal.classList.remove('hidden');
         }
 
         function toggleAllRules() {
             if (allRulesContainer.style.display === 'none') {
-                allRulesContainer.style.display = 'block'; toggleRulesBtn.textContent = 'Hide Naming Guide';
+                allRulesContainer.style.display = 'block';
+                guideActions.classList.add('visible');
+                toggleRulesBtn.textContent = 'Hide Naming Guide';
                 tipsModal.querySelector('.modal-content').scrollBy({top: 150, behavior: 'smooth'});
             } else {
-                allRulesContainer.style.display = 'none'; toggleRulesBtn.textContent = 'View Complete Naming Guide';
+                allRulesContainer.style.display = 'none';
+                guideActions.classList.remove('visible');
+                toggleRulesBtn.textContent = 'View Complete Naming Guide';
             }
+        }
         }
 
         function showMistakes() {
