@@ -646,7 +646,14 @@
       <li><strong>Count total valence electrons:</strong> Add up the valence electrons for all atoms. If it's an anion (negative), add extra electrons. If it's a cation (positive), subtract electrons.</li>
       <li><strong>Determine the Central Atom:</strong> Usually the least electronegative element. <em>(Note: Hydrogen is NEVER in the center).</em></li>
       <li><strong>Draw Single Bonds:</strong> Draw a line connecting the central atom to each outer atom. Each line represents 2 shared electrons. Subtract these from your total.</li>
-      <li><strong>Fill Outer Octets:</strong> Distribute remaining electrons as lone pairs (dots) around the outer atoms until they are happy (8 for an octet, 2 for H's duet).</li>
+      <li><strong>Fill Outer Octets:</strong> Distribute remaining electrons as lone pairs (dots) around the outer atoms until they are <em>happy</em>.
+        <ul style="margin-top: 8px; margin-bottom: 4px; padding-left: 1.4em; list-style: disc; font-weight: normal;">
+          <li><strong>"Happy"</strong> means an atom has a <strong>full valence shell</strong> — it matches the electron count of the nearest noble gas and is now stable.</li>
+          <li><strong>Most atoms</strong> (C, N, O, F, Cl, S, P, …) want <strong>8 electrons</strong> total around them — this is the <em>Octet Rule</em>.</li>
+          <li><strong>Hydrogen</strong> is the exception: it only wants <strong>2 electrons</strong> (a <em>duet</em>), like Helium. Because H already gets its 2 electrons from the single bond you drew in Step 3, <em>you never need to add lone pairs to H</em>.</li>
+          <li>Count the electrons around each outer atom (bonds count! each bond line = 2 electrons). Keep adding lone pairs until it reaches its target number.</li>
+        </ul>
+      </li>
       <li><strong>Check the Central Atom:</strong> Place any leftover electrons on the central atom. If the central atom does NOT have a full octet, erase a lone pair from an outer atom and turn it into a <strong>double or triple bond</strong> to share it.</li>
     </ol>
 
@@ -718,6 +725,103 @@
           </svg>
         </div>
         <p style="font-size: 0.85rem; color:#666;">A <strong>triple bond</strong> is required to satisfy both octets. The brackets and minus sign denote the polyatomic ion.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; background: #f0f4ff; border-left: 4px solid var(--primary); border-radius: 8px; padding: 24px 28px;">
+      <h3 style="color: var(--primary); margin-top: 0;">Worked Example: Ammonia (NH₃) — Step by Step</h3>
+      <p style="margin-bottom: 18px; color: #444;">Ammonia isn't covered elsewhere in this tutorial, so let's walk through the full 5-step process together.</p>
+
+      <ol style="padding-left: 1.3em; line-height: 2;">
+        <li>
+          <strong>Count total valence electrons</strong><br>
+          N is in Group 15 → <strong>5</strong> valence electrons.<br>
+          H is in Group 1 → <strong>1</strong> valence electron each, × 3 H atoms = <strong>3</strong>.<br>
+          <span style="display:inline-block; background:#e8f4fd; border-radius:5px; padding:2px 10px; margin-top:4px; font-weight:bold;">Total = 5 + 3 = 8 electrons</span>
+        </li>
+
+        <li style="margin-top: 12px;">
+          <strong>Determine the central atom</strong><br>
+          Nitrogen (N) is less electronegative than it might seem next to H, and H can never be central. N goes in the middle, the three H's surround it.
+        </li>
+
+        <li style="margin-top: 12px;">
+          <strong>Draw single bonds</strong><br>
+          Connect N to each H with a single bond line. That's 3 bonds × 2 electrons = <strong>6 electrons used</strong>.<br>
+          <span style="display:inline-block; background:#e8f4fd; border-radius:5px; padding:2px 10px; margin-top:4px; font-weight:bold;">8 − 6 = 2 electrons remaining</span>
+        </li>
+
+        <li style="margin-top: 12px;">
+          <strong>Fill outer octets</strong><br>
+          Check each outer atom: every H already has 2 electrons from its bond — <strong>H's duet is complete, they're happy!</strong> No lone pairs need to be added to hydrogen.
+        </li>
+
+        <li style="margin-top: 12px;">
+          <strong>Check the central atom</strong><br>
+          N has 3 bonds around it = 6 electrons. We still have 2 electrons left over — place them on N as a <strong>lone pair</strong>.<br>
+          Now N has: 3 bonds (6e⁻) + 1 lone pair (2e⁻) = <strong>8 electrons total. N is happy!</strong> ✓<br>
+          No double or triple bonds are needed.
+        </li>
+      </ol>
+
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:32px; margin-top:24px;">
+        <div style="text-align:center;">
+          <p style="font-size:0.85rem; color:#555; margin-bottom:8px;"><strong>Final Lewis Structure of NH₃</strong></p>
+          <svg width="150" height="130" viewBox="0 0 150 130">
+            <!-- N center -->
+            <text x="63" y="78" font-size="24" font-weight="bold" fill="#2c3e50">N</text>
+
+            <!-- Bond to left H -->
+            <line x1="60" y1="68" x2="28" y2="40" stroke="#2c3e50" stroke-width="3"/>
+            <text x="8" y="38" font-size="22" font-weight="bold" fill="#2c3e50">H</text>
+
+            <!-- Bond to bottom-left H -->
+            <line x1="68" y1="82" x2="30" y2="110" stroke="#2c3e50" stroke-width="3"/>
+            <text x="10" y="125" font-size="22" font-weight="bold" fill="#2c3e50">H</text>
+
+            <!-- Bond to right H -->
+            <line x1="88" y1="68" x2="115" y2="42" stroke="#2c3e50" stroke-width="3"/>
+            <text x="118" y="40" font-size="22" font-weight="bold" fill="#2c3e50">H</text>
+
+            <!-- Lone pair on N (above) -->
+            <circle cx="65" cy="44" r="3.5" fill="#e74c3c"/>
+            <circle cx="78" cy="44" r="3.5" fill="#e74c3c"/>
+          </svg>
+        </div>
+
+        <div style="flex:1; min-width:200px;">
+          <table style="border-collapse:collapse; font-size:0.88rem; width:100%;">
+            <thead>
+              <tr style="background:var(--primary); color:white;">
+                <th style="padding:7px 10px; text-align:left;">Atom</th>
+                <th style="padding:7px 10px; text-align:center;">Target</th>
+                <th style="padding:7px 10px; text-align:center;">Bonds</th>
+                <th style="padding:7px 10px; text-align:center;">Lone Pairs</th>
+                <th style="padding:7px 10px; text-align:center;">Total e⁻</th>
+                <th style="padding:7px 10px; text-align:center;">Happy?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#fff;">
+                <td style="padding:6px 10px;">N (center)</td>
+                <td style="padding:6px 10px; text-align:center;">8</td>
+                <td style="padding:6px 10px; text-align:center;">3 (= 6e⁻)</td>
+                <td style="padding:6px 10px; text-align:center;">1 (= 2e⁻)</td>
+                <td style="padding:6px 10px; text-align:center;">8</td>
+                <td style="padding:6px 10px; text-align:center;">✓</td>
+              </tr>
+              <tr style="background:#f8f8f8;">
+                <td style="padding:6px 10px;">H × 3</td>
+                <td style="padding:6px 10px; text-align:center;">2 (duet)</td>
+                <td style="padding:6px 10px; text-align:center;">1 (= 2e⁻)</td>
+                <td style="padding:6px 10px; text-align:center;">0</td>
+                <td style="padding:6px 10px; text-align:center;">2</td>
+                <td style="padding:6px 10px; text-align:center;">✓</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size:0.8rem; color:#666; margin-top:10px;">Key takeaway: the lone pair on N is what makes ammonia a pyramid shape in 3D (covered in Step 4!) and slightly basic in chemistry.</p>
+        </div>
       </div>
     </div>
   </div>
