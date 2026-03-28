@@ -377,7 +377,7 @@
     <div id="tips-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Nomenclature Tips</h2>
+                <h2>Nomenclature Tips & Full Naming Guide</h2>
                 <button id="close-tips-btn" class="close-btn">&times;</button>
             </div>
             <div class="tip-box" id="current-tip-box">
@@ -387,36 +387,228 @@
             <button id="toggle-rules-btn" class="secondary" style="width: 100%;">View Complete Naming Guide</button>
             <div id="all-rules" class="all-rules-container">
                 <div class="rule-item">
-                    <h4>1. The Suffix "-ide"</h4>
-                    <p>Used for <strong>binary compounds</strong> (only two elements). For ionic compounds, the nonmetal ending is changed to -ide. 
-                    <em>Example: Sodium Chlor<strong>ide</strong> (NaCl).</em> In molecular compounds, the second element also ends in -ide. 
-                    <em>Example: Carbon diox<strong>ide</strong> (CO₂).</em></p>
+                    <h4>1. Start by identifying the type of compound</h4>
+                    <p>This is the fastest way to choose the right naming rule.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>What you notice</th><th>Likely type</th><th>Main rule</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Metal + nonmetal</td><td>Ionic compound</td><td>Name cation first, then anion</td></tr>
+                            <tr><td>Metal + polyatomic ion</td><td>Ternary ionic compound</td><td>Keep polyatomic ion name unchanged</td></tr>
+                            <tr><td>Nonmetal + nonmetal</td><td>Molecular / covalent compound</td><td>Use Greek prefixes</td></tr>
+                            <tr><td>Starts with H and acts as an acid</td><td>Acid</td><td>Use acid naming rules</td></tr>
+                            <tr><td>Contains OH<sup>-</sup></td><td>Base</td><td>Name metal + hydroxide</td></tr>
+                        </tbody>
+                    </table>
                 </div>
+
                 <div class="rule-item">
-                    <h4>2. Polyatomic Suffixes "-ate" and "-ite"</h4>
-                    <p>Used for <strong>Oxyanions</strong> (polyatomic ions containing oxygen). 
-                    The <strong>"-ate"</strong> ending is used for the ion with <em>more</em> oxygen atoms, while <strong>"-ite"</strong> is used for the ion with <em>fewer</em> oxygen atoms.
-                    <br><em>Examples: Sulf<strong>ate</strong> (SO₄²⁻) vs Sulf<strong>ite</strong> (SO₃²⁻); Nitr<strong>ate</strong> (NO₃⁻) vs Nitr<strong>ite</strong> (NO₂⁻).</em></p>
+                    <h4>2. Binary ionic compounds: the anion ends in <strong>-ide</strong></h4>
+                    <p>These contain only <strong>two elements</strong>, usually a metal and a nonmetal. Name the metal first. Change the nonmetal ending to <strong>-ide</strong>.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Formula</th><th>Name</th><th>Why</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>NaCl</td><td>Sodium chloride</td><td>Chlorine becomes chlor<strong>ide</strong></td></tr>
+                            <tr><td>MgO</td><td>Magnesium oxide</td><td>Oxygen becomes ox<strong>ide</strong></td></tr>
+                            <tr><td>CaS</td><td>Calcium sulfide</td><td>Sulfur becomes sulf<strong>ide</strong></td></tr>
+                            <tr><td>AlBr<sub>3</sub></td><td>Aluminum bromide</td><td>Bromine becomes brom<strong>ide</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Common -ide endings:</strong> oxide, sulfide, nitride, phosphide, fluoride, chloride, bromide, iodide, hydride, selenide.</p>
                 </div>
+
                 <div class="rule-item">
-                    <h4>3. Acids and Suffixes</h4>
-                    <p>When naming acids based on polyatomic ions:
+                    <h4>3. Transition metals: use Roman numerals when the metal can have more than one charge</h4>
+                    <p>If the metal can form different ions, show the metal charge with a Roman numeral. The numeral applies only to the metal.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Formula</th><th>Name</th><th>Metal charge</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>FeO</td><td>Iron(II) oxide</td><td>Fe<sup>2+</sup></td></tr>
+                            <tr><td>Fe<sub>2</sub>O<sub>3</sub></td><td>Iron(III) oxide</td><td>Fe<sup>3+</sup></td></tr>
+                            <tr><td>CuCl</td><td>Copper(I) chloride</td><td>Cu<sup>+</sup></td></tr>
+                            <tr><td>CuCl<sub>2</sub></td><td>Copper(II) chloride</td><td>Cu<sup>2+</sup></td></tr>
+                            <tr><td>SnS<sub>2</sub></td><td>Tin(IV) sulfide</td><td>Sn<sup>4+</sup></td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>No Roman numeral is usually needed</strong> for Group 1 metals, Group 2 metals, Al<sup>3+</sup>, Zn<sup>2+</sup>, Ag<sup>+</sup>, and Cd<sup>2+</sup>.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>4. Polyatomic ions: keep the ion name together</h4>
+                    <p>When you see a known polyatomic ion, do <strong>not</strong> rename part of it to -ide. Treat the whole ion as one unit.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Formula</th><th>Name</th><th>Polyatomic ion</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>NaNO<sub>3</sub></td><td>Sodium nitrate</td><td>NO<sub>3</sub><sup>-</sup> = nitrate</td></tr>
+                            <tr><td>CaCO<sub>3</sub></td><td>Calcium carbonate</td><td>CO<sub>3</sub><sup>2-</sup> = carbonate</td></tr>
+                            <tr><td>KOH</td><td>Potassium hydroxide</td><td>OH<sup>-</sup> = hydroxide</td></tr>
+                            <tr><td>(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub></td><td>Ammonium sulfate</td><td>NH<sub>4</sub><sup>+</sup> and SO<sub>4</sub><sup>2-</sup></td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Very common polyatomic ions:</strong> nitrate, nitrite, sulfate, sulfite, carbonate, phosphate, phosphite, hydroxide, acetate, cyanide, chlorate, chlorite, perchlorate, permanganate, chromate, ammonium.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>5. Understanding <strong>-ate</strong> and <strong>-ite</strong></h4>
+                    <p>For related oxyanions, <strong>-ate</strong> usually means <strong>more oxygen</strong>, and <strong>-ite</strong> means <strong>less oxygen</strong>.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>More oxygen</th><th>Less oxygen</th><th>Example pair</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Nitrate</td><td>Nitrite</td><td>NO<sub>3</sub><sup>-</sup> vs NO<sub>2</sub><sup>-</sup></td></tr>
+                            <tr><td>Sulfate</td><td>Sulfite</td><td>SO<sub>4</sub><sup>2-</sup> vs SO<sub>3</sub><sup>2-</sup></td></tr>
+                            <tr><td>Phosphate</td><td>Phosphite</td><td>PO<sub>4</sub><sup>3-</sup> vs PO<sub>3</sub><sup>3-</sup></td></tr>
+                            <tr><td>Chlorate</td><td>Chlorite</td><td>ClO<sub>3</sub><sup>-</sup> vs ClO<sub>2</sub><sup>-</sup></td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Memory idea:</strong> <strong>a</strong>te has <strong>a</strong> bit more oxygen than <strong>i</strong>te.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>6. Prefix families for oxyanions: <strong>per-</strong> and <strong>hypo-</strong></h4>
+                    <p>Some oxyanion families use extra prefixes to show the relative number of oxygens.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Name</th><th>Meaning</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>per-</strong>...<strong>-ate</strong></td><td>Most oxygen</td><td>ClO<sub>4</sub><sup>-</sup> = perchlorate</td></tr>
+                            <tr><td>...<strong>-ate</strong></td><td>Next most oxygen</td><td>ClO<sub>3</sub><sup>-</sup> = chlorate</td></tr>
+                            <tr><td>...<strong>-ite</strong></td><td>Fewer oxygen</td><td>ClO<sub>2</sub><sup>-</sup> = chlorite</td></tr>
+                            <tr><td><strong>hypo-</strong>...<strong>-ite</strong></td><td>Least oxygen</td><td>ClO<sup>-</sup> = hypochlorite</td></tr>
+                        </tbody>
+                    </table>
+                    <p>This same pattern can appear in bromine and iodine oxyanion families too.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>7. Binary molecular compounds: use Greek prefixes</h4>
+                    <p>These are usually <strong>nonmetal + nonmetal</strong>. Use prefixes to show how many atoms are present. The second element ends in <strong>-ide</strong>.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Prefix</th><th>Number</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>mono-</td><td>1</td><td>CO = carbon monoxide</td></tr>
+                            <tr><td>di-</td><td>2</td><td>CO<sub>2</sub> = carbon dioxide</td></tr>
+                            <tr><td>tri-</td><td>3</td><td>N<sub>2</sub>O<sub>3</sub> = dinitrogen trioxide</td></tr>
+                            <tr><td>tetra-</td><td>4</td><td>CCl<sub>4</sub> = carbon tetrachloride</td></tr>
+                            <tr><td>penta-</td><td>5</td><td>P<sub>2</sub>O<sub>5</sub> = diphosphorus pentoxide</td></tr>
+                            <tr><td>hexa-</td><td>6</td><td>XeF<sub>6</sub> = xenon hexafluoride</td></tr>
+                            <tr><td>hepta-</td><td>7</td><td>Cl<sub>2</sub>O<sub>7</sub> = dichlorine heptoxide</td></tr>
+                            <tr><td>octa-</td><td>8</td><td>N<sub>2</sub>O<sub>8</sub> = dinitrogen octoxide</td></tr>
+                            <tr><td>nona-</td><td>9</td><td>I<sub>2</sub>O<sub>9</sub> = diiodine nonoxide</td></tr>
+                            <tr><td>deca-</td><td>10</td><td>S<sub>2</sub>F<sub>10</sub> = disulfur decafluoride</td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Important:</strong> Do not usually use <strong>mono-</strong> on the first element. So CO is <em>carbon monoxide</em>, not <em>monocarbon monoxide</em>.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>8. Vowel dropping in prefixes</h4>
+                    <p>Sometimes the final vowel of a prefix is dropped to make the name easier to say.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Not usually written</th><th>Correct form</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>monooxide</td><td>monoxide</td></tr>
+                            <tr><td>pentaoxide</td><td>pentoxide</td></tr>
+                            <tr><td>tetraoxide</td><td>tetroxide</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rule-item">
+                    <h4>9. Acids: connect the ion ending to the acid ending</h4>
+                    <p>Acid naming depends on the anion it comes from.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Anion ending</th><th>Acid pattern</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>-ide</strong></td><td><strong>hydro-</strong> root <strong>-ic acid</strong></td><td>HCl = hydrochloric acid</td></tr>
+                            <tr><td><strong>-ate</strong></td><td>root <strong>-ic acid</strong></td><td>HNO<sub>3</sub> = nitric acid</td></tr>
+                            <tr><td><strong>-ite</strong></td><td>root <strong>-ous acid</strong></td><td>HNO<sub>2</sub> = nitrous acid</td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Classic examples:</strong> H<sub>2</sub>SO<sub>4</sub> = sulfuric acid, H<sub>2</sub>SO<sub>3</sub> = sulfurous acid, HBr = hydrobromic acid, HClO<sub>4</sub> = perchloric acid, HClO = hypochlorous acid.</p>
+                </div>
+
+                <div class="rule-item">
+                    <h4>10. Bases: most classroom bases contain hydroxide</h4>
+                    <p>If the compound contains OH<sup>-</sup>, name the cation first, then add <strong>hydroxide</strong>.</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Formula</th><th>Name</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>NaOH</td><td>Sodium hydroxide</td></tr>
+                            <tr><td>Ca(OH)<sub>2</sub></td><td>Calcium hydroxide</td></tr>
+                            <tr><td>Fe(OH)<sub>3</sub></td><td>Iron(III) hydroxide</td></tr>
+                            <tr><td>CuOH</td><td>Copper(I) hydroxide</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rule-item">
+                    <h4>11. Formula writing tips for practice</h4>
+                    <p>When converting a name to a formula:</p>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Step</th><th>What to do</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>Write the cation and anion with charges</td><td>Fe<sup>3+</sup> and SO<sub>4</sub><sup>2-</sup></td></tr>
+                            <tr><td>2</td><td>Balance total positive and negative charge</td><td>2 Fe<sup>3+</sup> with 3 SO<sub>4</sub><sup>2-</sup></td></tr>
+                            <tr><td>3</td><td>Use parentheses if more than one polyatomic ion is needed</td><td>Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></td></tr>
+                            <tr><td>4</td><td>Reduce subscripts to lowest whole-number ratio</td><td>CaO, not Ca<sub>2</sub>O<sub>2</sub></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rule-item">
+                    <h4>12. Quick comparison guide</h4>
+                    <table class="rule-table">
+                        <thead>
+                            <tr><th>Pattern</th><th>Name cue</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>binary ionic</td><td>metal + nonmetal ending in -ide</td><td>AlP = aluminum phosphide</td></tr>
+                            <tr><td>ternary ionic</td><td>metal + polyatomic ion</td><td>KClO<sub>3</sub> = potassium chlorate</td></tr>
+                            <tr><td>molecular</td><td>prefixes like di-, tri-, tetra-</td><td>SO<sub>2</sub> = sulfur dioxide</td></tr>
+                            <tr><td>acid from -ide</td><td>hydro- ... -ic acid</td><td>HI = hydroiodic acid</td></tr>
+                            <tr><td>acid from -ate</td><td>-ic acid</td><td>H<sub>3</sub>PO<sub>4</sub> = phosphoric acid</td></tr>
+                            <tr><td>acid from -ite</td><td>-ous acid</td><td>H<sub>3</sub>PO<sub>3</sub> = phosphorous acid</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="rule-item">
+                    <h4>13. Common mistakes to avoid</h4>
+                    <p>Use these checks while practicing:</p>
                     <ul>
-                        <li><strong>-ate</strong> becomes <strong>-ic acid</strong> (<em>I "ate" something "ic"-ky</em>).</li>
-                        <li><strong>-ite</strong> becomes <strong>-ous acid</strong> (<em>Spr-ite is delici-ous</em>).</li>
-                        <li><strong>-ide</strong> (binary) becomes <strong>hydro-___-ic acid</strong>.</li>
+                        <li>Do not use prefixes for ionic compounds.</li>
+                        <li>Do not change polyatomic ions into -ide names.</li>
+                        <li>Do not forget Roman numerals for variable-charge metals.</li>
+                        <li>Do not put <strong>hydro-</strong> on oxyacids such as HNO<sub>3</sub> or H<sub>2</sub>SO<sub>4</sub>.</li>
+                        <li>Do not use <strong>-ic acid</strong> for anions ending in <strong>-ite</strong>; those become <strong>-ous acid</strong>.</li>
+                        <li>For molecular compounds, remember the second element always ends in <strong>-ide</strong>.</li>
                     </ul>
-                    </p>
-                </div>
-                <div class="rule-item">
-                    <h4>4. Transition Metals (Stock System)</h4>
-                    <p>Transition metals can form ions with different charges. A Roman numeral indicates the exact positive charge of the metal ion.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="decision-tree-modal" class="modal-overlay hidden">
+<div id="decision-tree-modal" class="modal-overlay hidden">
         <div class="modal-content tree-modal-content">
             <div class="modal-header">
                 <h2>Nomenclature Strategy Map</h2>
@@ -726,19 +918,62 @@
         }
 
         function determineCurrentRule() {
-            if (!currentCard) return { title: "Error", text: "No card selected." };
+            if (!currentCard) return { title: "Quick Rule Check", text: "No card selected." };
             const category = currentCard.item.category;
             const chemName = currentCard.item.name.toLowerCase();
+            const formula = currentCard.item.formula;
 
-            if (chemName.endsWith("ide") && category === "Binary Ionic Compounds") return { title: "Suffix: -ide", text: "Compounds ending in **-ide** are usually binary (two elements). The first is a metal, and the second is a nonmetal with its ending changed to -ide. <br>Ex: NaCl = Sodium Chlor**ide**." };
-            if (chemName.endsWith("ate")) return { title: "Suffix: -ate", text: "Compounds ending in **-ate** contain a polyatomic ion with more oxygen atoms. <br>Ex: NaNO₃ = Sodium Nitr**ate**." };
-            if (chemName.endsWith("ite")) return { title: "Suffix: -ite", text: "Compounds ending in **-ite** contain a polyatomic ion with fewer oxygen atoms. <br>Ex: NaNO₂ = Sodium Nitr**ite**." };
+            if (category === "Acids") {
+                if (chemName.includes("hydro") && chemName.includes("acid")) {
+                    return { title: "Acid Rule: -ide → hydro-...-ic acid", text: "This is a <strong>binary acid</strong>. Binary acids come from anions ending in <strong>-ide</strong>. Use <strong>hydro-</strong> + root + <strong>-ic acid</strong>. Example: HCl = hydrochloric acid, HBr = hydrobromic acid." };
+                }
+                if (chemName.includes("ous acid")) {
+                    return { title: "Acid Rule: -ite → -ous acid", text: "This acid comes from an oxyanion ending in <strong>-ite</strong>. Change <strong>-ite</strong> to <strong>-ous acid</strong>. Example: nitrite → nitrous acid, sulfite → sulfurous acid." };
+                }
+                return { title: "Acid Rule: -ate → -ic acid", text: "This acid comes from an oxyanion ending in <strong>-ate</strong>. Change <strong>-ate</strong> to <strong>-ic acid</strong>. Example: nitrate → nitric acid, sulfate → sulfuric acid, phosphate → phosphoric acid." };
+            }
 
-            if (category === "Acids") return { title: "Relevant Rule: Acids", text: "Acids begin with Hydrogen. Binary acids (ending in -ide) use 'hydro-' + '-ic acid'. Oxyacids: '-ate' becomes '-ic acid' and '-ite' becomes '-ous acid'." };
-            if (category === "Bases") return { title: "Relevant Rule: Bases", text: "Bases contain the **Hydroxide (OH⁻)** polyatomic ion paired with a metal. Name the metal normally, then add 'hydroxide'." };
-            if (/\([ivx]+\)/i.test(chemName)) return { title: "Relevant Rule: Transition Metals", text: "The Roman numeral indicates the positive charge of the metal ion (e.g., Iron(III) means Fe³⁺)." };
-            
-            return { title: "Relevant Rule: Binary Ionic Compounds", text: "Formed by a standard metal and a nonmetal. Use periodic group charges to balance the formula." };
+            if (category === "Bases") {
+                return { title: "Base Rule: metal + hydroxide", text: "This compound contains <strong>OH<sup>-</sup></strong>, so it is named as a base: name the cation first, then add <strong>hydroxide</strong>. If the metal has variable charge, include a Roman numeral." };
+            }
+
+            if (category === "Binary Molecular Compounds") {
+                return { title: "Molecular Rule: prefixes + -ide", text: "This is a <strong>nonmetal + nonmetal</strong> compound. Use Greek prefixes such as <strong>mono-, di-, tri-, tetra-, penta-</strong> to show atom counts. The second element ends in <strong>-ide</strong>. Example: CO<sub>2</sub> = carbon dioxide." };
+            }
+
+            if (category === "Polyatomic Ions") {
+                if (chemName.endsWith("ate")) return { title: "Polyatomic Ion: -ate", text: "An ion ending in <strong>-ate</strong> usually has <strong>more oxygen</strong> than the related <strong>-ite</strong> ion. Example: nitrate NO<sub>3</sub><sup>-</sup> vs nitrite NO<sub>2</sub><sup>-</sup>." };
+                if (chemName.endsWith("ite")) return { title: "Polyatomic Ion: -ite", text: "An ion ending in <strong>-ite</strong> usually has <strong>less oxygen</strong> than the related <strong>-ate</strong> ion. Example: sulfite SO<sub>3</sub><sup>2-</sup> vs sulfate SO<sub>4</sub><sup>2-</sup>." };
+                if (chemName.startsWith("per")) return { title: "Polyatomic Prefix: per-", text: "The prefix <strong>per-</strong> means the ion has the <strong>most oxygen</strong> in its family. Example: perchlorate ClO<sub>4</sub><sup>-</sup>." };
+                if (chemName.startsWith("hypo")) return { title: "Polyatomic Prefix: hypo-", text: "The prefix <strong>hypo-</strong> means the ion has the <strong>least oxygen</strong> in its family, usually paired with <strong>-ite</strong>. Example: hypochlorite ClO<sup>-</sup>." };
+                return { title: "Polyatomic Ion Rule", text: "Treat the entire polyatomic ion as a single named unit. Do not rename part of it to <strong>-ide</strong>. Example: NO<sub>3</sub><sup>-</sup> stays <strong>nitrate</strong>." };
+            }
+
+            if (/\([ivx]+\)/i.test(chemName)) {
+                return { title: "Transition Metal Rule", text: "The Roman numeral gives the positive charge of the metal ion. Example: Iron(III) means Fe<sup>3+</sup>; Copper(I) means Cu<sup>+</sup>. Use this to write or decode the formula correctly." };
+            }
+
+            if (chemName.endsWith("ate")) {
+                return { title: "Suffix: -ate", text: "This name uses a polyatomic ion ending in <strong>-ate</strong>, which usually means it has <strong>more oxygen</strong> than the related <strong>-ite</strong> ion. Example: sulfate vs sulfite, nitrate vs nitrite." };
+            }
+
+            if (chemName.endsWith("ite")) {
+                return { title: "Suffix: -ite", text: "This name uses a polyatomic ion ending in <strong>-ite</strong>, which usually means it has <strong>less oxygen</strong> than the related <strong>-ate</strong> ion. Example: chlorite has less oxygen than chlorate." };
+            }
+
+            if (chemName.startsWith("per")) {
+                return { title: "Prefix: per-", text: "The prefix <strong>per-</strong> means the ion has the most oxygen in a related oxyanion series. Example: perchlorate ClO<sub>4</sub><sup>-</sup>." };
+            }
+
+            if (chemName.startsWith("hypo")) {
+                return { title: "Prefix: hypo-", text: "The prefix <strong>hypo-</strong> means the ion has the least oxygen in a related oxyanion series, usually with the ending <strong>-ite</strong>." };
+            }
+
+            if (category === "Binary Ionic Compounds" || chemName.endsWith("ide")) {
+                return { title: "Suffix: -ide", text: "This is usually a <strong>binary compound</strong>. For binary ionic compounds, name the metal first and change the nonmetal ending to <strong>-ide</strong>. Example: NaCl = sodium chloride, MgO = magnesium oxide." };
+            }
+
+            return { title: "Quick Naming Strategy", text: "First decide whether the compound is <strong>ionic, molecular, acid, or base</strong>. Then apply the matching naming pattern from the full guide below." };
         }
 
         function openTips() {
