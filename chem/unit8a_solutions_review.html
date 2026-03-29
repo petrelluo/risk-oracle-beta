@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 8A Solutions — Complete Quiz Review | Dr. Suzette Sp26</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ===================== TOKENS ===================== */
+:root{
+  --bg:#07090f;
+  --s1:#0f1322;
+  --s2:#161d35;
+  --s3:#1e2847;
+  --bd:#253060;
+  --t1:#eef2ff;
+  --t2:#a8b4d8;
+  --t3:#5a6896;
+  --cyan:#38bdf8;
+  --pink:#f472b6;
+  --gold:#fbbf24;
+  --mint:#34d399;
+  --lavender:#a78bfa;
+  --r:10px;
+  --head:'DM Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--head);line-height:1.65;min-height:100vh}
+
+/* ===================== HERO ===================== */
+.hero{
+  background:linear-gradient(160deg,#050814 0%,#0c1434 50%,#071024 100%);
+  padding:56px 28px 44px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 40%,rgba(56,189,248,.09),transparent),
+    radial-gradient(ellipse 40% 60% at 85% 30%,rgba(167,139,250,.08),transparent),
+    radial-gradient(ellipse 30% 30% at 50% 80%,rgba(52,211,153,.06),transparent);
+}
+.hero-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;margin-bottom:14px}
+.hero h1{font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;line-height:1.08;
+  background:linear-gradient(130deg,#fff 20%,var(--cyan) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:12px}
+.hero-sub{color:var(--t2);font-size:.95rem;max-width:620px;margin:0 auto 22px}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pill{background:var(--s2);border:1px solid var(--bd);border-radius:999px;
+  padding:4px 14px;font-size:.75rem;font-family:var(--mono);color:var(--t2)}
+.pill b{color:var(--cyan)}
+
+/* ===================== NAV ===================== */
+.nav{
+  display:flex;flex-wrap:wrap;gap:2px;
+  background:var(--s1);border-bottom:2px solid var(--bd);
+  padding:0 20px;position:sticky;top:0;z-index:100;
+}
+.nav-btn{
+  background:none;border:none;cursor:pointer;
+  padding:13px 15px;color:var(--t3);
+  font-family:var(--head);font-size:.82rem;font-weight:600;
+  border-bottom:3px solid transparent;margin-bottom:-2px;
+  transition:color .2s,border-color .2s;white-space:nowrap;
+}
+.nav-btn.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+.nav-btn:hover:not(.on){color:var(--t1)}
+
+/* ===================== MAIN ===================== */
+.wrap{max-width:1080px;margin:0 auto;padding:36px 22px 80px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* ===================== TYPOGRAPHY ===================== */
+.sec-h{font-size:1.55rem;font-weight:900;color:#fff;margin-bottom:4px}
+.sec-d{color:var(--t2);font-size:.88rem;margin-bottom:26px}
+.sh{/* section heading inside panel */
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);
+  border-bottom:1px solid var(--bd);padding-bottom:8px;
+  margin:30px 0 14px;
+}
+.sh:first-child{margin-top:0}
+
+/* ===================== GRID ===================== */
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+
+/* ===================== CARDS ===================== */
+.card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:20px}
+.card.c-cyan{border-left:4px solid var(--cyan)}
+.card.c-pink{border-left:4px solid var(--pink)}
+.card.c-gold{border-left:4px solid var(--gold)}
+.card.c-mint{border-left:4px solid var(--mint)}
+.card.c-lav {border-left:4px solid var(--lavender)}
+.card h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card p,.card li{font-size:.85rem;color:var(--t1)}
+.card ul,.card ol{padding-left:18px}
+.card li{margin-bottom:5px}
+
+/* ===================== FORMULA BOX ===================== */
+.fbox{
+  background:#080c1c;border:1px solid var(--cyan);
+  border-radius:8px;padding:16px 20px;margin:10px 0;
+}
+.fbox .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase;margin-bottom:6px}
+.fbox .eq{font-family:var(--mono);font-size:1.1rem;color:#fff}
+.fbox .eq .v{color:var(--gold)}
+.fbox .note{font-size:.75rem;color:var(--t2);margin-top:8px;font-family:var(--head)}
+
+/* ===================== TABLE ===================== */
+.tbl{width:100%;border-collapse:collapse;font-size:.83rem;margin:14px 0}
+.tbl th{background:#090e1e;color:var(--cyan);font-family:var(--mono);padding:9px 13px;text-align:left;border-bottom:2px solid var(--cyan)}
+.tbl td{padding:8px 13px;border-bottom:1px solid var(--bd);vertical-align:top}
+.tbl tr:hover td{background:rgba(56,189,248,.03)}
+
+/* ===================== CALLOUTS ===================== */
+.callout{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.84rem;display:flex;gap:11px;align-items:flex-start}
+.callout .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.ca{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.25)}
+.cp{background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.25)}
+.cg{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25)}
+.cm{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25)}
+
+/* ===================== KEY TERMS ===================== */
+.term-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px}
+.term-card{background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:13px 15px}
+.term-card .t{font-weight:700;font-size:.9rem;color:var(--cyan);margin-bottom:5px}
+.term-card .d{font-size:.8rem;color:var(--t1)}
+
+/* ===================== TAG ===================== */
+.tag{display:inline-block;border-radius:999px;padding:2px 10px;font-size:.72rem;font-family:var(--mono);font-weight:600;letter-spacing:.04em}
+.tc{background:rgba(56,189,248,.12);color:var(--cyan);border:1px solid rgba(56,189,248,.3)}
+.tp{background:rgba(244,114,182,.12);color:var(--pink);border:1px solid rgba(244,114,182,.3)}
+.tg{background:rgba(251,191,36,.12);color:var(--gold);border:1px solid rgba(251,191,36,.3)}
+.tm{background:rgba(52,211,153,.12);color:var(--mint);border:1px solid rgba(52,211,153,.3)}
+.tlv{background:rgba(167,139,250,.12);color:var(--lavender);border:1px solid rgba(167,139,250,.3)}
+
+/* ===================== CHEAT ROWS ===================== */
+.cheat{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:16px}
+.cheat-h{font-family:var(--mono);font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:12px}
+.cr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid rgba(37,48,96,.5);font-size:.82rem}
+.cr:last-child{border-bottom:none}
+.ck{color:var(--t2);min-width:130px;flex-shrink:0}
+.cv{color:var(--t1);font-weight:600;text-align:right;flex:1}
+.cv.go{color:var(--mint)}
+.cv.wa{color:var(--pink)}
+.cv.hi{color:var(--gold)}
+
+/* ===================== DIVIDER ===================== */
+hr{border:none;border-top:1px solid var(--bd);margin:28px 0}
+
+/* ===================== QUIZ ===================== */
+.quiz-hdr{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:20px 24px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.quiz-hdr h2{font-size:1.15rem;font-weight:800}
+.quiz-hdr .qmeta{font-size:.78rem;color:var(--t2);margin-top:3px}
+
+.qb{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:20px;margin-bottom:14px;transition:border-color .2s}
+.qb:hover{border-color:rgba(56,189,248,.3)}
+.qn{font-family:var(--mono);font-size:.68rem;color:var(--cyan);letter-spacing:.08em;margin-bottom:7px}
+.qt{font-size:.93rem;font-weight:700;color:#fff;margin-bottom:13px;line-height:1.5}
+.qopts{display:grid;gap:7px}
+.qopt{display:flex;align-items:flex-start;gap:9px;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:9px 13px;cursor:pointer;transition:.15s;font-size:.85rem}
+.qopt:hover{background:#1a2440;border-color:rgba(56,189,248,.4)}
+.qopt.sel{background:rgba(56,189,248,.1);border-color:var(--cyan)}
+.qopt.ok {background:rgba(52,211,153,.1);border-color:var(--mint)}
+.qopt.bad{background:rgba(244,114,182,.1);border-color:var(--pink)}
+.ql{font-family:var(--mono);font-weight:700;font-size:.82rem;color:var(--cyan);min-width:16px;flex-shrink:0}
+.qopt.ok .ql{color:var(--mint)}
+.qopt.bad .ql{color:var(--pink)}
+.qexp{margin-top:11px;padding:11px 14px;background:rgba(52,211,153,.07);border-radius:6px;border-left:3px solid var(--mint);font-size:.81rem;color:var(--t1);display:none}
+.qexp.show{display:block}
+
+.quiz-ctrl{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
+.btn{padding:10px 22px;border-radius:8px;font-family:var(--head);font-weight:700;font-size:.86rem;cursor:pointer;border:none;transition:opacity .2s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--cyan);color:#000}
+.btn-o{background:transparent;border:1.5px solid var(--bd);color:var(--t1)}
+.btn-o:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.scorebox{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:24px;text-align:center;margin-top:22px;display:none}
+.scorebox.show{display:block}
+.scorebox .big{font-size:2.8rem;font-weight:900;color:var(--cyan)}
+.scorebox .lbl{color:var(--t2);font-size:.88rem;margin-top:4px}
+
+/* ===================== FLOW ===================== */
+.flow{display:flex;flex-wrap:wrap;gap:0;margin:12px 0}
+.step{flex:1;min-width:120px;background:var(--s1);border:1px solid var(--bd);padding:11px 13px;font-size:.8rem;text-align:center;position:relative}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--cyan);font-size:1rem;z-index:1}
+.step-n{font-family:var(--mono);font-size:.67rem;color:var(--cyan);display:block;margin-bottom:3px}
+
+/* ===================== EXTRAS ===================== */
+.star{color:var(--pink);font-weight:900}
+.hi{color:var(--gold)}
+.mn{color:var(--mint)}
+.cy{color:var(--cyan)}
+.lv{color:var(--lavender)}
+
+@media(max-width:600px){
+  .hero{padding:36px 16px 28px}
+  .wrap{padding:22px 14px 60px}
+  .nav{padding:0 6px}
+  .nav-btn{padding:11px 9px;font-size:.75rem}
+  .flow{flex-direction:column}
+  .step:not(:last-child)::after{content:'↓';right:50%;top:auto;bottom:-12px;transform:none}
+  .cr{flex-direction:column;gap:3px}
+  .cv{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">Dr. Suzette's Chem Class · Unit 8A · Sp26</div>
+  <h1>Solutions — Complete Quiz<br>Review &amp; Study Guide</h1>
+  <p class="hero-sub">Covers the teacher's guided notes (Topic 8.2 dissolving + PPTX slides) <em>and</em> all assigned textbook sections — with 3 full practice quizzes, a cheat sheet, key terms, and worked examples.</p>
+  <div class="pill-row">
+    <div class="pill">Teacher Notes 8.2 <b>⭐ HIGH PRIORITY</b></div>
+    <div class="pill">CK-12 §16.2 Solute-Solvent Combos</div>
+    <div class="pill">CK-12 §16.3 Rate of Dissolving</div>
+    <div class="pill">CK-12 §16.4 Saturated/Unsaturated</div>
+    <div class="pill">CK-12 §16.5 Temperature &amp; Solubility</div>
+    <div class="pill">CK-12 §15.7 Electrolytes</div>
+    <div class="pill">CK-12 §15.9 Strong/Weak Electrolytes</div>
+    <div class="pill">CK-12 §16.9 Molarity</div>
+    <div class="pill">CK-12 §16.11 Preparing Solutions</div>
+    <div class="pill">CK-12 §16.12 Dilution</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn on"  onclick="show('cheat',this)">🗒️ Cheat Sheet</button>
+  <button class="nav-btn"     onclick="show('terms',this)">📖 Key Terms</button>
+  <button class="nav-btn"     onclick="show('book',this)">📚 Textbook Notes</button>
+  <button class="nav-btn"     onclick="show('teacher',this)">⭐ Teacher Notes</button>
+  <button class="nav-btn"     onclick="show('formulas',this)">🧮 Formulas</button>
+  <button class="nav-btn"     onclick="show('q1',this)">📝 Quiz 1</button>
+  <button class="nav-btn"     onclick="show('q2',this)">📝 Quiz 2</button>
+  <button class="nav-btn"     onclick="show('q3',this)">📝 Quiz 3</button>
+</nav>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════
+     CHEAT SHEET
+══════════════════════════════════════════════ -->
+<div id="cheat" class="panel on">
+<div class="sec-h">⚡ One-Page Cheat Sheet</div>
+<div class="sec-d">Highest-yield facts — study these first. Starred items appear directly from teacher's own materials.</div>
+
+<div class="callout cp"><div class="ico">🔥</div><div><strong>Dr. Suzette Priority:</strong> The dissolving process (ionic vs. molecular), salt vs. sugar comparison, ion counts, saturation states, solubility curves, molarity calculations, and the dilution equation are the core of every quiz. Know these cold before anything else.</div></div>
+
+<div class="cheat">
+<div class="cheat-h">⭐ The Dissolving Process — Teacher's Own Notes (Topic 8.2)</div>
+<div class="cr"><div class="ck">Ionic compound dissolves</div><div class="cv go">→ DISSOCIATES into separate ions + each ion hydrated</div></div>
+<div class="cr"><div class="ck">Polar molecular dissolves</div><div class="cv go">→ Molecules stay INTACT, become HYDRATED (surrounded by water)</div></div>
+<div class="cr"><div class="ck">Nonpolar molecular</div><div class="cv wa">→ Does NOT dissolve in water</div></div>
+<div class="cr"><div class="ck">Salt (NaCl)</div><div class="cv">Dissolved ✔ · Hydrated ✔ · Dissociated ✔</div></div>
+<div class="cr"><div class="ck">Sugar (sucrose)</div><div class="cv">Dissolved ✔ · Hydrated ✔ · Dissociated ✘</div></div>
+<div class="cr"><div class="ck">Sucrose polar or nonpolar?</div><div class="cv hi">POLAR (many –OH groups attract water)</div></div>
+<div class="cr"><div class="ck">AgNO₃ → ions</div><div class="cv">Ag⁺ and NO₃⁻ · NO₃⁻ is a polyatomic ion — does NOT further dissociate</div></div>
+<div class="cr"><div class="ck">CaCl₂ → ions</div><div class="cv">Ca²⁺ + 2Cl⁻ per unit · 2 units → 2Ca²⁺ + 4Cl⁻</div></div>
+<div class="cr"><div class="ck">Na₂S → ions</div><div class="cv">2Na⁺ + S²⁻ per unit · 3 units → 6Na²⁺ + 3S²⁻</div></div>
+<div class="cr"><div class="ck">CO in water</div><div class="cv wa">Nonpolar → does NOT dissolve; molecules appear floating/separate</div></div>
+<div class="cr"><div class="ck">NH₃ in water</div><div class="cv go">Polar → dissolves, hydrated but NOT dissociated</div></div>
+<div class="cr"><div class="ck">Hydrated</div><div class="cv">Ion or molecule surrounded by water molecules</div></div>
+<div class="cr"><div class="ck">Aqueous solution</div><div class="cv">Any substance dissolved in water</div></div>
+<div class="cr"><div class="ck">Condition for ionic dissolving</div><div class="cv">Ion-water attraction must be STRONGER than ion-ion attraction</div></div>
+<div class="cr"><div class="ck">"Like dissolves like"</div><div class="cv">Polar dissolves in polar; nonpolar in nonpolar</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">🧪 Saturation States (Teacher + §16.4)</div>
+<div class="cr"><div class="ck">Unsaturated</div><div class="cv go">Can dissolve MORE solute at that temperature</div></div>
+<div class="cr"><div class="ck">Saturated</div><div class="cv">Maximum solute dissolved; dissolving rate = recrystallization rate (equilibrium)</div></div>
+<div class="cr"><div class="ck">Supersaturated</div><div class="cv wa">MORE solute than possible — UNSTABLE — seed crystal → rapid crystallization</div></div>
+<div class="cr"><div class="ck">Solution equilibrium</div><div class="cv">Rate of dissolving = rate of recrystallization; total dissolved solute constant</div></div>
+<div class="cr"><div class="ck">Recrystallization use</div><div class="cv">Purify compounds — dissolve in hot solvent, cool → target crystallizes, impurities stay dissolved</div></div>
+<div class="cr"><div class="ck">How to test saturation</div><div class="cv">Add more solute: dissolves → unsaturated; doesn't dissolve → saturated</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">🔄 Rate of Dissolving vs. Amount (§16.3)</div>
+<div class="cr"><div class="ck">Rate = how FAST</div><div class="cv">Affected by: agitation, temperature, surface area</div></div>
+<div class="cr"><div class="ck">Amount = how MUCH</div><div class="cv">= Solubility; affected by: temperature, identity of solute/solvent</div></div>
+<div class="cr"><div class="ck">Agitation (stirring)</div><div class="cv go">↑ rate only — fresh solvent contacts solute constantly</div></div>
+<div class="cr"><div class="ck">↑ Surface area (grinding)</div><div class="cv go">↑ rate only — more contact points; does NOT change how much dissolves</div></div>
+<div class="cr"><div class="ck">↑ Temperature</div><div class="cv hi">↑ rate AND (for solids) ↑ amount; more kinetic energy → more/harder collisions</div></div>
+<div class="cr"><div class="ck">Collision theory</div><div class="cv">More frequent + forceful solvent-solute collisions → faster dissolving</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">🌡️ Temperature, Pressure &amp; Solubility (§16.5)</div>
+<div class="cr"><div class="ck">Solids in water vs. temp</div><div class="cv go">Direct — ↑ temp → ↑ solubility (most solids, not all)</div></div>
+<div class="cr"><div class="ck">NaCl vs. temp</div><div class="cv">Very flat slope — nearly unchanged by temp</div></div>
+<div class="cr"><div class="ck">KNO₃ vs. temp</div><div class="cv">Very steep — dramatically ↑ solubility with temp</div></div>
+<div class="cr"><div class="ck">Gases in water vs. temp</div><div class="cv wa">Inverse — ↑ temp → ↓ gas solubility (more KE → gas escapes)</div></div>
+<div class="cr"><div class="ck">Gas solubility vs. pressure</div><div class="cv go">Direct — ↑ pressure → ↑ gas solubility (Henry's Law)</div></div>
+<div class="cr"><div class="ck">Solubility curve</div><div class="cv">Graph of g solute/100g water vs. temperature</div></div>
+<div class="cr"><div class="ck">Reading a curve: BELOW line</div><div class="cv go">Unsaturated</div></div>
+<div class="cr"><div class="ck">Reading a curve: ON line</div><div class="cv hi">Saturated</div></div>
+<div class="cr"><div class="ck">Reading a curve: ABOVE line</div><div class="cv wa">Supersaturated</div></div>
+<div class="cr"><div class="ck">Steeper slope</div><div class="cv">= More soluble compound</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">⚡ Electrolytes &amp; Nonelectrolytes (§15.7, §15.9)</div>
+<div class="cr"><div class="ck">Electrolyte</div><div class="cv">Conducts electricity in aqueous solution — produces mobile ions</div></div>
+<div class="cr"><div class="ck">Nonelectrolyte</div><div class="cv">Does NOT conduct electricity — produces no ions (e.g., sugar, ethanol)</div></div>
+<div class="cr"><div class="ck">All ionic compounds</div><div class="cv go">Electrolytes (even insoluble ones conduct in molten state)</div></div>
+<div class="cr"><div class="ck">Strong electrolyte</div><div class="cv go">100% ionization — all ionic compounds, strong acids (HCl, HNO₃, H₂SO₄), strong bases (NaOH, KOH)</div></div>
+<div class="cr"><div class="ck">Weak electrolyte</div><div class="cv hi">Partial ionization — e.g., acetic acid (CH₃COOH), ammonia (NH₃)</div></div>
+<div class="cr"><div class="ck">Nonelectrolyte</div><div class="cv wa">No ionization — e.g., sugar (C₁₂H₂₂O₁₁), ethanol (C₂H₅OH), CO</div></div>
+<div class="cr"><div class="ck">HCl (g) in water</div><div class="cv">Pure HCl is nonelectrolyte; dissolved in water it FULLY ionizes → strong electrolyte (HCl(g) → H⁺ + Cl⁻)</div></div>
+<div class="cr"><div class="ck">Equation symbol</div><div class="cv">Strong: →  (single arrow, complete) · Weak: ⇌ (equilibrium arrows, partial)</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">🧮 Formulas — MUST KNOW</div>
+<div class="cr"><div class="ck">Molarity (M)</div><div class="cv hi">M = mol solute / L solution</div></div>
+<div class="cr"><div class="ck">Find moles</div><div class="cv">moles = M × L</div></div>
+<div class="cr"><div class="ck">Find volume</div><div class="cv">L = moles / M</div></div>
+<div class="cr"><div class="ck">Grams ↔ moles</div><div class="cv">moles = g / molar mass &nbsp;|&nbsp; g = moles × molar mass</div></div>
+<div class="cr"><div class="ck">Dilution equation ⭐</div><div class="cv wa">M꜀ × V꜀ = M_d × V_d</div></div>
+<div class="cr"><div class="ck">mL → L</div><div class="cv">Divide by 1000</div></div>
+</div>
+
+<div class="cheat">
+<div class="cheat-h">🧪 Making Solutions &amp; Solute-Solvent Combos (§16.2, §16.9, §16.11, §16.12)</div>
+<div class="cr"><div class="ck">Volumetric flask</div><div class="cv">Pear-shaped, calibrated for ONE precise volume; used for accurate solutions</div></div>
+<div class="cr"><div class="ck">Making from solid (4 steps)</div><div class="cv">Weigh solid → add to flask half-filled with distilled water → swirl to dissolve → fill to calibration line</div></div>
+<div class="cr"><div class="ck">Making from stock</div><div class="cv">McVc = MdVd → pipette Vc of stock → fill to calibration line</div></div>
+<div class="cr"><div class="ck">Adding acid to water</div><div class="cv wa">ALWAYS acid to water (never reverse) — prevents violent exothermic splash</div></div>
+<div class="cr"><div class="ck">Solute-solvent combos</div><div class="cv">Solutions can be gas-gas (air), gas-liquid, liquid-liquid, solid-liquid, solid-solid (alloys)</div></div>
+<div class="cr"><div class="ck">Alloys</div><div class="cv">Solid-solid solutions (brass = Cu+Zn, bronze = Cu+Sn, sterling silver = Ag+Cu)</div></div>
+<div class="cr"><div class="ck">Dental amalgam</div><div class="cv">Liquid-solid solution: 50% mercury + silver/tin/copper powder</div></div>
+<div class="cr"><div class="ck">Largest substance = solvent</div><div class="cv">If ethylene glycol is 60% and water is 40% in antifreeze → ethylene glycol is solvent</div></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     KEY TERMS
+══════════════════════════════════════════════ -->
+<div id="terms" class="panel">
+<div class="sec-h">📖 Key Terms</div>
+<div class="sec-d">All vocabulary across teacher notes and assigned textbook chapters.</div>
+<div class="term-grid">
+<div class="term-card"><div class="t">Solution</div><div class="d">Homogeneous mixture of solute dissolved in solvent. Can be gas, liquid, or solid phase.</div></div>
+<div class="term-card"><div class="t">Solute</div><div class="d">Substance being dissolved (smaller quantity). E.g., NaCl in saltwater.</div></div>
+<div class="term-card"><div class="t">Solvent</div><div class="d">Substance doing the dissolving (larger quantity). Water is the "universal solvent."</div></div>
+<div class="term-card"><div class="t">Aqueous Solution</div><div class="d">Solution in which water is the solvent.</div></div>
+<div class="term-card"><div class="t">Dissolution</div><div class="d">Process by which solute dissolves into solvent to form a solution.</div></div>
+<div class="term-card"><div class="t">Dissociation</div><div class="d">Ionic compound separating into its component ions when dissolved. Only ionic compounds dissociate — not molecular ones.</div></div>
+<div class="term-card"><div class="t">Hydrated</div><div class="d">Ion or molecule surrounded by water molecules in solution.</div></div>
+<div class="term-card"><div class="t">Solubility</div><div class="d">Amount of solute that can dissolve in 100g of solvent at a specific temperature to form a saturated solution. Units: g/100g water.</div></div>
+<div class="term-card"><div class="t">Unsaturated Solution</div><div class="d">Contains less solute than the maximum possible; can dissolve more solute.</div></div>
+<div class="term-card"><div class="t">Saturated Solution</div><div class="d">Contains the maximum amount of dissolved solute at a given temperature and pressure. Adding more solute → it settles undissolved.</div></div>
+<div class="term-card"><div class="t">Supersaturated Solution</div><div class="d">Contains more solute than normally possible — unstable. Adding a seed crystal causes rapid crystallization of excess solute.</div></div>
+<div class="term-card"><div class="t">Solution Equilibrium</div><div class="d">State where rate of dissolving = rate of recrystallization; total dissolved solute stays constant.</div></div>
+<div class="term-card"><div class="t">Recrystallization</div><div class="d">Dissolved solute returning to solid state. Used in labs to purify compounds.</div></div>
+<div class="term-card"><div class="t">Seed Crystal</div><div class="d">Small crystal added to a supersaturated solution to initiate crystallization.</div></div>
+<div class="term-card"><div class="t">Rate of Dissolution</div><div class="d">How fast a solute dissolves. Factors: agitation, temperature, surface area.</div></div>
+<div class="term-card"><div class="t">Agitation</div><div class="d">Stirring/mixing. Brings fresh solvent to solute → ↑ rate. Does NOT affect how much dissolves.</div></div>
+<div class="term-card"><div class="t">Surface Area</div><div class="d">Smaller particles have more surface area → more contact with solvent → ↑ rate. Does NOT affect amount.</div></div>
+<div class="term-card"><div class="t">Concentration</div><div class="d">Amount of solute dissolved in a given amount of solvent or solution. Can be expressed many ways.</div></div>
+<div class="term-card"><div class="t">Dilute vs. Concentrated</div><div class="d">Dilute = small amount of solute; Concentrated = large amount. Qualitative terms.</div></div>
+<div class="term-card"><div class="t">Molarity (M)</div><div class="d">Moles of solute per liter of SOLUTION. M = mol/L. Changes with temperature.</div></div>
+<div class="term-card"><div class="t">Stock Solution</div><div class="d">Concentrated solution of accurately known concentration used to make diluted solutions.</div></div>
+<div class="term-card"><div class="t">Volumetric Flask</div><div class="d">Pear-shaped flask calibrated for ONE precise volume; used to make accurately concentrated solutions.</div></div>
+<div class="term-card"><div class="t">Dilution</div><div class="d">Adding solvent to decrease concentration. Moles of solute stay the same: McVc = MdVd.</div></div>
+<div class="term-card"><div class="t">Electrolyte</div><div class="d">Compound that conducts electricity in aqueous solution or when melted — must produce mobile ions.</div></div>
+<div class="term-card"><div class="t">Nonelectrolyte</div><div class="d">Compound that does NOT conduct electricity; dissolves without producing ions. E.g., sugar, ethanol.</div></div>
+<div class="term-card"><div class="t">Strong Electrolyte</div><div class="d">Completely ionized in solution. Includes all ionic compounds, strong acids (HCl, HNO₃, H₂SO₄), strong bases (NaOH, KOH).</div></div>
+<div class="term-card"><div class="t">Weak Electrolyte</div><div class="d">Only partially ionizes in solution. Conducts electricity weakly. E.g., acetic acid, NH₃. Uses ⇌ in equation.</div></div>
+<div class="term-card"><div class="t">Ionization</div><div class="d">A molecular compound breaking into ions when dissolved in water. (Ionic compounds "dissociate"; acids "ionize.")</div></div>
+<div class="term-card"><div class="t">Miscible</div><div class="d">Two liquids that mix completely with no phase separation (e.g., water + vinegar).</div></div>
+<div class="term-card"><div class="t">Immiscible</div><div class="d">Two liquids that separate into phases (e.g., water + oil). Different IMFs.</div></div>
+<div class="term-card"><div class="t">Alloy</div><div class="d">Solid-solid solution. Examples: brass (Cu+Zn), bronze (Cu+Sn), sterling silver (Ag+Cu).</div></div>
+<div class="term-card"><div class="t">Polar Molecule</div><div class="d">Uneven charge distribution (e.g., H₂O, sucrose, NH₃). Dissolves in water.</div></div>
+<div class="term-card"><div class="t">Nonpolar Molecule</div><div class="d">Even charge distribution (e.g., CO, hexane, oil). Does NOT dissolve in water.</div></div>
+<div class="term-card"><div class="t">Intermolecular Forces (IMFs)</div><div class="d">Attractive forces between molecules. "Like dissolves like" = similar IMFs dissolve each other.</div></div>
+<div class="term-card"><div class="t">Coulombic Attraction</div><div class="d">Attraction between opposite charges. Depends on charge magnitude and distance. Governs ionic solubility.</div></div>
+<div class="term-card"><div class="t">Polyatomic Ion</div><div class="d">A charged group of bonded atoms (e.g., NO₃⁻, SO₄²⁻, CO₃²⁻). Does NOT further dissociate when parent compound dissolves.</div></div>
+<div class="term-card"><div class="t">Henry's Law</div><div class="d">Gas solubility ∝ partial pressure of gas above liquid. ↑ pressure → ↑ gas dissolves. Explains soda fizzing.</div></div>
+<div class="term-card"><div class="t">Solubility Curve</div><div class="d">Graph of solubility (g/100g water) vs. temperature. Points on curve = saturated; below = unsaturated; above = supersaturated.</div></div>
+<div class="term-card"><div class="t">Blood as a Solution</div><div class="d">Blood is simultaneously: a solution (of salts, glucose, urea), a suspension (of blood cells), and a colloid (of plasma proteins).</div></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TEXTBOOK NOTES
+══════════════════════════════════════════════ -->
+<div id="book" class="panel">
+<div class="sec-h">📚 Textbook Chapter Notes</div>
+<div class="sec-d">All 9 assigned CK-12 sections — accurate content mapped directly to your links.</div>
+
+<!-- 16.2 -->
+<div class="sh">§16.2 — Solute-Solvent Combinations</div>
+<div class="callout ca"><div class="ico">📌</div><div>Solutions are not limited to solid-in-liquid. Any state can combine. The largest component is the <strong>solvent</strong>; everything else is the <strong>solute</strong>.</div></div>
+<table class="tbl">
+<thead><tr><th>Solute State</th><th>Solvent State</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>Gas</td><td>Gas</td><td>Air (N₂ = solvent ~78%; O₂, Ar, CO₂ = solutes)</td></tr>
+<tr><td>Gas</td><td>Liquid</td><td>O₂ dissolved in water; CO₂ in soda</td></tr>
+<tr><td>Liquid</td><td>Liquid</td><td>Ethanol in water; antifreeze (ethylene glycol + water)</td></tr>
+<tr><td>Solid</td><td>Liquid</td><td>NaCl in water; sugar in tea</td></tr>
+<tr><td>Solid</td><td>Solid</td><td>Alloys: brass (Cu+Zn), bronze (Cu+Sn), sterling silver (Ag+Cu)</td></tr>
+<tr><td>Liquid</td><td>Solid</td><td>Dental amalgam: mercury + silver/tin/copper powder (~50% Hg)</td></tr>
+</tbody>
+</table>
+<div class="callout cg"><div class="ico">💡</div><div><strong>Antifreeze rule:</strong> If a mixture is 60% ethylene glycol and 40% water → ethylene glycol is the <em>solvent</em> (larger quantity); water is the <em>solute</em>.</div></div>
+
+<hr>
+
+<!-- 16.3 -->
+<div class="sh">§16.3 — Rate of Dissolving</div>
+<div class="g3">
+  <div class="card c-cyan">
+    <h3>🌊 Agitation / Stirring</h3>
+    <p>Keeps fresh solvent in contact with solute. Without stirring, solute's surface becomes saturated, slowing dissolution. <strong>Only affects rate — NOT total amount.</strong></p>
+  </div>
+  <div class="card c-gold">
+    <h3>🌡️ Temperature</h3>
+    <p>↑ temp → ↑ kinetic energy → more frequent and forceful collisions. Affects <strong>both rate AND amount</strong> (for solids, higher temp = more dissolves).</p>
+  </div>
+  <div class="card c-mint">
+    <h3>🔩 Surface Area</h3>
+    <p>Crushing/grinding creates more contact points. Granulated sugar dissolves faster than a sugar cube. <strong>Only affects rate — NOT total amount.</strong></p>
+  </div>
+</div>
+<div class="callout cg"><div class="ico">⚠️</div><div><strong>Key distinction:</strong> Stirring and grinding only speed up how fast dissolving happens — they do NOT change the maximum amount (solubility) that can dissolve. Temperature is the only factor here that affects both.</div></div>
+
+<hr>
+
+<!-- 16.4 -->
+<div class="sh">§16.4 — Saturated and Unsaturated Solutions</div>
+<div class="g2">
+  <div class="card c-pink">
+    <h3>💧 What Happens at the Molecular Level</h3>
+    <ul>
+      <li>As NaCl dissolves, ions break off and enter solution (hydrated)</li>
+      <li>Some dissolved ions collide back with the crystal → recrystallize</li>
+      <li>Eventually dissolving rate = recrystallization rate → <strong>equilibrium</strong></li>
+      <li>At equilibrium: solution is <strong>saturated</strong></li>
+    </ul>
+  </div>
+  <div class="card c-lav">
+    <h3>🔬 Recrystallization in Lab</h3>
+    <ul>
+      <li>Used to <strong>purify</strong> synthesized compounds</li>
+      <li>Dissolve impure compound in hot solvent → forms solution</li>
+      <li>Cool slowly → target compound precipitates (less soluble when cool)</li>
+      <li>Impurities stay dissolved in solution</li>
+    </ul>
+  </div>
+</div>
+<div class="callout ca"><div class="ico">🧪</div><div><strong>How to tell if a solution is saturated:</strong> Add more solute. If it dissolves → unsaturated. If it doesn't → saturated. If there's undissolved solid at the bottom at equilibrium → saturated.</div></div>
+
+<hr>
+
+<!-- 16.5 -->
+<div class="sh">§16.5 — How Temperature Influences Solubility</div>
+<div class="g2">
+  <div class="card c-gold">
+    <h3>🏔️ Solids in Water</h3>
+    <ul>
+      <li>Most: ↑ temperature → ↑ solubility (direct relationship)</li>
+      <li>NaCl: nearly flat curve — very little change with temperature</li>
+      <li>KNO₃: very steep curve — solubility rises dramatically</li>
+      <li>Reason: higher KE → solvent collides more with solid → IMFs weaken → more dissolves</li>
+    </ul>
+  </div>
+  <div class="card c-cyan">
+    <h3>🫧 Gases in Water</h3>
+    <ul>
+      <li>↑ temperature → ↓ gas solubility (inverse relationship)</li>
+      <li>Reason: higher KE → gas molecules escape liquid phase more easily</li>
+      <li>Examples: HCl, NH₃, SO₂ all decrease in solubility as temp rises</li>
+      <li>↑ pressure → ↑ gas solubility (Henry's Law — direct)</li>
+      <li>Soda: sealed under pressure → CO₂ stays dissolved; open → pressure drops → fizz</li>
+    </ul>
+  </div>
+</div>
+<div class="callout cp"><div class="ico">🔥</div><div><strong>Nuclear power plant context (from textbook):</strong> Plants near rivers return warmer water to the river, which <em>lowers</em> dissolved oxygen in the water, affecting fish survival — an application of gas solubility and temperature.</div></div>
+
+<div class="callout cg"><div class="ico">📊</div><div><strong>Reading solubility curves:</strong> At 30°C, NaNO₃ ≈ 95g/100g water; K₂Cr₂O₇ ≈ 16g; NaCl ≈ 35g. NaNO₃ is most soluble. Steeper slope = more soluble compound. If 80g KNO₃ is added to 100g water at 30°C and only ~48g dissolves → solution is saturated with 32g undissolved solid remaining.</div></div>
+
+<hr>
+
+<!-- 15.7 -->
+<div class="sh">§15.7 — Electrolytes and Nonelectrolytes</div>
+<div class="g2">
+  <div class="card c-mint">
+    <h3>⚡ Electrolytes</h3>
+    <ul>
+      <li>Conduct electricity in aqueous solution or when molten</li>
+      <li>Require mobile ions to carry current</li>
+      <li><strong>All ionic compounds are electrolytes</strong> — even insoluble ones (conduct in molten state)</li>
+      <li>Example: NaCl, CaCl₂, AgNO₃, KOH</li>
+      <li>Sports drinks contain electrolytes (Na⁺, K⁺) to replace those lost in sweat</li>
+    </ul>
+  </div>
+  <div class="card c-pink">
+    <h3>🚫 Nonelectrolytes</h3>
+    <ul>
+      <li>Do NOT conduct electricity in solution or molten state</li>
+      <li>Dissolve without producing ions</li>
+      <li>Example: sugar (C₁₂H₂₂O₁₁), ethanol (C₂H₅OH), CO, glucose</li>
+      <li>Polar molecules that don't ionize in water are nonelectrolytes</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- 15.9 -->
+<div class="sh">§15.9 — Strong and Weak Electrolytes</div>
+<table class="tbl">
+<thead><tr><th>Type</th><th>Ionization</th><th>Conductivity</th><th>Equation</th><th>Examples</th></tr></thead>
+<tbody>
+<tr><td><strong class="mn">Strong Electrolyte</strong></td><td>~100% ionized</td><td>High</td><td>Single arrow → (complete)</td><td>NaCl, KCl, HCl(aq), HNO₃, H₂SO₄, NaOH, KOH</td></tr>
+<tr><td><strong class="hi">Weak Electrolyte</strong></td><td>Partial ionization</td><td>Low</td><td>Double arrow ⇌ (equilibrium)</td><td>Acetic acid (CH₃COOH), NH₃, HF, carbonic acid</td></tr>
+<tr><td><strong class="lv">Nonelectrolyte</strong></td><td>No ionization</td><td>None</td><td>Shows dissolution (no ions)</td><td>Sugar, ethanol, CO, glucose</td></tr>
+</tbody>
+</table>
+<div class="callout ca"><div class="ico">💡</div><div><strong>HCl special case:</strong> HCl gas is a molecular compound — it's a <em>nonelectrolyte</em> in its pure form. But when dissolved in water, it <em>completely ionizes</em>: HCl(g) → H⁺(aq) + Cl⁻(aq), making it a <strong>strong electrolyte</strong> called hydrochloric acid.</div></div>
+<div class="callout cg"><div class="ico">🔋</div><div><strong>Car battery connection:</strong> Sulfuric acid (H₂SO₄) in car batteries is a strong electrolyte — completely ionizes to provide the ions needed to conduct electricity and power the vehicle.</div></div>
+
+<hr>
+
+<!-- 16.9 -->
+<div class="sh">§16.9 — Molarity</div>
+<div class="fbox">
+<div class="lbl">Molarity Formula</div>
+<div class="eq">M = <span class="v">moles solute</span> / <span class="v">liters solution</span></div>
+<div class="note">⚠️ Volume = total SOLUTION (not just water). Convert mL ÷ 1000 to get L. Read as "molar" e.g. "1.5 M NH₃" = "1.5 molar ammonia."</div>
+</div>
+<div class="g2">
+  <div class="card c-cyan">
+    <h3>Example 1 — Find M</h3>
+    <p>42.23g NH₄Cl (MM=53.50) in 500 mL solution.</p>
+    <p>mol = 42.23 ÷ 53.50 = 0.7893 mol</p>
+    <p>M = 0.7893 ÷ 0.5000 L = <strong class="cy">1.579 M</strong></p>
+  </div>
+  <div class="card c-gold">
+    <h3>Example 2 — Find grams</h3>
+    <p>Make 3.00 L of 0.250 M KMnO₄ (MM=158.04)</p>
+    <p>mol = 0.250 × 3.00 = 0.750 mol</p>
+    <p>g = 0.750 × 158.04 = <strong class="hi">118.5 g</strong></p>
+  </div>
+</div>
+<div class="callout ca"><div class="ico">🎯</div><div>Why use molarity? Percent solutions tell you mass, not particle count. Molarity lets you directly compare <strong>numbers of molecules/ions</strong> for stoichiometry — a 2% NaCl vs 2% CsCl have very different numbers of particles even though the mass percentages match.</div></div>
+
+<hr>
+
+<!-- 16.11 -->
+<div class="sh">§16.11 — Preparing Solutions</div>
+<div class="flow">
+  <div class="step"><span class="step-n">STEP 1</span>Calculate moles → convert to grams</div>
+  <div class="step"><span class="step-n">STEP 2</span>Weigh out solid on balance</div>
+  <div class="step"><span class="step-n">STEP 3</span>Add to volumetric flask half-filled with distilled water</div>
+  <div class="step"><span class="step-n">STEP 4</span>Swirl until all dissolved</div>
+  <div class="step"><span class="step-n">STEP 5</span>Add water up to calibration line; cap &amp; invert to mix</div>
+</div>
+<div class="callout cp"><div class="ico">⚠️</div><div><strong>Common mistake:</strong> You CANNOT add solid to 1L of water and get 1L of solution — the hydrated ions take up space, making final volume slightly >1L. Always use a volumetric flask calibrated for your target volume.</div></div>
+<div class="callout ca"><div class="ico">🧪</div><div>Volumetric flasks are ONE-SIZE tools — a 1-liter flask can ONLY be used to make 1 liter of solution, not 500 mL or any other volume.</div></div>
+
+<hr>
+
+<!-- 16.12 -->
+<div class="sh">§16.12 — Dilution</div>
+<div class="fbox">
+<div class="lbl">Dilution Equation ⭐ HIGH PRIORITY</div>
+<div class="eq">M<sub>c</sub> × <span class="v">V</span><sub>c</sub> = M<sub>d</sub> × <span class="v">V</span><sub>d</sub></div>
+<div class="note">c = concentrate (stock), d = dilute (final). Moles of solute are CONSERVED — only volume changes. "Adding water doesn't change the number of solute particles."</div>
+</div>
+<div class="g2">
+  <div class="card c-mint">
+    <h3>Dilution Example 1</h3>
+    <p>Make 1.0 L of 1.0 M HCl from 11.7 M stock:</p>
+    <p>V꜀ = (1.0 × 1.0) / 11.7 = <strong class="mn">0.0855 L = 85.5 mL</strong></p>
+    <p>Add acid to water (not reverse!)</p>
+  </div>
+  <div class="card c-lav">
+    <h3>Dilution Example 2</h3>
+    <p>Make 500 mL of 1.0 M acetic acid from 17.6 M stock:</p>
+    <p>V꜀ = (1.0 × 0.500) / 17.6 = <strong class="lv">0.0284 L = 28.4 mL</strong></p>
+    <p>Pipette 28.4 mL into 500 mL volumetric flask; fill to line.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TEACHER NOTES
+══════════════════════════════════════════════ -->
+<div id="teacher" class="panel">
+<div class="sec-h">⭐ Teacher's Materials — Priority Coverage</div>
+<div class="sec-d">From the PDF guided notes (Topic 8.2) and PPTX slides. Dr. Suzette quizzes her own materials more — master every detail here.</div>
+
+<div class="callout cp"><div class="ico">🔥</div><div>These are the concepts most likely to appear directly on the quiz — drawn word-for-word from the teacher's own guided notes and slide deck.</div></div>
+
+<div class="sh">Topic 8.2 — Dissolving Process: The Core Comparison</div>
+<table class="tbl">
+<thead><tr><th>Property</th><th>Salt (NaCl) — Ionic</th><th>Sugar (Sucrose) — Polar Molecular</th><th>CO — Nonpolar Molecular</th></tr></thead>
+<tbody>
+<tr><td><strong>Dissolved?</strong></td><td>✅ Yes</td><td>✅ Yes</td><td>❌ No</td></tr>
+<tr><td><strong>Hydrated?</strong></td><td>✅ Yes (each ion surrounded)</td><td>✅ Yes (whole molecule surrounded)</td><td>❌ No</td></tr>
+<tr><td><strong>Dissociated?</strong></td><td>✅ Yes → Na⁺ + Cl⁻</td><td>❌ No (molecule stays intact)</td><td>❌ No</td></tr>
+<tr><td><strong>Beaker diagram</strong></td><td>Separate + and – ions, each surrounded by water dipoles</td><td>Whole molecules floating, surrounded by water</td><td>Molecules floating alone, not surrounded</td></div></tr>
+</tbody>
+</table>
+
+<div class="sh">AgNO₃ — The Tricky Special Case ⭐</div>
+<div class="g2">
+  <div class="card c-pink">
+    <h3>🔬 Why AgNO₃ is Tricky</h3>
+    <ul>
+      <li>AgNO₃ is ionic → it <strong>does</strong> dissociate when dissolved</li>
+      <li>Produces: <strong>Ag⁺</strong> and <strong>NO₃⁻</strong></li>
+      <li>Nitrate (NO₃⁻) is a <strong>polyatomic ion</strong> — a charged molecule</li>
+      <li>Therefore: NO₃⁻ does <strong>NOT</strong> further break apart</li>
+      <li>In solution you see: Ag⁺ (hydrated) + NO₃⁻ (hydrated, intact)</li>
+    </ul>
+  </div>
+  <div class="card c-cyan">
+    <h3>📌 Polyatomic Ion Rule</h3>
+    <p>When an ionic compound containing a polyatomic ion dissolves, the polyatomic ion separates as a <strong>unit</strong> — it does not break into its individual atoms.</p>
+    <p><strong>Other examples:</strong> Na₂SO₄ → 2Na⁺ + SO₄²⁻ (sulfate stays together)</p>
+    <p>K₂CO₃ → 2K⁺ + CO₃²⁻ (carbonate stays together)</p>
+  </div>
+</div>
+
+<div class="sh">Ion Counting Practice — From Teacher Slides ⭐</div>
+<table class="tbl">
+<thead><tr><th>Compound</th><th>Dissociation Equation</th><th>Ions per Formula Unit</th><th>For 3 Units</th></tr></thead>
+<tbody>
+<tr><td>NaCl</td><td>NaCl → Na⁺ + Cl⁻</td><td>2 ions</td><td>3Na⁺ + 3Cl⁻ = 6 total</td></tr>
+<tr><td>CaCl₂</td><td>CaCl₂ → Ca²⁺ + 2Cl⁻</td><td>3 ions</td><td>3Ca²⁺ + 6Cl⁻ = 9 total</td></tr>
+<tr><td>Na₂S</td><td>Na₂S → 2Na⁺ + S²⁻</td><td>3 ions</td><td>6Na⁺ + 3S²⁻ = 9 total</td></tr>
+<tr><td>AgNO₃</td><td>AgNO₃ → Ag⁺ + NO₃⁻</td><td>2 particles</td><td>3Ag⁺ + 3NO₃⁻ = 6 total</td></tr>
+</tbody>
+</table>
+
+<div class="sh">Teacher Slide Key Ideas — Fill-in-the-Blank Answers</div>
+<div class="g2">
+  <div class="card c-mint">
+    <h3>🔑 Dissolving Key Ideas</h3>
+    <ul>
+      <li>Most ionic compounds <span class="mn">dissociate</span> into separate ions when dissolved</li>
+      <li>Ionic substance dissolves when ion-water attraction is <span class="mn">weaker</span> than ion-ion (wait — attraction must be <em>stronger</em> for water to win) → ion-ion must be <span class="mn">weaker</span> than ion-water</li>
+      <li>Many <span class="mn">polar</span> molecules dissolve; water attracts to <span class="mn">oppositely</span> charged regions</li>
+      <li>Most <span class="mn">nonpolar</span> molecules do NOT dissolve</li>
+      <li>Polar molecules dissolve but do NOT <span class="mn">dissociate</span>; they become <span class="mn">hydrated</span></li>
+    </ul>
+  </div>
+  <div class="card c-gold">
+    <h3>🔑 Solubility Key Ideas</h3>
+    <ul>
+      <li>Rate depends on amount of <span class="hi">collisions</span> between solute and solvent</li>
+      <li>More collisions → <span class="hi">faster</span> rate of dissolving</li>
+      <li>How much dissolves depends on <span class="hi">temperature</span> and solute identity</li>
+      <li>Most solids dissolve more at <span class="hi">higher</span> temperatures; gases at <span class="hi">lower</span> temperatures (and higher pressures)</li>
+      <li><span class="hi">Solubility</span> = IF something dissolves; <span class="hi">collision theory</span> = RATE</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sh">Saturation Key Ideas — From Slides</div>
+<div class="g2">
+  <div class="card c-lav">
+    <h3>💧 Saturation Summary</h3>
+    <ul>
+      <li><span class="lv">Unsaturated</span> = can dissolve more solute</li>
+      <li><span class="lv">Saturated</span> = maximum solute at given temperature</li>
+      <li><span class="lv">Supersaturated</span> = more than possible → very <strong>unstable</strong> state</li>
+      <li>Compounds with <strong>smaller ions</strong> and <strong>lower charges</strong> are more soluble</li>
+      <li>Coulombic attraction: lower charge + smaller distance → stronger pull → harder to dissolve</li>
+    </ul>
+  </div>
+  <div class="card c-cyan">
+    <h3>🎓 Molarity from Slides (Teacher Examples)</h3>
+    <ul>
+      <li>10.0g LiCl (MM=42.5) in 100mL → <strong class="cy">2.35 M</strong></li>
+      <li>0.25 mol Cu(NO₃)₂ in 250mL → <strong class="cy">moles = M×V = 1.5×0.25 = 0.375 mol</strong></li>
+      <li>50.0g KF (MM=58.1) for 2.0M solution → <strong class="cy">V = 0.43 L</strong></li>
+      <li>500mL 0.5M Cu(NO₃)₂ (MM=187.6) → <strong class="cy">46.9g needed</strong></li>
+      <li>Dilution: 1.0L 1.0M HCl from 11.7M → <strong class="cy">V꜀ = 85.5 mL</strong></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sh">Blood as a Solution — From Slides (Don't Skip!)</div>
+<div class="card c-pink">
+  <h3>🩸 Blood is Three Things Simultaneously</h3>
+  <ul>
+    <li><strong>Solution</strong> — of salts, glucose, urea, and other small compounds</li>
+    <li><strong>Suspension</strong> — of blood cells and proteins</li>
+    <li><strong>Colloid</strong> — of plasma proteins</li>
+  </ul>
+  <p style="margin-top:10px;font-size:.83rem;">This is a direct slide from Dr. Suzette — easy to quiz as "which of the following correctly describes blood?"</p>
+</div>
+
+<div class="sh">Vapor Pressure &amp; Gas Solubility — From Slides (Don't Skip!)</div>
+<div class="card c-gold">
+  <h3>🌡️ Vapor Pressure &amp; IMFs</h3>
+  <ul>
+    <li>Higher intermolecular forces → fewer molecules escape as vapor → lower vapor pressure</li>
+    <li>Increasing temperature → more molecules have enough energy to escape liquid → vapor pressure increases</li>
+    <li>Gas solubility: lower temperature → gas molecules have lower KE → stronger attraction to solvent → more stays dissolved</li>
+    <li>Higher pressure: pushes more gas molecules into solution → ↑ solubility</li>
+  </ul>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FORMULAS
+══════════════════════════════════════════════ -->
+<div id="formulas" class="panel">
+<div class="sec-h">🧮 Formula Reference + Worked Examples</div>
+<div class="sec-d">Every equation you need — with step-by-step solutions in the style of Dr. Suzette's slides.</div>
+
+<div class="sh">Core Equations</div>
+<div class="fbox"><div class="lbl">Molarity</div><div class="eq">M = <span class="v">mol</span><sub>solute</sub> / <span class="v">L</span><sub>solution</sub></div><div class="note">M in mol/L. Convert mL÷1000. Volume = TOTAL solution.</div></div>
+<div class="fbox"><div class="lbl">Moles from Molarity</div><div class="eq">moles = <span class="v">M</span> × <span class="v">V</span><sub>(L)</sub></div><div class="note">Use when you know concentration and volume; want moles or grams.</div></div>
+<div class="fbox"><div class="lbl">Volume from Molarity</div><div class="eq">V = <span class="v">moles</span> / <span class="v">M</span></div><div class="note">Gives liters; multiply ×1000 for mL.</div></div>
+<div class="fbox"><div class="lbl">Grams ↔ Moles</div><div class="eq">moles = <span class="v">g</span> / molar mass &nbsp;&nbsp;|&nbsp;&nbsp; g = moles × molar mass</div><div class="note">Molar mass from periodic table (g/mol).</div></div>
+<div class="fbox"><div class="lbl">Dilution Equation ⭐</div><div class="eq">M<sub>c</sub> × <span class="v">V</span><sub>c</sub> = M<sub>d</sub> × <span class="v">V</span><sub>d</sub></div><div class="note">Moles of solute conserved. c=concentrated/stock; d=diluted/final. Volumes must be same units.</div></div>
+
+<hr>
+<div class="sh">Worked Examples (Teacher Slide Style)</div>
+<div class="g2">
+<div class="card c-cyan"><h3>Ex 1 — Find M</h3><p>10.0g LiCl (MM=42.5 g/mol) in 100 mL solution.</p><div class="fbox" style="margin-top:8px"><div class="eq">mol = 10.0÷42.5 = <span class="v">0.235 mol</span></div></div><div class="fbox"><div class="eq">V = 100mL = <span class="v">0.100 L</span></div></div><div class="fbox"><div class="eq">M = 0.235÷0.100 = <span class="v">2.35 M LiCl</span></div></div></div>
+<div class="card c-gold"><h3>Ex 2 — Find moles</h3><p>How many moles Cu(NO₃)₂ for 250mL of 1.5M?</p><div class="fbox" style="margin-top:8px"><div class="eq">moles = M×V = 1.5 × 0.250 = <span class="v">0.375 mol</span></div></div></div>
+<div class="card c-mint"><h3>Ex 3 — Find volume</h3><p>What volume of 2.0M KF from 50.0g KF (MM=58.1)?</p><div class="fbox" style="margin-top:8px"><div class="eq">mol = 50.0÷58.1 = 0.861 mol</div></div><div class="fbox"><div class="eq">V = 0.861÷2.0 = <span class="v">0.43 L</span></div></div></div>
+<div class="card c-pink"><h3>Ex 4 — Find grams</h3><p>500mL of 0.5M Cu(NO₃)₂ (MM=187.6 g/mol)?</p><div class="fbox" style="margin-top:8px"><div class="eq">mol = 0.5 × 0.500 = 0.25 mol</div></div><div class="fbox"><div class="eq">g = 0.25 × 187.6 = <span class="v">46.9 g</span></div></div></div>
+<div class="card c-lav"><h3>Ex 5 — Dilution</h3><p>1.0L of 1.0M HCl from 11.7M stock?</p><div class="fbox" style="margin-top:8px"><div class="eq">11.7 × V꜀ = 1.0 × 1.0</div></div><div class="fbox"><div class="eq">V꜀ = 1.0÷11.7 = <span class="v">0.0855 L = 85.5 mL</span></div></div></div>
+<div class="card c-cyan"><h3>Ex 6 — Dilution</h3><p>500mL of 1.0M acetic acid from 17.6M stock?</p><div class="fbox" style="margin-top:8px"><div class="eq">17.6 × V꜀ = 1.0 × 0.500</div></div><div class="fbox"><div class="eq">V꜀ = 0.500÷17.6 = <span class="v">0.0284 L = 28.4 mL</span></div></div></div>
+<div class="card c-gold"><h3>Ex 7 — Make solution from solid</h3><p>How to make 500mL of 1.2M NaOH (MM=40.0)?</p><div class="fbox" style="margin-top:8px"><div class="eq">mol = 1.2 × 0.500 = 0.60 mol</div></div><div class="fbox"><div class="eq">g = 0.60 × 40.0 = <span class="v">24.0 g</span></div></div><p style="font-size:.8rem;margin-top:6px;">Put 24g NaOH in 500mL volumetric flask; fill to line.</p></div>
+<div class="card c-mint"><h3>Ex 8 — Make from solid (two-step)</h3><p>50mL of 0.25M Na₂CO₃ (MM=106 g/mol)?</p><div class="fbox" style="margin-top:8px"><div class="eq">mol = 0.25 × 0.050 = 0.0125 mol</div></div><div class="fbox"><div class="eq">g = 0.0125 × 106 = <span class="v">1.33 g</span></div></div></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUIZ 1
+══════════════════════════════════════════════ -->
+<div id="q1" class="panel">
+<div class="quiz-hdr">
+  <div><h2>📝 Practice Quiz — Set 1</h2><div class="qmeta">20 questions · Teacher Material Focus (Dissolving, Saturation, Electrolytes)</div></div>
+  <span class="tag tc">Set 1</span>
+</div>
+<div id="q1-body"></div>
+<div class="quiz-ctrl">
+  <button class="btn btn-p" onclick="grade('q1')">Grade Quiz</button>
+  <button class="btn btn-o" onclick="reset_q('q1')">Reset</button>
+</div>
+<div id="q1-score" class="scorebox"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUIZ 2
+══════════════════════════════════════════════ -->
+<div id="q2" class="panel">
+<div class="quiz-hdr">
+  <div><h2>📝 Practice Quiz — Set 2</h2><div class="qmeta">20 questions · Calculation Focus (Molarity, Dilution, Making Solutions, Solubility Curves)</div></div>
+  <span class="tag tp">Set 2</span>
+</div>
+<div id="q2-body"></div>
+<div class="quiz-ctrl">
+  <button class="btn btn-p" onclick="grade('q2')">Grade Quiz</button>
+  <button class="btn btn-o" onclick="reset_q('q2')">Reset</button>
+</div>
+<div id="q2-score" class="scorebox"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     QUIZ 3
+══════════════════════════════════════════════ -->
+<div id="q3" class="panel">
+<div class="quiz-hdr">
+  <div><h2>📝 Practice Quiz — Set 3</h2><div class="qmeta">20 questions · Mixed Review (All Textbook Sections + Teacher Notes)</div></div>
+  <span class="tag tg">Set 3</span>
+</div>
+<div id="q3-body"></div>
+<div class="quiz-ctrl">
+  <button class="btn btn-p" onclick="grade('q3')">Grade Quiz</button>
+  <button class="btn btn-o" onclick="reset_q('q3')">Reset</button>
+</div>
+<div id="q3-score" class="scorebox"></div>
+</div>
+
+</div><!-- end wrap -->
+
+<script>
+/* ==================== NAVIGATION ==================== */
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ==================== QUIZ DATA ==================== */
+const Q1 = [
+  {q:"When NaCl dissolves in water, what correctly describes the sodium and chloride ions?",
+   o:["They combine to form a new compound","They dissociate and each becomes hydrated by water molecules","They dissolve but stay bonded to each other as NaCl units","They evaporate above the solution as a gas"],
+   a:1,e:"NaCl is ionic → it dissociates into Na⁺ and Cl⁻. Each ion is then hydrated — surrounded by water molecules. The negative oxygen of water orients toward Na⁺; the positive hydrogens orient toward Cl⁻."},
+
+  {q:"Sucrose (table sugar) dissolves in water. Which correctly describes what happens?",
+   o:["It dissociates into glucose and fructose ions","It dissolves and the sucrose molecules become hydrated but do NOT dissociate","It does not dissolve because it is nonpolar","It forms a strong electrolyte solution"],
+   a:1,e:"Sucrose is a POLAR molecule (many –OH groups). It dissolves in water and becomes hydrated — molecules are surrounded by water — but it does NOT dissociate into ions. Sugar is a nonelectrolyte."},
+
+  {q:"Is sucrose (sugar) polar or nonpolar, and how does this affect its solubility in water?",
+   o:["Nonpolar; it cannot dissolve in water","Polar; it dissolves in water because its charged regions attract water's dipoles","Nonpolar; it dissolves anyway because water is a universal solvent","Polar; it dissociates into ions that are hydrated"],
+   a:1,e:"Sucrose is POLAR — it has many –OH groups creating partial charges. Polar solutes dissolve in polar solvents (like dissolves like). Water's dipoles attract to the charged regions of sucrose molecules."},
+
+  {q:"AgNO₃ dissolves in water. Which statement about the nitrate ion (NO₃⁻) is correct?",
+   o:["NO₃⁻ further dissociates into N³⁻ and O²⁻ ions","NO₃⁻ remains intact as a polyatomic ion and does NOT further dissociate","NO₃⁻ becomes covalently bonded to water","NO₃⁻ is the solvent in this reaction"],
+   a:1,e:"NO₃⁻ is a polyatomic ion — a charged molecule. When AgNO₃ (ionic compound) dissolves, it separates into Ag⁺ and NO₃⁻. The nitrate unit stays together; it does not further break into individual atoms."},
+
+  {q:"CO (carbon monoxide) is placed in a beaker of water. What would you observe?",
+   o:["CO dissolves completely because it is a small molecule","CO molecules stay separate and do NOT dissolve — CO is nonpolar","CO dissociates into C⁴⁺ and O²⁻ ions","CO forms hydrogen bonds with water and dissolves easily"],
+   a:1,e:"CO is nonpolar — it has no permanent dipole moment to attract polar water molecules. 'Like dissolves like': nonpolar molecules do not dissolve in polar solvents. In a diagram, CO molecules would appear as separate, non-hydrated particles."},
+
+  {q:"3 units of Na₂S dissolve in water. How many of each ion are present?",
+   o:["3 Na⁺ and 3 S²⁻","6 Na⁺ and 3 S²⁻","3 Na²⁺ and 6 S²⁻","6 Na⁺ and 6 S²⁻"],
+   a:1,e:"Na₂S → 2Na⁺ + S²⁻ per formula unit. With 3 units: 3×2 = 6 Na⁺ and 3×1 = 3 S²⁻. Total: 6+3 = 9 ions."},
+
+  {q:"2 units of CaCl₂ dissolve in water. What ions are present?",
+   o:["2 Ca²⁺ and 2 Cl⁻","2 Ca²⁺ and 4 Cl⁻","4 Ca²⁺ and 2 Cl⁻","2 Ca⁺ and 4 Cl⁻"],
+   a:1,e:"CaCl₂ → Ca²⁺ + 2Cl⁻ per formula unit. For 2 units: 2 Ca²⁺ and 2×2 = 4 Cl⁻. Total: 6 ions."},
+
+  {q:"What is the key difference between a dissolved and a dissociated substance?",
+   o:["They are the same thing","Dissolved = separated into individual particles in solution; dissociated = specifically broken into ions","Dissociated = surrounded by water; dissolved = floating freely","Only nonpolar compounds can be dissolved"],
+   a:1,e:"Dissolved is the general term — it means the solute is dispersed throughout the solvent as individual units (which could be ions OR intact molecules). Dissociated specifically means the particles are ions. Sugar dissolves but does not dissociate."},
+
+  {q:"For an ionic compound to dissolve in water, which condition must be true?",
+   o:["The ion-ion attraction must be stronger than the ion-water attraction","The ion-ion attraction must be weaker than the ion-water (dipole) attraction","Ion-water attraction has no role in whether it dissolves","The compound must be heated before dissolving"],
+   a:1,e:"Water molecules must 'win' — they must attract the ions more strongly than the ions attract each other (coulombic attraction in the crystal). If ion-ion bonds are too strong, water can't pull the ions away and the compound won't dissolve."},
+
+  {q:"Which statement about NH₃ (ammonia) dissolving in water is accurate?",
+   o:["NH₃ dissociates into N³⁻ and H⁺ ions","NH₃ molecules remain intact and become hydrated by surrounding water molecules","NH₃ does not dissolve because it is a gas","NH₃ is nonpolar and therefore repels water"],
+   a:1,e:"NH₃ is polar (nitrogen is electronegative, hydrogen slightly positive) and dissolves in water. As a molecular compound, NH₃ does NOT dissociate — the molecules stay intact and become hydrated. NH₃ is a weak electrolyte."},
+
+  {q:"What is an electrolyte, and which category of compounds always qualifies?",
+   o:["A compound that melts at high temperature; all metals are electrolytes","A compound that conducts electricity in solution; all ionic compounds are electrolytes","A compound that dissolves easily in water; all polar molecules are electrolytes","A compound that reacts with water; all acids are electrolytes"],
+   a:1,e:"An electrolyte conducts electricity in aqueous solution or when melted — because it produces mobile ions. ALL ionic compounds are electrolytes. Even insoluble ones (like CaCO₃) qualify because they conduct electricity in the molten state."},
+
+  {q:"Which of the following is a nonelectrolyte?",
+   o:["NaCl","HCl dissolved in water","Sugar (C₁₂H₂₂O₁₁)","NaOH"],
+   a:2,e:"Sugar is a molecular compound that dissolves without producing ions — it is a nonelectrolyte. NaCl, HCl(aq), and NaOH all produce ions in solution and are electrolytes (NaCl and NaOH are strong; HCl(aq) is a strong acid = strong electrolyte)."},
+
+  {q:"HCl is a gas in its pure form. When dissolved in water, how does its electrolyte classification change?",
+   o:["It remains a nonelectrolyte — gases cannot become electrolytes","It becomes a strong electrolyte — HCl fully ionizes into H⁺ and Cl⁻ in water","It becomes a weak electrolyte — HCl partially ionizes","It becomes a nonelectrolyte because it is molecular"],
+   a:1,e:"Pure HCl gas is molecular and a nonelectrolyte. But when dissolved in water, it completely ionizes: HCl(g) → H⁺(aq) + Cl⁻(aq). This makes aqueous HCl (hydrochloric acid) a strong electrolyte. This is a key example from §15.9."},
+
+  {q:"What distinguishes a strong electrolyte from a weak electrolyte?",
+   o:["Strong electrolytes are more concentrated solutions","Strong electrolytes fully ionize (→); weak electrolytes only partially ionize (⇌)","Strong electrolytes are always ionic; weak electrolytes are always molecular","Strong electrolytes are solids; weak electrolytes are liquids"],
+   a:1,e:"Strong electrolytes are completely broken into ions in solution (equation uses single → arrow). Weak electrolytes only partially ionize — a mixture of ions and intact molecules exists (equation uses ⇌ arrows). Acetic acid is a classic weak electrolyte."},
+
+  {q:"A crystal is added to a clear solution and it immediately turns cloudy with solid forming everywhere. What type of solution was it?",
+   o:["Unsaturated","Saturated","Supersaturated","Dilute"],
+   a:2,e:"This describes a supersaturated solution. It contained more dissolved solute than is stable at that temperature. The added crystal acted as a seed crystal — providing nucleation sites for excess solute to rapidly crystallize out."},
+
+  {q:"What is solution equilibrium?",
+   o:["When no more dissolving occurs at all","When the rate of dissolving equals the rate of recrystallization","When a solution is completely unsaturated","When the solution and solute have the same temperature"],
+   a:1,e:"Solution equilibrium is a dynamic state — dissolving and recrystallization both continue, but at equal rates, so the total amount of dissolved solute stays constant. A solution at equilibrium is saturated."},
+
+  {q:"Blood is correctly described as which of the following?",
+   o:["Only a solution of salts and glucose","Only a suspension of blood cells","A solution, a suspension, AND a colloid simultaneously","An electrolyte but not a solution"],
+   a:2,e:"From Dr. Suzette's slides: blood is simultaneously (1) a solution of salts, glucose, and urea; (2) a suspension of blood cells and proteins; and (3) a colloid of plasma proteins. This makes it a complex biological mixture."},
+
+  {q:"Which of the following pairs is MISCIBLE?",
+   o:["Water and oil","Water and hexane","Water and ethanol","Water and gasoline"],
+   a:2,e:"Miscible = mix completely with no phase separation. Water and ethanol are miscible — both polar/hydrogen bonding capable. Oil, hexane, and gasoline are nonpolar and immiscible with water."},
+
+  {q:"All ionic compounds are electrolytes. Does this apply even to insoluble ionic compounds like CaCO₃?",
+   o:["No — insoluble compounds cannot produce ions","Yes — insoluble ionic compounds can still conduct electricity in the molten (melted) state","Only if they are dissolved in very hot water","No — only soluble ionic compounds are electrolytes"],
+   a:1,e:"Yes — according to §15.7: even insoluble ionic compounds are electrolytes because they can conduct electricity when melted (molten state). In the molten state, the ions are free to move and carry current even though the solid won't dissolve well in water."},
+
+  {q:"Which best explains why oil and water do not mix?",
+   o:["Oil is denser and sinks to the bottom","Oil and water have different intermolecular forces; like dissolves like — polar water cannot dissolve nonpolar oil","Oil reacts chemically with water","Oil molecules are too large to dissolve"],
+   a:1,e:"'Like dissolves like' — water is polar (hydrogen bonding, dipole-dipole) while oil is nonpolar (London dispersion only). Water molecules attract more strongly to each other than to oil, so the two phases remain separate. This is an immiscible pair."}
+];
+
+const Q2 = [
+  {q:"What is the molarity of a solution made by dissolving 42.23g of NH₄Cl (MM=53.50 g/mol) in enough water to make 500.0 mL of solution?",
+   o:["0.7893 M","1.579 M","7.893 M","0.158 M"],
+   a:1,e:"mol NH₄Cl = 42.23 ÷ 53.50 = 0.7893 mol. V = 500.0 mL = 0.5000 L. M = 0.7893 ÷ 0.5000 = 1.579 M."},
+
+  {q:"How many moles of Cu(NO₃)₂ are needed to make 250 mL of a 1.5 M solution?",
+   o:["0.167 mol","0.375 mol","3.75 mol","6.00 mol"],
+   a:1,e:"moles = M × V = 1.5 mol/L × 0.250 L = 0.375 mol."},
+
+  {q:"What volume (in liters) of 2.0 M KF can be made from 50.0g of KF (MM=58.1 g/mol)?",
+   o:["0.043 L","0.43 L","4.3 L","0.86 L"],
+   a:1,e:"mol KF = 50.0 ÷ 58.1 = 0.861 mol. V = moles ÷ M = 0.861 ÷ 2.0 = 0.43 L."},
+
+  {q:"How many grams of NaOH (MM=40.0 g/mol) are needed to make 500 mL of 1.2 M NaOH?",
+   o:["2.4 g","16.7 g","24.0 g","60.0 g"],
+   a:2,e:"mol = M × V = 1.2 × 0.500 = 0.60 mol. g = 0.60 × 40.0 = 24.0 g. Place 24g NaOH in 500mL volumetric flask and fill to line."},
+
+  {q:"Using McVc = MdVd, what volume of 11.7 M HCl stock is needed to make 1.0 L of 1.0 M HCl?",
+   o:["8.55 mL","85.5 mL","117 mL","11.7 mL"],
+   a:1,e:"McVc = MdVd → 11.7 × Vc = 1.0 × 1.0 → Vc = 1.0/11.7 = 0.0855 L = 85.5 mL. Add acid to water when diluting!"},
+
+  {q:"How would you make 500 mL of 1.0 M acetic acid from a 17.6 M stock solution?",
+   o:["Add 8.4 mL stock to 500 mL water","Pipette 28.4 mL stock into 500 mL volumetric flask; fill to calibration line with water","Dissolve 17.6g acetic acid in 500 mL water","Add 500 mL of stock to 28.4 mL water"],
+   a:1,e:"McVc = MdVd → 17.6 × Vc = 1.0 × 0.500 → Vc = 0.500/17.6 = 0.0284 L = 28.4 mL. Pipette 28.4 mL of stock into a 500 mL volumetric flask, then fill to the calibration line with distilled water."},
+
+  {q:"A student needs 3.00 L of 0.250 M KMnO₄ (MM=158.04 g/mol). How many grams are needed?",
+   o:["39.5 g","118.5 g","47.4 g","1.18 g"],
+   a:1,e:"mol = M × V = 0.250 × 3.00 = 0.750 mol. g = 0.750 × 158.04 = 118.5 g."},
+
+  {q:"At 30°C, the solubility of NaNO₃ is 95g/100g water. If you have 50g of NaNO₃ dissolved in 100g water at 30°C, what type of solution do you have?",
+   o:["Saturated","Supersaturated","Unsaturated","At equilibrium with undissolved solid"],
+   a:2,e:"The maximum at 30°C is 95g. You have only 50g dissolved — less than the maximum. Therefore the solution is unsaturated and could dissolve 45 more grams of NaNO₃."},
+
+  {q:"80g of KNO₃ is added to 100g water at 30°C. The solubility of KNO₃ at 30°C is about 48g/100g water. What do you observe?",
+   o:["All 80g dissolves — clear solution","Exactly 48g dissolves; 32g remains undissolved at the bottom","80g dissolves because hot water is a universal solvent","The solution crystallizes because it's supersaturated"],
+   a:1,e:"At 30°C, only ~48g of KNO₃ can dissolve in 100g water. Adding 80g → 48g dissolves (saturated), leaving 80–48 = 32g of undissolved solid at the bottom."},
+
+  {q:"Which factors affect the RATE of dissolving ONLY (not how much dissolves)?",
+   o:["Temperature and identity of solute","Agitation and particle size (surface area)","Temperature and pressure","Identity of solvent and temperature"],
+   a:1,e:"Agitation (stirring) and particle size (surface area) only speed up the rate of dissolving — they do NOT change the maximum amount that can dissolve. Temperature is unique: it affects BOTH rate and (for solids) the total amount that can dissolve."},
+
+  {q:"On a solubility curve, KNO₃ has a steep positive slope while NaCl has a nearly flat slope. What does this mean?",
+   o:["KNO₃ is always more soluble than NaCl regardless of temperature","KNO₃'s solubility increases dramatically with temperature; NaCl's changes very little with temperature","NaCl is always insoluble","KNO₃ becomes supersaturated at high temperatures"],
+   a:1,e:"Slope on a solubility curve = how much solubility changes with temperature. Steep = large change (KNO₃ is much more soluble at high temps). Flat = little change (NaCl's solubility barely changes from 0–100°C). Both can be soluble at any given temperature — the slope tells you the temperature sensitivity."},
+
+  {q:"Why is molarity preferred over percent concentration for chemistry calculations?",
+   o:["Molarity is easier to measure with common lab equipment","Molarity accounts for the number of moles/particles, which is what chemical equations need","Percent concentration changes with temperature but molarity does not","Molarity applies only to ionic compounds"],
+   a:1,e:"Chemical equations describe reactions in terms of moles of particles. Molarity (mol/L) directly tells you how many moles are in any given volume — making it ideal for stoichiometry. A 2% NaCl vs 2% CsCl have very different particle counts despite identical mass percentages."},
+
+  {q:"Why must a volumetric flask be used (not a graduated cylinder) when making a solution of known molarity?",
+   o:["Volumetric flasks can be heated, which speeds dissolving","They are calibrated for ONE exact volume at a specific temperature, ensuring precise concentration","They have airtight stoppers that prevent evaporation","They are larger and can hold more solvent"],
+   a:1,e:"A volumetric flask has a precise calibration mark on its neck. Filling to this mark guarantees the exact total volume of solution. A graduated cylinder is less precise. Also, you cannot add solid to water and measure afterward — the volume changes upon dissolving. The flask gives you the final volume accurately."},
+
+  {q:"You need to make 200 mL of 0.50 M HNO₃ from a 6.0 M stock. What volume of stock is needed?",
+   o:["1.67 mL","16.7 mL","60 mL","167 mL"],
+   a:1,e:"McVc = MdVd → 6.0 × Vc = 0.50 × 0.200 → Vc = 0.100/6.0 = 0.01667 L = 16.7 mL."},
+
+  {q:"Gas solubility in water as temperature increases:",
+   o:["Increases because warmer water has more energy","Decreases because gas molecules gain KE and escape solution more easily","Stays the same; temperature only affects solid solubility","Increases if pressure also increases"],
+   a:1,e:"As temperature increases, gas molecules gain kinetic energy and have greater tendency to escape the solvent and return to the gas phase. Result: gas solubility DECREASES with increasing temperature. This is opposite to the behavior of most solids."},
+
+  {q:"Henry's Law describes which relationship?",
+   o:["Solubility of a solid increases with temperature","Solubility of a gas in a liquid is directly proportional to the partial pressure of that gas above the liquid","Volume of a gas is inversely proportional to pressure","Rate of dissolving depends on surface area"],
+   a:1,e:"Henry's Law: gas solubility ∝ partial pressure of gas above the liquid. ↑ pressure → more gas forced into solution → ↑ solubility. This applies only to gases, not solids or liquids. Soda bubbles when opened because pressure drops, reducing CO₂ solubility."},
+
+  {q:"What does the dilution equation McVc = MdVd tell us about moles of solute?",
+   o:["Moles of solute decrease when you add water","Moles of solute are conserved — adding water only increases volume","Moles of solute increase when concentration drops","The equation does not involve moles"],
+   a:1,e:"The dilution equation is derived from the fact that moles of solute = M × V. Since moles don't change when you add solvent: M_c × V_c = moles = M_d × V_d. Adding water dilutes the solution but doesn't add or remove solute."},
+
+  {q:"What are the 4 steps to prepare a solution from a solid solute?",
+   o:["Measure volume of solvent → add solid → stir → transfer to any container","Weigh correct mass → add to half-filled volumetric flask → swirl until dissolved → fill to calibration line with water","Dissolve solid in water → measure volume after → adjust → cap","Heat water → add solid → cool → measure concentration"],
+   a:1,e:"The textbook (§16.11) steps: (1) Weigh correct mass of solid. (2) Add to volumetric flask half-filled with distilled water. (3) Swirl until all dissolved. (4) Carefully fill with distilled water up to the calibration line on the neck. Cap and invert to mix."},
+
+  {q:"If 36.0g of glucose (MM=180 g/mol) is dissolved to make 2.00 L of solution, what is the molarity?",
+   o:["0.100 M","0.200 M","0.400 M","18.0 M"],
+   a:0,e:"mol = 36.0 ÷ 180 = 0.200 mol. M = 0.200 ÷ 2.00 = 0.100 M."},
+
+  {q:"A solution has 3.0 moles of NaCl in 1.5 L. What is its molarity?",
+   o:["1.5 M","2.0 M","4.5 M","0.50 M"],
+   a:1,e:"M = moles ÷ L = 3.0 mol ÷ 1.5 L = 2.0 M."}
+];
+
+const Q3 = [
+  {q:"§16.2: Air is considered a solution. Which component is the solvent?",
+   o:["Oxygen (~21%)","Nitrogen (~78%)","Carbon dioxide (~0.03%)","Argon (~0.9%)"],
+   a:1,e:"In a solution, the solvent is the most abundant component. Air is ~78% nitrogen, making nitrogen the solvent. All other gases (O₂, Ar, CO₂, etc.) are solutes dissolved in the nitrogen 'matrix.' Air is a gas-gas solution."},
+
+  {q:"§16.2: Brass and bronze are examples of which type of solution?",
+   o:["Liquid-gas solutions","Liquid-liquid solutions","Solid-solid solutions called alloys","Solid-liquid solutions"],
+   a:2,e:"Alloys are solid-solid solutions. Brass = copper + zinc; bronze = copper + tin. Sterling silver = silver + copper. Dental amalgam is a liquid-solid solution (mercury + metal powder). This is from §16.2 Solute-Solvent Combinations."},
+
+  {q:"§16.3: A student grinds up a sugar cube before adding it to iced tea. Compared to adding the whole cube, what changes?",
+   o:["Both the rate of dissolving AND the total amount that dissolves increase","Only the rate of dissolving increases; total amount that dissolves stays the same","Only the total amount that dissolves increases","Neither rate nor total amount changes"],
+   a:1,e:"Grinding increases surface area → more contact between solute and solvent → faster rate. But the total solubility (how much can dissolve) is determined by temperature and the chemical identities of solute and solvent — not by particle size. Grinding does NOT change how much can dissolve."},
+
+  {q:"§16.4: You add NaCl to water and stir. Eventually more added salt no longer dissolves, settling at the bottom. What has been reached?",
+   o:["The salt has chemically reacted with water","Solution equilibrium — rate of dissolving equals rate of recrystallization","The water has become supersaturated","The salt has lost its polarity"],
+   a:1,e:"Solution equilibrium is reached when the rate at which NaCl dissolves equals the rate of recrystallization (ions returning to the crystal). The total dissolved salt stays constant. The solution is saturated."},
+
+  {q:"§16.5: A nuclear power plant returns warm water to a river. How does this affect dissolved oxygen levels for fish?",
+   o:["Warmer water holds more dissolved oxygen, benefiting fish","Warmer water lowers gas solubility, reducing dissolved oxygen and harming fish","Temperature has no effect on dissolved oxygen","Warmer water only affects solid solubility, not gas"],
+   a:1,e:"This is the real-world example from §16.5. Gas solubility decreases as temperature increases. Warmer river water therefore holds less dissolved oxygen (O₂). Reduced dissolved oxygen threatens fish and other aquatic organisms that need it to breathe."},
+
+  {q:"§15.7 + §15.9: Acetic acid (vinegar) partially ionizes in water. What type of electrolyte is it?",
+   o:["Strong electrolyte","Weak electrolyte","Nonelectrolyte","Not an electrolyte because it is a liquid"],
+   a:1,e:"Acetic acid (CH₃COOH) only partially ionizes: CH₃COOH ⇌ H⁺ + CH₃COO⁻. The double arrow (⇌) indicates partial/reversible ionization. This makes it a weak electrolyte — it conducts electricity, but weakly. This is the classic example from §15.9."},
+
+  {q:"§15.9: Car batteries use sulfuric acid (H₂SO₄). Why is this a good choice for conducting electricity?",
+   o:["H₂SO₄ is a liquid and liquids always conduct electricity","H₂SO₄ is a strong electrolyte that completely ionizes, providing many mobile ions","H₂SO₄ is a nonelectrolyte with low resistance","H₂SO₄ reacts with the car battery to produce electricity directly"],
+   a:1,e:"H₂SO₄ is a strong acid and strong electrolyte — it completely ionizes: H₂SO₄ → 2H⁺ + SO₄²⁻. The high concentration of mobile ions allows excellent electrical conductivity. This real-world example is explicitly in §15.9."},
+
+  {q:"§16.9: What is the molarity of a solution containing 0.7893 mol NH₄Cl in 500 mL?",
+   o:["0.395 M","1.579 M","0.790 M","7.89 M"],
+   a:1,e:"M = moles ÷ L = 0.7893 ÷ 0.5000 = 1.579 M. This is the textbook example from §16.9/16.8."},
+
+  {q:"Teacher notes + §16.11: The correct procedure for preparing a precise molarity solution from a solid is:",
+   o:["Add solid to exactly 1L of water and stir","Weigh solid → add to volumetric flask half-filled with water → swirl → fill to calibration line","Dissolve solid in any beaker → measure final volume → calculate M","Heat water to boiling → add solid → cool → measure volume"],
+   a:1,e:"You cannot add solid to a pre-measured volume of water — the dissolved solute changes the final volume. The correct method (§16.11): weigh solid, add to a volumetric flask half-filled with distilled water, swirl until dissolved, then carefully fill to the single calibration mark on the neck."},
+
+  {q:"Teacher notes: What does 'hydrated' mean in the context of dissolving?",
+   o:["A substance that contains water in its chemical formula","An ion or molecule surrounded by water molecules in solution","Water that has been heated above 50°C","A solution that is saturated with water"],
+   a:1,e:"When a substance dissolves in water, its ions or molecules become hydrated — each is surrounded by water molecules. The partial negative oxygen of water orients toward positive ions (cations); the partial positive hydrogens orient toward negative ions (anions). Both salt ions and sugar molecules become hydrated."},
+
+  {q:"§16.12: What volume of 6.0 M HNO₃ is needed to prepare 300 mL of 0.60 M HNO₃?",
+   o:["3.0 mL","30.0 mL","300 mL","0.30 mL"],
+   a:1,e:"McVc = MdVd → 6.0 × Vc = 0.60 × 0.300 → Vc = 0.180 ÷ 6.0 = 0.030 L = 30.0 mL."},
+
+  {q:"Teacher notes: Which statement about the rate of solvation vs. solubility is correct?",
+   o:["Solubility dictates rate; collision theory dictates if something dissolves","Solubility dictates IF something dissolves; collision theory dictates the RATE","They are the same concept with different names","Rate of solvation and solubility both increase equally with stirring"],
+   a:1,e:"From Dr. Suzette's slides: Solubility = IF something can dissolve (and how much). Collision theory = RATE at which it dissolves (more solute-solvent collisions = faster). Stirring increases collisions (rate) but cannot change what is thermodynamically possible to dissolve (solubility)."},
+
+  {q:"§16.5: At 30°C, 50g of NaNO₃ is dissolved in 100g water. Solubility of NaNO₃ at 30°C is 95g/100g water. How many MORE grams can dissolve?",
+   o:["0g — the solution is saturated","45g more","95g more","50g more"],
+   a:1,e:"The solution currently has 50g dissolved. Maximum at 30°C = 95g. So 95 – 50 = 45 more grams can dissolve before the solution becomes saturated."},
+
+  {q:"§15.7: Sports drinks advertise 'electrolytes.' Why are these important for athletes?",
+   o:["Electrolytes make drinks taste better","Electrolytes (ions like Na⁺, K⁺) conduct electrical signals in muscles and nerves; they're lost through sweat","Electrolytes increase the boiling point of the drink","Electrolytes are vitamins needed for energy"],
+   a:1,e:"Electrolytes are ions (Na⁺, K⁺, Cl⁻ etc.) that conduct electrical impulses needed for muscle contraction and nerve signaling. They're lost through sweat during exercise. Replacing them prevents muscle cramps, fatigue, and irregular heart rate. This context appears in §15.7."},
+
+  {q:"§16.4: The recrystallization technique is used to:",
+   o:["Make a solution more concentrated","Purify a compound by dissolving it in hot solvent and letting impurities stay dissolved when cooled","Create a supersaturated solution for crystal growing","Determine the molarity of an unknown solution"],
+   a:1,e:"Recrystallization: dissolve impure compound in hot solvent (more dissolves at high temp) → cool slowly → target compound is less soluble at low temp and crystallizes out → impurities remain dissolved. Filter to collect pure crystals. This is from §16.4."},
+
+  {q:"Teacher notes: In a beaker diagram of NH₃ dissolved in water, how should individual NH₃ molecules appear?",
+   o:["Broken into N³⁻ and H⁺ ions, each hydrated separately","As intact NH₃ molecules surrounded by water molecules","Not surrounded by water at all — NH₃ is in a separate layer","As NH₄⁺ and OH⁻ ions"],
+   a:1,e:"NH₃ is a polar molecular compound. When it dissolves, the molecules stay intact (no dissociation) and each NH₃ molecule becomes hydrated — surrounded by water molecules. In a beaker diagram, you'd draw intact NH₃ molecules with water molecules clustered around them."},
+
+  {q:"§16.5: A solubility curve shows NaCl's line is nearly flat from 0°C to 100°C. What does this tell you?",
+   o:["NaCl is insoluble at all temperatures","NaCl becomes supersaturated at high temperatures","NaCl's solubility barely changes with temperature — it's about 35–37g/100g water across all temperatures shown","NaCl dissolves faster at higher temperatures"],
+   a:2,e:"A flat slope on a solubility curve means very little change in how much dissolves with temperature change. NaCl is unusual in that its solubility is ~35–37g/100g water whether the temperature is 0°C or 100°C. This contrasts with KNO₃, which shows a very steep curve."},
+
+  {q:"§16.2: Ethylene glycol antifreeze is 60% of a mixture; water is 40%. Which is the solvent?",
+   o:["Water, because it is always the solvent","Ethylene glycol, because it is the greater quantity","Both are solvents equally","Water, because it is more polar"],
+   a:1,e:"By definition, the solvent is the component present in greater quantity. Here, ethylene glycol makes up 60% and water makes up 40%. Therefore ethylene glycol is the solvent and water is the solute. This is the textbook example from §16.2."},
+
+  {q:"Teacher notes + §16.12: Why should you always add acid to water (not water to acid) when making dilutions?",
+   o:["Acid dissolves faster when added to water","Water added to concentrated acid causes violent exothermic heat that can boil and splash caustic acid","Acid is less dense and floats on water naturally","The dilution equation only works when acid is added to water"],
+   a:1,e:"Concentrated acids dissolve with significant heat release (exothermic). Adding a small amount of water to a large volume of concentrated acid creates intense local heating — the water can flash-boil and spray hot acid dangerously. Adding acid slowly to a large volume of water dissipates heat safely. This is standard lab safety."},
+
+  {q:"§15.9: Which equation correctly represents a WEAK electrolyte in water?",
+   o:["NaCl(s) → Na⁺(aq) + Cl⁻(aq)","HCl(g) → H⁺(aq) + Cl⁻(aq)","CH₃COOH(aq) ⇌ H⁺(aq) + CH₃COO⁻(aq)","KOH(s) → K⁺(aq) + OH⁻(aq)"],
+   a:2,e:"Weak electrolytes use the double-arrow equilibrium symbol (⇌) because only a fraction of molecules ionize. Acetic acid (CH₃COOH) is the textbook example of a weak electrolyte. NaCl, HCl, and KOH all use a single forward arrow (→) because they completely dissociate/ionize — they are strong electrolytes."}
+];
+
+/* ==================== QUIZ ENGINE ==================== */
+const DATA = {q1:Q1, q2:Q2, q3:Q3};
+const ANSWERS = {q1:{}, q2:{}, q3:{}};
+
+function render(id) {
+  const data = DATA[id];
+  const body = document.getElementById(id+'-body');
+  body.innerHTML = '';
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'qb';
+    div.innerHTML = `
+      <div class="qn">Q${i+1} / ${data.length}</div>
+      <div class="qt">${item.q}</div>
+      <div class="qopts">
+        ${item.o.map((opt,j)=>`
+          <div class="qopt" onclick="pick(this,'${id}',${i},${j})" data-i="${j}">
+            <span class="ql">${'ABCD'[j]}</span>
+            <span>${opt}</span>
+          </div>`).join('')}
+      </div>
+      <div class="qexp" id="exp-${id}-${i}">${item.e}</div>
+    `;
+    body.appendChild(div);
+  });
+}
+
+function pick(el, qid, qi, oi) {
+  el.closest('.qopts').querySelectorAll('.qopt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  ANSWERS[qid][qi] = oi;
+}
+
+function grade(qid) {
+  const data = DATA[qid];
+  let correct = 0;
+  data.forEach((item, i) => {
+    const opts = document.querySelectorAll(`#${qid}-body .qb`)[i].querySelectorAll('.qopt');
+    opts.forEach(o=>{o.classList.remove('ok','bad')});
+    opts[item.a].classList.add('ok');
+    const ua = ANSWERS[qid][i];
+    if (ua !== undefined && ua !== item.a) opts[ua].classList.add('bad');
+    if (ua === item.a) correct++;
+    document.getElementById(`exp-${qid}-${i}`).classList.add('show');
+  });
+  const pct = Math.round(correct/data.length*100);
+  const emoji = pct>=90?'🌟 Outstanding!':pct>=80?'✅ Strong work!':pct>=65?'📚 Keep reviewing!':'🔄 Study more!';
+  const score = document.getElementById(`${qid}-score`);
+  score.innerHTML = `<div class="big">${correct}/${data.length}</div><div class="lbl">${pct}% — ${emoji}</div>`;
+  score.classList.add('show');
+  score.scrollIntoView({behavior:'smooth'});
+}
+
+function reset_q(qid) {
+  ANSWERS[qid] = {};
+  render(qid);
+  const score = document.getElementById(`${qid}-score`);
+  score.classList.remove('show');
+  score.innerHTML = '';
+}
+
+/* INIT */
+render('q1'); render('q2'); render('q3');
+</script>
+</body>
+</html>
