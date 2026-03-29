@@ -209,11 +209,9 @@ em{color:var(--muted)}
   .screen-nav,.no-print{display:none!important}
   body{background:#fff;color:#000;font-size:11pt;line-height:1.5}
 
-  /* Show only active panel content — we print quiz sheets specially */
-  .panel{display:block!important}
-
-  /* Review guide is first */
-  #guide{page-break-after:always}
+  /* Show only the active panel; suppress animation so opacity:0 doesn't blank the page */
+  .panel{display:none!important;animation:none!important}
+  .panel.on{display:block!important}
 
   .page-title{font-size:18pt}
   .ch{font-size:13pt;margin:20pt 0 8pt}
@@ -239,12 +237,6 @@ em{color:var(--muted)}
   .ak-item{border:1pt solid #ccc;padding:10pt;margin-bottom:8pt;break-inside:avoid}
   .ak-item .ak-ans{background:#000;color:#fff;padding:4pt 10pt}
   .ak-item .ak-exp{font-size:9pt}
-
-  /* Page breaks between quiz sets */
-  #quiz1{page-break-before:always}
-  #quiz2{page-break-before:always}
-  #quiz3{page-break-before:always}
-  #answers{page-break-before:always}
 }
 
 /* ============================================================
