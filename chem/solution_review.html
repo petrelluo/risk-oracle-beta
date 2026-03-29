@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Solutions — Test Review Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+  :root {
+    --navy: #0d1b2a;
+    --teal: #1b6ca8;
+    --aqua: #22c5c5;
+    --gold: #f0b429;
+    --cream: #f5f0e8;
+    --coral: #e05c5c;
+    --light-blue: #e8f4fc;
+    --text: #1a1a2e;
+    --muted: #6b7a99;
+    --card-bg: #ffffff;
+    --correct: #2a9d5c;
+    --wrong: #e05c5c;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #0d2b3a 100%);
+    padding: 60px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(34,197,197,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 20%, rgba(27,108,168,0.2) 0%, transparent 50%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(240,180,41,0.15);
+    border: 1px solid rgba(240,180,41,0.4);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    color: #ffffff;
+    line-height: 1.15;
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .hero h1 span { color: var(--aqua); }
+  .hero p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1rem;
+    position: relative;
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  /* NAV TABS */
+  .tab-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    padding: 0 16px;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    padding: 9px 20px;
+    border-radius: 24px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { background: rgba(34,197,197,0.15); color: #fff; }
+  .tab-btn.active {
+    background: var(--aqua);
+    border-color: var(--aqua);
+    color: var(--navy);
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SECTION HEADER */
+  .sec-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .sec-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--teal), var(--aqua));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .sec-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: #ffffff;
+    font-size: 1.6rem;
+  }
+  .sec-header p { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--teal);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+  .card.gold { border-left-color: var(--gold); }
+  .card.coral { border-left-color: var(--coral); }
+  .card.aqua { border-left-color: var(--aqua); }
+
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .card.gold h3 { color: #b07800; }
+  .card.coral h3 { color: var(--coral); }
+  .card.aqua h3 { color: #0d8080; }
+
+  .card p, .card li {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .card ul, .card ol {
+    padding-left: 20px;
+    margin-top: 8px;
+  }
+  .card li { margin-bottom: 6px; }
+
+  .tag {
+    display: inline-block;
+    background: var(--light-blue);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+  .tag.gold { background: #fff8e6; color: #9a6f00; }
+  .tag.coral { background: #fff0f0; color: #b83c3c; }
+
+  /* KEY TERMS GRID */
+  .terms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .term-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border-top: 3px solid var(--aqua);
+  }
+  .term-card .term { font-weight: 700; color: var(--teal); font-size: 0.95rem; margin-bottom: 4px; }
+  .term-card .def { font-size: 0.88rem; color: #444; line-height: 1.5; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: linear-gradient(135deg, #0d1b2a, #1b3a5c);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(34,197,197,0.25);
+  }
+  .formula-box .formula-name {
+    color: var(--aqua);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .formula-box .formula-eq {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .formula-box .formula-note {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  /* COMPARISON TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.9rem; }
+  .compare-table th {
+    background: var(--teal);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 9px 14px; border-bottom: 1px solid #e8eef5; color: var(--text); }
+  .compare-table tr:nth-child(even) td { background: #f7fafc; }
+  .compare-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .compare-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+  /* CHECK = ✔  CROSS = ✘ */
+  .yes { color: var(--correct); font-weight: 700; }
+  .no { color: var(--coral); font-weight: 700; }
+
+  /* QUIZ SECTION */
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .progress-bar-outer {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--aqua));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+  }
+  .progress-label { color: rgba(255,255,255,0.6); font-size: 13px; white-space: nowrap; }
+
+  .quiz-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+  }
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.55;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    background: #f4f7fb;
+    border: 2px solid #dde4ef;
+    border-radius: 10px;
+    padding: 12px 18px;
+    text-align: left;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.18s;
+    line-height: 1.45;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--teal); background: #eaf4fb; }
+  .option-btn.selected-correct {
+    background: #e6f9ef; border-color: var(--correct); color: var(--correct);
+    font-weight: 600;
+  }
+  .option-btn.selected-wrong {
+    background: #fdeaea; border-color: var(--wrong); color: var(--wrong);
+    font-weight: 600;
+  }
+  .option-btn.reveal-correct {
+    background: #e6f9ef; border-color: var(--correct); color: var(--correct);
+    font-weight: 600;
+  }
+  .option-btn:disabled { cursor: default; }
+
+  .q-explanation {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: #f0f8ff;
+    border-left: 4px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #2a3a50;
+  }
+  .q-explanation.show { display: block; }
+
+  .quiz-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 11px 26px;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-primary { background: var(--teal); color: white; }
+  .btn-primary:hover { background: #145e8e; }
+  .btn-secondary { background: transparent; color: var(--aqua); border: 2px solid var(--aqua); }
+  .btn-secondary:hover { background: rgba(34,197,197,0.1); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* SCORE BOARD */
+  .score-board {
+    text-align: center;
+    padding: 40px 24px;
+  }
+  .score-circle {
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--aqua));
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 30px rgba(34,197,197,0.35);
+  }
+  .score-circle .num { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; line-height: 1; }
+  .score-circle .denom { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+  .score-board h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; margin-bottom: 10px; }
+  .score-board p { color: rgba(255,255,255,0.6); margin-bottom: 28px; }
+
+  /* KEY TAKEAWAYS */
+  .takeaway-list { list-style: none; padding: 0; }
+  .takeaway-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #e8eef5;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .takeaway-list li:last-child { border-bottom: none; }
+  .takeaway-list .bullet {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--aqua);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .content { padding: 28px 14px 60px; }
+    .card { padding: 18px 16px; }
+    .quiz-card { padding: 20px 18px; }
+    .formula-box .formula-eq { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Dr. Suzette's Chem Class · Unit 8A · Spring 2026</div>
+  <h1>Solutions &amp; <span>Dissolving</span><br>Test Review Guide</h1>
+  <p>Covering CK-12 Ch. 15.7, 15.9, 16.2–16.5, 16.9, 16.11, 16.12 + guided notes</p>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showSection('review')">📖 Review Guide</button>
+    <button class="tab-btn" onclick="showSection('formulas')">🧮 Formulas</button>
+    <button class="tab-btn" onclick="showSection('terms')">🔑 Key Terms</button>
+    <button class="tab-btn" onclick="showSection('quiz')">📝 Quiz</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ===== REVIEW GUIDE ===== -->
+  <div id="review" class="section active">
+
+    <div class="sec-header">
+      <div class="sec-icon">📖</div>
+      <div><h2>Review Guide</h2><p>All major concepts organized by topic</p></div>
+    </div>
+
+    <!-- Water as Solvent -->
+    <div class="card aqua">
+      <div class="tag">Ch. 15.7 &amp; 15.9 — Water as Solvent</div>
+      <h3>Why Water Is the "Universal Solvent"</h3>
+      <p>Water is a <strong>polar covalent molecule</strong> with a bent shape (~105° bond angle). The highly electronegative oxygen pulls electron density away from the hydrogen atoms, giving O a partial negative charge (δ−) and each H a partial positive charge (δ+). This polarity allows water to:</p>
+      <ul>
+        <li>Attract and surround <strong>ionic compounds</strong> — the δ− oxygen sides face cations; the δ+ hydrogen sides face anions (hydration).</li>
+        <li>Interact with other <strong>polar covalent molecules</strong> through dipole–dipole attractions.</li>
+        <li>Form strong <strong>hydrogen bonds</strong> (H bonded to F, O, or N in a neighboring molecule).</li>
+        <li>Give water an unusually <strong>low vapor pressure</strong> and <strong>high surface tension</strong> compared to molecules of similar size.</li>
+      </ul>
+    </div>
+
+    <!-- Dissolving Process -->
+    <div class="card">
+      <div class="tag">8.2 Guided Notes — The Dissolving Process</div>
+      <h3>Ionic vs. Molecular Dissolving</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Property</th><th>Ionic (e.g., NaCl)</th><th>Molecular Polar (e.g., Sugar)</th><th>Molecular Nonpolar (e.g., CO)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dissolved?</td><td class="yes">✔ Yes</td><td class="yes">✔ Yes</td><td class="no">✘ No</td></tr>
+          <tr><td>Hydrated?</td><td class="yes">✔ Yes</td><td class="yes">✔ Yes</td><td class="no">✘ No</td></tr>
+          <tr><td>Dissociated?</td><td class="yes">✔ Separates into ions</td><td class="no">✘ Molecules stay intact</td><td class="no">✘ N/A</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;font-size:0.9rem;color:#555;">⚠️ <strong>Polyatomic ions</strong> (e.g., NO₃⁻ in AgNO₃) do NOT dissociate further — they stay together as charged molecules when the ionic compound dissolves.</p>
+    </div>
+
+    <!-- Like Dissolves Like -->
+    <div class="card gold">
+      <div class="tag gold">Solubility Rule</div>
+      <h3>"Like Dissolves Like" — IMF Matching</h3>
+      <ul>
+        <li>Substances dissolve in solvents with <strong>similar intermolecular forces (IMFs)</strong>.</li>
+        <li>Polar solutes dissolve in polar solvents; nonpolar solutes dissolve in nonpolar solvents.</li>
+        <li>A substance is considered <strong>soluble</strong> if &gt;0.1 mol dissolves per liter of water.</li>
+        <li>For ionic solubility: ions with <strong>smaller size</strong> or <strong>lower charge</strong> tend to be more soluble (weaker coulombic attraction = easier to separate).</li>
+      </ul>
+    </div>
+
+    <!-- Rate of Dissolving -->
+    <div class="card">
+      <div class="tag">Ch. 16.2 — Rate of Dissolving</div>
+      <h3>3 Factors That Affect <em>Rate</em> (not solubility!)</h3>
+      <ul>
+        <li><strong>Agitation (stirring)</strong> — keeps fresh solvent in contact with solute, increasing collision frequency.</li>
+        <li><strong>Temperature</strong> — molecules move faster, collide more often and more energetically.</li>
+        <li><strong>Surface area</strong> — smaller/crushed particles expose more surface for collisions (e.g., powdered sugar vs. a sugar cube).</li>
+      </ul>
+      <p style="margin-top:10px;font-size:0.88rem;color:#666;">🔑 <em>Collision Theory</em> governs the RATE at which a solute dissolves. Solubility determines HOW MUCH can dissolve.</p>
+    </div>
+
+    <!-- Saturated/Unsaturated/Supersaturated -->
+    <div class="card aqua">
+      <div class="tag">Ch. 16.3 &amp; 16.5 — Solution Types</div>
+      <h3>Unsaturated, Saturated &amp; Supersaturated</h3>
+      <ul>
+        <li><strong>Unsaturated</strong> — can still dissolve more solute at that temperature.</li>
+        <li><strong>Saturated</strong> — contains the maximum amount of dissolved solute at a given temperature. Rate of dissolving = rate of crystallization (dynamic equilibrium).</li>
+        <li><strong>Supersaturated</strong> — contains more solute than theoretically possible; highly unstable. Any disturbance (adding a seed crystal, stirring) causes rapid crystallization (e.g., rock candy).</li>
+      </ul>
+    </div>
+
+    <!-- Temperature & Solubility -->
+    <div class="card coral">
+      <div class="tag coral">Ch. 16.4 — Temperature &amp; Solubility</div>
+      <h3>How Temperature Affects Solubility</h3>
+      <ul>
+        <li>For most <strong>solid solutes</strong>: solubility <strong>increases</strong> with temperature (steeper solubility curve = more sensitive to temperature).</li>
+        <li>For <strong>gases dissolved in liquids</strong>: solubility <strong>decreases</strong> as temperature rises (why warm soda goes flat).</li>
+        <li><strong>Solubility curves</strong> show grams of solute that dissolve in 100 g of water at various temperatures. Points above the curve = supersaturated; on the curve = saturated; below = unsaturated.</li>
+        <li>NaCl is unusual — its solubility changes very little with temperature (nearly flat curve).</li>
+      </ul>
+    </div>
+
+    <!-- Preparing Solutions -->
+    <div class="card">
+      <div class="tag">Ch. 16.9 — Preparing Solutions</div>
+      <h3>Making Accurate Solutions (Molarity)</h3>
+      <ul>
+        <li>A <strong>volumetric flask</strong> — pear-shaped, calibrated to a precise volume — is used to make accurate solutions.</li>
+        <li>Method 1: Weigh solute → dissolve in a small amount of water → transfer to volumetric flask → dilute to the calibration line.</li>
+        <li>Method 2: <strong>Dilution from a concentrated stock solution</strong> using: <strong>M<sub>c</sub>V<sub>c</sub> = M<sub>d</sub>V<sub>d</sub></strong></li>
+        <li>⚠️ Always add concentrated acid <strong>to water</strong>, not water to acid (to avoid dangerous exothermic splashing).</li>
+      </ul>
+    </div>
+
+    <!-- Molality -->
+    <div class="card gold">
+      <div class="tag gold">Ch. 16.11 — Molality</div>
+      <h3>Molality vs. Molarity</h3>
+      <table class="compare-table">
+        <thead><tr><th></th><th>Molarity (M)</th><th>Molality (m)</th></tr></thead>
+        <tbody>
+          <tr><td>Formula</td><td>mol solute / L solution</td><td>mol solute / kg solvent</td></tr>
+          <tr><td>Symbol</td><td>M (uppercase)</td><td>m (lowercase italic)</td></tr>
+          <tr><td>Denominator</td><td>Volume of solution</td><td>Mass of solvent only</td></tr>
+          <tr><td>Changes with temp?</td><td class="no">Yes (volume changes)</td><td class="yes">No (mass is constant)</td></tr>
+          <tr><td>Used for…</td><td>General concentration</td><td>Colligative properties</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vapor Pressure Lowering -->
+    <div class="card">
+      <div class="tag">Ch. 16.12 — Colligative Properties</div>
+      <h3>Vapor Pressure Lowering (Raoult's Law)</h3>
+      <p><strong>Colligative properties</strong> depend only on the <em>number</em> of solute particles — not their chemical identity. They include:</p>
+      <ul>
+        <li><strong>Vapor pressure lowering</strong> — adding a nonvolatile solute reduces vapor pressure because solute particles occupy the surface, reducing the rate at which solvent evaporates. The more solute, the lower the vapor pressure.</li>
+        <li><strong>Boiling point elevation</strong> — lower vapor pressure means a higher temperature is needed to reach atmospheric pressure → solution boils higher than pure solvent.</li>
+        <li><strong>Freezing point depression</strong> — solute particles disrupt the crystal lattice formation → solution freezes lower than pure solvent.</li>
+      </ul>
+      <p style="margin-top:10px;font-size:0.88rem;color:#555;">Electrolytes (ionic compounds) produce MORE particles per formula unit → greater colligative effect than nonelectrolytes at the same molality.</p>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="card aqua">
+      <h3 style="margin-bottom:14px;">⚡ Quick Key Ideas to Remember</h3>
+      <ul class="takeaway-list">
+        <li><span class="bullet">1</span>Ionic compounds <strong>dissociate</strong> into separate ions; polar molecular compounds remain intact (only hydrated).</li>
+        <li><span class="bullet">2</span><strong>Rate</strong> (stirring, temp, surface area) ≠ <strong>Solubility</strong> (how much dissolves).</li>
+        <li><span class="bullet">3</span>Supersaturated solutions are <strong>unstable</strong> and will crystallize with any disturbance.</li>
+        <li><span class="bullet">4</span>Gas solubility decreases with temperature; solid solubility usually increases.</li>
+        <li><span class="bullet">5</span>Use <strong>molality</strong> (not molarity) for colligative property calculations.</li>
+        <li><span class="bullet">6</span>All colligative properties are driven by the <strong>number of dissolved particles</strong>.</li>
+        <li><span class="bullet">7</span>Volumetric flasks ensure precise solution concentrations. Always dilute: M<sub>c</sub>V<sub>c</sub> = M<sub>d</sub>V<sub>d</sub>.</li>
+      </ul>
+    </div>
+
+  </div><!-- end review -->
+
+  <!-- ===== FORMULAS ===== -->
+  <div id="formulas" class="section">
+
+    <div class="sec-header">
+      <div class="sec-icon">🧮</div>
+      <div><h2>Key Formulas</h2><p>Everything you need for calculations</p></div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Molarity</div>
+      <div class="formula-eq">M = mol solute ÷ L solution</div>
+      <div class="formula-note">Units: mol/L &nbsp;|&nbsp; Symbol: M (uppercase) &nbsp;|&nbsp; Used for most concentration problems</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Molality</div>
+      <div class="formula-eq">m = mol solute ÷ kg solvent</div>
+      <div class="formula-note">Units: mol/kg &nbsp;|&nbsp; Symbol: m (lowercase italic) &nbsp;|&nbsp; Used for colligative properties</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Dilution Formula</div>
+      <div class="formula-eq">M<sub style="font-size:0.7em">c</sub>V<sub style="font-size:0.7em">c</sub> = M<sub style="font-size:0.7em">d</sub>V<sub style="font-size:0.7em">d</sub></div>
+      <div class="formula-note">c = concentrated stock &nbsp;|&nbsp; d = diluted solution &nbsp;|&nbsp; V can be in mL or L (keep consistent)</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Percent by Mass</div>
+      <div class="formula-eq">% m/m = (mass solute ÷ mass solution) × 100</div>
+      <div class="formula-note">Also written: mass solute ÷ (mass solute + mass solvent) × 100</div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Boiling Point Elevation (Colligative)</div>
+      <div class="formula-eq">ΔT<sub style="font-size:0.7em">b</sub> = K<sub style="font-size:0.7em">b</sub> × m</div>
+      <div class="formula-note">K<sub>b</sub>(water) = 0.51°C/m &nbsp;|&nbsp; m = molality &nbsp;|&nbsp; Solution BP = 100°C + ΔT<sub>b</sub></div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-name">Freezing Point Depression (Colligative)</div>
+      <div class="formula-eq">ΔT<sub style="font-size:0.7em">f</sub> = K<sub style="font-size:0.7em">f</sub> × m</div>
+      <div class="formula-note">K<sub>f</sub>(water) = 1.86°C/m &nbsp;|&nbsp; Solution FP = 0°C − ΔT<sub>f</sub></div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>Worked Example: Dilution</h3>
+      <p>How is 1.0 L of a <strong>1.0 M HCl</strong> solution made from an <strong>11.7 M stock</strong>?</p>
+      <ol style="margin-top:10px;">
+        <li>Set up: M<sub>c</sub>V<sub>c</sub> = M<sub>d</sub>V<sub>d</sub> → 11.7 × V<sub>c</sub> = 1.0 × 1.0 L</li>
+        <li>Solve: V<sub>c</sub> = 1.0/11.7 = <strong>0.0855 L = 85.5 mL</strong></li>
+        <li>Procedure: Fill volumetric flask ¼ with water, add 85.5 mL stock via buret, dilute to 1.0 L fill line.</li>
+      </ol>
+    </div>
+
+    <div class="card gold">
+      <h3>Worked Example: Molality</h3>
+      <p>Find molality of a solution made by dissolving <strong>28.60 g glucose (C₆H₁₂O₆, MW = 180.18)</strong> in <strong>250 g water</strong>.</p>
+      <ol style="margin-top:10px;">
+        <li>mol glucose = 28.60 ÷ 180.18 = <strong>0.1588 mol</strong></li>
+        <li>kg solvent = 250 g ÷ 1000 = <strong>0.250 kg</strong></li>
+        <li>m = 0.1588 mol ÷ 0.250 kg = <strong>0.635 m</strong></li>
+      </ol>
+    </div>
+
+  </div><!-- end formulas -->
+
+  <!-- ===== KEY TERMS ===== -->
+  <div id="terms" class="section">
+
+    <div class="sec-header">
+      <div class="sec-icon">🔑</div>
+      <div><h2>Key Terms</h2><p>Definitions you must know for the test</p></div>
+    </div>
+
+    <div class="terms-grid">
+      <div class="term-card"><div class="term">Solute</div><div class="def">The substance being dissolved (present in smaller amount).</div></div>
+      <div class="term-card"><div class="term">Solvent</div><div class="def">The substance doing the dissolving (present in larger amount). Usually water in aqueous solutions.</div></div>
+      <div class="term-card"><div class="term">Aqueous solution</div><div class="def">A homogeneous mixture in which water is the solvent.</div></div>
+      <div class="term-card"><div class="term">Hydration</div><div class="def">Water molecules surrounding and stabilizing dissolved ions or molecules.</div></div>
+      <div class="term-card"><div class="term">Dissociation</div><div class="def">The separation of an ionic compound into its individual ions when dissolved in water.</div></div>
+      <div class="term-card"><div class="term">Solubility</div><div class="def">The maximum amount of solute that dissolves in a given amount of solvent at a specific temperature.</div></div>
+      <div class="term-card"><div class="term">Unsaturated solution</div><div class="def">A solution that can still dissolve more solute at the current temperature.</div></div>
+      <div class="term-card"><div class="term">Saturated solution</div><div class="def">A solution containing the maximum dissolved solute at a given temperature; in dynamic equilibrium with undissolved solute.</div></div>
+      <div class="term-card"><div class="term">Supersaturated solution</div><div class="def">An unstable solution containing more dissolved solute than should be possible at the current temperature.</div></div>
+      <div class="term-card"><div class="term">Miscible</div><div class="def">Two liquids that mix in all proportions without phase separation (e.g., water and vinegar).</div></div>
+      <div class="term-card"><div class="term">Immiscible</div><div class="def">Two liquids that do not mix and form separate layers (e.g., water and oil).</div></div>
+      <div class="term-card"><div class="term">Molarity (M)</div><div class="def">Moles of solute per liter of solution. M = mol/L. Changes with temperature.</div></div>
+      <div class="term-card"><div class="term">Molality (m)</div><div class="def">Moles of solute per kilogram of solvent. m = mol/kg. Does not change with temperature.</div></div>
+      <div class="term-card"><div class="term">Colligative property</div><div class="def">A property of a solution that depends only on the number of dissolved particles, not their identity (e.g., vapor pressure lowering, BP elevation, FP depression).</div></div>
+      <div class="term-card"><div class="term">Vapor pressure lowering</div><div class="def">Reduction in vapor pressure of a solvent caused by the presence of a nonvolatile solute (Raoult's Law).</div></div>
+      <div class="term-card"><div class="term">Volumetric flask</div><div class="def">A pear-shaped flask calibrated to contain a precise volume; used to prepare accurate solutions.</div></div>
+      <div class="term-card"><div class="term">Electrolyte</div><div class="def">A substance that dissociates into ions in solution, making the solution electrically conductive.</div></div>
+      <div class="term-card"><div class="term">Coulombic attraction</div><div class="def">The attraction between oppositely charged particles; depends on magnitude of charge and distance between charges.</div></div>
+    </div>
+
+  </div><!-- end terms -->
+
+  <!-- ===== QUIZ ===== -->
+  <div id="quiz" class="section">
+    <div class="sec-header">
+      <div class="sec-icon">📝</div>
+      <div><h2>Practice Quiz</h2><p>20 questions covering all topics</p></div>
+    </div>
+
+    <div id="quiz-container"></div>
+  </div>
+
+</div><!-- end content -->
+
+<script>
+// ===================== TAB LOGIC =====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'quiz' && !quizInitialized) initQuiz();
+}
+
+// ===================== QUIZ DATA =====================
+const questions = [
+  {
+    q: "What type of molecule is water, and what makes it such an effective solvent?",
+    opts: [
+      "Nonpolar — it forms London dispersion forces with all compounds",
+      "Polar covalent — its δ+ and δ− regions attract both cations, anions, and polar molecules",
+      "Ionic — it dissociates in solution to produce H⁺ and OH⁻ ions",
+      "Nonpolar covalent — it is miscible with oil-based substances"
+    ],
+    correct: 1,
+    explain: "Water is a polar covalent molecule with a bent shape. Oxygen's high electronegativity creates δ− at O and δ+ at H, allowing water to attract and surround both cations and anions (ionic hydration) and interact with other polar molecules."
+  },
+  {
+    q: "When NaCl dissolves in water, which of the following correctly describes what happens?",
+    opts: [
+      "NaCl molecules dissolve but remain intact; they are hydrated but not dissociated",
+      "NaCl dissociates into Na⁺ and Cl⁻ ions, each surrounded by water molecules (hydrated)",
+      "NaCl is nonpolar and therefore does not dissolve in water",
+      "Only the Na⁺ ions dissolve; Cl⁻ precipitates out"
+    ],
+    correct: 1,
+    explain: "NaCl is ionic. When dissolved, the ionic bonds are broken and Na⁺ and Cl⁻ ions are released (dissociation) and surrounded by water molecules (hydration). Both ions enter the aqueous solution."
+  },
+  {
+    q: "Which of the following BEST explains why sugar (sucrose) dissolves in water but does NOT dissociate?",
+    opts: [
+      "Sugar is ionic, so it splits into individual ions",
+      "Sugar is a nonpolar molecule that is repelled by water's polarity",
+      "Sugar is polar; its molecules are separated from each other and hydrated, but individual molecules remain intact",
+      "Sugar is insoluble in water because it is too large"
+    ],
+    correct: 2,
+    explain: "Sucrose is a polar molecular compound. It dissolves because polar regions on sucrose attract water molecules. However, it does not have ionic bonds to break, so the molecule stays intact — it is hydrated but NOT dissociated."
+  },
+  {
+    q: "AgNO₃ dissolves in water. What happens to the nitrate ion (NO₃⁻)?",
+    opts: [
+      "It dissociates into N³⁺ and 3 O²⁻ ions",
+      "It remains intact as a polyatomic ion; polyatomic ions do not dissociate further",
+      "It reacts with water to form nitric acid",
+      "It precipitates as a solid and does not dissolve"
+    ],
+    correct: 1,
+    explain: "Nitrate (NO₃⁻) is a polyatomic ion — a charged molecule. When AgNO₃ dissolves, it separates into Ag⁺ and NO₃⁻ ions. The NO₃⁻ stays together; polyatomic ions do not break apart further when ionic compounds dissolve."
+  },
+  {
+    q: "Which of the following factors affects the RATE of dissolving but does NOT change solubility?",
+    opts: [
+      "Temperature of the solvent",
+      "The polarity of the solute",
+      "The ionic charge of the solute",
+      "Stirring the solution"
+    ],
+    correct: 3,
+    explain: "Stirring (agitation) keeps fresh solvent in contact with the solute, increasing collision frequency and dissolving faster. However, it does not change HOW MUCH can dissolve (solubility). Temperature changes both rate AND solubility."
+  },
+  {
+    q: "A sugar cube dissolves slowly in cold, still water. How could you make it dissolve fastest?",
+    opts: [
+      "Use cold water and leave it undisturbed",
+      "Crush the sugar into powder and add it to hot, stirred water",
+      "Keep the cube intact but stir vigorously in cold water",
+      "Add less water so the sugar is more concentrated"
+    ],
+    correct: 1,
+    explain: "All three rate factors help: crushing = more surface area, hot water = more molecular energy and collisions, stirring = fresh solvent contact. Combining all three gives the fastest rate of dissolution."
+  },
+  {
+    q: "A solution is prepared with the maximum possible amount of KNO₃ dissolved at 40°C, then slowly cooled to 10°C without any disturbance. What type of solution results?",
+    opts: [
+      "Unsaturated — it can still dissolve more",
+      "Saturated — it has exactly the maximum amount",
+      "Supersaturated — it contains more dissolved solute than should be possible at 10°C",
+      "The solute would crystallize out immediately"
+    ],
+    correct: 2,
+    explain: "At 40°C the solution was saturated. As it cools, solubility decreases, so the amount dissolved now exceeds the new lower solubility limit — this is a supersaturated solution. It is unstable and will crystallize with any disturbance."
+  },
+  {
+    q: "According to a solubility curve, 48 g of KNO₃ dissolves in 100 g water at 30°C. A student adds 80 g of KNO₃ to 100 g water at 30°C. What is observed?",
+    opts: [
+      "All 80 g dissolves; the solution is unsaturated",
+      "48 g dissolves; 32 g remains undissolved at the bottom",
+      "80 g dissolves; the solution becomes supersaturated",
+      "No KNO₃ dissolves because the solution is already saturated"
+    ],
+    correct: 1,
+    explain: "Only the maximum solubility (48 g) can dissolve at 30°C. The remaining 80 − 48 = 32 g cannot dissolve and will settle at the bottom as undissolved solid. The solution is saturated."
+  },
+  {
+    q: "How does increasing temperature affect the solubility of a gas dissolved in water?",
+    opts: [
+      "Solubility increases because molecules move faster",
+      "Solubility increases because gases expand at higher temperatures",
+      "Solubility decreases because gas molecules gain energy and escape the liquid more easily",
+      "Temperature has no effect on gas solubility"
+    ],
+    correct: 2,
+    explain: "Gas solubility in liquids decreases with increasing temperature. As temperature rises, gas molecules have more kinetic energy and escape the solution more readily. This is why a warm soda is less carbonated than a cold one."
+  },
+  {
+    q: "Which ionic compound would you predict to be MORE soluble in water based on coulombic attraction principles?",
+    opts: [
+      "CaCl₂ — Ca²⁺ has a higher charge, so it attracts water more strongly",
+      "NaCl — Na⁺ has a lower charge and smaller size, so the attraction between ions is weaker and easier for water to overcome",
+      "FeS — Fe²⁺ is a transition metal, which makes it more soluble",
+      "KCl is less soluble than NaCl because K⁺ is larger"
+    ],
+    correct: 1,
+    explain: "Solubility is greater when the attraction between ions is weaker (lower charge, smaller ion size). Na⁺ has a +1 charge and small size → weaker coulombic attraction between Na⁺ and Cl⁻ → easier for water to pull them apart → more soluble than compounds with higher charges like Ca²⁺ (+2)."
+  },
+  {
+    q: "What is the molarity of a solution made by dissolving 2.0 mol of NaOH in enough water to make 500 mL of solution?",
+    opts: ["1.0 M", "4.0 M", "0.25 M", "2.0 M"],
+    correct: 1,
+    explain: "M = mol / L = 2.0 mol / 0.500 L = 4.0 M. Be sure to convert 500 mL to 0.500 L before dividing."
+  },
+  {
+    q: "A student needs 250 mL of 0.50 M HCl from a 6.0 M stock solution. What volume of stock is needed?",
+    opts: ["20.8 mL", "75 mL", "3.0 mL", "12.5 mL"],
+    correct: 0,
+    explain: "Use M₍c₎V₍c₎ = M₍d₎V₍d₎ → 6.0 × V₍c₎ = 0.50 × 250 mL → V₍c₎ = 125/6.0 = 20.8 mL of the 6.0 M stock."
+  },
+  {
+    q: "Why is molality (m) preferred over molarity (M) when calculating colligative properties?",
+    opts: [
+      "Molality uses more convenient units",
+      "Molarity is too difficult to calculate accurately",
+      "Molality is based on mass of solvent and does not change with temperature, while molarity (volume-based) does",
+      "Molality accounts for the identity of the solute particles"
+    ],
+    correct: 2,
+    explain: "Colligative properties are measured at different temperatures (e.g., boiling point). Since the volume of a solution changes with temperature, molarity would give different values at different temperatures. Molality uses mass of solvent (not volume), so it stays constant — making it reliable for these calculations."
+  },
+  {
+    q: "Calculate the molality of a solution made by dissolving 36.0 g NaCl (molar mass = 58.5 g/mol) in 500 g of water.",
+    opts: ["0.62 m", "1.23 m", "0.072 m", "2.46 m"],
+    correct: 1,
+    explain: "mol NaCl = 36.0 / 58.5 = 0.615 mol. kg solvent = 0.500 kg. m = 0.615 / 0.500 = 1.23 m."
+  },
+  {
+    q: "Adding a nonvolatile solute to water lowers its vapor pressure. What does this mean for the boiling point?",
+    opts: [
+      "The boiling point decreases because less energy is needed to vaporize",
+      "The boiling point stays the same; vapor pressure doesn't affect boiling point",
+      "The boiling point increases because a higher temperature is needed to raise vapor pressure back to atmospheric pressure",
+      "The boiling point decreases because the solute makes the liquid less stable"
+    ],
+    correct: 2,
+    explain: "Boiling occurs when vapor pressure equals atmospheric pressure. A nonvolatile solute lowers vapor pressure, so a higher temperature is required to push vapor pressure back up to 1 atm. Therefore, solutions have higher boiling points than the pure solvent."
+  },
+  {
+    q: "Which of the following solutions would cause the GREATEST boiling point elevation?",
+    opts: [
+      "1.0 m glucose (nonelectrolyte, 1 particle per formula unit)",
+      "1.0 m NaCl (electrolyte, dissociates into 2 ions)",
+      "1.0 m CaCl₂ (electrolyte, dissociates into 3 ions)",
+      "1.0 m sucrose (nonelectrolyte, 1 particle per formula unit)"
+    ],
+    correct: 2,
+    explain: "Colligative properties depend on the number of dissolved particles. CaCl₂ → Ca²⁺ + 2 Cl⁻ = 3 particles per formula unit. At 1.0 m, effective molality = 3.0 m particles, giving the largest ΔT₍b₎. Glucose and sucrose produce only 1 particle each."
+  },
+  {
+    q: "Why does ice float on liquid water? This is related to the dissolving discussion of water's unique properties (Ch. 15.7).",
+    opts: [
+      "Ice is less dense than liquid water because hydrogen bonds form an open hexagonal network in the solid state",
+      "Ice is denser than liquid water and sinks; the question is incorrect",
+      "Ice floats because it is nonpolar while liquid water is polar",
+      "Ice has higher coulombic forces than liquid water"
+    ],
+    correct: 0,
+    explain: "When water freezes, its bent shape forces hydrogen bonds into a permanent, open hexagonal lattice with gaps. This expanded structure is less dense than liquid water (where H-bonds break and reform constantly, packing molecules more closely). Less dense solid floats on more dense liquid."
+  },
+  {
+    q: "A solution contains 50 g NaNO₃ in 100 g water at 30°C. The solubility of NaNO₃ at 30°C is 95 g per 100 g water. What type of solution is this?",
+    opts: [
+      "Saturated — it contains the maximum amount",
+      "Supersaturated — it contains more than the maximum",
+      "Unsaturated — it could dissolve more NaNO₃",
+      "We cannot tell without knowing the temperature"
+    ],
+    correct: 2,
+    explain: "Since 50 g is dissolved and 95 g can dissolve at 30°C, the solution contains LESS than the maximum. It is unsaturated — an additional 45 g of NaNO₃ could still dissolve at this temperature."
+  },
+  {
+    q: "Which of the following correctly describes a 'like dissolves like' prediction?",
+    opts: [
+      "NaCl dissolves in hexane (a nonpolar solvent) because ionic compounds are always soluble",
+      "Iodine (I₂, nonpolar) dissolves well in carbon tetrachloride (CCl₄, nonpolar)",
+      "Oil dissolves in water because both are liquids",
+      "CO₂ dissolves in water because CO₂ is a gas and gases always dissolve in liquids"
+    ],
+    correct: 1,
+    explain: "Like dissolves like means similar IMFs attract. Iodine (I₂) is nonpolar and CCl₄ is also nonpolar; they both use London dispersion forces → they mix well. NaCl would NOT dissolve in nonpolar hexane. Oil does NOT dissolve in water (different IMFs). CO₂ does dissolve in water, but not because it's a gas — it's because CO₂ is slightly polar."
+  },
+  {
+    q: "What is the correct procedure for making a solution by diluting a concentrated acid from a stock solution?",
+    opts: [
+      "Add water slowly to the concentrated acid in the volumetric flask",
+      "Fill the volumetric flask with acid first, then add water to the fill line",
+      "Add the measured volume of stock acid to a flask that already contains some water, then dilute to the calibration line",
+      "Mix the acid and water in a regular beaker and estimate the volume"
+    ],
+    correct: 2,
+    explain: "Always add acid TO water — never the reverse. The stock acid volume is measured (using the dilution formula M₍c₎V₍c₎ = M₍d₎V₍d₎), carefully added to a volumetric flask partially filled with water, then diluted precisely to the calibration mark. This prevents dangerous exothermic splashing."
+  }
+];
+
+// ===================== QUIZ LOGIC =====================
+let quizInitialized = false;
+let userAnswers = new Array(questions.length).fill(null);
+let answered = new Array(questions.length).fill(false);
+let currentQ = 0;
+
+function initQuiz() {
+  quizInitialized = true;
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  const total = questions.length;
+  const answeredCount = answered.filter(Boolean).length;
+  const pct = (answeredCount / total) * 100;
+
+  if (answeredCount === total) {
+    const score = questions.reduce((acc, q, i) => acc + (userAnswers[i] === q.correct ? 1 : 0), 0);
+    const pctScore = Math.round((score / total) * 100);
+    let msg = pctScore >= 90 ? "Outstanding! You're test-ready 🎉" : pctScore >= 75 ? "Great work! Review any missed topics." : "Keep studying — check the Review Guide for help.";
+    container.innerHTML = `
+      <div class="quiz-card score-board">
+        <div class="score-circle">
+          <div class="num">${score}</div>
+          <div class="denom">out of ${total}</div>
+        </div>
+        <h2>${msg}</h2>
+        <p>${pctScore}% — ${score} correct out of ${total} questions</p>
+        <button class="btn btn-primary" onclick="restartQuiz()">Retake Quiz</button>
+      </div>`;
+    return;
+  }
+
+  const q = questions[currentQ];
+  const isAnswered = answered[currentQ];
+
+  container.innerHTML = `
+    <div class="quiz-progress">
+      <div class="progress-bar-outer"><div class="progress-bar-inner" style="width:${pct}%"></div></div>
+      <div class="progress-label">${answeredCount}/${total} answered</div>
+    </div>
+    <div class="quiz-card">
+      <div class="q-number">Question ${currentQ + 1} of ${total}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((opt, i) => {
+          let cls = '';
+          if (isAnswered) {
+            if (i === q.correct) cls = 'selected-correct';
+            else if (i === userAnswers[currentQ] && i !== q.correct) cls = 'selected-wrong';
+          }
+          return `<button class="option-btn ${cls}" ${isAnswered ? 'disabled' : ''} onclick="selectAnswer(${i})">${opt}</button>`;
+        }).join('')}
+      </div>
+      <div class="q-explanation ${isAnswered ? 'show' : ''}" id="explanation">
+        💡 <strong>Explanation:</strong> ${q.explain}
+      </div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-secondary" onclick="changeQ(-1)" ${currentQ === 0 ? 'disabled' : ''}>← Previous</button>
+      ${!isAnswered ? `<button class="btn btn-primary" id="skip-btn" onclick="skipQ()">Skip</button>` : ''}
+      <button class="btn btn-primary" onclick="changeQ(1)" ${currentQ === total - 1 ? 'disabled' : ''}>Next →</button>
+      ${answeredCount === total ? `<button class="btn btn-primary" onclick="renderQuiz()">See Results</button>` : ''}
+    </div>
+  `;
+}
+
+function selectAnswer(i) {
+  if (answered[currentQ]) return;
+  userAnswers[currentQ] = i;
+  answered[currentQ] = true;
+  renderQuiz();
+}
+
+function skipQ() {
+  if (currentQ < questions.length - 1) currentQ++;
+  renderQuiz();
+}
+
+function changeQ(dir) {
+  currentQ = Math.max(0, Math.min(questions.length - 1, currentQ + dir));
+  renderQuiz();
+}
+
+function restartQuiz() {
+  userAnswers = new Array(questions.length).fill(null);
+  answered = new Array(questions.length).fill(false);
+  currentQ = 0;
+  renderQuiz();
+}
+</script>
+</body>
+</html>
