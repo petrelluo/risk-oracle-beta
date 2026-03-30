@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sequences &amp; Series — Review Guide &amp; Practice Problems</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --navy:    #1a3557;
+  --blue:    #2e75b6;
+  --lblue:   #e6f1fb;
+  --mblue:   #b5d4f4;
+  --amber:   #ba7517;
+  --lamber:  #faeeda;
+  --mamber:  #fac775;
+  --green:   #3b6d11;
+  --lgreen:  #eaf3de;
+  --mgreen:  #c0dd97;
+  --red:     #a32d2d;
+  --lred:    #fcebeb;
+  --purple:  #534ab7;
+  --lpurple: #eeedfe;
+  --gray:    #f6f6f4;
+  --mgray:   #888780;
+  --dgray:   #2c2c2a;
+  --text:    #1a1a18;
+  --serif:   'Source Serif 4', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --mono:    'DM Mono', 'Courier New', monospace;
+
+  --badge-1-bg: var(--lblue);  --badge-1-fg: var(--navy);
+  --badge-2-bg: var(--lamber); --badge-2-fg: #412402;
+  --badge-3-bg: var(--lred);   --badge-3-fg: var(--red);
+  --badge-4-bg: var(--lgreen); --badge-4-fg: var(--green);
+  --badge-5-bg: var(--lpurple);--badge-5-fg: var(--purple);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background: #f0ede8;
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════ */
+.page-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 60px rgba(0,0,0,0.12);
+}
+
+/* ═══════════════════════════════════════════════════
+   NAV BAR (screen only)
+═══════════════════════════════════════════════════ */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  padding: 0 2rem;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.topnav a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 0.7rem 1rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.topnav a:hover { color: white; border-bottom-color: var(--mblue); }
+.topnav .nav-title {
+  color: white;
+  font-weight: 600;
+  margin-right: auto;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════
+   COVER PAGE
+═══════════════════════════════════════════════════ */
+.cover {
+  background: var(--navy);
+  padding: 5rem 3.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: rgba(46,117,182,0.18);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: rgba(46,117,182,0.10);
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mblue);
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+.cover h1 {
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+.cover-sub {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--mblue);
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.cover-rule {
+  width: 60px; height: 3px;
+  background: var(--blue);
+  margin-bottom: 2rem;
+  position: relative; z-index: 1;
+}
+.cover-meta {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 2.5rem;
+  position: relative; z-index: 1;
+}
+.cover-areas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+.cover-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+}
+.area-num {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.a1 { background: var(--lblue); color: var(--navy); }
+.a2 { background: var(--lamber); color: #412402; }
+.a3 { background: var(--lred); color: var(--red); }
+.a4 { background: var(--lgreen); color: var(--green); }
+.a5 { background: var(--lpurple); color: var(--purple); }
+
+.cover-area span {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+}
+.cover-toc {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.toc-item {
+  flex: 1;
+  text-align: center;
+}
+.toc-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mblue);
+  margin-bottom: 0.2rem;
+}
+.toc-val {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════════════ */
+.section {
+  padding: 3rem 3.5rem;
+  border-bottom: 1px solid #e8e5df;
+}
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--navy);
+}
+.section-header h2 {
+  font-family: var(--serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--navy);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
+
+/* ═══════════════════════════════════════════════════
+   AREA CARDS
+═══════════════════════════════════════════════════ */
+.area-card {
+  border: 1px solid #e0dbd3;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.area-badge {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.area-badge .num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.area-badge h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.badge-1 { background: var(--badge-1-bg); color: var(--badge-1-fg); }
+.badge-2 { background: var(--badge-2-bg); color: var(--badge-2-fg); }
+.badge-3 { background: var(--badge-3-bg); color: var(--badge-3-fg); }
+.badge-4 { background: var(--badge-4-bg); color: var(--badge-4-fg); }
+.badge-5 { background: var(--badge-5-bg); color: var(--badge-5-fg); }
+
+.area-body {
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+.area-body p {
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+  color: var(--dgray);
+}
+
+/* ═══════════════════════════════════════════════════
+   FORMULA BOX
+═══════════════════════════════════════════════════ */
+.formula-box {
+  background: var(--lblue);
+  border-left: 4px solid var(--blue);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1.2rem;
+  margin: 0.9rem 0;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--navy);
+  overflow-x: auto;
+}
+.formula-box .MathJax { font-size: 1.05em !important; }
+
+/* ═══════════════════════════════════════════════════
+   WORKED EXAMPLE BOX
+═══════════════════════════════════════════════════ */
+.worked {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin: 1rem 0;
+}
+.worked-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mgray);
+  margin-bottom: 0.7rem;
+  font-family: var(--mono);
+}
+.worked-q {
+  font-size: 0.95rem;
+  color: var(--dgray);
+  margin-bottom: 0.85rem;
+  font-family: var(--serif);
+  font-style: italic;
+}
+.steps { display: flex; flex-direction: column; gap: 0.45rem; }
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+}
+.step-n {
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-family: var(--mono);
+}
+.step-n.check { background: var(--green); }
+.step-text { color: var(--dgray); line-height: 1.55; }
+.step-text strong { color: var(--navy); }
+
+/* ═══════════════════════════════════════════════════
+   TIP / WARN BOXES
+═══════════════════════════════════════════════════ */
+.tip, .warn {
+  border-radius: 0 8px 8px 0;
+  padding: 0.7rem 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.tip {
+  background: var(--lamber);
+  border-left: 4px solid var(--mamber);
+  color: #412402;
+}
+.warn {
+  background: var(--lred);
+  border-left: 4px solid #f09595;
+  color: var(--red);
+}
+.tip strong, .warn strong { font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════
+   FORMULA TABLE
+═══════════════════════════════════════════════════ */
+.formula-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.9rem 0;
+  font-size: 0.88rem;
+}
+.formula-table th {
+  background: var(--lblue);
+  color: var(--navy);
+  font-weight: 600;
+  padding: 0.55rem 0.85rem;
+  text-align: left;
+  border: 1px solid var(--mblue);
+}
+.formula-table td {
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+.formula-table tr:nth-child(even) td { background: var(--gray); }
+.formula-table .mono { font-family: var(--mono); }
+
+/* ═══════════════════════════════════════════════════
+   PRACTICE PROBLEMS
+═══════════════════════════════════════════════════ */
+.set-intro {
+  background: var(--gray);
+  border-radius: 8px;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.88rem;
+  color: var(--mgray);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.problem {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.prob-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #eee;
+  background: #fafaf8;
+}
+.prob-num {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.prob-tag {
+  font-size: 0.75rem;
+  color: var(--mgray);
+  font-family: var(--mono);
+}
+.prob-stripe {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+.prob-body {
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--dgray);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════════════
+   ANSWER TOGGLE (screen only)
+═══════════════════════════════════════════════════ */
+.ans-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed #ddd;
+}
+.toggle-btn {
+  background: none;
+  border: 1px solid var(--green);
+  color: var(--green);
+  font-size: 0.78rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.toggle-btn:hover { background: var(--green); color: white; }
+
+/* ═══════════════════════════════════════════════════
+   ANSWER KEY BOXES
+═══════════════════════════════════════════════════ */
+.answer-key {
+  display: none;
+  margin-top: 0.85rem;
+  background: var(--lgreen);
+  border-radius: 8px;
+  border-left: 4px solid var(--mgreen);
+  padding: 0.9rem 1rem;
+}
+.answer-key.visible { display: block; }
+.answer-key .steps { gap: 0.4rem; }
+.answer-key .step-n { background: var(--green); }
+.answer-key .step-text { font-size: 0.88rem; }
+
+/* ── Inline answer key pages (print) ── */
+.ans-page .problem { break-inside: avoid; }
+.ans-page .answer-key { display: block !important; }
+.ans-page .ans-toggle { display: none; }
+
+/* ═══════════════════════════════════════════════════
+   SECTION DIVIDERS
+═══════════════════════════════════════════════════ */
+.chapter-break {
+  background: var(--navy);
+  color: white;
+  padding: 1.6rem 3.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.chapter-break .ch-icon {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--mblue);
+  line-height: 1;
+}
+.chapter-break h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.01em;
+}
+.chapter-break p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 0.15rem;
+}
+
+/* ═══════════════════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm 14mm 18mm;
+  }
+  @page :first { margin: 0; }
+
+  html { font-size: 11.5px; }
+  body { background: white; }
+  .page-wrap { box-shadow: none; max-width: none; width: 100%; }
+
+  .topnav { display: none !important; }
+
+  /* Cover: full-bleed, own page */
+  .cover {
+    padding: 1.6in 0.85in 1in;
+    min-height: 100vh;
+    page-break-after: always;
+    break-after: page;
+  }
+  .cover::before, .cover::after { display: none; }
+
+  /* Chapter breaks start a new page */
+  .chapter-break {
+    page-break-before: always;
+    break-before: page;
+    page-break-after: avoid;
+    break-after: avoid;
+    padding: 0.6rem 1rem;
+  }
+  .chapter-break .ch-icon { font-size: 1.3rem; }
+  .chapter-break h2 { font-size: 1.1rem; }
+  .chapter-break p { font-size: 0.72rem; }
+
+  /* Review guide */
+  .section { padding: 0.9rem 0; border-bottom: none; }
+  .area-card { break-inside: avoid; page-break-inside: avoid; margin-bottom: 0.9rem; }
+  .area-badge { padding: 0.45rem 0.9rem; }
+  .area-badge h3 { font-size: 0.88rem; }
+  .area-body { padding: 0.8rem 0.9rem 0.7rem; }
+  .area-body p { font-size: 0.82rem; margin-bottom: 0.5rem; }
+  .worked { padding: 0.65rem 0.85rem; margin: 0.6rem 0; break-inside: avoid; page-break-inside: avoid; }
+  .worked-title { font-size: 0.65rem; margin-bottom: 0.45rem; }
+  .worked-q { font-size: 0.82rem; margin-bottom: 0.55rem; }
+  .step { font-size: 0.8rem; }
+  .step-n { min-width: 18px; height: 18px; font-size: 0.6rem; }
+  .step-text { font-size: 0.8rem; line-height: 1.45; }
+  .tip, .warn { font-size: 0.78rem; padding: 0.5rem 0.8rem; margin: 0.5rem 0; }
+  .formula-box { padding: 0.6rem 0.9rem; margin: 0.6rem 0; font-size: 0.82rem; background: #f0f5fc; }
+  .formula-table { font-size: 0.78rem; }
+  .formula-table th, .formula-table td { padding: 0.35rem 0.6rem; }
+
+  /* ── PRACTICE SECTIONS: each set on its OWN A4 page ── */
+  .practice-section {
+    page-break-before: always;
+    break-before: page;
+    page-break-after: always;
+    break-after: page;
+    padding: 0.5rem 0 0;
+  }
+  /* Suppress the chapter-break page-break before practice sets
+     (the section itself handles the break) */
+  .practice-section + .practice-section { page-break-before: always; }
+
+  .set-intro {
+    background: none;
+    border: 0.5px solid #bbb;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
+    margin-bottom: 0.7rem;
+    border-radius: 4px;
+  }
+  .problem {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.55rem;
+    border-radius: 6px;
+  }
+  .prob-header {
+    padding: 0.35rem 0.7rem;
+    background: #f8f8f6;
+  }
+  .prob-num { font-size: 0.72rem; }
+  .prob-tag { font-size: 0.67rem; }
+  .prob-body {
+    padding: 0.55rem 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .prob-stripe { width: 3px; }
+
+  /* Practice: hide all answers on practice pages */
+  .practice-section .answer-key { display: none !important; }
+  .section-header { margin-bottom: 0.7rem; padding-bottom: 0.5rem; }
+  .section-header h2 { font-size: 1.1rem; }
+  .section-icon { width: 28px; height: 28px; font-size: 0.72rem; }
+
+  /* ── ANSWER KEY pages ── */
+  .anskey-section {
+    page-break-before: always;
+    break-before: page;
+  }
+  .anskey-section .answer-key { display: block !important; }
+  .anskey-section .prob-body { font-size: 0.78rem; padding: 0.45rem 0.7rem; }
+  .anskey-section .problem { margin-bottom: 0.5rem; }
+  .anskey-section .prob-header { padding: 0.3rem 0.7rem; }
+  .answer-key {
+    margin-top: 0.4rem;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+  }
+  .answer-key .step-text { font-size: 0.78rem; }
+  .answer-key .step-n { min-width: 16px; height: 16px; font-size: 0.58rem; }
+
+  /* Tighten overall color prints */
+  .worked { background: #f7f7f5; }
+  .tip { background: #fffbf2; }
+  .warn { background: #fff8f8; }
+  .lgreen-bg { background: #f0fae8; }
+
+  h2, h3 { page-break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="nav-title">Sequences &amp; Series</span>
+  <a href="#review">Review Guide</a>
+  <a href="#set1">Set 1</a>
+  <a href="#set2">Set 2</a>
+  <a href="#set3">Set 3</a>
+  <a href="#key1">Answer Keys</a>
+</div>
+
+<div class="page-wrap">
+
+<!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+<div class="cover">
+  <div class="cover-eyebrow">Big Ideas Integrated Mathematics III &nbsp;·&nbsp; Larson &amp; Boswell</div>
+  <h1>Sequences<br>&amp; Series</h1>
+  <div class="cover-sub">Review Guide &amp; Practice Problems</div>
+  <div class="cover-rule"></div>
+  <div class="cover-meta">Five focus areas &nbsp;·&nbsp; Three practice sets &nbsp;·&nbsp; Full answer keys</div>
+
+  <div class="cover-areas">
+    <div class="cover-area">
+      <div class="area-num a1">1</div>
+      <span>Compound Interest &amp; Geometric Sequences</span>
+    </div>
+    <div class="cover-area">
+      <div class="area-num a2">2</div>
+      <span>Sums Not Starting at <em>i</em> = 1, with Special Formulas</span>
+    </div>
+    <div class="cover-area">
+      <div class="area-num a3">3</div>
+      <span>Exponential Expressions &rarr; Scientific Notation</span>
+    </div>
+    <div class="cover-area">
+      <div class="area-num a4">4</div>
+      <span>Repeating Decimals &rarr; Fractions via Geometric Series</span>
+    </div>
+    <div class="cover-area">
+      <div class="area-num a5">5</div>
+      <span>Sequences with Special Terms at the Beginning</span>
+    </div>
+  </div>
+
+  <div class="cover-toc">
+    <div class="toc-item">
+      <span class="toc-label">Review pages</span>
+      <span class="toc-val">5</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-label">Practice sets</span>
+      <span class="toc-val">3</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-label">Problems</span>
+      <span class="toc-val">15</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-label">Answer keys</span>
+      <span class="toc-val">3</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════ REVIEW GUIDE ═══════════════════════════ -->
+<div class="chapter-break" id="review">
+  <div class="ch-icon">I</div>
+  <div>
+    <h2>Review Guide</h2>
+    <p>Formulas, key ideas, and fully worked examples for each area</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- AREA 1 -->
+  <div class="area-card">
+    <div class="area-badge badge-1">
+      <span class="num">AREA 1</span>
+      <h3>Compound Interest as a Geometric Sequence</h3>
+    </div>
+    <div class="area-body">
+
+      <p><strong>The big idea in one sentence:</strong> every year you earn interest <em>on top of</em> interest you already earned — so the balance grows by the <em>same multiplier</em> each period. That is exactly what a geometric sequence is.</p>
+
+      <!-- intuitive visual table -->
+      <div style="margin:0.9rem 0">
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--mgray);font-family:var(--mono);margin-bottom:0.5rem">Why it's geometric — $1,000 at 5% per year</div>
+        <table class="formula-table" style="font-size:0.85rem">
+          <tr>
+            <th>Year</th>
+            <th>Balance</th>
+            <th>How you get it</th>
+            <th>Ratio to prev year</th>
+          </tr>
+          <tr><td>Start</td><td><strong>$1,000.00</strong></td><td>you deposit this</td><td>&mdash;</td></tr>
+          <tr><td>1</td><td><strong>$1,050.00</strong></td><td>$1,000 &times; 1.05</td><td style="color:var(--green);font-weight:600">1.05</td></tr>
+          <tr><td>2</td><td><strong>$1,102.50</strong></td><td>$1,050 &times; 1.05</td><td style="color:var(--green);font-weight:600">1.05</td></tr>
+          <tr><td>3</td><td><strong>$1,157.63</strong></td><td>$1,102.50 &times; 1.05</td><td style="color:var(--green);font-weight:600">1.05</td></tr>
+          <tr><td>4</td><td><strong>$1,215.51</strong></td><td>$1,157.63 &times; 1.05</td><td style="color:var(--green);font-weight:600">1.05</td></tr>
+        </table>
+        <div style="font-size:0.82rem;color:var(--navy);margin-top:0.45rem;padding:0.45rem 0.7rem;background:var(--lblue);border-radius:6px">
+          The ratio column is <em>always</em> 1.05 &rarr; <strong>constant ratio = geometric sequence.</strong>
+          The "interest on interest" you hear about is just what happens when r &gt; 1.
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <strong>The key connection:</strong><br>
+        \[ A = P\cdot(1+r)^n \quad\longleftrightarrow\quad a_n = a_1 \cdot (\text{ratio})^{n-1} \]
+        <small style="color:var(--blue);font-family:var(--sans)">P = starting amount (= a<sub>1</sub>) &nbsp;&middot;&nbsp; (1+r) = common ratio &nbsp;&middot;&nbsp; n = number of periods</small>
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 1 &mdash; Annual compounding</div>
+        <div class="worked-q">You deposit $500 at 6% annual interest. Write the geometric sequence for the first 4 year-end balances, then use the formula to find the year-4 balance.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text"><strong>Identify the pieces:</strong> P = $500 &nbsp;(= a<sub>1</sub>), &nbsp;r = 0.06, &nbsp;so common ratio = 1 + 0.06 = <strong>1.06</strong></div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text"><strong>Build the sequence</strong> by multiplying by 1.06 each time:<br>$500 &rarr; $530.00 &rarr; $561.80 &rarr; $595.51 &rarr; <strong>$631.24</strong></div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text"><strong>Formula shortcut</strong> (skip straight to year 4):<br>\(A = 500 \times (1.06)^4 = 500 \times 1.2625 = \mathbf{\$631.24}\) &checkmark;</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text"><strong>Why n = 4?</strong> You want the balance <em>after</em> 4 years of growth, so you apply the ratio 4 times: \(a_1\cdot\text{ratio}^4\). (In the general formula \(a_n = a_1 r^{n-1}\), year-4 balance is term 5, but the compound-interest form \(A = P(1+r)^n\) counts periods directly, so n = 4.)</div></div>
+        </div>
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 2 &mdash; Quarterly compounding (same money, more periods)</div>
+        <div class="worked-q">Same $500 and 6% annual rate, but now interest is added <em>every quarter</em>. What is the balance after 3 years? How does that compare to annual compounding?</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text"><strong>Adjust r and n for quarterly periods.</strong><br>
+            Annual rate 6% &divide; 4 quarters = <strong>1.5% per quarter</strong> = 0.015<br>
+            3 years &times; 4 quarters/year = <strong>12 periods</strong></div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text"><strong>New common ratio</strong> = 1 + 0.015 = <strong>1.015</strong> (applied 12 times, not 3)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(A = 500 \times (1.015)^{12} = 500 \times 1.19562 = \mathbf{\$597.81}\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text"><strong>Compare to annual compounding</strong> (same 3 years):<br>
+            Annual: \(500\times(1.06)^3 = \$595.51\) &nbsp;&nbsp; Quarterly: \(\$597.81\)<br>
+            Quarterly gives <strong>$2.30 more</strong> — more compounding periods = slightly more growth.</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text"><strong>The pattern:</strong> more frequent compounding &rarr; smaller r per period, more n periods, same nominal rate — always a bit better for the saver.</div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>Quick check trick:</strong> multiply your starting amount by the ratio once per period and you should get the next term. If the ratio ever changes, it is <em>not</em> geometric — double-check your r.</div>
+      <div class="warn"><strong>Classic mistake:</strong> using the annual rate with quarterly n. If you see "compounded monthly / quarterly / semi-annually", you <em>must</em> divide r by the number of periods per year AND multiply n by that same number.</div>
+    </div>
+  </div>
+
+  <!-- AREA 2 -->
+  <div class="area-card">
+    <div class="area-badge badge-2">
+      <span class="num">AREA 2</span>
+      <h3>Sums Not Starting at i = 1</h3>
+    </div>
+    <div class="area-body">
+      <p>Standard summation formulas assume the index starts at 1. When it starts later, use the <strong>subtraction trick</strong>:</p>
+
+      <div class="formula-box">
+        \[ \sum_{i=m}^{n} f(i) \;=\; \sum_{i=1}^{n} f(i) \;-\; \sum_{i=1}^{m-1} f(i) \]
+        <small style="color:var(--blue);font-family:var(--sans)">Big sum (1 to n) minus the part you don't want (1 to m&minus;1)</small>
+      </div>
+
+      <p><strong>The three special formulas you must know:</strong></p>
+
+      <table class="formula-table">
+        <tr>
+          <th>Sum</th>
+          <th>Formula</th>
+          <th>Quick example (n = 4)</th>
+        </tr>
+        <tr>
+          <td class="mono">\(\displaystyle\sum_{i=1}^{n} c\)</td>
+          <td>\(c \cdot n\)</td>
+          <td>\(\sum_{i=1}^{4} 5 = 5 \times 4 = 20\)</td>
+        </tr>
+        <tr>
+          <td class="mono">\(\displaystyle\sum_{i=1}^{n} i\)</td>
+          <td>\(\dfrac{n(n+1)}{2}\)</td>
+          <td>\(\sum_{i=1}^{4} i = \frac{4 \cdot 5}{2} = 10\)</td>
+        </tr>
+        <tr>
+          <td class="mono">\(\displaystyle\sum_{i=1}^{n} i^2\)</td>
+          <td>\(\dfrac{n(n+1)(2n+1)}{6}\)</td>
+          <td>\(\sum_{i=1}^{4} i^2 = \frac{4 \cdot 5 \cdot 9}{6} = 30\)</td>
+        </tr>
+      </table>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example</div>
+        <div class="worked-q">Evaluate \(\displaystyle\sum_{i=3}^{6}(2i^2 + i - 5)\)</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split by linearity: \(2\displaystyle\sum_{i=3}^{6} i^2 \;+\; \sum_{i=3}^{6} i \;-\; \sum_{i=3}^{6} 5\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Use the subtraction trick on each piece: each = (sum from 1 to 6) minus (sum from 1 to 2)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=1}^{6} i^2 = \frac{6\cdot7\cdot13}{6} = 91\), &nbsp; \(\sum_{i=1}^{2} i^2 = 1+4 = 5\) &nbsp;&rarr;&nbsp; \(\sum_{i=3}^{6} i^2 = 91-5 = 86\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">\(\sum_{i=1}^{6} i = 21\), &nbsp; \(\sum_{i=1}^{2} i = 3\) &nbsp;&rarr;&nbsp; \(\sum_{i=3}^{6} i = 18\)</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-text">\(\sum_{i=3}^{6} 5\): there are \(6-3+1 = 4\) terms &rarr; \(5 \times 4 = 20\)</div></div>
+          <div class="step"><div class="step-n">6</div><div class="step-text">Final: \(2(86) + 18 - 20 = 172 + 18 - 20 = \mathbf{170}\)</div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>Counting terms:</strong> From \(i = m\) to \(i = n\) there are \((n - m + 1)\) terms. For \(i = 3\) to \(6\): \(6 - 3 + 1 = 4\) terms.</div>
+    </div>
+  </div>
+
+  <!-- AREA 3 -->
+  <div class="area-card">
+    <div class="area-badge badge-3">
+      <span class="num">AREA 3</span>
+      <h3>Exponential Expressions &rarr; Scientific Notation</h3>
+    </div>
+    <div class="area-body">
+      <p>The core trick: rewrite everything as a <strong>power of 10</strong>, then combine exponents using the product rule \(10^a \cdot 10^b = 10^{a+b}\).</p>
+
+      <div class="formula-box">
+        \[ 100 \cdot \left(\frac{1}{10}\right)^x = 10^2 \cdot 10^{-x} = 10^{(2-x)} \]
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 1 &mdash; Pure powers of 10</div>
+        <div class="worked-q">Simplify \(1000 \cdot (0.1)^x\), then evaluate for \(x = 0, 1, 2, 3, 4\).</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Rewrite: \(1000 = 10^3\) and \(0.1 = 10^{-1}\), so \((0.1)^x = 10^{-x}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Combine: \(10^3 \cdot 10^{-x} = \mathbf{10^{(3-x)}}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(x=0 \to 10^3 = 1\times10^3\) &nbsp;|&nbsp; \(x=1 \to 10^2 = 1\times10^2\) &nbsp;|&nbsp; \(x=2 \to 10^1 = 1\times10^1\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">\(x=3 \to 10^0 = 1\) &nbsp;|&nbsp; \(x=4 \to 10^{-1} = 1\times10^{-1}\)</div></div>
+        </div>
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 2 &mdash; Non-power-of-10 base</div>
+        <div class="worked-q">Simplify \(4.5 \times 10^3 \cdot (2 \times 10^{-1})^2\) and express in scientific notation.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Expand the square: \((2 \times 10^{-1})^2 = 2^2 \times (10^{-1})^2 = 4 \times 10^{-2}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Multiply: \((4.5 \times 10^3)\times(4\times10^{-2}) = (4.5\times4)\times10^{3+(-2)} = 18\times10^1\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Adjust so coefficient is between 1 and 10: \(18\times10^1 = 1.8\times10^1\times10^1 = \mathbf{1.8\times10^2}\)</div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>Three-step process:</strong> (1) Rewrite base as a power of 10 if possible &rarr; (2) Combine using \(10^a\cdot10^b=10^{a+b}\) &rarr; (3) Adjust so the coefficient is between 1 and 10.</div>
+    </div>
+  </div>
+
+  <!-- AREA 4 -->
+  <div class="area-card">
+    <div class="area-badge badge-4">
+      <span class="num">AREA 4</span>
+      <h3>Repeating Decimals &rarr; Fractions via Geometric Series</h3>
+    </div>
+    <div class="area-body">
+      <p>A repeating decimal is actually an <strong>infinite geometric series</strong> with \(|r| &lt; 1\). Use the infinite sum formula:</p>
+
+      <div class="formula-box">
+        \[ S = \frac{a_1}{1 - r} \qquad \text{(valid when } -1 < r < 1\text{)} \]
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 1</div>
+        <div class="worked-q">Convert \(0.818181\ldots\) to a fraction in simplest form.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Write as a series: \(0.81 + 0.0081 + 0.000081 + \cdots\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">First term \(a_1 = 0.81\), common ratio \(r = \frac{0.0081}{0.81} = 0.01\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S = \dfrac{0.81}{1 - 0.01} = \dfrac{0.81}{0.99} = \dfrac{81}{99}\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Simplify: \(\gcd(81, 99) = 9\) &rarr; \(\dfrac{81}{99} = \mathbf{\dfrac{9}{11}}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Check: \(9 \div 11 = 0.818181\ldots\) &checkmark;</div></div>
+        </div>
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 2</div>
+        <div class="worked-q">Convert \(0.123123123\ldots\) to a fraction.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Repeating block is "123" (3 digits): \(a_1 = 0.123\), \(r = 0.001\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(S = \dfrac{0.123}{1-0.001} = \dfrac{0.123}{0.999} = \dfrac{123}{999}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\gcd(123, 999) = 3\) &rarr; \(\mathbf{\dfrac{41}{333}}\)</div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>Shortcut:</strong> If \(k\) digits repeat, put the repeating block over \(k\) nines. \(0.\overline{81}\) &rarr; 2 repeating digits &rarr; \(\tfrac{81}{99} = \tfrac{9}{11}\). Works every time!</div>
+    </div>
+  </div>
+
+  <!-- AREA 5 -->
+  <div class="area-card">
+    <div class="area-badge badge-5">
+      <span class="num">AREA 5</span>
+      <h3>Sequences with Special Terms at the Beginning</h3>
+    </div>
+    <div class="area-body">
+      <p>Sometimes the first few terms don't follow the geometric or arithmetic pattern. Identify where the regular pattern begins, sum the "special" part by hand, then apply formulas to the regular part.</p>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 1 &mdash; Bouncing ball</div>
+        <div class="worked-q">A ball is dropped from 10 ft. Each bounce reaches 60% of the previous height. Find the total distance traveled after 5 bounces.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text"><strong>The special first term:</strong> the initial drop is 10 ft downward only — there is no "up" before it, so handle it separately.</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Bounce heights (60% each time): 6 ft, 3.6 ft, 2.16 ft, 1.296 ft, 0.7776 ft</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Each bounce = up + down = 2 &times; height</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Bounce total = \(2(6 + 3.6 + 2.16 + 1.296 + 0.7776) = 2(13.8336) = 27.667\text{ ft}\)</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-text">Grand total = \(10 + 27.667 = \mathbf{37.667\text{ ft}}\)</div></div>
+        </div>
+      </div>
+
+      <div class="worked">
+        <div class="worked-title">Worked Example 2 &mdash; Repeated opening terms</div>
+        <div class="worked-q">The sequence is 3, 3, 12, 48, 192, &hellip; &mdash; terms 1&ndash;2 are both 3 (not yet geometric), then ratio 4 kicks in. Find the sum of the first 7 terms.</div>
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Special part (terms 1&ndash;2): \(3 + 3 = 6\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Geometric part (terms 3&ndash;7): \(a_1 = 12\), \(r = 4\), 5 terms</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S_5 = 12\cdot\dfrac{4^5 - 1}{4-1} = 12\cdot\dfrac{1023}{3} = 12\times341 = 4{,}092\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total = \(6 + 4{,}092 = \mathbf{4{,}098}\)</div></div>
+        </div>
+      </div>
+
+      <div class="tip"><strong>Strategy:</strong> (1) Find where the regular pattern starts &rarr; (2) Sum all "special" terms by hand &rarr; (3) Apply the geometric/arithmetic formula to the regular part &rarr; (4) Add the two results.</div>
+    </div>
+  </div>
+
+</div><!-- end review section -->
+
+
+<!-- ═══════════════════════════ PRACTICE SETS ═══════════════════════════ -->
+<div class="chapter-break" id="practice">
+  <div class="ch-icon">II</div>
+  <div>
+    <h2>Practice Problems</h2>
+    <p>Three sets of 5 problems each &mdash; answers on screen or in the Answer Key section</p>
+  </div>
+</div>
+
+<!-- ─── SET 1 ─── -->
+<div class="section practice-section" id="set1">
+  <div class="section-header">
+    <div class="section-icon">S1</div>
+    <div>
+      <h2>Practice Set 1</h2>
+    </div>
+  </div>
+  <div class="set-intro">Try each problem on your own first. Click "Show answer" to reveal the solution, or see the Answer Key section at the end.</div>
+
+  <!-- P1-1 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--blue)"></div>
+      <div class="prob-num">Problem 1</div>
+      <div class="prob-tag">Area 1 &mdash; Compound interest</div>
+    </div>
+    <div class="prob-body">
+      Maya invests $2,000 in an account earning 4% interest compounded annually. Write the geometric sequence for the first four year-end balances, then use the formula to find the exact balance at the end of year 4.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Common ratio = \(1 + 0.04 = 1.04\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Sequence: $2,000 &rarr; $2,080.00 &rarr; $2,163.20 &rarr; $2,249.73</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(A = 2000\times(1.04)^4 = 2000\times1.16986 = \mathbf{\$2{,}339.72}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1-2 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--amber)"></div>
+      <div class="prob-num">Problem 2</div>
+      <div class="prob-tag">Area 2 &mdash; Sum not starting at i = 1</div>
+    </div>
+    <div class="prob-body">
+      Evaluate: \[\sum_{i=4}^{7}(3i+2)\]
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split: \(3\displaystyle\sum_{i=4}^{7}i + \sum_{i=4}^{7}2\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=1}^{7}i = \frac{7\cdot8}{2} = 28\), &nbsp; \(\sum_{i=1}^{3}i = 6\) &nbsp;&rarr;&nbsp; \(\sum_{i=4}^{7}i = 28-6 = 22\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=4}^{7}2\): there are \(7-4+1=4\) terms &rarr; \(2\times4=8\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Answer: \(3(22)+8 = 66+8 = \mathbf{74}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Check: \(14+17+20+23 = 74\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1-3 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--red)"></div>
+      <div class="prob-num">Problem 3</div>
+      <div class="prob-tag">Area 3 &mdash; Scientific notation</div>
+    </div>
+    <div class="prob-body">
+      Write a simplified expression for \(10{,}000\cdot(0.1)^x\) using a single power of 10. Then evaluate for \(x = 0\), \(x = 2\), and \(x = 5\), giving each answer in proper scientific notation.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(10{,}000 = 10^4\) and \(0.1 = 10^{-1}\) &rarr; expression = \(10^4\cdot(10^{-1})^x = \mathbf{10^{(4-x)}}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(x=0\): \(10^4 = 1\times10^4\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(x=2\): \(10^2 = 1\times10^2\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">\(x=5\): \(10^{-1} = 1\times10^{-1}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1-4 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--green)"></div>
+      <div class="prob-num">Problem 4</div>
+      <div class="prob-tag">Area 4 &mdash; Repeating decimal to fraction</div>
+    </div>
+    <div class="prob-body">
+      Convert \(0.454545\ldots\) to a fraction in simplest form using the infinite geometric series formula.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Series: \(0.45 + 0.0045 + 0.000045+\cdots\) &nbsp;&rarr;&nbsp; \(a_1 = 0.45,\; r = 0.01\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(S = \dfrac{0.45}{1-0.01} = \dfrac{0.45}{0.99} = \dfrac{45}{99}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\gcd(45,99)=9\) &rarr; simplest form: \(\mathbf{\dfrac{5}{11}}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Shortcut: 2 repeating digits &rarr; \(\tfrac{45}{99} = \tfrac{5}{11}\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1-5 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--purple)"></div>
+      <div class="prob-num">Problem 5</div>
+      <div class="prob-tag">Area 5 &mdash; Special terms at the start</div>
+    </div>
+    <div class="prob-body">
+      A sequence begins: 5, 5, 5, 20, 80, 320, &hellip; The first three terms are all 5 (the "special" part), then a geometric pattern with ratio 4 begins at term 4. Find the sum of the first 7 terms.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Special part (terms 1&ndash;3): \(5+5+5 = 15\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Geometric part (terms 4&ndash;7): \(a_1=20,\;r=4\), four terms</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S_4 = 20\cdot\dfrac{4^4-1}{4-1} = 20\cdot\dfrac{255}{3} = 20\times85 = 1{,}700\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total = \(15 + 1{,}700 = \mathbf{1{,}715}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SET 2 ─── -->
+<div class="section practice-section" id="set2">
+  <div class="section-header">
+    <div class="section-icon">S2</div>
+    <div>
+      <h2>Practice Set 2</h2>
+    </div>
+  </div>
+  <div class="set-intro">A step up in difficulty. Set up the problem carefully before calculating.</div>
+
+  <!-- P2-1 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--blue)"></div>
+      <div class="prob-num">Problem 1</div>
+      <div class="prob-tag">Area 1 &mdash; Compound interest</div>
+    </div>
+    <div class="prob-body">
+      $3,500 is invested at 5% interest compounded semi-annually. (a) How much is in the account after 3 years? (b) After how many full semi-annual periods does the account first exceed $4,500?
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Rate per period = \(5\%\div2 = 2.5\% = 0.025\). Periods in 3 years = 6.</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">(a) \(A = 3500\times(1.025)^6 = 3500\times1.15969 = \mathbf{\$4{,}058.91}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">(b) Solve \(3500\times(1.025)^n > 4500\) &rarr; \((1.025)^n > 1.2857\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Take logs: \(n > \dfrac{\log 1.2857}{\log 1.025} = \dfrac{0.10926}{0.01072} \approx 10.19\)</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-text">First whole period: \(\mathbf{n = 11}\) semi-annual periods (= 5.5 years)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2-2 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--amber)"></div>
+      <div class="prob-num">Problem 2</div>
+      <div class="prob-tag">Area 2 &mdash; Sum of squares, not starting at i = 1</div>
+    </div>
+    <div class="prob-body">
+      Evaluate: \[\sum_{i=3}^{8} i^2\]
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(\displaystyle\sum_{i=3}^{8}i^2 = \sum_{i=1}^{8}i^2 - \sum_{i=1}^{2}i^2\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=1}^{8}i^2 = \dfrac{8\cdot9\cdot17}{6} = \dfrac{1224}{6} = 204\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=1}^{2}i^2 = 1^2+2^2 = 1+4 = 5\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Answer: \(204 - 5 = \mathbf{199}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Check: \(9+16+25+36+49+64 = 199\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2-3 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--red)"></div>
+      <div class="prob-num">Problem 3</div>
+      <div class="prob-tag">Area 3 &mdash; Scientific notation, general base</div>
+    </div>
+    <div class="prob-body">
+      Simplify \(5\times10^2\cdot(2\times10^{-1})^3\) and express the answer in proper scientific notation.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Expand the cube: \((2\times10^{-1})^3 = 2^3\times(10^{-1})^3 = 8\times10^{-3}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Multiply: \((5\times10^2)\times(8\times10^{-3}) = (5\times8)\times10^{2+(-3)} = 40\times10^{-1}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Adjust: \(40\times10^{-1} = 4.0\times10^1\times10^{-1} = \mathbf{4.0\times10^0 = 4}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2-4 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--green)"></div>
+      <div class="prob-num">Problem 4</div>
+      <div class="prob-tag">Area 4 &mdash; Mixed repeating decimal</div>
+    </div>
+    <div class="prob-body">
+      Convert \(0.3272727\ldots\) to a fraction. Note: only the "27" repeats; the leading "3" does not.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split: \(0.3\) (non-repeating) + \(0.0\overline{27}\) (repeating)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Repeating part: \(a_1 = 0.027,\; r = 0.01\) &rarr; \(S = \dfrac{0.027}{0.99} = \dfrac{27}{990} = \dfrac{3}{110}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Non-repeating: \(0.3 = \dfrac{3}{10}\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total: \(\dfrac{3}{10}+\dfrac{3}{110} = \dfrac{33}{110}+\dfrac{3}{110} = \dfrac{36}{110} = \mathbf{\dfrac{18}{55}}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2-5 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--purple)"></div>
+      <div class="prob-num">Problem 5</div>
+      <div class="prob-tag">Area 5 &mdash; Bouncing ball</div>
+    </div>
+    <div class="prob-body">
+      A ball is dropped from 16 feet. Each bounce reaches 75% of the previous height. Find the total distance traveled when the ball hits the ground for the 4th time (i.e., after exactly 3 bounces).
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">First drop (special term): 16 ft downward only</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Bounce heights: 1st = 12 ft, 2nd = 9 ft, 3rd = 6.75 ft</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Each bounce = up + down = 2 &times; height</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Bounce total: \(2(12+9+6.75) = 2(27.75) = 55.5\text{ ft}\)</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-text">Grand total: \(16+55.5 = \mathbf{71.5\text{ ft}}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SET 3 ─── -->
+<div class="section practice-section" id="set3">
+  <div class="section-header">
+    <div class="section-icon">S3</div>
+    <div>
+      <h2>Practice Set 3</h2>
+    </div>
+  </div>
+  <div class="set-intro">Mixed challenge &mdash; some problems combine two focus areas.</div>
+
+  <!-- P3-1 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--blue)"></div>
+      <div class="prob-num">Problem 1</div>
+      <div class="prob-tag">Areas 1 + 3 &mdash; Exponential growth meets scientific notation</div>
+    </div>
+    <div class="prob-body">
+      A scientist places 1 bacterium in a dish. The population triples every hour. (a) Write a formula for the population \(P(x)\) after \(x\) hours. (b) Find \(P(8)\) in scientific notation. (c) Explain why this has the same mathematical structure as compound interest.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">(a) \(P(x) = 1\cdot3^x = \mathbf{3^x}\) &nbsp; (geometric, \(a_1=1,\; r=3\))</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">(b) \(P(8) = 3^8 = 6{,}561 = \mathbf{6.561\times10^3}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">(c) Compound interest: \(A = P(1+r)^n\). Bacteria: \(P=1\cdot3^x\). Identical structure &mdash; both multiply by a fixed ratio each period. Only the ratio differs (1.06 vs 3).</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3-2 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--amber)"></div>
+      <div class="prob-num">Problem 2</div>
+      <div class="prob-tag">Area 2 &mdash; Mixed special sum</div>
+    </div>
+    <div class="prob-body">
+      Evaluate: \[\sum_{i=2}^{5}(i^2 - 3i + 1)\]
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split: \(\displaystyle\sum_{i=2}^{5}i^2 \;-\; 3\sum_{i=2}^{5}i \;+\; \sum_{i=2}^{5}1\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=1}^{5}i^2 = \frac{5\cdot6\cdot11}{6} = 55\), &nbsp; \(\sum_{i=1}^{1}i^2 = 1\) &rarr; \(\sum_{i=2}^{5}i^2 = 54\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=1}^{5}i = 15\), &nbsp; \(\sum_{i=1}^{1}i = 1\) &rarr; \(\sum_{i=2}^{5}i = 14\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">\(\sum_{i=2}^{5}1 = 4\) terms \(\times\,1 = 4\)</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-text">Answer: \(54 - 3(14) + 4 = 54 - 42 + 4 = \mathbf{16}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Check: \((-1)+1+5+11 = 16\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3-3 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--red)"></div>
+      <div class="prob-num">Problem 3</div>
+      <div class="prob-tag">Area 3 &mdash; Finding the term index</div>
+    </div>
+    <div class="prob-body">
+      The sequence is defined by \(a_n = 6.4\times10^5\cdot(0.5)^n\). Find \(a_4\) in proper scientific notation. Then find the smallest \(n\) for which \(a_n < 1{,}000\).
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(a_4 = 6.4\times10^5\times(0.5)^4 = 640{,}000\times0.0625 = 40{,}000 = \mathbf{4.0\times10^4}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Solve \(6.4\times10^5\cdot(0.5)^n < 1000\) &rarr; \((0.5)^n < \dfrac{1000}{640000} \approx 0.001563\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(n > \dfrac{\log(0.001563)}{\log(0.5)} = \dfrac{-2.806}{-0.301} \approx 9.32\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Smallest integer: \(\mathbf{n = 10}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3-4 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--green)"></div>
+      <div class="prob-num">Problem 4</div>
+      <div class="prob-tag">Area 4 &mdash; Prove an identity</div>
+    </div>
+    <div class="prob-body">
+      A student claims \(0.9999\ldots = 1\) exactly (not "approximately"). Use the infinite geometric series formula to prove or disprove this claim. Show all steps.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Write as series: \(0.9 + 0.09 + 0.009 + \cdots\) &nbsp;&rarr;&nbsp; \(a_1 = 0.9,\; r = 0.1\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(|r| = 0.1 < 1\), so the infinite sum formula applies.</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S = \dfrac{0.9}{1-0.1} = \dfrac{0.9}{0.9} = \mathbf{1}\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">The student is <strong>correct</strong>. \(0.\overline{9} = 1\) exactly &mdash; this is a proven mathematical fact, not an approximation.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P3-5 -->
+  <div class="problem">
+    <div class="prob-header">
+      <div class="prob-stripe" style="background:var(--purple)"></div>
+      <div class="prob-num">Problem 5</div>
+      <div class="prob-tag">Area 5 &mdash; Special start, real-world context</div>
+    </div>
+    <div class="prob-body">
+      A social media post gets 2 shares on Day 1 and 2 shares on Day 2 (spreading slowly). Starting Day 3, each day's shares are exactly triple the previous day's. Find the total number of shares over all 7 days.
+      <div class="answer-key">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Special part (Days 1&ndash;2): \(2+2 = 4\) shares</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Geometric part starts Day 3: \(a_1 = 2\times3 = 6,\; r=3\), and there are 5 terms (Days 3&ndash;7)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S_5 = 6\cdot\dfrac{3^5-1}{3-1} = 6\cdot\dfrac{242}{2} = 6\times121 = 726\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total = \(4+726 = \mathbf{730\text{ shares}}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Sequence: 2, 2, 6, 18, 54, 162, 486 &nbsp;&rarr;&nbsp; sum = 730 &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════ ANSWER KEYS ═══════════════════════════ -->
+<div class="chapter-break" id="key1">
+  <div class="ch-icon">III</div>
+  <div>
+    <h2>Answer Keys</h2>
+    <p>Full step-by-step solutions for all three practice sets</p>
+  </div>
+</div>
+
+<!-- KEY 1 -->
+<div class="section anskey-section">
+  <div class="section-header">
+    <div class="section-icon">K1</div>
+    <h2>Answer Key &mdash; Practice Set 1</h2>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--blue)"></div><div class="prob-num">Problem 1</div><div class="prob-tag">Area 1 &mdash; Maya's investment</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Common ratio = \(1+0.04 = 1.04\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Year-end balances: $2,000 &rarr; $2,080.00 &rarr; $2,163.20 &rarr; $2,249.73</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(A = 2000\times(1.04)^4 = 2000\times1.16986 = \mathbf{\$2{,}339.72}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--amber)"></div><div class="prob-num">Problem 2</div><div class="prob-tag">Area 2 &mdash; \(\sum_{i=4}^{7}(3i+2)\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split: \(3\displaystyle\sum_{i=4}^{7}i + \sum_{i=4}^{7}2\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=1}^{7}i = 28\), &nbsp;\(\sum_{i=1}^{3}i = 6\) &rarr; \(\sum_{i=4}^{7}i = 22\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=4}^{7}2 = 2\times4 = 8\) &nbsp;(4 terms)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Answer: \(3(22)+8 = \mathbf{74}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">Check: \(14+17+20+23 = 74\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--red)"></div><div class="prob-num">Problem 3</div><div class="prob-tag">Area 3 &mdash; \(10{,}000\cdot(0.1)^x\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Simplified form: \(\mathbf{10^{(4-x)}}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(x=0\to 1\times10^4\) &nbsp;|&nbsp; \(x=2\to 1\times10^2\) &nbsp;|&nbsp; \(x=5\to 1\times10^{-1}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--green)"></div><div class="prob-num">Problem 4</div><div class="prob-tag">Area 4 &mdash; \(0.\overline{45}\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(a_1=0.45,\; r=0.01\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(S = \dfrac{0.45}{0.99} = \dfrac{45}{99}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Simplify: \(\gcd(45,99)=9\) &rarr; \(\mathbf{\dfrac{5}{11}}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--purple)"></div><div class="prob-num">Problem 5</div><div class="prob-tag">Area 5 &mdash; 5, 5, 5, 20, 80, &hellip;</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Special (terms 1&ndash;3): \(5+5+5=15\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Geometric (terms 4&ndash;7): \(a_1=20,\;r=4,\;4\) terms</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S_4 = 20\cdot\dfrac{255}{3} = 1{,}700\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total: \(15+1700 = \mathbf{1{,}715}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY 2 -->
+<div class="section anskey-section" id="key2">
+  <div class="section-header">
+    <div class="section-icon">K2</div>
+    <h2>Answer Key &mdash; Practice Set 2</h2>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--blue)"></div><div class="prob-num">Problem 1</div><div class="prob-tag">Area 1 &mdash; $3,500 semi-annual</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Rate per period = 0.025, periods in 3 years = 6</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">(a) \(A = 3500\times(1.025)^6 = \mathbf{\$4{,}058.91}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">(b) \(n > \dfrac{\log 1.2857}{\log 1.025} \approx 10.19\) &rarr; first period is \(\mathbf{n=11}\) (= 5.5 years)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--amber)"></div><div class="prob-num">Problem 2</div><div class="prob-tag">Area 2 &mdash; \(\sum_{i=3}^{8}i^2\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(\sum_{i=3}^{8}i^2 = \sum_{i=1}^{8}i^2 - \sum_{i=1}^{2}i^2\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=1}^{8}i^2 = \dfrac{8\cdot9\cdot17}{6} = 204\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(\sum_{i=1}^{2}i^2 = 1+4 = 5\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Answer: \(204-5 = \mathbf{199}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">\(9+16+25+36+49+64 = 199\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--red)"></div><div class="prob-num">Problem 3</div><div class="prob-tag">Area 3 &mdash; \(5\times10^2\cdot(2\times10^{-1})^3\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\((2\times10^{-1})^3 = 8\times10^{-3}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\((5\times10^2)(8\times10^{-3}) = 40\times10^{-1}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Adjust: \(\mathbf{4.0\times10^0 = 4}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--green)"></div><div class="prob-num">Problem 4</div><div class="prob-tag">Area 4 &mdash; \(0.3\overline{27}\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Non-repeating: \(0.3 = \dfrac{3}{10}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Repeating \(0.0\overline{27}\): \(a_1=0.027,\;r=0.01\) &rarr; \(S = \dfrac{27}{990} = \dfrac{3}{110}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Total: \(\dfrac{3}{10}+\dfrac{3}{110} = \dfrac{36}{110} = \mathbf{\dfrac{18}{55}}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--purple)"></div><div class="prob-num">Problem 5</div><div class="prob-tag">Area 5 &mdash; Ball dropped 16 ft</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">First drop (special): 16 ft</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">3 bounce heights: 12, 9, 6.75 ft</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Bounce total: \(2(12+9+6.75) = 55.5\text{ ft}\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Grand total: \(16+55.5 = \mathbf{71.5\text{ ft}}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY 3 -->
+<div class="section anskey-section" id="key3">
+  <div class="section-header">
+    <div class="section-icon">K3</div>
+    <h2>Answer Key &mdash; Practice Set 3</h2>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--blue)"></div><div class="prob-num">Problem 1</div><div class="prob-tag">Areas 1+3 &mdash; Bacteria + scientific notation</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">(a) \(P(x) = \mathbf{3^x}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">(b) \(P(8) = 3^8 = 6{,}561 = \mathbf{6.561\times10^3}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">(c) Same structure as \(A=P(1+r)^n\) &mdash; both multiply by a fixed ratio each period. The ratio is just 3 instead of 1.06.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--amber)"></div><div class="prob-num">Problem 2</div><div class="prob-tag">Area 2 &mdash; \(\sum_{i=2}^{5}(i^2-3i+1)\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Split into three sums, each from \(i=2\) to \(5\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(\sum_{i=2}^{5}i^2 = 55-1 = 54\) &nbsp;|&nbsp; \(\sum_{i=2}^{5}i = 15-1 = 14\) &nbsp;|&nbsp; \(\sum_{i=2}^{5}1 = 4\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Answer: \(54-3(14)+4 = \mathbf{16}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">\((-1)+1+5+11=16\) &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--red)"></div><div class="prob-num">Problem 3</div><div class="prob-tag">Area 3 &mdash; \(a_n = 6.4\times10^5\cdot(0.5)^n\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(a_4 = 640000\times0.0625 = 40000 = \mathbf{4.0\times10^4}\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\((0.5)^n < 0.001563\) &rarr; \(n > 9.32\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">Smallest integer: \(\mathbf{n=10}\)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--green)"></div><div class="prob-num">Problem 4</div><div class="prob-tag">Area 4 &mdash; Prove \(0.\overline{9}=1\)</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">\(a_1=0.9,\; r=0.1\); formula applies since \(|r|<1\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">\(S = \dfrac{0.9}{0.9} = \mathbf{1}\)</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">The student is <strong>correct</strong>: \(0.\overline{9}=1\) exactly.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <div class="prob-header"><div class="prob-stripe" style="background:var(--purple)"></div><div class="prob-num">Problem 5</div><div class="prob-tag">Area 5 &mdash; Social media shares</div></div>
+    <div class="prob-body">
+      <div class="answer-key visible">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-text">Special (Days 1&ndash;2): \(2+2=4\)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-text">Geometric (Days 3&ndash;7): \(a_1=6,\;r=3,\;5\) terms</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-text">\(S_5 = 6\cdot\dfrac{3^5-1}{2} = 6\times121 = 726\)</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-text">Total: \(4+726 = \mathbf{730\text{ shares}}\)</div></div>
+          <div class="step"><div class="step-n check">&#10003;</div><div class="step-text">2+2+6+18+54+162+486 = 730 &checkmark;</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:var(--navy);padding:1.2rem 3.5rem;display:flex;justify-content:space-between;align-items:center;">
+  <span style="font-family:var(--mono);font-size:0.72rem;color:rgba(255,255,255,0.4);letter-spacing:0.06em">BIG IDEAS INTEGRATED MATH III</span>
+  <span style="font-family:var(--mono);font-size:0.72rem;color:rgba(255,255,255,0.4);letter-spacing:0.06em">SEQUENCES &amp; SERIES REVIEW</span>
+</div>
+
+</div><!-- end page-wrap -->
+
+</body>
+</html>
