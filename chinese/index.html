@@ -289,6 +289,23 @@
             display: none !important;
         }
 
+        .voice-status-bar {
+            padding: 6px 16px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .voice-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #ef4444;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+        .voice-dot.ready { background: #10b981; }
+
         /* Multiple-choice quiz styles */
         .q-choices {
             width: 100%;
@@ -358,6 +375,10 @@
             <button class="tab-btn active" id="tab-reading">📖 文章阅读</button>
             <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习</button>
             <button class="tab-btn" id="tab-quiz">🧠 记忆测验</button>
+        </div>
+        <div class="voice-status-bar">
+            <span class="voice-dot" id="voiceDot"></span>
+            <span id="voiceStatusText" style="color:#64748b;">正在加载中文语音… (Loading Chinese voice…)</span>
         </div>
 
         <div id="section-reading">
@@ -890,30 +911,70 @@
         let synth = window.speechSynthesis;
 
         // ── Chinese voice selection ──────────────────────────────────────
-        // On Chromebook, voices load asynchronously. We wait for them and
-        // explicitly pick the best available Mandarin voice (Google quality).
+        // Chrome on Chromebook: getVoices() returns [] on first call and
+        // onvoiceschanged can fire before the list is populated.
+        // We use THREE strategies in parallel to guarantee the voice is set.
         let chineseVoice = null;
+        const voiceDot        = document.getElementById('voiceDot');
+        const voiceStatusText = document.getElementById('voiceStatusText');
 
-        function pickChineseVoice() {
+        function findBestChineseVoice() {
             const voices = synth.getVoices();
-            chineseVoice =
-                voices.find(v => v.lang === 'zh-CN' && /google/i.test(v.name)) ||
-                voices.find(v => v.lang === 'zh-TW' && /google/i.test(v.name)) ||
-                voices.find(v => v.lang === 'zh-CN') ||
-                voices.find(v => v.lang.startsWith('zh')) ||
-                null;
+            return (
+                voices.find(v => v.lang === 'zh-CN' && /google/i.test(v.name))  ||
+                voices.find(v => v.lang.startsWith('zh') && /google/i.test(v.name)) ||
+                voices.find(v => v.lang === 'zh-CN')                             ||
+                voices.find(v => v.lang.startsWith('zh'))                        ||
+                null
+            );
         }
 
-        // Voices may already be loaded (Firefox) or arrive via event (Chrome/Chromebook)
-        pickChineseVoice();
-        synth.onvoiceschanged = pickChineseVoice;
+        function applyVoice(v) {
+            chineseVoice = v;
+            voiceDot.classList.add('ready');
+            voiceStatusText.style.color = '#10b981';
+            voiceStatusText.textContent = `✅ 中文语音已就绪: ${v.name}`;
+        }
 
-        // Helper: create a properly configured Chinese utterance
+        function tryLoadVoice() {
+            if (chineseVoice) return true;   // already found
+            const v = findBestChineseVoice();
+            if (v) { applyVoice(v); return true; }
+            return false;
+        }
+
+        // Strategy 1 – immediate (already cached in Firefox / some Chrome)
+        tryLoadVoice();
+
+        // Strategy 2 – onvoiceschanged event (standard Chrome path)
+        synth.onvoiceschanged = () => {
+            if (!chineseVoice) tryLoadVoice();
+        };
+
+        // Strategy 3 – polling fallback (Chromebook sometimes needs this;
+        //              voices can arrive after the event fires with []s)
+        const voicePoll = setInterval(() => {
+            if (tryLoadVoice()) clearInterval(voicePoll);
+        }, 100);
+        setTimeout(() => {
+            clearInterval(voicePoll);
+            if (!chineseVoice) {
+                voiceStatusText.style.color = '#ef4444';
+                voiceStatusText.textContent =
+                    '⚠️ 未找到中文语音。请在 Chrome 设置 → 语言 → 文字转语音 中启用"Google 普通话"。';
+            }
+        }, 8000);   // give up after 8 s and show a help message
+
+        // Helper: always re-check at speak-time in case poll hadn't finished yet
         function makeUtterance(text, rate) {
             const utt = new SpeechSynthesisUtterance(text);
             utt.lang = 'zh-CN';
             utt.rate = rate || 1.0;
-            if (chineseVoice) utt.voice = chineseVoice;
+            const voice = chineseVoice || findBestChineseVoice();
+            if (voice) {
+                utt.voice = voice;
+                if (!chineseVoice) applyVoice(voice);   // late bind
+            }
             return utt;
         }
         // ────────────────────────────────────────────────────────────────
