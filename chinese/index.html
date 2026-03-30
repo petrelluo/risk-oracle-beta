@@ -424,8 +424,13 @@
 
         <div id="section-quiz" class="hidden">
             <div class="controls-bar" style="justify-content: center; background:#f8fafc; flex-direction: column; gap: 5px;">
-                <div style="font-size: 1.15rem; font-weight: bold; color: var(--text-main);">
-                    掌握进度 (Mastered Progress): <span id="qMasteredCount" style="color: var(--success);">0</span> / <span id="qTotalCount">50</span>
+                <div style="display:flex; justify-content:center; align-items:center; gap: 28px; flex-wrap:wrap;">
+                    <div style="font-size: 1.15rem; font-weight: bold; color: var(--text-main);">
+                        掌握进度 (Mastered): <span id="qMasteredCount" style="color: var(--success);">0</span> / <span id="qTotalCount">50</span>
+                    </div>
+                    <div style="font-size: 1.15rem; font-weight: bold; color: var(--text-main);">
+                        得分 (Score): <span id="qScoreDisplay" style="color: var(--primary);">0</span>
+                    </div>
                 </div>
                 <div class="quiz-progress-container">
                     <div class="quiz-progress-bar" id="qProgressBar"></div>
@@ -877,12 +882,42 @@
         const qFbExample = document.getElementById('qFbExample');
         const qNextControls = document.getElementById('qNextControls');
         const qNextBtn = document.getElementById('qNextBtn');
+        const qScoreDisplay = document.getElementById('qScoreDisplay');
 
         // ==========================================
         // 3. 全局状态变量
         // ==========================================
         let synth = window.speechSynthesis;
-        
+
+        // ── Chinese voice selection ──────────────────────────────────────
+        // On Chromebook, voices load asynchronously. We wait for them and
+        // explicitly pick the best available Mandarin voice (Google quality).
+        let chineseVoice = null;
+
+        function pickChineseVoice() {
+            const voices = synth.getVoices();
+            chineseVoice =
+                voices.find(v => v.lang === 'zh-CN' && /google/i.test(v.name)) ||
+                voices.find(v => v.lang === 'zh-TW' && /google/i.test(v.name)) ||
+                voices.find(v => v.lang === 'zh-CN') ||
+                voices.find(v => v.lang.startsWith('zh')) ||
+                null;
+        }
+
+        // Voices may already be loaded (Firefox) or arrive via event (Chrome/Chromebook)
+        pickChineseVoice();
+        synth.onvoiceschanged = pickChineseVoice;
+
+        // Helper: create a properly configured Chinese utterance
+        function makeUtterance(text, rate) {
+            const utt = new SpeechSynthesisUtterance(text);
+            utt.lang = 'zh-CN';
+            utt.rate = rate || 1.0;
+            if (chineseVoice) utt.voice = chineseVoice;
+            return utt;
+        }
+        // ────────────────────────────────────────────────────────────────
+
         // Reading State
         let sentencesDOM = []; 
         let currentReadIndex = 0;
@@ -909,6 +944,7 @@
             nextTime: 0 
         }));
         let currentQuizItem = null;
+        let quizScore = 0;
 
         // ==========================================
         // 4. Tabs 切换逻辑
@@ -1026,12 +1062,18 @@
 
             // Auto-read the word
             synth.cancel();
-            const wordUtt = new SpeechSynthesisUtterance(currentQuizItem.word);
-            const exUtt = new SpeechSynthesisUtterance(currentQuizItem.example);
-            wordUtt.lang = 'zh-CN'; exUtt.lang = 'zh-CN';
-            wordUtt.rate = parseFloat(speedRate.value); exUtt.rate = parseFloat(speedRate.value);
-            synth.speak(wordUtt);
-            synth.speak(exUtt);
+            const rate = parseFloat(speedRate.value);
+            synth.speak(makeUtterance(currentQuizItem.word, rate));
+            synth.speak(makeUtterance(currentQuizItem.example, rate));
+
+            // Score: +1 correct, -1 wrong
+            if (isCorrect) {
+                quizScore++;
+            } else {
+                quizScore--;
+            }
+            qScoreDisplay.textContent = quizScore;
+            qScoreDisplay.style.color = quizScore >= 0 ? 'var(--primary)' : 'var(--danger)';
 
             // SRS: advance box on correct, reset on wrong
             if (isCorrect) {
@@ -1080,11 +1122,8 @@
             const vocab = vocabulary[currentVocabIndex];
             const rate = parseFloat(vocabSpeedRate.value);
 
-            let wordUtt = new SpeechSynthesisUtterance(vocab.word);
-            wordUtt.lang = 'zh-CN'; wordUtt.rate = rate;
-
-            let exUtt = new SpeechSynthesisUtterance(vocab.example);
-            exUtt.lang = 'zh-CN'; exUtt.rate = rate;
+            let wordUtt = makeUtterance(vocab.word, rate);
+            let exUtt = makeUtterance(vocab.example, rate);
 
             exUtt.onend = function() {
                 if (capturedSessionId !== currentVocabSessionId) return; 
@@ -1247,9 +1286,7 @@
             currentSpan.classList.add('highlight');
             currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            let utterance = new SpeechSynthesisUtterance(currentSpan.textContent);
-            utterance.lang = 'zh-CN'; 
-            utterance.rate = parseFloat(speedRate.value);
+            let utterance = makeUtterance(currentSpan.textContent, parseFloat(speedRate.value));
 
             keepAliveArray.push(utterance);
             if (keepAliveArray.length > 50) keepAliveArray.shift();
