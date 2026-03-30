@@ -288,6 +288,66 @@
         .hidden {
             display: none !important;
         }
+
+        /* Multiple-choice quiz styles */
+        .q-choices {
+            width: 100%;
+            max-width: 500px;
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .q-choice-btn {
+            padding: 13px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8fafc;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #334155;
+            transition: background 0.15s, border-color 0.15s;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.5;
+        }
+
+        .q-choice-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #eff6ff;
+        }
+
+        .q-choice-btn:disabled { cursor: default; }
+
+        .q-choice-btn.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+            font-weight: 700;
+        }
+
+        .q-choice-btn.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .q-feedback {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 14px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .q-feedback.correct { background: #d1fae5; border-left: 4px solid var(--success); }
+        .q-feedback.wrong   { background: #fee2e2; border-left: 4px solid var(--danger); }
+
+        .q-feedback .q-fb-pinyin { color: #475569; font-family: 'Courier New', monospace; margin-bottom: 4px; }
+        .q-feedback .q-fb-meaning { font-weight: 600; color: #1e293b; margin-bottom: 8px; }
+        .q-feedback .q-fb-example { background: white; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); }
     </style>
 </head>
 <body>
@@ -377,26 +437,26 @@
                     <div id="qCompleteMessage" class="hidden" style="font-size: 1.4rem; color: var(--success); font-weight: bold;">
                         🎉 恭喜！您已掌握所有词汇！<br>(Congratulations! All vocabulary mastered!)
                     </div>
-                    
                     <div id="qContentArea">
-                        <div class="v-word" id="qWord" style="margin-bottom: 20px;">多彩多姿</div>
-                        
-                        <div id="qAnswerArea" class="hidden">
-                            <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin-bottom: 20px;">
-                            <div class="v-pinyin" id="qPinyin">duō cǎi duō zī</div>
-                            <div class="v-meaning" id="qMeaning">Colorful and diverse; rich and varied.</div>
-                            <div class="v-example" id="qExample">例句：大自然的生活多彩多姿。</div>
-                        </div>
+                        <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">选择正确的意思 · Choose the correct meaning</div>
+                        <div class="v-word" id="qWord" style="margin-bottom: 6px;"></div>
+                        <div class="v-pinyin" id="qPinyin" style="margin-bottom: 0;"></div>
                     </div>
                 </div>
 
-                <div class="vocab-controls" id="qControlsQuestion">
-                    <button class="btn" id="qShowBtn" style="font-size: 1.1rem; padding: 10px 24px;">👁️ 显示答案 (Show Answer)</button>
+                <!-- Multiple choice options injected here -->
+                <div class="q-choices" id="qChoicesArea"></div>
+
+                <!-- Feedback shown after answering -->
+                <div class="q-feedback hidden" id="qFeedback">
+                    <div class="q-fb-pinyin" id="qFbPinyin"></div>
+                    <div class="q-fb-meaning" id="qFbMeaning"></div>
+                    <div class="q-fb-example" id="qFbExample"></div>
                 </div>
-                
-                <div class="vocab-controls hidden" id="qControlsAnswer">
-                    <button class="btn btn-danger" id="qForgotBtn" style="font-size: 1.1rem; padding: 10px 24px;">❌ 没记住 (Forgot)</button>
-                    <button class="btn btn-success" id="qGotItBtn" style="font-size: 1.1rem; padding: 10px 24px;">✅ 记住了 (Got it)</button>
+
+                <!-- Next button shown after answering -->
+                <div class="vocab-controls hidden" id="qNextControls">
+                    <button class="btn" id="qNextBtn" style="font-size: 1.1rem; padding: 10px 28px;">下一题 (Next) ➡️</button>
                 </div>
             </div>
         </div>
@@ -619,7 +679,7 @@
 
 它跌跌撞撞地沿着竹林中的小径小跑着，忽然看到一只云豹正咬住一只小鹿的脖子，使小鹿叫不出声来. 小鹿拼命踢踏着四蹄，皮上的毛溅落下来，不久便停止了挣扎。它听到云豹撕裂小鹿肚皮的声音，看到热乎乎的鲜血滴落在洁白的雪地上. 这情景更加刺激它的食欲，它悄悄地吞下口中流动的口涎，同时情不自禁地向前迈步，因为它还不知道危险。云豹看见这只傻头傻脑的熊猫崽向它走来，便从叼住小鹿的嘴中发出“呜呜”的警告声；虎子因为听不懂云豹的语言而继续往前走. 忽然，云豹发出嘘气声和高声的猫叫扑向它，并迅速伸出一只利爪，抓住它的额头，把它撕开了一道血口。它惊呆了，这才知道大祸临头，急忙转身逃跑，同时高声号叫，而云豹还在咆哮着追赶它. 就在万分紧急的时候，娇娇为寻找虎子恰好赶到这里，妈妈从竹丛中蹦跳出来，勇敢地截住了云豹，把云豹赶走.
 
-虎子投入妈妈的怀抱，再次尝到了在妈妈身边的安全和妈妈的无限慈爱. 它用力将前爪抓住妈妈的颈脖，拥抱着，哭着，同时把这次离开妈妈之后的可怕经历深深地印在自己的记忆里。娇娇用鼻子抚慰它，用舌舐舔它的伤口，然后带它一起回到那片熟悉的小树林. 在那儿，娇娇把高大坚硬的巴山竹林从基部咬断，把整颗竹子平放在地上，希望能让幼崽吃到顶端那些最嫩、最适口的竹叶。但是虎子还是咬啮不断这些竹叶. 这时的竹子对它来说还只是玩具，不是食物。它迫不及待地转向妈妈，并全力吸吮着妈妈那鼓鼓胀胀的乳房，直到填报了肚子，才心满意足地跟随妈妈来到一颗巨大的松树下面，倚着妈妈打盹.
+虎子投入妈妈的怀抱，再次尝到了在妈妈身边的安全和妈妈的无限慈爱. 它用力将前爪抓住妈妈的颈脖，拥抱着，哭着，同时把这次离开妈妈之后的可怕经历深深地印在自己的记忆里。娇娇用鼻子抚慰它，用舌舐舔它的伤口，然后带它一起回到那片熟悉的小树林. 在那儿，娇娇把高大坚硬的巴山竹林从基部咬断，把整颗竹子平放在地上，希望能让幼崽吃到顶端那些最嫩、最适口的竹叶。但是虎子还是咬啮不断这些竹叶. 这时的竹子对它来说还只是玩具，不是食物。它迫不及待地转向妈妈，并全力吸吮着妈妈那鼓鼓胀胀的乳房，直到填饱了肚子，才心满意足地跟随妈妈来到一颗巨大的松树下面，倚着妈妈打盹.
 
 它睡着了，开始做梦. 身体在梦中扭来扭去，有时还叫了几声......
 
@@ -679,7 +739,90 @@
             { word: "究竟", pinyin: "jiū jìng", meaning: "Actually; exactly; after all.", example: "你究竟想要说什么？" },
             { word: "咬啮", pinyin: "yǎo niè", meaning: "To bite; to gnaw.", example: "老鼠咬啮坏了木质家具。" },
             { word: "锐利", pinyin: "ruì lì", meaning: "Sharp; keen; acute.", example: "老鹰有锐利的眼神和爪子。" },
-            { word: "遗留", pinyin: "yí liú", meaning: "To leave behind; to hand down.", example: "这是历史上遗留下来的古迹。" }
+            { word: "遗留", pinyin: "yí liú", meaning: "To leave behind; to hand down.", example: "这是历史上遗留下来的古迹。" },
+            // 新增词汇（动物故事相关）
+            { word: "扒土", pinyin: "bā tǔ", meaning: "To scrape or dig at the earth; to claw at the ground.", example: "小狗在花园里扒土，想把骨头埋起来。" },
+            { word: "肆无忌惮", pinyin: "sì wú jì dàn", meaning: "To act recklessly without restraint; wantonly; brazenly.", example: "那只猴子肆无忌惮地抢走了游客的食物。" },
+            { word: "傻头傻脑", pinyin: "shǎ tóu shǎ nǎo", meaning: "Stupid; dull-witted; foolish-looking.", example: "小熊猫傻头傻脑地撞上了竹子，把大家都逗乐了。" },
+            { word: "惊叫", pinyin: "jīng jiào", meaning: "To cry out in alarm; to scream; to shriek.", example: "孩子看到蛇后惊叫着跑开了。" },
+            { word: "河床", pinyin: "hé chuáng", meaning: "Riverbed; the bottom channel of a river.", example: "干旱季节，河床裸露在阳光下。" },
+            { word: "毛茸茸", pinyin: "máo róng róng", meaning: "Fluffy; furry; covered with soft hair.", example: "刚出生的小熊猫毛茸茸的，非常可爱。" },
+            { word: "湍急", pinyin: "tuān jí", meaning: "Rapid; rushing; swift-flowing (of water).", example: "山间的溪流湍急，不适合游泳。" },
+            { word: "磕磕撞撞", pinyin: "kē kē zhuàng zhuàng", meaning: "Bumping along; stumbling; lurching about.", example: "他在黑暗中磕磕撞撞地走到了门口。" },
+            { word: "拐弯", pinyin: "guǎi wān", meaning: "To turn a corner; to make a bend; to curve.", example: "在路口拐弯后就能看到学校了。" },
+            { word: "痛苦", pinyin: "tòng kǔ", meaning: "Pain; suffering; anguish; distress.", example: "受伤的小鸟发出痛苦的鸣叫声。" },
+            { word: "昏昏欲睡", pinyin: "hūn hūn yù shuì", meaning: "Drowsy; heavy with sleep; nodding off.", example: "午饭后，他坐在椅子上昏昏欲睡。" },
+            { word: "疲惫不堪", pinyin: "pí bèi bù kān", meaning: "Utterly exhausted; completely worn out.", example: "跑完马拉松后，他疲惫不堪地倒在了草地上。" },
+            { word: "孤苦无援", pinyin: "gū kǔ wú yuán", meaning: "Lonely, suffering and helpless; without anyone to turn to.", example: "小鹿在森林里迷路，孤苦无援地哭泣着。" },
+            { word: "嗅闻", pinyin: "xiù wén", meaning: "To sniff; to smell; to nose around.", example: "狗用鼻子嗅闻地面，寻找气味。" },
+            { word: "狠狠", pinyin: "hěn hěn", meaning: "Fiercely; ruthlessly; with great force.", example: "他狠狠地咬了一口苹果。" },
+            { word: "鸟类", pinyin: "niǎo lèi", meaning: "Birds; avian species; the bird family.", example: "鸟类是唯一有羽毛的脊椎动物。" },
+            { word: "掉转", pinyin: "diào zhuǎn", meaning: "To turn around; to reverse direction; to wheel about.", example: "马儿掉转头，向来时的方向跑去。" },
+            { word: "雄鸡", pinyin: "xióng jī", meaning: "Rooster; cock.", example: "天刚亮，农场里的雄鸡就开始打鸣。" },
+            { word: "攻击", pinyin: "gōng jī", meaning: "To attack; to assault; an attack.", example: "母熊为了保护幼崽，毫不犹豫地攻击了入侵者。" },
+            { word: "蹲坐", pinyin: "dūn zuò", meaning: "To squat; to crouch down and sit.", example: "小猫蹲坐在窗台上，望着窗外的飞鸟。" },
+            { word: "漩涡", pinyin: "xuán wō", meaning: "Whirlpool; vortex; eddy.", example: "河水中的漩涡将落叶卷走了。" },
+            { word: "翻来覆去", pinyin: "fān lái fù qù", meaning: "Tossing and turning; over and over again.", example: "他在床上翻来覆去，怎么也睡不着。" },
+            { word: "挥动", pinyin: "huī dòng", meaning: "To wave; to swing; to brandish.", example: "熊挥动着爪子，把蜂巢打落了。" },
+            { word: "四肢", pinyin: "sì zhī", meaning: "The four limbs; arms and legs.", example: "游泳能锻炼全身，尤其是四肢。" },
+            { word: "窒息难耐", pinyin: "zhì xī nán nài", meaning: "Suffocatingly unbearable; so stuffy as to be intolerable.", example: "夏日午后，山谷里窒息难耐的热气令人头晕。" },
+            { word: "迅速", pinyin: "xùn sù", meaning: "Rapid; swift; quick; speedy.", example: "猎豹迅速追上了羚羊。" },
+            { word: "肚子", pinyin: "dù zi", meaning: "Belly; stomach; abdomen.", example: "小熊猫吃饱了，圆滚滚的肚子让它走路都困难。" },
+            { word: "稳不住", pinyin: "wěn bù zhù", meaning: "Unable to keep steady; can't maintain balance.", example: "激流太猛，小鹿稳不住身子，被冲倒了。" },
+            { word: "漂浮", pinyin: "piāo fú", meaning: "To float; to drift on the surface.", example: "落叶漂浮在平静的湖面上。" },
+            { word: "跌跌撞撞", pinyin: "diē diē zhuàng zhuàng", meaning: "Stumbling along; lurching; staggering.", example: "刚学走路的幼崽跌跌撞撞地追着母亲。" },
+            { word: "小径", pinyin: "xiǎo jìng", meaning: "Small path; trail; narrow footpath.", example: "森林里有一条蜿蜒的小径通向瀑布。" },
+            { word: "踢踏", pinyin: "tī tà", meaning: "To stomp; to kick and clatter; to tap with feet.", example: "小马驹兴奋地在草地上踢踏着。" },
+            { word: "挣扎", pinyin: "zhēng zhá", meaning: "To struggle; to fight to get free; to writhe.", example: "落入网中的鱼不断挣扎，想要逃脱。" },
+            { word: "悄悄", pinyin: "qiāo qiāo", meaning: "Quietly; stealthily; without making a sound.", example: "小猫悄悄地走到鸟笼旁边。" },
+            { word: "撕裂", pinyin: "sī liè", meaning: "To tear apart; to rip; to lacerate.", example: "老鹰用利爪将猎物撕裂。" },
+            { word: "利爪", pinyin: "lì zhǎo", meaning: "Sharp claws; razor-sharp talons.", example: "老虎有一双锋利的利爪。" },
+            { word: "蹦跳", pinyin: "bèng tiào", meaning: "To jump; to leap; to bounce about.", example: "小兔子在草地上开心地蹦跳着。" },
+            { word: "咆哮", pinyin: "páo xiāo", meaning: "To roar; to howl; to bellow furiously.", example: "愤怒的狮子发出震耳欲聋的咆哮声。" },
+            { word: "惊呆", pinyin: "jīng dāi", meaning: "To be stunned; to be dumbfounded; to be frozen in shock.", example: "看到眼前的景象，所有人都惊呆了。" },
+            { word: "截住", pinyin: "jié zhù", meaning: "To intercept; to cut off; to block someone's path.", example: "猎豹绕道截住了试图逃跑的羚羊。" },
+            { word: "滴落", pinyin: "dī luò", meaning: "To drip down; to trickle; to fall in drops.", example: "雨水从叶尖滴落到泥土里。" },
+            { word: "小鹿", pinyin: "xiǎo lù", meaning: "Fawn; young deer.", example: "小鹿斑比是一个家喻户晓的故事。" },
+            { word: "吞", pinyin: "tūn", meaning: "To swallow; to gulp down; to devour.", example: "蛇慢慢地把整只青蛙吞了下去。" },
+            { word: "额头", pinyin: "é tóu", meaning: "Forehead.", example: "妈妈用手摸了摸孩子的额头，感觉有点发烫。" },
+            { word: "紧急", pinyin: "jǐn jí", meaning: "Urgent; emergency; critical.", example: "发生了紧急情况，大家必须立刻撤离。" },
+            { word: "情不自禁", pinyin: "qíng bù zì jīn", meaning: "Cannot help but; unable to control one's feelings or actions.", example: "听到这首歌，她情不自禁地流下了眼泪。" },
+            { word: "情景", pinyin: "qíng jǐng", meaning: "Scene; sight; circumstances; a moving or vivid picture.", example: "母子重逢的情景令所有人动容。" },
+            { word: "刺激", pinyin: "cì jī", meaning: "To stimulate; to excite; to provoke; a stimulus.", example: "这部电影的情节十分刺激，让人看得心跳加速。" },
+            { word: "拥抱", pinyin: "yōng bào", meaning: "To embrace; to hug; an embrace.", example: "久别重逢，两人紧紧地拥抱在一起。" },
+            { word: "投入", pinyin: "tóu rù", meaning: "To throw oneself into; to devote oneself; to be absorbed in.", example: "她全身心地投入到了这份工作中。" },
+            { word: "怀抱", pinyin: "huái bào", meaning: "Embrace; bosom; arms (as in being held).", example: "小猫蜷缩在主人的怀抱里睡着了。" },
+            { word: "无限", pinyin: "wú xiàn", meaning: "Infinite; limitless; boundless; endless.", example: "大自然蕴藏着无限的奥秘等待探索。" },
+            { word: "慈爱", pinyin: "cí ài", meaning: "Loving and kind; affectionate (especially of parents toward children).", example: "母亲用慈爱的目光注视着熟睡的孩子。" },
+            { word: "适合", pinyin: "shì hé", meaning: "Suitable; appropriate; to fit; to be right for.", example: "这片竹林非常适合熊猫生活。" },
+            { word: "迫不及待", pinyin: "pò bù jí dài", meaning: "Cannot wait; too impatient; eagerly; with great urgency.", example: "幼崽迫不及待地扑向了母亲。" },
+            { word: "填饱", pinyin: "tián bǎo", meaning: "To fill up; to stuff full; to eat one's fill.", example: "熊猫每天要吃大量的竹子才能填饱肚子。" },
+            { word: "抚慰", pinyin: "fǔ wèi", meaning: "To comfort; to soothe; to console.", example: "母亲轻声细语地抚慰着受惊的幼崽。" },
+            { word: "熟悉", pinyin: "shú xī", meaning: "Familiar; to be acquainted with; to know well.", example: "它熟悉这片森林里的每一条小径。" },
+            { word: "深深", pinyin: "shēn shēn", meaning: "Deeply; profoundly.", example: "妈妈深深地爱着她的孩子。" },
+            { word: "顶端", pinyin: "dǐng duān", meaning: "The very top; apex; tip; summit.", example: "小松鼠爬到了大树的顶端。" },
+            { word: "幼崽", pinyin: "yòu zǎi", meaning: "Cub; pup; young animal offspring.", example: "母熊在洞穴里照顾刚出生的幼崽。" },
+            { word: "基部", pinyin: "jī bù", meaning: "The base; the bottom part; the root section.", example: "竹子的基部最为坚硬，难以咬断。" },
+            { word: "咬断", pinyin: "yǎo duàn", meaning: "To bite off; to bite through; to sever with teeth.", example: "老鼠咬断了电线，导致停电。" },
+            { word: "吸吮", pinyin: "xī shǔn", meaning: "To suck; to suckle; to draw in by sucking.", example: "小熊猫正在吸吮母亲的乳汁。" },
+            { word: "倚着", pinyin: "yǐ zhe", meaning: "Leaning against; resting against.", example: "他倚着大树坐下来休息。" },
+            { word: "鼓鼓掌掌", pinyin: "gǔ gǔ zhǎng zhǎng", meaning: "Plump; chubby; stuffed full; rounded and full.", example: "吃饱后，小熊猫的肚子鼓鼓掌掌的。" },
+            { word: "打盹", pinyin: "dǎ dǔn", meaning: "To doze; to nap; to snooze; to take a short nap.", example: "老猫吃完饭后缩成一团打盹。" },
+            { word: "颈脖", pinyin: "jǐng bó", meaning: "Neck; the neck area.", example: "小狗把头靠在主人的颈脖上。" },
+            { word: "乳房", pinyin: "rǔ fáng", meaning: "Breast; mammary gland; udder.", example: "幼崽紧紧依偎在母亲的乳房旁吸吮乳汁。" },
+            { word: "大祸临头", pinyin: "dà huò lín tóu", meaning: "A great disaster is imminent; catastrophe is about to strike.", example: "他感到大祸临头，却不知道该怎么办。" },
+            { word: "警告", pinyin: "jǐng gào", meaning: "Warning; to warn; to caution.", example: "母熊发出低吼声，警告闯入者离开。" },
+            { word: "迈步", pinyin: "mài bù", meaning: "To take a step; to stride forward.", example: "它鼓起勇气，迈步走向了陌生的森林。" },
+            { word: "扭来扭去", pinyin: "niǔ lái niǔ qù", meaning: "To twist and turn; to wriggle; to squirm.", example: "被抱起的小猫扭来扭去想要逃脱。" },
+            { word: "具有", pinyin: "jù yǒu", meaning: "To have; to possess; to be endowed with.", example: "熊猫具有黑白两色的独特外貌。" },
+            { word: "挨饿", pinyin: "ái è", meaning: "To go hungry; to starve; to suffer from hunger.", example: "冬天食物稀少，许多动物不得不挨饿。" },
+            { word: "渐渐", pinyin: "jiàn jiàn", meaning: "Gradually; little by little; bit by bit.", example: "天色渐渐暗了下来。" },
+            { word: "棕色", pinyin: "zōng sè", meaning: "Brown; the color brown.", example: "秋天，树叶变成了深浅不一的棕色。" },
+            { word: "捕捉", pinyin: "bǔ zhuō", meaning: "To catch; to capture; to seize.", example: "猫咪在草丛里捕捉蝴蝶。" },
+            { word: "竹笋", pinyin: "zhú sǔn", meaning: "Bamboo shoot; young bamboo sprout.", example: "春天是竹笋生长最旺盛的季节。" },
+            { word: "森林", pinyin: "sēn lín", meaning: "Forest; woods.", example: "大熊猫生活在中国西南部的竹子森林里。" },
+            { word: "下肢", pinyin: "xià zhī", meaning: "Lower limbs; legs.", example: "长时间坐着会让下肢感到麻木。" },
+            { word: "捡起来", pinyin: "jiǎn qǐ lái", meaning: "To pick up; to lift up from the ground.", example: "她把掉落在地上的幼崽轻轻捡起来。" }
         ];
 
         // ==========================================
@@ -726,16 +869,14 @@
         const qCompleteMessage = document.getElementById('qCompleteMessage');
         const qContentArea = document.getElementById('qContentArea');
         const qWord = document.getElementById('qWord');
-        const qAnswerArea = document.getElementById('qAnswerArea');
         const qPinyin = document.getElementById('qPinyin');
-        const qMeaning = document.getElementById('qMeaning');
-        const qExample = document.getElementById('qExample');
-        
-        const qControlsQuestion = document.getElementById('qControlsQuestion');
-        const qControlsAnswer = document.getElementById('qControlsAnswer');
-        const qShowBtn = document.getElementById('qShowBtn');
-        const qForgotBtn = document.getElementById('qForgotBtn');
-        const qGotItBtn = document.getElementById('qGotItBtn');
+        const qChoicesArea = document.getElementById('qChoicesArea');
+        const qFeedback = document.getElementById('qFeedback');
+        const qFbPinyin = document.getElementById('qFbPinyin');
+        const qFbMeaning = document.getElementById('qFbMeaning');
+        const qFbExample = document.getElementById('qFbExample');
+        const qNextControls = document.getElementById('qNextControls');
+        const qNextBtn = document.getElementById('qNextBtn');
 
         // ==========================================
         // 3. 全局状态变量
@@ -749,9 +890,15 @@
         let currentSessionId = 0; 
         let keepAliveArray = [];  
 
+        // Shuffle vocabulary for random flashcard order on every page load (Fisher-Yates)
+        for (let i = vocabulary.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [vocabulary[i], vocabulary[j]] = [vocabulary[j], vocabulary[i]];
+        }
+
         // Vocab State
         let currentVocabIndex = 0;
-        let currentVocabSessionId = 0; 
+        let currentVocabSessionId = 0;
 
         // Quiz State (Spaced Repetition System)
         // box 0: new/forgotten, box 1, 2, 3: learning, box 4: mastered
@@ -802,22 +949,26 @@
         tabQuizBtn.onclick = () => switchTab('quiz');
 
         // ==========================================
-        // 5. 记忆测验 (Quiz - SRS) 核心功能
+        // 5. 记忆测验 (Quiz - SRS, Multiple Choice) 核心功能
         // ==========================================
         function renderQuizCard() {
             // 1. 计算进度
             const total = quizData.length;
             const mastered = quizData.filter(item => item.box >= 4).length;
-            
+
             qMasteredCount.textContent = mastered;
             qTotalCount.textContent = total;
             qProgressBar.style.width = `${(mastered / total) * 100}%`;
 
+            // Reset feedback / next button
+            qFeedback.classList.add('hidden');
+            qNextControls.classList.add('hidden');
+            qChoicesArea.innerHTML = '';
+
             // 2. 检查是否全部掌握
             if (mastered === total) {
                 qContentArea.classList.add('hidden');
-                qControlsQuestion.classList.add('hidden');
-                qControlsAnswer.classList.add('hidden');
+                qChoicesArea.innerHTML = '';
                 qCompleteMessage.classList.remove('hidden');
                 return;
             }
@@ -826,68 +977,78 @@
             const now = Date.now();
             let unmastered = quizData.filter(item => item.box < 4);
             let dueCards = unmastered.filter(item => item.nextTime <= now);
-            
-            // 如果当前没有到期的卡片，为了避免用户等待，直接取下一个即将到期的
+
             if (dueCards.length === 0) {
                 unmastered.sort((a, b) => a.nextTime - b.nextTime);
                 currentQuizItem = unmastered[0];
             } else {
-                // 如果有到期的，优先复习最久未复习的 (nextTime 最小的)
                 dueCards.sort((a, b) => a.nextTime - b.nextTime);
                 currentQuizItem = dueCards[0];
             }
 
-            // 4. 更新 UI 状态 (显示问题，隐藏答案)
+            // 4. 显示词语和拼音
             qWord.textContent = currentQuizItem.word;
             qPinyin.textContent = currentQuizItem.pinyin;
-            qMeaning.textContent = currentQuizItem.meaning;
-            qExample.textContent = `例句：${currentQuizItem.example}`;
 
-            qAnswerArea.classList.add('hidden');
-            qControlsQuestion.classList.remove('hidden');
-            qControlsAnswer.classList.add('hidden');
+            // 5. 生成 4 个选项 (1 正确 + 3 随机错误)
+            const wrongPool = quizData.filter(item => item.word !== currentQuizItem.word);
+            const shuffledWrong = wrongPool.sort(() => Math.random() - 0.5).slice(0, 3);
+            const choices = [...shuffledWrong, currentQuizItem].sort(() => Math.random() - 0.5);
+
+            choices.forEach((choice) => {
+                const btn = document.createElement('button');
+                btn.className = 'q-choice-btn';
+                btn.textContent = choice.meaning;
+                btn.onclick = () => handleChoice(btn, choice, choices);
+                qChoicesArea.appendChild(btn);
+            });
         }
 
-        qShowBtn.onclick = () => {
-            // 显示答案
-            qAnswerArea.classList.remove('hidden');
-            qControlsQuestion.classList.add('hidden');
-            qControlsAnswer.classList.remove('hidden');
-            
-            // 测验模式下显示答案时自动朗读一次
+        function handleChoice(selectedBtn, chosenItem, allChoices) {
+            const isCorrect = chosenItem.word === currentQuizItem.word;
+
+            // Disable all buttons and highlight result
+            const allBtns = qChoicesArea.querySelectorAll('.q-choice-btn');
+            allBtns.forEach((btn, i) => {
+                btn.disabled = true;
+                if (allChoices[i].word === currentQuizItem.word) {
+                    btn.classList.add('correct');
+                }
+            });
+            if (!isCorrect) selectedBtn.classList.add('wrong');
+
+            // Show full answer feedback
+            qFbPinyin.textContent = currentQuizItem.pinyin;
+            qFbMeaning.textContent = currentQuizItem.meaning;
+            qFbExample.textContent = `例句：${currentQuizItem.example}`;
+            qFeedback.className = `q-feedback ${isCorrect ? 'correct' : 'wrong'}`;
+            qFeedback.classList.remove('hidden');
+
+            // Auto-read the word
             synth.cancel();
-            let wordUtt = new SpeechSynthesisUtterance(currentQuizItem.word);
-            let exUtt = new SpeechSynthesisUtterance(currentQuizItem.example);
+            const wordUtt = new SpeechSynthesisUtterance(currentQuizItem.word);
+            const exUtt = new SpeechSynthesisUtterance(currentQuizItem.example);
             wordUtt.lang = 'zh-CN'; exUtt.lang = 'zh-CN';
             wordUtt.rate = parseFloat(speedRate.value); exUtt.rate = parseFloat(speedRate.value);
             synth.speak(wordUtt);
             synth.speak(exUtt);
-        };
 
-        qForgotBtn.onclick = () => {
-            // 忘记了，重置盒子，10秒后再次复习
-            currentQuizItem.box = 0;
-            currentQuizItem.nextTime = Date.now() + 10 * 1000; 
-            renderQuizCard();
-        };
+            // SRS: advance box on correct, reset on wrong
+            if (isCorrect) {
+                currentQuizItem.box++;
+                const now = Date.now();
+                if (currentQuizItem.box === 1)      currentQuizItem.nextTime = now + 15 * 1000;
+                else if (currentQuizItem.box === 2) currentQuizItem.nextTime = now + 45 * 1000;
+                else if (currentQuizItem.box === 3) currentQuizItem.nextTime = now + 120 * 1000;
+            } else {
+                currentQuizItem.box = 0;
+                currentQuizItem.nextTime = Date.now() + 10 * 1000;
+            }
 
-        qGotItBtn.onclick = () => {
-            // 记住了，提升盒子等级，设定下一次复习时间
-            currentQuizItem.box++;
-            const now = Date.now();
-            
-            // 简单的间隔重复时间线设定 (为了演示效果，间隔设置较短)
-            if (currentQuizItem.box === 1) {
-                currentQuizItem.nextTime = now + 15 * 1000; // 15秒后
-            } else if (currentQuizItem.box === 2) {
-                currentQuizItem.nextTime = now + 45 * 1000; // 45秒后
-            } else if (currentQuizItem.box === 3) {
-                currentQuizItem.nextTime = now + 120 * 1000; // 2分钟后
-            } 
-            // 如果 box 达到 4，则标记为已掌握 (在 renderQuizCard 中过滤)
-            
-            renderQuizCard();
-        };
+            qNextControls.classList.remove('hidden');
+        }
+
+        qNextBtn.onclick = () => renderQuizCard();
 
 
         // ==========================================
