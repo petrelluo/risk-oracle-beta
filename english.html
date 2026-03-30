@@ -638,7 +638,7 @@
       <option value="5">Group 6 (501 - 600)</option>
       <option value="6">Group 7 (601+)</option>
       <option value="notebook">Notebook</option>
-      <option value="wod">📅 Words of Day</option>
+      <option value="wod" selected>📅 Words of Day</option>
       <option value="mistakes">My Mistakes</option>
       <option value="custom">Added Words</option>
     </select>
@@ -1890,7 +1890,7 @@
   }
 
   let currentMode = 'flashcard';
-  let currentGroupIndex = 'all'; // Controls the 100-word blocks
+  let currentGroupIndex = 'wod'; // Controls the 100-word blocks
   let fcIndex = 0;
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};

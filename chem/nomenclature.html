@@ -107,6 +107,19 @@
         .mastery-complete { background-color: #38a169; color: white; border-color: #2f855a; }
         
         .quiz-box { color: #805ad5; background-color: #faf5ff; border: 1px solid #d6bcfa; }
+        .timer-box { color: #c05621; background-color: #fffaf0; border: 1px solid #fbd38d; min-width: 110px; }
+        .timer-box.warning { color: #c53030; background-color: #fff5f5; border-color: #fc8181; }
+        .timer-box.warning span { animation: timerPulse 0.8s infinite; display: inline-block; }
+        @keyframes timerPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Quiz review table */
+        .quiz-review-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.88rem; text-align: left; }
+        .quiz-review-table th { background: #f7fafc; color: #4a5568; padding: 8px 10px; border-bottom: 2px solid #e2e8f0; }
+        .quiz-review-table td { padding: 8px 10px; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+        .quiz-review-table tr.correct-row td { background: #f0fff4; }
+        .quiz-review-table tr.wrong-row td { background: #fff5f5; }
+        .review-icon { font-size: 1rem; }
+        .toggle-review-btn { margin-top: 1rem; width: 100%; }
 
         .instruction { color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem; }
         #question-prompt { font-size: 1.1rem; margin-bottom: 0.5rem; color: #4a5568; }
@@ -412,21 +425,33 @@
         <div id="quiz-stats" class="stats-row hidden">
             <div class="stat-box quiz-box">Question: <span id="quiz-progress">1</span> / 25</div>
             <div class="stat-box score-box">Quiz Score: <span id="quiz-score">0</span></div>
+            <div class="stat-box timer-box" id="quiz-timer-box">⏱ <span id="quiz-timer">25:00</span></div>
         </div>
 
+        <!-- Quiz lobby (shown before quiz starts) -->
+        <div id="quiz-lobby" class="hidden" style="padding: 1.5rem 0 0.5rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🧪</div>
+            <h2 style="color: #1a365d; margin: 0 0 0.4rem;">Ready to begin?</h2>
+            <p style="color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem;">25 questions &nbsp;·&nbsp; 25-minute timer &nbsp;·&nbsp; All categories</p>
+            <button id="start-quiz-btn" class="primary-btn" style="font-size: 1.1rem; padding: 0.85rem 2.5rem;">▶ Start Quiz</button>
+        </div>
+
+        <!-- Question area (hidden until quiz starts) -->
+        <div id="quiz-question-area">
         <p class="instruction" id="main-instruction">Formulas don't need subscripts or charges (e.g., type SO4 for Sulfate).</p>
-        
+
         <div id="question-prompt">Loading question...</div>
         <div id="target"></div>
-        
+
         <input type="text" id="answer-input" placeholder="Type answer here..." autocomplete="off">
-        
+
         <div class="btn-group">
             <button id="submit-btn" class="primary-btn">Submit</button>
             <button id="review-btn" class="secondary">Review Mistakes</button>
         </div>
-        
+
         <div id="feedback"></div>
+        </div>
     </div>
 
     <div class="card hidden" id="mistakes-screen">
@@ -443,12 +468,15 @@
         <h1>Quiz Complete!</h1>
         <div class="stats-row">
             <div class="stat-box quiz-box" style="font-size: 1.5rem;">Final Score: <span id="quiz-final-score">0</span> / 25</div>
+            <div class="stat-box score-box" style="font-size: 1.5rem;"><span id="quiz-final-pct">0%</span></div>
         </div>
         <p class="instruction">Your global score and repetition weights have been updated in the background.</p>
-        <div class="btn-group" style="margin-top: 2rem;">
+        <div class="btn-group" style="margin-top: 1rem;">
             <button id="retake-quiz-btn" class="primary-btn">Retake Quiz</button>
             <button id="exit-quiz-btn" class="secondary">Return to Practice</button>
         </div>
+        <button id="toggle-review-btn" class="secondary toggle-review-btn">▾ Review Answers</button>
+        <div id="quiz-review-container" class="hidden"></div>
     </div>
 
     <div id="cheat-sheet-modal" class="modal-overlay hidden">
@@ -837,6 +865,12 @@
         const quizProgressEl = document.getElementById('quiz-progress');
         const quizScoreEl = document.getElementById('quiz-score');
         const quizFinalScoreEl = document.getElementById('quiz-final-score');
+        const quizFinalPctEl = document.getElementById('quiz-final-pct');
+        const quizTimerEl = document.getElementById('quiz-timer');
+        const quizTimerBox = document.getElementById('quiz-timer-box');
+        const quizReviewContainer = document.getElementById('quiz-review-container');
+        const toggleReviewBtn = document.getElementById('toggle-review-btn');
+        let quizTimerInterval = null;
 
 
         function buildCommonPolyatomicTable() {
@@ -987,10 +1021,12 @@
                 modeQuizBtn.classList.add('active');
                 practiceControls.classList.add('hidden');
                 practiceStats.classList.add('hidden');
-                quizStats.classList.remove('hidden');
+                quizStats.classList.add('hidden');
                 tipsBtn.style.display = 'none';
                 reviewBtn.style.display = 'none';
-                startQuiz();
+                quizEndScreen.classList.add('hidden');
+                document.getElementById('quiz-question-area').classList.add('hidden');
+                document.getElementById('quiz-lobby').classList.remove('hidden');
             }
         }
 
@@ -1004,14 +1040,34 @@
         function startQuiz() {
             quizScreen.classList.remove('hidden');
             quizEndScreen.classList.add('hidden');
+            document.getElementById('quiz-lobby').classList.add('hidden');
+            document.getElementById('quiz-question-area').classList.remove('hidden');
+            quizStats.classList.remove('hidden');
             let allCards = [...appData.deck];
             shuffleArray(allCards);
             quizState.questions = allCards.slice(0, 25);
             quizState.currentIndex = 0;
             quizState.score = 0;
+            quizState.log = [];
             quizProgressEl.textContent = quizState.currentIndex + 1;
             quizScoreEl.textContent = quizState.score;
+            startQuizTimer();
             loadQuizQuestion();
+        }
+
+        function startQuizTimer() {
+            clearInterval(quizTimerInterval);
+            let seconds = 25 * 60;
+            quizTimerBox.classList.remove('warning');
+            quizTimerEl.textContent = '25:00';
+            quizTimerInterval = setInterval(() => {
+                seconds--;
+                const m = Math.floor(seconds / 60);
+                const s = seconds % 60;
+                quizTimerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+                if (seconds <= 5 * 60) quizTimerBox.classList.add('warning');
+                if (seconds <= 0) { clearInterval(quizTimerInterval); endQuiz(); }
+            }, 1000);
         }
 
         function loadQuizQuestion() {
@@ -1029,9 +1085,31 @@
         }
 
         function endQuiz() {
+            clearInterval(quizTimerInterval);
             quizScreen.classList.add('hidden');
             quizEndScreen.classList.remove('hidden');
             quizFinalScoreEl.textContent = quizState.score;
+            quizFinalPctEl.textContent = Math.round((quizState.score / 25) * 100) + '%';
+            buildQuizReview();
+            quizReviewContainer.classList.add('hidden');
+            toggleReviewBtn.textContent = '▾ Review Answers';
+        }
+
+        function buildQuizReview() {
+            if (!quizState.log || quizState.log.length === 0) {
+                quizReviewContainer.innerHTML = '<p style="color:#718096;font-style:italic;margin-top:1rem;">No answers recorded.</p>';
+                return;
+            }
+            let html = '<table class="quiz-review-table"><thead><tr><th>#</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th></th></tr></thead><tbody>';
+            quizState.log.forEach((entry, i) => {
+                const rowClass = entry.isCorrect ? 'correct-row' : 'wrong-row';
+                const icon = entry.isCorrect ? '<span class="review-icon">✅</span>' : '<span class="review-icon">❌</span>';
+                const userDisplay = entry.isCorrect ? entry.userAnswer : `<span style="color:#c53030">${entry.userAnswer || '—'}</span>`;
+                const correctDisplay = entry.isCorrect ? entry.correctAnswer : `<strong>${entry.correctAnswer}</strong>`;
+                html += `<tr class="${rowClass}"><td>${i + 1}</td><td>${entry.questionPrompt} <strong>${entry.targetDisplay}</strong></td><td>${userDisplay}</td><td>${correctDisplay}</td><td>${icon}</td></tr>`;
+            });
+            html += '</tbody></table>';
+            quizReviewContainer.innerHTML = html;
         }
 
         function getActiveDeck() {
@@ -1095,18 +1173,29 @@
             const cleanCorrectAnswer = correctAnswer.replace(/\^.*/, '').toLowerCase();
             const isCorrect = cleanUserAnswer === cleanCorrectAnswer;
 
+            // Log result for quiz review
+            if (appMode === 'quiz') {
+                quizState.log.push({
+                    questionPrompt: promptEl.textContent,
+                    targetDisplay: targetEl.innerHTML,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    isCorrect: isCorrect
+                });
+            }
+
             if (isCorrect) {
                 appData.score++;
                 currentCard.weight = Math.max(1, currentCard.weight - 3);
                 if (appMode === 'practice') {
-                    scoreEl.textContent = appData.score; 
+                    scoreEl.textContent = appData.score;
                     updateMasteryDisplay();
                 } else {
                     quizState.score++;
                     quizScoreEl.textContent = quizState.score;
                 }
                 feedbackEl.innerHTML = "Correct! Well done."; feedbackEl.className = "correct";
-                saveData(); 
+                saveData();
                 setTimeout(() => {
                     if (appMode === 'practice') generateQuestion();
                     else {
@@ -1449,10 +1538,15 @@
             d3UpdateFn(d3Root);
         }
 
+        document.getElementById('start-quiz-btn').addEventListener('click', () => startQuiz());
         modePracticeBtn.addEventListener('click', () => setAppMode('practice'));
         modeQuizBtn.addEventListener('click', () => setAppMode('quiz'));
         retakeQuizBtn.addEventListener('click', () => startQuiz());
-        exitQuizBtn.addEventListener('click', () => { quizEndScreen.classList.add('hidden'); setAppMode('practice'); });
+        exitQuizBtn.addEventListener('click', () => { clearInterval(quizTimerInterval); quizEndScreen.classList.add('hidden'); setAppMode('practice'); });
+        toggleReviewBtn.addEventListener('click', () => {
+            const hidden = quizReviewContainer.classList.toggle('hidden');
+            toggleReviewBtn.textContent = hidden ? '▾ Review Answers' : '▴ Hide Answers';
+        });
         submitBtn.addEventListener('click', checkAnswer);
         reviewBtn.addEventListener('click', showMistakes);
         viewCategoryBtn.addEventListener('click', openCheatSheet);
