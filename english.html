@@ -3022,7 +3022,8 @@
 
   async function toggleAutoplay() {
     if (isAutoplaying) {
-      return; // already playing — no impact; auto-advances when current word finishes
+      await stopAutoplay();
+      return;
     }
 
     isAutoplaying = true;
@@ -3030,7 +3031,7 @@
     autoplayRunId++;
 
     const btn = document.getElementById('btn-autoplay');
-    btn.textContent = "▶️ Playing…";
+    btn.textContent = "⏹ Stop Autoplay";
     btn.classList.add('btn-autoplay-active');
 
     startAutoplayTimer();
