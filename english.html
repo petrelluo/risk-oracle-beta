@@ -638,7 +638,7 @@
       <option value="5">Group 6 (501 - 600)</option>
       <option value="6">Group 7 (601+)</option>
       <option value="notebook">Notebook</option>
-      <option value="wod" selected>📅 Words of Day</option>
+      <option value="wod" selected>🎲 Fresh 25</option>
       <option value="mistakes">My Mistakes</option>
       <option value="custom">Added Words</option>
     </select>
@@ -1891,6 +1891,7 @@
 
   let currentMode = 'flashcard';
   let currentGroupIndex = 'wod'; // Controls the 100-word blocks
+  let fresh25Cache = null;       // Cleared on each group switch to force a new roll
   let fcIndex = 0;
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};
@@ -2465,6 +2466,7 @@
   // --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
+    if (currentGroupIndex === 'wod') fresh25Cache = null;
     selectedGroupWords.clear();
     fcIndex = 0;
     flashcardOrderMap[currentGroupIndex] = null;
@@ -2475,35 +2477,34 @@
     if (isGroupWordListOpen) buildGroupWordList();
   }
 
-  // --- WORDS OF DAY ---
+  // --- FRESH 25 ---
   function getWordsOfDay() {
-    const today = new Date().toISOString().slice(0, 10);
-    const cached = JSON.parse(localStorage.getItem('vocabWod') || 'null');
-    if (cached && cached.date === today) {
-      const cachedSet = new Set(cached.words);
-      return vocabState.filter(item => cachedSet.has(normalizeWord(item.word)));
-    }
+    if (fresh25Cache) return fresh25Cache;
 
-    // New day — build eligible pool
     const history = new Set(JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'));
-    let eligible = vocabState.filter(item => item.isNotebook || !history.has(normalizeWord(item.word)));
 
-    // If pool is too small (all non-notebook words exhausted), reset history
-    if (eligible.length < 20) {
+    // Eligible: never shown in Fresh 25 before, OR in notebook, OR has mistakes
+    // Any one of these signals the word is still unfamiliar
+    let eligible = vocabState.filter(item =>
+      !history.has(normalizeWord(item.word)) ||
+      item.isNotebook ||
+      item.mistakes > 0
+    );
+
+    // Pool exhausted (all unseen words gone, nothing in notebook or mistakes) — reset history
+    if (eligible.length < 25) {
       history.clear();
       eligible = vocabState.slice();
     }
 
-    // Shuffle and pick 20
-    const shuffled = eligible.slice().sort(() => Math.random() - 0.5);
-    const picked = shuffled.slice(0, 20);
-    const pickedKeys = picked.map(item => normalizeWord(item.word));
+    // Absolute fallback: use everything
+    if (eligible.length === 0) eligible = vocabState.slice();
 
-    // Record non-notebook picks in history (notebook words always stay eligible)
-    picked.forEach(item => { if (!item.isNotebook) history.add(normalizeWord(item.word)); });
+    const picked = eligible.slice().sort(() => Math.random() - 0.5).slice(0, 25);
+    picked.forEach(item => history.add(normalizeWord(item.word)));
     localStorage.setItem('vocabWodHistory', JSON.stringify([...history]));
-    localStorage.setItem('vocabWod', JSON.stringify({ date: today, words: pickedKeys }));
 
+    fresh25Cache = picked;
     return picked;
   }
 
