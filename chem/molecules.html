@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecular Shapes & IMF: Complete Mastery Guide</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #e0e7ff;
+            --success: #16a34a;
+            --error: #dc2626;
+            --warning: #d97706;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --border: #e2e8f0;
+            --bg: #f1f5f9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .container { max-width: 980px; margin: 0 auto; padding: 0 20px 80px; }
+
+        /* ── Header ── */
+        header {
+            background: linear-gradient(135deg, #312e81 0%, var(--primary) 60%, #0ea5e9 100%);
+            color: white;
+            text-align: center;
+            padding: 64px 20px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.07) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 50%, rgba(255,255,255,0.07) 0%, transparent 60%);
+        }
+        header h1 { font-size: 2.6em; font-weight: 800; position: relative; margin-bottom: 10px; letter-spacing: -0.02em; }
+        header p { font-size: 1.05em; opacity: 0.88; position: relative; }
+
+        /* ── Section titles ── */
+        .section-title {
+            font-size: 1.75em; font-weight: 800;
+            color: var(--primary-dark);
+            margin: 52px 0 22px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-light);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            background: var(--primary); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.15em; flex-shrink: 0;
+        }
+
+        /* ── General card ── */
+        .card {
+            background: white; border-radius: 14px; padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+        .card h3 { color: var(--primary-dark); font-size: 1.1em; margin-bottom: 10px; }
+
+        /* ── Highlight boxes ── */
+        .hl { padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 14px 0; border-left: 4px solid; }
+        .hl-blue  { background: #eff6ff; border-color: var(--primary); }
+        .hl-green { background: #f0fdf4; border-color: var(--success); }
+        .hl-yellow{ background: #fffbeb; border-color: var(--warning); }
+        .hl-red   { background: #fef2f2; border-color: var(--error); }
+        .hl strong { font-weight: 700; }
+
+        /* ── Step list ── */
+        .steps { list-style: none; counter-reset: step; }
+        .steps li { counter-increment: step; display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+        .steps li::before {
+            content: counter(step);
+            background: var(--primary); color: white;
+            width: 26px; height: 26px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85em; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+        }
+
+        /* ── VSEPR Simulator ── */
+        .simulator {
+            background: white; border-radius: 16px; padding: 30px;
+            box-shadow: 0 4px 20px rgba(79,70,229,0.12);
+            border: 2px solid var(--primary-light); margin-bottom: 30px;
+        }
+        .sim-title {
+            font-size: 1.2em; font-weight: 700; color: var(--primary-dark);
+            margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+        }
+        .sim-controls { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+        .sim-ctrl { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 150px; }
+        .sim-ctrl label { font-weight: 700; font-size: 0.85em; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.04em; }
+        .sim-ctrl select {
+            padding: 10px 14px; border: 2px solid var(--border);
+            border-radius: 9px; font-size: 1em; color: var(--text-dark);
+            background: white; cursor: pointer; outline: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 12px center;
+        }
+        .sim-ctrl select:focus { border-color: var(--primary); }
+
+        .mol-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .mol-preset-label { font-size: 0.82em; font-weight: 700; color: var(--text-light); width: 100%; }
+        .mol-btn {
+            padding: 6px 14px; border: 2px solid var(--primary-light);
+            border-radius: 8px; background: white; color: var(--primary-dark);
+            font-size: 0.9em; font-weight: 600; cursor: pointer; transition: all 0.15s;
+        }
+        .mol-btn:hover, .mol-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .sim-display { display: grid; grid-template-columns: 260px 1fr; gap: 24px; align-items: start; }
+        @media (max-width: 640px) { .sim-display { grid-template-columns: 1fr; } }
+
+        .sim-canvas {
+            background: #f5f3ff; border-radius: 12px;
+            border: 1px solid #c7d2fe;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 220px; padding: 10px;
+        }
+
+        .sim-info { display: flex; flex-direction: column; gap: 14px; }
+        .shape-badge {
+            display: inline-block; padding: 3px 12px;
+            background: var(--primary-light); color: var(--primary-dark);
+            border-radius: 20px; font-size: 0.8em; font-weight: 700;
+        }
+        .shape-name { font-size: 1.8em; font-weight: 800; color: var(--primary-dark); }
+        .sim-row { display: flex; flex-direction: column; gap: 3px; }
+        .sim-row-label { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-light); }
+        .sim-row-val { font-size: 0.97em; color: var(--text-dark); }
+        .polar-tag { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 0.82em; font-weight: 700; }
+        .polar-tag.is-polar { background: #fee2e2; color: #991b1b; }
+        .polar-tag.not-polar { background: #dcfce7; color: #166534; }
+
+        /* ── Shape Gallery ── */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px; margin-bottom: 30px; }
+        .g-card {
+            background: white; border-radius: 14px; padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--border);
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .g-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(79,70,229,0.13); }
+        .g-card-title { font-size: 1.15em; font-weight: 800; color: var(--primary-dark); }
+        .g-card-sub { font-size: 0.82em; color: var(--text-light); margin-bottom: 14px; }
+        .g-svg-wrap {
+            background: #f8f7ff; border-radius: 10px; padding: 8px;
+            display: flex; align-items: center; justify-content: center; min-height: 155px;
+            margin-bottom: 14px;
+        }
+        .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .tag { padding: 3px 9px; border-radius: 12px; font-size: 0.75em; font-weight: 700; }
+        .tag-blue { background: var(--primary-light); color: var(--primary-dark); }
+        .tag-green { background: #dcfce7; color: #166534; }
+        .tag-orange { background: #fed7aa; color: #9a3412; }
+
+        /* ── Polarity Visualizer ── */
+        .polarity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 20px 0; }
+        @media (max-width: 580px) { .polarity-grid { grid-template-columns: 1fr; } }
+        .pol-card {
+            border-radius: 12px; padding: 20px; border: 2px solid var(--border);
+            text-align: center; transition: all 0.2s;
+        }
+        .pol-card.polar { border-color: #ef4444; background: #fff5f5; }
+        .pol-card.nonpolar { border-color: var(--success); background: #f0fdf4; }
+        .pol-label { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 700; margin-bottom: 10px; }
+        .polar .pol-label { background: #fee2e2; color: #991b1b; }
+        .nonpolar .pol-label { background: #dcfce7; color: #166534; }
+        .pol-reason { font-size: 0.88em; color: var(--text-light); margin-top: 10px; }
+
+        /* ── IMF Cards ── */
+        .imf-card {
+            background: white; border-radius: 14px; padding: 26px;
+            margin-bottom: 18px; border-left: 6px solid;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .imf-card.ldf { border-color: #94a3b8; }
+        .imf-card.dd  { border-color: #0ea5e9; }
+        .imf-card.hb  { border-color: #ef4444; }
+        .imf-card.id  { border-color: #f59e0b; }
+
+        .imf-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+        .imf-icon {
+            width: 46px; height: 46px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4em; flex-shrink: 0;
+        }
+        .ldf .imf-icon { background: #f1f5f9; }
+        .dd  .imf-icon { background: #e0f2fe; }
+        .hb  .imf-icon { background: #fee2e2; }
+        .id  .imf-icon { background: #fef3c7; }
+        .imf-card h3 { font-size: 1.15em; font-weight: 700; color: var(--text-dark); }
+        .imf-card .imf-sub { font-size: 0.82em; color: var(--text-light); }
+
+        /* H-Bond Animation */
+        .hbond-scene {
+            background: #0f172a; border-radius: 14px; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 180px; overflow: hidden;
+        }
+        .hb-dashed {
+            stroke-dasharray: 7 5;
+            animation: hb-pulse 2.4s ease-in-out infinite;
+        }
+        .hb-dashed:nth-child(2) { animation-delay: 0.8s; }
+        .hb-dashed:nth-child(3) { animation-delay: 1.6s; }
+        @keyframes hb-pulse {
+            0%,100% { opacity: 0.15; }
+            50%      { opacity: 1; }
+        }
+
+        /* IMF Strength Ladder */
+        .strength-ladder { background: white; border-radius: 14px; padding: 28px; margin-bottom: 30px; border: 1px solid var(--border); }
+        .strength-ladder h3 { font-size: 1.1em; color: var(--primary-dark); margin-bottom: 20px; }
+        .ladder-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .ladder-label { width: 180px; font-size: 0.88em; font-weight: 700; flex-shrink: 0; }
+        .ladder-track { flex: 1; background: #f1f5f9; border-radius: 100px; height: 22px; overflow: hidden; }
+        .ladder-fill {
+            height: 100%; border-radius: 100px; display: flex; align-items: center;
+            padding-left: 10px; font-size: 0.75em; font-weight: 700; color: white;
+            white-space: nowrap;
+        }
+        .ladder-ex { font-size: 0.78em; color: var(--text-light); width: 95px; flex-shrink: 0; }
+
+        /* ── Quiz ── */
+        .quiz-container {
+            background: white; border-radius: 16px; padding: 38px;
+            box-shadow: 0 10px 30px rgba(79,70,229,0.10);
+            border-top: 5px solid var(--primary-dark); margin-top: 52px;
+        }
+        .quiz-container h2 { color: var(--primary-dark); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-top: 0; margin-bottom: 18px; }
+        .progress-text { color: var(--text-light); font-weight: 700; margin-bottom: 16px; font-size: 0.92em; }
+        .question-text { font-size: 1.2em; font-weight: 600; margin-bottom: 20px; }
+        .options-grid { display: grid; gap: 11px; }
+        .option-btn {
+            padding: 14px 18px; font-size: 1em; text-align: left;
+            background: #f8fafc; border: 2px solid var(--border);
+            border-radius: 9px; cursor: pointer; transition: all 0.18s; color: var(--text-dark);
+        }
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background: #eff6ff; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .option-btn.correct { background: #dcfce7; border-color: var(--success); color: #14532d; font-weight: 600; }
+        .option-btn.incorrect { background: #fee2e2; border-color: var(--error); color: #7f1d1d; }
+        .feedback-box {
+            margin-top: 18px; padding: 14px 18px; border-radius: 9px;
+            display: none; font-weight: 500; font-size: 0.95em;
+        }
+        .btn-next {
+            margin-top: 18px; padding: 12px 24px; background: var(--primary);
+            color: white; border: none; border-radius: 9px; font-size: 1em;
+            cursor: pointer; display: none; float: right;
+        }
+        .btn-next:hover { background: var(--primary-dark); }
+        .score-screen { text-align: center; display: none; }
+        .final-score { font-size: 3em; font-weight: 800; color: var(--primary); margin: 18px 0; }
+        .score-summary { display: flex; justify-content: center; gap: 28px; margin: 12px 0 24px; flex-wrap: wrap; }
+        .score-stat { text-align: center; }
+        .score-stat-value { font-size: 2em; font-weight: 800; }
+        .score-stat-label { font-size: 0.82em; color: var(--text-light); font-weight: 700; }
+        .stat-correct .score-stat-value { color: var(--success); }
+        .stat-incorrect .score-stat-value { color: var(--error); }
+        .stat-total .score-stat-value { color: var(--primary); }
+
+        /* Review */
+        .review-section { margin-top: 32px; text-align: left; }
+        .review-section > h3 { text-align: center; font-size: 1.3em; color: var(--primary-dark); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
+        .review-item { border: 2px solid var(--border); border-radius: 11px; padding: 20px; margin-bottom: 16px; background: #f9fafb; }
+        .review-item.review-correct { border-color: var(--success); background: #f0fdf4; }
+        .review-item.review-incorrect { border-color: var(--error); background: #fff5f5; }
+        .review-item-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+        .review-badge { font-size: 1.1em; flex-shrink: 0; padding-top: 1px; }
+        .review-q-num { font-size: 0.82em; font-weight: 700; color: var(--text-light); flex-shrink: 0; padding-top: 3px; }
+        .review-q-text { font-weight: 600; color: var(--text-dark); font-size: 0.97em; }
+        .review-options { display: grid; gap: 7px; margin-top: 10px; }
+        .review-option { padding: 9px 14px; border-radius: 7px; border: 1px solid var(--border); font-size: 0.92em; background: white; }
+        .review-opt-correct { background: #dcfce7; border-color: var(--success); color: #14532d; font-weight: 700; }
+        .review-opt-wrong   { background: #fee2e2; border-color: var(--error); color: #7f1d1d; font-weight: 700; }
+        .review-explanation { margin-top: 11px; padding: 10px 14px; background: white; border-left: 4px solid var(--primary); border-radius: 0 7px 7px 0; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⚛ Molecular Shapes & IMF</h1>
+    <p>Step-by-step mastery: VSEPR theory, polarity, and intermolecular forces — with interactive simulations</p>
+</header>
+
+<div class="container">
+
+    <!-- ═══════════════════════════════════════
+         PART 1 — VSEPR THEORY
+    ═══════════════════════════════════════ -->
+    <div class="section-title"><span class="section-icon">🔷</span> Part 1: VSEPR Theory — Predicting Molecular Shapes</div>
+
+    <div class="card">
+        <h3>What Is VSEPR?</h3>
+        <p><strong>VSEPR</strong> (Valence Shell Electron Pair Repulsion) states one simple rule:</p>
+        <div class="hl hl-blue">
+            <strong>Electron domains around a central atom push as far apart as possible to minimize repulsion.</strong>
+            The resulting arrangement of atoms gives the molecule its shape.
+        </div>
+        <p>An <strong>electron domain</strong> is any group of electrons — a single bond, double bond, triple bond, or lone pair all count as <em>one domain</em>.</p>
+    </div>
+
+    <div class="card">
+        <h3>The 3-Step VSEPR Method</h3>
+        <ol class="steps">
+            <li>
+                <div><strong>Draw the Lewis Structure</strong> — find how many bonding pairs and lone pairs surround the central atom.</div>
+            </li>
+            <li>
+                <div><strong>Count total electron domains</strong> (bonding + lone pairs). This gives the <em>electron geometry</em>.</div>
+            </li>
+            <li>
+                <div><strong>Identify the molecular shape</strong> by looking only at where the <em>atoms</em> are (ignore lone pairs for the name, but they still push things around).</div>
+            </li>
+        </ol>
+
+        <div class="hl hl-yellow">
+            <strong>Key distinction:</strong><br>
+            <strong>Electron geometry</strong> = all domains (including lone pairs)<br>
+            <strong>Molecular geometry / shape</strong> = only the atoms (ignores lone pairs)
+        </div>
+
+        <div class="hl hl-green">
+            <strong>Lone pair rule:</strong> Lone pairs are "fatter" clouds and repel more strongly than bonding pairs.
+            They <strong>compress bond angles</strong> slightly below the ideal geometry.
+            <br><br>
+            Ideal tetrahedral = 109.5° → NH₃ (1 lone pair) = 107° → H₂O (2 lone pairs) = 104.5°
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         INTERACTIVE SIMULATOR
+    ═══════════════════════════════════════ -->
+    <div class="simulator">
+        <div class="sim-title">🔬 Interactive VSEPR Shape Predictor</div>
+
+        <div class="mol-presets">
+            <div class="mol-preset-label">Quick-load a molecule:</div>
+            <button class="mol-btn" onclick="loadMolecule('CO₂',2,0)">CO₂</button>
+            <button class="mol-btn" onclick="loadMolecule('BF₃',3,0)">BF₃</button>
+            <button class="mol-btn" onclick="loadMolecule('SO₂',2,1)">SO₂</button>
+            <button class="mol-btn" onclick="loadMolecule('CH₄',4,0)">CH₄</button>
+            <button class="mol-btn" onclick="loadMolecule('NH₃',3,1)">NH₃</button>
+            <button class="mol-btn" onclick="loadMolecule('H₂O',2,2)">H₂O</button>
+            <button class="mol-btn" onclick="loadMolecule('PCl₅',5,0)">PCl₅</button>
+            <button class="mol-btn" onclick="loadMolecule('SF₆',6,0)">SF₆</button>
+        </div>
+
+        <div class="sim-controls">
+            <div class="sim-ctrl">
+                <label>Bonding Pairs</label>
+                <select id="bond-sel" onchange="updateSim()">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4" selected>4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div class="sim-ctrl">
+                <label>Lone Pairs</label>
+                <select id="lone-sel" onchange="updateSim()">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="sim-display">
+            <div class="sim-canvas" id="sim-canvas"><!-- SVG injected here --></div>
+            <div class="sim-info" id="sim-info"><!-- Info injected here --></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SHAPE GALLERY
+    ═══════════════════════════════════════ -->
+    <div class="section-title"><span class="section-icon">📐</span> Shape Gallery: All 6 Core Shapes</div>
+
+    <div class="gallery">
+
+        <div class="g-card">
+            <div class="g-card-title">Linear</div>
+            <div class="g-card-sub">2 bonds · 0 lone pairs · 180°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 140" width="230" height="125">
+                    <!-- bonds (double) -->
+                    <line x1="72" y1="65" x2="112" y2="65" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="72" y1="73" x2="112" y2="73" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="148" y1="65" x2="188" y2="65" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="148" y1="73" x2="188" y2="73" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- O left -->
+                    <circle cx="55" cy="69" r="20" fill="#ef4444"/>
+                    <text x="55" y="74" text-anchor="middle" fill="white" font-weight="700" font-size="14">O</text>
+                    <!-- C center -->
+                    <circle cx="130" cy="69" r="18" fill="#6366f1"/>
+                    <text x="130" y="74" text-anchor="middle" fill="white" font-weight="700" font-size="13">C</text>
+                    <!-- O right -->
+                    <circle cx="205" cy="69" r="20" fill="#ef4444"/>
+                    <text x="205" y="74" text-anchor="middle" fill="white" font-weight="700" font-size="14">O</text>
+                    <!-- angle arc -->
+                    <path d="M95,60 A40,40 0 0 1 165,60" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="130" y="115" text-anchor="middle" fill="#6b7280" font-size="12" font-weight="600">180°</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">Atoms are arranged in a straight line. The molecule is <strong>symmetric</strong> so all dipoles cancel — nonpolar.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">CO₂</span><span class="tag tag-blue">BeCl₂</span><span class="tag tag-green">Nonpolar</span>
+            </div>
+        </div>
+
+        <div class="g-card">
+            <div class="g-card-title">Trigonal Planar</div>
+            <div class="g-card-sub">3 bonds · 0 lone pairs · 120°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 170" width="230" height="150">
+                    <line x1="130" y1="95" x2="130" y2="42" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="95" x2="64" y2="148" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="95" x2="196" y2="148" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- B center -->
+                    <circle cx="130" cy="95" r="18" fill="#8b5cf6"/>
+                    <text x="130" y="100" text-anchor="middle" fill="white" font-weight="700" font-size="13">B</text>
+                    <!-- F atoms -->
+                    <circle cx="130" cy="26" r="17" fill="#84cc16"/>
+                    <text x="130" y="31" text-anchor="middle" fill="white" font-weight="700" font-size="13">F</text>
+                    <circle cx="47" cy="160" r="17" fill="#84cc16"/>
+                    <text x="47" y="165" text-anchor="middle" fill="white" font-weight="700" font-size="13">F</text>
+                    <circle cx="213" cy="160" r="17" fill="#84cc16"/>
+                    <text x="213" y="165" text-anchor="middle" fill="white" font-weight="700" font-size="13">F</text>
+                    <text x="130" y="118" text-anchor="middle" fill="#9ca3af" font-size="11">120°</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">Flat, symmetric arrangement. All bond angles 120°. Nonpolar when all outer atoms are the same.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">BF₃</span><span class="tag tag-blue">SO₃</span><span class="tag tag-green">Nonpolar</span>
+            </div>
+        </div>
+
+        <div class="g-card">
+            <div class="g-card-title">Bent (V-Shape)</div>
+            <div class="g-card-sub">2 bonds · 1–2 lone pairs · ~104–117°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 190" width="230" height="168">
+                    <!-- lone pair clouds on O -->
+                    <ellipse cx="115" cy="62" rx="16" ry="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <ellipse cx="145" cy="62" rx="16" ry="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="115" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">••</text>
+                    <text x="145" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">••</text>
+                    <!-- bonds -->
+                    <line x1="115" y1="95" x2="66" y2="148" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="145" y1="95" x2="194" y2="148" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- O center -->
+                    <circle cx="130" cy="90" r="20" fill="#ef4444"/>
+                    <text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="14">O</text>
+                    <!-- H atoms -->
+                    <circle cx="52" cy="158" r="16" fill="#94a3b8"/>
+                    <text x="52" y="163" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <circle cx="208" cy="158" r="16" fill="#94a3b8"/>
+                    <text x="208" y="163" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <text x="130" y="135" text-anchor="middle" fill="#9ca3af" font-size="11">104.5°</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">Lone pairs squish the bond angle below 109.5°. The net dipole points from H atoms toward O — <strong>very polar</strong>.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">H₂O</span><span class="tag tag-blue">SO₂</span><span class="tag tag-orange">Polar</span>
+            </div>
+        </div>
+
+        <div class="g-card">
+            <div class="g-card-title">Tetrahedral</div>
+            <div class="g-card-sub">4 bonds · 0 lone pairs · 109.5°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 200" width="230" height="178">
+                    <!-- wedge front (toward viewer) -->
+                    <polygon points="130,100 70,162 85,162" fill="#6366f1" opacity="0.85"/>
+                    <!-- dash back (away from viewer) -->
+                    <line x1="130" y1="100" x2="190" y2="162" stroke="#6366f1" stroke-width="2.5" stroke-dasharray="5,4"/>
+                    <!-- plain bonds -->
+                    <line x1="130" y1="100" x2="130" y2="28" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="100" x2="62" y2="82" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- C center -->
+                    <circle cx="130" cy="100" r="18" fill="#6366f1"/>
+                    <text x="130" y="105" text-anchor="middle" fill="white" font-weight="700" font-size="13">C</text>
+                    <!-- H atoms -->
+                    <circle cx="130" cy="14" r="16" fill="#94a3b8"/>
+                    <text x="130" y="19" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <circle cx="48" cy="74" r="16" fill="#94a3b8"/>
+                    <text x="48" y="79" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <circle cx="68" cy="170" r="16" fill="#94a3b8"/>
+                    <text x="68" y="175" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <circle cx="196" cy="170" r="16" fill="#94a3b8"/>
+                    <text x="196" y="175" text-anchor="middle" fill="white" font-weight="700" font-size="13">H</text>
+                    <text x="155" y="110" fill="#9ca3af" font-size="10">109.5°</text>
+                    <!-- legend -->
+                    <polygon points="20,188 14,200 26,200" fill="#6366f1" opacity="0.85"/>
+                    <text x="30" y="198" fill="#9ca3af" font-size="9">= toward you</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">3D shape — like a pyramid with a triangular base. Filled wedge = bond coming toward you; dashed = going away.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">CH₄</span><span class="tag tag-blue">CCl₄</span><span class="tag tag-green">Nonpolar</span>
+            </div>
+        </div>
+
+        <div class="g-card">
+            <div class="g-card-title">Trigonal Pyramidal</div>
+            <div class="g-card-sub">3 bonds · 1 lone pair · ~107°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 200" width="230" height="178">
+                    <!-- lone pair cloud -->
+                    <ellipse cx="130" cy="30" rx="22" ry="13" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <text x="130" y="23" fill="#94a3b8" font-size="10" text-anchor="middle">••</text>
+                    <!-- bonds -->
+                    <line x1="130" y1="90" x2="130" y2="50" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+                    <line x1="130" y1="90" x2="58" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="90" x2="202" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- wedge front -->
+                    <polygon points="130,90 108,168 122,168" fill="#3b82f6" opacity="0.85"/>
+                    <!-- N center -->
+                    <circle cx="130" cy="90" r="19" fill="#3b82f6"/>
+                    <text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="13">N</text>
+                    <!-- H atoms -->
+                    <circle cx="44" cy="163" r="15" fill="#94a3b8"/>
+                    <text x="44" y="168" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+                    <circle cx="116" cy="176" r="15" fill="#94a3b8"/>
+                    <text x="116" y="181" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+                    <circle cx="216" cy="163" r="15" fill="#94a3b8"/>
+                    <text x="216" y="168" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+                    <text x="158" y="110" fill="#9ca3af" font-size="10">107°</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">Like tetrahedral but the lone pair on top is invisible — so it looks like a pyramid. The lone pair pushes bonds together, shrinking the angle.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">NH₃</span><span class="tag tag-blue">PCl₃</span><span class="tag tag-orange">Polar</span>
+            </div>
+        </div>
+
+        <div class="g-card">
+            <div class="g-card-title">Trigonal Bipyramidal</div>
+            <div class="g-card-sub">5 bonds · 0 lone pairs · 90° &amp; 120°</div>
+            <div class="g-svg-wrap">
+                <svg viewBox="0 0 260 200" width="230" height="178">
+                    <!-- axial bonds -->
+                    <line x1="130" y1="95" x2="130" y2="22" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="95" x2="130" y2="168" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- equatorial bonds -->
+                    <line x1="130" y1="95" x2="52" y2="110" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="95" x2="195" y2="70" stroke="#6b7280" stroke-width="2.5"/>
+                    <line x1="130" y1="95" x2="195" y2="135" stroke="#6b7280" stroke-width="2.5"/>
+                    <!-- P center -->
+                    <circle cx="130" cy="95" r="18" fill="#f59e0b"/>
+                    <text x="130" y="100" text-anchor="middle" fill="white" font-weight="700" font-size="13">P</text>
+                    <!-- Cl atoms axial -->
+                    <circle cx="130" cy="10" r="17" fill="#22c55e"/>
+                    <text x="130" y="15" text-anchor="middle" fill="white" font-weight="700" font-size="12">Cl</text>
+                    <circle cx="130" cy="180" r="17" fill="#22c55e"/>
+                    <text x="130" y="185" text-anchor="middle" fill="white" font-weight="700" font-size="12">Cl</text>
+                    <!-- Cl equatorial -->
+                    <circle cx="38" cy="110" r="17" fill="#22c55e"/>
+                    <text x="38" y="115" text-anchor="middle" fill="white" font-weight="700" font-size="12">Cl</text>
+                    <circle cx="209" cy="62" r="17" fill="#22c55e"/>
+                    <text x="209" y="67" text-anchor="middle" fill="white" font-weight="700" font-size="12">Cl</text>
+                    <circle cx="209" cy="143" r="17" fill="#22c55e"/>
+                    <text x="209" y="148" text-anchor="middle" fill="white" font-weight="700" font-size="12">Cl</text>
+                    <text x="80" y="92" fill="#9ca3af" font-size="9">120°</text>
+                    <text x="140" y="58" fill="#9ca3af" font-size="9">90°</text>
+                </svg>
+            </div>
+            <p style="font-size:.9em; color:var(--text-light);">Two axial positions (90° from equatorial) and three equatorial positions (120° apart). Symmetric → nonpolar.</p>
+            <div class="tags" style="margin-top:10px;">
+                <span class="tag tag-blue">PCl₅</span><span class="tag tag-blue">PF₅</span><span class="tag tag-green">Nonpolar</span>
+            </div>
+        </div>
+
+    </div><!-- end gallery -->
+
+    <!-- ═══════════════════════════════════════
+         PART 2 — POLARITY
+    ═══════════════════════════════════════ -->
+    <div class="section-title"><span class="section-icon">⚡</span> Part 2: Polarity &amp; Dipole Moments</div>
+
+    <div class="card">
+        <h3>From Bond Polarity → Molecular Polarity</h3>
+        <p>A <strong>polar bond</strong> forms when two atoms share electrons unequally (different electronegativities). Each polar bond creates a <em>bond dipole</em> — an arrow pointing toward the more electronegative atom.</p>
+        <div class="hl hl-blue">
+            <strong>Molecular polarity depends on TWO things:</strong><br>
+            1. Are there polar bonds? (individual bond dipoles)<br>
+            2. Do those dipoles cancel out? → determined by <strong>shape</strong>
+        </div>
+        <p>If the dipoles point in exactly opposite directions and cancel → <strong>nonpolar</strong>.<br>If they don't cancel → <strong>polar</strong> (the molecule has a net dipole moment, δ+ and δ− ends).</p>
+    </div>
+
+    <div class="polarity-grid">
+        <div class="pol-card nonpolar">
+            <div class="pol-label">NONPOLAR</div>
+            <svg viewBox="0 0 220 120" width="200" height="110">
+                <!-- CO2 with canceling arrows -->
+                <line x1="60" y1="57" x2="100" y2="57" stroke="#9ca3af" stroke-width="2.5"/>
+                <line x1="60" y1="63" x2="100" y2="63" stroke="#9ca3af" stroke-width="2.5"/>
+                <line x1="120" y1="57" x2="160" y2="57" stroke="#9ca3af" stroke-width="2.5"/>
+                <line x1="120" y1="63" x2="160" y2="63" stroke="#9ca3af" stroke-width="2.5"/>
+                <!-- dipole arrows (cancel) -->
+                <defs>
+                    <marker id="arr-r" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                        <polygon points="0 0, 7 3.5, 0 7" fill="#ef4444"/>
+                    </marker>
+                    <marker id="arr-l" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto-start-reverse">
+                        <polygon points="0 0, 7 3.5, 0 7" fill="#ef4444"/>
+                    </marker>
+                </defs>
+                <line x1="108" y1="80" x2="68" y2="80" stroke="#ef4444" stroke-width="2" marker-end="url(#arr-r)"/>
+                <line x1="112" y1="80" x2="152" y2="80" stroke="#ef4444" stroke-width="2" marker-end="url(#arr-r)"/>
+                <text x="110" y="98" text-anchor="middle" fill="#16a34a" font-size="11" font-weight="700">Dipoles cancel → Net = 0</text>
+                <!-- atoms -->
+                <circle cx="45" cy="60" r="18" fill="#ef4444"/>
+                <text x="45" y="65" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+                <circle cx="110" cy="60" r="16" fill="#6366f1"/>
+                <text x="110" y="65" text-anchor="middle" fill="white" font-weight="700" font-size="12">C</text>
+                <circle cx="175" cy="60" r="18" fill="#ef4444"/>
+                <text x="175" y="65" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+            </svg>
+            <div class="pol-reason">CO₂: linear shape causes the two C=O dipoles to point in exactly opposite directions — they cancel perfectly.</div>
+        </div>
+
+        <div class="pol-card polar">
+            <div class="pol-label">POLAR</div>
+            <svg viewBox="0 0 220 140" width="200" height="128">
+                <!-- H2O bent with net dipole -->
+                <line x1="100" y1="68" x2="60" y2="108" stroke="#9ca3af" stroke-width="2.5"/>
+                <line x1="120" y1="68" x2="160" y2="108" stroke="#9ca3af" stroke-width="2.5"/>
+                <defs>
+                    <marker id="arr-up" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto">
+                        <polygon points="0 7, 3.5 0, 7 7" fill="#dc2626"/>
+                    </marker>
+                </defs>
+                <!-- net dipole arrow pointing up toward O -->
+                <line x1="110" y1="100" x2="110" y2="48" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arr-up)"/>
+                <text x="130" y="75" fill="#dc2626" font-size="10" font-weight="700">Net μ</text>
+                <!-- atoms -->
+                <circle cx="110" cy="62" r="19" fill="#ef4444"/>
+                <text x="110" y="67" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+                <circle cx="48" cy="118" r="15" fill="#94a3b8"/>
+                <text x="48" y="123" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+                <circle cx="172" cy="118" r="15" fill="#94a3b8"/>
+                <text x="172" y="123" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+                <text x="110" y="130" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="700">Dipoles DO NOT cancel</text>
+            </svg>
+            <div class="pol-reason">H₂O: bent shape means the two O–H dipoles both point toward O — they <em>add together</em>, creating a strong net dipole moment.</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         PART 3 — IMF
+    ═══════════════════════════════════════ -->
+    <div class="section-title"><span class="section-icon">🔗</span> Part 3: Intermolecular Forces (IMF)</div>
+
+    <div class="card">
+        <h3>What Are IMFs and Why Do They Matter?</h3>
+        <p><strong>Intermolecular forces (IMF)</strong> are the attractions <em>between</em> molecules — not the bonds <em>inside</em> them. They are much weaker than covalent or ionic bonds, but they control:</p>
+        <ul style="margin: 10px 0 0 18px;">
+            <li>Boiling point and melting point</li>
+            <li>Viscosity (how thick a liquid is)</li>
+            <li>Surface tension</li>
+            <li>Solubility ("like dissolves like")</li>
+        </ul>
+        <div class="hl hl-yellow">
+            <strong>Rule:</strong> Stronger IMFs → higher boiling point (more energy needed to separate molecules into gas).
+        </div>
+    </div>
+
+    <!-- LDF -->
+    <div class="imf-card ldf">
+        <div class="imf-header">
+            <div class="imf-icon">☁️</div>
+            <div>
+                <h3>1. London Dispersion Forces (LDF)</h3>
+                <div class="imf-sub">Also called van der Waals forces — present in ALL molecules</div>
+            </div>
+        </div>
+        <p>Even nonpolar molecules have momentary, random shifts in electron distribution. This creates an <strong>instantaneous dipole</strong> that induces a temporary dipole in a neighboring molecule, causing a weak attraction.</p>
+        <div class="hl hl-blue" style="margin-top:14px;">
+            <strong>Strength depends on:</strong> the <em>number of electrons</em> (larger molecules / more electrons = stronger LDF = higher boiling point).<br>
+            <strong>Example:</strong> F₂ (bp −188°C) &lt; Cl₂ (bp −34°C) &lt; Br₂ (bp 59°C) — all nonpolar halogens, increasing bp due to more electrons.
+        </div>
+    </div>
+
+    <!-- Dipole-Dipole -->
+    <div class="imf-card dd">
+        <div class="imf-header">
+            <div class="imf-icon">↔️</div>
+            <div>
+                <h3>2. Dipole–Dipole Forces</h3>
+                <div class="imf-sub">Only in polar molecules</div>
+            </div>
+        </div>
+        <p>Polar molecules have a permanent δ+ end and a δ− end. They align so that the positive end of one molecule is attracted to the negative end of the next.</p>
+        <div style="display:flex; justify-content:center; margin:16px 0;">
+            <svg viewBox="0 0 320 70" width="300" height="65">
+                <!-- molecule 1 -->
+                <rect x="10" y="20" width="120" height="34" rx="8" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+                <text x="30" y="41" fill="#0c4a6e" font-weight="700" font-size="14">δ+</text>
+                <text x="100" y="41" fill="#dc2626" font-weight="700" font-size="14">δ−</text>
+                <!-- attraction arrow -->
+                <text x="150" y="41" fill="#6b7280" font-size="22">⇌</text>
+                <!-- molecule 2 -->
+                <rect x="188" y="20" width="120" height="34" rx="8" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+                <text x="205" y="41" fill="#0c4a6e" font-weight="700" font-size="14">δ+</text>
+                <text x="280" y="41" fill="#dc2626" font-weight="700" font-size="14">δ−</text>
+            </svg>
+        </div>
+        <p style="font-size:.9em; color:var(--text-light);">Example: HCl molecules (bp −85°C) — stronger than LDF-only molecules of similar size. Acetone is held together by dipole–dipole forces.</p>
+    </div>
+
+    <!-- Hydrogen Bonding -->
+    <div class="imf-card hb">
+        <div class="imf-header">
+            <div class="imf-icon">💧</div>
+            <div>
+                <h3>3. Hydrogen Bonding</h3>
+                <div class="imf-sub">Special case — only when H is bonded to N, O, or F</div>
+            </div>
+        </div>
+        <p>H bonded to a highly electronegative atom (N, O, F) becomes extremely positive (δ+). It is attracted to a lone pair on a neighboring N, O, or F. This is the <strong>strongest IMF</strong> between neutral molecules.</p>
+        <div class="hl hl-red">
+            <strong>The big three:</strong> N–H ···N, O–H ···O, F–H ···F &nbsp;(memorize these!)<br>
+            <strong>Why water is special:</strong> Each H₂O can form up to 4 hydrogen bonds (2 as donor, 2 as acceptor) — this is why water has a surprisingly high boiling point (100°C) for its tiny size.
+        </div>
+        <!-- H-bond animation -->
+        <div class="hbond-scene" style="margin-top:16px;">
+            <svg viewBox="0 0 380 150" width="350" height="140">
+                <!-- Water molecule 1 (top-left) -->
+                <circle cx="60" cy="45" r="14" fill="#3b82f6"/>
+                <text x="60" y="50" text-anchor="middle" fill="white" font-size="11" font-weight="700">O</text>
+                <circle cx="36" cy="68" r="10" fill="#94a3b8"/>
+                <text x="36" y="72" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <circle cx="84" cy="68" r="10" fill="#94a3b8"/>
+                <text x="84" y="72" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <line x1="60" y1="58" x2="42" y2="65" stroke="white" stroke-width="1.8"/>
+                <line x1="60" y1="58" x2="78" y2="65" stroke="white" stroke-width="1.8"/>
+
+                <!-- Water molecule 2 (top-right) -->
+                <circle cx="240" cy="45" r="14" fill="#3b82f6"/>
+                <text x="240" y="50" text-anchor="middle" fill="white" font-size="11" font-weight="700">O</text>
+                <circle cx="216" cy="68" r="10" fill="#94a3b8"/>
+                <text x="216" y="72" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <circle cx="264" cy="68" r="10" fill="#94a3b8"/>
+                <text x="264" y="72" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <line x1="240" y1="58" x2="226" y2="65" stroke="white" stroke-width="1.8"/>
+                <line x1="240" y1="58" x2="254" y2="65" stroke="white" stroke-width="1.8"/>
+
+                <!-- Water molecule 3 (bottom) -->
+                <circle cx="150" cy="118" r="14" fill="#3b82f6"/>
+                <text x="150" y="123" text-anchor="middle" fill="white" font-size="11" font-weight="700">O</text>
+                <circle cx="126" cy="138" r="10" fill="#94a3b8"/>
+                <text x="126" y="143" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <circle cx="174" cy="138" r="10" fill="#94a3b8"/>
+                <text x="174" y="143" text-anchor="middle" fill="white" font-size="10" font-weight="700">H</text>
+                <line x1="150" y1="130" x2="136" y2="136" stroke="white" stroke-width="1.8"/>
+                <line x1="150" y1="130" x2="164" y2="136" stroke="white" stroke-width="1.8"/>
+
+                <!-- H-bond lines (animated, dashed, cyan) -->
+                <line class="hb-dashed" x1="84" y1="68" x2="136" y2="118" stroke="#67e8f9" stroke-width="2"/>
+                <line class="hb-dashed" x1="216" y1="68" x2="164" y2="118" stroke="#67e8f9" stroke-width="2"/>
+                <line class="hb-dashed" x1="73" y1="45" x2="228" y2="45" stroke="#67e8f9" stroke-width="2"/>
+
+                <!-- label -->
+                <text x="150" y="22" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="700">—— H-bond (cyan, animated) ——</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Ion-Dipole -->
+    <div class="imf-card id">
+        <div class="imf-header">
+            <div class="imf-icon">⚡</div>
+            <div>
+                <h3>4. Ion–Dipole Forces</h3>
+                <div class="imf-sub">Between an ion and a polar molecule — the strongest IMF</div>
+            </div>
+        </div>
+        <p>When an ionic compound dissolves in a polar solvent (like water), the ions are surrounded by polar molecules oriented toward them. This is the force that makes dissolving possible!</p>
+        <div class="hl hl-yellow">
+            <strong>Example:</strong> NaCl dissolving in water — Na⁺ ions are surrounded by water molecules with their δ− (O side) facing the ion; Cl⁻ ions are surrounded by water with their δ+ (H side) facing the ion.
+        </div>
+    </div>
+
+    <!-- IMF Strength Ladder -->
+    <div class="strength-ladder">
+        <h3>📊 IMF Strength Comparison (Relative Boiling Points)</h3>
+        <p style="font-size:.9em; color:var(--text-light); margin-bottom:16px;">Stronger IMF → higher boiling point → more energy needed to separate molecules</p>
+        <div class="ladder-row">
+            <div class="ladder-label">London Dispersion<br><span style="font-size:.78em; color:var(--text-light);">(small molecules)</span></div>
+            <div class="ladder-track"><div class="ladder-fill" style="width:25%; background:#94a3b8;">Weak</div></div>
+            <div class="ladder-ex">CH₄, −161°C</div>
+        </div>
+        <div class="ladder-row">
+            <div class="ladder-label">London Dispersion<br><span style="font-size:.78em; color:var(--text-light);">(large molecules)</span></div>
+            <div class="ladder-track"><div class="ladder-fill" style="width:42%; background:#64748b;">Moderate</div></div>
+            <div class="ladder-ex">C₈H₁₈, 126°C</div>
+        </div>
+        <div class="ladder-row">
+            <div class="ladder-label">Dipole–Dipole</div>
+            <div class="ladder-track"><div class="ladder-fill" style="width:55%; background:#0ea5e9;">Moderate</div></div>
+            <div class="ladder-ex">HCl, −85°C</div>
+        </div>
+        <div class="ladder-row">
+            <div class="ladder-label">Hydrogen Bonding</div>
+            <div class="ladder-track"><div class="ladder-fill" style="width:78%; background:#ef4444;">Strong</div></div>
+            <div class="ladder-ex">H₂O, 100°C</div>
+        </div>
+        <div class="ladder-row">
+            <div class="ladder-label">Ion–Dipole</div>
+            <div class="ladder-track"><div class="ladder-fill" style="width:92%; background:#7c3aed;">Very Strong</div></div>
+            <div class="ladder-ex">NaCl in H₂O</div>
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="card">
+        <h3>Quick IMF Decision Tree</h3>
+        <ol class="steps">
+            <li><div><strong>Is it ionic?</strong> → Ion–Dipole if mixing with polar solvent. Done.</div></li>
+            <li><div><strong>Does it contain N–H, O–H, or F–H bonds?</strong> → Hydrogen Bonding (+ LDF). Done.</div></li>
+            <li><div><strong>Is it polar?</strong> (asymmetric shape) → Dipole–Dipole (+ LDF). Done.</div></li>
+            <li><div><strong>None of the above?</strong> → London Dispersion Forces only.</div></li>
+        </ol>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         QUIZ
+    ═══════════════════════════════════════ -->
+    <div class="quiz-container" id="quiz-app">
+        <div id="quiz-active">
+            <h2>🧪 Quiz: Shapes &amp; IMF Mastery (10 Questions)</h2>
+            <div class="progress-text" id="progress-text">Question 1 of 10</div>
+            <div class="question-text" id="question-text">Loading question...</div>
+            <div class="options-grid" id="options-container"></div>
+            <div class="feedback-box" id="feedback-box"></div>
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next Question →</button>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="score-screen" id="score-screen">
+            <h2>Quiz Complete! 🎉</h2>
+            <p>Here is how you did:</p>
+            <div class="final-score" id="final-score">0/10</div>
+            <div class="score-summary" id="score-summary"></div>
+            <button class="btn-next" style="display:inline-block;float:none;" onclick="restartQuiz()">Retake Quiz</button>
+            <div class="review-section">
+                <h3>Question-by-Question Review</h3>
+                <div id="review-container"></div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end container -->
+
+<script>
+// ───────────────────────────────────────────
+//  VSEPR SIMULATOR
+// ───────────────────────────────────────────
+const SHAPE_DB = {
+    '2-0': {
+        name: 'Linear',
+        eg: 'Linear',
+        angle: '180°',
+        example: 'CO₂, BeCl₂, HCN',
+        polar: false,
+        polarNote: 'Symmetric — bond dipoles cancel → NONPOLAR',
+        svg: `<svg viewBox="0 0 260 140" width="230" height="125">
+            <line x1="72" y1="68" x2="112" y2="68" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="72" y1="76" x2="112" y2="76" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="148" y1="68" x2="188" y2="68" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="148" y1="76" x2="188" y2="76" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="55" cy="72" r="20" fill="#ef4444"/><text x="55" y="77" text-anchor="middle" fill="white" font-weight="700" font-size="13">O</text>
+            <circle cx="130" cy="72" r="18" fill="#6366f1"/><text x="130" y="77" text-anchor="middle" fill="white" font-weight="700" font-size="12">C</text>
+            <circle cx="205" cy="72" r="20" fill="#ef4444"/><text x="205" y="77" text-anchor="middle" fill="white" font-weight="700" font-size="13">O</text>
+            <text x="130" y="118" text-anchor="middle" fill="#9ca3af" font-size="12" font-weight="600">180°</text>
+        </svg>`
+    },
+    '3-0': {
+        name: 'Trigonal Planar',
+        eg: 'Trigonal Planar',
+        angle: '120°',
+        example: 'BF₃, SO₃, AlCl₃',
+        polar: false,
+        polarNote: 'Symmetric flat shape — dipoles cancel → NONPOLAR',
+        svg: `<svg viewBox="0 0 260 190" width="230" height="168">
+            <line x1="130" y1="98" x2="130" y2="42" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="98" x2="65" y2="158" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="98" x2="195" y2="158" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="130" cy="98" r="18" fill="#8b5cf6"/><text x="130" y="103" text-anchor="middle" fill="white" font-weight="700" font-size="12">B</text>
+            <circle cx="130" cy="26" r="16" fill="#84cc16"/><text x="130" y="31" text-anchor="middle" fill="white" font-weight="700" font-size="12">F</text>
+            <circle cx="49" cy="170" r="16" fill="#84cc16"/><text x="49" y="175" text-anchor="middle" fill="white" font-weight="700" font-size="12">F</text>
+            <circle cx="211" cy="170" r="16" fill="#84cc16"/><text x="211" y="175" text-anchor="middle" fill="white" font-weight="700" font-size="12">F</text>
+            <text x="130" y="122" text-anchor="middle" fill="#9ca3af" font-size="11">120°</text>
+        </svg>`
+    },
+    '2-1': {
+        name: 'Bent',
+        eg: 'Trigonal Planar',
+        angle: '≈117°',
+        example: 'SO₂, O₃',
+        polar: true,
+        polarNote: 'Lone pair pushes atoms → asymmetric → POLAR',
+        svg: `<svg viewBox="0 0 260 190" width="230" height="168">
+            <ellipse cx="130" cy="48" rx="22" ry="13" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="130" y="42" fill="#94a3b8" font-size="10" text-anchor="middle">••</text>
+            <line x1="112" y1="95" x2="65" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="148" y1="95" x2="195" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="130" cy="90" r="19" fill="#eab308"/><text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="12">S</text>
+            <circle cx="50" cy="165" r="18" fill="#ef4444"/><text x="50" y="170" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+            <circle cx="210" cy="165" r="18" fill="#ef4444"/><text x="210" y="170" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+            <text x="130" y="130" text-anchor="middle" fill="#9ca3af" font-size="11">≈117°</text>
+        </svg>`
+    },
+    '4-0': {
+        name: 'Tetrahedral',
+        eg: 'Tetrahedral',
+        angle: '109.5°',
+        example: 'CH₄, SiCl₄, CCl₄',
+        polar: false,
+        polarNote: 'Symmetric 3D shape — all dipoles cancel → NONPOLAR (if identical outer atoms)',
+        svg: `<svg viewBox="0 0 260 200" width="230" height="178">
+            <polygon points="130,100 70,168 85,168" fill="#6366f1" opacity="0.85"/>
+            <line x1="130" y1="100" x2="190" y2="168" stroke="#6366f1" stroke-width="2.5" stroke-dasharray="5,4"/>
+            <line x1="130" y1="100" x2="130" y2="28" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="100" x2="55" y2="80" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="130" cy="100" r="18" fill="#6366f1"/><text x="130" y="105" text-anchor="middle" fill="white" font-weight="700" font-size="12">C</text>
+            <circle cx="130" cy="14" r="15" fill="#94a3b8"/><text x="130" y="19" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="41" cy="72" r="15" fill="#94a3b8"/><text x="41" y="77" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="72" cy="174" r="15" fill="#94a3b8"/><text x="72" y="179" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="196" cy="174" r="15" fill="#94a3b8"/><text x="196" y="179" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <text x="160" y="112" fill="#9ca3af" font-size="10">109.5°</text>
+        </svg>`
+    },
+    '3-1': {
+        name: 'Trigonal Pyramidal',
+        eg: 'Tetrahedral',
+        angle: '≈107°',
+        example: 'NH₃, PCl₃, NF₃',
+        polar: true,
+        polarNote: 'Lone pair points opposite to bonds → net dipole → POLAR',
+        svg: `<svg viewBox="0 0 260 200" width="230" height="178">
+            <ellipse cx="130" cy="30" rx="22" ry="12" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="130" y="24" fill="#94a3b8" font-size="10" text-anchor="middle">••</text>
+            <line x1="130" y1="90" x2="58" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="202" y2="155" stroke="#6b7280" stroke-width="2.5"/>
+            <polygon points="130,90 108,170 122,170" fill="#3b82f6" opacity="0.85"/>
+            <circle cx="130" cy="90" r="19" fill="#3b82f6"/><text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="12">N</text>
+            <circle cx="44" cy="163" r="15" fill="#94a3b8"/><text x="44" y="168" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="116" cy="178" r="15" fill="#94a3b8"/><text x="116" y="183" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="216" cy="163" r="15" fill="#94a3b8"/><text x="216" y="168" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <text x="158" y="112" fill="#9ca3af" font-size="10">107°</text>
+        </svg>`
+    },
+    '2-2': {
+        name: 'Bent',
+        eg: 'Tetrahedral',
+        angle: '≈104.5°',
+        example: 'H₂O, H₂S',
+        polar: true,
+        polarNote: '2 lone pairs create strong asymmetry → strong net dipole → VERY POLAR',
+        svg: `<svg viewBox="0 0 260 200" width="230" height="178">
+            <ellipse cx="115" cy="52" rx="18" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <ellipse cx="145" cy="52" rx="18" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="115" y="46" fill="#94a3b8" font-size="10" text-anchor="middle">••</text>
+            <text x="145" y="46" fill="#94a3b8" font-size="10" text-anchor="middle">••</text>
+            <line x1="112" y1="95" x2="62" y2="152" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="148" y1="95" x2="198" y2="152" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="130" cy="90" r="19" fill="#ef4444"/><text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="12">O</text>
+            <circle cx="48" cy="162" r="15" fill="#94a3b8"/><text x="48" y="167" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <circle cx="212" cy="162" r="15" fill="#94a3b8"/><text x="212" y="167" text-anchor="middle" fill="white" font-weight="700" font-size="12">H</text>
+            <text x="130" y="130" text-anchor="middle" fill="#9ca3af" font-size="11">104.5°</text>
+        </svg>`
+    },
+    '5-0': {
+        name: 'Trigonal Bipyramidal',
+        eg: 'Trigonal Bipyramidal',
+        angle: '90° (axial), 120° (equatorial)',
+        example: 'PCl₅, PF₅, AsF₅',
+        polar: false,
+        polarNote: 'Symmetric — all dipoles cancel → NONPOLAR',
+        svg: `<svg viewBox="0 0 260 200" width="230" height="178">
+            <line x1="130" y1="90" x2="130" y2="22" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="130" y2="165" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="50" y2="108" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="195" y2="68" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="195" y2="128" stroke="#6b7280" stroke-width="2.5"/>
+            <circle cx="130" cy="90" r="18" fill="#f59e0b"/><text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="12">P</text>
+            <circle cx="130" cy="10" r="16" fill="#22c55e"/><text x="130" y="15" text-anchor="middle" fill="white" font-weight="700" font-size="11">Cl</text>
+            <circle cx="130" cy="177" r="16" fill="#22c55e"/><text x="130" y="182" text-anchor="middle" fill="white" font-weight="700" font-size="11">Cl</text>
+            <circle cx="36" cy="108" r="16" fill="#22c55e"/><text x="36" y="113" text-anchor="middle" fill="white" font-weight="700" font-size="11">Cl</text>
+            <circle cx="209" cy="60" r="16" fill="#22c55e"/><text x="209" y="65" text-anchor="middle" fill="white" font-weight="700" font-size="11">Cl</text>
+            <circle cx="209" cy="136" r="16" fill="#22c55e"/><text x="209" y="141" text-anchor="middle" fill="white" font-weight="700" font-size="11">Cl</text>
+        </svg>`
+    },
+    '6-0': {
+        name: 'Octahedral',
+        eg: 'Octahedral',
+        angle: '90°',
+        example: 'SF₆, XeF₄ (with lone pairs)',
+        polar: false,
+        polarNote: 'Perfectly symmetric — all dipoles cancel → NONPOLAR',
+        svg: `<svg viewBox="0 0 260 200" width="230" height="178">
+            <line x1="130" y1="90" x2="130" y2="22" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="130" y2="158" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="52" y2="90" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="208" y2="90" stroke="#6b7280" stroke-width="2.5"/>
+            <line x1="130" y1="90" x2="86" y2="52" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+            <line x1="130" y1="90" x2="174" y2="128" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+            <circle cx="130" cy="90" r="18" fill="#eab308"/><text x="130" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="12">S</text>
+            <circle cx="130" cy="10" r="15" fill="#84cc16"/><text x="130" y="15" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+            <circle cx="130" cy="170" r="15" fill="#84cc16"/><text x="130" y="175" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+            <circle cx="38" cy="90" r="15" fill="#84cc16"/><text x="38" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+            <circle cx="222" cy="90" r="15" fill="#84cc16"/><text x="222" y="95" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+            <circle cx="74" cy="44" r="15" fill="#84cc16"/><text x="74" y="49" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+            <circle cx="186" cy="136" r="15" fill="#84cc16"/><text x="186" y="141" text-anchor="middle" fill="white" font-weight="700" font-size="11">F</text>
+        </svg>`
+    },
+    'invalid': {
+        name: 'Invalid Combination',
+        eg: '—',
+        angle: '—',
+        example: '—',
+        polar: false,
+        polarNote: '—',
+        svg: `<svg viewBox="0 0 260 140" width="230" height="125">
+            <text x="130" y="70" text-anchor="middle" fill="#ef4444" font-size="14">This combination</text>
+            <text x="130" y="90" text-anchor="middle" fill="#ef4444" font-size="14">doesn't commonly occur.</text>
+        </svg>`
+    }
+};
+
+function getShapeKey(bonds, lone) {
+    const key = `${bonds}-${lone}`;
+    return SHAPE_DB[key] ? key : 'invalid';
+}
+
+function updateSim() {
+    const bonds = parseInt(document.getElementById('bond-sel').value);
+    const lone  = parseInt(document.getElementById('lone-sel').value);
+    const key   = getShapeKey(bonds, lone);
+    const s     = SHAPE_DB[key];
+
+    document.getElementById('sim-canvas').innerHTML = s.svg;
+
+    const polarClass = s.polar ? 'is-polar' : 'not-polar';
+    const polarText  = s.polar ? 'Polar' : 'Nonpolar';
+
+    document.getElementById('sim-info').innerHTML = `
+        <div><span class="shape-badge">Electron Geometry: ${s.eg}</span></div>
+        <div class="shape-name">${s.name}</div>
+        <div class="sim-row"><div class="sim-row-label">Bond Angles</div><div class="sim-row-val">${s.angle}</div></div>
+        <div class="sim-row"><div class="sim-row-label">Real Examples</div><div class="sim-row-val">${s.example}</div></div>
+        <div class="sim-row"><div class="sim-row-label">Polarity</div><div class="sim-row-val"><span class="polar-tag ${polarClass}">${polarText}</span></div></div>
+        <div class="sim-row"><div class="sim-row-label">Why?</div><div class="sim-row-val" style="font-size:.9em;color:var(--text-light);">${s.polarNote}</div></div>
+    `;
+
+    // update active preset button
+    document.querySelectorAll('.mol-btn').forEach(b => b.classList.remove('active'));
+}
+
+function loadMolecule(name, bonds, lone) {
+    document.getElementById('bond-sel').value = bonds;
+    document.getElementById('lone-sel').value = lone;
+    updateSim();
+    // highlight pressed button
+    document.querySelectorAll('.mol-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent === name);
+    });
+}
+
+// Initialize simulator on load
+updateSim();
+
+// ───────────────────────────────────────────
+//  QUIZ
+// ───────────────────────────────────────────
+const quizData = [
+    {
+        question: "Water (H₂O) has 2 bonding pairs and 2 lone pairs on oxygen. What is the molecular shape of water?",
+        options: ["Linear", "Trigonal Planar", "Bent (~104.5°)", "Tetrahedral"],
+        correct: 2,
+        explanation: "Correct! 4 electron domains (tetrahedral electron geometry), but 2 of them are lone pairs. Looking only at atoms: the molecule is BENT with a bond angle of ~104.5°. The lone pairs squish the bond angle below the ideal 109.5°."
+    },
+    {
+        question: "CO₂ has 2 double bonds and 0 lone pairs on carbon. Despite having polar C=O bonds, CO₂ is a nonpolar molecule. Why?",
+        options: [
+            "Carbon is not electronegative, so no dipole forms.",
+            "The linear shape causes the two C=O dipoles to point in exactly opposite directions and cancel out.",
+            "Double bonds are never polar.",
+            "All gas molecules are nonpolar."
+        ],
+        correct: 1,
+        explanation: "Correct! Each C=O bond is polar (O is more electronegative). But in a LINEAR molecule, the two bond dipoles point in exactly opposite directions — they perfectly cancel, giving CO₂ a net dipole of zero."
+    },
+    {
+        question: "Ammonia (NH₃) has 3 bonding pairs and 1 lone pair. What is the molecular shape, and what is the approximate bond angle?",
+        options: [
+            "Trigonal Planar, 120°",
+            "Tetrahedral, 109.5°",
+            "Trigonal Pyramidal, ~107°",
+            "Linear, 180°"
+        ],
+        correct: 2,
+        explanation: "Correct! 4 electron domains → tetrahedral ELECTRON geometry. But 1 lone pair is invisible in the shape name → TRIGONAL PYRAMIDAL. The lone pair repels the bonding pairs slightly more than they repel each other, compressing the angle to ~107°."
+    },
+    {
+        question: "Which statement correctly explains why lone pairs compress bond angles more than bonding pairs do?",
+        options: [
+            "Lone pairs are positively charged.",
+            "Lone pairs are held by two nuclei, making them spread out less.",
+            "Lone pairs are held by only one nucleus and occupy more space, exerting greater repulsion.",
+            "Lone pairs always point upward in a molecule."
+        ],
+        correct: 2,
+        explanation: "Correct! Bonding pairs are held between two atoms and are relatively 'thin'. Lone pairs are held by only one atom and spread into a larger, fatter electron cloud — they repel neighboring electron domains more strongly."
+    },
+    {
+        question: "Which of the following IMFs is present in EVERY molecule, including nonpolar ones like Ar (argon) or CH₄?",
+        options: [
+            "Hydrogen bonding",
+            "Dipole–Dipole forces",
+            "Ion–Dipole forces",
+            "London Dispersion Forces (LDF)"
+        ],
+        correct: 3,
+        explanation: "Correct! London Dispersion Forces arise from temporary, instantaneous dipoles caused by random electron movement. Since every molecule has electrons, every molecule has LDF — even noble gases and nonpolar molecules like CH₄."
+    },
+    {
+        question: "Which of the following molecules can form hydrogen bonds with itself?",
+        options: [
+            "CH₄ (methane)",
+            "HCl (hydrogen chloride)",
+            "CO₂ (carbon dioxide)",
+            "NH₃ (ammonia)"
+        ],
+        correct: 3,
+        explanation: "Correct! Hydrogen bonding requires H bonded directly to N, O, or F. NH₃ has N–H bonds, so it can form hydrogen bonds. CH₄ lacks this (C–H bond), HCl only has a weak dipole (Cl is not N/O/F for H-bonding), and CO₂ has no O–H bonds."
+    },
+    {
+        question: "Why does water (H₂O, bp 100°C) have a much higher boiling point than H₂S (bp −60°C), even though sulfur is a larger atom?",
+        options: [
+            "Water has more protons in its nucleus.",
+            "H₂S is ionic and dissolves easily.",
+            "Water forms strong hydrogen bonds (O–H···O) that require a lot of energy to break; H₂S cannot form hydrogen bonds.",
+            "Water molecules are heavier than H₂S molecules."
+        ],
+        correct: 2,
+        explanation: "Correct! Water has O–H bonds, which are capable of forming strong hydrogen bonds. H₂S has S–H bonds — sulfur is not electronegative enough (and is too large) to support hydrogen bonding. So H₂S only has weaker dipole-dipole and LDF, giving it a much lower boiling point."
+    },
+    {
+        question: "A molecule of BF₃ has 3 bonding pairs and 0 lone pairs. It is trigonal planar and symmetric. Which statement is correct?",
+        options: [
+            "BF₃ is polar because the B–F bonds are polar.",
+            "BF₃ is nonpolar because the three B–F dipoles point outward symmetrically and cancel to zero.",
+            "BF₃ is nonpolar because fluorine is not electronegative.",
+            "BF₃ is polar because it has only 3 bonds, not 4."
+        ],
+        correct: 1,
+        explanation: "Correct! Each B–F bond IS polar (F is very electronegative). But the trigonal planar shape is perfectly symmetric — the three bond dipoles point out at 120° and cancel each other perfectly. Net dipole = 0 → NONPOLAR molecule."
+    },
+    {
+        question: "Octane (C₈H₁₈) has a much higher boiling point than methane (CH₄), even though both are nonpolar. What explains this?",
+        options: [
+            "Octane has more polar bonds.",
+            "Octane can form hydrogen bonds; methane cannot.",
+            "Octane has significantly more electrons and a larger surface area, leading to much stronger London Dispersion Forces.",
+            "Methane is ionic; octane is not."
+        ],
+        correct: 2,
+        explanation: "Correct! Both molecules only have LDF (no dipole-dipole, no H-bonding). But LDF strength depends on the NUMBER of electrons and the surface area of the molecule. Octane has 66 electrons vs methane's 10, and a much larger molecular surface — its LDF are far stronger."
+    },
+    {
+        question: "A molecule has 4 bonding pairs and 2 lone pairs on the central atom. What is the molecular shape?",
+        options: [
+            "Octahedral",
+            "Trigonal Bipyramidal",
+            "Square Planar",
+            "Bent (~104.5°)"
+        ],
+        correct: 2,
+        explanation: "Correct! 6 total electron domains (4 bonding + 2 lone pairs) → OCTAHEDRAL electron geometry. The 2 lone pairs position themselves opposite each other (to minimize repulsion). Looking only at atoms: 4 atoms in a flat square arrangement = SQUARE PLANAR. (e.g., XeF₄)"
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let userAnswers = [];
+
+const qText      = document.getElementById('question-text');
+const optsDiv    = document.getElementById('options-container');
+const feedbackEl = document.getElementById('feedback-box');
+const btnNext    = document.getElementById('btn-next');
+const progressEl = document.getElementById('progress-text');
+const quizActive = document.getElementById('quiz-active');
+const scoreScr   = document.getElementById('score-screen');
+const finalScr   = document.getElementById('final-score');
+const scoreSumEl = document.getElementById('score-summary');
+const reviewEl   = document.getElementById('review-container');
+
+function loadQuestion() {
+    feedbackEl.style.display = 'none';
+    btnNext.style.display    = 'none';
+    optsDiv.innerHTML        = '';
+
+    const q = quizData[currentQuestion];
+    progressEl.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+    qText.innerHTML = q.question;
+
+    q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = opt;
+        btn.onclick = () => checkAnswer(idx, btn);
+        optsDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected, selectedBtn) {
+    const q = quizData[currentQuestion];
+    const allBtns = optsDiv.children;
+    for (const b of allBtns) b.disabled = true;
+
+    const isCorrect = selected === q.correct;
+    userAnswers.push({ questionIndex: currentQuestion, selectedIndex: selected, isCorrect });
+
+    feedbackEl.style.display = 'block';
+    if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        feedbackEl.style.backgroundColor = '#dcfce7';
+        feedbackEl.style.color = '#14532d';
+        feedbackEl.innerHTML = `<strong>✅ Correct!</strong><br>${q.explanation}`;
+        score++;
+    } else {
+        selectedBtn.classList.add('incorrect');
+        allBtns[q.correct].classList.add('correct');
+        feedbackEl.style.backgroundColor = '#fee2e2';
+        feedbackEl.style.color = '#7f1d1d';
+        feedbackEl.innerHTML = `<strong>❌ Incorrect.</strong><br>${q.explanation}`;
+    }
+    btnNext.style.display = 'block';
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    quizActive.style.display = 'none';
+    scoreScr.style.display   = 'block';
+    finalScr.innerText = `${score} / ${quizData.length}`;
+
+    const pct = Math.round((score / quizData.length) * 100);
+    scoreSumEl.innerHTML = `
+        <div class="score-stat stat-correct"><div class="score-stat-value">${score}</div><div class="score-stat-label">Correct</div></div>
+        <div class="score-stat stat-incorrect"><div class="score-stat-value">${quizData.length - score}</div><div class="score-stat-label">Incorrect</div></div>
+        <div class="score-stat stat-total"><div class="score-stat-value">${pct}%</div><div class="score-stat-label">Score</div></div>
+    `;
+    renderReview();
+}
+
+function renderReview() {
+    reviewEl.innerHTML = '';
+    userAnswers.forEach((ans, i) => {
+        const q = quizData[ans.questionIndex];
+        const optsHtml = q.options.map((opt, idx) => {
+            let cls = 'review-option';
+            if (idx === q.correct) cls += ' review-opt-correct';
+            else if (idx === ans.selectedIndex && !ans.isCorrect) cls += ' review-opt-wrong';
+            const suffix = idx === q.correct
+                ? ' ✅ Correct Answer'
+                : (idx === ans.selectedIndex ? ' ❌ Your Answer' : '');
+            return `<div class="${cls}">${opt}${suffix}</div>`;
+        }).join('');
+
+        reviewEl.innerHTML += `
+            <div class="review-item ${ans.isCorrect ? 'review-correct' : 'review-incorrect'}">
+                <div class="review-item-header">
+                    <span class="review-badge">${ans.isCorrect ? '✅' : '❌'}</span>
+                    <span class="review-q-num">Q${i + 1}</span>
+                    <span class="review-q-text">${q.question}</span>
+                </div>
+                <div class="review-options">${optsHtml}</div>
+                <div class="review-explanation">${q.explanation}</div>
+            </div>`;
+    });
+}
+
+function restartQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    quizActive.style.display = 'block';
+    scoreScr.style.display   = 'none';
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
