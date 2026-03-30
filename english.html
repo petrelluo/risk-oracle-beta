@@ -932,7 +932,7 @@
   <div class="controls">
     <button class="btn-audio" id="btn-listen-card" onclick="toggleListenToCard()">🔊 Listen: Off</button>
     <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
-    <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
+    <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autopilot</button>
     <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
   </div>
   <div class="controls" style="margin-top: 10px;">
@@ -943,7 +943,7 @@
   <div id="notebook-status" style="text-align: center; margin-top: 8px; color: var(--text-light); font-weight: 600;"></div>
   <div class="autoplay-timer-wrap">
     <span class="autoplay-timer-label">Sleep timer</span>
-    <select id="autoplay-timer-select" class="autoplay-timer-select" aria-label="Autoplay sleep timer">
+    <select id="autoplay-timer-select" class="autoplay-timer-select" aria-label="Autopilot sleep timer">
       <option value="0">Off</option>
       <option value="300">5 min</option>
       <option value="600">10 min</option>
@@ -2159,6 +2159,7 @@
   let fcIndex = 0;
   let cardFlipEnabled = window.innerWidth > 640; // desktop: flip on; mobile: flip off
   let listenToCardEnabled = false; // auto-play audio when a card is shown
+  let listenRunId = 0;             // incremented on each navigation to cancel stale speakCardAsync
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};
   let selectedGroupWords = new Set();
@@ -2242,13 +2243,22 @@
     item.isNotebook = !item.isNotebook;
     saveState();
 
-    if (currentGroupIndex === 'notebook' && !item.isNotebook) {
-      clampFlashcardIndex();
-    }
-
     if (currentMode === 'dashboard') renderDashboard();
     if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
-    updateFlashcardUI();
+
+    if (currentMode === 'flashcard') {
+      if (currentGroupIndex === 'notebook' && !item.isNotebook) {
+        // Word was removed while viewing Notebook group — it's gone from the pool, must navigate
+        clampFlashcardIndex();
+        updateFlashcardUI();
+      } else {
+        // Just refresh the button/status — don't touch the card, audio, or flip state
+        updateNotebookButtonState();
+      }
+    } else {
+      updateFlashcardUI();
+    }
+
     if (isGroupWordListOpen) buildGroupWordList();
     else updateGroupWordListSummary();
   }
@@ -3009,9 +3019,10 @@
       fsGroup.textContent = sel ? sel.options[sel.selectedIndex].text : '';
     }
     updateNotebookButtonState();
-    // Auto-play audio if listen mode is on
-    if (listenToCardEnabled && !isAutoplaying) {
-      speakCardAsync(item);
+    // Start audio whenever listen is on — autoplay loop will await this promise
+    if (listenToCardEnabled) {
+      listenRunId++;
+      currentSpeakPromise = speakCardAsync(item);
     }
   }
 
@@ -3038,6 +3049,7 @@
   }
 
   function nextCard(source) {
+    listenRunId++;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if (source !== 'autoplay' && isAutoplaying &&
         !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
@@ -3050,6 +3062,7 @@
   }
 
   function prevCard() {
+    listenRunId++;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     stopAutoplay();
     const activePool = getActiveVocab();
@@ -3061,6 +3074,7 @@
   // --- AUDIO & AUTOPLAY LOGIC ---
   let isAutoplaying = false;
   let autoplayRunId = 0;
+  let currentSpeakPromise = null; // promise for the currently-playing card audio
   let wakeLockSentinel = null;
   let shouldResumeAutoplayAfterReturn = false;
   let autoplayTimerTimeout = null;
@@ -3194,20 +3208,22 @@
 
   async function speakCardAsync(item) {
     if (!item) return;
+    const myRunId = ++listenRunId;
+    const ok = () => listenToCardEnabled && listenRunId === myRunId;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     await speakTextAsync(item.word);
-    if (!listenToCardEnabled) return;
+    if (!ok()) return;
     await sleep(400);
-    if (!listenToCardEnabled) return;
+    if (!ok()) return;
     if (cardFlipEnabled) {
       flashcardElement.classList.add('is-flipped');
       await sleep(500);
-      if (!listenToCardEnabled) return;
+      if (!ok()) return;
     }
     await speakTextAsync(item.definition);
-    if (!listenToCardEnabled) return;
+    if (!ok()) return;
     for (const ex of item.examples) {
-      if (!listenToCardEnabled) return;
+      if (!ok()) return;
       await speakTextAsync(ex);
     }
   }
@@ -3242,25 +3258,26 @@
     }
   }
 
-  async function stopAutoplay() {
+  async function stopAutoplay(keepAudio = false) {
     isAutoplaying = false;
     autoplayRunId++;
     shouldResumeAutoplayAfterReturn = false;
     clearAutoplayTimerHandles();
     autoplayStopAt = null;
+    if (!keepAudio) currentSpeakPromise = null;
 
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (!keepAudio && 'speechSynthesis' in window) window.speechSynthesis.cancel();
     await releaseWakeLock();
 
     const btn = document.getElementById('btn-autoplay');
-    btn.textContent = "▶️ Autoplay";
+    btn.textContent = "▶️ Autopilot";
     btn.classList.remove('btn-autoplay-active', 'active-loop');
     updateAutoplayTimerStatus();
   }
 
   async function toggleAutoplay() {
     if (isAutoplaying) {
-      await stopAutoplay();
+      await stopAutoplay(true);
       return;
     }
 
@@ -3269,7 +3286,7 @@
     autoplayRunId++;
 
     const btn = document.getElementById('btn-autoplay');
-    btn.textContent = "⏹ Stop Autoplay";
+    btn.textContent = "⏹ Stop Autopilot";
     btn.classList.add('btn-autoplay-active');
 
     startAutoplayTimer();
@@ -3284,36 +3301,26 @@
     if (activePool.length === 0) { await stopAutoplay(); return; }
 
     if (listenToCardEnabled) {
-      // Audio mode: speak word + definition + examples — flip state is untouched (independent)
-      const order = getFlashcardOrder(activePool);
-      const item = activePool[order[fcIndex]];
-
-      await speakTextAsync(item.word);
-      if (!isAutoplaying || runId !== autoplayRunId) return;
-
-      await sleep(600);
-      if (!isAutoplaying || runId !== autoplayRunId) return;
-
-      if (cardFlipEnabled) {
-        flashcardElement.classList.add('is-flipped');
-        await sleep(500);
-        if (!isAutoplaying || runId !== autoplayRunId) return;
+      // Ensure audio is running for the current card (handles the very first iteration)
+      if (!currentSpeakPromise) {
+        const item = activePool[getFlashcardOrder(activePool)[fcIndex]];
+        currentSpeakPromise = speakCardAsync(item);
       }
-
-      await speakTextAsync(item.definition);
-      if (!isAutoplaying || runId !== autoplayRunId) return;
-
-      for (const ex of item.examples) {
-        if (!isAutoplaying || runId !== autoplayRunId) return;
-        await speakTextAsync(ex);
-      }
-
-      await sleep(800);
+      await currentSpeakPromise;
+      currentSpeakPromise = null;
       if (!isAutoplaying || runId !== autoplayRunId) return;
     } else {
-      // Silent mode: just wait a fixed interval then advance
-      await sleep(4000);
+      // Silent mode: wait, flip if enabled, wait, then advance
+      await sleep(2000);
       if (!isAutoplaying || runId !== autoplayRunId) return;
+      if (cardFlipEnabled) {
+        flashcardElement.classList.add('is-flipped');
+        await sleep(2000);
+        if (!isAutoplaying || runId !== autoplayRunId) return;
+      } else {
+        await sleep(2000);
+        if (!isAutoplaying || runId !== autoplayRunId) return;
+      }
     }
 
     document.getElementById('btn-autoplay').classList.add('active-loop');
@@ -3321,7 +3328,7 @@
 
     setTimeout(() => {
       if (isAutoplaying && runId === autoplayRunId) runAutoplayLoop(runId);
-    }, 500);
+    }, 300);
   }
 
   // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
