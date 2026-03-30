@@ -645,6 +645,8 @@
     <label style="font-weight: bold; color: var(--text-light); font-size: 0.9rem; white-space:nowrap;">Word List:</label>
     <button type="button" class="btn-nav" id="btn-toggle-group-list" onclick="toggleGroupWordList()">Show</button>
     <span id="group-wordlist-summary" class="group-wordlist-summary"></span>
+    <div style="width:1px; height:20px; background:#e5e7eb; flex-shrink:0;"></div>
+    <button type="button" class="btn-nav" onclick="showNotebookWordList()" title="View all notebook words">📋 Notebook Words</button>
   </div>
 </header>
 
@@ -3317,6 +3319,24 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
   updateGroupWordListSummary();
   updateFlashcardUI();
 
+  function showNotebookWordList() {
+    const words = vocabState
+      .filter(item => item.isNotebook)
+      .map(item => item.word);
+    const ta = document.getElementById('notebook-word-textarea');
+    ta.value = words.length ? words.join('\n') : '(No words in notebook yet)';
+    const overlay = document.getElementById('notebook-word-overlay');
+    overlay.style.display = 'flex';
+    ta.focus();
+    ta.select();
+  }
+
+  function selectNotebookTextarea() {
+    const ta = document.getElementById('notebook-word-textarea');
+    ta.focus();
+    ta.select();
+  }
+
 </script>
 
 <div class="bottom-search-wrap">
@@ -3325,6 +3345,22 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     <button type="button" class="btn-nav" onclick="runGlobalSearch()">Search</button>
   </div>
   <div id="globalSearchResult" class="lookup-result"></div>
+</div>
+
+<!-- Notebook word list overlay -->
+<div id="notebook-word-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:14px; padding:24px; width:min(480px,92vw); max-height:80vh; display:flex; flex-direction:column; gap:12px; box-shadow:0 8px 32px rgba(0,0,0,.25);">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <strong style="font-size:1rem; color:var(--primary);">📒 Notebook Words</strong>
+      <button type="button" onclick="document.getElementById('notebook-word-overlay').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-light);">✕</button>
+    </div>
+    <p style="font-size:.8rem; color:var(--text-light); margin:0;">Select all and copy (Ctrl+A then Ctrl+C).</p>
+    <textarea id="notebook-word-textarea" readonly style="flex:1; min-height:320px; resize:none; border:1.5px solid #e5e7eb; border-radius:8px; padding:10px 12px; font-size:.9rem; font-family:inherit; line-height:1.8; outline:none; color:var(--text-main);"></textarea>
+    <div style="display:flex; gap:8px; justify-content:flex-end;">
+      <button type="button" class="btn-nav" onclick="selectNotebookTextarea()">Select All</button>
+      <button type="button" class="btn-nav" onclick="document.getElementById('notebook-word-overlay').style.display='none'">Close</button>
+    </div>
+  </div>
 </div>
 </body>
 </html>
