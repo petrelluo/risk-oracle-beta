@@ -3196,9 +3196,20 @@
     if (!item) return;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     await speakTextAsync(item.word);
+    if (!listenToCardEnabled) return;
     await sleep(400);
+    if (!listenToCardEnabled) return;
+    if (cardFlipEnabled) {
+      flashcardElement.classList.add('is-flipped');
+      await sleep(500);
+      if (!listenToCardEnabled) return;
+    }
     await speakTextAsync(item.definition);
-    for (const ex of item.examples) await speakTextAsync(ex);
+    if (!listenToCardEnabled) return;
+    for (const ex of item.examples) {
+      if (!listenToCardEnabled) return;
+      await speakTextAsync(ex);
+    }
   }
 
   function speakTextAsync(text) {
@@ -3282,6 +3293,12 @@
 
       await sleep(600);
       if (!isAutoplaying || runId !== autoplayRunId) return;
+
+      if (cardFlipEnabled) {
+        flashcardElement.classList.add('is-flipped');
+        await sleep(500);
+        if (!isAutoplaying || runId !== autoplayRunId) return;
+      }
 
       await speakTextAsync(item.definition);
       if (!isAutoplaying || runId !== autoplayRunId) return;
