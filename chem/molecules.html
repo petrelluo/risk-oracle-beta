@@ -275,9 +275,9 @@
         .stat-total .score-stat-value { color: var(--primary); }
 
         /* Review */
-        .review-section { margin-top: 32px; text-align: left; }
+        .review-section { margin-top: 32px; text-align: left !important; }
         .review-section > h3 { text-align: center; font-size: 1.3em; color: var(--primary-dark); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-        .review-item { border: 2px solid var(--border); border-radius: 11px; padding: 20px; margin-bottom: 16px; background: #f9fafb; }
+        .review-item { border: 2px solid var(--border); border-radius: 11px; padding: 20px; margin-bottom: 16px; background: #f9fafb; text-align: left; }
         .review-item.review-correct { border-color: var(--success); background: #f0fdf4; }
         .review-item.review-incorrect { border-color: var(--error); background: #fff5f5; }
         .review-item-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
@@ -862,8 +862,11 @@
             <p>Here is how you did:</p>
             <div class="final-score" id="final-score">0/10</div>
             <div class="score-summary" id="score-summary"></div>
-            <button class="btn-next" style="display:inline-block;float:none;" onclick="restartQuiz()">Retake Quiz</button>
-            <div class="review-section">
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;">
+                <button class="btn-next" style="display:inline-block;float:none;margin-top:0;" onclick="restartQuiz()">↺ Retake Quiz</button>
+                <button class="btn-next" style="display:inline-block;float:none;margin-top:0;background:#0ea5e9;" onclick="document.getElementById('review-anchor').scrollIntoView({behavior:'smooth'})">📋 View Full Review ↓</button>
+            </div>
+            <div class="review-section" id="review-anchor">
                 <h3>Question-by-Question Review</h3>
                 <div id="review-container"></div>
             </div>
@@ -1273,6 +1276,8 @@ function showScore() {
     quizActive.style.display = 'none';
     scoreScr.style.display   = 'block';
     finalScr.innerText = `${score} / ${quizData.length}`;
+    // Scroll to the score screen so user sees results immediately
+    scoreScr.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     const pct = Math.round((score / quizData.length) * 100);
     scoreSumEl.innerHTML = `
