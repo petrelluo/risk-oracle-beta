@@ -624,6 +624,44 @@
   /* iOS bottom tab bar — hidden on desktop */
   .ios-tab-bar { display: none; }
 
+  /* ── No-flip card mode ── */
+  body.card-no-flip .scene { height: auto !important; perspective: none; }
+  body.card-no-flip .card {
+    transform: none !important;
+    cursor: default;
+    transform-style: flat;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body.card-no-flip .card-face {
+    position: static;
+    backface-visibility: visible;
+    transform: none !important;
+    width: 100%;
+    height: auto;
+    flex: none;
+  }
+  body.card-no-flip .card-front {
+    border-radius: 20px 20px 0 0;
+    border-bottom: 1px dashed #d1d5db;
+    padding-bottom: 20px;
+  }
+  body.card-no-flip .card-back {
+    background: #f8f9ff;
+    color: var(--text-main);
+    border: 2px solid #e5e7eb;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    padding-top: 20px;
+  }
+  body.card-no-flip .card-back .examples {
+    border-top-color: rgba(0,0,0,0.1);
+    color: var(--text-light);
+  }
+  body.card-no-flip .hint { display: none !important; }
+  body.card-no-flip #btn-toggle-flip { background: #ede9fe; color: #4f46e5; border-color: #c4b5fd; }
+
   @media (max-width: 640px) {
     html, body { overscroll-behavior-y: none; }
 
@@ -748,6 +786,9 @@
     body.fc-fullscreen .controls:last-of-type { margin-top: 4px !important; }
     body.fc-fullscreen #notebook-status { margin-top: 2px; font-size: 0.8rem; }
     body.fc-fullscreen .autoplay-timer-wrap { padding: 4px 8px 6px; }
+
+    /* No-flip overrides fullscreen fixed height */
+    body.fc-fullscreen.card-no-flip .scene { height: auto !important; min-height: unset !important; overflow-y: visible; }
 
     /* Scene must be relative for overlay */
     .scene { position: relative; }
@@ -877,6 +918,7 @@
   <div class="controls" style="margin-top: 10px;">
     <button class="btn-nav" id="btn-toggle-notebook" onclick="toggleNotebookForCurrentWord()">📒 Add to Notebook</button>
     <button class="btn-nav" onclick="openNotebookGroup()">Open Notebook</button>
+    <button class="btn-nav" id="btn-toggle-flip" onclick="toggleCardFlip()">🔄 Flip: On</button>
   </div>
   <div id="notebook-status" style="text-align: center; margin-top: 8px; color: var(--text-light); font-weight: 600;"></div>
   <div class="autoplay-timer-wrap">
@@ -2095,6 +2137,7 @@
   let currentGroupIndex = 'wod'; // Controls the 100-word blocks
   let fresh25Cache = null;       // Cleared on each group switch to force a new roll
   let fcIndex = 0;
+  let cardFlipEnabled = window.innerWidth > 640; // desktop: flip on; mobile: flip off
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};
   let selectedGroupWords = new Set();
@@ -2840,8 +2883,21 @@
   // --- FLASHCARD LOGIC ---
   const flashcardElement = document.getElementById('flashcard');
 
+  function applyCardFlipMode() {
+    document.body.classList.toggle('card-no-flip', !cardFlipEnabled);
+    if (!cardFlipEnabled) flashcardElement.classList.remove('is-flipped');
+    const btn = document.getElementById('btn-toggle-flip');
+    if (btn) btn.textContent = cardFlipEnabled ? '🔄 Flip: On' : '🔄 Flip: Off';
+  }
+
+  function toggleCardFlip() {
+    cardFlipEnabled = !cardFlipEnabled;
+    applyCardFlipMode();
+  }
+
   flashcardElement.addEventListener('click', () => {
     if (_didSwipe) { _didSwipe = false; return; } // swipe already handled — skip flip
+    if (!cardFlipEnabled) return;
     if (isAutoplaying) stopAutoplay();
     flashcardElement.classList.toggle('is-flipped');
   });
@@ -3602,6 +3658,7 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
   updateGroupWordListSummary();
   // Apply fullscreen class on mobile (flashcard is default mode)
   document.body.classList.toggle('fc-fullscreen', currentMode === 'flashcard' && window.innerWidth <= 640);
+  applyCardFlipMode();
   updateFlashcardUI();
   window.addEventListener('resize', () => {
     document.body.classList.toggle('fc-fullscreen', currentMode === 'flashcard' && window.innerWidth <= 640);
