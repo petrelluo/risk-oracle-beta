@@ -102,8 +102,21 @@
     .mode-container.active { display: block; }
 
     /* Flashcard CSS */
-    .scene { width: 100%; height: 380px; perspective: 1000px; margin-bottom: 20px; }
+    .scene { width: 100%; height: 380px; perspective: 1000px; margin-bottom: 20px; overflow: hidden; }
+    #card-wrapper { position: absolute; width: 100%; height: 100%; }
     .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; cursor: pointer; touch-action: pan-y; }
+
+    /* Swipe slide animations */
+    @keyframes cardSlideOutLeft  { to   { transform: translateX(-115%); opacity: 0; } }
+    @keyframes cardSlideOutRight { to   { transform: translateX( 115%); opacity: 0; } }
+    @keyframes cardSlideInRight  { from { transform: translateX( 115%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes cardSlideInLeft   { from { transform: translateX(-115%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    #card-wrapper.slide-out-left  { animation: cardSlideOutLeft  0.22s ease-in  forwards; }
+    #card-wrapper.slide-out-right { animation: cardSlideOutRight 0.22s ease-in  forwards; }
+    #card-wrapper.slide-in-right  { animation: cardSlideInRight  0.25s ease-out forwards; }
+    #card-wrapper.slide-in-left   { animation: cardSlideInLeft   0.25s ease-out forwards; }
+
+    .btn-listen-on { background-color: var(--secondary) !important; color: white !important; border-color: var(--secondary) !important; }
     .card.is-flipped { transform: rotateY(180deg); }
     .card-face {
       position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; box-sizing: border-box; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; overflow-y: auto;
@@ -626,6 +639,7 @@
 
   /* ── No-flip card mode ── */
   /* Scene keeps its normal fixed height — card becomes an internal scroller */
+  body.card-no-flip #card-wrapper { overflow-y: auto; -webkit-overflow-scrolling: touch; border-radius: 20px; }
   body.card-no-flip .card {
     transform: none !important;
     transform-style: flat;
@@ -901,20 +915,22 @@
       <span class="fc-fs-pill" id="fc-fs-group"></span>
       <span class="fc-fs-pill" id="fc-fs-progress"></span>
     </div>
-    <div class="card" id="flashcard">
-      <div class="card-face card-front">
-        <div class="word" id="wordDisplay">Loading...</div>
-        <div class="hint">Click anywhere on card to flip</div>
-      </div>
-      <div class="card-face card-back">
-        <div class="definition" id="defDisplay">Definition goes here...</div>
-        <div class="examples" id="exDisplay">"Example sentences go here..."</div>
+    <div id="card-wrapper">
+      <div class="card" id="flashcard">
+        <div class="card-face card-front">
+          <div class="word" id="wordDisplay">Loading...</div>
+          <div class="hint">Click anywhere on card to flip</div>
+        </div>
+        <div class="card-face card-back">
+          <div class="definition" id="defDisplay">Definition goes here...</div>
+          <div class="examples" id="exDisplay">"Example sentences go here..."</div>
+        </div>
       </div>
     </div>
   </div>
   <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--text-light);" id="fc-progress">Card 1 of 50</div>
   <div class="controls">
-    <button class="btn-audio" onclick="readCurrentCard()"><span>🔊</span> Listen to Card</button>
+    <button class="btn-audio" id="btn-listen-card" onclick="toggleListenToCard()">🔊 Listen: Off</button>
     <button class="btn-nav" onclick="prevCard()">&larr; Prev</button>
     <button class="btn-nav" id="btn-autoplay" onclick="toggleAutoplay()">▶️ Autoplay</button>
     <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
@@ -2142,6 +2158,7 @@
   let fresh25Cache = null;       // Cleared on each group switch to force a new roll
   let fcIndex = 0;
   let cardFlipEnabled = window.innerWidth > 640; // desktop: flip on; mobile: flip off
+  let listenToCardEnabled = false; // auto-play audio when a card is shown
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};
   let selectedGroupWords = new Set();
@@ -2902,6 +2919,24 @@
     applyCardFlipMode();
   }
 
+  function toggleListenToCard() {
+    listenToCardEnabled = !listenToCardEnabled;
+    const btn = document.getElementById('btn-listen-card');
+    if (listenToCardEnabled) {
+      btn.textContent = '🔊 Listen: On';
+      btn.classList.add('btn-listen-on');
+      // Immediately play current card
+      const pool = getActiveVocab();
+      if (pool.length > 0) {
+        speakCardAsync(pool[getFlashcardOrder(pool)[fcIndex]]);
+      }
+    } else {
+      btn.textContent = '🔊 Listen: Off';
+      btn.classList.remove('btn-listen-on');
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+  }
+
   flashcardElement.addEventListener('click', () => {
     if (_didSwipe) { _didSwipe = false; return; } // swipe already handled — skip flip
     if (!cardFlipEnabled) return;
@@ -2936,65 +2971,82 @@
     else         prevCard(); // swipe right → prev
   }, { passive: true });
 
-  function updateFlashcardUI() {
-    flashcardElement.classList.remove('is-flipped');
-    flashcardElement.scrollTop = 0;
-    setTimeout(() => {
-      const activePool = getActiveVocab();
-      if(activePool.length === 0) {
-        const emptyTitle = currentGroupIndex === 'notebook'
-          ? "Your notebook is empty."
-          : currentGroupIndex === 'mistakes'
-            ? "No mistakes yet!"
-            : currentGroupIndex === 'custom'
-              ? "No added words yet."
-              : "No words in this group.";
-        const emptyBody = currentGroupIndex === 'notebook'
-          ? "Add words from Flashcards to build a notebook you can replay anytime."
-          : currentGroupIndex === 'mistakes'
-            ? "Words you answer incorrectly will appear here automatically."
-            : currentGroupIndex === 'custom'
-              ? "Use Add Custom Word to save your own words. They will appear here automatically."
-              : "Please select another group or add new words.";
-        document.getElementById('wordDisplay').textContent = emptyTitle;
-        document.getElementById('defDisplay').textContent = emptyBody;
-        document.getElementById('exDisplay').innerHTML = "";
-        document.getElementById('fc-progress').textContent = "0 of 0";
-        updateNotebookButtonState();
-        return; // Exit the function early
-      }
-
-      clampFlashcardIndex();
-      const order = getFlashcardOrder(activePool);
-      const item = activePool[order[fcIndex]];
-      document.getElementById('wordDisplay').textContent = item.word;
-      document.getElementById('defDisplay').textContent = item.definition;
-
-      let exHTML = "";
-      item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
-      document.getElementById('exDisplay').innerHTML = exHTML;
-      document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
-      // Update fullscreen overlay pills
-      const fsProgress = document.getElementById('fc-fs-progress');
-      const fsGroup = document.getElementById('fc-fs-group');
-      if (fsProgress) fsProgress.textContent = `${fcIndex + 1} / ${activePool.length}`;
-      if (fsGroup) {
-        const sel = document.getElementById('groupSelect');
-        fsGroup.textContent = sel ? sel.options[sel.selectedIndex].text : '';
-      }
+  function _applyCardContent() {
+    const activePool = getActiveVocab();
+    if (activePool.length === 0) {
+      const emptyTitle = currentGroupIndex === 'notebook' ? "Your notebook is empty."
+        : currentGroupIndex === 'mistakes' ? "No mistakes yet!"
+        : currentGroupIndex === 'custom'   ? "No added words yet."
+        : "No words in this group.";
+      const emptyBody = currentGroupIndex === 'notebook'
+        ? "Add words from Flashcards to build a notebook you can replay anytime."
+        : currentGroupIndex === 'mistakes'
+          ? "Words you answer incorrectly will appear here automatically."
+          : currentGroupIndex === 'custom'
+            ? "Use Add Custom Word to save your own words. They will appear here automatically."
+            : "Please select another group or add new words.";
+      document.getElementById('wordDisplay').textContent = emptyTitle;
+      document.getElementById('defDisplay').textContent = emptyBody;
+      document.getElementById('exDisplay').innerHTML = "";
+      document.getElementById('fc-progress').textContent = "0 of 0";
       updateNotebookButtonState();
-    }, 150);
+      return;
+    }
+    clampFlashcardIndex();
+    const order = getFlashcardOrder(activePool);
+    const item = activePool[order[fcIndex]];
+    document.getElementById('wordDisplay').textContent = item.word;
+    document.getElementById('defDisplay').textContent = item.definition;
+    let exHTML = "";
+    item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
+    document.getElementById('exDisplay').innerHTML = exHTML;
+    document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
+    const fsProgress = document.getElementById('fc-fs-progress');
+    const fsGroup = document.getElementById('fc-fs-group');
+    if (fsProgress) fsProgress.textContent = `${fcIndex + 1} / ${activePool.length}`;
+    if (fsGroup) {
+      const sel = document.getElementById('groupSelect');
+      fsGroup.textContent = sel ? sel.options[sel.selectedIndex].text : '';
+    }
+    updateNotebookButtonState();
+    // Auto-play audio if listen mode is on
+    if (listenToCardEnabled && !isAutoplaying) {
+      speakCardAsync(item);
+    }
   }
 
-  function nextCard() {
+  function updateFlashcardUI(slideDir) {
+    flashcardElement.classList.remove('is-flipped');
+    flashcardElement.scrollTop = 0;
+    const wrapper = document.getElementById('card-wrapper');
+    if (wrapper) wrapper.scrollTop = 0;
+
+    if (slideDir && wrapper) {
+      const outClass = slideDir === 'next' ? 'slide-out-left' : 'slide-out-right';
+      const inClass  = slideDir === 'next' ? 'slide-in-right'  : 'slide-in-left';
+      wrapper.classList.add(outClass);
+      setTimeout(() => {
+        wrapper.classList.remove(outClass);
+        _applyCardContent();
+        void wrapper.offsetWidth; // force reflow to restart animation
+        wrapper.classList.add(inClass);
+        setTimeout(() => wrapper.classList.remove(inClass), 280);
+      }, 220);
+    } else {
+      setTimeout(_applyCardContent, 150);
+    }
+  }
+
+  function nextCard(source) {
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    if(isAutoplaying && !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
+    if (source !== 'autoplay' && isAutoplaying &&
+        !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
       stopAutoplay();
     }
     const activePool = getActiveVocab();
     if (activePool.length === 0) return;
     fcIndex = (fcIndex + 1) % activePool.length;
-    updateFlashcardUI();
+    updateFlashcardUI('next');
   }
 
   function prevCard() {
@@ -3003,7 +3055,7 @@
     const activePool = getActiveVocab();
     if (activePool.length === 0) return;
     fcIndex = (fcIndex - 1 + activePool.length) % activePool.length;
-    updateFlashcardUI();
+    updateFlashcardUI('prev');
   }
 
   // --- AUDIO & AUTOPLAY LOGIC ---
@@ -3140,6 +3192,15 @@
     }
   });
 
+  async function speakCardAsync(item) {
+    if (!item) return;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    await speakTextAsync(item.word);
+    await sleep(400);
+    await speakTextAsync(item.definition);
+    for (const ex of item.examples) await speakTextAsync(ex);
+  }
+
   function speakTextAsync(text) {
     return new Promise(resolve => {
       if (!('speechSynthesis' in window)) return resolve();
@@ -3209,47 +3270,40 @@
     if (!isAutoplaying || runId !== autoplayRunId) return;
 
     const activePool = getActiveVocab();
-    if (activePool.length === 0) {
-      await stopAutoplay();
-      return;
-    }
-    const order = getFlashcardOrder(activePool);
-    const item = activePool[order[fcIndex]];
+    if (activePool.length === 0) { await stopAutoplay(); return; }
 
-    if (flashcardElement.classList.contains('is-flipped')) {
-      flashcardElement.classList.remove('is-flipped');
-      await sleep(400);
+    if (listenToCardEnabled) {
+      // Audio mode: speak word + definition + examples — flip state is untouched (independent)
+      const order = getFlashcardOrder(activePool);
+      const item = activePool[order[fcIndex]];
+
+      await speakTextAsync(item.word);
+      if (!isAutoplaying || runId !== autoplayRunId) return;
+
+      await sleep(600);
+      if (!isAutoplaying || runId !== autoplayRunId) return;
+
+      await speakTextAsync(item.definition);
+      if (!isAutoplaying || runId !== autoplayRunId) return;
+
+      for (const ex of item.examples) {
+        if (!isAutoplaying || runId !== autoplayRunId) return;
+        await speakTextAsync(ex);
+      }
+
+      await sleep(800);
+      if (!isAutoplaying || runId !== autoplayRunId) return;
+    } else {
+      // Silent mode: just wait a fixed interval then advance
+      await sleep(4000);
       if (!isAutoplaying || runId !== autoplayRunId) return;
     }
-
-    await speakTextAsync(item.word);
-    if (!isAutoplaying || runId !== autoplayRunId) return;
-
-    await sleep(1000);
-    if (!isAutoplaying || runId !== autoplayRunId) return;
-
-    flashcardElement.classList.add('is-flipped');
-    await sleep(600);
-    if (!isAutoplaying || runId !== autoplayRunId) return;
-
-    await speakTextAsync(item.definition);
-    if (!isAutoplaying || runId !== autoplayRunId) return;
-
-    for (let ex of item.examples) {
-      if (!isAutoplaying || runId !== autoplayRunId) return;
-      await speakTextAsync(ex);
-    }
-
-    await sleep(1500);
-    if (!isAutoplaying || runId !== autoplayRunId) return;
 
     document.getElementById('btn-autoplay').classList.add('active-loop');
-    nextCard();
+    nextCard('autoplay');
 
     setTimeout(() => {
-      if (isAutoplaying && runId === autoplayRunId) {
-        runAutoplayLoop(runId);
-      }
+      if (isAutoplaying && runId === autoplayRunId) runAutoplayLoop(runId);
     }, 500);
   }
 
