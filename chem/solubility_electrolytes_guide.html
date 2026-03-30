@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solubility &amp; Electrolytes — Chemistry Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & tokens ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:    #1a3557;
+  --blue:    #2e75b6;
+  --lblue:   #e6f1fb;
+  --mblue:   #b5d4f4;
+  --dblue:   #0c447c;
+  --teal:    #0f6e56;
+  --lteal:   #e1f5ee;
+  --mteal:   #9fe1cb;
+  --amber:   #854f0b;
+  --lamber:  #faeeda;
+  --mamber:  #ef9f27;
+  --damber:  #412402;
+  --green:   #27500a;
+  --lgreen:  #eaf3de;
+  --mgreen:  #97c459;
+  --red:     #791f1f;
+  --lred:    #fcebeb;
+  --mred:    #e24b4a;
+  --purple:  #3c3489;
+  --lpurple: #eeedfe;
+  --gray:    #f6f5f0;
+  --mgray:   #888780;
+  --dgray:   #2c2c2a;
+  --text:    #1a1a18;
+  --border:  rgba(0,0,0,0.1);
+  --serif:   'Source Serif 4', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --mono:    'DM Mono', 'Courier New', monospace;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  color: var(--text);
+  background: #eceae4;
+  line-height: 1.7;
+}
+
+/* ── Page wrapper ───────────────────────────────── */
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 80px rgba(0,0,0,0.13);
+}
+
+/* ── Nav bar ────────────────────────────────────── */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  padding: 0 2.5rem;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.topnav .nav-title {
+  color: white;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.topnav .nav-title span {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--mblue);
+}
+.topnav a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.topnav a:hover { color: white; border-bottom-color: var(--mblue); }
+
+/* ── Cover ──────────────────────────────────────── */
+.cover {
+  background: var(--navy);
+  padding: 4.5rem 3.5rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: rgba(46,117,182,0.14);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 40px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(46,117,182,0.08);
+}
+.cover-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mblue);
+  margin-bottom: 1.2rem;
+  position: relative; z-index: 1;
+}
+.cover h1 {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  position: relative; z-index: 1;
+}
+.cover-sub {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 300;
+  color: var(--mblue);
+  margin-bottom: 2.5rem;
+  position: relative; z-index: 1;
+}
+.cover-rule {
+  width: 50px; height: 3px;
+  background: var(--blue);
+  margin-bottom: 2rem;
+  position: relative; z-index: 1;
+}
+.cover-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  position: relative; z-index: 1;
+  margin-bottom: 2.5rem;
+}
+.cover-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 30px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.82);
+}
+.cover-pill .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cover-stats {
+  display: flex;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  position: relative; z-index: 1;
+}
+.cover-stat .label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mblue);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+.cover-stat .val {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1;
+}
+
+/* ── Chapter breaks ─────────────────────────────── */
+.chapter-break {
+  background: var(--navy);
+  padding: 1.4rem 3.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.chapter-break .ch-num {
+  font-family: var(--mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--mblue);
+  line-height: 1;
+  min-width: 2rem;
+}
+.chapter-break h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.01em;
+}
+.chapter-break p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.1rem;
+}
+
+/* ── Content sections ───────────────────────────── */
+.section {
+  padding: 2.5rem 3.5rem;
+  border-bottom: 1px solid #ece9e2;
+}
+.section:last-child { border-bottom: none; }
+
+.section > h2 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.section > p {
+  font-size: 0.94rem;
+  color: var(--dgray);
+  margin-bottom: 1rem;
+  margin-top: 0.7rem;
+}
+
+h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--mgray);
+  margin: 1.4rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--mono);
+}
+
+/* ── Badges ─────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  vertical-align: middle;
+  font-family: var(--sans);
+  white-space: nowrap;
+}
+.b-blue   { background: var(--lblue);   color: var(--dblue); }
+.b-teal   { background: var(--lteal);   color: var(--teal); }
+.b-amber  { background: var(--lamber);  color: var(--damber); }
+.b-green  { background: var(--lgreen);  color: var(--green); }
+.b-red    { background: var(--lred);    color: var(--red); }
+.b-gray   { background: var(--gray);    color: var(--mgray); }
+.b-purple { background: var(--lpurple); color: var(--purple); }
+
+/* ── Callout boxes ───────────────────────────────── */
+.callout {
+  border-radius: 0 8px 8px 0;
+  padding: 0.8rem 1.1rem;
+  margin: 0.9rem 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.c-info   { background: var(--lblue);   border-left: 4px solid var(--blue);   color: var(--dblue); }
+.c-ok     { background: var(--lgreen);  border-left: 4px solid var(--mgreen); color: var(--green); }
+.c-warn   { background: var(--lamber);  border-left: 4px solid var(--mamber); color: var(--damber); }
+.c-danger { background: var(--lred);    border-left: 4px solid var(--mred);   color: var(--red); }
+.c-purple { background: var(--lpurple); border-left: 4px solid #7f77dd;       color: var(--purple); }
+.callout strong { font-weight: 600; }
+
+/* ── Key point box ───────────────────────────────── */
+.keypoint {
+  background: var(--navy);
+  color: white;
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.keypoint strong { color: var(--mblue); }
+
+/* ── Rule rows ───────────────────────────────────── */
+.rule {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--gray);
+  border-radius: 8px;
+  padding: 10px 13px;
+  margin: 0.55rem 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--dgray);
+}
+.rule-icon {
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-family: var(--mono);
+}
+.ri-blue   { background: var(--lblue);   color: var(--dblue); }
+.ri-teal   { background: var(--lteal);   color: var(--teal); }
+.ri-amber  { background: var(--lamber);  color: var(--damber); }
+.ri-red    { background: var(--lred);    color: var(--red); }
+.ri-green  { background: var(--lgreen);  color: var(--green); }
+.ri-purple { background: var(--lpurple); color: var(--purple); }
+
+/* ── Grids ───────────────────────────────────────── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0.9rem 0; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 0.9rem 0; }
+
+.card {
+  background: white;
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-size: 0.87rem;
+  line-height: 1.55;
+  color: var(--dgray);
+}
+.card-head {
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 0.4rem;
+  color: var(--dgray);
+}
+.card-sub {
+  font-size: 0.78rem;
+  color: var(--mgray);
+  margin-top: 0.5rem;
+}
+
+/* ── VS grid ─────────────────────────────────────── */
+.vs-grid {
+  display: grid;
+  grid-template-columns: 1fr 36px 1fr;
+  gap: 0;
+  margin: 0.9rem 0;
+  align-items: start;
+}
+.vs-col {
+  background: var(--gray);
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  font-size: 0.87rem;
+}
+.vs-col .col-head {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--mgray);
+  margin-bottom: 0.55rem;
+  font-family: var(--mono);
+}
+.vs-col ul { padding-left: 1.1rem; }
+.vs-col li { margin-bottom: 0.3rem; font-size: 0.85rem; }
+.vs-mid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mgray);
+  padding-top: 1.4rem;
+}
+
+/* ── Step row ────────────────────────────────────── */
+.step-row {
+  display: flex;
+  gap: 0;
+  margin: 0.9rem 0;
+}
+.step-box {
+  flex: 1;
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  padding: 0.75rem 0.9rem;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  text-align: center;
+  position: relative;
+}
+.step-box:first-child { border-radius: 8px 0 0 8px; }
+.step-box:last-child  { border-radius: 0 8px 8px 0; }
+.step-box + .step-box { border-left: none; }
+.step-num {
+  font-size: 0.65rem;
+  color: var(--mgray);
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.arr-mid {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--mgray);
+  padding: 0 2px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* ── Comparison matrix ────────────────────────────── */
+.matrix-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0.9rem 0;
+}
+.matrix-col {
+  padding: 1rem 1.1rem;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  border-right: 0.5px solid var(--border);
+}
+.matrix-col:last-child { border-right: none; }
+.matrix-col .mh {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid;
+}
+.mc-blue  { background: var(--lblue);   }
+.mc-blue  .mh  { color: var(--dblue);  border-color: var(--blue); }
+.mc-amber { background: var(--lamber);  }
+.mc-amber .mh  { color: var(--damber); border-color: var(--mamber); }
+.mc-green { background: var(--lgreen);  }
+.mc-green .mh  { color: var(--green);  border-color: var(--mgreen); }
+
+/* ── Solubility table ────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  margin: 0.9rem 0;
+}
+th {
+  background: var(--lblue);
+  color: var(--navy);
+  font-weight: 600;
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  border: 0.5px solid var(--mblue);
+  font-size: 0.8rem;
+}
+td {
+  padding: 0.6rem 0.85rem;
+  border: 0.5px solid #ddd;
+  vertical-align: top;
+  line-height: 1.5;
+}
+tr:nth-child(even) td { background: var(--gray); }
+.sol   { color: var(--green); font-weight: 600; font-size: 0.82rem; }
+.insol { color: var(--red);   font-weight: 600; font-size: 0.82rem; }
+.exc   { color: var(--mgray); font-style: italic; font-size: 0.78rem; }
+
+/* ── New: Insoluble-but-electrolyte section ───────── */
+.two-prop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem 0;
+  border: 0.5px solid var(--border);
+}
+.two-prop .tp-col {
+  padding: 1rem 1.2rem;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+.two-prop .tp-col:first-child {
+  background: var(--lblue);
+  border-right: 0.5px solid var(--mblue);
+}
+.two-prop .tp-col:last-child {
+  background: var(--lgreen);
+}
+.two-prop .tp-head {
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+}
+.two-prop .tp-col:first-child .tp-head { color: var(--dblue); }
+.two-prop .tp-col:last-child  .tp-head { color: var(--green); }
+.tp-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 6px;
+}
+.t-blue  { background: var(--dblue);  color: white; }
+.t-green { background: var(--green);  color: white; }
+
+.compound-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr 1fr;
+  gap: 0;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+  font-size: 0.84rem;
+}
+.compound-row.header { background: var(--gray); font-weight: 600; font-size: 0.76rem; color: var(--mgray); font-family: var(--mono); letter-spacing: 0.04em; }
+.cr-cell {
+  padding: 0.5rem 0.75rem;
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+.cr-cell:last-child { border-right: none; }
+.cr-yes { color: var(--green); font-weight: 600; }
+.cr-no  { color: var(--red);   font-weight: 600; }
+.cr-part { color: var(--amber); font-weight: 600; }
+
+/* ── Decision flowchart ──────────────────────────── */
+.decision {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  margin: 1rem 0;
+}
+.d-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0.4rem 0;
+  font-size: 0.87rem;
+}
+.d-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 90px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+.footer {
+  background: var(--navy);
+  padding: 1.2rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Print styles ────────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm 14mm 18mm; }
+  @page :first { margin: 0; }
+
+  html { font-size: 11px; }
+  body { background: white; }
+  .page-wrap { box-shadow: none; max-width: none; }
+  .topnav { display: none !important; }
+
+  .cover {
+    padding: 1.4in 0.9in 1in;
+    min-height: 100vh;
+    page-break-after: always;
+    break-after: page;
+  }
+  .cover::before, .cover::after { display: none; }
+
+  .chapter-break {
+    page-break-before: always;
+    break-before: page;
+    page-break-after: avoid;
+    break-after: avoid;
+    padding: 0.7rem 1rem;
+  }
+  .chapter-break .ch-num { font-size: 1.3rem; }
+  .chapter-break h2 { font-size: 1.1rem; }
+
+  .section { padding: 1rem 0; border-bottom: none; break-inside: avoid; }
+  .section > h2 { font-size: 1.1rem; }
+  .callout { page-break-inside: avoid; break-inside: avoid; padding: 0.55rem 0.8rem; font-size: 0.79rem; }
+  .rule { page-break-inside: avoid; break-inside: avoid; }
+  .card { page-break-inside: avoid; break-inside: avoid; }
+  .keypoint { page-break-inside: avoid; break-inside: avoid; }
+  .matrix-row { page-break-inside: avoid; break-inside: avoid; }
+  .two-prop { page-break-inside: avoid; break-inside: avoid; }
+  .compound-row { page-break-inside: avoid; break-inside: avoid; }
+  .step-row { page-break-inside: avoid; break-inside: avoid; }
+
+  .grid2, .grid3 { gap: 7px; }
+  .card { padding: 0.65rem 0.8rem; font-size: 0.78rem; }
+  table { font-size: 0.75rem; }
+  th, td { padding: 0.4rem 0.6rem; }
+
+  .callout { background: none !important; }
+  .c-info   { border-left-color: var(--blue);   background: #f0f5fc !important; }
+  .c-ok     { border-left-color: var(--mgreen); background: #f2f9e8 !important; }
+  .c-warn   { border-left-color: var(--mamber); background: #fffbf0 !important; }
+  .c-danger { border-left-color: var(--mred);   background: #fff8f8 !important; }
+  .c-purple { border-left-color: #7f77dd;       background: #f5f5fe !important; }
+
+  h2, h3 { page-break-after: avoid; break-after: avoid; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="nav-title"><span></span>Solubility &amp; Electrolytes</span>
+  <a href="#sec1">Like dissolves like</a>
+  <a href="#sec2">Ionic dissolving</a>
+  <a href="#sec3">Covalent dissolving</a>
+  <a href="#sec4">Electrolytes</a>
+  <a href="#sec5">Insoluble &amp; still electrolytes</a>
+  <a href="#sec6">Solubility rules</a>
+  <a href="#sec7">Exceptions</a>
+  <a href="#sec8">The why</a>
+</nav>
+
+<div class="page-wrap">
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover">
+  <div class="cover-eyebrow">Chemistry Reference Guide</div>
+  <h1>Solubility &amp;<br>Electrolytes</h1>
+  <div class="cover-sub">What dissolves, what doesn't, and why</div>
+  <div class="cover-rule"></div>
+
+  <div class="cover-pills">
+    <div class="cover-pill"><span class="dot" style="background:#b5d4f4"></span>The master rule: like dissolves like</div>
+    <div class="cover-pill"><span class="dot" style="background:#9fe1cb"></span>How ionic compounds dissolve</div>
+    <div class="cover-pill"><span class="dot" style="background:#fac775"></span>How covalent compounds dissolve</div>
+    <div class="cover-pill"><span class="dot" style="background:#f09595"></span>Strong, weak &amp; non-electrolytes</div>
+    <div class="cover-pill"><span class="dot" style="background:#afa9ec"></span>Insoluble ionic compounds: still electrolytes?</div>
+    <div class="cover-pill"><span class="dot" style="background:#c0dd97"></span>Solubility rules &amp; key exceptions</div>
+    <div class="cover-pill"><span class="dot" style="background:#888780"></span>The thermodynamic why (ΔG)</div>
+  </div>
+
+  <div class="cover-stats">
+    <div class="cover-stat"><span class="label">Sections</span><span class="val">8</span></div>
+    <div class="cover-stat"><span class="label">Solubility rules</span><span class="val">12</span></div>
+    <div class="cover-stat"><span class="label">Key exceptions</span><span class="val">8</span></div>
+    <div class="cover-stat"><span class="label">Common confusions</span><span class="val">6</span></div>
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 1 ══════════════ -->
+<div class="chapter-break" id="sec1">
+  <div class="ch-num">1</div>
+  <div>
+    <h2>The master rule: "like dissolves like"</h2>
+    <p>The single idea that everything else follows from</p>
+  </div>
+</div>
+
+<div class="section">
+  <p>A solvent can only dissolve a solute if the <strong>forces between solvent and solute are comparable to or stronger than the forces holding the solute together</strong> and the forces holding the solvent together.</p>
+
+  <div class="grid2">
+    <div class="card" style="border-top: 3px solid var(--blue)">
+      <div class="card-head">Polar / ionic solutes</div>
+      <p>Dissolve in <strong>polar solvents</strong> like water. Water's partial charges attract ions and polar molecules strongly enough to pull them apart.</p>
+      <div class="card-sub">NaCl, KNO₃, sugar, ethanol ✓</div>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--mamber)">
+      <div class="card-head">Nonpolar solutes</div>
+      <p>Dissolve in <strong>nonpolar solvents</strong> like hexane or benzene. Matching van der Waals forces make it favorable.</p>
+      <div class="card-sub">Fats in hexane, wax in oil ✓ &nbsp; — not in water ✗</div>
+    </div>
+  </div>
+
+  <div class="callout c-info">
+    <strong>Why water is special:</strong> Water is bent and polar with a large dipole moment, plus two H-bond donors and two H-bond acceptors. This gives it an unusually strong ability to stabilize cations (through its oxygen's lone pairs) and anions (through its H-bond donor H atoms). Almost nothing matches water as a solvent for ionic and polar compounds.
+  </div>
+
+  <div class="callout c-warn">
+    <strong>"Like dissolves like" is a tendency, not a law.</strong> Some ionic compounds are insoluble in water because their lattice energy is too high (BaSO₄, AgCl). Some polar organics are barely soluble because their nonpolar portion is too large (long-chain alcohols). Always verify with the specific solubility rules below.
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 2 ══════════════ -->
+<div class="chapter-break" id="sec2">
+  <div class="ch-num">2</div>
+  <div>
+    <h2>How ionic compounds dissolve</h2>
+    <p>Ion–dipole forces vs lattice energy</p>
+  </div>
+</div>
+
+<div class="section">
+  <p>Ionic solids are held together by strong electrostatic attraction between alternating + and − ions in a crystal lattice. For one to dissolve, water must pull those ions away one by one.</p>
+
+  <h3>The mechanism</h3>
+  <div class="step-row">
+    <div class="step-box">
+      <div class="step-num">step 1</div>
+      <strong>Water orients</strong><br>
+      O (δ−) faces cations, H (δ+) faces anions at the crystal surface
+    </div>
+    <div class="arr-mid">→</div>
+    <div class="step-box">
+      <div class="step-num">step 2</div>
+      <strong>Ion-dipole forces act</strong><br>
+      Must overcome lattice energy to pull ions free from crystal
+    </div>
+    <div class="arr-mid">→</div>
+    <div class="step-box">
+      <div class="step-num">step 3</div>
+      <strong>Hydration shell forms</strong><br>
+      Released ions surrounded by water — releases hydration energy
+    </div>
+  </div>
+
+  <div class="callout c-ok">
+    <strong>Dissolves when:</strong> Hydration energy released ≥ lattice energy needed to break the crystal.<br>
+    <strong>Insoluble when:</strong> Lattice energy is so high that even full hydration can't compensate (BaSO₄, AgCl, CaCO₃).
+  </div>
+
+  <h3>What makes hydration stronger?</h3>
+  <div class="grid3">
+    <div class="card" style="border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0">
+      <div class="card-head">Higher charge</div>
+      <p>Al³⁺ is hydrated far more strongly than Na⁺. More charge means stronger ion-dipole attraction to water's dipole.</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0">
+      <div class="card-head">Smaller ionic radius</div>
+      <p>Smaller ions concentrate their charge into less space → stronger electric field → tighter, more stable hydration shell.</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0">
+      <div class="card-head">High charge cuts both ways</div>
+      <p>High charge density also means high lattice energy — which is why Al₂O₃ is insoluble despite Al³⁺ being strongly hydrated.</p>
+    </div>
+  </div>
+
+  <div class="callout c-warn">
+    <strong>The lattice vs hydration tug-of-war:</strong> Two ions with ±2 charges attract each other four times more strongly than ±1 pairs (Coulomb's law: force ∝ q₁q₂/r²). That's why most 2−2 and 3−2 salts (BaSO₄, Ca₃(PO₄)₂) are insoluble — their lattice energy overwhelms any hydration benefit.
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 3 ══════════════ -->
+<div class="chapter-break" id="sec3">
+  <div class="ch-num">3</div>
+  <div>
+    <h2>How covalent compounds dissolve</h2>
+    <p>Two very different sub-cases: polar vs nonpolar</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="vs-grid">
+    <div class="vs-col">
+      <div class="col-head">Polar covalent — dissolves in water</div>
+      <p>Molecules have a dipole or can H-bond with water. New solvent–solute attractions compensate for partially breaking water's H-bond network.</p>
+      <ul>
+        <li>Ethanol (C₂H₅OH) — OH group H-bonds with water</li>
+        <li>Glucose — multiple OH groups</li>
+        <li>HF, HCl (gases) — polar, dissolve readily</li>
+        <li>Acetone — C=O dipole interacts with water</li>
+      </ul>
+    </div>
+    <div class="vs-mid">vs</div>
+    <div class="vs-col">
+      <div class="col-head">Nonpolar covalent — does NOT dissolve in water</div>
+      <p>No charge, no dipole. Water would have to break its own H-bond network to cage these molecules — energetically costly with no compensating attraction.</p>
+      <ul>
+        <li>Oils, fats — long nonpolar C–C / C–H chains</li>
+        <li>Waxes, benzene, hexane</li>
+        <li>I₂, Br₂ — nonpolar; dissolve in CCl₄, not water</li>
+        <li>CO₂ — slight solubility only because it reacts to form H₂CO₃</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout c-info">
+    <strong>The "oil and water" explanation:</strong> Water molecules near a nonpolar solute lose some H-bonding freedom. To minimize this penalty, water forms a highly ordered "cage" around the nonpolar molecule — which actually decreases entropy. The system avoids this by pushing nonpolar molecules together instead. That's the hydrophobic effect, and it's why oil droplets merge into larger ones.
+  </div>
+
+  <h3>The partially-miscible gray zone</h3>
+  <div class="rule">
+    <div class="rule-icon ri-amber">!</div>
+    <div>Long-chain alcohols have a polar OH head (dissolves) and a nonpolar carbon tail (doesn't). As chain length increases, solubility drops sharply: methanol ∞ miscible → ethanol ∞ → propanol ∞ → butanol 7.7 g/100 mL → pentanol 2.2 g/100 mL → hexanol 0.6 g/100 mL. The nonpolar tail eventually overwhelms the polar head.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 4 ══════════════ -->
+<div class="chapter-break" id="sec4">
+  <div class="ch-num">4</div>
+  <div>
+    <h2>Electrolytes vs non-electrolytes</h2>
+    <p>Does the dissolved compound produce free ions?</p>
+  </div>
+</div>
+
+<div class="section">
+  <p>An electrolyte dissolves to produce free ions that can carry electric current. The key question is whether the solute <em>ionizes</em> in water — not merely whether it dissolves.</p>
+
+  <div class="matrix-row">
+    <div class="matrix-col mc-blue">
+      <div class="mh">Strong electrolytes</div>
+      <p style="font-size:0.84rem;margin-bottom:0.7rem"><strong>100% dissociation.</strong> All dissolved units become free ions.</p>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--dblue)">The 7 strong acids (memorize)</div>
+      <div style="font-size:0.82rem;margin-bottom:0.7rem">HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄, HClO₃</div>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--dblue)">Strong bases</div>
+      <div style="font-size:0.82rem;margin-bottom:0.7rem">All group 1 hydroxides (NaOH, KOH…) + Ba(OH)₂, Sr(OH)₂</div>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--dblue)">Soluble ionic salts</div>
+      <div style="font-size:0.82rem">NaCl, KNO₃, CuSO₄, NH₄Cl…</div>
+    </div>
+    <div class="matrix-col mc-amber">
+      <div class="mh">Weak electrolytes</div>
+      <p style="font-size:0.84rem;margin-bottom:0.7rem"><strong>Partial dissociation.</strong> An equilibrium exists between the molecular and ionic forms.</p>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--damber)">Weak acids</div>
+      <div style="font-size:0.82rem;margin-bottom:0.7rem">CH₃COOH (acetic), HF, HNO₂, H₂CO₃, H₃PO₄, HCN…</div>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--damber)">Weak bases</div>
+      <div style="font-size:0.82rem;margin-bottom:0.7rem">NH₃ (ammonia), amines (CH₃NH₂…)</div>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--damber)">Slightly soluble salts</div>
+      <div style="font-size:0.82rem">PbSO₄, CaF₂ — low ion concentrations</div>
+    </div>
+    <div class="matrix-col mc-green">
+      <div class="mh">Non-electrolytes</div>
+      <p style="font-size:0.84rem;margin-bottom:0.7rem"><strong>No ionization at all.</strong> Dissolve as intact molecules — zero free ions, zero conductivity.</p>
+      <div style="font-size:0.82rem;margin-bottom:0.3rem;font-weight:500;color:var(--green)">Examples</div>
+      <div style="font-size:0.82rem;margin-bottom:0.7rem">Sucrose, glucose, ethanol, glycerol, acetone, urea — most organic molecules</div>
+      <div style="font-size:0.82rem;color:var(--mgray)">These often dissolve well in water (polar), they just don't ionize.</div>
+    </div>
+  </div>
+
+  <div class="callout c-danger">
+    <strong>Classic confusion — dissolves ≠ electrolyte:</strong> Sugar dissolves beautifully in water but is a non-electrolyte (produces no ions). Conversely, AgCl barely dissolves — but every unit that does dissolves dissociates 100% into Ag⁺ and Cl⁻. Solubility and degree of ionization are completely independent.
+  </div>
+
+  <div class="callout c-warn">
+    <strong>HF is a weak acid</strong> — not a strong acid, even though all other hydrogen halides (HCl, HBr, HI) are. The H–F bond is unusually short and strong, so HF only partially ionizes: HF ⇌ H⁺ + F⁻ with Kₐ ≈ 6.8 × 10⁻⁴. This makes HF a weak electrolyte despite being a hydrogen halide.
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 5 ══════════════ -->
+<div class="chapter-break" id="sec5">
+  <div class="ch-num">5</div>
+  <div>
+    <h2>Insoluble ionic compounds: still electrolytes?</h2>
+    <p>Two independent properties that are often conflated</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="keypoint">
+    <strong>Short answer: technically yes — but practically, it doesn't matter.</strong><br>
+    Every ionic compound that dissolves dissociates 100% into ions. Insoluble ionic compounds are therefore <strong>strong electrolytes</strong> by definition. But because so little dissolves, the actual ion concentration is negligibly small — far too low to conduct meaningful current.
+  </div>
+
+  <p>Solubility and electrolyte strength are two completely separate properties. You need to know both to understand a compound's behavior:</p>
+
+  <div class="two-prop">
+    <div class="tp-col">
+      <div class="tp-tag t-blue">property 1</div>
+      <div class="tp-head">Degree of dissociation</div>
+      <p>What fraction of the <em>dissolved</em> compound breaks into ions?<br>For ionic compounds: always <strong>100%</strong>. That's what being ionic means — in water, the ion-dipole forces pull them apart as individual ions, never as intact formula units.</p>
+      <p>This is what "strong / weak / non-electrolyte" describes.</p>
+    </div>
+    <div class="tp-col">
+      <div class="tp-tag t-green">property 2</div>
+      <div class="tp-head">Solubility</div>
+      <p>How much of the compound enters the solution <em>in the first place?</em><br>This ranges from completely miscible down to essentially zero, and is determined by the lattice energy vs hydration energy competition.</p>
+      <p>This is what "soluble / slightly soluble / insoluble" describes.</p>
+    </div>
+  </div>
+
+  <h3>Comparing real compounds</h3>
+  <div class="compound-row header">
+    <div class="cr-cell">Compound</div>
+    <div class="cr-cell">Solubility</div>
+    <div class="cr-cell">% of dissolved that ionizes</div>
+    <div class="cr-cell">Electrolyte type</div>
+  </div>
+  <div class="compound-row">
+    <div class="cr-cell"><strong>NaCl</strong></div>
+    <div class="cr-cell"><span class="cr-yes">High</span> — 36 g/100 mL</div>
+    <div class="cr-cell"><span class="cr-yes">100%</span></div>
+    <div class="cr-cell">Strong electrolyte</div>
+  </div>
+  <div class="compound-row">
+    <div class="cr-cell"><strong>AgCl</strong></div>
+    <div class="cr-cell"><span class="cr-no">Insoluble</span> — 0.0002 g/100 mL</div>
+    <div class="cr-cell"><span class="cr-yes">100%</span></div>
+    <div class="cr-cell">Strong electrolyte <span style="font-size:0.76rem;color:var(--mgray)">(ion conc. ~negligible)</span></div>
+  </div>
+  <div class="compound-row">
+    <div class="cr-cell"><strong>BaSO₄</strong></div>
+    <div class="cr-cell"><span class="cr-no">Insoluble</span> — 0.00024 g/100 mL</div>
+    <div class="cr-cell"><span class="cr-yes">100%</span></div>
+    <div class="cr-cell">Strong electrolyte <span style="font-size:0.76rem;color:var(--mgray)">(ion conc. ~negligible)</span></div>
+  </div>
+  <div class="compound-row">
+    <div class="cr-cell"><strong>CH₃COOH</strong></div>
+    <div class="cr-cell"><span class="cr-yes">High</span> — fully miscible</div>
+    <div class="cr-cell"><span class="cr-part">~1%</span></div>
+    <div class="cr-cell">Weak electrolyte</div>
+  </div>
+  <div class="compound-row">
+    <div class="cr-cell"><strong>Sugar</strong></div>
+    <div class="cr-cell"><span class="cr-yes">High</span> — 200 g/100 mL</div>
+    <div class="cr-cell"><span class="cr-no">0%</span></div>
+    <div class="cr-cell">Non-electrolyte</div>
+  </div>
+
+  <div class="callout c-purple">
+    <strong>The precise language:</strong> Chemists say an insoluble ionic compound is a <em>"strong electrolyte with very low solubility"</em> — keeping the two properties explicitly separate. Never call it a non-electrolyte just because it doesn't dissolve much. The electrolyte strength describes the ionization behavior; the solubility describes the quantity that enters solution. Both statements are needed.
+  </div>
+
+  <h3>Practical consequence</h3>
+  <div class="rule">
+    <div class="rule-icon ri-blue">i</div>
+    <div>BaSO₄ is used as an X-ray contrast agent precisely because it is an insoluble strong electrolyte. It passes through the GI tract without dissolving (low solubility → low ion concentration → not toxic), while still being dense enough to block X-rays. If it were a non-electrolyte, it would dissolve as molecules and be absorbed; if it were merely "soluble," Ba²⁺ ions would enter the bloodstream and be highly toxic.</div>
+  </div>
+  <div class="rule">
+    <div class="rule-icon ri-blue">i</div>
+    <div>When chemists write net ionic equations, they show insoluble ionic compounds as intact formula units (e.g., AgCl(s)) rather than as separated ions. This is because so little dissolves that representing it as Ag⁺(aq) + Cl⁻(aq) would be misleading — the ion concentrations are negligible even though dissociation is technically complete for the tiny amount that does dissolve.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 6 ══════════════ -->
+<div class="chapter-break" id="sec6">
+  <div class="ch-num">6</div>
+  <div>
+    <h2>Solubility rules table</h2>
+    <p>Ionic compounds in water at room temperature</p>
+  </div>
+</div>
+
+<div class="section">
+  <p style="font-size:0.84rem;color:var(--mgray)">Soluble = &gt;1 g per 100 mL. Insoluble = &lt;0.1 g per 100 mL. "Slightly soluble" falls between.</p>
+
+  <table>
+    <tr>
+      <th style="width:22%">Ion</th>
+      <th style="width:18%">General rule</th>
+      <th>Exceptions (opposite behavior)</th>
+    </tr>
+    <tr>
+      <td><strong>NO₃⁻</strong> nitrate</td>
+      <td class="sol">All soluble</td>
+      <td class="exc">None — truly zero exceptions</td>
+    </tr>
+    <tr>
+      <td><strong>ClO₃⁻</strong> chlorate</td>
+      <td class="sol">All soluble</td>
+      <td class="exc">None</td>
+    </tr>
+    <tr>
+      <td><strong>CH₃COO⁻</strong> acetate</td>
+      <td class="sol">All soluble</td>
+      <td class="exc">None — even Ag⁺ and Pb²⁺ acetates dissolve</td>
+    </tr>
+    <tr>
+      <td><strong>Cl⁻</strong> chloride<br><strong>Br⁻</strong> bromide<br><strong>I⁻</strong> iodide</td>
+      <td class="sol">Mostly soluble</td>
+      <td class="exc">Insoluble with Ag⁺, Pb²⁺, Hg₂²⁺<br>(PbCl₂ slightly soluble in hot water)</td>
+    </tr>
+    <tr>
+      <td><strong>F⁻</strong> fluoride</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble with group 1 metals + NH₄⁺<br>(NaF, KF dissolve; CaF₂, MgF₂ do not)</td>
+    </tr>
+    <tr>
+      <td><strong>SO₄²⁻</strong> sulfate</td>
+      <td class="sol">Mostly soluble</td>
+      <td class="exc">Insoluble: BaSO₄, PbSO₄, Hg₂SO₄<br>Slightly soluble: CaSO₄, SrSO₄, Ag₂SO₄</td>
+    </tr>
+    <tr>
+      <td><strong>CO₃²⁻</strong> carbonate</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble with group 1 + NH₄⁺<br>(Na₂CO₃, K₂CO₃, (NH₄)₂CO₃ dissolve)</td>
+    </tr>
+    <tr>
+      <td><strong>PO₄³⁻</strong> phosphate</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble with group 1 + NH₄⁺<br>(Na₃PO₄ dissolves; Ca₃(PO₄)₂ does not)</td>
+    </tr>
+    <tr>
+      <td><strong>SO₃²⁻</strong> sulfite</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble with group 1 + NH₄⁺</td>
+    </tr>
+    <tr>
+      <td><strong>S²⁻</strong> sulfide</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble with group 1, group 2 + NH₄⁺<br>(Na₂S, CaS dissolve; FeS, PbS, CuS do not)</td>
+    </tr>
+    <tr>
+      <td><strong>OH⁻</strong> hydroxide</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Soluble: group 1 hydroxides + Ba(OH)₂<br>Slightly soluble: Sr(OH)₂, Ca(OH)₂ (limewater)<br>Insoluble: Fe(OH)₃, Cu(OH)₂, Al(OH)₃</td>
+    </tr>
+    <tr>
+      <td><strong>O²⁻</strong> oxide</td>
+      <td class="insol">Mostly insoluble</td>
+      <td class="exc">Group 1 oxides react with water → hydroxides<br>(Na₂O + H₂O → 2 NaOH). BaO does too.</td>
+    </tr>
+  </table>
+
+  <div class="callout c-info">
+    <strong>The "always soluble" trio to memorize first:</strong> Nitrates (NO₃⁻), chlorates (ClO₃⁻), and acetates (CH₃COO⁻) have zero exceptions — everything with these anions dissolves. Nitrates are used as fertilizers precisely because rain never leaves them stranded in soil.
+  </div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 7 ══════════════ -->
+<div class="chapter-break" id="sec7">
+  <div class="ch-num">7</div>
+  <div>
+    <h2>Key exceptions and tricky cases</h2>
+    <p>The ones most likely to appear on exams and cause confusion</p>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="rule"><div class="rule-icon ri-red">!</div><div><strong>AgCl, AgBr, AgI — all insoluble.</strong> Silver halides are used in photography precisely because they are insoluble, light-sensitive solids. But Ag⁺ + NO₃⁻ = AgNO₃ is highly soluble. The anion changes everything — the same cation can form both soluble and insoluble salts.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-red">!</div><div><strong>BaSO₄ — insoluble, even though BaCl₂ and Ba(NO₃)₂ are soluble.</strong> BaSO₄'s enormous lattice energy (Ba²⁺ × SO₄²⁻, double charges) overwhelms hydration. Used as an X-ray contrast agent because it passes through the body undissolved — and undissociated in meaningful quantities.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-amber">!</div><div><strong>Ca(OH)₂ — slightly soluble, not insoluble.</strong> Dissolves enough (~1.5 g/L) to make limewater — a dilute but functional basic solution. Often listed inconsistently across textbooks; what matters is that it is not freely soluble like NaOH, and any dissolved portion dissociates completely (strong electrolyte).</div></div>
+
+  <div class="rule"><div class="rule-icon ri-amber">!</div><div><strong>PbCl₂ — soluble in hot water, insoluble in cold.</strong> Most ionic compounds become more soluble as temperature rises. PbCl₂ demonstrates this dramatically — it precipitates on cooling. This is the opposite behavior from gases, which become less soluble on heating.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-amber">!</div><div><strong>H₂SO₄ — the second proton is weak.</strong> Sulfuric acid fully donates its first H⁺ (H₂SO₄ → H⁺ + HSO₄⁻, strong step) but only partially donates the second (HSO₄⁻ ⇌ H⁺ + SO₄²⁻, Kₐ₂ ≈ 0.012). It is a diprotic acid with one strong step and one weak step.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-amber">!</div><div><strong>NH₃ — weak base, not a non-electrolyte.</strong> Ammonia dissolves extremely well in water (700 volumes of gas per volume of water) but is a weak electrolyte — only a small fraction reacts: NH₃ + H₂O ⇌ NH₄⁺ + OH⁻ (Kb ≈ 1.8 × 10⁻⁵). Highly soluble + weak electrolyte.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-blue">i</div><div><strong>CO₂ — dissolves slightly, then reacts.</strong> CO₂ is nonpolar, yet has some water solubility (~1.7 g/L at 25°C) because it reacts: CO₂ + H₂O ⇌ H₂CO₃. Carbonic acid then partially ionizes. This is why carbonated drinks are acidic and why CO₂ emissions drive ocean acidification.</div></div>
+
+  <div class="rule"><div class="rule-icon ri-blue">i</div><div><strong>Hg₂²⁺ (mercury(I)) — almost always insoluble.</strong> The dimeric Hg₂²⁺ ion forms insoluble chloride, bromide, iodide, sulfate, carbonate, phosphate, and hydroxide. Hg₂(NO₃)₂ and Hg₂(ClO₄)₂ are among the few soluble mercury(I) salts.</div></div>
+</div>
+
+
+<!-- ══════════════ CHAPTER 8 ══════════════ -->
+<div class="chapter-break" id="sec8">
+  <div class="ch-num">8</div>
+  <div>
+    <h2>The thermodynamic "why"</h2>
+    <p>ΔG = ΔH − TΔS — when and why dissolution is spontaneous</p>
+  </div>
+</div>
+
+<div class="section">
+  <p>Dissolution is spontaneous when Gibbs free energy decreases: <strong>ΔG &lt; 0</strong>, which means ΔH − TΔS &lt; 0.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-head">Enthalpy of solution (ΔH_soln)</div>
+      <p>Sum of three steps (Hess's law):</p>
+      <div style="margin-top:0.6rem;font-size:0.84rem">
+        <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="color:var(--red);font-weight:600;min-width:14px">+</span><span>Lattice energy — endothermic, breaking the crystal</span></div>
+        <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px"><span style="color:var(--red);font-weight:600;min-width:14px">+</span><span>Expanding solvent — endothermic, parting water molecules</span></div>
+        <div style="display:flex;gap:8px;align-items:baseline"><span style="color:var(--green);font-weight:600;min-width:14px">−</span><span>Hydration energy — exothermic, ions surrounded by water</span></div>
+      </div>
+      <div class="card-sub">ΔH_soln can be + or −. NaCl ≈ +3.9 kJ/mol (endothermic). LiCl ≈ −37 kJ/mol (exothermic).</div>
+    </div>
+    <div class="card">
+      <div class="card-head">Entropy of solution (ΔS_soln)</div>
+      <p>Mixing almost always increases entropy — ions/molecules go from an ordered solid to dispersed in solution.</p>
+      <p style="margin-top:0.5rem">ΔS_soln is almost always <strong>positive</strong> for dissolution of solids.</p>
+      <div class="card-sub">Exception: highly charged ions create such an ordered hydration shell that local entropy decreases (electrostriction). But overall solution entropy still usually increases.</div>
+    </div>
+  </div>
+
+  <div class="callout c-info">
+    <strong>Why are some things insoluble if entropy always favors dissolving?</strong> The TΔS term is usually too small to overcome a very large positive ΔH (huge lattice energy, poor hydration). When ΔH ≫ TΔS, ΔG stays positive — dissolution is non-spontaneous. BaSO₄ has ΔG_soln ≈ +59 kJ/mol; entropy simply cannot overcome that.
+  </div>
+
+  <div class="callout c-warn">
+    <strong>Temperature effect:</strong> Raising T magnifies the TΔS term. That's why most solids get more soluble at higher temperatures (entropy wins more at higher T). Gases show the opposite — dissolving a gas is exothermic (ΔH &lt; 0), so raising T shifts equilibrium away from dissolution (Le Chatelier's principle).
+  </div>
+
+  <h3>Quick decision map — put it all together</h3>
+  <div class="decision">
+    <div class="d-row">
+      <span class="d-badge b-blue">ionic compound</span>
+      <span style="font-size:0.85rem">→ check solubility rules → if soluble, it's a <strong>strong electrolyte</strong> (100% dissociation). If insoluble, it's still technically a strong electrolyte but with negligible ion concentration.</span>
+    </div>
+    <div class="d-row">
+      <span class="d-badge b-teal">polar covalent</span>
+      <span style="font-size:0.85rem">→ likely dissolves in water → check ionization: strong acid / weak acid / weak base / non-electrolyte (e.g. sugar, ethanol)</span>
+    </div>
+    <div class="d-row">
+      <span class="d-badge b-amber">nonpolar covalent</span>
+      <span style="font-size:0.85rem">→ does <em>not</em> dissolve in water → dissolves in nonpolar solvents → <strong>non-electrolyte</strong></span>
+    </div>
+    <div class="d-row">
+      <span class="d-badge b-gray">exception zone</span>
+      <span style="font-size:0.85rem">→ HF (polar, dissolves, but weak acid) · long-chain alcohols (partial) · CO₂ (reacts) · BaSO₄ (ionic, insoluble, technically strong electrolyte) · H₂SO₄ (diprotic: 1 strong + 1 weak step)</span>
+    </div>
+  </div>
+
+  <div class="keypoint">
+    <strong>The two properties to always state separately:</strong><br>
+    (1) <strong style="color:var(--mblue)">Solubility</strong> — how much enters solution. Determined by lattice energy vs hydration energy.<br>
+    (2) <strong style="color:var(--mblue)">Electrolyte strength</strong> — what fraction of what dissolved becomes ions. For ionic compounds: always 100% (strong). For covalent acids/bases: depends on Kₐ or Kb. For sugars and organics: 0% (non-electrolyte).
+  </div>
+</div>
+
+
+<div class="footer">
+  <span>Chemistry Reference Guide</span>
+  <span>Solubility &amp; Electrolytes</span>
+</div>
+
+</div><!-- end page-wrap -->
+</body>
+</html>

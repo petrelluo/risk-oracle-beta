@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Vocab Master">
+  <meta name="theme-color" content="#f2f2f7">
   <title>Vocab Master Pro: SRS & Quiz</title>
   <style>
     :root {
@@ -612,6 +616,118 @@
       border-radius: 2px;
       margin: 0 auto 16px;
     }
+
+  /* ── iOS global fixes ── */
+  * { -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  /* iOS bottom tab bar — hidden on desktop */
+  .ios-tab-bar { display: none; }
+
+  @media (max-width: 640px) {
+    html, body { overscroll-behavior: none; }
+
+    body {
+      padding: 0;
+      padding-bottom: calc(52px + env(safe-area-inset-bottom));
+      background: #f2f2f7;
+      align-items: stretch;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding-top: env(safe-area-inset-top);
+      background: rgba(242,242,247,0.94);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 0.5px solid rgba(0,0,0,0.18);
+      text-align: left;
+    }
+
+    header h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      padding: 10px 16px 8px;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    /* Hide top tab strip — replaced by bottom bar */
+    .tabs { display: none !important; }
+
+    .group-selector-container {
+      border-radius: 0;
+      box-shadow: none;
+      border-bottom: 0.5px solid rgba(0,0,0,0.12);
+      margin-bottom: 0;
+      padding: 7px 12px;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      scrollbar-width: none;
+      background: rgba(242,242,247,0.94);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+    .group-selector-container::-webkit-scrollbar { display: none; }
+
+    .group-selector-container select { font-size: 0.82rem; padding: 5px 8px; }
+    .group-selector-container label { font-size: 0.8rem; white-space: nowrap; }
+
+    .mode-container { max-width: 100%; }
+    .mode-container.active { padding: 12px 14px 0; }
+
+    .scene { height: 300px; }
+    .word { font-size: 1.9rem; }
+
+    /* iOS bottom tab bar */
+    .ios-tab-bar {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(249,249,249,0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-top: 0.5px solid rgba(0,0,0,0.2);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .ios-tab-bar-inner {
+      display: flex;
+      width: 100%;
+      height: 52px;
+    }
+
+    .ios-tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 2px 2px;
+      color: #8e8e93;
+      min-width: 0;
+      font-weight: 400;
+    }
+
+    .ios-tab-btn .ios-icon { font-size: 21px; line-height: 1; }
+    .ios-tab-btn .ios-label { font-size: 9px; font-weight: 500; letter-spacing: -0.1px; white-space: nowrap; }
+    .ios-tab-btn.active { color: var(--primary); }
+  }
   </style>
 </head>
 <body>
@@ -2528,8 +2644,10 @@
 
     currentMode = mode;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.ios-tab-btn').forEach(btn => btn.classList.remove('active'));
     if (targetId) {
-      document.getElementById(targetId).classList.add('active');
+      document.getElementById(targetId)?.classList.add('active');
+      document.getElementById('ios-' + targetId)?.classList.add('active');
     }
 
     document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
@@ -2634,6 +2752,31 @@
     if(isAutoplaying) stopAutoplay();
     flashcardElement.classList.toggle('is-flipped');
   });
+
+  // --- SWIPE GESTURE (mobile) ---
+  let _swipeStartX = 0, _swipeStartY = 0, _swipeStartTime = 0;
+
+  flashcardElement.addEventListener('touchstart', e => {
+    const t = e.changedTouches[0];
+    _swipeStartX = t.clientX;
+    _swipeStartY = t.clientY;
+    _swipeStartTime = Date.now();
+  }, { passive: true });
+
+  flashcardElement.addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    const dx = t.clientX - _swipeStartX;
+    const dy = t.clientY - _swipeStartY;
+    const dt = Date.now() - _swipeStartTime;
+
+    // Ignore slow drags or mostly-vertical movements
+    if (dt > 400 || Math.abs(dy) > Math.abs(dx) || Math.abs(dx) < 40) return;
+
+    // Horizontal swipe detected — prevent the click from also firing
+    e.preventDefault();
+    if (dx < 0) nextCard();   // swipe left  → next
+    else         prevCard();  // swipe right → prev
+  }, { passive: false });
 
   function updateFlashcardUI() {
     flashcardElement.classList.remove('is-flipped');
@@ -2870,27 +3013,26 @@
 
     const btn = document.getElementById('btn-autoplay');
     btn.textContent = "▶️ Autoplay";
-    btn.classList.remove('btn-autoplay-active');
-    btn.classList.remove('active-loop');
+    btn.classList.remove('btn-autoplay-active', 'active-loop');
     updateAutoplayTimerStatus();
   }
 
   async function toggleAutoplay() {
     if (isAutoplaying) {
-      await stopAutoplay();
-    } else {
-      isAutoplaying = true;
-      shouldResumeAutoplayAfterReturn = false;
-      autoplayRunId++;
-
-      const btn = document.getElementById('btn-autoplay');
-      btn.textContent = "⏹️ Stop";
-      btn.classList.add('btn-autoplay-active');
-
-      startAutoplayTimer();
-      await requestWakeLock();
-      runAutoplayLoop(autoplayRunId);
+      return; // already playing — no impact; auto-advances when current word finishes
     }
+
+    isAutoplaying = true;
+    shouldResumeAutoplayAfterReturn = false;
+    autoplayRunId++;
+
+    const btn = document.getElementById('btn-autoplay');
+    btn.textContent = "▶️ Playing…";
+    btn.classList.add('btn-autoplay-active');
+
+    startAutoplayTimer();
+    await requestWakeLock();
+    runAutoplayLoop(autoplayRunId);
   }
 
   async function runAutoplayLoop(runId = autoplayRunId) {
@@ -3397,5 +3539,35 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     </div>
   </div>
 </div>
+
+<!-- iOS bottom tab bar (visible only on mobile) -->
+<nav class="ios-tab-bar">
+  <div class="ios-tab-bar-inner">
+    <button class="ios-tab-btn active" id="ios-tab-flashcard" onclick="setMode('flashcard','tab-flashcard')">
+      <span class="ios-icon">🗂️</span>
+      <span class="ios-label">Cards</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-quiz" onclick="setMode('quiz','tab-quiz')">
+      <span class="ios-icon">⚡️</span>
+      <span class="ios-label">Quiz</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-review" onclick="setMode('review','tab-review')">
+      <span class="ios-icon">🔴</span>
+      <span class="ios-label">Mistakes</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-dashboard" onclick="setMode('dashboard','tab-dashboard')">
+      <span class="ios-icon">📊</span>
+      <span class="ios-label">Stats</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-add" onclick="setMode('add','tab-add')">
+      <span class="ios-icon">➕</span>
+      <span class="ios-label">Add</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-read" onclick="setMode('read','tab-read')">
+      <span class="ios-icon">📰</span>
+      <span class="ios-label">Articles</span>
+    </button>
+  </div>
+</nav>
 </body>
 </html>
