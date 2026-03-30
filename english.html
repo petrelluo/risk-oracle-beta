@@ -686,6 +686,72 @@
     .scene { height: 300px; }
     .word { font-size: 1.9rem; }
 
+    /* ── Fullscreen flashcard mode on mobile ── */
+    body.fc-fullscreen header { display: none !important; }
+    body.fc-fullscreen .group-selector-container { display: none !important; }
+    body.fc-fullscreen #group-wordlist-panel { display: none !important; }
+    body.fc-fullscreen .mode-container.active { padding: 0; }
+
+    body.fc-fullscreen .scene {
+      height: calc(100dvh - 52px - env(safe-area-inset-bottom) - 100px);
+      min-height: 200px;
+      margin-bottom: 6px;
+    }
+
+    body.fc-fullscreen #flashcard-mode {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.fc-fullscreen #fc-progress { display: none; }
+
+    /* Floating progress pill overlaid at top of card */
+    .fc-fs-overlay {
+      display: none;
+    }
+    body.fc-fullscreen .fc-fs-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      right: 12px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .fc-fs-pill {
+      background: rgba(0,0,0,0.38);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    /* Compact controls in fullscreen */
+    body.fc-fullscreen .controls {
+      flex-wrap: nowrap;
+      gap: 5px;
+      padding: 0 8px;
+      margin-top: 0;
+    }
+    body.fc-fullscreen .controls button {
+      font-size: 0.75rem;
+      padding: 6px 8px;
+      flex: 1;
+    }
+    body.fc-fullscreen .controls:last-of-type { margin-top: 4px !important; }
+    body.fc-fullscreen #notebook-status { margin-top: 2px; font-size: 0.8rem; }
+    body.fc-fullscreen .autoplay-timer-wrap { padding: 4px 8px 6px; }
+
+    /* Scene must be relative for overlay */
+    .scene { position: relative; }
+
     /* iOS bottom tab bar */
     .ios-tab-bar {
       display: flex;
@@ -786,6 +852,10 @@
 
 <div id="flashcard-mode" class="mode-container active">
   <div class="scene">
+    <div class="fc-fs-overlay">
+      <span class="fc-fs-pill" id="fc-fs-group"></span>
+      <span class="fc-fs-pill" id="fc-fs-progress"></span>
+    </div>
     <div class="card" id="flashcard">
       <div class="card-face card-front">
         <div class="word" id="wordDisplay">Loading...</div>
@@ -2652,6 +2722,9 @@
 
     document.querySelectorAll('.mode-container').forEach(container => container.classList.remove('active'));
 
+    // Toggle fullscreen flashcard class on mobile
+    document.body.classList.toggle('fc-fullscreen', mode === 'flashcard' && window.innerWidth <= 640);
+
     if (mode === 'flashcard') {
       flashcardOrderMap[currentGroupIndex] = null;
       document.getElementById('flashcard-mode').classList.add('active');
@@ -2818,6 +2891,14 @@
       item.examples.forEach(ex => { exHTML += `<div style="margin-bottom:10px;">"${ex}"</div>`; });
       document.getElementById('exDisplay').innerHTML = exHTML;
       document.getElementById('fc-progress').textContent = `Card ${fcIndex + 1} of ${activePool.length}`;
+      // Update fullscreen overlay pills
+      const fsProgress = document.getElementById('fc-fs-progress');
+      const fsGroup = document.getElementById('fc-fs-group');
+      if (fsProgress) fsProgress.textContent = `${fcIndex + 1} / ${activePool.length}`;
+      if (fsGroup) {
+        const sel = document.getElementById('groupSelect');
+        fsGroup.textContent = sel ? sel.options[sel.selectedIndex].text : '';
+      }
       updateNotebookButtonState();
     }, 150);
   }
@@ -3498,7 +3579,12 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
   updateQuizMasteryProgress();
   updateQuizNotebookButtonState();
   updateGroupWordListSummary();
+  // Apply fullscreen class on mobile (flashcard is default mode)
+  document.body.classList.toggle('fc-fullscreen', currentMode === 'flashcard' && window.innerWidth <= 640);
   updateFlashcardUI();
+  window.addEventListener('resize', () => {
+    document.body.classList.toggle('fc-fullscreen', currentMode === 'flashcard' && window.innerWidth <= 640);
+  });
 
   function showNotebookWordList() {
     const words = vocabState
