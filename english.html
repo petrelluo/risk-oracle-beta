@@ -638,6 +638,7 @@
       <option value="5">Group 6 (501 - 600)</option>
       <option value="6">Group 7 (601+)</option>
       <option value="notebook">Notebook</option>
+      <option value="wod">📅 Words of Day</option>
       <option value="mistakes">My Mistakes</option>
       <option value="custom">Added Words</option>
     </select>
@@ -2474,10 +2475,43 @@
     if (isGroupWordListOpen) buildGroupWordList();
   }
 
+  // --- WORDS OF DAY ---
+  function getWordsOfDay() {
+    const today = new Date().toISOString().slice(0, 10);
+    const cached = JSON.parse(localStorage.getItem('vocabWod') || 'null');
+    if (cached && cached.date === today) {
+      const cachedSet = new Set(cached.words);
+      return vocabState.filter(item => cachedSet.has(normalizeWord(item.word)));
+    }
+
+    // New day — build eligible pool
+    const history = new Set(JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'));
+    let eligible = vocabState.filter(item => item.isNotebook || !history.has(normalizeWord(item.word)));
+
+    // If pool is too small (all non-notebook words exhausted), reset history
+    if (eligible.length < 20) {
+      history.clear();
+      eligible = vocabState.slice();
+    }
+
+    // Shuffle and pick 20
+    const shuffled = eligible.slice().sort(() => Math.random() - 0.5);
+    const picked = shuffled.slice(0, 20);
+    const pickedKeys = picked.map(item => normalizeWord(item.word));
+
+    // Record non-notebook picks in history (notebook words always stay eligible)
+    picked.forEach(item => { if (!item.isNotebook) history.add(normalizeWord(item.word)); });
+    localStorage.setItem('vocabWodHistory', JSON.stringify([...history]));
+    localStorage.setItem('vocabWod', JSON.stringify({ date: today, words: pickedKeys }));
+
+    return picked;
+  }
+
   // Helper function that dynamically restricts the vocab deck to the selected block
   function getActiveVocab() {
     if (currentGroupIndex === 'all') return vocabState;
     if (currentGroupIndex === 'notebook') return vocabState.filter(item => item.isNotebook);
+    if (currentGroupIndex === 'wod') return getWordsOfDay();
     if (currentGroupIndex === 'mistakes') return vocabState.filter(item => item.mistakes > 0).sort((a, b) => b.mistakes - a.mistakes);
     if (currentGroupIndex === 'custom') return vocabState.filter(item => item.isCustom);
     const start = parseInt(currentGroupIndex) * 100;
