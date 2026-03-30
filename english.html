@@ -1024,6 +1024,21 @@
 </div>
 
 <script>
+  // Catch any uncaught startup crash and show a reload button so iOS PWA
+  // never silently hangs with a blank/frozen screen.
+  window.addEventListener('error', function(ev) {
+    const existing = document.getElementById('_crash-banner');
+    if (existing) return;
+    const banner = document.createElement('div');
+    banner.id = '_crash-banner';
+    banner.style.cssText = 'position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f2f2f7;z-index:9999;gap:16px;padding:32px;text-align:center;';
+    banner.innerHTML = '<div style="font-size:2rem">⚠️</div>'
+      + '<div style="font-weight:700;font-size:1rem;color:#1c1c1e;">Something went wrong loading the app.</div>'
+      + '<div style="font-size:.85rem;color:#6e6e73;max-width:300px;">If you just updated the app, you may need to reload to get the latest version.</div>'
+      + '<button onclick="location.reload()" style="margin-top:8px;padding:12px 28px;background:#4f46e5;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;">Reload App</button>';
+    document.body.appendChild(banner);
+  });
+
   // =========================================================================
   // RAW DATA - ORGANIZED INTO GROUPS OF 100
   // =========================================================================
@@ -2025,7 +2040,8 @@
   // =========================================================================
 
   // --- APP STATE & LOCAL STORAGE ---
-  let vocabState = JSON.parse(localStorage.getItem('vocabStatePro'));
+  let vocabState;
+  try { vocabState = JSON.parse(localStorage.getItem('vocabStatePro')); } catch(e) { vocabState = null; }
 
   if (!vocabState || vocabState.length === 0) {
     vocabState = rawVocabData.map(createNewItemState);
@@ -2086,8 +2102,10 @@
   let currentQuizWord = null;
 
   function saveState() {
-    localStorage.setItem('vocabStatePro', JSON.stringify(vocabState));
-    localStorage.setItem('vocabScore', sessionScore.toString());
+    try {
+      localStorage.setItem('vocabStatePro', JSON.stringify(vocabState));
+      localStorage.setItem('vocabScore', sessionScore.toString());
+    } catch(e) { console.warn('saveState failed:', e); }
   }
 
   function updateScoreDisplay() {
@@ -2667,7 +2685,8 @@
   function getWordsOfDay() {
     if (fresh25Cache) return fresh25Cache;
 
-    const history = new Set(JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'));
+    let _wodRaw; try { _wodRaw = JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'); } catch(e) { _wodRaw = []; }
+    const history = new Set(_wodRaw);
 
     // Eligible: never shown in Fresh 25 before, OR in notebook, OR has mistakes
     // Any one of these signals the word is still unfamiliar
@@ -2748,12 +2767,12 @@
     if (isGroupWordListOpen) buildGroupWordList();
   }
 
-  document.getElementById('tab-flashcard').addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
-  document.getElementById('tab-quiz').addEventListener('click', function() { setMode('quiz', 'tab-quiz'); });
-  document.getElementById('tab-review').addEventListener('click', function() { setMode('review', 'tab-review'); });
-  document.getElementById('tab-dashboard').addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
-  document.getElementById('tab-add').addEventListener('click', function() { setMode('add', 'tab-add'); });
-  document.getElementById('tab-read').addEventListener('click', function() { setMode('read', 'tab-read'); });
+  document.getElementById('tab-flashcard')?.addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
+  document.getElementById('tab-quiz')?.addEventListener('click', function() { setMode('quiz', 'tab-quiz'); });
+  document.getElementById('tab-review')?.addEventListener('click', function() { setMode('review', 'tab-review'); });
+  document.getElementById('tab-dashboard')?.addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
+  document.getElementById('tab-add')?.addEventListener('click', function() { setMode('add', 'tab-add'); });
+  document.getElementById('tab-read')?.addEventListener('click', function() { setMode('read', 'tab-read'); });
 
   // --- DASHBOARD LOGIC ---
   function renderDashboard() {
@@ -2772,7 +2791,7 @@
   }
 
   // --- ADD WORD LOGIC ---
-  document.getElementById('addWordForm').addEventListener('submit', addCustomWord);
+  document.getElementById('addWordForm')?.addEventListener('submit', addCustomWord);
 
   function addCustomWord(e) {
     e.preventDefault();
@@ -2904,6 +2923,7 @@
   }
 
   function nextCard() {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if(isAutoplaying && !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
       stopAutoplay();
     }
@@ -2914,6 +2934,7 @@
   }
 
   function prevCard() {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     stopAutoplay();
     const activePool = getActiveVocab();
     if (activePool.length === 0) return;
