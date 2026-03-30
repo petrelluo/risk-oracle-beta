@@ -731,14 +731,15 @@
     .word { font-size: 1.9rem; }
 
     /* ── Fullscreen flashcard mode on mobile ── */
-    body.fc-fullscreen header { display: none !important; }
-    body.fc-fullscreen .group-selector-container { display: none !important; }
+    /* Hide only the title, keep the group selector bar visible */
+    body.fc-fullscreen header h1 { display: none !important; }
     body.fc-fullscreen #group-wordlist-panel { display: none !important; }
     body.fc-fullscreen .mode-container.active { padding: 0; }
 
     body.fc-fullscreen .scene {
-      height: calc(100dvh - 52px - env(safe-area-inset-bottom) - 100px);
-      min-height: 200px;
+      /* subtract: tab bar (52px) + safe-area-bottom + group selector bar (~44px) + safe-area-top + controls (~100px) */
+      height: calc(100dvh - 52px - env(safe-area-inset-bottom) - env(safe-area-inset-top) - 44px - 100px);
+      min-height: 180px;
       margin-bottom: 6px;
     }
 
