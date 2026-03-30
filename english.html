@@ -625,14 +625,18 @@
   .ios-tab-bar { display: none; }
 
   /* ── No-flip card mode ── */
-  body.card-no-flip .scene { height: auto !important; perspective: none; }
+  /* Scene keeps its normal fixed height — card becomes an internal scroller */
   body.card-no-flip .card {
     transform: none !important;
-    cursor: default;
     transform-style: flat;
-    height: auto;
+    cursor: default;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   }
   body.card-no-flip .card-face {
     position: static;
@@ -640,17 +644,19 @@
     transform: none !important;
     width: 100%;
     height: auto;
-    flex: none;
+    flex-shrink: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
   body.card-no-flip .card-front {
-    border-radius: 20px 20px 0 0;
     border-bottom: 1px dashed #d1d5db;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
     padding-bottom: 20px;
   }
   body.card-no-flip .card-back {
     background: #f8f9ff;
     color: var(--text-main);
-    border: 2px solid #e5e7eb;
     border-top: none;
     border-radius: 0 0 20px 20px;
     padding-top: 20px;
@@ -786,9 +792,6 @@
     body.fc-fullscreen .controls:last-of-type { margin-top: 4px !important; }
     body.fc-fullscreen #notebook-status { margin-top: 2px; font-size: 0.8rem; }
     body.fc-fullscreen .autoplay-timer-wrap { padding: 4px 8px 6px; }
-
-    /* No-flip overrides fullscreen fixed height */
-    body.fc-fullscreen.card-no-flip .scene { height: auto !important; min-height: unset !important; overflow-y: visible; }
 
     /* Scene must be relative for overlay */
     .scene { position: relative; }
@@ -2885,7 +2888,10 @@
 
   function applyCardFlipMode() {
     document.body.classList.toggle('card-no-flip', !cardFlipEnabled);
-    if (!cardFlipEnabled) flashcardElement.classList.remove('is-flipped');
+    if (!cardFlipEnabled) {
+      flashcardElement.classList.remove('is-flipped');
+      flashcardElement.scrollTop = 0;
+    }
     const btn = document.getElementById('btn-toggle-flip');
     if (btn) btn.textContent = cardFlipEnabled ? '🔄 Flip: On' : '🔄 Flip: Off';
   }
@@ -2931,6 +2937,7 @@
 
   function updateFlashcardUI() {
     flashcardElement.classList.remove('is-flipped');
+    flashcardElement.scrollTop = 0;
     setTimeout(() => {
       const activePool = getActiveVocab();
       if(activePool.length === 0) {
