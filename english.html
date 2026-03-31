@@ -271,6 +271,27 @@
       color: var(--text-light);
       font-weight: 600;
     }
+    .group-wordlist-toggle-label {
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      user-select: none;
+      padding: 3px 6px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .group-wordlist-toggle-label:hover {
+      background: rgba(99,102,241,0.08);
+    }
+    @media print {
+      body > *:not(#print-word-list) { display: none !important; }
+      #print-word-list { display: block !important; }
+    }
+    #print-word-list {
+      display: none;
+    }
     .group-wordlist-panel {
       margin: 16px 0 10px;
     }
@@ -928,9 +949,8 @@
       <option value="custom">Added Words</option>
     </select>
     <div style="width:1px; height:20px; background:#e5e7eb; flex-shrink:0;"></div>
-    <label style="font-weight: bold; color: var(--text-light); font-size: 0.9rem; white-space:nowrap;">Word List:</label>
-    <button type="button" class="btn-nav" id="btn-toggle-group-list" onclick="toggleGroupWordList()">Show</button>
-    <span id="group-wordlist-summary" class="group-wordlist-summary"></span>
+    <span id="group-wordlist-toggle" class="group-wordlist-toggle-label" onclick="toggleGroupWordList()">-- words ▾</span>
+    <button type="button" class="btn-nav" onclick="printGroupWordList()" title="Print word list">🖨️</button>
     <div style="width:1px; height:20px; background:#e5e7eb; flex-shrink:0;"></div>
     <button type="button" class="btn-nav" onclick="showNotebookWordList()" title="View all notebook words">📋 Notebook Words</button>
   </div>
@@ -2747,10 +2767,12 @@
   }
 
   function updateGroupWordListSummary() {
-    const summary = document.getElementById('group-wordlist-summary');
-    if (!summary) return;
+    const toggle = document.getElementById('group-wordlist-toggle');
+    if (!toggle) return;
     const count = getActiveVocab().length;
-    summary.textContent = count === 1 ? '1 word' : `${count} words`;
+    const label = count === 1 ? '1 word' : `${count} words`;
+    const arrow = isGroupWordListOpen ? '▴' : '▾';
+    toggle.textContent = `${label} ${arrow}`;
   }
 
   function syncSelectedGroupWordsWithActivePool() {
@@ -2860,8 +2882,7 @@
     const panel = document.getElementById('group-wordlist-panel');
     const title = document.getElementById('group-wordlist-title');
     const content = document.getElementById('group-wordlist-content');
-    const btn = document.getElementById('btn-toggle-group-list');
-    if (!panel || !title || !content || !btn) return;
+    if (!panel || !title || !content) return;
 
     const activePool = getActiveVocab();
     title.textContent = `${getCurrentGroupLabel()} · Word List`;
@@ -2870,13 +2891,11 @@
 
     if (!isGroupWordListOpen) {
       panel.style.display = 'none';
-      btn.textContent = 'Show';
       updateGroupWordListSelectionSummary();
       return;
     }
 
     panel.style.display = 'block';
-    btn.textContent = 'Hide';
 
     const isNotebookGroup = currentGroupIndex === 'notebook';
     const actionBtn = document.getElementById('btn-group-notebook-action');
@@ -2941,6 +2960,52 @@
       isGroupWordListOpen = !isGroupWordListOpen;
     }
     buildGroupWordList();
+  }
+
+  function printGroupWordList() {
+    const activePool = getActiveVocab();
+    if (!activePool.length) return;
+    const groupLabel = getCurrentGroupLabel();
+    const rows = activePool.map((item, idx) => {
+      const examples = (item.examples || []).slice(0, 2).map(ex =>
+        `<div class="pr-ex">${escapeHtml(ex)}</div>`
+      ).join('');
+      return `<tr class="${idx % 2 === 1 ? 'pr-alt' : ''}">
+        <td class="pr-num">${idx + 1}</td>
+        <td class="pr-word">${escapeHtml(item.word)}</td>
+        <td class="pr-def">${escapeHtml(item.definition || '')}</td>
+        <td class="pr-exs">${examples}</td>
+      </tr>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>${escapeHtml(groupLabel)} – Word List</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; font-size: 11px; color: #111; margin: 16px; }
+  h2 { font-size: 14px; margin: 0 0 10px; color: #333; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #888; border-bottom: 2px solid #ccc; padding: 4px 6px; }
+  td { vertical-align: top; padding: 4px 6px; border-bottom: 1px solid #eee; }
+  .pr-num { color: #aaa; width: 28px; text-align: right; padding-right: 8px; }
+  .pr-word { font-weight: 700; color: #1a1a1a; width: 130px; }
+  .pr-def { color: #444; width: 200px; }
+  .pr-exs { color: #666; font-style: italic; }
+  .pr-ex + .pr-ex { margin-top: 3px; }
+  .pr-alt td { background: #f7f7f7; }
+  @media print { body { margin: 0; } }
+</style></head><body>
+<h2>${escapeHtml(groupLabel)} — ${activePool.length} words</h2>
+<table>
+  <thead><tr><th>#</th><th>Word</th><th>Meaning</th><th>Examples</th></tr></thead>
+  <tbody>${rows}</tbody>
+</table>
+<script>window.onload=()=>{window.print();}<\/script>
+</body></html>`;
+
+    const win = window.open('', '_blank');
+    if (!win) return;
+    win.document.write(html);
+    win.document.close();
   }
 
   function openWordFromGroupList(index) {
