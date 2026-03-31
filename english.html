@@ -422,6 +422,49 @@
     .option-btn:disabled { cursor: not-allowed; transform: none; }
 
     .quiz-feedback { text-align: center; margin-top: 20px; min-height: 60px; }
+
+    /* ── Synonym / Antonym Game ── */
+    .sa-header { display: flex; align-items: center; justify-content: space-between; background: white; padding: 14px 16px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 16px; gap: 8px; }
+    .sa-score-wrap { font-weight: 700; font-size: 0.95rem; color: var(--text-light); white-space: nowrap; }
+    .sa-score-val { color: var(--primary); font-size: 1.2rem; }
+    .sa-score-val.negative { color: var(--danger); }
+    .sa-type-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; white-space: nowrap; }
+    .sa-type-badge.synonym { background: #d1fae5; color: #065f46; }
+    .sa-type-badge.antonym { background: #fee2e2; color: #991b1b; }
+    .sa-progress { font-size: 0.85rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
+    .sa-question-card { background: white; padding: 22px 18px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 14px; text-align: center; }
+    .sa-prompt { font-size: 0.92rem; color: var(--text-light); font-weight: 600; margin-bottom: 10px; }
+    .sa-prompt strong { color: var(--primary); }
+    .sa-target-word { font-size: 1.75rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; line-height: 1.2; }
+    .sa-target-def { font-size: 0.88rem; color: var(--text-light); line-height: 1.5; font-style: italic; }
+    .sa-options { display: grid; gap: 10px; margin-bottom: 14px; }
+    .sa-opt-btn { background: white; border: 2px solid #e5e7eb; padding: 13px 16px; text-align: center; font-size: 0.97rem; font-weight: 600; color: var(--text-main); border-radius: 10px; cursor: pointer; transition: all 0.2s; line-height: 1.3; width: 100%; }
+    .sa-opt-btn:hover:not(:disabled) { border-color: var(--primary); background: #f5f3ff; transform: translateY(-2px); }
+    .sa-opt-btn.correct { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
+    .sa-opt-btn.incorrect { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+    .sa-opt-btn:disabled { cursor: not-allowed; transform: none; }
+    .sa-feedback-banner { padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.97rem; text-align: center; margin-bottom: 12px; }
+    .sa-feedback-banner.correct { background: #d1fae5; color: #065f46; }
+    .sa-feedback-banner.incorrect { background: #fee2e2; color: #991b1b; }
+    .sa-def-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+    .sa-def-card { background: #f8fafc; border-radius: 10px; padding: 12px 13px; border: 1px solid #e2e8f0; }
+    .sa-def-word { font-weight: 800; font-size: 0.92rem; color: var(--primary); margin-bottom: 4px; }
+    .sa-def-text { font-size: 0.82rem; color: var(--text-light); line-height: 1.4; }
+    .sa-connector { text-align: center; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; padding: 6px 0 2px; }
+    .sa-connector.synonym { color: #059669; }
+    .sa-connector.antonym { color: #dc2626; }
+    .sa-next-btn { background: var(--primary); color: white; width: 100%; padding: 13px; font-size: 1rem; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; margin-top: 12px; transition: background 0.2s; }
+    .sa-next-btn:hover { background: var(--primary-hover, #4338ca); }
+    .sa-game-over { text-align: center; padding: 36px 20px; background: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .sa-final-score { font-size: 3.2rem; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
+    .sa-final-score.negative { color: var(--danger); }
+    .sa-final-label { font-size: 1rem; color: var(--text-light); margin-bottom: 8px; font-weight: 600; }
+    .sa-start-btn { background: var(--primary); color: white; padding: 13px 36px; font-size: 1rem; font-weight: 700; border-radius: 12px; border: none; cursor: pointer; margin-top: 16px; }
+    .sa-start-btn:hover { background: var(--primary-hover, #4338ca); }
+    @media (max-width: 640px) {
+      .sa-def-pair { grid-template-columns: 1fr; }
+      .sa-target-word { font-size: 1.4rem; }
+    }
     .btn-next-quiz { background-color: var(--primary); color: white; margin: 10px auto; display: none; padding: 15px 30px; font-size: 1.1rem; }
 
     .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
@@ -747,7 +790,7 @@
     /* ── Fullscreen flashcard mode on mobile ── */
     /* Hide only the title, keep the group selector bar visible */
     body.fc-fullscreen header h1 { display: none !important; }
-    body.fc-fullscreen #group-wordlist-panel { display: none !important; }
+    body.fc-fullscreen #group-wordlist-panel { display: none; }
     body.fc-fullscreen .mode-container.active { padding: 0; }
 
     body.fc-fullscreen .scene {
@@ -866,6 +909,7 @@
     <button class="tab-btn" id="tab-dashboard">Dashboard</button>
     <button class="tab-btn" id="tab-add">Add Word</button>
     <button class="tab-btn" id="tab-read">Articles</button>
+    <button class="tab-btn" id="tab-syn-ant">🔗 Match</button>
   </div>
   <div class="group-selector-container">
     <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
@@ -2180,6 +2224,192 @@
     else scoreEl.classList.remove('negative');
   }
 
+  // ── Synonym / Antonym Game Data ──────────────────────────────────────────
+  const synAntPairs = [
+    // [word A, word B, "synonym"/"antonym"]
+    // --- Synonyms ---
+    ["stuck-up",              "hoity-toity",                  "synonym"],
+    ["jazzed",                "raring to go",                 "synonym"],
+    ["flabbergast",           "gobsmacked",                   "synonym"],
+    ["smoke and mirrors",     "shell game",                   "synonym"],
+    ["lighten up",            "loosen up",                    "synonym"],
+    ["big cheese",            "head honcho",                  "synonym"],
+    ["patsy",                 "soft touch",                   "synonym"],
+    ["snazzy",                "swanky",                       "synonym"],
+    ["crummy",                "rinky-dink",                   "synonym"],
+    ["daft",                  "harebrained",                  "synonym"],
+    ["schmooze",              "rub elbows",                   "synonym"],
+    ["bellow",                "go off on somebody",           "synonym"],
+    ["pariah",                "out in the cold",              "synonym"],
+    ["shoot from the hip",    "speak one's mind",             "synonym"],
+    ["knuckle down",          "keep one's nose to the grindstone", "synonym"],
+    ["two-faced",             "pull the wool over one's eyes","synonym"],
+    ["frazzle",               "running on fumes",             "synonym"],
+    ["on a mission",          "lead the charge",              "synonym"],
+    ["wishy-washy",           "spineless",                    "synonym"],
+    ["stir the pot",          "shake the cage",               "synonym"],
+    ["under the table",       "backroom deal",                "synonym"],
+    ["janky",                 "crummy",                       "synonym"],
+    ["down and out",          "out in the cold",              "synonym"],
+    ["aplomb",                "level-headed",                 "synonym"],
+    // --- Antonyms ---
+    ["level-headed",          "high-strung",                  "antonym"],
+    ["at death's door",       "fit as a fiddle",              "antonym"],
+    ["subdued",               "jazzed",                       "antonym"],
+    ["stalwart",              "flaky",                        "antonym"],
+    ["bottle up",             "speak one's mind",             "antonym"],
+    ["down and out",          "stinking rich",                "antonym"],
+    ["spineless",             "stalwart",                     "antonym"],
+    ["out of one's depth",    "ahead of the pack",            "antonym"],
+    ["knuckle down",          "phone it in",                  "antonym"],
+    ["two-faced",             "on the up and up",             "antonym"],
+    ["harebrained",           "level-headed",                 "antonym"],
+    ["flat-footed",           "on one's toes",                "antonym"],
+    ["frazzle",               "second wind",                  "antonym"],
+    ["fit as a fiddle",       "running on fumes",             "antonym"],
+    ["over the hump",         "back to the wall",             "antonym"],
+    ["pariah",                "big cheese",                   "antonym"],
+    ["on the up and up",      "shell game",                   "antonym"],
+    ["take down a notch",     "put someone on a pedestal",    "antonym"],
+    ["catch a break",         "back to the wall",             "antonym"],
+    ["ahead of the pack",     "out in the cold",              "antonym"],
+  ];
+
+  // ── Synonym / Antonym Game State ─────────────────────────────────────────
+  let saScore = 0;
+  let saQNum = 0;
+  let saAnswered = false;
+  let saCurrentData = null;
+  let saShuffledPairs = [];
+  let saPairIdx = 0;
+
+  // ── Synonym / Antonym Game Functions ──────────────────────────────────────
+  function initSynAntGame() {
+    saScore = 0;
+    saQNum = 0;
+    saAnswered = false;
+    saShuffledPairs = [...synAntPairs];
+    for (let i = saShuffledPairs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [saShuffledPairs[i], saShuffledPairs[j]] = [saShuffledPairs[j], saShuffledPairs[i]];
+    }
+    saPairIdx = 0;
+    renderSynAntQuestion();
+  }
+
+  function renderSynAntQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+
+    if (saPairIdx >= saShuffledPairs.length) {
+      renderSynAntGameOver(container);
+      return;
+    }
+
+    saQNum++;
+    saAnswered = false;
+
+    const pair = saShuffledPairs[saPairIdx++];
+    const type = pair[2];
+    const [w1, w2] = Math.random() < 0.5 ? [pair[0], pair[1]] : [pair[1], pair[0]];
+
+    const targetItem = vocabState.find(v => v.word.toLowerCase() === w1.toLowerCase());
+    const correctItem = vocabState.find(v => v.word.toLowerCase() === w2.toLowerCase());
+    saCurrentData = { type, targetWord: w1, correctWord: w2, targetItem, correctItem };
+
+    // 3 random distractors
+    const pool = vocabState.filter(v => v.word !== w1 && v.word !== w2 && !v.isCustom);
+    const usedIdx = new Set();
+    const distractors = [];
+    while (distractors.length < 3 && usedIdx.size < pool.length) {
+      const ri = Math.floor(Math.random() * pool.length);
+      if (!usedIdx.has(ri)) { usedIdx.add(ri); distractors.push(pool[ri].word); }
+    }
+
+    const options = [w2, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+
+    const scoreCls = saScore < 0 ? ' negative' : '';
+    const promptVerb = type === 'synonym' ? 'same meaning as' : 'opposite meaning to';
+
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="sa-score-val">${saScore > 0 ? '+' + saScore : saScore}</span></div>
+        <div class="sa-type-badge ${type}">${type === 'synonym' ? '≈ SYNONYM' : '↔ ANTONYM'}</div>
+        <div class="sa-progress">${saQNum} / ${saShuffledPairs.length}</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Which word has <strong>${promptVerb}</strong>:</div>
+        <div class="sa-target-word">${escapeHtml(w1)}</div>
+        <div class="sa-target-def">${escapeHtml(targetItem?.definition || '')}</div>
+      </div>
+      <div class="sa-options">
+        ${options.map(opt => `<button class="sa-opt-btn" onclick="checkSynAntAnswer(this,'${escapeJsSingleQuoted(opt)}')">${escapeHtml(opt)}</button>`).join('')}
+      </div>
+      <div id="sa-feedback"></div>`;
+  }
+
+  function checkSynAntAnswer(btn, chosen) {
+    if (saAnswered) return;
+    saAnswered = true;
+
+    const { type, targetWord, correctWord, targetItem, correctItem } = saCurrentData;
+    const isCorrect = chosen === correctWord;
+    if (isCorrect) saScore++; else saScore--;
+
+    document.querySelectorAll('.sa-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (b.textContent.trim() === correctWord) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+
+    const scoreEl = document.getElementById('sa-score-val');
+    if (scoreEl) {
+      scoreEl.textContent = saScore > 0 ? '+' + saScore : saScore;
+      scoreEl.className = 'sa-score-val' + (saScore < 0 ? ' negative' : '');
+    }
+
+    const connLabel = type === 'synonym' ? '≈ SYNONYMS — similar meaning ≈' : '↔ ANTONYMS — opposite meaning ↔';
+    const nextLabel = saPairIdx >= saShuffledPairs.length ? 'See Results' : 'Next →';
+    const feedback = document.getElementById('sa-feedback');
+    if (feedback) {
+      feedback.innerHTML = `
+        <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(correctWord)}"`}</div>
+        <div class="sa-def-pair">
+          <div class="sa-def-card">
+            <div class="sa-def-word">${escapeHtml(targetWord)}</div>
+            <div class="sa-def-text">${escapeHtml(targetItem?.definition || '')}</div>
+          </div>
+          <div class="sa-def-card">
+            <div class="sa-def-word">${escapeHtml(correctWord)}</div>
+            <div class="sa-def-text">${escapeHtml(correctItem?.definition || '')}</div>
+          </div>
+        </div>
+        <div class="sa-connector ${type}">${connLabel}</div>
+        <button class="sa-next-btn" onclick="renderSynAntQuestion()">${nextLabel}</button>`;
+    }
+  }
+
+  function renderSynAntGameOver(container) {
+    const total = saShuffledPairs.length;
+    const emoji = saScore >= Math.round(total * 0.7) ? '🏆' : saScore >= 0 ? '👍' : '💪';
+    const scoreCls = saScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${saScore > 0 ? '+' : ''}${saScore}</div>
+        <div class="sa-final-label">Final Score &middot; ${total} questions</div>
+        <div style="color:var(--text-light); font-size:0.9rem; margin-bottom:6px">
+          Synonyms test <em>same</em> meaning &middot; Antonyms test <em>opposite</em> meaning
+        </div>
+        <button class="sa-start-btn" onclick="initSynAntGame()">Play Again ↺</button>
+      </div>`;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   function getCurrentFlashcardItem() {
     const activePool = getActiveVocab();
     if (!activePool.length) return null;
@@ -2835,6 +3065,9 @@
     } else if (mode === 'read') {
       document.getElementById('read-mode').classList.add('active');
       renderArticleMode();
+    } else if (mode === 'syn-ant') {
+      document.getElementById('syn-ant-mode').classList.add('active');
+      initSynAntGame();
     }
 
     updateGroupWordListSummary();
@@ -2847,6 +3080,7 @@
   document.getElementById('tab-dashboard')?.addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
   document.getElementById('tab-add')?.addEventListener('click', function() { setMode('add', 'tab-add'); });
   document.getElementById('tab-read')?.addEventListener('click', function() { setMode('read', 'tab-read'); });
+  document.getElementById('tab-syn-ant')?.addEventListener('click', function() { setMode('syn-ant', 'tab-syn-ant'); });
 
   // --- DASHBOARD LOGIC ---
   function renderDashboard() {
@@ -3794,6 +4028,10 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
   </div>
 </div>
 
+<div id="syn-ant-mode" class="mode-container">
+  <div id="sa-inner"></div>
+</div>
+
 <!-- iOS bottom tab bar (visible only on mobile) -->
 <nav class="ios-tab-bar">
   <div class="ios-tab-bar-inner">
@@ -3820,6 +4058,10 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     <button class="ios-tab-btn" id="ios-tab-read" onclick="setMode('read','tab-read')">
       <span class="ios-icon">📰</span>
       <span class="ios-label">Articles</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-syn-ant" onclick="setMode('syn-ant','tab-syn-ant')">
+      <span class="ios-icon">🔗</span>
+      <span class="ios-label">Match</span>
     </button>
   </div>
 </nav>

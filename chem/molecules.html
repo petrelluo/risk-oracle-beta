@@ -344,6 +344,384 @@
     </div>
 
     <!-- ═══════════════════════════════════════
+         ELECTRON vs MOLECULAR GEOMETRY
+    ═══════════════════════════════════════ -->
+    <div class="card" style="border-left: 5px solid var(--primary);">
+        <h3 style="font-size:1.25em;">🔍 Electron Geometry vs. Molecular Geometry — What's the Difference?</h3>
+
+        <div class="hl hl-blue" style="font-size:1.05em;">
+            <strong>One-sentence rule:</strong><br>
+            Electron geometry counts <em>everything</em> (bonds + lone pairs).<br>
+            Molecular geometry counts <em>only the atoms you can see</em>.
+        </div>
+
+        <!-- Analogy -->
+        <div style="background:#f8f7ff; border-radius:12px; padding:20px; margin:18px 0;">
+            <div style="font-weight:700; color:var(--primary-dark); margin-bottom:10px; font-size:1.05em;">🪑 The "Invisible Person" Analogy</div>
+            <p style="margin-bottom:10px;">
+                Imagine a round table with <strong>4 seats</strong>. You place 4 people equally around it —
+                each person sits as far from the others as possible. That arrangement is the <strong>electron geometry</strong>.
+            </p>
+            <p style="margin-bottom:10px;">
+                Now imagine 1 of those 4 people is <strong>invisible</strong> (a lone pair).
+                A photo of the table shows only 3 people — you'd describe it as a "triangle of people."
+                That's the <strong>molecular geometry</strong>.
+            </p>
+            <p style="margin:0; color:var(--text-light); font-size:0.92em;">
+                The invisible person is still <em>there</em> — they still take up a seat and push the others around —
+                you just don't name the shape based on them.
+            </p>
+        </div>
+
+        <!-- Side-by-side definition boxes -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0;">
+            <div style="background:#eff6ff; border:2px solid #bfdbfe; border-radius:10px; padding:16px;">
+                <div style="font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Electron Geometry</div>
+                <ul style="margin:0 0 0 16px; font-size:0.92em; line-height:1.8;">
+                    <li>Counts <strong>all</strong> electron domains</li>
+                    <li>Includes lone pairs</li>
+                    <li>Describes how electrons are arranged in 3D space</li>
+                    <li>Determines the <em>base shape</em> and ideal angles</li>
+                </ul>
+            </div>
+            <div style="background:#f0fdf4; border:2px solid #bbf7d0; border-radius:10px; padding:16px;">
+                <div style="font-weight:800; color:#166534; margin-bottom:8px;">Molecular Geometry</div>
+                <ul style="margin:0 0 0 16px; font-size:0.92em; line-height:1.8;">
+                    <li>Counts <strong>only bonded atoms</strong></li>
+                    <li>Lone pairs are <em>invisible</em> in the name</li>
+                    <li>Describes what the molecule looks like to an observer</li>
+                    <li>Determines polarity and physical properties</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Visual comparison cards -->
+        <div style="font-weight:800; color:var(--primary-dark); font-size:1.05em; margin:22px 0 6px;">📊 Visual Comparison — Electron Geometry vs Molecular Geometry</div>
+        <p style="font-size:0.88em; color:var(--text-light); margin:0 0 16px;">
+            Each card shows the same molecule twice. <strong style="color:#374151;">Left (full):</strong> all electron domains including lone pairs (gray clouds ••). <strong style="color:var(--primary);">Right (named):</strong> lone pairs faded — this is what the molecular shape name is based on.
+        </p>
+
+        <!-- ── CH₄ card ── -->
+        <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <div style="background:var(--primary-light); padding:9px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <span style="font-weight:800; color:var(--primary-dark);">CH₄ — Methane &nbsp;|&nbsp; 4 bonds, 0 lone pairs</span>
+                <span style="background:#dcfce7; color:#166534; font-size:0.8em; font-weight:700; padding:2px 10px; border-radius:20px;">✓ Geometries are identical</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr;">
+                <!-- electron view -->
+                <div style="padding:14px; text-align:center; background:#fafbff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6366f1; margin-bottom:4px;">Electron Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Tetrahedral</div>
+                    <svg viewBox="0 0 160 140" width="140" height="122">
+                        <polygon points="80,72 60,122 100,122" fill="#6366f1" opacity="0.75"/>
+                        <line x1="80" y1="72" x2="80" y2="20" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="72" x2="16" y2="108" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="72" x2="144" y2="108" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+                        <circle cx="80" cy="72" r="17" fill="#6366f1"/><text x="80" y="77" text-anchor="middle" fill="white" font-size="12" font-weight="700">C</text>
+                        <circle cx="80" cy="10" r="13" fill="#94a3b8"/><text x="80" y="15" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="6"  cy="112" r="13" fill="#94a3b8"/><text x="6"  y="117" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="80" cy="128" r="13" fill="#94a3b8"/><text x="80" y="133" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="154" cy="112" r="13" fill="#94a3b8"/><text x="154" y="117" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="147" text-anchor="middle" fill="#9ca3af" font-size="10">109.5°</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:var(--text-light); margin-top:6px;">4 domains, 0 lone pairs</div>
+                </div>
+                <!-- arrow -->
+                <div style="display:flex; align-items:center; padding:0 10px; font-size:1.6em; color:#9ca3af;">→</div>
+                <!-- molecular view -->
+                <div style="padding:14px; text-align:center; background:#f0fdf4;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#16a34a; margin-bottom:4px;">Molecular Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:#166534; margin-bottom:8px;">Tetrahedral ✓ same</div>
+                    <svg viewBox="0 0 160 140" width="140" height="122">
+                        <polygon points="80,72 60,122 100,122" fill="#6366f1" opacity="0.75"/>
+                        <line x1="80" y1="72" x2="80" y2="20" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="72" x2="16" y2="108" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="72" x2="144" y2="108" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+                        <circle cx="80" cy="72" r="17" fill="#6366f1"/><text x="80" y="77" text-anchor="middle" fill="white" font-size="12" font-weight="700">C</text>
+                        <circle cx="80" cy="10" r="13" fill="#94a3b8"/><text x="80" y="15" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="6"  cy="112" r="13" fill="#94a3b8"/><text x="6"  y="117" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="80" cy="128" r="13" fill="#94a3b8"/><text x="80" y="133" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="154" cy="112" r="13" fill="#94a3b8"/><text x="154" y="117" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="147" text-anchor="middle" fill="#9ca3af" font-size="10">109.5°</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:#16a34a; margin-top:6px; font-weight:600;">No lone pairs → shape unchanged</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── NH₃ card ── -->
+        <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <div style="background:#eff6ff; padding:9px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <span style="font-weight:800; color:var(--primary-dark);">NH₃ — Ammonia &nbsp;|&nbsp; 3 bonds, 1 lone pair</span>
+                <span style="background:#fee2e2; color:#991b1b; font-size:0.8em; font-weight:700; padding:2px 10px; border-radius:20px;">≠ Geometries differ!</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr;">
+                <div style="padding:14px; text-align:center; background:#fafbff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6366f1; margin-bottom:4px;">Electron Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Tetrahedral</div>
+                    <svg viewBox="0 0 160 148" width="140" height="130">
+                        <!-- lone pair VISIBLE -->
+                        <ellipse cx="80" cy="22" rx="22" ry="12" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <text x="80" y="17" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700">••</text>
+                        <text x="80" y="32" text-anchor="middle" fill="#64748b" font-size="9">lone pair</text>
+                        <!-- bonds -->
+                        <polygon points="80,76 60,130 100,130" fill="#3b82f6" opacity="0.7"/>
+                        <line x1="80" y1="76" x2="14" y2="116" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="76" x2="146" y2="116" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+                        <!-- N center -->
+                        <circle cx="80" cy="76" r="17" fill="#3b82f6"/><text x="80" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="700">N</text>
+                        <!-- H atoms -->
+                        <circle cx="4"   cy="120" r="13" fill="#94a3b8"/><text x="4"   y="125" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="80"  cy="136" r="13" fill="#94a3b8"/><text x="80"  y="141" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="156" cy="120" r="13" fill="#94a3b8"/><text x="156" y="125" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="152" text-anchor="middle" fill="#9ca3af" font-size="9">109.5° (ideal)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:var(--text-light); margin-top:6px;">4 domains total (3+1)</div>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 10px; font-size:1.6em; color:#9ca3af;">→</div>
+                <div style="padding:14px; text-align:center; background:#f0f9ff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#0ea5e9; margin-bottom:4px;">Molecular Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:#0c4a6e; margin-bottom:8px;">Trigonal Pyramidal</div>
+                    <svg viewBox="0 0 160 148" width="140" height="130">
+                        <!-- lone pair FADED (still there physically, ignored for naming) -->
+                        <ellipse cx="80" cy="22" rx="22" ry="12" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3" opacity="0.2"/>
+                        <text x="80" y="17" text-anchor="middle" fill="#94a3b8" font-size="11" opacity="0.2">••</text>
+                        <text x="80" y="32" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="700">(not counted)</text>
+                        <!-- bonds -->
+                        <polygon points="80,76 60,130 100,130" fill="#3b82f6" opacity="0.7"/>
+                        <line x1="80" y1="76" x2="14" y2="116" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="80" y1="76" x2="146" y2="116" stroke="#6b7280" stroke-width="2.5" stroke-dasharray="5,4"/>
+                        <!-- N center -->
+                        <circle cx="80" cy="76" r="17" fill="#3b82f6"/><text x="80" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="700">N</text>
+                        <!-- H atoms -->
+                        <circle cx="4"   cy="120" r="13" fill="#94a3b8"/><text x="4"   y="125" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="80"  cy="136" r="13" fill="#94a3b8"/><text x="80"  y="141" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="156" cy="120" r="13" fill="#94a3b8"/><text x="156" y="125" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="152" text-anchor="middle" fill="#9ca3af" font-size="9">107° (squeezed)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:#0c4a6e; margin-top:6px; font-weight:600;">3 atoms → pyramid shape</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── H₂O card ── -->
+        <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <div style="background:#eff6ff; padding:9px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <span style="font-weight:800; color:var(--primary-dark);">H₂O — Water &nbsp;|&nbsp; 2 bonds, 2 lone pairs</span>
+                <span style="background:#fee2e2; color:#991b1b; font-size:0.8em; font-weight:700; padding:2px 10px; border-radius:20px;">≠ Geometries differ!</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr;">
+                <div style="padding:14px; text-align:center; background:#fafbff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6366f1; margin-bottom:4px;">Electron Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Tetrahedral</div>
+                    <svg viewBox="0 0 160 145" width="140" height="127">
+                        <!-- 2 lone pair clouds VISIBLE -->
+                        <ellipse cx="52" cy="24" rx="20" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <text x="52" y="19" text-anchor="middle" fill="#64748b" font-size="10" font-weight="700">••</text>
+                        <ellipse cx="108" cy="24" rx="20" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <text x="108" y="19" text-anchor="middle" fill="#64748b" font-size="10" font-weight="700">••</text>
+                        <text x="80" y="40" text-anchor="middle" fill="#64748b" font-size="9">2 lone pairs</text>
+                        <!-- bonds -->
+                        <line x1="72" y1="78" x2="14" y2="118" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="88" y1="78" x2="146" y2="118" stroke="#6b7280" stroke-width="2.5"/>
+                        <!-- O center -->
+                        <circle cx="80" cy="74" r="17" fill="#ef4444"/><text x="80" y="79" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <!-- H atoms -->
+                        <circle cx="6"   cy="122" r="13" fill="#94a3b8"/><text x="6"   y="127" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="154" cy="122" r="13" fill="#94a3b8"/><text x="154" y="127" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="148" text-anchor="middle" fill="#9ca3af" font-size="9">109.5° (ideal)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:var(--text-light); margin-top:6px;">4 domains total (2+2)</div>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 10px; font-size:1.6em; color:#9ca3af;">→</div>
+                <div style="padding:14px; text-align:center; background:#fff7ed;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#ea580c; margin-bottom:4px;">Molecular Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:#9a3412; margin-bottom:8px;">Bent (V-shape)</div>
+                    <svg viewBox="0 0 160 145" width="140" height="127">
+                        <!-- 2 lone pair clouds FADED -->
+                        <ellipse cx="52" cy="24" rx="20" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3" opacity="0.18"/>
+                        <text x="52" y="19" text-anchor="middle" fill="#94a3b8" font-size="10" opacity="0.18">••</text>
+                        <ellipse cx="108" cy="24" rx="20" ry="11" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3" opacity="0.18"/>
+                        <text x="108" y="19" text-anchor="middle" fill="#94a3b8" font-size="10" opacity="0.18">••</text>
+                        <text x="80" y="40" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="700">(not counted)</text>
+                        <!-- bonds -->
+                        <line x1="72" y1="78" x2="14" y2="118" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="88" y1="78" x2="146" y2="118" stroke="#6b7280" stroke-width="2.5"/>
+                        <!-- O center -->
+                        <circle cx="80" cy="74" r="17" fill="#ef4444"/><text x="80" y="79" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <!-- H atoms -->
+                        <circle cx="6"   cy="122" r="13" fill="#94a3b8"/><text x="6"   y="127" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <circle cx="154" cy="122" r="13" fill="#94a3b8"/><text x="154" y="127" text-anchor="middle" fill="white" font-size="11" font-weight="700">H</text>
+                        <text x="80" y="148" text-anchor="middle" fill="#9ca3af" font-size="9">104.5° (squeezed most!)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:#9a3412; margin-top:6px; font-weight:600;">2 atoms → V-shape</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── CO₂ card ── -->
+        <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <div style="background:var(--primary-light); padding:9px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <span style="font-weight:800; color:var(--primary-dark);">CO₂ — Carbon Dioxide &nbsp;|&nbsp; 2 bonds, 0 lone pairs</span>
+                <span style="background:#dcfce7; color:#166534; font-size:0.8em; font-weight:700; padding:2px 10px; border-radius:20px;">✓ Geometries are identical</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr;">
+                <div style="padding:14px; text-align:center; background:#fafbff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6366f1; margin-bottom:4px;">Electron Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Linear</div>
+                    <svg viewBox="0 0 160 80" width="140" height="70">
+                        <line x1="36" y1="32" x2="58" y2="32" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="36" y1="40" x2="58" y2="40" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="102" y1="32" x2="124" y2="32" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="102" y1="40" x2="124" y2="40" stroke="#6b7280" stroke-width="2.5"/>
+                        <circle cx="22"  cy="36" r="16" fill="#ef4444"/><text x="22"  y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <circle cx="80"  cy="36" r="16" fill="#6366f1"/><text x="80"  y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">C</text>
+                        <circle cx="138" cy="36" r="16" fill="#ef4444"/><text x="138" y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <text x="80" y="70" text-anchor="middle" fill="#9ca3af" font-size="10">180°</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:var(--text-light); margin-top:6px;">2 domains, 0 lone pairs</div>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 10px; font-size:1.6em; color:#9ca3af;">→</div>
+                <div style="padding:14px; text-align:center; background:#f0fdf4;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#16a34a; margin-bottom:4px;">Molecular Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:#166534; margin-bottom:8px;">Linear ✓ same</div>
+                    <svg viewBox="0 0 160 80" width="140" height="70">
+                        <line x1="36" y1="32" x2="58" y2="32" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="36" y1="40" x2="58" y2="40" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="102" y1="32" x2="124" y2="32" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="102" y1="40" x2="124" y2="40" stroke="#6b7280" stroke-width="2.5"/>
+                        <circle cx="22"  cy="36" r="16" fill="#ef4444"/><text x="22"  y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <circle cx="80"  cy="36" r="16" fill="#6366f1"/><text x="80"  y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">C</text>
+                        <circle cx="138" cy="36" r="16" fill="#ef4444"/><text x="138" y="41" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <text x="80" y="70" text-anchor="middle" fill="#9ca3af" font-size="10">180°</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:#16a34a; margin-top:6px; font-weight:600;">No lone pairs → shape unchanged</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── SO₂ card ── -->
+        <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <div style="background:#eff6ff; padding:9px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <span style="font-weight:800; color:var(--primary-dark);">SO₂ — Sulfur Dioxide &nbsp;|&nbsp; 2 bonds, 1 lone pair</span>
+                <span style="background:#fee2e2; color:#991b1b; font-size:0.8em; font-weight:700; padding:2px 10px; border-radius:20px;">≠ Geometries differ!</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr;">
+                <div style="padding:14px; text-align:center; background:#fafbff;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#6366f1; margin-bottom:4px;">Electron Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:var(--primary-dark); margin-bottom:8px;">Trigonal Planar</div>
+                    <svg viewBox="0 0 160 135" width="140" height="118">
+                        <!-- lone pair cloud VISIBLE at top -->
+                        <ellipse cx="80" cy="20" rx="22" ry="12" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <text x="80" y="15" text-anchor="middle" fill="#64748b" font-size="10" font-weight="700">••</text>
+                        <text x="80" y="30" text-anchor="middle" fill="#64748b" font-size="9">lone pair</text>
+                        <!-- bonds -->
+                        <line x1="68" y1="72" x2="18" y2="110" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="92" y1="72" x2="142" y2="110" stroke="#6b7280" stroke-width="2.5"/>
+                        <!-- S center -->
+                        <circle cx="80" cy="68" r="17" fill="#eab308"/><text x="80" y="73" text-anchor="middle" fill="white" font-size="12" font-weight="700">S</text>
+                        <!-- O atoms -->
+                        <circle cx="6"   cy="116" r="16" fill="#ef4444"/><text x="6"   y="121" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <circle cx="154" cy="116" r="16" fill="#ef4444"/><text x="154" y="121" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <text x="80" y="138" text-anchor="middle" fill="#9ca3af" font-size="9">120° (ideal)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:var(--text-light); margin-top:6px;">3 domains total (2+1)</div>
+                </div>
+                <div style="display:flex; align-items:center; padding:0 10px; font-size:1.6em; color:#9ca3af;">→</div>
+                <div style="padding:14px; text-align:center; background:#fefce8;">
+                    <div style="font-size:0.72em; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#ca8a04; margin-bottom:4px;">Molecular Geometry</div>
+                    <div style="font-size:0.9em; font-weight:800; color:#854d0e; margin-bottom:8px;">Bent (V-shape)</div>
+                    <svg viewBox="0 0 160 135" width="140" height="118">
+                        <!-- lone pair FADED -->
+                        <ellipse cx="80" cy="20" rx="22" ry="12" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3" opacity="0.2"/>
+                        <text x="80" y="15" text-anchor="middle" fill="#94a3b8" font-size="10" opacity="0.2">••</text>
+                        <text x="80" y="30" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="700">(not counted)</text>
+                        <!-- bonds -->
+                        <line x1="68" y1="72" x2="18" y2="110" stroke="#6b7280" stroke-width="2.5"/>
+                        <line x1="92" y1="72" x2="142" y2="110" stroke="#6b7280" stroke-width="2.5"/>
+                        <!-- S center -->
+                        <circle cx="80" cy="68" r="17" fill="#eab308"/><text x="80" y="73" text-anchor="middle" fill="white" font-size="12" font-weight="700">S</text>
+                        <!-- O atoms -->
+                        <circle cx="6"   cy="116" r="16" fill="#ef4444"/><text x="6"   y="121" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <circle cx="154" cy="116" r="16" fill="#ef4444"/><text x="154" y="121" text-anchor="middle" fill="white" font-size="12" font-weight="700">O</text>
+                        <text x="80" y="138" text-anchor="middle" fill="#9ca3af" font-size="9">≈117° (squeezed)</text>
+                    </svg>
+                    <div style="font-size:0.78em; color:#854d0e; margin-top:6px; font-weight:600;">2 atoms → V-shape (like water!)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hl hl-yellow" style="margin-top:4px;">
+            <strong>Pattern to notice:</strong> When there are <strong>zero lone pairs</strong>, the two geometries are identical. Every lone pair you add hides one domain from the shape name — and squeezes the bond angles a little tighter.
+        </div>
+
+        <!-- Deep-dive: CH4 → NH3 → H2O progression -->
+        <div style="font-weight:800; color:var(--primary-dark); font-size:1.05em; margin:26px 0 12px;">🔬 The Tetrahedral Family — Same Electron Geometry, Three Different Shapes</div>
+        <p style="font-size:0.9em; color:var(--text-light); margin:0 0 14px;">CH₄, NH₃, and H₂O all have 4 electron domains (tetrahedral electron geometry). Watch what happens as lone pairs replace bonding pairs one by one:</p>
+
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px;">
+            <!-- CH4 -->
+            <div style="background:white; border:2px solid #c7d2fe; border-radius:12px; padding:16px; text-align:center;">
+                <div style="font-weight:800; color:var(--primary-dark); margin-bottom:4px;">CH₄</div>
+                <div style="font-size:0.78em; color:var(--text-light); margin-bottom:10px;">0 lone pairs</div>
+                <svg viewBox="0 0 120 120" width="100" height="100">
+                    <polygon points="60,58 44,100 76,100" fill="#6366f1" opacity="0.7"/>
+                    <line x1="60" y1="58" x2="60" y2="14" stroke="#6b7280" stroke-width="2"/>
+                    <line x1="60" y1="58" x2="10" y2="86" stroke="#6b7280" stroke-width="2"/>
+                    <line x1="60" y1="58" x2="110" y2="86" stroke="#6b7280" stroke-width="2" stroke-dasharray="4,3"/>
+                    <circle cx="60" cy="58" r="14" fill="#6366f1"/><text x="60" y="63" text-anchor="middle" fill="white" font-size="10" font-weight="700">C</text>
+                    <circle cx="60" cy="6"  r="10" fill="#94a3b8"/><text x="60" y="10" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="4"  cy="88" r="10" fill="#94a3b8"/><text x="4"  y="92" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="60" cy="104" r="10" fill="#94a3b8"/><text x="60" y="108" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="116" cy="88" r="10" fill="#94a3b8"/><text x="116" y="92" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                </svg>
+                <div style="font-size:0.85em; font-weight:700; color:var(--primary-dark); margin-top:6px;">Tetrahedral</div>
+                <div style="font-size:0.78em; color:var(--text-light);">109.5°</div>
+            </div>
+            <!-- NH3 -->
+            <div style="background:white; border:2px solid #bae6fd; border-radius:12px; padding:16px; text-align:center;">
+                <div style="font-weight:800; color:#0c4a6e; margin-bottom:4px;">NH₃</div>
+                <div style="font-size:0.78em; color:var(--text-light); margin-bottom:10px;">1 lone pair → replaces 1 H</div>
+                <svg viewBox="0 0 120 120" width="100" height="100">
+                    <ellipse cx="60" cy="14" rx="17" ry="9" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <text x="60" y="10" text-anchor="middle" fill="#64748b" font-size="8" font-weight="700">••</text>
+                    <polygon points="60,58 44,100 76,100" fill="#3b82f6" opacity="0.7"/>
+                    <line x1="60" y1="58" x2="10" y2="86" stroke="#6b7280" stroke-width="2"/>
+                    <line x1="60" y1="58" x2="110" y2="86" stroke="#6b7280" stroke-width="2" stroke-dasharray="4,3"/>
+                    <circle cx="60" cy="58" r="14" fill="#3b82f6"/><text x="60" y="63" text-anchor="middle" fill="white" font-size="10" font-weight="700">N</text>
+                    <circle cx="4"   cy="88" r="10" fill="#94a3b8"/><text x="4"   y="92" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="60"  cy="104" r="10" fill="#94a3b8"/><text x="60"  y="108" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="116" cy="88" r="10" fill="#94a3b8"/><text x="116" y="92" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                </svg>
+                <div style="font-size:0.85em; font-weight:700; color:#0c4a6e; margin-top:6px;">Trigonal Pyramidal</div>
+                <div style="font-size:0.78em; color:var(--text-light);">107° ↓ (compressed)</div>
+            </div>
+            <!-- H2O -->
+            <div style="background:white; border:2px solid #fed7aa; border-radius:12px; padding:16px; text-align:center;">
+                <div style="font-weight:800; color:#9a3412; margin-bottom:4px;">H₂O</div>
+                <div style="font-size:0.78em; color:var(--text-light); margin-bottom:10px;">2 lone pairs → replace 2 H</div>
+                <svg viewBox="0 0 120 120" width="100" height="100">
+                    <ellipse cx="40" cy="18" rx="16" ry="9" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <text x="40" y="14" text-anchor="middle" fill="#64748b" font-size="8" font-weight="700">••</text>
+                    <ellipse cx="80" cy="18" rx="16" ry="9" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <text x="80" y="14" text-anchor="middle" fill="#64748b" font-size="8" font-weight="700">••</text>
+                    <line x1="52" y1="62" x2="10" y2="96" stroke="#6b7280" stroke-width="2"/>
+                    <line x1="68" y1="62" x2="110" y2="96" stroke="#6b7280" stroke-width="2"/>
+                    <circle cx="60" cy="58" r="14" fill="#ef4444"/><text x="60" y="63" text-anchor="middle" fill="white" font-size="10" font-weight="700">O</text>
+                    <circle cx="4"   cy="100" r="10" fill="#94a3b8"/><text x="4"   y="104" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                    <circle cx="116" cy="100" r="10" fill="#94a3b8"/><text x="116" y="104" text-anchor="middle" fill="white" font-size="9" font-weight="700">H</text>
+                </svg>
+                <div style="font-size:0.85em; font-weight:700; color:#9a3412; margin-top:6px;">Bent</div>
+                <div style="font-size:0.78em; color:var(--text-light);">104.5° ↓↓ (most compressed)</div>
+            </div>
+        </div>
+
+        <div class="hl hl-blue">
+            <strong>The key insight:</strong> CH₄, NH₃, and H₂O all have <em>exactly the same electron geometry</em> (tetrahedral). But each lone pair hides itself from the shape name <em>and</em> squeezes the remaining bonds closer together. More lone pairs = smaller angle = more "bent" appearance.
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
          INTERACTIVE SIMULATOR
     ═══════════════════════════════════════ -->
     <div class="simulator">
