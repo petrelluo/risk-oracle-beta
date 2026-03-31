@@ -433,7 +433,7 @@
         <div id="quiz-lobby" class="hidden" style="padding: 1.5rem 0 0.5rem; text-align: center;">
             <div style="font-size: 3rem; margin-bottom: 0.5rem;">🧪</div>
             <h2 style="color: #1a365d; margin: 0 0 0.4rem;">Ready to begin?</h2>
-            <p style="color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem;">25 questions &nbsp;·&nbsp; 20-minute timer &nbsp;·&nbsp; All categories</p>
+            <p id="quiz-lobby-desc" style="color: #718096; font-size: 0.95rem; margin-bottom: 1.5rem;">25 questions &nbsp;·&nbsp; 20-minute timer &nbsp;·&nbsp; All categories</p>
             <button id="start-quiz-btn" class="primary-btn" style="font-size: 1.1rem; padding: 0.85rem 2.5rem;">▶ Start Quiz</button>
         </div>
 
@@ -985,7 +985,15 @@
             const savedData = localStorage.getItem('chemistryQuizData');
             if (savedData) {
                 appData = JSON.parse(savedData);
-                if(appData.deck.length < chemicals.length * 2) buildNewDeck();
+                if(appData.deck.length < chemicals.length * 2) {
+                    buildNewDeck();
+                } else {
+                    // Refresh item data from source so category changes are picked up
+                    appData.deck.forEach(card => {
+                        const chem = chemicals.find(c => c.formula === card.item.formula && c.name === card.item.name);
+                        if (chem) card.item = chem;
+                    });
+                }
             } else {
                 buildNewDeck();
             }
@@ -1039,14 +1047,21 @@
         }
 
         function startQuiz() {
+            const activeDeck = getActiveDeck();
+            if (activeDeck.length === 0) {
+                alert('No questions available for the selected category/direction. Please change your filters.');
+                return;
+            }
             quizScreen.classList.remove('hidden');
             quizEndScreen.classList.add('hidden');
             document.getElementById('quiz-lobby').classList.add('hidden');
             document.getElementById('quiz-question-area').classList.remove('hidden');
             quizStats.classList.remove('hidden');
-            let allCards = [...appData.deck];
+            let allCards = [...activeDeck];
             shuffleArray(allCards);
-            quizState.questions = allCards.slice(0, 25);
+            const questionCount = Math.min(25, allCards.length);
+            quizState.questions = allCards.slice(0, questionCount);
+            quizState.totalQuestions = questionCount;
             quizState.currentIndex = 0;
             quizState.score = 0;
             quizState.log = [];
@@ -1090,7 +1105,7 @@
             quizScreen.classList.add('hidden');
             quizEndScreen.classList.remove('hidden');
             quizFinalScoreEl.textContent = quizState.score;
-            quizFinalPctEl.textContent = Math.round((quizState.score / 25) * 100) + '%';
+            quizFinalPctEl.textContent = Math.round((quizState.score / (quizState.totalQuestions || 25)) * 100) + '%';
             buildQuizReview();
             quizReviewContainer.classList.add('hidden');
             toggleReviewBtn.textContent = '▾ Review Answers';
@@ -1136,6 +1151,17 @@
             currentDirection = directionSelect.value;
             updateMasteryDisplay();
             generateQuestion();
+            updateQuizLobbyDesc();
+        }
+
+        function updateQuizLobbyDesc() {
+            const lobbyDesc = document.getElementById('quiz-lobby-desc');
+            if (!lobbyDesc) return;
+            const activeDeck = getActiveDeck();
+            const qCount = Math.min(25, activeDeck.length);
+            const catLabel = currentCategory === 'Everything' ? 'All categories' : currentCategory;
+            const dirLabel = currentDirection === 'both' ? '' : ` · ${currentDirection === 'formula' ? 'Formula only' : 'Name only'}`;
+            lobbyDesc.textContent = `${qCount} questions · 20-minute timer · ${catLabel}${dirLabel}`;
         }
 
         function generateQuestion() {
