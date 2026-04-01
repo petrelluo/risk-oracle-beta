@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solutions — Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111111;
+    --dark: #222222;
+    --mid: #555555;
+    --light: #888888;
+    --rule: #cccccc;
+    --rule-light: #e5e5e5;
+    --bg: #f4f4f4;
+    --bg-mid: #ebebeb;
+    --white: #ffffff;
+  }
+
+  @page { size: A4 portrait; margin: 0; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #c8c8c8;
+    color: var(--black);
+    padding: 20px;
+  }
+
+  /* A4 = 210mm × 297mm */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    padding: 10mm 11mm;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 4px 28px rgba(0,0,0,0.22);
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-bottom: 2.5px solid var(--black);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+    color: var(--black);
+  }
+  header .sub {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--mid);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .span2 { grid-column: span 2; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    padding: 8px 10px;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 0.82rem;
+    color: var(--black);
+    margin-bottom: 6px;
+    padding-bottom: 5px;
+    border-bottom: 1.5px solid var(--black);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .dot { display: none; }
+
+  /* ── CONCENTRATION ── */
+  .def {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--mid);
+  }
+  .def strong { color: var(--black); font-weight: 600; }
+
+  .formula-row {
+    margin-top: 7px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .formula-chip {
+    background: var(--bg-mid);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--dark);
+  }
+  .formula-chip span { color: var(--mid); font-size: 0.6rem; font-family: 'DM Sans', sans-serif; font-weight: 400; display: block; margin-top: 1px; }
+
+  /* ── DILUTION ── */
+  .dilution-steps {
+    display: flex;
+    flex-direction: column;
+    margin-top: 7px;
+    border-top: 1px solid var(--rule);
+  }
+  .d-step {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 0.7rem;
+    line-height: 1.45;
+    color: var(--mid);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule-light);
+  }
+  .d-step:last-child { border-bottom: none; }
+  .d-step .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--black);
+    width: 16px;
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 1px;
+  }
+  .d-step .dtext { flex: 1; }
+  .highlight { color: var(--black); font-weight: 600; }
+
+  /* ── SOLUBILITY ── */
+  .sol-section { margin-bottom: 6px; }
+  .sol-section:last-child { margin-bottom: 0; }
+  .sol-header {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .sol-header.soluble   { background: var(--black); color: var(--white); }
+  .sol-header.insoluble { background: var(--bg-mid); color: var(--dark); border: 1px solid var(--rule); }
+
+  .rule-row {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    font-size: 0.68rem;
+    padding: 2px 0;
+    border-bottom: 1px solid var(--rule-light);
+    line-height: 1.35;
+  }
+  .rule-row:last-child { border-bottom: none; }
+  .ion { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--dark); font-weight: 600; white-space: nowrap; }
+  .except { color: var(--mid); font-size: 0.64rem; font-style: italic; }
+  .note { color: var(--mid); font-size: 0.66rem; }
+
+  /* ── ELECTROLYTES ── */
+  .elec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 7px;
+    margin-bottom: 7px;
+  }
+  .elec-col {
+    border-radius: 5px;
+    padding: 7px 8px;
+    font-size: 0.67rem;
+    border: 1px solid var(--rule);
+    background: var(--white);
+  }
+  .elec-col.strong   { border-top: 2.5px solid var(--black); }
+  .elec-col.weak     { border-top: 2.5px solid var(--mid); background: var(--bg); }
+  .elec-col.non      { border-top: 2.5px solid var(--light); background: var(--bg-mid); }
+
+  .elec-col h3 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--black);
+  }
+  .elec-col .tagline {
+    font-size: 0.62rem;
+    color: var(--mid);
+    margin-bottom: 5px;
+    line-height: 1.35;
+    font-style: italic;
+  }
+  .elec-col .sub-label {
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mid);
+    margin-top: 5px;
+    margin-bottom: 1px;
+  }
+  .elec-col .examples {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--dark);
+    line-height: 1.45;
+  }
+
+  .confusion-banner {
+    background: var(--bg-mid);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--black);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 0.67rem;
+    line-height: 1.45;
+    color: var(--dark);
+  }
+  .confusion-banner strong { color: var(--black); }
+
+  /* ── SOLID SOLUTION ── */
+  .solid-steps { display: flex; flex-direction: column; }
+  .s-step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--rule-light);
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+  .s-step:last-child { border-bottom: none; }
+  .s-step .snum {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--black);
+    width: 18px;
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 1px;
+  }
+  .s-step .stext { color: var(--mid); }
+  .s-step .stext strong { color: var(--black); font-weight: 600; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Solutions</h1>
+    <span class="sub">Chemistry Cheat Sheet</span>
+  </header>
+
+  <div class="grid">
+
+    <!-- CONCENTRATION -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-teal"></span>Concentration &amp; Dilution</div>
+      <p class="def">The <strong>concentration</strong> of a solution measures the amount of solute dissolved in a given quantity of solvent.</p>
+
+      <div class="formula-row">
+        <div class="formula-chip">M = mol / L<span>molarity</span></div>
+        <div class="formula-chip">M₁V₁ = M₂V₂<span>dilution formula</span></div>
+        <div class="formula-chip">C = m / V<span>general conc.</span></div>
+      </div>
+
+      <p style="margin-top:7px;font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);">Dilution Procedure — Example: 85.5 mL stock → 1.0 L</p>
+      <div class="dilution-steps">
+        <div class="d-step"><div class="num">1</div><div class="dtext">Fill a <span class="highlight">1.0 L volumetric flask</span> ¼ with distilled water first — adding water before acid prevents dangerous exothermic splashing.</div></div>
+        <div class="d-step"><div class="num">2</div><div class="dtext">Dispense <span class="highlight">85.5 mL</span> of the concentrated stock solution from a buret into the flask.</div></div>
+        <div class="d-step"><div class="num">3</div><div class="dtext">Add distilled water up to the <span class="highlight">1.0 L fill line</span>; stopper and invert to mix thoroughly.</div></div>
+      </div>
+    </div>
+
+    <!-- SOLUBILITY RULES -->
+    <div class="card">
+      <div class="card-title"><span class="dot dot-navy"></span>Solubility Rules <small style="font-weight:400;font-size:0.72rem;color:var(--mid);margin-left:4px;">(higher rule takes priority)</small></div>
+
+      <div class="sol-section">
+        <div class="sol-header soluble">✔ Soluble</div>
+        <div class="rule-row"><span class="ion">Na⁺, K⁺, NH₄⁺</span><span class="note">All salts — no exceptions</span></div>
+        <div class="rule-row"><span class="ion">NO₃⁻, ClO₃⁻, ClO₄⁻, CH₃CO₂⁻</span><span class="note">All salts — no exceptions</span></div>
+        <div class="rule-row"><span class="ion">Cl⁻, Br⁻, I⁻</span><span class="except">EXCEPT Ag⁺, Hg₂²⁺, Pb²⁺</span></div>
+        <div class="rule-row"><span class="ion">SO₄²⁻</span><span class="except">EXCEPT Ca²⁺, Ba²⁺, Pb²⁺, Ag⁺, Sr²⁺</span></div>
+        <div class="rule-row"><span class="ion">F⁻</span><span class="except">EXCEPT Mg²⁺, Ca²⁺, Sr²⁺, Ba²⁺, Pb²⁺</span></div>
+      </div>
+
+      <div class="sol-section" style="margin-top:10px;">
+        <div class="sol-header insoluble">✖ Insoluble</div>
+        <div class="rule-row"><span class="ion">CO₃²⁻, PO₄³⁻, C₂O₄²⁻, CrO₄²⁻, S²⁻</span><span class="note">All salts</span></div>
+        <div class="rule-row"><span class="ion">OH⁻, O²⁻</span><span class="note">Most metal salts</span></div>
+      </div>
+
+      <div style="margin-top:6px;font-size:0.66rem;color:var(--mid);background:var(--bg);border-radius:4px;padding:4px 8px;line-height:1.5;">
+        <strong style="color:var(--black);">Common insoluble examples:</strong>&ensp;
+        CaSO₄ &nbsp;·&nbsp; CaCO₃ &nbsp;·&nbsp; AgCl &nbsp;·&nbsp; K₂SO₄
+      </div>
+    </div>
+
+    <!-- ELECTROLYTES — full width -->
+    <div class="card span2">
+      <div class="card-title"><span class="dot dot-amber"></span>Electrolytes in Aqueous Solution</div>
+
+      <div class="elec-grid">
+        <div class="elec-col strong">
+          <h3>⚡ Strong Electrolytes</h3>
+          <div class="tagline">100% dissociation — all dissolved units become free ions</div>
+          <div class="sub-label">7 Strong Acids (memorize)</div>
+          <div class="examples">HCl, HBr, HI, HNO₃<br>H₂SO₄, HClO₄, HClO₃</div>
+          <div class="sub-label">Strong Bases</div>
+          <div class="examples">Group 1 hydroxides (NaOH, KOH…)<br>+ Ba(OH)₂, Sr(OH)₂</div>
+          <div class="sub-label">Soluble Ionic Salts</div>
+          <div class="examples">NaCl, KNO₃, CuSO₄, NH₄Cl…</div>
+        </div>
+
+        <div class="elec-col weak">
+          <h3>〰 Weak Electrolytes</h3>
+          <div class="tagline">Partial dissociation — equilibrium between molecular &amp; ionic forms</div>
+          <div class="sub-label">Weak Acids</div>
+          <div class="examples">CH₃COOH (acetic), HF<br>HNO₂, H₂CO₃, H₃PO₄, HCN…</div>
+          <div class="sub-label">Weak Bases</div>
+          <div class="examples">NH₃ (ammonia)<br>amines (CH₃NH₂…)</div>
+          <div class="sub-label">Slightly Soluble Salts</div>
+          <div class="examples">PbSO₄, CaF₂<br>(low ion concentrations)</div>
+        </div>
+
+        <div class="elec-col non">
+          <h3>○ Non-Electrolytes</h3>
+          <div class="tagline">No ionization at all — dissolve as intact molecules, zero conductivity</div>
+          <div class="sub-label">Examples</div>
+          <div class="examples">Sucrose, glucose, ethanol<br>glycerol, acetone, urea<br>— most organic molecules</div>
+          <div class="sub-label" style="margin-top:8px;">Note</div>
+          <div class="examples" style="color:var(--mid);">These often dissolve well in water (polar) — they just don't ionize.</div>
+        </div>
+      </div>
+
+      <div class="confusion-banner">
+        <strong>⚠ Classic confusion — dissolves ≠ electrolyte:</strong> Sugar dissolves beautifully in water but is a non-electrolyte (produces no ions). Conversely, AgCl barely dissolves — but every unit that does dissolves dissociates 100% into Ag⁺ and Cl⁻. <em>Solubility and degree of ionization are completely independent.</em>
+      </div>
+    </div>
+
+    <!-- MAKING A SOLUTION FROM A SOLID -->
+    <div class="card span2">
+      <div class="card-title"><span class="dot dot-rose"></span>Making a Solution from a Solid — 4 Steps</div>
+      <div class="solid-steps">
+        <div class="s-step">
+          <div class="snum">1</div>
+          <div class="stext"><strong>Calculate moles needed</strong> → convert to grams using molar mass</div>
+        </div>
+        <div class="s-step">
+          <div class="snum">2</div>
+          <div class="stext"><strong>Weigh out</strong> the correct mass of solid on a balance</div>
+        </div>
+        <div class="s-step">
+          <div class="snum">3</div>
+          <div class="stext"><strong>Add solid</strong> to a volumetric flask <strong>half-filled</strong> with distilled water; swirl until fully dissolved</div>
+        </div>
+        <div class="s-step">
+          <div class="snum">4</div>
+          <div class="stext"><strong>Add distilled water</strong> up to the calibration mark on the flask neck; cap and invert to mix</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+</div><!-- /page -->
+</body>
+</html>
