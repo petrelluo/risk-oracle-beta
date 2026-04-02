@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Integrated Math III · Ch. 5 · Exponential &amp; Logarithmic Functions</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#16213e;--blue:#1251a3;--sky:#1976d2;--teal:#00796b;--gold:#e65100;--purple:#6a1b9a;--red:#b71c1c;--paper:#fffef9;--cream:#f4f2ed;--mist:#eaeef8;--lt-teal:#e0f2f1;--border:#cdd4e8;--slate:#546e7a;--r:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh}
+
+/* ── MATH DISPLAY ── */
+sup,sub{font-size:.72em;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}sub{bottom:-.22em}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;font-size:.88em;line-height:1.35}
+.frac .num{border-bottom:1.5px solid currentColor;padding:0 4px 1px;text-align:center}
+.frac .den{padding:1px 4px 0;text-align:center}
+.surd{display:inline-flex;align-items:flex-start;vertical-align:middle}
+.rad{border-top:1.5px solid currentColor;padding:0 3px 0 1px;margin-left:1px}
+.math{font-style:italic}
+
+/* ── HEADER ── */
+header{background:linear-gradient(135deg,#0d1f3c 0%,#1251a3 60%,#1976d2 100%);color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 56px)}
+header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:32px;background:var(--cream);clip-path:ellipse(54% 100% at 50% 100%)}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:.28rem 1rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;position:relative;z-index:1}
+header h1{font-family:'Lora',serif;font-size:clamp(1.5rem,4vw,2.4rem);line-height:1.2;margin-bottom:.4rem;position:relative;z-index:1}
+header p{opacity:.72;font-size:.88rem;font-weight:300;position:relative;z-index:1}
+
+/* ── NAV ── */
+.nav-wrap{background:#fff;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(18,81,163,.1)}
+.nav-top{display:flex;justify-content:center;gap:.5rem;padding:.65rem 1rem .4rem;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.nav-groups{display:flex;justify-content:center;flex-wrap:wrap}
+.nav-grp{display:flex;align-items:center;gap:.3rem;padding:.4rem .75rem;border-right:1px solid var(--border);flex-wrap:wrap}
+.nav-grp:last-child{border-right:none}
+.grp-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);padding-right:.3rem;white-space:nowrap}
+.tb{padding:.3rem .82rem;border-radius:999px;border:2px solid var(--border);background:transparent;font-family:'Source Sans 3',sans-serif;font-size:.78rem;font-weight:700;color:var(--slate);cursor:pointer;transition:all .17s;white-space:nowrap}
+.tb:hover{border-color:var(--sky);color:var(--sky)}
+.tb.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.tb.top{font-size:.8rem;padding:.35rem 1.1rem}
+.tb.ch:hover,.tb.ch.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.tb.ch{border-color:var(--purple);color:var(--purple)}
+.tb.ak:hover,.tb.ak.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.tb.ak{border-color:var(--teal);color:var(--teal)}
+
+/* ── SECTIONS ── */
+section{display:none}
+section.active{display:block;animation:fu .28s ease}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:820px;margin:0 auto;padding:2rem 1.5rem 5rem}
+
+/* ── PAGE TITLE ── */
+.pg-title{font-family:'Lora',serif;font-size:1.5rem;margin-bottom:.3rem}
+.pg-sub{font-size:.84rem;color:var(--slate);padding-bottom:.85rem;margin-bottom:1.5rem;border-bottom:2px solid var(--mist)}
+
+/* ── QUIZ META ── */
+.qmeta{background:var(--mist);border-radius:var(--r);padding:.75rem 1.1rem;margin-bottom:1.4rem;display:flex;flex-wrap:wrap;gap:.9rem;font-size:.83rem;color:var(--slate)}
+.qmeta strong{color:var(--ink)}
+
+/* ── PROBLEMS ── */
+.prob-list{display:flex;flex-direction:column;gap:1.1rem}
+.prob{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden}
+.prob-hd{background:var(--mist);padding:.42rem 1.1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--border)}
+.pnum{font-weight:700;font-size:.8rem;color:var(--blue)}
+.pts{font-size:.72rem;color:var(--slate);background:#fff;border-radius:999px;padding:.12rem .55rem;border:1px solid var(--border);margin-left:auto}
+.ptag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.13rem .5rem;border-radius:999px}
+.app{background:#e8f5e9;color:#1b5e20}.diff{background:#fce4ec;color:#880e4f}.mod{background:#fff3e0;color:#bf360c}
+.prob-bd{padding:.95rem 1.2rem}
+.prob-bd p{font-size:.94rem;line-height:1.75}
+.prob-bd .q{font-weight:600;margin-bottom:.25rem}
+.sub-parts{padding-left:1.2rem;margin-top:.4rem}
+.sub-parts li{font-size:.92rem;line-height:1.8;margin-bottom:.1rem}
+.ws{margin-top:.85rem}
+.wl{height:26px;border-bottom:1px solid #ddd;margin-bottom:1px}
+
+/* ── CHEAT SHEET ── */
+.cs-sec{margin-bottom:1.9rem}
+.cs-h{font-family:'Lora',serif;font-size:1.05rem;color:var(--blue);border-left:4px solid var(--blue);padding-left:.65rem;margin-bottom:.85rem}
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:.75rem;margin-bottom:.75rem}
+.cs-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:.8rem .95rem}
+.cs-lbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sky);margin-bottom:.28rem}
+.cs-f{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:.28rem;line-height:1.55}
+.cs-card p{font-size:.78rem;color:var(--slate);line-height:1.5}
+.cs-tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:.5rem 0 .9rem}
+.cs-tbl th{background:var(--blue);color:#fff;padding:.48rem .8rem;text-align:left;font-weight:600}
+.cs-tbl td{padding:.42rem .8rem;border-bottom:1px solid var(--border)}
+.cs-tbl tr:nth-child(even) td{background:var(--mist)}
+.cs-note{background:#fff8e1;border-left:4px solid var(--gold);padding:.65rem 1rem;border-radius:0 8px 8px 0;margin-top:.5rem;font-size:.84rem;color:#4e342e;line-height:1.6}
+.cs-box{background:linear-gradient(135deg,#0d1f3c,#1251a3);color:#fff;border-radius:var(--r);padding:1.1rem 1.3rem;margin-top:.5rem}
+.cs-box h4{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.65;margin-bottom:.6rem}
+.chip-row{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:.3rem .75rem;font-size:.8rem;line-height:1.5}
+
+/* ── ANSWER KEYS ── */
+.ak-blk{margin-bottom:2rem}
+.ak-h{font-family:'Lora',serif;font-size:1rem;color:var(--teal);border-left:4px solid var(--teal);padding-left:.65rem;margin-bottom:.85rem}
+.ak-grid{display:flex;flex-direction:column;gap:.45rem}
+.ak-item{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:.6rem 1rem;display:grid;grid-template-columns:1.8rem 1fr;gap:.7rem;align-items:baseline;font-size:.87rem}
+.an{font-weight:700;color:var(--blue)}
+.av{line-height:1.65}
+.av .key{font-weight:700;color:var(--teal)}
+.ak-note{font-size:.78rem;color:var(--slate);font-style:italic;margin-top:.15rem}
+
+/* ── REVIEW GUIDE ── */
+.rg-lesson{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:1.4rem;overflow:hidden;box-shadow:0 2px 10px rgba(15,31,61,.06)}
+.rg-head{background:linear-gradient(90deg,var(--blue),var(--sky));color:#fff;padding:.72rem 1.1rem;display:flex;align-items:center;gap:.7rem}
+.rg-num{background:rgba(255,255,255,.2);border-radius:7px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;line-height:1}
+.rg-head h3{font-size:.97rem;font-weight:600}
+.rg-body{padding:1.05rem 1.25rem}
+.ex-box{background:#f0fdf4;border-left:4px solid var(--teal);border-radius:0 9px 9px 0;padding:.75rem 1rem;margin:.75rem 0}
+.ex-lbl{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:.28rem}
+.ex-box p{font-size:.88rem;line-height:1.65;color:#134e4a}
+.key-note{background:#fffbeb;border:1.5px solid #fde68a;border-radius:9px;padding:.7rem 1rem;margin:.75rem 0;display:flex;gap:.6rem;align-items:flex-start}
+.key-note .icon{font-size:1.15rem;flex-shrink:0;line-height:1.35}
+.key-note p{font-size:.85rem;color:#92400e;line-height:1.55}
+.step-list{padding-left:1.35rem;margin:.45rem 0}
+.step-list li{font-size:.87rem;line-height:1.75;color:#334155;margin-bottom:.1rem}
+.rg-body .cs-grid{margin:.7rem 0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:580px){.grp-lbl{display:none}.nav-grp{padding:.35rem .45rem}.prob-bd p{font-size:.87rem}}
+
+/* ── FLOATING PRINT BUTTON ── */
+.fab-print{position:fixed;bottom:1.6rem;right:1.6rem;z-index:200;background:var(--blue);color:#fff;border:none;border-radius:999px;padding:.65rem 1.25rem;font-family:'Source Sans 3',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(18,81,163,.35);display:flex;align-items:center;gap:.4rem;transition:all .2s}
+.fab-print:hover{background:var(--ink);transform:translateY(-2px);box-shadow:0 6px 22px rgba(18,81,163,.4)}
+
+/* ── PRINT MEDIA (Ctrl+P fallback) ── */
+@media print{
+  .nav-wrap,.fab-print{display:none!important}
+  header{background:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:1rem;margin-bottom:0}
+  header::after{display:none}
+  body{background:#fff}
+  section{display:none!important}
+  section.active{display:block!important}
+  .container{padding:0;max-width:100%}
+  .prob{page-break-inside:avoid;border:1px solid #999!important}
+  .prob-hd{background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wl{border-bottom:1px solid #aaa!important}
+  .qmeta{background:#f5f5f5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .ptag{display:none}
+  .pg-sub{border-bottom:1.5px solid #000!important}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="badge">Big Ideas Integrated Mathematics III · Larson &amp; Boswell</div>
+  <h1>Chapter 5 · Exponential &amp; Logarithmic Functions</h1>
+  <p>Review Guide · Cheat Sheet · 11 Quizzes · Answer Keys</p>
+</header>
+
+<!-- NAVIGATION -->
+<div class="nav-wrap">
+  <div class="nav-top">
+    <button class="tb top" onclick="go('review')">📖 Review Guide</button>
+    <button class="tb top ak active" onclick="go('cheat')">📋 Cheat Sheet</button>
+    <button class="tb top ak" onclick="go('keys')">🔑 Answer Keys</button>
+  </div>
+  <div class="nav-groups">
+    <div class="nav-grp">
+      <span class="grp-lbl">Sections 5.1–5.3</span>
+      <button class="tb" onclick="go('q1')">Quiz 1</button>
+      <button class="tb" onclick="go('q2')">Quiz 2</button>
+      <button class="tb" onclick="go('q3')">Quiz 3</button>
+    </div>
+    <div class="nav-grp">
+      <span class="grp-lbl">Sections 5.4–5.6</span>
+      <button class="tb" onclick="go('q4')">Quiz 4</button>
+      <button class="tb" onclick="go('q5')">Quiz 5</button>
+      <button class="tb" onclick="go('q6')">Quiz 6</button>
+    </div>
+    <div class="nav-grp">
+      <span class="grp-lbl">Full Chapter</span>
+      <button class="tb" onclick="go('q7')">Quiz 7</button>
+      <button class="tb" onclick="go('q8')">Quiz 8</button>
+      <button class="tb" onclick="go('q9')">Quiz 9</button>
+    </div>
+    <div class="nav-grp">
+      <span class="grp-lbl">Challenge</span>
+      <button class="tb ch" onclick="go('q10')">Quiz 10 ★</button>
+      <button class="tb ch" onclick="go('q11')">Quiz 11 ★</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ REVIEW GUIDE ═══════════════ -->
+<section id="review">
+<div class="container">
+  <p class="pg-title">Chapter 5 · Review Guide</p>
+  <p class="pg-sub">Sections 5.1 – 5.6 · Exponential &amp; Logarithmic Functions</p>
+
+  <!-- 5.1 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.1</div>
+      <h3>The Natural Base <i>e</i></h3>
+    </div>
+    <div class="rg-body">
+      <div class="cs-grid">
+        <div class="cs-card">
+          <div class="cs-lbl">The Number <i>e</i></div>
+          <div class="cs-f"><i>e</i> ≈ 2.71828…</div>
+          <p>Irrational constant. The natural base of exponential functions.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Natural Exponential Function</div>
+          <div class="cs-f"><i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i></div>
+          <p>Domain: all reals. Range: <i>y</i> &gt; 0. Passes through (0, 1) and (1, <i>e</i>). Always increasing.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Continuous Compounding</div>
+          <div class="cs-f"><i>A</i> = <i>Pe<sup>rt</sup></i></div>
+          <p><i>P</i> = principal, <i>r</i> = annual rate (decimal), <i>t</i> = years.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Inverse Properties</div>
+          <div class="cs-f"><i>e</i><sup>ln <i>x</i></sup> = <i>x</i> &nbsp;&amp;&nbsp; ln(<i>e<sup>x</sup></i>) = <i>x</i></div>
+          <p><i>y</i> = <i>e<sup>x</sup></i> and <i>y</i> = ln <i>x</i> are inverses of each other.</p>
+        </div>
+      </div>
+      <div class="key-note">
+        <span class="icon">💡</span>
+        <p>The graph of <i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i> has a <strong>horizontal asymptote at y = 0</strong>. It is strictly increasing for all <i>x</i> and is never negative.</p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Example — Continuous Compounding</div>
+        <p>$3,000 invested at 4% compounded continuously for 6 years:<br>
+        <i>A</i> = 3000 · <i>e</i><sup>0.04 · 6</sup> = 3000 · <i>e</i><sup>0.24</sup> ≈ 3000 × 1.2712 ≈ <strong>$3,813.57</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.2</div>
+      <h3>Logarithms and Logarithmic Functions</h3>
+    </div>
+    <div class="rg-body">
+      <div class="cs-grid">
+        <div class="cs-card">
+          <div class="cs-lbl">Definition</div>
+          <div class="cs-f">log<sub><i>b</i></sub> <i>y</i> = <i>x</i> &nbsp;⟺&nbsp; <i>b<sup>x</sup></i> = <i>y</i></div>
+          <p>Requires <i>b</i> &gt; 0, <i>b</i> ≠ 1, and <i>y</i> &gt; 0.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Common Log</div>
+          <div class="cs-f">log <i>x</i> = log<sub>10</sub> <i>x</i></div>
+          <p>Base 10. Used when no base is written. log 100 = 2 since 10² = 100.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Natural Log</div>
+          <div class="cs-f">ln <i>x</i> = log<sub><i>e</i></sub> <i>x</i></div>
+          <p>Base <i>e</i>. Inverse of <i>y</i> = <i>e<sup>x</sup></i>. ln <i>e</i> = 1.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Special Values</div>
+          <div class="cs-f">log<sub><i>b</i></sub> 1 = 0<br>log<sub><i>b</i></sub> <i>b</i> = 1<br>log<sub><i>b</i></sub>(<i>b<sup>x</sup></i>) = <i>x</i></div>
+          <p>These follow directly from the definition.</p>
+        </div>
+      </div>
+      <table class="cs-tbl">
+        <tr><th>Exponential Form</th><th>Logarithmic Form</th><th>Value</th></tr>
+        <tr><td>2<sup>5</sup> = 32</td><td>log<sub>2</sub> 32 = 5</td><td>5</td></tr>
+        <tr><td>10<sup>4</sup> = 10,000</td><td>log 10,000 = 4</td><td>4</td></tr>
+        <tr><td><i>e</i><sup>3</sup> ≈ 20.09</td><td>ln 20.09 ≈ 3</td><td>3</td></tr>
+        <tr><td>4<sup>−2</sup> = <span class="frac"><span class="num">1</span><span class="den">16</span></span></td><td>log<sub>4</sub> <span class="frac"><span class="num">1</span><span class="den">16</span></span> = −2</td><td>−2</td></tr>
+      </table>
+      <div class="key-note">
+        <span class="icon">📌</span>
+        <p>Graph of <i>y</i> = log<sub><i>b</i></sub> <i>x</i>: domain <i>x</i> &gt; 0, range all reals, <strong>vertical asymptote x = 0</strong>, passes through (1, 0) and (<i>b</i>, 1). It is the reflection of <i>y</i> = <i>b<sup>x</sup></i> over the line <i>y</i> = <i>x</i>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.3</div>
+      <h3>Transformations of Exponential &amp; Logarithmic Functions</h3>
+    </div>
+    <div class="rg-body">
+      <table class="cs-tbl">
+        <tr><th>Function</th><th>Transformation from Parent</th><th>New Asymptote</th></tr>
+        <tr><td><i>y</i> = <i>b<sup>x</sup></i> + <i>k</i></td><td>Shift <b>up</b> <i>k</i> units</td><td><i>y</i> = <i>k</i></td></tr>
+        <tr><td><i>y</i> = <i>b<sup>x</sup></i> − <i>k</i></td><td>Shift <b>down</b> <i>k</i> units</td><td><i>y</i> = −<i>k</i></td></tr>
+        <tr><td><i>y</i> = <i>b</i><sup><i>x</i> − <i>h</i></sup></td><td>Shift <b>right</b> <i>h</i> units</td><td><i>y</i> = 0</td></tr>
+        <tr><td><i>y</i> = <i>b</i><sup><i>x</i> + <i>h</i></sup></td><td>Shift <b>left</b> <i>h</i> units</td><td><i>y</i> = 0</td></tr>
+        <tr><td><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i>, <i>a</i> &gt; 1</td><td>Vertical <b>stretch</b> by <i>a</i></td><td><i>y</i> = 0</td></tr>
+        <tr><td><i>y</i> = −<i>b<sup>x</sup></i></td><td>Reflect over <b>x-axis</b></td><td><i>y</i> = 0</td></tr>
+        <tr><td><i>y</i> = <i>b</i><sup>−<i>x</i></sup></td><td>Reflect over <b>y-axis</b></td><td><i>y</i> = 0</td></tr>
+        <tr><td><i>y</i> = log<sub><i>b</i></sub>(<i>x</i> − <i>h</i>) + <i>k</i></td><td>Shift right <i>h</i>, up <i>k</i></td><td><i>x</i> = <i>h</i></td></tr>
+        <tr><td><i>y</i> = <i>a</i> · log<sub><i>b</i></sub> <i>x</i></td><td>Vertical stretch by <i>a</i>; reflect if <i>a</i> &lt; 0</td><td><i>x</i> = 0</td></tr>
+      </table>
+      <div class="key-note">
+        <span class="icon">🔑</span>
+        <p><strong>Key rule:</strong> For <i>y</i> = <i>a</i> · <i>b</i><sup><i>x</i>−<i>h</i></sup> + <i>k</i>, the horizontal asymptote is <i>y</i> = <i>k</i>. For <i>y</i> = <i>a</i> · log<sub><i>b</i></sub>(<i>x</i> − <i>h</i>) + <i>k</i>, the vertical asymptote is <i>x</i> = <i>h</i> and the domain is <i>x</i> &gt; <i>h</i>.</p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Example</div>
+        <p>Describe <i>g</i>(<i>x</i>) = −2<i>e</i><sup><i>x</i>+1</sup> + 3 from <i>y</i> = <i>e<sup>x</sup></i>:<br>
+        Reflect over x-axis · Vertical stretch by 2 · Shift left 1 · Shift up 3.<br>
+        Horizontal asymptote: <strong>y = 3</strong>. Domain: all reals. Range: <i>y</i> &lt; 3.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.4 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.4</div>
+      <h3>Properties of Logarithms</h3>
+    </div>
+    <div class="rg-body">
+      <div class="cs-grid">
+        <div class="cs-card">
+          <div class="cs-lbl">Product Property</div>
+          <div class="cs-f">log<sub><i>b</i></sub>(<i>mn</i>) = log<sub><i>b</i></sub> <i>m</i> + log<sub><i>b</i></sub> <i>n</i></div>
+          <p>Log of a product equals the <strong>sum</strong> of logs.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Quotient Property</div>
+          <div class="cs-f">log<sub><i>b</i></sub> <span class="frac"><span class="num"><i>m</i></span><span class="den"><i>n</i></span></span> = log<sub><i>b</i></sub> <i>m</i> − log<sub><i>b</i></sub> <i>n</i></div>
+          <p>Log of a quotient equals the <strong>difference</strong> of logs.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Power Property</div>
+          <div class="cs-f">log<sub><i>b</i></sub>(<i>m<sup>n</sup></i>) = <i>n</i> · log<sub><i>b</i></sub> <i>m</i></div>
+          <p>The exponent moves to become a <strong>multiplier</strong> in front.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Change of Base</div>
+          <div class="cs-f">log<sub><i>b</i></sub> <i>a</i> = <span class="frac"><span class="num">log <i>a</i></span><span class="den">log <i>b</i></span></span> = <span class="frac"><span class="num">ln <i>a</i></span><span class="den">ln <i>b</i></span></span></div>
+          <p>Converts any base to base 10 or base <i>e</i> for calculator use.</p>
+        </div>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Expand</div>
+        <p>log<sub>2</sub> <span class="frac"><span class="num">8<i>x</i><sup>3</sup></span><span class="den"><i>y</i></span></span> = log<sub>2</sub> 8 + 3 log<sub>2</sub> <i>x</i> − log<sub>2</sub> <i>y</i> = <strong>3 + 3 log<sub>2</sub> <i>x</i> − log<sub>2</sub> <i>y</i></strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Condense</div>
+        <p>2 ln <i>x</i> + ln 5 − ln <i>y</i> = ln(<i>x</i><sup>2</sup>) + ln 5 − ln <i>y</i> = <strong>ln <span class="frac"><span class="num">5<i>x</i><sup>2</sup></span><span class="den"><i>y</i></span></span></strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.5 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.5</div>
+      <h3>Solving Exponential &amp; Logarithmic Equations</h3>
+    </div>
+    <div class="rg-body">
+      <p style="font-size:.86rem;font-weight:700;color:var(--blue);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.05em">Exponential Equations</p>
+      <ol class="step-list">
+        <li><strong>Same base:</strong> If <i>b<sup>u</sup></i> = <i>b<sup>v</sup></i>, then <i>u</i> = <i>v</i>. (Set exponents equal.)</li>
+        <li><strong>Different bases:</strong> Take log or ln of both sides → use Power Property to bring variable down → solve.</li>
+        <li><strong>With <i>e</i>:</strong> Isolate <i>e<sup>u</sup></i>, then apply ln to both sides.</li>
+      </ol>
+      <div class="ex-box">
+        <div class="ex-lbl">Example — Different Bases</div>
+        <p>Solve 3<sup>2<i>x</i></sup> = 50:<br>
+        2<i>x</i> · ln 3 = ln 50 &nbsp;→&nbsp; 2<i>x</i> = <span class="frac"><span class="num">ln 50</span><span class="den">ln 3</span></span> &nbsp;→&nbsp; <i>x</i> = <span class="frac"><span class="num">ln 50</span><span class="den">2 ln 3</span></span> ≈ <strong>1.786</strong></p>
+      </div>
+      <p style="font-size:.86rem;font-weight:700;color:var(--blue);margin:.9rem 0 .6rem;text-transform:uppercase;letter-spacing:.05em">Logarithmic Equations</p>
+      <ol class="step-list">
+        <li><strong>Condense</strong> both sides to a single logarithm each.</li>
+        <li><strong>Convert</strong> to exponential form (or if log<sub><i>b</i></sub> <i>u</i> = log<sub><i>b</i></sub> <i>v</i>, then <i>u</i> = <i>v</i>).</li>
+        <li><strong>Solve</strong> the resulting equation.</li>
+        <li><strong>Check:</strong> Reject any solution that makes a log argument ≤ 0 (extraneous root).</li>
+      </ol>
+      <div class="ex-box">
+        <div class="ex-lbl">Example — Logarithmic with Extraneous Root</div>
+        <p>Solve log<sub>3</sub>(<i>x</i> + 4) + log<sub>3</sub>(<i>x</i> − 2) = 3:<br>
+        log<sub>3</sub>[(<i>x</i>+4)(<i>x</i>−2)] = 3 &nbsp;→&nbsp; (<i>x</i>+4)(<i>x</i>−2) = 27<br>
+        <i>x</i><sup>2</sup> + 2<i>x</i> − 8 = 27 &nbsp;→&nbsp; <i>x</i><sup>2</sup> + 2<i>x</i> − 35 = 0 &nbsp;→&nbsp; (<i>x</i>+7)(<i>x</i>−5) = 0<br>
+        <i>x</i> = −7: log of negative → <strong>reject</strong>. &nbsp;&nbsp; <i>x</i> = 5 ✓ &nbsp; <strong>Answer: x = 5</strong></p>
+      </div>
+      <div class="key-note">
+        <span class="icon">⚠️</span>
+        <p><strong>Always check for extraneous solutions</strong> when solving logarithmic equations. Any value that makes a logarithm's argument ≤ 0 must be discarded.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.6 -->
+  <div class="rg-lesson">
+    <div class="rg-head">
+      <div class="rg-num">5.6</div>
+      <h3>Modeling with Exponential &amp; Logarithmic Functions</h3>
+    </div>
+    <div class="rg-body">
+      <table class="cs-tbl">
+        <tr><th>Model</th><th>Equation</th><th>Notes</th></tr>
+        <tr><td>Exponential Growth</td><td><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i>, <i>b</i> &gt; 1</td><td>Increases without bound</td></tr>
+        <tr><td>Exponential Decay</td><td><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i>, 0 &lt; <i>b</i> &lt; 1</td><td>Approaches <i>y</i> = 0</td></tr>
+        <tr><td>Continuous Growth/Decay</td><td><i>y</i> = <i>ae<sup>kt</sup></i></td><td><i>k</i> &gt; 0 growth; <i>k</i> &lt; 0 decay</td></tr>
+        <tr><td>Continuous Compounding</td><td><i>A</i> = <i>Pe<sup>rt</sup></i></td><td><i>r</i> = annual rate (decimal)</td></tr>
+        <tr><td>Half-Life</td><td><i>y</i> = <i>a</i> · <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup><i>t</i>/<i>h</i></sup></td><td><i>h</i> = half-life period</td></tr>
+        <tr><td>Doubling Time</td><td><i>t<sub>d</sub></i> = <span class="frac"><span class="num">ln 2</span><span class="den"><i>r</i></span></span></td><td>Continuous growth rate <i>r</i></td></tr>
+      </table>
+      <div class="cs-grid" style="margin-top:.8rem">
+        <div class="cs-card">
+          <div class="cs-lbl">Finding a Model from Two Points</div>
+          <div class="cs-f">Use <i>y</i> = <i>a</i> · <i>b<sup>x</sup></i></div>
+          <p>Plug in both points to get two equations. Divide to eliminate <i>a</i>, solve for <i>b</i>, then find <i>a</i>.</p>
+        </div>
+        <div class="cs-card">
+          <div class="cs-lbl">Finding Rate from Growth Data</div>
+          <div class="cs-f">Solve <i>ae<sup>kt</sup></i> = <i>y</i> for <i>k</i></div>
+          <p>Isolate <i>e<sup>kt</sup></i>, apply ln, divide by <i>t</i>. Then use <i>k</i> to find any other value.</p>
+        </div>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Example — Half-Life</div>
+        <p>Carbon-14 half-life: 5,730 years. Starting with 200 g, find amount after 10,000 yr:<br>
+        <i>y</i> = 200 · <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup>10000/5730</sup> = 200 · (0.5)<sup>1.746</sup> ≈ <strong>59.5 g</strong></p>
+      </div>
+      <div class="ex-box">
+        <div class="ex-lbl">Example — Doubling Time</div>
+        <p>A population grows continuously at 3% per year. Find doubling time:<br>
+        <i>t<sub>d</sub></i> = <span class="frac"><span class="num">ln 2</span><span class="den">0.03</span></span> ≈ <span class="frac"><span class="num">0.6931</span><span class="den">0.03</span></span> ≈ <strong>23.1 years</strong></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ═══════════════ CHEAT SHEET ═══════════════ -->
+<section id="cheat" class="active">
+<div class="container">
+  <p class="pg-title">Chapter 5 · Cheat Sheet</p>
+  <p class="pg-sub">Key formulas, definitions, and strategies for exponential &amp; logarithmic functions</p>
+
+  <div class="cs-sec">
+    <p class="cs-h">The Natural Base <i>e</i> &amp; Exponential Functions</p>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-lbl">Natural Base</div>
+        <div class="cs-f"><i>e</i> ≈ 2.71828…</div>
+        <p>Irrational constant; base of the natural exponential function.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Natural Exponential</div>
+        <div class="cs-f"><i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i></div>
+        <p>Domain: all reals. Range: <i>y</i> &gt; 0. Passes through (0, 1). Always increasing.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Exponential Growth</div>
+        <div class="cs-f"><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i>, <i>b</i> &gt; 1</div>
+        <p>Increases without bound. <i>a</i> = initial value (y-intercept).</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Exponential Decay</div>
+        <div class="cs-f"><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i>, 0 &lt; <i>b</i> &lt; 1</div>
+        <p>Decreases toward y = 0. Horizontal asymptote: y = 0.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Continuous Compounding</div>
+        <div class="cs-f"><i>A</i> = <i>Pe<sup>rt</sup></i></div>
+        <p><i>P</i> = principal, <i>r</i> = annual rate (decimal), <i>t</i> = years.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Inverse Property</div>
+        <div class="cs-f"><i>e</i><sup>ln <i>x</i></sup> = <i>x</i> &nbsp; &amp; &nbsp; ln(<i>e<sup>x</sup></i>) = <i>x</i></div>
+        <p>The functions <i>y</i> = <i>e<sup>x</sup></i> and <i>y</i> = ln <i>x</i> are inverses.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-sec">
+    <p class="cs-h">Logarithm Definitions &amp; Special Values</p>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-lbl">Definition</div>
+        <div class="cs-f">log<sub><i>b</i></sub> <i>y</i> = <i>x</i> &nbsp;⟺&nbsp; <i>b<sup>x</sup></i> = <i>y</i></div>
+        <p><i>b</i> &gt; 0, <i>b</i> ≠ 1, <i>y</i> &gt; 0</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Common Log</div>
+        <div class="cs-f">log <i>x</i> = log<sub>10</sub> <i>x</i></div>
+        <p>Base 10; default when no base is written.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Natural Log</div>
+        <div class="cs-f">ln <i>x</i> = log<sub><i>e</i></sub> <i>x</i></div>
+        <p>Base <i>e</i>; inverse of <i>y</i> = <i>e<sup>x</sup></i>.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Special Values</div>
+        <div class="cs-f">log<sub><i>b</i></sub> 1 = 0<br>log<sub><i>b</i></sub> <i>b</i> = 1</div>
+        <p>log<sub><i>b</i></sub>(<i>b<sup>x</sup></i>) = <i>x</i> &nbsp; and &nbsp; <i>b</i><sup>log<sub><i>b</i></sub> <i>x</i></sup> = <i>x</i></p>
+      </div>
+    </div>
+    <table class="cs-tbl">
+      <tr><th>Exponential Form</th><th>Logarithmic Form</th><th>Value</th></tr>
+      <tr><td>2<sup>5</sup> = 32</td><td>log<sub>2</sub> 32 = 5</td><td>5</td></tr>
+      <tr><td>10<sup>3</sup> = 1000</td><td>log 1000 = 3</td><td>3</td></tr>
+      <tr><td><i>e</i><sup>1</sup> = <i>e</i></td><td>ln <i>e</i> = 1</td><td>1</td></tr>
+      <tr><td>3<sup>−2</sup> = <span class="frac"><span class="num">1</span><span class="den">9</span></span></td><td>log<sub>3</sub> <span class="frac"><span class="num">1</span><span class="den">9</span></span> = −2</td><td>−2</td></tr>
+      <tr><td><i>b</i><sup>0</sup> = 1</td><td>log<sub><i>b</i></sub> 1 = 0</td><td>0</td></tr>
+    </table>
+  </div>
+
+  <div class="cs-sec">
+    <p class="cs-h">Transformations of Exponential &amp; Logarithmic Functions</p>
+    <table class="cs-tbl">
+      <tr><th>Function Form</th><th>Transformation from Parent</th><th>Asymptote</th></tr>
+      <tr><td><i>y</i> = <i>b<sup>x</sup></i> + <i>k</i></td><td>Shift up <i>k</i> units</td><td><i>y</i> = <i>k</i></td></tr>
+      <tr><td><i>y</i> = <i>b</i><sup><i>x</i> − <i>h</i></sup></td><td>Shift right <i>h</i> units</td><td><i>y</i> = 0</td></tr>
+      <tr><td><i>y</i> = <i>a</i> · <i>b<sup>x</sup></i></td><td>Vertical stretch/compress by |<i>a</i>|; reflect over x-axis if <i>a</i> &lt; 0</td><td><i>y</i> = 0</td></tr>
+      <tr><td><i>y</i> = <i>b</i><sup>−<i>x</i></sup></td><td>Reflect over y-axis</td><td><i>y</i> = 0</td></tr>
+      <tr><td><i>y</i> = log<sub><i>b</i></sub>(<i>x</i> − <i>h</i>) + <i>k</i></td><td>Shift right <i>h</i>, up <i>k</i></td><td><i>x</i> = <i>h</i></td></tr>
+      <tr><td><i>y</i> = <i>a</i> · log<sub><i>b</i></sub> <i>x</i></td><td>Vertical stretch/compress; reflect if <i>a</i> &lt; 0</td><td><i>x</i> = 0</td></tr>
+    </table>
+    <div class="cs-note">📌 For <i>y</i> = <i>a</i> · <i>b</i><sup><i>x</i>−<i>h</i></sup> + <i>k</i>: horizontal asymptote is <i>y</i> = <i>k</i>. Domain: all reals. Range: <i>y</i> &gt; <i>k</i> (if <i>a</i> &gt; 0).<br>For <i>y</i> = <i>a</i> · log<sub><i>b</i></sub>(<i>x</i> − <i>h</i>) + <i>k</i>: vertical asymptote is <i>x</i> = <i>h</i>. Domain: <i>x</i> &gt; <i>h</i>. Range: all reals.</div>
+  </div>
+
+  <div class="cs-sec">
+    <p class="cs-h">Properties of Logarithms</p>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-lbl">Product Property</div>
+        <div class="cs-f">log<sub><i>b</i></sub>(<i>mn</i>) = log<sub><i>b</i></sub> <i>m</i> + log<sub><i>b</i></sub> <i>n</i></div>
+        <p>Log of a product = sum of logs.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Quotient Property</div>
+        <div class="cs-f">log<sub><i>b</i></sub><span class="frac"><span class="num"><i>m</i></span><span class="den"><i>n</i></span></span> = log<sub><i>b</i></sub> <i>m</i> − log<sub><i>b</i></sub> <i>n</i></div>
+        <p>Log of a quotient = difference of logs.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Power Property</div>
+        <div class="cs-f">log<sub><i>b</i></sub>(<i>m<sup>n</sup></i>) = <i>n</i> · log<sub><i>b</i></sub> <i>m</i></div>
+        <p>Exponent moves to become a multiplier.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Change of Base</div>
+        <div class="cs-f">log<sub><i>b</i></sub> <i>a</i> = <span class="frac"><span class="num">log <i>a</i></span><span class="den">log <i>b</i></span></span> = <span class="frac"><span class="num">ln <i>a</i></span><span class="den">ln <i>b</i></span></span></div>
+        <p>Converts to base 10 or base <i>e</i> for calculator use.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-sec">
+    <p class="cs-h">Solving Strategies</p>
+    <table class="cs-tbl">
+      <tr><th>Equation Type</th><th>Strategy</th><th>Example</th></tr>
+      <tr><td>Same base: <i>b<sup>f</sup></i> = <i>b<sup>g</sup></i></td><td>Set exponents equal: <i>f</i> = <i>g</i></td><td>2<sup>x</sup> = 2<sup>5</sup> → x = 5</td></tr>
+      <tr><td>Different base exponential</td><td>Take log or ln of both sides; apply Power Property</td><td>3<sup>x</sup> = 20 → x = <span class="frac"><span class="num">ln 20</span><span class="den">ln 3</span></span></td></tr>
+      <tr><td>Exponential with <i>e</i></td><td>Isolate <i>e<sup>u</sup></i>, then apply ln</td><td><i>e</i><sup>2<i>x</i></sup> = 9 → 2<i>x</i> = ln 9</td></tr>
+      <tr><td>Single logarithm</td><td>Convert to exponential form</td><td>log<sub>3</sub> <i>x</i> = 4 → <i>x</i> = 3<sup>4</sup> = 81</td></tr>
+      <tr><td>Multiple logarithms</td><td>Condense to one log; then convert</td><td>log <i>x</i> + log 3 = 2 → log(3<i>x</i>) = 2 → 3<i>x</i> = 100</td></tr>
+    </table>
+    <div class="cs-note">⚠️ Always check for <strong>extraneous solutions</strong> when solving logarithmic equations. Reject any value that makes an argument ≤ 0.</div>
+  </div>
+
+  <div class="cs-sec">
+    <p class="cs-h">Modeling Formulas</p>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-lbl">Half-Life</div>
+        <div class="cs-f"><i>y</i> = <i>a</i> · <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup><i>t</i>/<i>h</i></sup></div>
+        <p><i>h</i> = half-life period. Amount halves every <i>h</i> units.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Doubling Time</div>
+        <div class="cs-f"><i>t<sub>d</sub></i> = <span class="frac"><span class="num">ln 2</span><span class="den"><i>r</i></span></span></div>
+        <p>Time for a quantity to double at continuous rate <i>r</i>.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Continuous Growth/Decay</div>
+        <div class="cs-f"><i>N</i>(<i>t</i>) = <i>N</i><sub>0</sub> · <i>e<sup>kt</sup></i></div>
+        <p><i>k</i> &gt; 0 → growth; <i>k</i> &lt; 0 → decay.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-lbl">Periodic Compounding</div>
+        <div class="cs-f"><i>A</i> = <i>P</i><span class="frac"><span class="num">1 + <i>r</i></span><span class="den"><i>n</i></span></span><sup><i>nt</i></sup></div>
+        <p><i>n</i> = compounding periods per year.</p>
+      </div>
+    </div>
+    <div class="cs-box">
+      <h4>⚡ Quick Reference Strip</h4>
+      <div class="chip-row">
+        <span class="chip">log<sub><i>b</i></sub>(<i>b<sup>x</sup></i>) = <i>x</i></span>
+        <span class="chip"><i>b</i><sup>log<sub><i>b</i></sub> <i>x</i></sup> = <i>x</i></span>
+        <span class="chip"><i>A</i> = <i>Pe<sup>rt</sup></i></span>
+        <span class="chip">log<sub><i>b</i></sub>(1) = 0</span>
+        <span class="chip">log(<i>mn</i>) = log<i>m</i> + log<i>n</i></span>
+        <span class="chip">log(<i>m<sup>n</sup></i>) = <i>n</i>·log<i>m</i></span>
+        <span class="chip">log<sub><i>b</i></sub><i>a</i> = <span class="frac"><span class="num">ln <i>a</i></span><span class="den">ln <i>b</i></span></span></span>
+        <span class="chip"><i>t<sub>d</sub></i> = <span class="frac"><span class="num">ln 2</span><span class="den"><i>r</i></span></span></span>
+        <span class="chip"><i>y</i> = <i>a</i>·(<span class="frac"><span class="num">1</span><span class="den">2</span></span>)<sup><i>t/h</i></sup></span>
+        <span class="chip"><i>e</i><sup>ln <i>x</i></sup> = <i>x</i></span>
+        <span class="chip">ln(<i>e<sup>x</sup></i>) = <i>x</i></span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 1 · Sections 5.1–5.3 ═══════════════ -->
+<section id="q1">
+<div class="container">
+  <p class="pg-title">Quiz 1 · Sections 5.1 – 5.3</p>
+  <p class="pg-sub">The Natural Base <i>e</i> · Logarithms · Transformations</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~20 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.3</strong></span>
+    <span>💯 <strong>32 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Simplify the expression.</p>
+        <p><i>e</i><sup>ln 12</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the expression.</p>
+        <p>ln(<i>e</i><sup>5</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Tell whether the function represents exponential <i>growth</i> or <i>decay</i>. Identify the y-intercept.</p>
+        <p><i>y</i> = 3 · (0.75)<sup><i>x</i></sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">You deposit $5,000 in an account that earns 3% annual interest compounded continuously. Write an equation for the balance <i>A</i> after <i>t</i> years. Then find the balance after 10 years. Round to the nearest cent.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the logarithm without using a calculator.</p>
+        <p>log<sub>4</sub> 64</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Rewrite in exponential form.</p>
+        <p>log<sub>8</sub> 512 = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the logarithm without using a calculator.</p>
+        <p>log<sub>1/3</sub> 9</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe the transformation of <i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i> represented by <i>g</i>. Then state the horizontal asymptote.</p>
+        <p><i>g</i>(<i>x</i>) = <i>e</i><sup><i>x</i> − 3</sup> + 2</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Graph <i>y</i> = log<sub>2</sub>(<i>x</i> + 1). State the domain, range, and vertical asymptote.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe the transformation of <i>f</i>(<i>x</i>) = log<sub>5</sub> <i>x</i> represented by <i>g</i>.</p>
+        <p><i>g</i>(<i>x</i>) = −log<sub>5</sub> <i>x</i> + 4</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 2 · Sections 5.1–5.3 ═══════════════ -->
+<section id="q2">
+<div class="container">
+  <p class="pg-title">Quiz 2 · Sections 5.1 – 5.3</p>
+  <p class="pg-sub">The Natural Base <i>e</i> · Logarithms · Transformations</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~20 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.3</strong></span>
+    <span>💯 <strong>32 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Identify the value of each expression.</p>
+        <p><i>e</i><sup>0</sup> &nbsp;=&nbsp; _____&nbsp;&nbsp;&nbsp; <i>e</i><sup>1</sup> &nbsp;≈&nbsp; _____</p>
+        <div class="ws"><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Simplify the expression.</p>
+        <p>4<i>e</i><sup>2<i>x</i></sup> · <i>e</i><sup>3<i>x</i></sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">How long does it take $1,000 to double if it earns 5% annual interest compounded continuously? Round to the nearest tenth of a year.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the logarithm without using a calculator.</p>
+        <p>log<sub>3</sub> <span class="frac"><span class="num">1</span><span class="den">27</span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Rewrite in exponential form. Then verify the statement is true.</p>
+        <p>log<sub>7</sub> 49 = 2</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate without a calculator.</p>
+        <p>log 10,000</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">State the domain, range, and vertical asymptote of the function.</p>
+        <p><i>f</i>(<i>x</i>) = log<sub>10</sub>(<i>x</i> − 2) + 1</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe all transformations of <i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i> represented by <i>g</i>. State the horizontal asymptote.</p>
+        <p><i>g</i>(<i>x</i>) = 2<i>e</i><sup>−<i>x</i></sup> + 1</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe all transformations of <i>h</i>(<i>x</i>) = −ln(<i>x</i> + 1) + 3 from the parent function <i>y</i> = ln <i>x</i>. State the domain and vertical asymptote.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">3 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Find the value of <i>x</i>.</p>
+        <p>log<sub><i>x</i></sub> 27 = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 3 · Sections 5.1–5.3 ═══════════════ -->
+<section id="q3">
+<div class="container">
+  <p class="pg-title">Quiz 3 · Sections 5.1 – 5.3</p>
+  <p class="pg-sub">The Natural Base <i>e</i> · Logarithms · Transformations &nbsp;|&nbsp; ~20% harder problems</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~25 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.3</strong></span>
+    <span>💯 <strong>34 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the expression. Write your answer in simplest form.</p>
+        <p>ln(<i>e</i><sup>3 ln 2</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">4 pts</span><span class="ptag app">Application</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">An account grows continuously from $2,000 to $2,500 in 4 years. Find the annual interest rate. Round to the nearest tenth of a percent.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the logarithm without a calculator.</p>
+        <p>log<sub>2</sub> <span class="surd">√<span class="rad">32</span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Rewrite in logarithmic form.</p>
+        <p>10<sup>−3</sup> = 0.001</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">4 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Find the domain of the function. Write your answer in interval notation.</p>
+        <p><i>f</i>(<i>x</i>) = ln(4 − <i>x</i><sup>2</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe the transformations of <i>f</i>(<i>x</i>) = 3<i>e</i><sup>2<i>x</i></sup> − 5 from <i>y</i> = <i>e<sup>x</sup></i>. State the horizontal asymptote.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">4 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe the transformations of <i>g</i>(<i>x</i>) = log<sub>4</sub>(2<i>x</i> − 6) + 1 from <i>y</i> = log<sub>4</sub> <i>x</i>. State the domain and vertical asymptote. (<i>Hint:</i> Factor the argument first.)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">If <i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i>, write the expression for <i>f</i>(<i>x</i> + 3) and describe how the graph relates to <i>f</i>(<i>x</i>).</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve for <i>x</i> using properties of exponential functions.</p>
+        <p><i>e<sup>x</sup></i> = <i>e</i><sup>2<i>x</i> − 4</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Determine whether the point (3, 1) lies on the graph of <i>y</i> = log<sub>5</sub>(<i>x</i> + 2). Justify your answer.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 4 · Sections 5.4–5.6 ═══════════════ -->
+<section id="q4">
+<div class="container">
+  <p class="pg-title">Quiz 4 · Sections 5.4 – 5.6</p>
+  <p class="pg-sub">Properties of Logarithms · Solving Equations · Modeling</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~25 min</strong></span>
+    <span>📖 <strong>Sections 5.4–5.6</strong></span>
+    <span>💯 <strong>33 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log<sub>3</sub>(9<i>x</i><sup>4</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense the expression to the logarithm of a single quantity.</p>
+        <p>2 log <i>x</i> + log <i>y</i> − 3 log <i>z</i></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Use the Change-of-Base Formula to evaluate. Round to three decimal places.</p>
+        <p>log<sub>5</sub> 30</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>4<sup><i>x</i></sup> = 256</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>log<sub>2</sub>(<i>x</i> + 5) = 4</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to three decimal places.</p>
+        <p>3<i>e<sup>x</sup></i> − 12 = 0</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A population of 5,000 grows at 7% per year. Write an exponential model. Then find the population after 10 years. Round to the nearest whole number.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">The half-life of a radioactive substance is 12 years. Write a model for the amount remaining. Then find what fraction of the original amount remains after 36 years.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>ln <span class="frac"><span class="num"><i>x</i><sup>2</sup></span><span class="den"><span class="surd">√<span class="rad"><i>y</i></span></span></span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense the expression to the logarithm of a single quantity.</p>
+        <p>3 ln <i>x</i> − 2 ln <i>y</i> + ln 5</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 5 · Sections 5.4–5.6 ═══════════════ -->
+<section id="q5">
+<div class="container">
+  <p class="pg-title">Quiz 5 · Sections 5.4 – 5.6</p>
+  <p class="pg-sub">Properties of Logarithms · Solving Equations · Modeling</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~25 min</strong></span>
+    <span>📖 <strong>Sections 5.4–5.6</strong></span>
+    <span>💯 <strong>34 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log<sub>2</sub> <span class="frac"><span class="num">8<i>x</i><sup>3</sup></span><span class="den"><i>y</i><sup>2</sup></span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense the expression to the logarithm of a single quantity.</p>
+        <p><span class="frac"><span class="num">1</span><span class="den">2</span></span> log<sub>4</sub> <i>x</i> − 2 log<sub>4</sub> <i>y</i></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>2<sup>3<i>x</i> − 1</sup> = 32</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>log <i>x</i> + log(<i>x</i> − 3) = 1</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to three decimal places.</p>
+        <p>5<i>e</i><sup>2<i>x</i></sup> = 75</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A car is purchased for $30,000 and depreciates at 15% per year. After how many years is the car worth $15,000? Round to the nearest tenth.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Use the Change-of-Base Formula to evaluate. Round to three decimal places.</p>
+        <p>log<sub>3</sub> 150</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense the expression to the logarithm of a single quantity.</p>
+        <p>log 6 + 2 log <i>x</i> − log 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to three decimal places.</p>
+        <p>ln(2<i>x</i> + 1) = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">5 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">A table of values shows <i>y</i> = 10 when <i>t</i> = 0, and <i>y</i> = 40 when <i>t</i> = 5. Write an exponential model of the form <i>y</i> = <i>a</i> · <i>b<sup>t</sup></i>.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 6 · Sections 5.4–5.6 ═══════════════ -->
+<section id="q6">
+<div class="container">
+  <p class="pg-title">Quiz 6 · Sections 5.4 – 5.6</p>
+  <p class="pg-sub">Properties of Logarithms · Solving Equations · Modeling &nbsp;|&nbsp; ~20% harder problems</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~30 min</strong></span>
+    <span>📖 <strong>Sections 5.4–5.6</strong></span>
+    <span>💯 <strong>36 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log <span class="frac"><span class="num"><i>x</i><sup>2</sup><i>y</i></span><span class="den"><i>z</i><sup>3</sup></span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to the nearest hundredth.</p>
+        <p>5<sup><i>x</i></sup> = 200</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">4 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>log<sub>2</sub>(<i>x</i> − 1) + log<sub>2</sub>(<i>x</i> + 2) = 2</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>2 · 3<sup><i>x</i> + 1</sup> = 54</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">4 pts</span><span class="ptag app">Application</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">A quantity decays continuously at 4% per year. Find the half-life. Round to the nearest tenth of a year.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">3 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate using the Change-of-Base Formula. Give an exact simplified answer.</p>
+        <p>log<sub>4</sub> 8</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>ln <i>x</i> + ln(<i>x</i> + 2) = ln 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">The number of users of an app grows from 1 million to 8 million in 6 years. Assuming continuous growth, find the growth rate as a percent. Round to the nearest tenth.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense into a single logarithm.</p>
+        <p>2 log<sub>3</sub> <i>x</i> − <span class="frac"><span class="num">1</span><span class="den">2</span></span> log<sub>3</sub>(<i>x</i> + 1) + log<sub>3</sub> 4</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">4 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the system of equations.</p>
+        <ul class="sub-parts">
+          <li><i>y</i> = 2<sup><i>x</i></sup></li>
+          <li><i>y</i> = 4<sup><i>x</i> − 1</sup></li>
+        </ul>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 7 · Full Chapter ═══════════════ -->
+<section id="q7">
+<div class="container">
+  <p class="pg-title">Quiz 7 · Full Chapter Review</p>
+  <p class="pg-sub">Sections 5.1 – 5.6 &nbsp;|&nbsp; Comprehensive</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~25 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.6</strong></span>
+    <span>💯 <strong>32 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate.</p>
+        <p>log<sub>5</sub> 125</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Simplify the expression.</p>
+        <p><i>e</i><sup>2 ln 3</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log<sub>2</sub> <span class="frac"><span class="num"><i>x</i><sup>3</sup></span><span class="den"><i>y</i></span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>2<sup><i>x</i></sup> = 64</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>log<sub>3</sub>(<i>x</i> + 2) = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">$4,500 is deposited at 2.5% annual interest compounded continuously. Find the balance after 8 years. Round to the nearest cent.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe all transformations of <i>f</i>(<i>x</i>) = <i>e<sup>x</sup></i> represented by <i>g</i>. State the asymptote.</p>
+        <p><i>g</i>(<i>x</i>) = −2<i>e</i><sup><i>x</i> + 1</sup> − 4</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense into a single logarithm.</p>
+        <p>4 ln <i>x</i> + ln 3 − 2 ln <i>y</i></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to three decimal places.</p>
+        <p><i>e</i><sup>3<i>x</i></sup> = 50</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A bacteria culture starts with 100 cells and doubles every 4 hours. Write an exponential model. Find the number of cells after 24 hours.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 8 · Full Chapter ═══════════════ -->
+<section id="q8">
+<div class="container">
+  <p class="pg-title">Quiz 8 · Full Chapter Review</p>
+  <p class="pg-sub">Sections 5.1 – 5.6 &nbsp;|&nbsp; Comprehensive</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~25 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.6</strong></span>
+    <span>💯 <strong>33 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate.</p>
+        <p>ln(<i>e</i><sup>−3</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">2 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Rewrite in exponential form.</p>
+        <p>log<sub>10</sub> 0.01 = −2</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Tell whether the function represents exponential growth or decay. Find <i>f</i>(0) and <i>f</i>(3).</p>
+        <p><i>f</i>(<i>x</i>) = 5 · (1.2)<sup><i>x</i></sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log<sub>3</sub>(<span class="surd">√<span class="rad"><i>x</i></span></span> · <i>y</i><sup>2</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">4 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation.</p>
+        <p>4<sup>2<i>x</i> − 1</sup> = 8<sup><i>x</i></sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>log<sub>4</sub> <i>x</i> + log<sub>4</sub>(<i>x</i> − 3) = 1</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Describe the transformations of <i>g</i>(<i>x</i>) = 3 log(<i>x</i> + 2) − 1. State the domain and vertical asymptote.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">Carbon-14 has a half-life of 5,730 years. A fossil sample contains 60% of the original Carbon-14. Estimate the age of the fossil. Round to the nearest year.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense into a single logarithm.</p>
+        <p>2 log<sub>5</sub> <i>x</i> − log<sub>5</sub> 3 + 3 log<sub>5</sub> <i>y</i></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to three decimal places.</p>
+        <p>6<i>e</i><sup><i>x</i> − 2</sup> = 42</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 9 · Full Chapter ═══════════════ -->
+<section id="q9">
+<div class="container">
+  <p class="pg-title">Quiz 9 · Full Chapter Review</p>
+  <p class="pg-sub">Sections 5.1 – 5.6 &nbsp;|&nbsp; ~20% harder / mixed-concept problems</p>
+  <div class="qmeta">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~30 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.6</strong></span>
+    <span>💯 <strong>36 Points</strong></span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the expression without a calculator. (<i>Hint:</i> Use product property first.)</p>
+        <p>log<sub>4</sub> 2 + log<sub>4</sub> 8</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Simplify the expression.</p>
+        <p>ln(<i>e<sup>x</sup></i> · <i>e</i><sup>3</sup>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">4 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Find the inverse function of <i>f</i>(<i>x</i>) = 2<i>e</i><sup><i>x</i> − 1</sup>. State the domain of <i>f</i><sup>−1</sup>.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Expand the logarithmic expression.</p>
+        <p>log <span class="frac"><span class="num"><i>x</i><sup>2</sup><i>y</i><sup>3</sup></span><span class="den"><i>z</i></span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">5 pts</span><span class="ptag diff">★ Harder</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. (<i>Hint:</i> The equation is quadratic in form — let <i>u</i> = 3<sup><i>x</i></sup>.)</p>
+        <p>3<sup>2<i>x</i></sup> − 28 · 3<sup><i>x</i></sup> + 27 = 0</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>log<sub>2</sub> <i>x</i> − log<sub>2</sub>(<i>x</i> − 4) = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">$10,000 is invested for 10 years. Find the difference in balance between continuous compounding at 4% and annual compounding at 4%. Round to the nearest cent.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">3 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Condense and simplify as much as possible.</p>
+        <p>log<sub>5</sub>(25<i>x</i>) − log<sub>5</sub> <i>x</i><sup>2</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">4 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A population model is <i>P</i> = 500<i>e</i><sup>0.03<i>t</i></sup>. When does the population reach 2,000? Round to the nearest tenth.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">3 pts</span><span class="ptag diff">★ Different</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve for all values of <i>x</i>.</p>
+        <p>|log<sub>2</sub> <i>x</i>| = 3</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 10 · Challenge ★ ═══════════════ -->
+<section id="q10">
+<div class="container">
+  <p class="pg-title">Quiz 10 · Challenge ★</p>
+  <p class="pg-sub">Full Chapter · Advanced Problems — Requires multi-step reasoning</p>
+  <div class="qmeta" style="background:#f3e8ff;border:1.5px solid #d8b4fe">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~40 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.6</strong></span>
+    <span>💯 <strong>42 Points</strong></span>
+    <span style="color:#6a1b9a;font-weight:700">★ Challenge Level</span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">3 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the expression. Give an exact simplified answer.</p>
+        <p>log<sub>3</sub> <span class="frac"><span class="num"><span class="surd">√<span class="rad">27</span></span></span><span class="den">9</span></span></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Round to the nearest hundredth.</p>
+        <p>2<sup><i>x</i></sup> = 3<sup><i>x</i> − 1</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Given that log 2 ≈ 0.301 and log 3 ≈ 0.477, evaluate log 18 without a calculator. Show your reasoning.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Use logarithm properties to <strong>prove</strong> that log<sub><i>b</i></sub> <span class="frac"><span class="num">1</span><span class="den"><i>x</i></span></span> = −log<sub><i>b</i></sub> <i>x</i>.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">5 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. (<i>Hint:</i> Let <i>u</i> = <i>e<sup>x</sup></i> and solve the resulting quadratic.)</p>
+        <p><i>e</i><sup>2<i>x</i></sup> − 5<i>e<sup>x</sup></i> + 6 = 0</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation. Check for extraneous solutions.</p>
+        <p>log(<i>x</i> + 1) + log(<i>x</i> − 1) = log(<i>x</i> + 3)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A bacteria colony starts with 200 cells. After 3 hours there are 450 cells. Assuming continuous growth, when will the colony reach 1,000 cells? Round to the nearest tenth of an hour.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve for all values of <i>x</i>. (<i>Hint:</i> Let <i>u</i> = 2<sup><i>x</i></sup>.)</p>
+        <p>4<sup><i>x</i></sup> + 2<sup><i>x</i>+1</sup> − 3 = 0</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">The pH of a solution is defined as pH = −log[H<sup>+</sup>]. Solution A has [H<sup>+</sup>] = 10<sup>−3</sup> M. Solution B has [H<sup>+</sup>] = 5 × 10<sup>−6</sup> M. How many times more acidic is Solution A than Solution B? Round to the nearest whole number.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Simplify the expression completely using logarithm properties.</p>
+        <p>(log<sub>2</sub> <i>x</i> + log<sub>2</sub> <i>y</i>)<sup>2</sup> − (log<sub>2</sub> <i>x</i> − log<sub>2</sub> <i>y</i>)<sup>2</sup></p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ QUIZ 11 · Challenge ★ ═══════════════ -->
+<section id="q11">
+<div class="container">
+  <p class="pg-title">Quiz 11 · Challenge ★</p>
+  <p class="pg-sub">Full Chapter · Most challenging problems — Nested logs, quadratics in exponential form, inequalities</p>
+  <div class="qmeta" style="background:#f3e8ff;border:1.5px solid #d8b4fe">
+    <span>📋 <strong>10 Problems</strong></span>
+    <span>⏱ <strong>~45 min</strong></span>
+    <span>📖 <strong>Sections 5.1–5.6</strong></span>
+    <span>💯 <strong>44 Points</strong></span>
+    <span style="color:#6a1b9a;font-weight:700">★★ Highest Challenge</span>
+  </div>
+  <div class="prob-list">
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">1.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the nested logarithm equation.</p>
+        <p>log<sub>4</sub>(log<sub>3</sub> <i>x</i>) = 1</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">2.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Evaluate the expression exactly, without a calculator. Show all steps using the Change-of-Base Formula.</p>
+        <p>log<sub>2</sub> 3 · log<sub>3</sub> 4 · log<sub>4</sub> 8</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">3.</span><span class="pts">5 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the equation exactly. (<i>Hint:</i> Multiply both sides by <i>e<sup>x</sup></i> and solve the resulting quadratic.)</p>
+        <p><i>e<sup>x</sup></i> − <i>e</i><sup>−<i>x</i></sup> = 4</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">4.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Let <i>f</i>(<i>x</i>) = ln <i>x</i> and <i>g</i>(<i>x</i>) = <i>x</i><sup>2</sup> − 1. Find all values of <i>x</i> such that <i>f</i>(<i>g</i>(<i>x</i>)) = 0. State the domain restriction.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">5.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">After 10 years, 80% of a radioactive substance remains. After 20 years, 64% remains. (a) Verify the decay is exponential. (b) Find the half-life. Round to the nearest tenth.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">6.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Without a calculator, determine which quantity is larger: 2<sup>300</sup> or 3<sup>200</sup>. Justify your answer using logarithms. (Use log 2 ≈ 0.301, log 3 ≈ 0.477.)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">7.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve for all values of <i>x</i>. (<i>Hint:</i> Let <i>u</i> = 2<sup><i>x</i></sup>.)</p>
+        <p>4<sup><i>x</i></sup> − 9 · 2<sup><i>x</i></sup> + 8 = 0</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">8.</span><span class="pts">5 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Solve the logarithmic inequality.</p>
+        <p>log<sub>3</sub>(<i>x</i><sup>2</sup> − 4) &gt; log<sub>3</sub>(3<i>x</i>)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">9.</span><span class="pts">5 pts</span><span class="ptag app">Application</span></div>
+      <div class="prob-bd">
+        <p class="q">A rumor spreads through a school of 1,200 students following the logistic model <i>P</i>(<i>t</i>) = <span class="frac"><span class="num">1200</span><span class="den">1 + 1199<i>e</i><sup>−0.9<i>t</i></sup></span></span>. After how many hours have 600 students heard the rumor? Round to the nearest tenth.</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+    <div class="prob">
+      <div class="prob-hd"><span class="pnum">10.</span><span class="pts">4 pts</span></div>
+      <div class="prob-bd">
+        <p class="q">Determine the number of digits in 5<sup>100</sup> without a calculator. Justify using logarithms. (Use log 2 ≈ 0.301.)</p>
+        <div class="ws"><div class="wl"></div><div class="wl"></div><div class="wl"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════ ANSWER KEYS ═══════════════ -->
+<section id="keys">
+<div class="container">
+  <p class="pg-title">Answer Keys</p>
+  <p class="pg-sub">Kept separate for student self-checking. Free-response answers show key steps.</p>
+
+  <!-- Quiz 1 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 1 · Sections 5.1–5.3</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">12</span>&nbsp; — Inverse property: <i>e</i><sup>ln <i>u</i></sup> = <i>u</i></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">5</span>&nbsp; — Inverse property: ln(<i>e<sup>u</sup></i>) = <i>u</i></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key">Decay</span> (base 0.75 &lt; 1); y-intercept: <span class="key">(0, 3)</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><i>A</i> = 5000<i>e</i><sup>0.03<i>t</i></sup>; after 10 yr: <span class="key">$6,749.29</span><br><span class="ak-note">5000 · e<sup>0.3</sup> ≈ 5000 × 1.34986</span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av"><span class="key">3</span>&nbsp; — 4<sup>3</sup> = 64</span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><span class="key">8<sup>3</sup> = 512</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av"><span class="key">−2</span>&nbsp; — (1/3)<sup>−2</sup> = 3<sup>2</sup> = 9</span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av">Shift right 3, up 2; asymptote: <span class="key">y = 2</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av">Domain: <span class="key">x &gt; −1</span>&nbsp; Range: all reals&nbsp; VA: <span class="key">x = −1</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">Reflect over x-axis, shift up 4</span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 2 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 2 · Sections 5.1–5.3</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><i>e</i><sup>0</sup> = <span class="key">1</span>;&nbsp; <i>e</i><sup>1</sup> ≈ <span class="key">2.718</span></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">4<i>e</i><sup>5<i>x</i></sup></span>&nbsp; — Product of powers: add exponents</span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av">2000 = 1000<i>e</i><sup>0.05<i>t</i></sup> → <i>t</i> = ln 2 / 0.05 ≈ <span class="key">13.9 years</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key">−3</span>&nbsp; — 3<sup>−3</sup> = 1/27</span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av"><span class="key">7<sup>2</sup> = 49</span>; verify: 49 = 49 ✓</span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><span class="key">4</span>&nbsp; — log 10,000 = log 10<sup>4</sup> = 4</span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">Domain: <span class="key">x &gt; 2</span>&nbsp; Range: all reals&nbsp; VA: <span class="key">x = 2</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av">Reflect over y-axis, stretch by 2, shift up 1; asymptote: <span class="key">y = 1</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av">Reflect over x-axis, shift left 1, shift up 3; Domain: x &gt; −1; VA: <span class="key">x = −1</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av"><span class="key"><i>x</i> = 3</span>&nbsp; — <i>x</i><sup>3</sup> = 27 → <i>x</i> = 3</span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 3 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 3 · Sections 5.1–5.3</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">3 ln 2</span> ≈ 2.079&nbsp; — <i>e</i><sup>3 ln 2</sup> = 2<sup>3</sup> = 8; ln(8) = 3 ln 2</span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av">2500 = 2000<i>e</i><sup>4<i>r</i></sup> → <i>r</i> = ln(1.25)/4 ≈ <span class="key">5.58%</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key">5/2 = 2.5</span>&nbsp; — √32 = 32<sup>1/2</sup>; (1/2)·log<sub>2</sub> 32 = (1/2)(5)</span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key">log<sub>10</sub> 0.001 = −3</span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">4 − <i>x</i><sup>2</sup> &gt; 0 → <i>x</i><sup>2</sup> &lt; 4; Domain: <span class="key">(−2, 2)</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av">Stretch by 3, horizontal compression by 1/2, shift down 5; asymptote: <span class="key">y = −5</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">log<sub>4</sub>(2(<i>x</i>−3))+1: shift right 3, compress horiz. by 1/2, shift up 1; Domain: <span class="key">x &gt; 3</span>; VA: <span class="key">x = 3</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><span class="key"><i>e</i><sup><i>x</i>+3</sup></span>; graph shifts left 3 (equivalently, <i>e</i><sup>3</sup> · <i>e<sup>x</sup></i>, a vertical stretch by <i>e</i><sup>3</sup>)</span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key"><i>x</i> = 4</span>&nbsp; — Equal bases: <i>x</i> = 2<i>x</i> − 4</span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">log<sub>5</sub>(3+2) = log<sub>5</sub> 5 = 1; <span class="key">Yes</span>, the point (3,1) lies on the graph. ✓</span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 4 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 4 · Sections 5.4–5.6</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">2 + 4 log<sub>3</sub> <i>x</i></span>&nbsp; — log<sub>3</sub> 9 = 2</span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">log(<i>x</i><sup>2</sup><i>y</i> / <i>z</i><sup>3</sup>)</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key">≈ 2.113</span>&nbsp; — log 30 / log 5 ≈ 1.4771 / 0.6990</span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key"><i>x</i> = 4</span>&nbsp; — 4<sup>4</sup> = 256</span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av"><span class="key"><i>x</i> = 11</span>&nbsp; — <i>x</i> + 5 = 2<sup>4</sup> = 16</span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><span class="key"><i>x</i> = ln 4 ≈ 1.386</span>&nbsp; — <i>e<sup>x</sup></i> = 4</span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av"><i>y</i> = 5000(1.07)<sup><i>t</i></sup>; after 10 yr: <span class="key">≈ 9,836</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><i>y</i> = <i>a</i>(1/2)<sup><i>t</i>/12</sup>; after 36 yr: <span class="key">1/8</span> remains (3 half-lives)</span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key">2 ln <i>x</i> − (1/2) ln <i>y</i></span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av"><span class="key">ln(5<i>x</i><sup>3</sup> / <i>y</i><sup>2</sup>)</span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 5 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 5 · Sections 5.4–5.6</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">3 + 3 log<sub>2</sub> <i>x</i> − 2 log<sub>2</sub> <i>y</i></span>&nbsp; — log<sub>2</sub> 8 = 3</span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">log<sub>4</sub>(<span class="surd">√<span class="rad"><i>x</i></span></span> / <i>y</i><sup>2</sup>)</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key"><i>x</i> = 2</span>&nbsp; — 3<i>x</i> − 1 = 5</span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><i>x</i>(<i>x</i>−3) = 10 → <i>x</i><sup>2</sup>−3<i>x</i>−10=0 → (x−5)(x+2)=0; <i>x</i>=−2 extraneous; <span class="key"><i>x</i> = 5</span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av"><span class="key"><i>x</i> = ln 15 / 2 ≈ 1.354</span>&nbsp; — <i>e</i><sup>2<i>x</i></sup> = 15</span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av">30000(0.85)<sup><i>t</i></sup>=15000 → <i>t</i>=ln(0.5)/ln(0.85) ≈ <span class="key">4.3 years</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av"><span class="key">≈ 4.560</span>&nbsp; — log 150 / log 3</span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><span class="key">log(2<i>x</i><sup>2</sup>)</span>&nbsp; — log(6/3) + log(<i>x</i><sup>2</sup>)</span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key"><i>x</i> = (<i>e</i><sup>3</sup>−1)/2 ≈ 9.543</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av"><i>b</i><sup>5</sup>=4 → <i>b</i>=4<sup>1/5</sup>; <span class="key"><i>y</i> = 10 · 4<sup><i>t</i>/5</sup></span> or equivalently <i>y</i> = 10<i>e</i><sup>0.277<i>t</i></sup></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 6 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 6 · Sections 5.4–5.6</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">2 log <i>x</i> + log <i>y</i> − 3 log <i>z</i></span></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key"><i>x</i> ≈ 3.29</span>&nbsp; — <i>x</i> = log 200 / log 5</span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av">(<i>x</i>−1)(<i>x</i>+2)=4 → <i>x</i><sup>2</sup>+<i>x</i>−6=0 → <i>x</i>=2 or <i>x</i>=−3; <i>x</i>=−3 extraneous; <span class="key"><i>x</i> = 2</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av">3<sup><i>x</i>+1</sup>=27=3<sup>3</sup> → <i>x</i>+1=3; <span class="key"><i>x</i> = 2</span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">Half-life = ln 2 / 0.04 ≈ <span class="key">17.3 years</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><span class="key">3/2</span>&nbsp; — ln 8 / ln 4 = 3 ln 2 / 2 ln 2 = 3/2</span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av"><i>x</i>(<i>x</i>+2)=3 → <i>x</i><sup>2</sup>+2<i>x</i>−3=0 → (<i>x</i>+3)(<i>x</i>−1)=0; <i>x</i>=−3 extraneous; <span class="key"><i>x</i> = 1</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><i>e</i><sup>6<i>r</i></sup>=8 → <i>r</i>=ln 8/6=ln 2/2 ≈ <span class="key">34.7%</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key">log<sub>3</sub>(4<i>x</i><sup>2</sup> / <span class="surd">√<span class="rad"><i>x</i>+1</span></span>)</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">2<sup><i>x</i></sup>=2<sup>2(<i>x</i>−1)</sup> → <i>x</i>=2<i>x</i>−2; <span class="key"><i>x</i> = 2, <i>y</i> = 4</span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 7 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 7 · Full Chapter</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">3</span>&nbsp; — 5<sup>3</sup> = 125</span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">9</span>&nbsp; — (<i>e</i><sup>ln 3</sup>)<sup>2</sup> = 3<sup>2</sup> = 9</span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key">3 log<sub>2</sub> <i>x</i> − log<sub>2</sub> <i>y</i></span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key"><i>x</i> = 6</span>&nbsp; — 2<sup>6</sup> = 64</span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av"><span class="key"><i>x</i> = 25</span>&nbsp; — <i>x</i>+2 = 3<sup>3</sup> = 27</span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><span class="key">$5,496.47</span>&nbsp; — 4500<i>e</i><sup>0.2</sup></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">Reflect over x-axis, stretch by 2, shift left 1, shift down 4; asymptote: <span class="key">y = −4</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><span class="key">ln(3<i>x</i><sup>4</sup> / <i>y</i><sup>2</sup>)</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key"><i>x</i> = ln 50 / 3 ≈ 1.304</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av"><i>y</i> = 100 · 2<sup><i>t</i>/4</sup>; after 24 hr (6 doublings): <span class="key">6,400 cells</span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 8 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 8 · Full Chapter</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av"><span class="key">−3</span></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key">10<sup>−2</sup> = 0.01</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av">Growth (base 1.2 &gt; 1); <i>f</i>(0) = <span class="key">5</span>;&nbsp; <i>f</i>(3) = 5(1.2)<sup>3</sup> ≈ <span class="key">8.64</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key">(1/2) log<sub>3</sub> <i>x</i> + 2 log<sub>3</sub> <i>y</i></span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">2<sup>4<i>x</i>−2</sup> = 2<sup>3<i>x</i></sup> → 4<i>x</i>−2=3<i>x</i>; <span class="key"><i>x</i> = 2</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><i>x</i>(<i>x</i>−3)=4 → <i>x</i><sup>2</sup>−3<i>x</i>−4=0 → (<i>x</i>−4)(<i>x</i>+1)=0; <i>x</i>=−1 extraneous; <span class="key"><i>x</i> = 4</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">Stretch by 3, shift left 2, shift down 1; Domain: <span class="key">x &gt; −2</span>; VA: <span class="key">x = −2</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av">0.6 = (1/2)<sup><i>t</i>/5730</sup> → <i>t</i> = 5730 · ln(0.6)/ln(0.5) ≈ <span class="key">4,222 years</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><span class="key">log<sub>5</sub>(<i>x</i><sup>2</sup><i>y</i><sup>3</sup> / 3)</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av"><i>e</i><sup><i>x</i>−2</sup>=7 → <i>x</i>=2+ln 7 ≈ <span class="key">3.946</span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 9 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 9 · Full Chapter</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av">log<sub>4</sub>(16) = <span class="key">2</span>&nbsp; — 4<sup>2</sup> = 16</span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><span class="key"><i>x</i> + 3</span>&nbsp; — ln(<i>e</i><sup><i>x</i>+3</sup>) = <i>x</i>+3</span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av"><span class="key"><i>f</i><sup>−1</sup>(<i>x</i>) = ln(<i>x</i>/2) + 1</span>, domain <i>x</i> &gt; 0</span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av"><span class="key">2 log <i>x</i> + 3 log <i>y</i> − log <i>z</i></span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">(<i>u</i>−1)(<i>u</i>−27)=0 → <i>u</i>=1 or 27; <span class="key"><i>x</i> = 0 or <i>x</i> = 3</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av"><i>x</i>/(<i>x</i>−4)=8 → <i>x</i>=8<i>x</i>−32 → <span class="key"><i>x</i> = 32/7 ≈ 4.571</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">Continuous: $14,918.25&nbsp; Annual: $14,802.44&nbsp; Difference: <span class="key">≈ $115.81 more</span> (continuous)</span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av">log<sub>5</sub>(25/<i>x</i>) = log<sub>5</sub> 25 − log<sub>5</sub> <i>x</i> = <span class="key">2 − log<sub>5</sub> <i>x</i></span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av"><i>t</i> = ln 4 / 0.03 ≈ <span class="key">46.2 units of time</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">log<sub>2</sub> <i>x</i> = ±3 → <span class="key"><i>x</i> = 8 or <i>x</i> = 1/8</span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 10 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 10 · Challenge ★</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av">log<sub>3</sub>(27<sup>1/2</sup>) − log<sub>3</sub> 9 = 3/2 − 2 = <span class="key">−1/2</span></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av"><i>x</i> ln 2 = (<i>x</i>−1) ln 3 → <i>x</i>(ln 2 − ln 3) = −ln 3; <span class="key"><i>x</i> = ln 3/(ln 3 − ln 2) ≈ 2.71</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av">log 18 = log(2 · 3<sup>2</sup>) = log 2 + 2 log 3 ≈ 0.301 + 0.954 = <span class="key">1.255</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av">log<sub><i>b</i></sub>(1/<i>x</i>) = log<sub><i>b</i></sub>(<i>x</i><sup>−1</sup>) = −1 · log<sub><i>b</i></sub> <i>x</i> = −log<sub><i>b</i></sub> <i>x</i>&nbsp; ✓ (Power Property)</span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">(<i>u</i>−2)(<i>u</i>−3)=0; <span class="key"><i>x</i> = ln 2 ≈ 0.693 or <i>x</i> = ln 3 ≈ 1.099</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av">(<i>x</i>+1)(<i>x</i>−1)=<i>x</i>+3 → <i>x</i><sup>2</sup>−<i>x</i>−4=0; <span class="key"><i>x</i> = (1+√17)/2 ≈ 2.56</span> (neg. root extraneous)</span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av"><i>k</i>=ln(2.25)/3≈0.270; 200<i>e</i><sup>0.270<i>t</i></sup>=1000 → <i>t</i>=ln 5/0.270 ≈ <span class="key">5.9 hours</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av">(2<sup><i>x</i></sup>)<sup>2</sup>+2·2<sup><i>x</i></sup>−3=0 → (<i>u</i>+3)(<i>u</i>−1)=0 → <i>u</i>=1; <span class="key"><i>x</i> = 0</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av">[H<sup>+</sup>]<sub>A</sub>/[H<sup>+</sup>]<sub>B</sub> = 10<sup>−3</sup>/(5×10<sup>−6</sup>) = <span class="key">200 times</span> more acidic</span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">Difference of squares: [2 log<sub>2</sub> <i>x</i>][2 log<sub>2</sub> <i>y</i>] = <span class="key">4 log<sub>2</sub> <i>x</i> · log<sub>2</sub> <i>y</i></span></span></div>
+    </div>
+  </div>
+
+  <!-- Quiz 11 -->
+  <div class="ak-blk">
+    <p class="ak-h">Quiz 11 · Challenge ★★</p>
+    <div class="ak-grid">
+      <div class="ak-item"><span class="an">1.</span><span class="av">log<sub>3</sub> <i>x</i> = 4<sup>1</sup> = 4 → <span class="key"><i>x</i> = 81</span></span></div>
+      <div class="ak-item"><span class="an">2.</span><span class="av">Chain collapses: ln 8/ln 2 = 3 ln 2/ln 2 = <span class="key">3</span></span></div>
+      <div class="ak-item"><span class="an">3.</span><span class="av">(<i>e<sup>x</sup></i>)<sup>2</sup>−4<i>e<sup>x</sup></i>−1=0 → <i>e<sup>x</sup></i>=2+√5 (positive); <span class="key"><i>x</i> = ln(2+√5) ≈ 1.444</span></span></div>
+      <div class="ak-item"><span class="an">4.</span><span class="av">ln(<i>x</i><sup>2</sup>−1)=0 → <i>x</i><sup>2</sup>−1=1 → <i>x</i>=±√2; domain |<i>x</i>|&gt;1; <span class="key"><i>x</i> = ±√2</span></span></div>
+      <div class="ak-item"><span class="an">5.</span><span class="av">(a) 0.8<sup>2</sup>=0.64 ✓ exponential; (b) 0.5=(0.8)<sup><i>t</i>/10</sup> → half-life ≈ <span class="key">31.1 years</span></span></div>
+      <div class="ak-item"><span class="an">6.</span><span class="av">log(2<sup>300</sup>)=90.3;&nbsp; log(3<sup>200</sup>)=95.4;&nbsp; <span class="key">3<sup>200</sup> is larger</span></span></div>
+      <div class="ak-item"><span class="an">7.</span><span class="av">(<i>u</i>−1)(<i>u</i>−8)=0 → 2<sup><i>x</i></sup>=1 or 8; <span class="key"><i>x</i> = 0 or <i>x</i> = 3</span></span></div>
+      <div class="ak-item"><span class="an">8.</span><span class="av"><i>x</i><sup>2</sup>−3<i>x</i>−4&gt;0 and <i>x</i>&gt;0 and <i>x</i><sup>2</sup>−4&gt;0; intersection: <span class="key"><i>x</i> &gt; 4</span></span></div>
+      <div class="ak-item"><span class="an">9.</span><span class="av">1+1199<i>e</i><sup>−0.9<i>t</i></sup>=2 → <i>e</i><sup>−0.9<i>t</i></sup>=1/1199 → <span class="key"><i>t</i> ≈ 7.9 hours</span></span></div>
+      <div class="ak-item"><span class="an">10.</span><span class="av">log(5<sup>100</sup>)=100·log 5=100(1−log 2)≈69.9; number of digits = ⌊69.9⌋+1 = <span class="key">70 digits</span></span></div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<button class="fab-print" onclick="printCurrent()" title="Print current page">🖨 Print</button>
+
+<script>
+/* ── Navigation ── */
+function go(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tb').forEach(btn=>{
+    const t=btn.textContent.trim();
+    const targets={'📖 Review Guide':'review','📋 Cheat Sheet':'cheat','🔑 Answer Keys':'keys','Quiz 1':'q1','Quiz 2':'q2','Quiz 3':'q3','Quiz 4':'q4','Quiz 5':'q5','Quiz 6':'q6','Quiz 7':'q7','Quiz 8':'q8','Quiz 9':'q9','Quiz 10 ★':'q10','Quiz 11 ★':'q11'};
+    if(targets[t]===id) btn.classList.add('active');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Print ── */
+function printCurrent(){
+  const section=document.querySelector('section.active');
+  if(!section) return;
+
+  const title = section.querySelector('.pg-title')?.textContent.trim() || 'Chapter 5';
+  const sub   = section.querySelector('.pg-sub')?.innerHTML || '';
+  const metaEl= section.querySelector('.qmeta');
+  const metaHTML = metaEl ? `<div class="qmeta">${metaEl.innerHTML}</div>` : '';
+  const isQuiz = !!metaEl;
+
+  // Build name/date row only for quizzes
+  const nameRow = isQuiz
+    ? `<div class="name-row"><div class="nfield">Name:&nbsp;<span class="line"></span></div><div class="nfield">Date:&nbsp;<span class="line short"></span>&nbsp;&nbsp;&nbsp;Period:&nbsp;<span class="line short"></span></div></div>`
+    : '';
+
+  // Get printable body content
+  let bodyHTML = '';
+  if(isQuiz){
+    const pl = section.querySelector('.prob-list');
+    bodyHTML = pl ? pl.outerHTML : '';
+  } else {
+    // cheat sheet, review guide, or answer keys — print full container
+    const c = section.querySelector('.container');
+    // strip the pg-title and pg-sub since we already render them in the header
+    const clone = c ? c.cloneNode(true) : null;
+    if(clone){
+      clone.querySelector('.pg-title')?.remove();
+      clone.querySelector('.pg-sub')?.remove();
+      bodyHTML = clone.innerHTML;
+    }
+  }
+
+  const css = `
+    @page{margin:.7in .8in}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,'Times New Roman',serif;font-size:11pt;color:#000;background:#fff;line-height:1.55}
+
+    /* math */
+    sup,sub{font-size:.7em;line-height:0;position:relative;vertical-align:baseline}
+    sup{top:-.45em}sub{bottom:-.2em}
+    .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;font-size:.87em;line-height:1.3}
+    .frac .num{border-bottom:1pt solid #000;padding:0 3pt 1pt;text-align:center}
+    .frac .den{padding:1pt 3pt 0;text-align:center}
+    .surd{display:inline-flex;align-items:flex-start;vertical-align:middle}
+    .rad{border-top:1pt solid #000;padding:0 2pt 0 1pt;margin-left:1pt}
+
+    /* page header */
+    .pg-title{font-size:14pt;font-weight:bold;font-family:Georgia,serif;margin-bottom:2pt}
+    .pg-sub,.sub{font-size:9.5pt;color:#333;padding-bottom:5pt;margin-bottom:10pt;border-bottom:1.5pt solid #000;display:block}
+
+    /* name row (quizzes only) */
+    .name-row{display:flex;gap:20pt;margin-bottom:12pt}
+    .nfield{font-size:10pt;flex:1;display:flex;align-items:flex-end;gap:3pt}
+    .line{flex:1;border-bottom:1pt solid #000;display:inline-block;height:14pt}
+    .line.short{width:60pt;flex:none}
+
+    /* quiz meta */
+    .qmeta{font-size:9pt;color:#222;display:flex;flex-wrap:wrap;gap:10pt;margin-bottom:12pt;padding:4pt 8pt;border:1pt solid #999;background:#f7f7f7}
+    .qmeta strong{color:#000}
+
+    /* ── QUIZ PROBLEMS ── */
+    .prob-list{display:flex;flex-direction:column;gap:9pt}
+    .prob{border:1pt solid #999;border-radius:3pt;page-break-inside:avoid}
+    .prob-hd{background:#efefef;padding:3pt 8pt;border-bottom:1pt solid #ccc;display:flex;align-items:center;gap:5pt}
+    .pnum{font-weight:bold;font-size:9pt;font-family:Arial,sans-serif}
+    .pts{font-size:8pt;color:#444;border:1pt solid #bbb;border-radius:999pt;padding:1pt 5pt;margin-left:auto;font-family:Arial,sans-serif}
+    .ptag{font-size:7pt;font-weight:bold;text-transform:uppercase;padding:1pt 4pt;border-radius:999pt;border:1pt solid #999;background:#eee;color:#333}
+    .prob-bd{padding:6pt 9pt}
+    .prob-bd p{font-size:11pt;line-height:1.65}
+    .q{font-weight:bold;margin-bottom:2pt}
+    .sub-parts{padding-left:14pt;margin-top:3pt}
+    .sub-parts li{font-size:10.5pt;line-height:1.85}
+    .ws{margin-top:7pt}
+    .wl{border-bottom:1pt solid #bbb;height:22pt;margin-bottom:1pt;display:block}
+
+    /* ── CHEAT SHEET (B&W) ── */
+    .cs-sec{margin-bottom:16pt}
+    .cs-h{font-size:11pt;font-weight:bold;font-family:Georgia,serif;border-left:3pt solid #000;padding-left:6pt;margin-bottom:7pt;color:#000}
+    .cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160pt,1fr));gap:6pt;margin-bottom:6pt}
+    .cs-card{border:1pt solid #999;border-radius:3pt;padding:6pt 8pt;background:#fff}
+    .cs-lbl{font-size:7.5pt;font-weight:bold;text-transform:uppercase;letter-spacing:.05em;color:#000;margin-bottom:2pt;font-family:Arial,sans-serif}
+    .cs-f{font-size:10.5pt;font-weight:bold;margin-bottom:2pt;line-height:1.5;color:#000}
+    .cs-card p{font-size:8.5pt;color:#333;line-height:1.4}
+    .cs-tbl{width:100%;border-collapse:collapse;font-size:9pt;margin:.3rem 0 .7rem}
+    .cs-tbl th{background:#333;color:#fff;padding:3pt 7pt;text-align:left;font-weight:bold}
+    .cs-tbl td{padding:3pt 7pt;border-bottom:1pt solid #ccc}
+    .cs-tbl tr:nth-child(even) td{background:#f5f5f5}
+    .cs-note{background:#f0f0f0;border-left:3pt solid #333;padding:5pt 8pt;border-radius:0 3pt 3pt 0;margin-top:4pt;font-size:8.5pt;color:#000;line-height:1.5}
+    .cs-box{background:#fff;border:2pt solid #000;border-radius:3pt;padding:8pt 10pt;margin-top:4pt}
+    .cs-box h4{font-size:7.5pt;font-weight:bold;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5pt;font-family:Arial,sans-serif;color:#000}
+    .chip-row{display:flex;flex-wrap:wrap;gap:4pt}
+    .chip{background:#f0f0f0;border:1pt solid #999;border-radius:4pt;padding:2pt 6pt;font-size:8.5pt;color:#000}
+
+    /* ── REVIEW GUIDE (B&W) ── */
+    .rg-lesson{border:1.5pt solid #999;border-radius:3pt;margin-bottom:12pt;overflow:hidden;page-break-inside:avoid}
+    .rg-head{background:#333;color:#fff;padding:5pt 9pt;display:flex;align-items:center;gap:6pt}
+    .rg-num{background:rgba(255,255,255,.25);border-radius:4pt;width:18pt;height:18pt;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:8.5pt;flex-shrink:0;line-height:1}
+    .rg-head h3{font-size:10pt;font-weight:600;color:#fff;font-family:Georgia,serif}
+    .rg-body{padding:7pt 10pt}
+    .ex-box{background:#f5f5f5;border-left:3pt solid #333;border-radius:0 3pt 3pt 0;padding:5pt 8pt;margin:6pt 0}
+    .ex-lbl{font-size:7.5pt;font-weight:bold;text-transform:uppercase;letter-spacing:.07em;color:#000;margin-bottom:2pt;font-family:Arial,sans-serif}
+    .ex-box p{font-size:9.5pt;line-height:1.6;color:#000}
+    .key-note{background:#ececec;border:1pt solid #aaa;border-radius:3pt;padding:5pt 8pt;margin:6pt 0;display:flex;gap:5pt;align-items:flex-start}
+    .key-note .icon{font-size:10pt;flex-shrink:0;line-height:1.4}
+    .key-note p{font-size:8.5pt;color:#000;line-height:1.5}
+    .step-list{padding-left:14pt;margin:4pt 0}
+    .step-list li{font-size:9.5pt;line-height:1.7;color:#000;margin-bottom:1pt}
+
+    /* ── ANSWER KEYS (B&W) ── */
+    .ak-blk{margin-bottom:14pt;page-break-inside:avoid}
+    .ak-h{font-size:11pt;font-weight:bold;font-family:Georgia,serif;border-left:3pt solid #000;padding-left:6pt;margin-bottom:6pt;color:#000}
+    .ak-grid{display:flex;flex-direction:column;gap:4pt}
+    .ak-item{border:1pt solid #ccc;border-radius:3pt;padding:4pt 8pt;display:grid;grid-template-columns:1.6rem 1fr;gap:6pt;align-items:baseline;font-size:9.5pt}
+    .an{font-weight:bold;color:#000}
+    .av{line-height:1.6;color:#000}
+    .av .key{font-weight:bold;color:#000;text-decoration:underline}
+    .ak-note{font-size:8pt;color:#555;font-style:italic;margin-top:1pt}
+  `;
+
+  const html = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>${title}</title>
+<style>${css}</style></head>
+<body>
+  <div class="print-header">
+    <div class="pg-title">${title}</div>
+    <div class="sub">${sub}</div>
+  </div>
+  ${nameRow}
+  ${metaHTML}
+  ${bodyHTML}
+</body></html>`;
+
+  const w = window.open('','_blank','width=900,height=750');
+  if(!w){ alert('Please allow popups to print.'); return; }
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  // slight delay so fonts/layout settle before print dialog
+  setTimeout(()=>{ w.print(); }, 600);
+}
+</script>
+</body>
+</html>
