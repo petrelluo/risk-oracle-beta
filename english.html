@@ -123,9 +123,9 @@
     }
     .card-front { background-color: var(--card-bg); border: 2px solid #e5e7eb; }
     .card-back { background-color: var(--primary); color: white; transform: rotateY(180deg); }
-    .word { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
-    .definition { font-size: 1.2rem; line-height: 1.4; margin-bottom: 20px; font-weight: bold;}
-    .examples { font-size: 1rem; line-height: 1.5; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
+    .word { font-size: 3rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
+    .definition { font-size: 1.45rem; line-height: 1.5; margin-bottom: 20px; font-weight: bold;}
+    .examples { font-size: 1.2rem; line-height: 1.6; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
     .hint { font-size: 0.9rem; color: var(--text-light); margin-top: auto; }
 
     /* Controls */
@@ -805,8 +805,10 @@
     .mode-container { max-width: 100%; }
     .mode-container.active { padding: 12px 14px 0; }
 
-    .scene { height: 300px; }
-    .word { font-size: 1.9rem; }
+    .scene { height: 340px; }
+    .word { font-size: 2.4rem; }
+    .definition { font-size: 1.25rem; }
+    .examples { font-size: 1.05rem; }
 
     /* ── Fullscreen flashcard mode on mobile ── */
     /* Hide only the title, keep the group selector bar visible */
@@ -6427,6 +6429,116 @@
     ["derelict",              "first-rate",                   "antonym"],
     ["facade",                "veracity",                     "antonym"],
     ["expedite",              "hem and haw",                  "antonym"],
+
+    // --- Additional Synonyms (Groups 23+) ---
+    ["morose",                "glum",                         "synonym"],
+    ["trudge",                "plod",                         "synonym"],
+    ["muzzle",                "muffle",                       "synonym"],
+    ["ergo",                  "hence",                        "synonym"],
+    ["capricious",            "fickle",                       "synonym"],
+    ["loathsome",             "abhorrent",                    "synonym"],
+    ["tenacious",             "steadfast",                    "synonym"],
+    ["posh",                  "swanky",                       "synonym"],
+    ["burgeon",               "flourish",                     "synonym"],
+    ["wane",                  "dwindle",                      "synonym"],
+    ["jubilant",              "elated",                       "synonym"],
+    ["avid",                  "ardent",                       "synonym"],
+    ["craven",                "spineless",                    "synonym"],
+    ["insolent",              "impertinent",                  "synonym"],
+    ["erstwhile",             "bygone",                       "synonym"],
+    ["belligerent",           "combative",                    "synonym"],
+    ["formidable",            "daunting",                     "synonym"],
+    ["suave",                 "debonair",                     "synonym"],
+    ["enigma",                "conundrum",                    "synonym"],
+    ["malign",                "defame",                       "synonym"],
+    ["penury",                "destitution",                  "synonym"],
+    ["indolence",             "lethargy",                     "synonym"],
+    ["antiquated",            "obsolete",                     "synonym"],
+    ["pretentious",           "pompous",                      "synonym"],
+    ["galvanize",             "invigorate",                   "synonym"],
+    ["contrition",            "remorse",                      "synonym"],
+    ["repentant",             "penitent",                     "synonym"],
+    ["mordant",               "caustic",                      "synonym"],
+    ["animosity",             "antipathy",                    "synonym"],
+    ["incendiary",            "inflammatory",                 "synonym"],
+    ["plight",                "predicament",                  "synonym"],
+    ["ominous",               "foreboding",                   "synonym"],
+    ["dismal",                "dreary",                       "synonym"],
+    ["hapless",               "lowly",                        "synonym"],
+    ["harangue",              "tirade",                       "synonym"],
+    ["blathering",            "rambling",                     "synonym"],
+    ["sleazebag",             "scoundrel",                    "synonym"],
+    ["repudiate",             "denounce",                     "synonym"],
+    ["adjudicate",            "arbitrate",                    "synonym"],
+    ["collude",               "conspire",                     "synonym"],
+    ["commandeer",            "requisition",                  "synonym"],
+    ["elude",                 "evade",                        "synonym"],
+    ["incriminate",           "implicate",                    "synonym"],
+    ["inexorable",            "relentless",                   "synonym"],
+    ["debilitate",            "incapacitate",                 "synonym"],
+    ["inundate",              "overwhelm",                    "synonym"],
+    ["subsist",               "scrape by",                    "synonym"],
+    ["slumber",               "doze",                         "synonym"],
+    ["enshrine",              "consecrate",                   "synonym"],
+    ["repatriate",            "extradite",                    "synonym"],
+    ["cogitate",              "ruminate",                     "synonym"],
+    ["mire",                  "quagmire",                     "synonym"],
+    ["dour",                  "morose",                       "synonym"],
+    ["antithetical",          "contradictory",                "synonym"],
+    ["unflattering",          "unbecoming",                   "synonym"],
+    ["jostle",                "elbow",                        "synonym"],
+    ["truncate",              "curtail",                      "synonym"],
+    ["scrupulous",            "meticulous",                   "synonym"],
+    ["affable",               "genial",                       "synonym"],
+    ["intrepid",              "dauntless",                    "synonym"],
+    ["propinquity",           "proximity",                    "synonym"],
+    ["loathsome",             "repugnant",                    "synonym"],
+    ["convivial",             "gregarious",                   "synonym"],
+    ["verbosity",             "blathering",                   "synonym"],
+    ["brazen",                "insolent",                     "synonym"],
+
+    // --- Additional Antonyms (Groups 23+) ---
+    ["craven",                "intrepid",                     "antonym"],
+    ["insolent",              "deferential",                  "antonym"],
+    ["lethargic",             "amped",                        "antonym"],
+    ["morose",                "jubilant",                     "antonym"],
+    ["wane",                  "burgeon",                      "antonym"],
+    ["loathsome",             "affable",                      "antonym"],
+    ["posh",                  "lowly",                        "antonym"],
+    ["capricious",            "steadfast",                    "antonym"],
+    ["tenacious",             "wishy washy",                  "antonym"],
+    ["belligerent",           "affable",                      "antonym"],
+    ["indolence",             "diligence",                    "antonym"],
+    ["penury",                "opulence",                     "antonym"],
+    ["depraved",              "virtuous",                     "antonym"],
+    ["pretentious",           "unpretentious",                "antonym"],
+    ["antiquated",            "cutting-edge",                 "antonym"],
+    ["enigma",                "open book",                    "antonym"],
+    ["jubilant",              "morose",                       "antonym"],
+    ["galvanize",             "demoralize",                   "antonym"],
+    ["burgeon",               "dwindle",                      "antonym"],
+    ["avid",                  "indifferent",                  "antonym"],
+    ["formidable",            "feeble",                       "antonym"],
+    ["suave",                 "boorish",                      "antonym"],
+    ["repentant",             "unrepentant",                  "antonym"],
+    ["intrepid",              "craven",                       "antonym"],
+    ["unflattering",          "becoming",                     "antonym"],
+    ["dismal",                "jubilant",                     "antonym"],
+    ["incendiary",            "conciliatory",                 "antonym"],
+    ["contrition",            "defiance",                     "antonym"],
+    ["animosity",             "affinity",                     "antonym"],
+    ["ominous",               "reassuring",                   "antonym"],
+    ["belligerent",           "docile",                       "antonym"],
+    ["inundate",              "trickle",                      "antonym"],
+    ["narcissistic",          "selfless",                     "antonym"],
+    ["convivial",             "standoffish",                  "antonym"],
+    ["lament",                "rejoice",                      "antonym"],
+    ["slumber",               "vigilant",                     "antonym"],
+    ["prudent",               "reckless",                     "antonym"],
+    ["tenacious",             "fickle",                       "antonym"],
+    ["debilitate",            "fortify",                      "antonym"],
+    ["penury",                "affluence",                    "antonym"],
+    ["unbecoming",            "befitting",                    "antonym"],
   ];
 
   // ── Synonym / Antonym Game State ─────────────────────────────────────────
