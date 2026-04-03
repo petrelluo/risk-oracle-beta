@@ -123,8 +123,8 @@
     }
     .card-front { background-color: var(--card-bg); border: 2px solid #e5e7eb; }
     .card-back { background-color: var(--primary); color: white; transform: rotateY(180deg); }
-    .word { font-size: 3rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
-    .definition { font-size: 1.45rem; line-height: 1.5; margin-bottom: 20px; font-weight: bold;}
+    .word { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; text-transform: capitalize;}
+    .definition { font-size: 1.15rem; line-height: 1.5; margin-bottom: 16px; font-weight: bold;}
     .examples { font-size: 1.2rem; line-height: 1.6; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;}
     .hint { font-size: 0.9rem; color: var(--text-light); margin-top: auto; }
 
@@ -805,9 +805,9 @@
     .mode-container { max-width: 100%; }
     .mode-container.active { padding: 12px 14px 0; }
 
-    .scene { height: 340px; }
-    .word { font-size: 2.4rem; }
-    .definition { font-size: 1.25rem; }
+    .scene { height: 320px; }
+    .word { font-size: 1.9rem; }
+    .definition { font-size: 1.05rem; }
     .examples { font-size: 1.05rem; }
 
     /* ── Fullscreen flashcard mode on mobile ── */
@@ -1051,11 +1051,11 @@
   </div>
 
   <div class="srs-status" id="srs-status"></div>
-  <div class="quiz-word" id="quizWordDisplay">Word</div>
   <div class="quiz-word-actions">
     <button type="button" class="btn-nav" id="btn-quiz-notebook" onclick="toggleNotebookForCurrentQuizWord()">📒 Add to Notebook</button>
     <span id="quiz-notebook-status" class="quiz-notebook-status"></span>
   </div>
+  <div class="quiz-word" id="quizWordDisplay">Word</div>
   <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
 
   <div class="options-grid" id="optionsContainer"></div>

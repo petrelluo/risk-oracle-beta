@@ -209,46 +209,56 @@
             background: #f8fafc;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            padding: 30px;
+            padding: 20px 24px;
             text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            min-height: 250px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            will-change: transform;
+            user-select: none;
         }
 
         .v-word {
-            font-size: 3.5rem;
+            font-size: 2.4rem;
             font-weight: bold;
             color: #0f172a;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             letter-spacing: 2px;
         }
 
         .v-pinyin {
-            font-size: 1.4rem;
+            font-size: 1.15rem;
             color: #64748b;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
             font-family: 'Courier New', Courier, monospace;
         }
 
         .v-meaning {
-            font-size: 1.15rem;
+            font-size: 1rem;
             color: #334155;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
             font-weight: 500;
         }
 
         .v-example {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #1e293b;
             background: #e0f2fe;
-            padding: 15px 20px;
+            padding: 10px 14px;
             border-radius: 8px;
             text-align: left;
             border-left: 4px solid var(--primary);
             line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .v-word { font-size: 1.9rem; }
+            .v-pinyin { font-size: 1rem; }
+            .v-meaning { font-size: 0.95rem; }
+            .v-example { font-size: 0.95rem; padding: 8px 12px; }
+            .vocab-card { padding: 14px 16px; }
         }
 
         .vocab-controls {
@@ -256,7 +266,7 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: 16px;
             width: 100%;
         }
 
@@ -365,6 +375,115 @@
         .q-feedback .q-fb-pinyin { color: #475569; font-family: 'Courier New', monospace; margin-bottom: 4px; }
         .q-feedback .q-fb-meaning { font-weight: 600; color: #1e293b; margin-bottom: 8px; }
         .q-feedback .q-fb-example { background: white; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); }
+
+        /* Study group selector */
+        .group-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+        .group-bar-label {
+            font-size: 0.78rem;
+            color: #64748b;
+            font-weight: 700;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .group-btn {
+            padding: 4px 14px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 20px;
+            background: white;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: #475569;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            transition: all 0.15s;
+            line-height: 1.6;
+        }
+        .group-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .group-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
+
+        /* ── Tinder-style swipe ── */
+        .swipe-label {
+            position: absolute;
+            top: 14px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 3px solid;
+            font-size: 0.95rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .swipe-label-right {
+            left: 14px;
+            color: #10b981;
+            border-color: #10b981;
+            background: rgba(209,250,229,0.92);
+            transform: rotate(-14deg);
+        }
+        .swipe-label-left {
+            right: 14px;
+            color: #ef4444;
+            border-color: #ef4444;
+            background: rgba(254,226,226,0.92);
+            transform: rotate(14deg);
+        }
+        @keyframes fly-left-out  { to { transform: translateX(-170%) rotate(-28deg); opacity: 0; } }
+        @keyframes fly-right-out { to { transform: translateX(170%)  rotate(28deg);  opacity: 0; } }
+        .vocab-card.fly-left  { animation: fly-left-out  0.32s ease-in forwards; }
+        .vocab-card.fly-right { animation: fly-right-out 0.32s ease-in forwards; }
+
+        /* swipe hint — only on touch devices */
+        .swipe-hint {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .swipe-hint { display: flex; }
+        }
+
+        /* Notebook action button */
+        .notebook-action-btn {
+            background: none;
+            border: 1.5px solid #94a3b8;
+            border-radius: 8px;
+            padding: 4px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #64748b;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            transition: all 0.15s;
+        }
+        .notebook-action-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .notebook-action-btn.in-notebook {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #92400e;
+            font-weight: 600;
+        }
+        .notebook-action-btn.in-notebook:hover {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: var(--danger);
+        }
     </style>
 </head>
 <body>
@@ -379,6 +498,12 @@
         <div class="voice-status-bar">
             <span class="voice-dot" id="voiceDot"></span>
             <span id="voiceStatusText" style="color:#64748b;">正在加载中文语音… (Loading Chinese voice…)</span>
+        </div>
+
+        <div class="group-bar">
+            <span class="group-bar-label">学习组 Group:</span>
+            <button class="group-btn active" id="group-btn-熊猫虎子" onclick="loadGroup('熊猫虎子')">熊猫虎子</button>
+            <button class="group-btn" id="group-btn-笔记本" onclick="loadGroup('笔记本')">📒 笔记本</button>
         </div>
 
         <div id="section-reading">
@@ -427,7 +552,9 @@
             </div>
 
             <div class="vocab-content">
-                <div class="vocab-card">
+                <div class="vocab-card" id="vocabCardEl">
+                    <div class="swipe-label swipe-label-right" id="swipeLabelRight">📒 笔记本</div>
+                    <div class="swipe-label swipe-label-left"  id="swipeLabelLeft">✓ 已掌握</div>
                     <div class="v-word" id="vWord">多彩多姿</div>
                     <div class="v-pinyin" id="vPinyin">duō cǎi duō zī</div>
                     <div class="v-meaning" id="vMeaning">Colorful and diverse; rich and varied.</div>
@@ -439,6 +566,16 @@
                     <span class="v-progress" id="vProgress">1 / 13</span>
                     <button class="btn btn-outline" id="vNextBtn">下一个 (Next) ➡️</button>
                     <button class="btn" id="vPlayBtn" style="margin-left: 10px;">🔊 朗读 (Play)</button>
+                </div>
+                <div style="display:flex; justify-content:center; margin-top:10px;">
+                    <button id="vNotebookBtn" onclick="toggleVocabNotebook()" class="notebook-action-btn">📒 加入笔记本</button>
+                </div>
+                <div class="swipe-hint">
+                    <span style="color:#ef4444;">← 已掌握</span>
+                    <span style="color:#cbd5e1; font-size:0.9rem;">|</span>
+                    <span style="color:#64748b;">滑动卡片</span>
+                    <span style="color:#cbd5e1; font-size:0.9rem;">|</span>
+                    <span style="color:#10b981;">📒 笔记本 →</span>
                 </div>
             </div>
         </div>
@@ -453,6 +590,12 @@
                         得分 (Score): <span id="qScoreDisplay" style="color: var(--primary);">0</span>
                     </div>
                 </div>
+                <div style="display:flex; justify-content:center; align-items:center; gap: 18px; flex-wrap:wrap; padding-top: 2px;">
+                    <label class="checkbox-control" style="color: var(--primary);">
+                        <input type="checkbox" id="autoPlayQuiz">
+                        🔊 出题时自动发音 (Auto-play word)
+                    </label>
+                </div>
                 <div class="quiz-progress-container">
                     <div class="quiz-progress-bar" id="qProgressBar"></div>
                 </div>
@@ -466,7 +609,11 @@
                     <div id="qContentArea">
                         <div style="font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">选择正确的意思 · Choose the correct meaning</div>
                         <div class="v-word" id="qWord" style="margin-bottom: 6px;"></div>
-                        <div class="v-pinyin" id="qPinyin" style="margin-bottom: 0;"></div>
+                        <div class="v-pinyin" id="qPinyin" style="margin-bottom: 8px;"></div>
+                        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:4px;">
+                            <button id="qPlayBtn" onclick="playQuizWordAudio()" title="朗读 (Play)" style="background:none; border:1.5px solid var(--primary); border-radius:8px; padding:4px 14px; cursor:pointer; font-size:1rem; color:var(--primary); line-height:1.6;">🔊 朗读</button>
+                            <button id="qNotebookBtn" onclick="toggleQuizNotebook()" class="notebook-action-btn">📒 加入笔记本</button>
+                        </div>
                     </div>
                 </div>
 
@@ -714,7 +861,8 @@
         ];
 
         // --- 词汇列表 ---
-        const vocabulary = [
+        const studyGroups = {
+        "熊猫虎子": [
             { word: "多彩多姿", pinyin: "duō cǎi duō zī", meaning: "Colorful and diverse in postures/forms; rich and varied.", example: "大自然的生活多彩多姿。" },
             { word: "消遣", pinyin: "xiāo qiǎn", meaning: "Pastime; recreation; to while away the time.", example: "看书和听音乐是他周末最喜欢的消遣。" },
             { word: "不屈不挠", pinyin: "bù qū bù náo", meaning: "Unyielding; indomitable; relentless.", example: "凭着不屈不挠的精神，他终于战胜了重重困难。" },
@@ -849,7 +997,9 @@
             { word: "森林", pinyin: "sēn lín", meaning: "Forest; woods.", example: "大熊猫生活在中国西南部的竹子森林里。" },
             { word: "下肢", pinyin: "xià zhī", meaning: "Lower limbs; legs.", example: "长时间坐着会让下肢感到麻木。" },
             { word: "捡起来", pinyin: "jiǎn qǐ lái", meaning: "To pick up; to lift up from the ground.", example: "她把掉落在地上的幼崽轻轻捡起来。" }
-        ];
+        ],
+        "笔记本": []
+        };
 
         // ==========================================
         // 2. DOM 元素获取
@@ -986,26 +1136,120 @@
         let currentSessionId = 0; 
         let keepAliveArray = [];  
 
-        // Shuffle vocabulary for random flashcard order on every page load (Fisher-Yates)
-        for (let i = vocabulary.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [vocabulary[i], vocabulary[j]] = [vocabulary[j], vocabulary[i]];
+        // Active study group
+        let activeGroup = "熊猫虎子";
+
+        function shuffleCopy(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
         }
 
         // Vocab State
+        let vocabulary = shuffleCopy(studyGroups[activeGroup]);
         let currentVocabIndex = 0;
         let currentVocabSessionId = 0;
 
         // Quiz State (Spaced Repetition System)
         // box 0: new/forgotten, box 1, 2, 3: learning, box 4: mastered
-        let quizData = vocabulary.map((v, index) => ({
-            ...v,
-            originalIndex: index,
-            box: 0, 
-            nextTime: 0 
-        }));
+        let quizData = vocabulary.map((v, index) => ({ ...v, originalIndex: index, box: 0, nextTime: 0 }));
         let currentQuizItem = null;
         let quizScore = 0;
+
+        function loadGroup(name) {
+            if (!studyGroups[name]) return;
+            activeGroup = name;
+            synth.cancel();
+            currentVocabSessionId++;
+
+            vocabulary = shuffleCopy(studyGroups[name]);
+            currentVocabIndex = 0;
+            quizData = vocabulary.map((v, index) => ({ ...v, originalIndex: index, box: 0, nextTime: 0 }));
+            currentQuizItem = null;
+            quizScore = 0;
+            qScoreDisplay.textContent = String(0);
+            qScoreDisplay.style.color = 'var(--primary)';
+
+            // Update button active state
+            document.querySelectorAll('.group-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('group-btn-' + name);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            // Re-render whichever tab is visible
+            if (!sectionVocab.classList.contains('hidden')) renderVocabCard(true);
+            else if (!sectionQuiz.classList.contains('hidden')) renderQuizCard();
+        }
+
+        // ==========================================
+        // Notebook helpers
+        // ==========================================
+        function isInNotebook(word) {
+            return studyGroups["笔记本"].some(v => v.word === word);
+        }
+
+        function updateNotebookBtns(word) {
+            const inNb = word ? isInNotebook(word) : false;
+            const inNbGroup = activeGroup === "笔记本";
+
+            [document.getElementById('vNotebookBtn'), document.getElementById('qNotebookBtn')].forEach(btn => {
+                if (!btn) return;
+                if (!word) { btn.style.display = 'none'; return; }
+                btn.style.display = '';
+                if (inNbGroup) {
+                    btn.textContent = '🗑️ 移除笔记本 (Remove)';
+                    btn.classList.add('in-notebook');
+                } else if (inNb) {
+                    btn.textContent = '📒 已在笔记本 · 移除';
+                    btn.classList.add('in-notebook');
+                } else {
+                    btn.textContent = '📒 加入笔记本 (Add)';
+                    btn.classList.remove('in-notebook');
+                }
+            });
+        }
+
+        function addToNotebook(wordObj) {
+            if (!isInNotebook(wordObj.word)) {
+                studyGroups["笔记本"].push({ ...wordObj });
+            }
+        }
+
+        function removeFromNotebook(word) {
+            studyGroups["笔记本"] = studyGroups["笔记本"].filter(v => v.word !== word);
+            // If currently browsing the notebook, also remove from the live arrays
+            if (activeGroup === "笔记本") {
+                const vi = vocabulary.findIndex(v => v.word === word);
+                if (vi !== -1) vocabulary.splice(vi, 1);
+                quizData = quizData.filter(v => v.word !== word);
+                if (currentVocabIndex >= vocabulary.length) currentVocabIndex = Math.max(0, vocabulary.length - 1);
+            }
+        }
+
+        function toggleVocabNotebook() {
+            if (vocabulary.length === 0) return;
+            const wordObj = vocabulary[currentVocabIndex];
+            if (isInNotebook(wordObj.word)) {
+                removeFromNotebook(wordObj.word);
+                if (activeGroup === "笔记本") { renderVocabCard(); return; }
+            } else {
+                addToNotebook(wordObj);
+            }
+            updateNotebookBtns(wordObj.word);
+        }
+
+        function toggleQuizNotebook() {
+            if (!currentQuizItem) return;
+            if (isInNotebook(currentQuizItem.word)) {
+                removeFromNotebook(currentQuizItem.word);
+                if (activeGroup === "笔记本") { renderQuizCard(); return; }
+            } else {
+                addToNotebook(currentQuizItem);
+            }
+            updateNotebookBtns(currentQuizItem.word);
+        }
 
         // ==========================================
         // 4. Tabs 切换逻辑
@@ -1049,12 +1293,28 @@
         // 5. 记忆测验 (Quiz - SRS, Multiple Choice) 核心功能
         // ==========================================
         function renderQuizCard() {
+            // Empty group guard
+            if (vocabulary.length === 0) {
+                qContentArea.classList.add('hidden');
+                qChoicesArea.innerHTML = '';
+                qFeedback.classList.add('hidden');
+                qNextControls.classList.add('hidden');
+                qCompleteMessage.classList.remove('hidden');
+                qCompleteMessage.innerHTML = '📭 该学习组暂无词汇。<br>(No words in this group yet.)';
+                qMasteredCount.textContent = '0';
+                qTotalCount.textContent = '0';
+                qProgressBar.style.width = '0%';
+                updateNotebookBtns(null);
+                return;
+            }
+            qCompleteMessage.innerHTML = '🎉 恭喜！您已掌握所有词汇！<br>(Congratulations! All vocabulary mastered!)';
+
             // 1. 计算进度
             const total = quizData.length;
             const mastered = quizData.filter(item => item.box >= 4).length;
 
-            qMasteredCount.textContent = mastered;
-            qTotalCount.textContent = total;
+            qMasteredCount.textContent = String(mastered);
+            qTotalCount.textContent = String(total);
             qProgressBar.style.width = `${(mastered / total) * 100}%`;
 
             // Reset feedback / next button
@@ -1067,8 +1327,12 @@
                 qContentArea.classList.add('hidden');
                 qChoicesArea.innerHTML = '';
                 qCompleteMessage.classList.remove('hidden');
+                updateNotebookBtns(null);
                 return;
             }
+
+            qContentArea.classList.remove('hidden');
+            qCompleteMessage.classList.add('hidden');
 
             // 3. 选择下一个要复习的词汇
             const now = Date.now();
@@ -1086,6 +1350,13 @@
             // 4. 显示词语和拼音
             qWord.textContent = currentQuizItem.word;
             qPinyin.textContent = currentQuizItem.pinyin;
+            updateNotebookBtns(currentQuizItem.word);
+
+            // Auto-play word if toggle is on
+            if (document.getElementById('autoPlayQuiz').checked) {
+                synth.cancel();
+                synth.speak(makeUtterance(currentQuizItem.word, parseFloat(speedRate.value)));
+            }
 
             // 5. 生成 4 个选项 (1 正确 + 3 随机错误)
             const wrongPool = quizData.filter(item => item.word !== currentQuizItem.word);
@@ -1133,7 +1404,7 @@
             } else {
                 quizScore--;
             }
-            qScoreDisplay.textContent = quizScore;
+            qScoreDisplay.textContent = String(quizScore);
             qScoreDisplay.style.color = quizScore >= 0 ? 'var(--primary)' : 'var(--danger)';
 
             // SRS: advance box on correct, reset on wrong
@@ -1153,23 +1424,43 @@
 
         qNextBtn.onclick = () => renderQuizCard();
 
+        function playQuizWordAudio() {
+            if (!currentQuizItem) return;
+            synth.cancel();
+            synth.speak(makeUtterance(currentQuizItem.word, parseFloat(speedRate.value)));
+        }
+
 
         // ==========================================
         // 6. 词汇学习 (Vocabulary) 核心功能
         // ==========================================
-        function renderVocabCard(isTabSwitch = false) {
-            currentVocabSessionId++; 
+        function renderVocabCard(_isTabSwitch = false) {
+            currentVocabSessionId++;
+
+            if (vocabulary.length === 0) {
+                vWord.textContent = '—';
+                vPinyin.textContent = '';
+                vMeaning.textContent = '该学习组暂无词汇。(No words in this group yet.)';
+                vExample.textContent = '';
+                vProgress.textContent = '0 / 0';
+                vPrevBtn.disabled = true;
+                vNextBtn.disabled = true;
+                updateNotebookBtns(null);
+                return;
+            }
+            vNextBtn.disabled = false;
 
             const vocab = vocabulary[currentVocabIndex];
             vWord.textContent = vocab.word;
             vPinyin.textContent = vocab.pinyin;
             vMeaning.textContent = vocab.meaning;
             vExample.textContent = `例句 (Example)：${vocab.example}`;
-            
+
             vProgress.textContent = `${currentVocabIndex + 1} / ${vocabulary.length}`;
 
             vPrevBtn.disabled = (currentVocabIndex === 0);
-            
+            updateNotebookBtns(vocab.word);
+
             if (autoPlayVocab.checked || autoAdvanceVocab.checked) {
                 playVocabAudio();
             }
@@ -1409,9 +1700,139 @@
         // 8. 初始运行
         // ==========================================
         initSelect();
-        loadArticle(0); 
-        renderVocabCard(false); 
+        loadArticle(0);
+        renderVocabCard(false);
         renderQuizCard(); // 初始化测验数据
+
+        // ==========================================
+        // 9. 滑动手势 (Swipe Gesture - Tinder style)
+        // ==========================================
+        (function() {
+            const card       = document.getElementById('vocabCardEl');
+            const lblRight   = document.getElementById('swipeLabelRight'); // green  – shown while dragging right
+            const lblLeft    = document.getElementById('swipeLabelLeft');  // red    – shown while dragging left
+            const THRESHOLD  = 88;   // px to trigger action
+            const MAX_ROT    = 22;   // max rotation degrees at threshold
+            const FLY_MS     = 320;  // fly-out duration must match CSS animation
+
+            let startX = 0, startY = 0;
+            let dragging = false, dirLocked = false;
+
+            // ── drag start ──────────────────────────────────────
+            card.addEventListener('touchstart', e => {
+                startX    = e.touches[0].clientX;
+                startY    = e.touches[0].clientY;
+                dragging  = false;
+                dirLocked = false;
+                card.style.transition = 'none';
+            }, { passive: true });
+
+            // ── drag move ───────────────────────────────────────
+            card.addEventListener('touchmove', e => {
+                const dx = e.touches[0].clientX - startX;
+                const dy = e.touches[0].clientY - startY;
+
+                // lock direction on first significant move
+                if (!dirLocked) {
+                    if (Math.abs(dy) > Math.abs(dx) + 6) return; // vertical dominant → allow scroll
+                    dirLocked = true;
+                    dragging  = true;
+                }
+                if (!dragging) return;
+                e.preventDefault(); // block scroll while swiping horizontally
+
+                const rot   = Math.max(-MAX_ROT, Math.min(MAX_ROT, dx * 0.12));
+                const ratio = Math.min(Math.abs(dx) / THRESHOLD, 1);
+
+                card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+
+                if (dx > 0) {
+                    // swiping right → notebook
+                    lblRight.style.opacity = ratio;
+                    lblLeft.style.opacity  = 0;
+                    card.style.boxShadow   = `0 10px 40px rgba(16,185,129,${(ratio * 0.5).toFixed(2)})`;
+                    card.style.borderColor = `rgba(16,185,129,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                } else if (dx < 0) {
+                    // swiping left → mastered
+                    lblLeft.style.opacity  = ratio;
+                    lblRight.style.opacity = 0;
+                    card.style.boxShadow   = `0 10px 40px rgba(239,68,68,${(ratio * 0.5).toFixed(2)})`;
+                    card.style.borderColor = `rgba(239,68,68,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                } else {
+                    lblLeft.style.opacity  = 0;
+                    lblRight.style.opacity = 0;
+                }
+            }, { passive: false });
+
+            // ── drag end ────────────────────────────────────────
+            card.addEventListener('touchend', e => {
+                if (!dragging) return;
+                dragging = false;
+                const dx = e.changedTouches[0].clientX - startX;
+                lblLeft.style.opacity  = 0;
+                lblRight.style.opacity = 0;
+
+                if      (dx < -THRESHOLD) fireSwipe('left');
+                else if (dx >  THRESHOLD) fireSwipe('right');
+                else                      snapBack();
+            });
+
+            card.addEventListener('touchcancel', () => {
+                if (dragging) snapBack();
+                dragging = false;
+            });
+
+            // ── snap back (not enough drag) ──────────────────────
+            function snapBack() {
+                card.style.transition  = 'transform 0.42s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s, border-color 0.3s';
+                card.style.transform   = '';
+                card.style.boxShadow   = '';
+                card.style.borderColor = '';
+            }
+
+            // ── fire swipe: animate fly-out then apply action ────
+            function fireSwipe(direction) {
+                card.style.transition = 'none';
+                card.style.boxShadow  = '';
+                card.style.borderColor= '';
+                card.classList.add(direction === 'left' ? 'fly-left' : 'fly-right');
+
+                setTimeout(() => {
+                    card.classList.remove('fly-left', 'fly-right');
+                    card.style.transform  = '';
+                    card.style.opacity    = '';
+                    if (direction === 'left') doMastered();
+                    else                      doNotebook();
+                }, FLY_MS);
+            }
+
+            // ── swipe left: master the word ──────────────────────
+            function doMastered() {
+                if (vocabulary.length === 0) return;
+                const word = vocabulary[currentVocabIndex].word;
+                if (activeGroup === '笔记本') {
+                    // in notebook group, left-swipe removes from notebook
+                    removeFromNotebook(word);
+                } else {
+                    // session-only mastery: remove from working copy
+                    vocabulary.splice(currentVocabIndex, 1);
+                    if (currentVocabIndex >= vocabulary.length)
+                        currentVocabIndex = Math.max(0, vocabulary.length - 1);
+                }
+                renderVocabCard();
+            }
+
+            // ── swipe right: save to notebook, advance ───────────
+            function doNotebook() {
+                if (vocabulary.length === 0) return;
+                const wordObj = vocabulary[currentVocabIndex];
+                addToNotebook(wordObj);
+                // advance to next card
+                if (currentVocabIndex < vocabulary.length - 1) currentVocabIndex++;
+                else currentVocabIndex = 0;
+                renderVocabCard();
+            }
+        })();
 
     </script>
 </body>
