@@ -520,6 +520,20 @@
     }
     .btn-next-quiz { background-color: var(--primary); color: white; margin: 10px auto; display: none; padding: 15px 30px; font-size: 1.1rem; }
 
+    /* ── Exercises Hub ── */
+    .ex-hub-title-bar { text-align: center; margin-bottom: 20px; }
+    .ex-hub-title-bar h2 { margin: 0 0 4px; color: var(--text-main); font-size: 1.3rem; }
+    .ex-hub-title-bar p { margin: 0; color: var(--text-light); font-size: 0.88rem; }
+    .ex-hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+    .ex-hub-card { background: white; border: 2px solid #e5e7eb; border-radius: 14px; padding: 22px 14px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .ex-hub-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(99,102,241,0.15); }
+    .ex-hub-icon { font-size: 2rem; margin-bottom: 10px; }
+    .ex-hub-name { font-weight: 800; font-size: 0.97rem; color: var(--text-main); margin-bottom: 4px; }
+    .ex-hub-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.4; }
+    /* Fill-in-blank sentence display */
+    .fb-sentence { font-size: 1.1rem; line-height: 1.7; color: var(--text-main); background: white; border-radius: 14px; padding: 22px 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 14px; text-align: center; }
+    .fb-blank { display: inline-block; min-width: 90px; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: 800; font-style: normal; }
+
     .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
     /* Forms & Dashboard CSS */
@@ -958,12 +972,12 @@
 <header>
   <h1>Vocab Master Pro</h1>
   <div class="tabs">
-    <button class="tab-btn active" id="tab-flashcard">Flashcards</button>
-    <button class="tab-btn" id="tab-quiz">SRS Quiz</button>
-    <button class="tab-btn" id="tab-dashboard">Dashboard</button>
-    <button class="tab-btn" id="tab-add">Add Word</button>
-    <button class="tab-btn" id="tab-read">Articles</button>
-    <button class="tab-btn" id="tab-syn-ant">🔗 Match</button>
+    <button class="tab-btn active" id="tab-flashcard">🗂️ Flashcards</button>
+    <button class="tab-btn" id="tab-quiz">⚡️ SRS Quiz</button>
+    <button class="tab-btn" id="tab-dashboard">📊 Dashboard</button>
+    <button class="tab-btn" id="tab-add">➕ Add Word</button>
+    <button class="tab-btn" id="tab-read">📰 Articles</button>
+    <button class="tab-btn" id="tab-syn-ant">🎯 Exercises</button>
   </div>
   <div class="group-selector-container">
     <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
@@ -1044,7 +1058,6 @@
   </div>
   <div class="controls" style="margin-top: 10px;">
     <button class="btn-nav btn-got-it" id="btn-got-it" onclick="markCurrentWordGotIt()">✓ Got It</button>
-    <button class="btn-nav" id="btn-undo-got-it" onclick="undoGotIt()" style="display:none;">↩ Undo</button>
     <button class="btn-nav" id="btn-toggle-notebook" onclick="toggleNotebookForCurrentWord()">📒 Add to Notebook</button>
     <button class="btn-nav" id="btn-toggle-flip" onclick="toggleCardFlip()">🔄 Flip: On</button>
   </div>
@@ -1120,9 +1133,9 @@
       <div class="stat-value" id="stat-struggling" style="color: var(--danger);">0</div>
       <div class="stat-label">My Mistakes 🔴</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card" onclick="showGotItList()" style="cursor:pointer;" title="Tap to review words you marked Got It">
       <div class="stat-value" id="stat-session-mastered" style="color: #ef4444;">0</div>
-      <div class="stat-label">Got It (Session)</div>
+      <div class="stat-label">Got It (Session) ✓</div>
     </div>
     <div class="stat-card" onclick="showNotebookWordList()" style="cursor:pointer;" title="Tap to view notebook words">
       <div class="stat-value" id="stat-notebook" style="color: #10b981;">0</div>
@@ -6720,6 +6733,213 @@
           Synonyms test <em>same</em> meaning &middot; Antonyms test <em>opposite</em> meaning
         </div>
         <button class="sa-start-btn" onclick="initSynAntGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+  // ── Exercise Hub ──────────────────────────────────────────────────────────
+  function renderExerciseHub() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="ex-hub-title-bar">
+        <h2>🎯 Exercises</h2>
+        <p>Choose a GRE / SAT-style exercise to practice</p>
+      </div>
+      <div class="ex-hub-grid">
+        <div class="ex-hub-card" onclick="initSynAntGame()">
+          <div class="ex-hub-icon">🔗</div>
+          <div class="ex-hub-name">Synonym & Antonym</div>
+          <div class="ex-hub-desc">Identify word relationships: same or opposite meaning</div>
+        </div>
+        <div class="ex-hub-card" onclick="initFillBlankGame()">
+          <div class="ex-hub-icon">✏️</div>
+          <div class="ex-hub-name">Fill in the Blank</div>
+          <div class="ex-hub-desc">Pick the word that completes the sentence in context</div>
+        </div>
+        <div class="ex-hub-card" onclick="initDefMatchGame()">
+          <div class="ex-hub-icon">📖</div>
+          <div class="ex-hub-name">Definition Match</div>
+          <div class="ex-hub-desc">Read a definition and identify the correct word</div>
+        </div>
+      </div>`;
+  }
+
+  // ── Fill in the Blank ─────────────────────────────────────────────────────
+  let fbScore = 0, fbQNum = 0, fbAnswered = false, fbPool = [], fbIdx = 0, fbCurrentData = null;
+
+  function initFillBlankGame() {
+    fbScore = 0; fbQNum = 0; fbAnswered = false; fbIdx = 0;
+    // Only words that have example sentences containing the word itself
+    fbPool = vocabState.filter(item => {
+      const w = item.word.toLowerCase();
+      return item.examples && item.examples.some(ex => ex.toLowerCase().includes(w));
+    });
+    for (let i = fbPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [fbPool[i], fbPool[j]] = [fbPool[j], fbPool[i]];
+    }
+    renderFillBlankQuestion();
+  }
+
+  function renderFillBlankQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (fbIdx >= fbPool.length || fbIdx >= 20) { renderFillBlankGameOver(container); return; }
+
+    fbQNum++;
+    fbAnswered = false;
+    const item = fbPool[fbIdx++];
+    // Pick an example sentence that contains the word
+    const word = item.word;
+    const ex = item.examples.find(e => e.toLowerCase().includes(word.toLowerCase()));
+    // Replace word in sentence (case-insensitive) with blank
+    const re = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    const blanked = ex.replace(re, '<span class="fb-blank">_____</span>');
+
+    const pool = vocabState.filter(v => v.word !== word && !v.isCustom);
+    const distractors = [];
+    const used = new Set();
+    while (distractors.length < 3 && used.size < pool.length) {
+      const ri = Math.floor(Math.random() * pool.length);
+      if (!used.has(ri)) { used.add(ri); distractors.push(pool[ri].word); }
+    }
+    const options = [word, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    fbCurrentData = { word, ex };
+    const scoreCls = fbScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="fb-score-val">${fbScore > 0 ? '+' + fbScore : fbScore}</span></div>
+        <div class="sa-type-badge synonym">✏️ FILL BLANK</div>
+        <div class="sa-progress">${fbQNum} / 20</div>
+      </div>
+      <div class="fb-sentence">${blanked}</div>
+      <div class="sa-options">
+        ${options.map(opt => `<button class="sa-opt-btn" onclick="checkFillBlankAnswer(this,'${escapeJsSingleQuoted(opt)}')">${escapeHtml(opt)}</button>`).join('')}
+      </div>
+      <div id="fb-feedback"></div>`;
+  }
+
+  function checkFillBlankAnswer(btn, chosen) {
+    if (fbAnswered) return;
+    fbAnswered = true;
+    const { word, ex } = fbCurrentData;
+    const isCorrect = chosen.toLowerCase() === word.toLowerCase();
+    if (isCorrect) fbScore++; else fbScore--;
+    document.querySelectorAll('.sa-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (b.textContent.trim().toLowerCase() === word.toLowerCase()) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    const scoreEl = document.getElementById('fb-score-val');
+    if (scoreEl) { scoreEl.textContent = fbScore > 0 ? '+' + fbScore : fbScore; scoreEl.className = 'sa-score-val' + (fbScore < 0 ? ' negative' : ''); }
+    const nextLabel = (fbIdx >= fbPool.length || fbIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('fb-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(word)}"`}</div>
+      <div class="sa-question-card" style="font-size:.9rem; color:var(--text-light); font-style:italic;">"${escapeHtml(ex)}"</div>
+      <button class="sa-next-btn" onclick="renderFillBlankQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderFillBlankGameOver(container) {
+    const emoji = fbScore >= 14 ? '🏆' : fbScore >= 8 ? '👍' : '💪';
+    const scoreCls = fbScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${fbScore > 0 ? '+' : ''}${fbScore}</div>
+        <div class="sa-final-label">Fill in the Blank — 20 questions</div>
+        <button class="sa-start-btn" onclick="initFillBlankGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Definition Match ──────────────────────────────────────────────────────
+  let dmScore = 0, dmQNum = 0, dmAnswered = false, dmPool = [], dmIdx = 0, dmCurrentData = null;
+
+  function initDefMatchGame() {
+    dmScore = 0; dmQNum = 0; dmAnswered = false; dmIdx = 0;
+    dmPool = vocabState.filter(item => item.definition && !item.isCustom);
+    for (let i = dmPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [dmPool[i], dmPool[j]] = [dmPool[j], dmPool[i]];
+    }
+    renderDefMatchQuestion();
+  }
+
+  function renderDefMatchQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (dmIdx >= dmPool.length || dmIdx >= 20) { renderDefMatchGameOver(container); return; }
+
+    dmQNum++;
+    dmAnswered = false;
+    const item = dmPool[dmIdx++];
+    const correct = item.word;
+    const pool = vocabState.filter(v => v.word !== correct && !v.isCustom);
+    const distractors = [];
+    const used = new Set();
+    while (distractors.length < 3 && used.size < pool.length) {
+      const ri = Math.floor(Math.random() * pool.length);
+      if (!used.has(ri)) { used.add(ri); distractors.push(pool[ri].word); }
+    }
+    const options = [correct, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    dmCurrentData = { word: correct, item };
+    const scoreCls = dmScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="dm-score-val">${dmScore > 0 ? '+' + dmScore : dmScore}</span></div>
+        <div class="sa-type-badge antonym">📖 DEF MATCH</div>
+        <div class="sa-progress">${dmQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Which word matches this definition?</div>
+        <div class="sa-target-def" style="font-size:1rem; color:var(--text-main); font-style:normal; font-weight:600;">${escapeHtml(item.definition)}</div>
+        ${item.examples && item.examples[0] ? `<div class="sa-target-def" style="margin-top:10px;">"${escapeHtml(item.examples[0])}"</div>` : ''}
+      </div>
+      <div class="sa-options">
+        ${options.map(opt => `<button class="sa-opt-btn" onclick="checkDefMatchAnswer(this,'${escapeJsSingleQuoted(opt)}')">${escapeHtml(opt)}</button>`).join('')}
+      </div>
+      <div id="dm-feedback"></div>`;
+  }
+
+  function checkDefMatchAnswer(btn, chosen) {
+    if (dmAnswered) return;
+    dmAnswered = true;
+    const { word } = dmCurrentData;
+    const isCorrect = chosen.toLowerCase() === word.toLowerCase();
+    if (isCorrect) dmScore++; else dmScore--;
+    document.querySelectorAll('.sa-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (b.textContent.trim().toLowerCase() === word.toLowerCase()) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    const scoreEl = document.getElementById('dm-score-val');
+    if (scoreEl) { scoreEl.textContent = dmScore > 0 ? '+' + dmScore : dmScore; scoreEl.className = 'sa-score-val' + (dmScore < 0 ? ' negative' : ''); }
+    const nextLabel = (dmIdx >= dmPool.length || dmIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('dm-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(word)}"`}</div>
+      <button class="sa-next-btn" onclick="renderDefMatchQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderDefMatchGameOver(container) {
+    const emoji = dmScore >= 14 ? '🏆' : dmScore >= 8 ? '👍' : '💪';
+    const scoreCls = dmScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${dmScore > 0 ? '+' : ''}${dmScore}</div>
+        <div class="sa-final-label">Definition Match — 20 questions</div>
+        <button class="sa-start-btn" onclick="initDefMatchGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
       </div>`;
   }
   // ─────────────────────────────────────────────────────────────────────────
@@ -6741,7 +6961,25 @@
     if (fcIndex < 0) fcIndex = 0;
   }
 
-  let _lastGotItWord = null; // for undo
+  function _flyCardOut(dir, callback) {
+    const stamp = dir === 'left' ? _stampLeft : _stampRight;
+    stamp.style.opacity = '1';
+    _fcWrapper.style.transition = `transform ${_FLY_MS}ms ease-in, opacity ${_FLY_MS}ms ease-in`;
+    _fcWrapper.style.transform  = dir === 'left' ? 'translateX(-145%) rotate(-24deg)' : 'translateX(145%) rotate(24deg)';
+    _fcWrapper.style.opacity    = '0';
+    setTimeout(() => {
+      stamp.style.opacity         = '0';
+      _fcWrapper.style.transition = 'none';
+      _fcWrapper.style.transform  = '';
+      _fcWrapper.style.opacity    = '';
+      _fcWrapper.style.boxShadow  = '';
+      callback();
+      const inClass = dir === 'left' ? 'slide-in-right' : 'slide-in-left';
+      void _fcWrapper.offsetWidth;
+      _fcWrapper.classList.add(inClass);
+      setTimeout(() => _fcWrapper.classList.remove(inClass), 340);
+    }, _FLY_MS);
+  }
 
   function markCurrentWordGotIt() {
     const activePool = getActiveVocab();
@@ -6749,27 +6987,16 @@
     const order = getFlashcardOrder(activePool);
     const item  = activePool[order[fcIndex % order.length]];
     if (!item) return;
+    const key = normalizeWord(item.word);
 
-    _lastGotItWord = normalizeWord(item.word);
-    sessionMasteredWords.add(_lastGotItWord);
-    flashcardOrderMap[currentGroupIndex] = null;
-
-    const newPool = getActiveVocab();
-    if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
-
-    document.getElementById('btn-undo-got-it').style.display = '';
-    updateFlashcardUI();
-    if (currentMode === 'dashboard') renderDashboard();
-  }
-
-  function undoGotIt() {
-    if (!_lastGotItWord) return;
-    sessionMasteredWords.delete(_lastGotItWord);
-    _lastGotItWord = null;
-    flashcardOrderMap[currentGroupIndex] = null;
-    document.getElementById('btn-undo-got-it').style.display = 'none';
-    updateFlashcardUI();
-    if (currentMode === 'dashboard') renderDashboard();
+    _flyCardOut('left', () => {
+      sessionMasteredWords.add(key);
+      flashcardOrderMap[currentGroupIndex] = null;
+      const newPool = getActiveVocab();
+      if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
+      updateFlashcardUI();
+      renderDashboard();
+    });
   }
 
   function updateNotebookButtonState() {
@@ -6830,6 +7057,23 @@
     const item = getCurrentFlashcardItem();
     if (!item) return;
 
+    const adding = !item.isNotebook;
+
+    if (currentMode === 'flashcard' && adding) {
+      // Animate right fly-out when adding to notebook
+      _flyCardOut('right', () => {
+        item.isNotebook = true;
+        saveState();
+        const newPool = getActiveVocab();
+        if (newPool.length > 0) fcIndex = (fcIndex + 1) % newPool.length;
+        updateFlashcardUI();
+        renderDashboard();
+        if (isGroupWordListOpen) buildGroupWordList();
+        else updateGroupWordListSummary();
+      });
+      return;
+    }
+
     item.isNotebook = !item.isNotebook;
     saveState();
 
@@ -6838,11 +7082,9 @@
 
     if (currentMode === 'flashcard') {
       if (currentGroupIndex === 'notebook' && !item.isNotebook) {
-        // Word was removed while viewing Notebook group — it's gone from the pool, must navigate
         clampFlashcardIndex();
         updateFlashcardUI();
       } else {
-        // Just refresh the button/status — don't touch the card, audio, or flip state
         updateNotebookButtonState();
       }
     } else {
@@ -7382,9 +7624,6 @@
     if (currentGroupIndex === 'wod') flash100Cache = null;
     selectedGroupWords.clear();
     sessionMasteredWords.clear();
-    _lastGotItWord = null;
-    const undoBtn = document.getElementById('btn-undo-got-it');
-    if (undoBtn) undoBtn.style.display = 'none';
     fcIndex = 0;
     flashcardOrderMap[currentGroupIndex] = null;
     if (currentMode === 'flashcard') updateFlashcardUI();
@@ -7480,7 +7719,7 @@
       renderArticleMode();
     } else if (mode === 'syn-ant') {
       document.getElementById('syn-ant-mode').classList.add('active');
-      initSynAntGame();
+      renderExerciseHub();
     }
 
     updateGroupWordListSummary();
@@ -7727,6 +7966,107 @@
     }
     _swipeDragging = false;
   }, { passive: true });
+
+  // --- MOUSE DRAG (desktop) — mirrors the touch swipe ---
+  let _mouseDown = false;
+
+  flashcardElement.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    _mouseDown      = true;
+    _swipeStartX    = e.clientX;
+    _swipeStartY    = e.clientY;
+    _swipeDragging  = false;
+    _swipeDirLocked = false;
+    _didSwipe       = false;
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!_mouseDown) return;
+    const dx = e.clientX - _swipeStartX;
+    const dy = e.clientY - _swipeStartY;
+
+    if (!_swipeDirLocked) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      if (Math.abs(dy) > Math.abs(dx)) { _mouseDown = false; return; }
+      _swipeDirLocked = true;
+      _swipeDragging  = true;
+    }
+    if (!_swipeDragging) return;
+
+    const rot   = Math.max(-_SWIPE_MAX_ROT, Math.min(_SWIPE_MAX_ROT, dx * 0.1));
+    const ratio = Math.min(Math.abs(dx) / _SWIPE_THRESHOLD, 1);
+    _fcWrapper.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+
+    if (dx < 0) {
+      _stampLeft.style.opacity   = ratio;
+      _stampRight.style.opacity  = 0;
+      _fcWrapper.style.boxShadow = `0 14px 44px rgba(239,68,68,${(ratio * 0.45).toFixed(2)})`;
+    } else if (dx > 0) {
+      _stampRight.style.opacity  = ratio;
+      _stampLeft.style.opacity   = 0;
+      _fcWrapper.style.boxShadow = `0 14px 44px rgba(16,185,129,${(ratio * 0.45).toFixed(2)})`;
+    } else {
+      _stampLeft.style.opacity  = 0;
+      _stampRight.style.opacity = 0;
+    }
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!_mouseDown) return;
+    _mouseDown = false;
+    if (!_swipeDragging) return;
+    _swipeDragging = false;
+    _stampLeft.style.opacity  = '0';
+    _stampRight.style.opacity = '0';
+
+    const dx = e.clientX - _swipeStartX;
+
+    if (Math.abs(dx) >= _SWIPE_THRESHOLD) {
+      _didSwipe = true;
+      const dir = dx < 0 ? 'left' : 'right';
+      // Guard: right swipe when already in notebook
+      if (dir === 'right') {
+        const ap    = getActiveVocab();
+        const order = getFlashcardOrder(ap);
+        const item  = ap[order[fcIndex % order.length]];
+        if (currentGroupIndex === 'notebook' || (item && item.isNotebook)) {
+          _fcWrapper.style.transition = 'transform 0.44s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s';
+          _fcWrapper.style.transform  = '';
+          _fcWrapper.style.boxShadow  = '';
+          const stamp = _stampRight;
+          stamp.style.opacity = '1';
+          stamp.textContent = '📒 Already Saved';
+          stamp.style.color = '#d97706';
+          stamp.style.borderColor = '#f59e0b';
+          stamp.style.background = 'rgba(254,243,199,0.97)';
+          setTimeout(() => {
+            stamp.style.opacity = '0';
+            setTimeout(() => {
+              stamp.textContent = '📒 Save';
+              stamp.style.color = '';
+              stamp.style.borderColor = '';
+              stamp.style.background = '';
+            }, 300);
+          }, 900);
+          return;
+        }
+      }
+      _fcWrapper.style.transition = `transform ${_FLY_MS}ms ease-in, opacity ${_FLY_MS}ms ease-in`;
+      _fcWrapper.style.transform  = dir === 'left' ? 'translateX(-145%) rotate(-24deg)' : 'translateX(145%) rotate(24deg)';
+      _fcWrapper.style.opacity    = '0';
+      setTimeout(() => {
+        _fcWrapper.style.transition = 'none';
+        _fcWrapper.style.transform  = '';
+        _fcWrapper.style.opacity    = '';
+        _fcWrapper.style.boxShadow  = '';
+        _swipeTinderAdvance(dir);
+      }, _FLY_MS);
+    } else {
+      _fcWrapper.style.transition = 'transform 0.44s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s';
+      _fcWrapper.style.transform  = '';
+      _fcWrapper.style.boxShadow  = '';
+    }
+  });
 
   function _swipeTinderAdvance(dir) {
     listenRunId++;
@@ -8138,7 +8478,7 @@
     updateQuizNotebookButtonState();
 
     setTimeout(() => {
-      document.getElementById('quiz-mode')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('quizWordDisplay')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 30);
 
     const activePool = getActiveVocab();
@@ -8553,6 +8893,39 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     document.body.classList.toggle('fc-fullscreen', currentMode === 'flashcard' && window.innerWidth <= 640);
   });
 
+  function showGotItList() {
+    const overlay = document.getElementById('got-it-overlay');
+    const list    = document.getElementById('got-it-list');
+    if (sessionMasteredWords.size === 0) {
+      list.innerHTML = '<p style="color:var(--text-light); text-align:center; margin:16px 0;">No words marked Got It yet this session.</p>';
+    } else {
+      list.innerHTML = [...sessionMasteredWords].map(key => {
+        const item = vocabState.find(v => normalizeWord(v.word) === key);
+        const display = item ? item.word : key;
+        const def = item ? `<span style="font-size:.8rem; color:var(--text-light); margin-left:8px;">${item.definition.slice(0,60)}${item.definition.length>60?'…':''}</span>` : '';
+        return `<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 10px; border:1.5px solid #fee2e2; border-radius:8px; background:#fff5f5;">
+          <span style="font-weight:700; color:var(--text-main);">${display}${def}</span>
+          <button type="button" class="btn-nav" style="flex-shrink:0; font-size:.8rem; padding:4px 10px;" onclick="restoreGotItWord('${key}')">↩ Restore</button>
+        </div>`;
+      }).join('');
+    }
+    overlay.style.display = 'flex';
+  }
+
+  function restoreGotItWord(key) {
+    sessionMasteredWords.delete(key);
+    flashcardOrderMap[currentGroupIndex] = null;
+    renderDashboard();
+    showGotItList(); // refresh the list
+  }
+
+  function restoreAllGotIt() {
+    sessionMasteredWords.clear();
+    flashcardOrderMap[currentGroupIndex] = null;
+    renderDashboard();
+    document.getElementById('got-it-overlay').style.display = 'none';
+  }
+
   function showNotebookWordList() {
     const words = vocabState
       .filter(item => item.isNotebook)
@@ -8572,6 +8945,22 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
   }
 
 </script>
+
+<!-- Got It session list overlay -->
+<div id="got-it-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:14px; padding:24px; width:min(500px,94vw); max-height:80vh; display:flex; flex-direction:column; gap:12px; box-shadow:0 8px 32px rgba(0,0,0,.25);">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <strong style="font-size:1rem; color:#ef4444;">✓ Got It — This Session</strong>
+      <button type="button" onclick="document.getElementById('got-it-overlay').style.display='none'" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-light);">✕</button>
+    </div>
+    <p style="font-size:.8rem; color:var(--text-light); margin:0;">Words you marked as "Got It" this session. Restore any to study again.</p>
+    <div id="got-it-list" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px; min-height:80px;"></div>
+    <div style="display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+      <button type="button" class="btn-nav" onclick="restoreAllGotIt()" style="color:#ef4444; border-color:#ef4444;">↩ Study All Again</button>
+      <button type="button" class="btn-nav" onclick="document.getElementById('got-it-overlay').style.display='none'">Close</button>
+    </div>
+  </div>
+</div>
 
 <!-- Notebook word list overlay -->
 <div id="notebook-word-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:999; align-items:center; justify-content:center;">
@@ -8617,8 +9006,8 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
       <span class="ios-label">Articles</span>
     </button>
     <button class="ios-tab-btn" id="ios-tab-syn-ant" onclick="setMode('syn-ant','tab-syn-ant')">
-      <span class="ios-icon">🔗</span>
-      <span class="ios-label">Match</span>
+      <span class="ios-icon">🎯</span>
+      <span class="ios-label">Exercises</span>
     </button>
   </div>
 </nav>
