@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lewis Dot Structures — Top 30 Molecules</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:    #fdf6ec;
+    --card-bg:  #fffdf8;
+    --gold:     #c8922a;
+    --gold-pal: #f7e9cc;
+    --rust:     #b85c38;
+    --ink:      #241c0f;
+    --ink-mid:  #5a4a36;
+    --ink-soft: #8a7860;
+    --line:     #e8d8c0;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 12px;
+    padding: 26px 22px 30px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 11px; margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px; font-weight: 800; color: var(--ink);
+  }
+
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .header-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px; font-style: italic; color: var(--ink-soft); margin-top: 3px;
+  }
+
+  .header-tag {
+    font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-soft); text-align: right; line-height: 1.6;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    background: var(--gold-pal); border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0; padding: 9px 14px;
+    margin-bottom: 16px; font-size: 10.5px; color: var(--ink-mid);
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 16px; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px; font-weight: 700; font-style: italic;
+    color: var(--gold); letter-spacing: .12em; text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px; margin-bottom: 9px;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    padding: 8px 5px 6px;
+    text-align: center;
+    break-inside: avoid;
+  }
+
+  .formula {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700; color: var(--ink);
+    line-height: 1.2; margin-bottom: 2px;
+  }
+
+  .mol-name {
+    font-size: 9px; font-weight: 300; color: var(--ink-soft); margin-bottom: 3px;
+  }
+
+  .mol-svg { display: block; margin: 0 auto; overflow: visible; }
+
+  .shape {
+    font-size: 8.5px; font-style: italic; color: var(--ink-soft);
+    margin-top: 3px; line-height: 1.3;
+  }
+
+  .exc {
+    font-size: 7.5px; font-weight: 600; color: var(--rust);
+    text-transform: uppercase; letter-spacing: .05em; margin-top: 2px;
+  }
+
+  /* ── SVG SHARED STYLES ── */
+  .bd  { stroke: #1a1a1a; stroke-width: 1.7; stroke-linecap: round; fill: none; }
+  .lp  { fill: #1a1a1a; }
+  .at  { font-size: 14px; font-weight: 600; text-anchor: middle; dominant-baseline: central; font-family: 'DM Sans', sans-serif; }
+  .atH { fill: #888; }
+  .atC { fill: #1a1a1a; }
+  .atN { fill: #2255cc; }
+  .atO { fill: #cc2211; }
+  .atF { fill: #1a7730; }
+  .atCl{ fill: #1a7730; }
+  .atS { fill: #996600; }
+  .atP { fill: #bb4400; }
+  .atB { fill: #7722cc; }
+  .ch  { font-size: 10px; font-weight: 700; fill: #666; text-anchor: middle; dominant-baseline: central; font-family: 'DM Sans', sans-serif; }
+  .note{ font-size: 8px; fill: #aaa; text-anchor: middle; dominant-baseline: central; font-family: 'DM Sans', sans-serif; font-style: italic; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--line); padding-top: 9px; margin-top: 16px;
+    display: flex; justify-content: space-between;
+    font-family: 'Playfair Display', serif; font-size: 9px;
+    font-style: italic; color: var(--ink-soft);
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; padding: 12px 14px; }
+    .card { break-inside: avoid; border-color: #ccc; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <div>
+    <h1>Lewis Dot <em>Structures</em></h1>
+    <div class="header-sub">The 30 most important molecules in high school chemistry</div>
+  </div>
+  <div class="header-tag">
+    Chemistry Reference Sheet<br>
+    ✦ Bonding &amp; Molecular Structure
+  </div>
+</header>
+
+<!-- ══ LEGEND ══ -->
+<div class="legend">
+  <div class="legend-item">
+    <svg width="28" height="12" overflow="visible"><line class="bd" x1="2" y1="6" x2="26" y2="6"/></svg>
+    Single bond
+  </div>
+  <div class="legend-item">
+    <svg width="28" height="12" overflow="visible"><line class="bd" x1="2" y1="4" x2="26" y2="4"/><line class="bd" x1="2" y1="10" x2="26" y2="10"/></svg>
+    Double bond
+  </div>
+  <div class="legend-item">
+    <svg width="28" height="14" overflow="visible"><line class="bd" x1="2" y1="3" x2="26" y2="3"/><line class="bd" x1="2" y1="7" x2="26" y2="7"/><line class="bd" x1="2" y1="11" x2="26" y2="11"/></svg>
+    Triple bond
+  </div>
+  <div class="legend-item">
+    <svg width="16" height="12" overflow="visible"><circle class="lp" cx="3" cy="6" r="2.2"/><circle class="lp" cx="13" cy="6" r="2.2"/></svg>
+    Lone pair (2 e⁻)
+  </div>
+  <div class="legend-item">
+    <svg width="10" height="12" overflow="visible"><circle class="lp" cx="5" cy="6" r="2.2"/></svg>
+    Unpaired (radical)
+  </div>
+  <div class="legend-item" style="margin-left:6px">
+    <b style="color:#2255cc">N</b>&nbsp;
+    <b style="color:#cc2211">O</b>&nbsp;
+    <b style="color:#1a7730">F / Cl</b>&nbsp;
+    <b style="color:#996600">S</b>&nbsp;
+    <b style="color:#bb4400">P</b>&nbsp;
+    <b style="color:#7722cc">B</b>
+    &nbsp;— element colours
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     GROUP 1 — DIATOMIC ELEMENTS
+══════════════════════════════════════════════ -->
+<div class="section">
+<div class="section-title">✦ Diatomic elements</div>
+<div class="grid">
+
+<!-- H₂ -->
+<div class="card">
+<div class="formula">H₂</div>
+<div class="mol-name">hydrogen</div>
+<svg class="mol-svg" width="110" height="54" viewBox="0 0 110 54" overflow="visible">
+  <text class="at atH" x="22" y="27">H</text>
+  <line class="bd" x1="30" y1="27" x2="80" y2="27"/>
+  <text class="at atH" x="88" y="27">H</text>
+</svg>
+<div class="shape">single bond · nonpolar</div>
+</div>
+
+<!-- O₂ -->
+<div class="card">
+<div class="formula">O₂</div>
+<div class="mol-name">oxygen</div>
+<svg class="mol-svg" width="110" height="62" viewBox="0 0 110 62" overflow="visible">
+  <text class="at atO" x="22" y="31">O</text>
+  <line class="bd" x1="30" y1="27" x2="80" y2="27"/>
+  <line class="bd" x1="30" y1="35" x2="80" y2="35"/>
+  <text class="at atO" x="88" y="31">O</text>
+  <circle class="lp" cx="13" cy="23" r="2.2"/><circle class="lp" cx="21" cy="23" r="2.2"/>
+  <circle class="lp" cx="13" cy="39" r="2.2"/><circle class="lp" cx="21" cy="39" r="2.2"/>
+  <circle class="lp" cx="81" cy="23" r="2.2"/><circle class="lp" cx="89" cy="23" r="2.2"/>
+  <circle class="lp" cx="81" cy="39" r="2.2"/><circle class="lp" cx="89" cy="39" r="2.2"/>
+</svg>
+<div class="shape">double bond · 2 LP each</div>
+</div>
+
+<!-- N₂ -->
+<div class="card">
+<div class="formula">N₂</div>
+<div class="mol-name">nitrogen</div>
+<svg class="mol-svg" width="110" height="54" viewBox="0 0 110 54" overflow="visible">
+  <text class="at atN" x="22" y="27">N</text>
+  <line class="bd" x1="30" y1="22" x2="80" y2="22"/>
+  <line class="bd" x1="30" y1="27" x2="80" y2="27"/>
+  <line class="bd" x1="30" y1="32" x2="80" y2="32"/>
+  <text class="at atN" x="88" y="27">N</text>
+  <circle class="lp" cx="9"  cy="23" r="2.2"/><circle class="lp" cx="9"  cy="31" r="2.2"/>
+  <circle class="lp" cx="101" cy="23" r="2.2"/><circle class="lp" cx="101" cy="31" r="2.2"/>
+</svg>
+<div class="shape">triple bond · 1 LP each</div>
+</div>
+
+<!-- F₂ -->
+<div class="card">
+<div class="formula">F₂</div>
+<div class="mol-name">fluorine</div>
+<svg class="mol-svg" width="110" height="62" viewBox="0 0 110 62" overflow="visible">
+  <text class="at atF" x="22" y="31">F</text>
+  <line class="bd" x1="30" y1="31" x2="80" y2="31"/>
+  <text class="at atF" x="88" y="31">F</text>
+  <circle class="lp" cx="13" cy="22" r="2.2"/><circle class="lp" cx="21" cy="22" r="2.2"/>
+  <circle class="lp" cx="13" cy="40" r="2.2"/><circle class="lp" cx="21" cy="40" r="2.2"/>
+  <circle class="lp" cx="7"  cy="28" r="2.2"/><circle class="lp" cx="7"  cy="36" r="2.2"/>
+  <circle class="lp" cx="81" cy="22" r="2.2"/><circle class="lp" cx="89" cy="22" r="2.2"/>
+  <circle class="lp" cx="81" cy="40" r="2.2"/><circle class="lp" cx="89" cy="40" r="2.2"/>
+  <circle class="lp" cx="103" cy="28" r="2.2"/><circle class="lp" cx="103" cy="36" r="2.2"/>
+</svg>
+<div class="shape">single bond · 3 LP each</div>
+</div>
+
+<!-- Cl₂ -->
+<div class="card">
+<div class="formula">Cl₂</div>
+<div class="mol-name">chlorine</div>
+<svg class="mol-svg" width="110" height="62" viewBox="0 0 110 62" overflow="visible">
+  <text class="at atCl" x="21" y="31">Cl</text>
+  <line class="bd" x1="32" y1="31" x2="78" y2="31"/>
+  <text class="at atCl" x="89" y="31">Cl</text>
+  <circle class="lp" cx="10" cy="22" r="2.2"/><circle class="lp" cx="20" cy="22" r="2.2"/>
+  <circle class="lp" cx="10" cy="40" r="2.2"/><circle class="lp" cx="20" cy="40" r="2.2"/>
+  <circle class="lp" cx="3"  cy="28" r="2.2"/><circle class="lp" cx="3"  cy="36" r="2.2"/>
+  <circle class="lp" cx="80" cy="22" r="2.2"/><circle class="lp" cx="90" cy="22" r="2.2"/>
+  <circle class="lp" cx="80" cy="40" r="2.2"/><circle class="lp" cx="90" cy="40" r="2.2"/>
+  <circle class="lp" cx="104" cy="28" r="2.2"/><circle class="lp" cx="104" cy="36" r="2.2"/>
+</svg>
+<div class="shape">single bond · 3 LP each</div>
+</div>
+
+<!-- HCl -->
+<div class="card">
+<div class="formula">HCl</div>
+<div class="mol-name">hydrogen chloride</div>
+<svg class="mol-svg" width="110" height="62" viewBox="0 0 110 62" overflow="visible">
+  <text class="at atH" x="14" y="31">H</text>
+  <line class="bd" x1="22" y1="31" x2="68" y2="31"/>
+  <text class="at atCl" x="80" y="31">Cl</text>
+  <circle class="lp" cx="70" cy="22" r="2.2"/><circle class="lp" cx="80" cy="22" r="2.2"/>
+  <circle class="lp" cx="70" cy="40" r="2.2"/><circle class="lp" cx="80" cy="40" r="2.2"/>
+  <circle class="lp" cx="95" cy="28" r="2.2"/><circle class="lp" cx="95" cy="36" r="2.2"/>
+</svg>
+<div class="shape">polar · 3 LP on Cl</div>
+</div>
+
+</div><!-- /grid -->
+</div><!-- /section -->
+
+
+<!-- ══════════════════════════════════════════════
+     GROUP 2 — HYDRIDES
+══════════════════════════════════════════════ -->
+<div class="section">
+<div class="section-title">✦ Hydrides</div>
+<div class="grid">
+
+<!-- HF -->
+<div class="card">
+<div class="formula">HF</div>
+<div class="mol-name">hydrogen fluoride</div>
+<svg class="mol-svg" width="110" height="62" viewBox="0 0 110 62" overflow="visible">
+  <text class="at atH" x="14" y="31">H</text>
+  <line class="bd" x1="22" y1="31" x2="72" y2="31"/>
+  <text class="at atF" x="82" y="31">F</text>
+  <circle class="lp" cx="72" cy="22" r="2.2"/><circle class="lp" cx="82" cy="22" r="2.2"/>
+  <circle class="lp" cx="72" cy="40" r="2.2"/><circle class="lp" cx="82" cy="40" r="2.2"/>
+  <circle class="lp" cx="96" cy="28" r="2.2"/><circle class="lp" cx="96" cy="36" r="2.2"/>
+</svg>
+<div class="shape">most polar H-halide · 3 LP on F</div>
+</div>
+
+<!-- H₂O -->
+<div class="card">
+<div class="formula">H₂O</div>
+<div class="mol-name">water</div>
+<svg class="mol-svg" width="110" height="78" viewBox="0 0 110 78" overflow="visible">
+  <text class="at atO" x="55" y="28">O</text>
+  <circle class="lp" cx="44" cy="17" r="2.2"/><circle class="lp" cx="51" cy="17" r="2.2"/>
+  <circle class="lp" cx="59" cy="17" r="2.2"/><circle class="lp" cx="66" cy="17" r="2.2"/>
+  <line class="bd" x1="48" y1="34" x2="22" y2="56"/>
+  <line class="bd" x1="62" y1="34" x2="88" y2="56"/>
+  <text class="at atH" x="14" y="64">H</text>
+  <text class="at atH" x="96" y="64">H</text>
+</svg>
+<div class="shape">bent · 104.5° · 2 LP on O</div>
+</div>
+
+<!-- H₂S -->
+<div class="card">
+<div class="formula">H₂S</div>
+<div class="mol-name">hydrogen sulfide</div>
+<svg class="mol-svg" width="110" height="78" viewBox="0 0 110 78" overflow="visible">
+  <text class="at atS" x="55" y="28">S</text>
+  <circle class="lp" cx="44" cy="17" r="2.2"/><circle class="lp" cx="51" cy="17" r="2.2"/>
+  <circle class="lp" cx="59" cy="17" r="2.2"/><circle class="lp" cx="66" cy="17" r="2.2"/>
+  <line class="bd" x1="48" y1="34" x2="22" y2="56"/>
+  <line class="bd" x1="62" y1="34" x2="88" y2="56"/>
+  <text class="at atH" x="14" y="64">H</text>
+  <text class="at atH" x="96" y="64">H</text>
+</svg>
+<div class="shape">bent · 2 LP on S (like H₂O)</div>
+</div>
+
+<!-- NH₃ -->
+<div class="card">
+<div class="formula">NH₃</div>
+<div class="mol-name">ammonia</div>
+<svg class="mol-svg" width="110" height="80" viewBox="0 0 110 80" overflow="visible">
+  <text class="at atN" x="55" y="26">N</text>
+  <circle class="lp" cx="47" cy="14" r="2.2"/><circle class="lp" cx="55" cy="12" r="2.2"/><circle class="lp" cx="63" cy="14" r="2.2"/>
+  <!-- 1 lone pair = 2 dots -->
+  <line class="bd" x1="47" y1="33" x2="20" y2="58"/>
+  <line class="bd" x1="55" y1="34" x2="55" y2="62"/>
+  <line class="bd" x1="63" y1="33" x2="90" y2="58"/>
+  <text class="at atH" x="12" y="67">H</text>
+  <text class="at atH" x="55" y="71">H</text>
+  <text class="at atH" x="98" y="67">H</text>
+</svg>
+<div class="shape">pyramidal · 107° · 1 LP on N</div>
+</div>
+
+<!-- PH₃ -->
+<div class="card">
+<div class="formula">PH₃</div>
+<div class="mol-name">phosphine</div>
+<svg class="mol-svg" width="110" height="80" viewBox="0 0 110 80" overflow="visible">
+  <text class="at atP" x="55" y="26">P</text>
+  <circle class="lp" cx="47" cy="13" r="2.2"/><circle class="lp" cx="63" cy="13" r="2.2"/>
+  <line class="bd" x1="47" y1="33" x2="20" y2="58"/>
+  <line class="bd" x1="55" y1="34" x2="55" y2="62"/>
+  <line class="bd" x1="63" y1="33" x2="90" y2="58"/>
+  <text class="at atH" x="12" y="67">H</text>
+  <text class="at atH" x="55" y="71">H</text>
+  <text class="at atH" x="98" y="67">H</text>
+</svg>
+<div class="shape">pyramidal · 1 LP on P (like NH₃)</div>
+</div>
+
+<!-- CH₄ -->
+<div class="card">
+<div class="formula">CH₄</div>
+<div class="mol-name">methane</div>
+<svg class="mol-svg" width="110" height="78" viewBox="0 0 110 78" overflow="visible">
+  <text class="at atC" x="55" y="39">C</text>
+  <line class="bd" x1="55" y1="31" x2="55" y2="12"/>
+  <line class="bd" x1="55" y1="47" x2="55" y2="66"/>
+  <line class="bd" x1="47" y1="39" x2="18" y2="39"/>
+  <line class="bd" x1="63" y1="39" x2="92" y2="39"/>
+  <text class="at atH" x="55" y="7">H</text>
+  <text class="at atH" x="55" y="74">H</text>
+  <text class="at atH" x="10" y="39">H</text>
+  <text class="at atH" x="100" y="39">H</text>
+</svg>
+<div class="shape">tetrahedral · no LP on C</div>
+</div>
+
+</div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     GROUP 3 — CARBON & SIMPLE COMPOUNDS
+══════════════════════════════════════════════ -->
+<div class="section">
+<div class="section-title">✦ Carbon &amp; simple compounds</div>
+<div class="grid">
+
+<!-- CO -->
+<div class="card">
+<div class="formula">CO</div>
+<div class="mol-name">carbon monoxide</div>
+<svg class="mol-svg" width="110" height="54" viewBox="0 0 110 54" overflow="visible">
+  <text class="at atC" x="24" y="27">C</text>
+  <line class="bd" x1="32" y1="22" x2="78" y2="22"/>
+  <line class="bd" x1="32" y1="27" x2="78" y2="27"/>
+  <line class="bd" x1="32" y1="32" x2="78" y2="32"/>
+  <text class="at atO" x="86" y="27">O</text>
+  <circle class="lp" cx="11" cy="23" r="2.2"/><circle class="lp" cx="11" cy="31" r="2.2"/>
+  <circle class="lp" cx="99" cy="23" r="2.2"/><circle class="lp" cx="99" cy="31" r="2.2"/>
+</svg>
+<div class="shape">linear · triple bond · 1 LP each</div>
+</div>
+
+<!-- CO₂ -->
+<div class="card">
+<div class="formula">CO₂</div>
+<div class="mol-name">carbon dioxide</div>
+<svg class="mol-svg" width="110" height="60" viewBox="0 0 110 60" overflow="visible">
+  <text class="at atO" x="14" y="30">O</text>
+  <line class="bd" x1="22" y1="26" x2="48" y2="26"/>
+  <line class="bd" x1="22" y1="34" x2="48" y2="34"/>
+  <text class="at atC" x="55" y="30">C</text>
+  <line class="bd" x1="62" y1="26" x2="88" y2="26"/>
+  <line class="bd" x1="62" y1="34" x2="88" y2="34"/>
+  <text class="at atO" x="96" y="30">O</text>
+  <circle class="lp" cx="4"  cy="22" r="2.2"/><circle class="lp" cx="12" cy="22" r="2.2"/>
+  <circle class="lp" cx="4"  cy="38" r="2.2"/><circle class="lp" cx="12" cy="38" r="2.2"/>
+  <circle class="lp" cx="88" cy="22" r="2.2"/><circle class="lp" cx="96" cy="22" r="2.2"/>
+  <circle class="lp" cx="88" cy="38" r="2.2"/><circle class="lp" cx="96" cy="38" r="2.2"/>
+</svg>
+<div class="shape">linear · 2 C=O · 2 LP on each O</div>
+</div>
+
+<!-- SO₂ -->
+<div class="card">
+<div class="formula">SO₂</div>
+<div class="mol-name">sulfur dioxide</div>
+<svg class="mol-svg" width="110" height="80" viewBox="0 0 110 80" overflow="visible">
+  <text class="at atS" x="55" y="26">S</text>
+  <circle class="lp" cx="47" cy="13" r="2.2"/><circle class="lp" cx="63" cy="13" r="2.2"/>
+  <!-- S=O left (double) -->
+  <line class="bd" x1="48" y1="33" x2="22" y2="54"/>
+  <line class="bd" x1="45" y1="30" x2="19" y2="51"/>
+  <!-- S-O right (single) -->
+  <line class="bd" x1="62" y1="33" x2="88" y2="54"/>
+  <text class="at atO" x="14" y="63">O</text>
+  <text class="at atO" x="96" y="63">O</text>
+  <circle class="lp" cx="3"  cy="57" r="2.2"/><circle class="lp" cx="3"  cy="65" r="2.2"/>
+  <circle class="lp" cx="7"  cy="71" r="2.2"/><circle class="lp" cx="15" cy="73" r="2.2"/>
+  <circle class="lp" cx="88" cy="57" r="2.2"/><circle class="lp" cx="96" cy="57" r="2.2"/>
+  <circle class="lp" cx="101" cy="65" r="2.2"/><circle class="lp" cx="103" cy="72" r="2.2"/>
+  <circle class="lp" cx="88" cy="71" r="2.2"/><circle class="lp" cx="96" cy="73" r="2.2"/>
+</svg>
+<div class="shape">bent · 1 LP on S · resonance</div>
+</div>
+
+<!-- HCN -->
+<div class="card">
+<div class="formula">HCN</div>
+<div class="mol-name">hydrogen cyanide</div>
+<svg class="mol-svg" width="110" height="54" viewBox="0 0 110 54" overflow="visible">
+  <text class="at atH" x="10" y="27">H</text>
+  <line class="bd" x1="18" y1="27" x2="36" y2="27"/>
+  <text class="at atC" x="44" y="27">C</text>
+  <line class="bd" x1="52" y1="22" x2="80" y2="22"/>
+  <line class="bd" x1="52" y1="27" x2="80" y2="27"/>
+  <line class="bd" x1="52" y1="32" x2="80" y2="32"/>
+  <text class="at atN" x="88" y="27">N</text>
+  <circle class="lp" cx="100" cy="23" r="2.2"/><circle class="lp" cx="100" cy="31" r="2.2"/>
+</svg>
+<div class="shape">linear · C≡N · 1 LP on N</div>
+</div>
+
+<!-- C₂H₂ -->
+<div class="card">
+<div class="formula">C₂H₂</div>
+<div class="mol-name">acetylene (ethyne)</div>
+<svg class="mol-svg" width="110" height="54" viewBox="0 0 110 54" overflow="visible">
+  <text class="at atH" x="7"  y="27">H</text>
+  <line class="bd" x1="15" y1="27" x2="30" y2="27"/>
+  <text class="at atC" x="38" y="27">C</text>
+  <line class="bd" x1="46" y1="22" x2="64" y2="22"/>
+  <line class="bd" x1="46" y1="27" x2="64" y2="27"/>
+  <line class="bd" x1="46" y1="32" x2="64" y2="32"/>
+  <text class="at atC" x="72" y="27">C</text>
+  <line class="bd" x1="80" y1="27" x2="95" y2="27"/>
+  <text class="at atH" x="103" y="27">H</text>
+</svg>
+<div class="shape">linear · C≡C triple bond</div>
+</div>
+
+<!-- C₂H₄ -->
+<div class="card">
+<div class="formula">C₂H₄</div>
+<div class="mol-name">ethylene (ethene)</div>
+<svg class="mol-svg" width="110" height="80" viewBox="0 0 110 80" overflow="visible">
+  <text class="at atC" x="33" y="40">C</text>
+  <line class="bd" x1="41" y1="36" x2="69" y2="36"/>
+  <line class="bd" x1="41" y1="44" x2="69" y2="44"/>
+  <text class="at atC" x="77" y="40">C</text>
+  <line class="bd" x1="26" y1="34" x2="13" y2="22"/>
+  <line class="bd" x1="26" y1="46" x2="13" y2="58"/>
+  <text class="at atH" x="7"  y="18">H</text>
+  <text class="at atH" x="7"  y="64">H</text>
+  <line class="bd" x1="84" y1="34" x2="97" y2="22"/>
+  <line class="bd" x1="84" y1="46" x2="97" y2="58"/>
+  <text class="at atH" x="103" y="18">H</text>
+  <text class="at atH" x="103" y="64">H</text>
+</svg>
+<div class="shape">planar · C=C double bond</div>
+</div>
+
+</div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     GROUP 4 — OXIDES & RADICALS
+══════════════════════════════════════════════ -->
+<div class="section">
+<div class="section-title">✦ Oxides &amp; radicals</div>
+<div class="grid">
+
+<!-- SO₃ -->
+<div class="card">
+<div class="formula">SO₃</div>
+<div class="mol-name">sulfur trioxide</div>
+<svg class="mol-svg" width="110" height="82" viewBox="0 0 110 82" overflow="visible">
+  <text class="at atS" x="55" y="34">S</text>
+  <!-- S=O top double bond -->
+  <line class="bd" x1="51" y1="25" x2="51" y2="12"/>
+  <line class="bd" x1="59" y1="25" x2="59" y2="12"/>
+  <text class="at atO" x="55" y="7">O</text>
+  <!-- S=O lower-left double bond -->
+  <line class="bd" x1="48" y1="41" x2="23" y2="60"/>
+  <line class="bd" x1="45" y1="38" x2="20" y2="57"/>
+  <text class="at atO" x="14" y="68">O</text>
+  <!-- S=O lower-right double bond -->
+  <line class="bd" x1="62" y1="41" x2="87" y2="60"/>
+  <line class="bd" x1="65" y1="38" x2="90" y2="57"/>
+  <text class="at atO" x="96" y="68">O</text>
+  <!-- LP on each O: 2 per O (double bond → 2 LP) -->
+  <circle class="lp" cx="45" cy="4" r="2.2"/><circle class="lp" cx="65" cy="4" r="2.2"/>
+  <circle class="lp" cx="3"  cy="62" r="2.2"/><circle class="lp" cx="3"  cy="70" r="2.2"/>
+  <circle class="lp" cx="102" cy="62" r="2.2"/><circle class="lp" cx="107" cy="70" r="2.2"/>
+</svg>
+<div class="shape">trigonal planar · 3 S=O bonds</div>
+</div>
+
+<!-- NO -->
+<div class="card">
+<div class="formula">NO</div>
+<div class="mol-name">nitric oxide</div>
+<svg class="mol-svg" width="110" height="60" viewBox="0 0 110 60" overflow="visible">
+  <text class="at atN" x="28" y="30">N</text>
+  <line class="bd" x1="36" y1="26" x2="74" y2="26"/>
+  <line class="bd" x1="36" y1="34" x2="74" y2="34"/>
+  <text class="at atO" x="82" y="30">O</text>
+  <!-- N: 1 LP (top) + 1 radical dot (bottom) -->
+  <circle class="lp" cx="18" cy="22" r="2.2"/><circle class="lp" cx="18" cy="30" r="2.2"/>
+  <circle class="lp" cx="18" cy="39" r="2.2"/><!-- radical single dot -->
+  <!-- O: 2 LP -->
+  <circle class="lp" cx="74" cy="20" r="2.2"/><circle class="lp" cx="82" cy="20" r="2.2"/>
+  <circle class="lp" cx="74" cy="40" r="2.2"/><circle class="lp" cx="82" cy="40" r="2.2"/>
+</svg>
+<div class="shape">linear · N=O · odd electron (11 e⁻)</div>
+<div class="exc">Radical molecule</div>
+</div>
+
+<!-- NO₂ -->
+<div class="card">
+<div class="formula">NO₂</div>
+<div class="mol-name">nitrogen dioxide</div>
+<svg class="mol-svg" width="110" height="82" viewBox="0 0 110 82" overflow="visible">
+  <text class="at atN" x="55" y="27">N</text>
+  <!-- radical unpaired electron dot above N -->
+  <circle class="lp" cx="55" cy="14" r="2.2"/>
+  <!-- N=O left (double) -->
+  <line class="bd" x1="48" y1="34" x2="21" y2="56"/>
+  <line class="bd" x1="45" y1="31" x2="18" y2="53"/>
+  <!-- N-O right (single) -->
+  <line class="bd" x1="62" y1="34" x2="89" y2="56"/>
+  <text class="at atO" x="13" y="65">O</text>
+  <text class="at atO" x="97" y="65">O</text>
+  <!-- Left O: 2 LP -->
+  <circle class="lp" cx="2"  cy="59" r="2.2"/><circle class="lp" cx="2"  cy="67" r="2.2"/>
+  <circle class="lp" cx="6"  cy="73" r="2.2"/><circle class="lp" cx="14" cy="75" r="2.2"/>
+  <!-- Right O: 3 LP -->
+  <circle class="lp" cx="90" cy="59" r="2.2"/><circle class="lp" cx="98" cy="59" r="2.2"/>
+  <circle class="lp" cx="104" cy="67" r="2.2"/><circle class="lp" cx="106" cy="74" r="2.2"/>
+  <circle class="lp" cx="90" cy="73" r="2.2"/><circle class="lp" cx="98" cy="75" r="2.2"/>
+</svg>
+<div class="shape">bent · radical on N · 17 e⁻</div>
+<div class="exc">Radical molecule</div>
+</div>
+
+<!-- O₃ -->
+<div class="card">
+<div class="formula">O₃</div>
+<div class="mol-name">ozone</div>
+<svg class="mol-svg" width="110" height="82" viewBox="0 0 110 82" overflow="visible">
+  <text class="at atO" x="55" y="25">O</text>
+  <circle class="lp" cx="47" cy="12" r="2.2"/><circle class="lp" cx="63" cy="12" r="2.2"/>
+  <!-- O=O left (double) -->
+  <line class="bd" x1="48" y1="32" x2="22" y2="54"/>
+  <line class="bd" x1="45" y1="29" x2="19" y2="51"/>
+  <!-- O-O right (single) -->
+  <line class="bd" x1="62" y1="32" x2="88" y2="54"/>
+  <text class="at atO" x="14" y="63">O</text>
+  <text class="at atO" x="96" y="63">O</text>
+  <circle class="lp" cx="3"  cy="57" r="2.2"/><circle class="lp" cx="3"  cy="65" r="2.2"/>
+  <circle class="lp" cx="7"  cy="71" r="2.2"/><circle class="lp" cx="15" cy="73" r="2.2"/>
+  <circle class="lp" cx="89" cy="57" r="2.2"/><circle class="lp" cx="97" cy="57" r="2.2"/>
+  <circle class="lp" cx="103" cy="65" r="2.2"/><circle class="lp" cx="105" cy="72" r="2.2"/>
+  <circle class="lp" cx="89" cy="71" r="2.2"/><circle class="lp" cx="97" cy="73" r="2.2"/>
+</svg>
+<div class="shape">bent · 1 LP on central O · resonance</div>
+</div>
+
+<!-- BF₃ -->
+<div class="card">
+<div class="formula">BF₃</div>
+<div class="mol-name">boron trifluoride</div>
+<svg class="mol-svg" width="110" height="84" viewBox="0 0 110 84" overflow="visible">
+  <text class="at atB" x="55" y="34">B</text>
+  <line class="bd" x1="55" y1="26" x2="55" y2="12"/>
+  <line class="bd" x1="48" y1="40" x2="22" y2="58"/>
+  <line class="bd" x1="62" y1="40" x2="88" y2="58"/>
+  <text class="at atF" x="55" y="6">F</text>
+  <text class="at atF" x="14" y="67">F</text>
+  <text class="at atF" x="96" y="67">F</text>
+  <circle class="lp" cx="45" cy="3" r="2.2"/><circle class="lp" cx="65" cy="3" r="2.2"/>
+  <circle class="lp" cx="3"  cy="61" r="2.2"/><circle class="lp" cx="3"  cy="69" r="2.2"/>
+  <circle class="lp" cx="7"  cy="75" r="2.2"/><circle class="lp" cx="15" cy="77" r="2.2"/>
+  <circle class="lp" cx="97" cy="61" r="2.2"/><circle class="lp" cx="105" cy="61" r="2.2"/>
+  <circle class="lp" cx="104" cy="69" r="2.2"/><circle class="lp" cx="107" cy="77" r="2.2"/>
+</svg>
+<div class="shape">trigonal planar · only 6e⁻ on B</div>
+<div class="exc">Incomplete octet</div>
+</div>
+
+<!-- PCl₃ -->
+<div class="card">
+<div class="formula">PCl₃</div>
+<div class="mol-name">phosphorus trichloride</div>
+<svg class="mol-svg" width="110" height="84" viewBox="0 0 110 84" overflow="visible">
+  <text class="at atP" x="55" y="24">P</text>
+  <circle class="lp" cx="47" cy="11" r="2.2"/><circle class="lp" cx="63" cy="11" r="2.2"/>
+  <line class="bd" x1="47" y1="31" x2="22" y2="57"/>
+  <line class="bd" x1="55" y1="32" x2="55" y2="64"/>
+  <line class="bd" x1="63" y1="31" x2="88" y2="57"/>
+  <text class="at atCl" x="14" y="67">Cl</text>
+  <text class="at atCl" x="55" y="74">Cl</text>
+  <text class="at atCl" x="96" y="67">Cl</text>
+  <circle class="lp" cx="3"  cy="62" r="2.2"/><circle class="lp" cx="3"  cy="70" r="2.2"/>
+  <circle class="lp" cx="45" cy="78" r="2.2"/><circle class="lp" cx="65" cy="78" r="2.2"/>
+  <circle class="lp" cx="102" cy="62" r="2.2"/><circle class="lp" cx="107" cy="70" r="2.2"/>
+</svg>
+<div class="shape">pyramidal · 1 LP on P · 3 LP each Cl</div>
+</div>
+
+</div></div>
+
+
+<!-- ══════════════════════════════════════════════
+     GROUP 5 — EXPANDED OCTET & IONS
+══════════════════════════════════════════════ -->
+<div class="section">
+<div class="section-title">✦ Expanded octet &amp; polyatomic ions</div>
+<div class="grid">
+
+<!-- PCl₅ -->
+<div class="card">
+<div class="formula">PCl₅</div>
+<div class="mol-name">phosphorus pentachloride</div>
+<svg class="mol-svg" width="110" height="88" viewBox="0 0 110 88" overflow="visible">
+  <text class="at atP" x="55" y="44">P</text>
+  <line class="bd" x1="55" y1="36" x2="55" y2="14"/>
+  <line class="bd" x1="55" y1="52" x2="55" y2="74"/>
+  <line class="bd" x1="47" y1="44" x2="16" y2="44"/>
+  <line class="bd" x1="62" y1="38" x2="88" y2="21"/>
+  <line class="bd" x1="62" y1="50" x2="88" y2="67"/>
+  <text class="at atCl" x="55" y="8">Cl</text>
+  <text class="at atCl" x="55" y="82">Cl</text>
+  <text class="at atCl" x="8"  y="44">Cl</text>
+  <text class="at atCl" x="97" y="17">Cl</text>
+  <text class="at atCl" x="97" y="71">Cl</text>
+</svg>
+<div class="shape">trig. bipyramidal · 10e⁻ on P</div>
+<div class="exc">Expanded octet</div>
+</div>
+
+<!-- SF₆ -->
+<div class="card">
+<div class="formula">SF₆</div>
+<div class="mol-name">sulfur hexafluoride</div>
+<svg class="mol-svg" width="110" height="88" viewBox="0 0 110 88" overflow="visible">
+  <text class="at atS" x="55" y="44">S</text>
+  <line class="bd" x1="55" y1="36" x2="55" y2="12"/>
+  <line class="bd" x1="55" y1="52" x2="55" y2="76"/>
+  <line class="bd" x1="47" y1="44" x2="12" y2="44"/>
+  <line class="bd" x1="63" y1="44" x2="98" y2="44"/>
+  <line class="bd" x1="61" y1="37" x2="84" y2="18"/>
+  <line class="bd" x1="49" y1="51" x2="26" y2="70"/>
+  <text class="at atF" x="55" y="6">F</text>
+  <text class="at atF" x="55" y="84">F</text>
+  <text class="at atF" x="4"  y="44">F</text>
+  <text class="at atF" x="106" y="44">F</text>
+  <text class="at atF" x="90" y="14">F</text>
+  <text class="at atF" x="20" y="78">F</text>
+  <text class="note" x="55" y="94">3 LP on each F · 12e⁻ on S</text>
+</svg>
+<div class="shape">octahedral · 12e⁻ on S</div>
+<div class="exc">Expanded octet</div>
+</div>
+
+<!-- NH₄⁺ -->
+<div class="card">
+<div class="formula">NH₄⁺</div>
+<div class="mol-name">ammonium ion</div>
+<svg class="mol-svg" width="110" height="78" viewBox="0 0 110 78" overflow="visible">
+  <text class="at atN" x="55" y="39">N</text>
+  <line class="bd" x1="55" y1="31" x2="55" y2="12"/>
+  <line class="bd" x1="55" y1="47" x2="55" y2="66"/>
+  <line class="bd" x1="47" y1="39" x2="18" y2="39"/>
+  <line class="bd" x1="63" y1="39" x2="92" y2="39"/>
+  <text class="at atH" x="55" y="6">H</text>
+  <text class="at atH" x="55" y="74">H</text>
+  <text class="at atH" x="10" y="39">H</text>
+  <text class="at atH" x="100" y="39">H</text>
+  <text class="ch" x="101" y="10">+</text>
+</svg>
+<div class="shape">tetrahedral · no LP on N</div>
+</div>
+
+<!-- OH⁻ -->
+<div class="card">
+<div class="formula">OH⁻</div>
+<div class="mol-name">hydroxide ion</div>
+<svg class="mol-svg" width="110" height="66" viewBox="0 0 110 66" overflow="visible">
+  <text class="at atO" x="38" y="33">O</text>
+  <line class="bd" x1="46" y1="33" x2="82" y2="33"/>
+  <text class="at atH" x="90" y="33">H</text>
+  <circle class="lp" cx="27" cy="22" r="2.2"/><circle class="lp" cx="37" cy="22" r="2.2"/>
+  <circle class="lp" cx="27" cy="44" r="2.2"/><circle class="lp" cx="37" cy="44" r="2.2"/>
+  <circle class="lp" cx="22" cy="29" r="2.2"/><circle class="lp" cx="22" cy="37" r="2.2"/>
+  <text class="ch" x="100" y="16">−</text>
+</svg>
+<div class="shape">linear · 3 LP on O · charge −1</div>
+</div>
+
+<!-- NO₃⁻ -->
+<div class="card">
+<div class="formula">NO₃⁻</div>
+<div class="mol-name">nitrate ion</div>
+<svg class="mol-svg" width="110" height="88" viewBox="0 0 110 88" overflow="visible">
+  <text class="at atN" x="55" y="28">N</text>
+  <!-- N=O top (double) -->
+  <line class="bd" x1="51" y1="20" x2="51" y2="8"/>
+  <line class="bd" x1="59" y1="20" x2="59" y2="8"/>
+  <!-- N-O left (single) -->
+  <line class="bd" x1="47" y1="35" x2="20" y2="57"/>
+  <!-- N-O right (single) -->
+  <line class="bd" x1="63" y1="35" x2="90" y2="57"/>
+  <text class="at atO" x="55" y="4">O</text>
+  <text class="at atO" x="12" y="66">O</text>
+  <text class="at atO" x="98" y="66">O</text>
+  <!-- Top O: 2 LP -->
+  <circle class="lp" cx="44" cy="1" r="2.2"/><circle class="lp" cx="66" cy="1" r="2.2"/>
+  <!-- Left O: 3 LP -->
+  <circle class="lp" cx="1"  cy="60" r="2.2"/><circle class="lp" cx="1"  cy="68" r="2.2"/>
+  <circle class="lp" cx="5"  cy="74" r="2.2"/><circle class="lp" cx="13" cy="76" r="2.2"/>
+  <!-- Right O: 3 LP -->
+  <circle class="lp" cx="91" cy="60" r="2.2"/><circle class="lp" cx="99" cy="60" r="2.2"/>
+  <circle class="lp" cx="104" cy="68" r="2.2"/><circle class="lp" cx="106" cy="75" r="2.2"/>
+  <text class="ch" x="100" y="9">−</text>
+</svg>
+<div class="shape">trigonal planar · resonance · −1</div>
+</div>
+
+<!-- SO₄²⁻ -->
+<div class="card">
+<div class="formula">SO₄²⁻</div>
+<div class="mol-name">sulfate ion</div>
+<svg class="mol-svg" width="110" height="84" viewBox="0 0 110 84" overflow="visible">
+  <text class="at atS" x="55" y="42">S</text>
+  <!-- S=O top -->
+  <line class="bd" x1="51" y1="33" x2="51" y2="16"/>
+  <line class="bd" x1="59" y1="33" x2="59" y2="16"/>
+  <!-- S=O bottom -->
+  <line class="bd" x1="51" y1="51" x2="51" y2="68"/>
+  <line class="bd" x1="59" y1="51" x2="59" y2="68"/>
+  <!-- S=O left -->
+  <line class="bd" x1="47" y1="38" x2="22" y2="38"/>
+  <line class="bd" x1="47" y1="46" x2="22" y2="46"/>
+  <!-- S=O right -->
+  <line class="bd" x1="63" y1="38" x2="88" y2="38"/>
+  <line class="bd" x1="63" y1="46" x2="88" y2="46"/>
+  <text class="at atO" x="55" y="11">O</text>
+  <text class="at atO" x="55" y="77">O</text>
+  <text class="at atO" x="13" y="42">O</text>
+  <text class="at atO" x="97" y="42">O</text>
+  <!-- 2 LP on each O -->
+  <circle class="lp" cx="45" cy="4" r="2.2"/><circle class="lp" cx="65" cy="4" r="2.2"/>
+  <circle class="lp" cx="45" cy="82" r="2.2"/><circle class="lp" cx="65" cy="82" r="2.2"/>
+  <circle class="lp" cx="3"  cy="36" r="2.2"/><circle class="lp" cx="3"  cy="48" r="2.2"/>
+  <circle class="lp" cx="103" cy="36" r="2.2"/><circle class="lp" cx="103" cy="48" r="2.2"/>
+  <text class="ch" x="100" y="9">2−</text>
+</svg>
+<div class="shape">tetrahedral · 12e⁻ on S · charge 2−</div>
+<div class="exc">Expanded octet</div>
+</div>
+
+</div></div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>✦ Each dot pair = lone pair (2 e⁻) &nbsp;|&nbsp; Lines = bonding pairs &nbsp;|&nbsp; Single dot = unpaired radical electron</span>
+  <span>High School Chemistry — Lewis Dot Structures</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Test-Taking Superpowers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400;1,700&family=Caveat:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:       #fdf6ec;
+    --warm-white:  #fffdf8;
+    --gold:        #c8922a;
+    --gold-light:  #e8b84b;
+    --gold-pale:   #f7e9cc;
+    --gold-deep:   #9a6a16;
+    --rust:        #b85c38;
+    --rust-pale:   #f9ede6;
+    --sage:        #4e6e52;
+    --sage-light:  #d0e4d2;
+    --ink:         #241c0f;
+    --ink-mid:     #5a4a36;
+    --ink-soft:    #8a7860;
+    --line:        #ead9bf;
+    --purple:      #6d5c9a;
+    --purple-pale: #ece7f7;
+    --teal:        #2d7291;
+    --teal-pale:   #d8eef6;
+    --red:         #b84848;
+    --red-pale:    #fde6e6;
+    --green:       #4a8a50;
+    --green-pale:  #dff0e0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4 portrait; margin: 10mm 11mm; }
+
+  html, body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink); background: #c4b8a8; font-size: 14px;
+  }
+  body { display: flex; justify-content: center; padding: 28px; }
+
+  .page {
+    background: var(--cream); width: 794px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 14px 56px rgba(50,28,8,.3), 0 3px 12px rgba(50,28,8,.14);
+  }
+
+  /* Left accent strip */
+  .side-accent {
+    position: absolute; top: 0; left: 0; bottom: 0; width: 6px; z-index: 2;
+    background: repeating-linear-gradient(to bottom,
+      var(--gold) 0, var(--gold) 22px, var(--rust) 22px, var(--rust) 44px,
+      var(--sage) 44px, var(--sage) 66px, var(--gold-light) 66px, var(--gold-light) 88px,
+      var(--purple) 88px, var(--purple) 110px, var(--teal) 110px, var(--teal) 132px
+    );
+  }
+
+  .lines-bg {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent 0, transparent 30px, var(--line) 30px, var(--line) 31px
+    );
+    pointer-events: none; opacity: 0.18; z-index: 0;
+  }
+
+  .margin-line {
+    position: absolute; top: 0; bottom: 0; left: 48px;
+    width: 1.5px; background: #f0b8a4; opacity: 0.4; z-index: 0;
+  }
+
+  .content {
+    position: relative; z-index: 1;
+    padding: 12px 16px 11px 22px;
+    display: flex; flex-direction: column; gap: 9px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 9px;
+    border-bottom: 2px solid var(--line);
+    position: relative;
+  }
+
+  .header::after {
+    content: '✦';
+    position: absolute; right: 162px; top: 0;
+    font-size: 110px; color: var(--gold); opacity: 0.045;
+    line-height: 1; pointer-events: none; font-family: serif;
+  }
+
+  .eyebrow {
+    font-family: 'Caveat', cursive; font-size: 16px;
+    color: var(--rust); letter-spacing: 0.08em; margin-bottom: 2px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif; font-size: 40px;
+    font-weight: 800; line-height: 1.0; color: var(--ink);
+  }
+
+  h1 em { font-style: italic; color: var(--gold); }
+
+  .header-sub {
+    font-family: 'Playfair Display', serif; font-size: 12px;
+    font-style: italic; color: var(--ink-soft); margin-top: 4px;
+  }
+
+  .header-right { text-align: right; padding-bottom: 3px; }
+
+  .tagline {
+    font-size: 9.5px; color: var(--ink-soft);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px;
+  }
+
+  .name-label {
+    font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft); display: block; margin-bottom: 4px;
+  }
+
+  .name-line { width: 158px; height: 1.5px; background: var(--ink-soft); margin-left: auto; }
+
+  /* ── TOP ROW ── */
+  .top-row { display: flex; gap: 10px; }
+
+  .intro-box {
+    flex: 1.05; background: var(--gold-pale);
+    border-left: 5px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 15px;
+    font-family: 'Caveat', cursive; font-size: 16px;
+    color: var(--ink-mid); line-height: 1.48;
+    position: relative; overflow: hidden;
+  }
+
+  .intro-box::after {
+    content: '✦'; position: absolute; bottom: 8px; right: 12px;
+    font-size: 28px; color: var(--gold); opacity: 0.2;
+  }
+
+  .intro-box strong { color: var(--gold-deep); font-size: 17px; }
+
+  .ritual-box {
+    flex: 1;
+    background: linear-gradient(145deg, #271a0a 0%, #3c2912 50%, #2a1d0c 100%);
+    border-radius: 10px; padding: 12px 14px; color: white;
+    position: relative; overflow: hidden;
+  }
+
+  .ritual-box::before {
+    content: '✦'; position: absolute; right: 11px; top: 7px;
+    font-size: 50px; color: var(--gold-light); opacity: 0.14;
+  }
+
+  .ritual-box h3 {
+    font-family: 'Playfair Display', serif; font-size: 13px;
+    font-style: italic; color: var(--gold-light); margin-bottom: 9px;
+  }
+
+  .ritual-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 12px; list-style: none; }
+
+  .ritual-steps li {
+    font-size: 12px; font-weight: 300; color: #ecdcc6;
+    display: flex; align-items: flex-start; gap: 7px; line-height: 1.42;
+  }
+
+  .dot {
+    width: 20px; height: 20px; border-radius: 50%; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--ink); flex-shrink: 0;
+  }
+
+  /* ── FLOW STRIP ── */
+  .flow-strip {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    background: #f4e8d0; border-radius: 9px;
+    padding: 9px 26px 8px;
+    position: relative;
+  }
+
+  .flow-strip::before {
+    content: ''; position: absolute;
+    top: 20px; left: 64px; right: 64px; height: 1.5px;
+    background: repeating-linear-gradient(90deg, #c8a870 0,#c8a870 6px,transparent 6px,transparent 11px);
+  }
+
+  .flow-stage { display: flex; flex-direction: column; align-items: center; gap: 5px; z-index: 1; }
+
+  .flow-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .fd-gold   { background: #c8922a; }
+  .fd-sage   { background: #4e6e52; }
+  .fd-teal   { background: #2d7291; }
+  .fd-purple { background: #6d5c9a; }
+  .fd-rust   { background: #b85c38; }
+
+  .flow-label {
+    font-size: 8.5px; font-weight: 500; color: var(--ink-mid);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    text-align: center; line-height: 1.3;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 11px; font-style: italic;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* ── HABIT CARDS ── */
+  .habits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+
+  .habit-card {
+    border-radius: 10px; overflow: hidden;
+    border: 1.5px solid var(--line);
+    border-left-width: 5px;
+    background: var(--warm-white);
+    padding: 10px 13px 10px 12px;
+    box-shadow: 0 1px 6px rgba(80,50,10,.07);
+  }
+
+  .habit-header {
+    display: flex; align-items: center;
+    gap: 8px; margin-bottom: 5px;
+  }
+
+  .habit-badge {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+
+  /* Colored icon — sits between badge and title */
+  .habit-icon {
+    flex-shrink: 0;
+  }
+
+  .habit-title {
+    font-weight: 600; font-size: 13.5px; color: var(--ink);
+    line-height: 1.2; flex: 1;
+  }
+
+  .habit-viz {
+    font-family: 'Caveat', cursive; font-size: 20px;
+    color: var(--ink-mid); line-height: 1.4; margin-bottom: 6px;
+  }
+
+  .habit-pill {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 9.5px; font-weight: 500; border-radius: 20px;
+    padding: 2px 10px; letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  /* Per-card color — border, badge, icon stroke */
+  .c1 { border-left-color: #c08820; }
+  .c1 .habit-badge { background: #c08820; }
+  .c1 .habit-icon  { color: #c08820; }
+  .c1 .habit-pill  { background: #fef2d0; color: #7a5010; }
+
+  .c2 { border-left-color: #b05030; }
+  .c2 .habit-badge { background: #b05030; }
+  .c2 .habit-icon  { color: #b05030; }
+  .c2 .habit-pill  { background: var(--rust-pale); color: #7a3020; }
+
+  .c3 { border-left-color: #4a7050; }
+  .c3 .habit-badge { background: #4a7050; }
+  .c3 .habit-icon  { color: #4a7050; }
+  .c3 .habit-pill  { background: var(--sage-light); color: #285a30; }
+
+  .c4 { border-left-color: #6858a0; }
+  .c4 .habit-badge { background: #6858a0; }
+  .c4 .habit-icon  { color: #6858a0; }
+  .c4 .habit-pill  { background: var(--purple-pale); color: #40307a; }
+
+  .c5 { border-left-color: #287898; }
+  .c5 .habit-badge { background: #287898; }
+  .c5 .habit-icon  { color: #287898; }
+  .c5 .habit-pill  { background: var(--teal-pale); color: #185068; }
+
+  .c6 { border-left-color: #a84040; }
+  .c6 .habit-badge { background: #a84040; }
+  .c6 .habit-icon  { color: #a84040; }
+  .c6 .habit-pill  { background: var(--red-pale); color: #6a2020; }
+
+  .c7 { border-left-color: #408848; }
+  .c7 .habit-badge { background: #408848; }
+  .c7 .habit-icon  { color: #408848; }
+  .c7 .habit-pill  { background: var(--green-pale); color: #2a5830; }
+
+  /* ── BOTTOM ROW ── */
+  .bottom-row { display: flex; gap: 10px; }
+
+  .checklist-wrap { flex: 1; }
+
+  .checklist-title {
+    font-family: 'Playfair Display', serif; font-size: 11px; font-style: italic;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 7px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .checklist-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+
+  .check-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12.5px; color: var(--ink-mid); line-height: 1.3;
+  }
+
+  .check-box {
+    width: 15px; height: 15px; border: 2px solid var(--gold);
+    border-radius: 3px; background: white; flex-shrink: 0;
+  }
+
+  /* ── AFFIRMATION ── */
+  .affirmation-banner {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 11px 14px;
+    border: 2px dashed var(--gold-light);
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fffef5, #fff8e6);
+    position: relative; overflow: hidden;
+    gap: 7px;
+  }
+
+  .affirmation-banner::before {
+    content: '✦'; position: absolute; left: 8px; top: 6px;
+    font-size: 22px; color: var(--gold-light); opacity: 0.4;
+  }
+
+  .affirmation-banner::after {
+    content: '✦'; position: absolute; right: 8px; bottom: 6px;
+    font-size: 22px; color: var(--gold-light); opacity: 0.4;
+  }
+
+  .aff-big {
+    font-family: 'Caveat', cursive; font-size: 18px; font-weight: 700;
+    color: var(--gold-deep); display: block; line-height: 1.4;
+  }
+
+  .aff-small {
+    font-size: 9.5px; color: var(--ink-soft);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1.5px solid var(--line); padding-top: 7px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-left {
+    font-family: 'Playfair Display', serif; font-size: 11px;
+    font-style: italic; color: var(--ink-soft);
+  }
+
+  .footer-right {
+    font-family: 'Caveat', cursive; font-size: 15px;
+    color: var(--rust); text-align: right; line-height: 1.3;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="side-accent"></div>
+  <div class="lines-bg"></div>
+  <div class="margin-line"></div>
+
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <div class="eyebrow">✦ my personal guide ✦</div>
+        <h1>Test-Taking <em>Superpowers</em></h1>
+        <div class="header-sub">A visualization toolkit for scoring higher, every single time</div>
+      </div>
+      <div class="header-right">
+        <div class="tagline">Visualize it · Believe it · Do it</div>
+        <span class="name-label">This belongs to</span>
+        <div class="name-line"></div>
+      </div>
+    </div>
+
+    <!-- INTRO + RITUAL -->
+    <div class="top-row">
+      <div class="intro-box">
+        <strong>Before every test:</strong> Close your eyes for 30 seconds. Picture the best version of yourself — calm, focused, working through every problem with confidence. <em>That person is you. She shows up every time.</em>
+      </div>
+      <div class="ritual-box">
+        <h3>✦ The Pre-Test Ritual — Do This Every Time</h3>
+        <ul class="ritual-steps">
+          <li><span class="dot">1</span> Take 3 slow, deep breaths to settle your mind</li>
+          <li><span class="dot">2</span> Write down key formulas on your scratch paper</li>
+          <li><span class="dot">3</span> Skim the full test so you know what's ahead</li>
+          <li><span class="dot">4</span> Whisper: <em>"I am prepared. I will do my best."</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FLOW STRIP -->
+    <div class="flow-strip">
+      <div class="flow-stage">
+        <div class="flow-dot fd-gold">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="white"><polygon points="8,1 10.2,6 15.5,6.4 11.6,9.9 12.8,15.2 8,12.4 3.2,15.2 4.4,9.9 0.5,6.4 5.8,6"/></svg>
+        </div>
+        <div class="flow-label">Pre-Test<br>Ritual</div>
+      </div>
+      <div class="flow-stage">
+        <div class="flow-dot fd-sage">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round">
+            <path d="M1.5 8s2.8-4.5 6.5-4.5S14.5 8 14.5 8s-2.8 4.5-6.5 4.5S1.5 8 1.5 8z"/>
+            <circle cx="8" cy="8" r="1.8" fill="white" stroke="none"/>
+          </svg>
+        </div>
+        <div class="flow-label">Read<br>Carefully</div>
+      </div>
+      <div class="flow-stage">
+        <div class="flow-dot fd-teal">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4,4 10,8 4,12"/><line x1="10.5" y1="4" x2="10.5" y2="12"/>
+          </svg>
+        </div>
+        <div class="flow-label">Work &amp;<br>Move On</div>
+      </div>
+      <div class="flow-stage">
+        <div class="flow-dot fd-purple">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round">
+            <path d="M6 10.5c0-1.8-2.5-3.2-2.5-5.2a4.5 4.5 0 0 1 9 0c0 2-2.5 3.4-2.5 5.2H6z"/>
+            <line x1="6.5" y1="12.5" x2="9.5" y2="12.5"/>
+          </svg>
+        </div>
+        <div class="flow-label">Quick<br>Sense Check</div>
+      </div>
+      <div class="flow-stage">
+        <div class="flow-dot fd-rust">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="7" cy="7" r="4"/><line x1="10.2" y1="10.2" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <div class="flow-label">Full<br>Review</div>
+      </div>
+    </div>
+
+    <!-- HABITS -->
+    <div class="section-title">The 7 Habits I Visualize Before &amp; During Every Test</div>
+    <div class="habits-grid">
+
+      <!-- 1: Read — Book icon -->
+      <div class="habit-card c1">
+        <div class="habit-header">
+          <div class="habit-badge">1</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12.5V4a1 1 0 011-1h3.5v10H3a1 1 0 01-1-1z"/>
+            <path d="M9.5 3H13a1 1 0 011 1v8.5a1 1 0 01-1 1H9.5z"/>
+            <line x1="8" y1="3" x2="8" y2="13"/>
+          </svg>
+          <div class="habit-title">Read Every Word of the Prompt</div>
+        </div>
+        <div class="habit-viz">I see myself slowly reading each question, underlining key words like "NOT" or "EXCEPT." I never start writing until I truly understand what's being asked.</div>
+        <span class="habit-pill">📖 "I read to understand, not just to finish."</span>
+      </div>
+
+      <!-- 2: Careful — Pencil icon -->
+      <div class="habit-card c2">
+        <div class="habit-header">
+          <div class="habit-badge">2</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 2l3 3-7.5 7.5-3.5.5.5-3.5L11 2z"/>
+            <line x1="9" y1="4" x2="12" y2="7"/>
+          </svg>
+          <div class="habit-title">Slow Down — No Careless Mistakes</div>
+        </div>
+        <div class="habit-viz">I picture pausing one breath after each step to check signs, units, and details. I never throw away easy points I've already earned.</div>
+        <span class="habit-pill">🎯 "Slow is smooth. Smooth is high scores."</span>
+      </div>
+
+      <!-- 3: Skip — Circular arrow icon -->
+      <div class="habit-card c3">
+        <div class="habit-header">
+          <div class="habit-badge">3</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 8a5 5 0 1 1-2.5-4.3"/>
+            <polyline points="13,2 13,5.5 9.5,5.5"/>
+          </svg>
+          <div class="habit-title">Stuck? Circle It &amp; Move Forward</div>
+        </div>
+        <div class="habit-viz">When I hit a hard problem, I confidently star it and keep going. Fresh eyes later often make the answer obvious the second time around.</div>
+        <span class="habit-pill">⏩ "Every point counts — grab the easy ones first."</span>
+      </div>
+
+      <!-- 4: Sense check — Lightbulb icon -->
+      <div class="habit-card c4">
+        <div class="habit-header">
+          <div class="habit-badge">4</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M6 10.5c0-1.8-2.5-3.2-2.5-5.2a4.5 4.5 0 019 0c0 2-2.5 3.4-2.5 5.2H6z"/>
+            <line x1="6.5" y1="12.5" x2="9.5" y2="12.5"/>
+            <line x1="7" y1="14.5" x2="9" y2="14.5"/>
+          </svg>
+          <div class="habit-title">Quick Common-Sense Check</div>
+        </div>
+        <div class="habit-viz">After each answer I ask: "Does this make sense?" If I solved for age and got 300 years, I know something's wrong. I picture catching those moments every time.</div>
+        <span class="habit-pill">🧠 "My gut is a great first editor."</span>
+      </div>
+
+      <!-- 5: Review — Magnifying glass icon -->
+      <div class="habit-card c5">
+        <div class="habit-header">
+          <div class="habit-badge">5</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="7" cy="7" r="4.5"/>
+            <line x1="10.5" y1="10.5" x2="14.5" y2="14.5"/>
+          </svg>
+          <div class="habit-title">Thorough Review — Never Turn In Early</div>
+        </div>
+        <div class="habit-viz">I visualize finishing, taking a breath, then reviewing every answer carefully. I imagine catching at least one mistake. Extra time = extra points. Always.</div>
+        <span class="habit-pill">🔍 "Finished first doesn't mean finished best."</span>
+      </div>
+
+      <!-- 6: Breathe — Wave icon -->
+      <div class="habit-card c6">
+        <div class="habit-header">
+          <div class="habit-badge">6</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M1 5.5q3.5-3.5 7 0t7 0"/>
+            <path d="M1 9.5q3.5-3.5 7 0t7 0"/>
+            <path d="M1 13q3.5-3.5 7 0t7 0"/>
+          </svg>
+          <div class="habit-title">Breathe Through Anxiety</div>
+        </div>
+        <div class="habit-viz">When panic creeps in, I put my pencil down for 5 seconds and breathe slowly. Anxiety lies — it tells me I don't know things I actually do. A calm mind remembers more.</div>
+        <span class="habit-pill">🌬️ "Breathe in confidence, breathe out doubt."</span>
+      </div>
+
+      <!-- 7: Eliminate — Funnel icon -->
+      <div class="habit-card c7">
+        <div class="habit-header">
+          <div class="habit-badge">7</div>
+          <svg class="habit-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 2.5h11L9.5 9v4.5l-3-1.5V9L2.5 2.5z"/>
+          </svg>
+          <div class="habit-title">Use Process of Elimination</div>
+        </div>
+        <div class="habit-viz">On multiple-choice, I cross off answers I know are wrong. Going from 4 choices to 2 makes a smart guess possible. A reasoned guess beats a blank every time.</div>
+        <span class="habit-pill">✂️ "Eliminate the wrong. Reveal the right."</span>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+      <div class="checklist-wrap">
+        <div class="checklist-title">My During-Test Checklist</div>
+        <div class="checklist-grid">
+          <div class="check-item"><div class="check-box"></div> Re-read each question</div>
+          <div class="check-item"><div class="check-box"></div> Underlined key words</div>
+          <div class="check-item"><div class="check-box"></div> Showed all my work</div>
+          <div class="check-item"><div class="check-box"></div> Checked units &amp; signs</div>
+          <div class="check-item"><div class="check-box"></div> Circled items to return to</div>
+          <div class="check-item"><div class="check-box"></div> Did NOT turn in early</div>
+          <div class="check-item"><div class="check-box"></div> Common-sense check done</div>
+          <div class="check-item"><div class="check-box"></div> Stayed calm throughout</div>
+        </div>
+      </div>
+
+      <div class="affirmation-banner">
+        <svg width="120" height="44" viewBox="0 0 120 44">
+          <line x1="8" y1="40" x2="115" y2="40" stroke="#e8d8c0" stroke-width="1.3"/>
+          <line x1="8" y1="4"  x2="8"   y2="40" stroke="#e8d8c0" stroke-width="1.3"/>
+          <rect x="14" y="28" width="15" height="12" rx="2" fill="#c8922a" opacity="0.28"/>
+          <rect x="33" y="21" width="15" height="19" rx="2" fill="#c8922a" opacity="0.48"/>
+          <rect x="52" y="14" width="15" height="26" rx="2" fill="#c8922a" opacity="0.68"/>
+          <rect x="71" y="7"  width="15" height="33" rx="2" fill="#c8922a" opacity="0.85"/>
+          <rect x="90" y="2"  width="15" height="38" rx="2" fill="#c8922a"/>
+          <polyline points="21,30 40,23 59,16 78,9 97,4" fill="none" stroke="#e8b84b" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2,2"/>
+          <text x="21"  y="44" text-anchor="middle" font-size="7.5" fill="#8a7860" font-family="sans-serif">T1</text>
+          <text x="40"  y="44" text-anchor="middle" font-size="7.5" fill="#8a7860" font-family="sans-serif">T2</text>
+          <text x="59"  y="44" text-anchor="middle" font-size="7.5" fill="#8a7860" font-family="sans-serif">T3</text>
+          <text x="78"  y="44" text-anchor="middle" font-size="7.5" fill="#8a7860" font-family="sans-serif">T4</text>
+          <text x="97"  y="44" text-anchor="middle" font-size="7.5" fill="#8a7860" font-family="sans-serif">T5</text>
+          <text x="97"  y="0"  text-anchor="middle" font-size="11" fill="#c8922a" font-family="sans-serif">★</text>
+        </svg>
+        <span class="aff-big">"I am smart, I am prepared,<br>and I give my best every time."</span>
+        <span class="aff-small">Read this out loud before every test ✦</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">✦ Visualize success · Practice the habit · Own the result ✦</div>
+      <div class="footer-right">Progress over perfection.<br>One test at a time. ✦</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
