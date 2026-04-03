@@ -117,6 +117,19 @@
     #card-wrapper.slide-in-left   { animation: cardSlideInLeft   0.32s cubic-bezier(0.175,0.885,0.32,1.1) forwards; }
 
     /* Tinder swipe stamp labels (inside card-wrapper, move with the card) */
+    @keyframes stamp-pop {
+        0%   { opacity: 0; transform: rotate(12deg) scale(1.6); }
+        55%  { opacity: 1; transform: rotate(12deg) scale(0.88); }
+        75%  { transform: rotate(12deg) scale(1.06); }
+        100% { opacity: 1; transform: rotate(12deg) scale(1); }
+    }
+    @keyframes stamp-fade-out {
+        0%   { opacity: 1; transform: rotate(12deg) scale(1); }
+        100% { opacity: 0; transform: rotate(12deg) scale(0.7); }
+    }
+    .swipe-stamp.stamp-hide {
+        animation: stamp-fade-out 0.25s ease-in forwards;
+    }
     .swipe-stamp {
         position: absolute;
         top: 22px;
@@ -131,6 +144,9 @@
         pointer-events: none;
         z-index: 20;
     }
+    .swipe-stamp.stamp-show {
+        animation: stamp-pop 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
     .swipe-stamp-left {   /* top-right — appears when dragging left → Got It (mastered) */
         right: 18px;
         color: #ef4444;
@@ -138,12 +154,12 @@
         background: rgba(254,226,226,0.93);
         transform: rotate(12deg);
     }
-    .swipe-stamp-right {  /* top-left — appears when dragging right → Save to Notebook */
-        left: 18px;
+    .swipe-stamp-right {  /* top-right — appears when dragging right → Save to Notebook */
+        right: 18px;
         color: #10b981;
         border-color: #10b981;
         background: rgba(209,250,229,0.93);
-        transform: rotate(-12deg);
+        transform: rotate(12deg);
     }
 
     .btn-listen-on { background-color: var(--secondary) !important; color: white !important; border-color: var(--secondary) !important; }
@@ -484,6 +500,14 @@
     .sa-type-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; white-space: nowrap; }
     .sa-type-badge.synonym { background: #d1fae5; color: #065f46; }
     .sa-type-badge.antonym { background: #fee2e2; color: #991b1b; }
+    .sa-type-badge.revdef { background: #dbeafe; color: #1e40af; }
+    .sa-type-badge.spelling { background: #ede9fe; color: #5b21b6; }
+    .sd-input-wrap { display: flex; gap: 8px; margin-bottom: 14px; }
+    .sd-input { flex: 1; padding: 12px 16px; font-size: 1rem; font-weight: 600; border: 2px solid #e5e7eb; border-radius: 10px; outline: none; transition: border-color 0.2s; }
+    .sd-input:focus { border-color: var(--primary); }
+    .sd-submit-btn { background: var(--primary); color: white; padding: 12px 20px; font-size: 0.95rem; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; white-space: nowrap; }
+    .sd-submit-btn:hover:not(:disabled) { background: var(--primary-hover, #4338ca); }
+    .sd-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .sa-progress { font-size: 0.85rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
     .sa-question-card { background: white; padding: 22px 18px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 14px; text-align: center; }
     .sa-prompt { font-size: 0.92rem; color: var(--text-light); font-weight: 600; margin-bottom: 10px; }
@@ -975,14 +999,14 @@
     <button class="tab-btn active" id="tab-flashcard">🗂️ Flashcards</button>
     <button class="tab-btn" id="tab-quiz">⚡️ SRS Quiz</button>
     <button class="tab-btn" id="tab-dashboard">📊 Dashboard</button>
-    <button class="tab-btn" id="tab-add">➕ Add Word</button>
     <button class="tab-btn" id="tab-read">📰 Articles</button>
     <button class="tab-btn" id="tab-syn-ant">🎯 Exercises</button>
+    <button class="tab-btn" id="tab-flash100">⚡ Flash 100</button>
   </div>
   <div class="group-selector-container">
     <label for="groupSelect" style="font-weight: bold; color: var(--text-light); font-size: 0.9rem;">Study Group:</label>
     <select id="groupSelect" onchange="changeGroup()">
-      <option value="all">All Words</option>
+      <option value="all" selected>All Words</option>
       <option value="0">Group 1 (1 - 300)</option>
       <option value="1">Group 2 (301 - 600)</option>
       <option value="2">Group 3 (601 - 900)</option>
@@ -1001,7 +1025,7 @@
       <option value="15">Group 16 (4501 - 4800)</option>
       <option value="16">Group 17 (4801+)</option>
       <option value="notebook">Notebook</option>
-      <option value="wod" selected>🎲 Flash 100</option>
+      <option value="wod">🎲 Flash 100</option>
       <option value="mistakes">My Mistakes</option>
       <option value="custom">Added Words</option>
     </select>
@@ -1036,7 +1060,7 @@
     </div>
     <div id="card-wrapper">
       <div class="swipe-stamp swipe-stamp-left"  id="fc-stamp-left">✓ Got It</div>
-      <div class="swipe-stamp swipe-stamp-right" id="fc-stamp-right">📒 Save</div>
+      <div class="swipe-stamp swipe-stamp-right" id="fc-stamp-right">📒 Saved</div>
       <div class="card" id="flashcard">
         <div class="card-face card-front">
           <div class="word" id="wordDisplay">Loading...</div>
@@ -1149,39 +1173,40 @@
     </div>
     <div id="globalSearchResult" class="lookup-result"></div>
   </div>
-</div>
-
-<div id="add-mode" class="mode-container">
-  <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <h2 style="margin-top: 0; color: var(--primary); text-align: center;">Add Custom Word</h2>
-    <div class="lookup-card" style="margin-bottom: 18px;">
-      <div class="lookup-title">Check My Vocab</div>
-      <div class="lookup-row">
-        <input type="text" id="lookupWordInput" placeholder="Enter a word to search your vocab list..." />
-        <button type="button" class="btn-nav" onclick="lookupWordInVocab()">Lookup</button>
+  <div style="text-align:center; margin-top: 10px;">
+    <button type="button" class="btn-nav" id="btn-toggle-add-word" onclick="toggleAddWordSection()" style="width:100%; padding:10px; font-size:0.95rem;">➕ Add Custom Word</button>
+  </div>
+  <div id="add-word-section" style="display:none; margin-top:10px;">
+    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+      <div class="lookup-card" style="margin-bottom: 18px;">
+        <div class="lookup-title">Check My Vocab</div>
+        <div class="lookup-row">
+          <input type="text" id="lookupWordInput" placeholder="Enter a word to search your vocab list..." />
+          <button type="button" class="btn-nav" onclick="lookupWordInVocab()">Lookup</button>
+        </div>
+        <div id="lookupResult" class="lookup-result"></div>
       </div>
-      <div id="lookupResult" class="lookup-result"></div>
+      <form id="addWordForm">
+        <div class="form-group">
+          <label for="newWord">Vocabulary Word</label>
+          <input type="text" id="newWord" required placeholder="e.g., ephemeral">
+        </div>
+        <div class="form-group">
+          <label for="newDef">Definition</label>
+          <textarea id="newDef" rows="3" required placeholder="Lasting for a very short time."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="newEx1">Example Sentence 1</label>
+          <input type="text" id="newEx1" required placeholder="Fashions are ephemeral.">
+        </div>
+        <div class="form-group">
+          <label for="newEx2">Example Sentence 2 (Optional)</label>
+          <input type="text" id="newEx2" placeholder="...">
+        </div>
+        <button type="submit" class="btn-submit">Add to Deck ➕</button>
+      </form>
+      <div id="addSuccessMsg" class="success-msg">Word added successfully!</div>
     </div>
-    <form id="addWordForm">
-      <div class="form-group">
-        <label for="newWord">Vocabulary Word</label>
-        <input type="text" id="newWord" required placeholder="e.g., ephemeral">
-      </div>
-      <div class="form-group">
-        <label for="newDef">Definition</label>
-        <textarea id="newDef" rows="3" required placeholder="Lasting for a very short time."></textarea>
-      </div>
-      <div class="form-group">
-        <label for="newEx1">Example Sentence 1</label>
-        <input type="text" id="newEx1" required placeholder="Fashions are ephemeral.">
-      </div>
-      <div class="form-group">
-        <label for="newEx2">Example Sentence 2 (Optional)</label>
-        <input type="text" id="newEx2" placeholder="...">
-      </div>
-      <button type="submit" class="btn-submit">Add to Deck ➕</button>
-    </form>
-    <div id="addSuccessMsg" class="success-msg">Word added successfully!</div>
   </div>
 </div>
 
@@ -6254,7 +6279,7 @@
   }
 
   let currentMode = 'flashcard';
-  let currentGroupIndex = 'wod'; // Controls the 100-word blocks
+  let currentGroupIndex = 'all'; // Controls the 100-word blocks
   let flash100Cache = null;      // Cleared on each group switch to force a new roll
   let fcIndex = 0;
   let cardFlipEnabled = window.innerWidth > 640; // desktop: flip on; mobile: flip off
@@ -6761,6 +6786,16 @@
           <div class="ex-hub-name">Definition Match</div>
           <div class="ex-hub-desc">Read a definition and identify the correct word</div>
         </div>
+        <div class="ex-hub-card" onclick="initRevDefGame()">
+          <div class="ex-hub-icon">🔍</div>
+          <div class="ex-hub-name">Reverse Definition</div>
+          <div class="ex-hub-desc">See a word and pick its correct definition</div>
+        </div>
+        <div class="ex-hub-card" onclick="initSpellingGame()">
+          <div class="ex-hub-icon">🔤</div>
+          <div class="ex-hub-name">Spelling Drill</div>
+          <div class="ex-hub-desc">Read the definition and type the correct word</div>
+        </div>
       </div>`;
   }
 
@@ -6772,7 +6807,8 @@
     // Only words that have example sentences containing the word itself
     fbPool = vocabState.filter(item => {
       const w = item.word.toLowerCase();
-      return item.examples && item.examples.some(ex => ex.toLowerCase().includes(w));
+      return item.examples && item.examples.some(ex => ex.toLowerCase().includes(w))
+        && !sessionMasteredWords.has(normalizeWord(item.word));
     });
     for (let i = fbPool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -6794,7 +6830,7 @@
     const ex = item.examples.find(e => e.toLowerCase().includes(word.toLowerCase()));
     // Replace word in sentence (case-insensitive) with blank
     const re = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-    const blanked = ex.replace(re, '<span class="fb-blank">_____</span>');
+    const blanked = ex.replace(re, '<span class="fb-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
 
     const pool = vocabState.filter(v => v.word !== word && !v.isCustom);
     const distractors = [];
@@ -6862,7 +6898,7 @@
 
   function initDefMatchGame() {
     dmScore = 0; dmQNum = 0; dmAnswered = false; dmIdx = 0;
-    dmPool = vocabState.filter(item => item.definition && !item.isCustom);
+    dmPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
     for (let i = dmPool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [dmPool[i], dmPool[j]] = [dmPool[j], dmPool[i]];
@@ -6942,13 +6978,176 @@
         <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
       </div>`;
   }
+  // ── Reverse Definition ────────────────────────────────────────────────────
+  let rdScore = 0, rdQNum = 0, rdAnswered = false, rdPool = [], rdIdx = 0, rdCurrentData = null;
+
+  function initRevDefGame() {
+    rdScore = 0; rdQNum = 0; rdAnswered = false; rdIdx = 0;
+    rdPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = rdPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [rdPool[i], rdPool[j]] = [rdPool[j], rdPool[i]];
+    }
+    renderRevDefQuestion();
+  }
+
+  function renderRevDefQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (rdIdx >= rdPool.length || rdIdx >= 20) { renderRevDefGameOver(container); return; }
+    rdQNum++;
+    rdAnswered = false;
+    const item = rdPool[rdIdx++];
+    const correct = item.definition;
+    const pool = vocabState.filter(v => v.word !== item.word && v.definition && !v.isCustom);
+    const distractors = [];
+    const used = new Set();
+    while (distractors.length < 3 && used.size < pool.length) {
+      const ri = Math.floor(Math.random() * pool.length);
+      if (!used.has(ri)) { used.add(ri); distractors.push(pool[ri].definition); }
+    }
+    const options = [correct, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    const correctIdx = options.indexOf(correct);
+    rdCurrentData = { word: item.word, correctIdx };
+    const scoreCls = rdScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="rd-score-val">${rdScore > 0 ? '+' + rdScore : rdScore}</span></div>
+        <div class="sa-type-badge revdef">🔍 REV DEF</div>
+        <div class="sa-progress">${rdQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Which definition matches this word?</div>
+        <div class="sa-target-word">${escapeHtml(item.word)}</div>
+      </div>
+      <div class="sa-options">
+        ${options.map((opt, i) => `<button class="sa-opt-btn" style="text-align:left;font-size:0.88rem;font-weight:500;" onclick="checkRevDefAnswer(this,${i})">${escapeHtml(opt)}</button>`).join('')}
+      </div>
+      <div id="rd-feedback"></div>`;
+  }
+
+  function checkRevDefAnswer(btn, chosenIdx) {
+    if (rdAnswered) return;
+    rdAnswered = true;
+    const { correctIdx } = rdCurrentData;
+    const isCorrect = chosenIdx === correctIdx;
+    if (isCorrect) rdScore++; else rdScore--;
+    document.querySelectorAll('.sa-opt-btn').forEach((b, i) => {
+      b.disabled = true;
+      if (i === correctIdx) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    const scoreEl = document.getElementById('rd-score-val');
+    if (scoreEl) { scoreEl.textContent = rdScore > 0 ? '+' + rdScore : rdScore; scoreEl.className = 'sa-score-val' + (rdScore < 0 ? ' negative' : ''); }
+    const nextLabel = (rdIdx >= rdPool.length || rdIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('rd-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ Incorrect`}</div>
+      <button class="sa-next-btn" onclick="renderRevDefQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderRevDefGameOver(container) {
+    const emoji = rdScore >= 14 ? '🏆' : rdScore >= 8 ? '👍' : '💪';
+    const scoreCls = rdScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${rdScore > 0 ? '+' : ''}${rdScore}</div>
+        <div class="sa-final-label">Reverse Definition — 20 questions</div>
+        <button class="sa-start-btn" onclick="initRevDefGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Spelling Drill ────────────────────────────────────────────────────────
+  let sdScore = 0, sdQNum = 0, sdAnswered = false, sdPool = [], sdIdx = 0, sdCurrentData = null;
+
+  function initSpellingGame() {
+    sdScore = 0; sdQNum = 0; sdAnswered = false; sdIdx = 0;
+    sdPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = sdPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [sdPool[i], sdPool[j]] = [sdPool[j], sdPool[i]];
+    }
+    renderSpellingQuestion();
+  }
+
+  function renderSpellingQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (sdIdx >= sdPool.length || sdIdx >= 20) { renderSpellingGameOver(container); return; }
+    sdQNum++;
+    sdAnswered = false;
+    const item = sdPool[sdIdx++];
+    sdCurrentData = { word: item.word };
+    const scoreCls = sdScore < 0 ? ' negative' : '';
+    const word = item.word;
+    const re = new RegExp(word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    const exLine = item.examples && item.examples.find(e => e.toLowerCase().includes(word.toLowerCase()));
+    const blankedEx = exLine ? exLine.replace(re, '<span class="fb-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>') : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="sd-score-val">${sdScore > 0 ? '+' + sdScore : sdScore}</span></div>
+        <div class="sa-type-badge spelling">🔤 SPELLING</div>
+        <div class="sa-progress">${sdQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Type the word that matches this definition:</div>
+        <div class="sa-target-def" style="font-size:1rem;color:var(--text-main);font-style:normal;font-weight:600;">${escapeHtml(item.definition)}</div>
+        ${blankedEx ? `<div class="sa-target-def" style="margin-top:10px;">${blankedEx}</div>` : ''}
+      </div>
+      <div class="sd-input-wrap">
+        <input class="sd-input" id="sd-answer" type="text" placeholder="Type your answer…" autocomplete="off" onkeydown="if(event.key==='Enter')checkSpellingAnswer()">
+        <button class="sd-submit-btn" id="sd-submit-btn" onclick="checkSpellingAnswer()">Submit</button>
+      </div>
+      <div id="sd-feedback"></div>`;
+    setTimeout(() => { const inp = document.getElementById('sd-answer'); if (inp) inp.focus(); }, 50);
+  }
+
+  function checkSpellingAnswer() {
+    if (sdAnswered) return;
+    const inp = document.getElementById('sd-answer');
+    if (!inp || !inp.value.trim()) return;
+    sdAnswered = true;
+    inp.disabled = true;
+    const submitBtn = document.getElementById('sd-submit-btn');
+    if (submitBtn) submitBtn.disabled = true;
+    const { word } = sdCurrentData;
+    const isCorrect = inp.value.trim().toLowerCase() === word.toLowerCase();
+    if (isCorrect) sdScore++; else sdScore--;
+    const scoreEl = document.getElementById('sd-score-val');
+    if (scoreEl) { scoreEl.textContent = sdScore > 0 ? '+' + sdScore : sdScore; scoreEl.className = 'sa-score-val' + (sdScore < 0 ? ' negative' : ''); }
+    const nextLabel = (sdIdx >= sdPool.length || sdIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('sd-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(word)}"`}</div>
+      <button class="sa-next-btn" onclick="renderSpellingQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderSpellingGameOver(container) {
+    const emoji = sdScore >= 14 ? '🏆' : sdScore >= 8 ? '👍' : '💪';
+    const scoreCls = sdScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${sdScore > 0 ? '+' : ''}${sdScore}</div>
+        <div class="sa-final-label">Spelling Drill — 20 questions</div>
+        <button class="sa-start-btn" onclick="initSpellingGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
   function getCurrentFlashcardItem() {
     const activePool = getActiveVocab();
     if (!activePool.length) return null;
     if (fcIndex >= activePool.length) fcIndex = 0;
-    return activePool[fcIndex] || null;
+    const order = getFlashcardOrder(activePool);
+    return activePool[order[fcIndex]] || null;
   }
 
   function clampFlashcardIndex() {
@@ -6989,14 +7188,22 @@
     if (!item) return;
     const key = normalizeWord(item.word);
 
-    _flyCardOut('left', () => {
-      sessionMasteredWords.add(key);
-      flashcardOrderMap[currentGroupIndex] = null;
-      const newPool = getActiveVocab();
-      if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
-      updateFlashcardUI();
-      renderDashboard();
-    });
+    sessionMasteredWords.add(key);
+    flashcardOrderMap[currentGroupIndex] = null;
+    renderDashboard();
+    updateGroupWordListSummary();
+
+    if (isAutoplaying) {
+      // During autopilot: stamp the card, let the loop advance naturally
+      _showStamp(_stampLeft);
+    } else {
+      // Outside autopilot: fly the card out so the mastered word disappears
+      _flyCardOut('left', () => {
+        const newPool = getActiveVocab();
+        if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
+        updateFlashcardUI();
+      });
+    }
   }
 
   function updateNotebookButtonState() {
@@ -7041,7 +7248,6 @@
   function openMistakesFlashcards() {
     currentGroupIndex = 'mistakes';
     selectedGroupWords.clear();
-    sessionMasteredWords.clear();
     _lastGotItWord = null;
     document.getElementById('groupSelect').value = 'mistakes';
     fcIndex = 0;
@@ -7059,36 +7265,16 @@
 
     const adding = !item.isNotebook;
 
-    if (currentMode === 'flashcard' && adding) {
-      // Animate right fly-out when adding to notebook
-      _flyCardOut('right', () => {
-        item.isNotebook = true;
-        saveState();
-        const newPool = getActiveVocab();
-        if (newPool.length > 0) fcIndex = (fcIndex + 1) % newPool.length;
-        updateFlashcardUI();
-        renderDashboard();
-        if (isGroupWordListOpen) buildGroupWordList();
-        else updateGroupWordListSummary();
-      });
-      return;
-    }
-
+    // Always independent — never advances the card
     item.isNotebook = !item.isNotebook;
     saveState();
+    renderDashboard();
+    updateNotebookButtonState();
 
-    if (currentMode === 'dashboard') renderDashboard();
-    if (currentMode === 'quiz' || currentMode === 'review') loadNextQuestion();
-
-    if (currentMode === 'flashcard') {
-      if (currentGroupIndex === 'notebook' && !item.isNotebook) {
-        clampFlashcardIndex();
-        updateFlashcardUI();
-      } else {
-        updateNotebookButtonState();
-      }
+    if (item.isNotebook) {
+      _showStamp(_stampRight);
     } else {
-      updateFlashcardUI();
+      _hideStamp(_stampRight, true); // animated fade-out when removing
     }
 
     if (isGroupWordListOpen) buildGroupWordList();
@@ -7621,9 +7807,7 @@
   // --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
-    if (currentGroupIndex === 'wod') flash100Cache = null;
     selectedGroupWords.clear();
-    sessionMasteredWords.clear();
     fcIndex = 0;
     flashcardOrderMap[currentGroupIndex] = null;
     if (currentMode === 'flashcard') updateFlashcardUI();
@@ -7640,21 +7824,26 @@
     let _wodRaw; try { _wodRaw = JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'); } catch(e) { _wodRaw = []; }
     const history = new Set(_wodRaw);
 
-    // Eligible: never shown in Flash 100 before, OR in notebook, OR has mistakes
-    // Any one of these signals the word is still unfamiliar
+    // Base pool: all words + notebook words (notebook ⊆ vocabState, so just vocabState),
+    // excluding anything already in Got It this session
+    const notGotIt = item => !sessionMasteredWords.has(normalizeWord(item.word));
+
+    // Eligible: not Got It, and either unseen in Flash 100, in notebook, or has mistakes
     let eligible = vocabState.filter(item =>
-      !history.has(normalizeWord(item.word)) ||
-      item.isNotebook ||
-      item.mistakes > 0
+      notGotIt(item) && (
+        !history.has(normalizeWord(item.word)) ||
+        item.isNotebook ||
+        item.mistakes > 0
+      )
     );
 
-    // Pool exhausted (all unseen words gone, nothing in notebook or mistakes) — reset history
+    // Pool exhausted — reset history and use all non-Got-It words
     if (eligible.length < 100) {
       history.clear();
-      eligible = vocabState.slice();
+      eligible = vocabState.filter(notGotIt);
     }
 
-    // Absolute fallback: use everything
+    // Absolute fallback
     if (eligible.length === 0) eligible = vocabState.slice();
 
     const picked = eligible.slice().sort(() => Math.random() - 0.5).slice(0, 100);
@@ -7711,9 +7900,15 @@
       document.getElementById('dashboard-mode').classList.add('active');
       renderDashboard();
     } else if (mode === 'add') {
-      document.getElementById('add-mode').classList.add('active');
+      // Add Word is now embedded in Dashboard
+      currentMode = 'dashboard';
+      document.getElementById('tab-dashboard')?.classList.add('active');
+      document.getElementById('dashboard-mode').classList.add('active');
+      renderDashboard();
+      const addSection = document.getElementById('add-word-section');
+      if (addSection) addSection.style.display = 'block';
       const lookupInput = document.getElementById('lookupWordInput');
-      if (lookupInput) lookupInput.focus();
+      if (lookupInput) { lookupInput.focus(); lookupInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
     } else if (mode === 'read') {
       document.getElementById('read-mode').classList.add('active');
       renderArticleMode();
@@ -7729,7 +7924,29 @@
   document.getElementById('tab-flashcard')?.addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
   document.getElementById('tab-quiz')?.addEventListener('click', function() { setMode('quiz', 'tab-quiz'); });
   document.getElementById('tab-dashboard')?.addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
-  document.getElementById('tab-add')?.addEventListener('click', function() { setMode('add', 'tab-add'); });
+  document.getElementById('tab-flash100')?.addEventListener('click', initFlash100Tab);
+
+  function initFlash100Tab() {
+    flash100Cache = null; // force a fresh 100-word roll (respects current Got It state)
+    currentGroupIndex = 'wod';
+    selectedGroupWords.clear();
+    const sel = document.getElementById('groupSelect');
+    if (sel) sel.value = 'wod';
+    updateGroupWordListSummary();
+    setMode('flashcard', 'tab-flashcard');
+    document.getElementById('tab-flash100')?.classList.add('active');
+    document.getElementById('ios-tab-flash100')?.classList.add('active');
+  }
+  function toggleAddWordSection() {
+    const section = document.getElementById('add-word-section');
+    if (!section) return;
+    const isOpen = section.style.display !== 'none';
+    section.style.display = isOpen ? 'none' : 'block';
+    if (!isOpen) {
+      const lookupInput = document.getElementById('lookupWordInput');
+      if (lookupInput) { lookupInput.focus(); }
+    }
+  }
   document.getElementById('tab-read')?.addEventListener('click', function() { setMode('read', 'tab-read'); });
   document.getElementById('tab-syn-ant')?.addEventListener('click', function() { setMode('syn-ant', 'tab-syn-ant'); });
 
@@ -7853,6 +8070,25 @@
   const _fcWrapper  = document.getElementById('card-wrapper');
   const _stampLeft  = document.getElementById('fc-stamp-left');   // shown when swiping left  (next)
   const _stampRight = document.getElementById('fc-stamp-right');  // shown when swiping right (back)
+
+  function _showStamp(el) {
+    el.style.opacity = ''; // clear any inline style so the animation can take over
+    el.classList.remove('stamp-show', 'stamp-hide');
+    void el.offsetWidth; // force reflow to restart animation
+    el.classList.add('stamp-show');
+  }
+  function _hideStamp(el, animate = false) {
+    if (animate && el.classList.contains('stamp-show')) {
+      el.classList.remove('stamp-show');
+      el.classList.remove('stamp-hide');
+      void el.offsetWidth;
+      el.classList.add('stamp-hide');
+      setTimeout(() => { el.classList.remove('stamp-hide'); el.style.opacity = '0'; }, 260);
+    } else {
+      el.classList.remove('stamp-show', 'stamp-hide');
+      el.style.opacity = '0';
+    }
+  }
 
   flashcardElement.addEventListener('touchstart', e => {
     _swipeStartX    = e.touches[0].clientX;
@@ -8084,6 +8320,8 @@
       if (item) sessionMasteredWords.add(normalizeWord(item.word));
       // Invalidate order so it rebuilds with the smaller pool
       flashcardOrderMap[currentGroupIndex] = null;
+      renderDashboard();
+      updateGroupWordListSummary();
       // Pool shrinks; clamp index and advance
       const newPool = getActiveVocab();
       if (newPool.length === 0) {
@@ -8156,6 +8394,8 @@
       fsGroup.textContent = sel ? sel.options[sel.selectedIndex].text : '';
     }
     updateNotebookButtonState();
+    // Show notebook stamp if this word is already saved
+    if (item.isNotebook) _showStamp(_stampRight); else _hideStamp(_stampRight, false);
     // Start audio whenever listen is on — autoplay loop will await this promise
     if (listenToCardEnabled) {
       listenRunId++;
@@ -8187,6 +8427,8 @@
 
   function nextCard(source) {
     listenRunId++;
+    _hideStamp(_stampLeft);
+    _hideStamp(_stampRight);
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if (source !== 'autoplay' && isAutoplaying &&
         !document.getElementById('btn-autoplay').classList.contains('active-loop')) {
@@ -8704,7 +8946,7 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     }
   ];
 
-  let currentArticleIndex = 0;
+  let currentArticleIndex = 5; // default to "Notebook Words"
   let articleHighlightRegex = null;
   let articleWordMap = {};
   let articleIsPaused = false;
@@ -8997,10 +9239,6 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
       <span class="ios-icon">📊</span>
       <span class="ios-label">Stats</span>
     </button>
-    <button class="ios-tab-btn" id="ios-tab-add" onclick="setMode('add','tab-add')">
-      <span class="ios-icon">➕</span>
-      <span class="ios-label">Add</span>
-    </button>
     <button class="ios-tab-btn" id="ios-tab-read" onclick="setMode('read','tab-read')">
       <span class="ios-icon">📰</span>
       <span class="ios-label">Articles</span>
@@ -9008,6 +9246,10 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     <button class="ios-tab-btn" id="ios-tab-syn-ant" onclick="setMode('syn-ant','tab-syn-ant')">
       <span class="ios-icon">🎯</span>
       <span class="ios-label">Exercises</span>
+    </button>
+    <button class="ios-tab-btn" id="ios-tab-flash100" onclick="initFlash100Tab()">
+      <span class="ios-icon">⚡</span>
+      <span class="ios-label">Flash 100</span>
     </button>
   </div>
 </nav>

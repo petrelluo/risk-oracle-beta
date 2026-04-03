@@ -407,23 +407,35 @@
             z-index: 5;
         }
         .swipe-label-right {
-            left: 14px;
+            right: 14px;
             color: #10b981;
             border-color: #10b981;
             background: rgba(209,250,229,0.92);
-            transform: rotate(-14deg);
+            transform: rotate(12deg);
         }
         .swipe-label-left {
             right: 14px;
             color: #ef4444;
             border-color: #ef4444;
             background: rgba(254,226,226,0.92);
-            transform: rotate(14deg);
+            transform: rotate(12deg);
         }
         @keyframes fly-left-out  { to { transform: translateX(-170%) rotate(-28deg); opacity: 0; } }
         @keyframes fly-right-out { to { transform: translateX(170%)  rotate(28deg);  opacity: 0; } }
         .vocab-card.fly-left  { animation: fly-left-out  0.32s ease-in forwards; }
         .vocab-card.fly-right { animation: fly-right-out 0.32s ease-in forwards; }
+        @keyframes stamp-pop {
+            0%   { opacity: 0; transform: rotate(12deg) scale(1.6); }
+            55%  { opacity: 1; transform: rotate(12deg) scale(0.88); }
+            75%  { transform: rotate(12deg) scale(1.06); }
+            100% { opacity: 1; transform: rotate(12deg) scale(1); }
+        }
+        @keyframes stamp-fade-out {
+            0%   { opacity: 1; transform: rotate(12deg) scale(1); }
+            100% { opacity: 0; transform: rotate(12deg) scale(0.7); }
+        }
+        .swipe-label.stamp-show { animation: stamp-pop 0.35s cubic-bezier(0.22,0.61,0.36,1) forwards; }
+        .swipe-label.stamp-hide { animation: stamp-fade-out 0.25s ease-in forwards; }
 
         /* swipe hint — only on touch devices */
         .swipe-hint {
@@ -534,7 +546,7 @@
 
             <div class="vocab-content">
                 <div class="vocab-card" id="vocabCardEl">
-                    <div class="swipe-label swipe-label-right" id="swipeLabelRight">📒 笔记本</div>
+                    <div class="swipe-label swipe-label-right" id="swipeLabelRight">📒 已保存</div>
                     <div class="swipe-label swipe-label-left"  id="swipeLabelLeft">✓ 已掌握</div>
                     <div class="v-word" id="vWord">多彩多姿</div>
                     <div class="v-pinyin" id="vPinyin">duō cǎi duō zī</div>
@@ -548,8 +560,12 @@
                     <button class="btn btn-outline" id="vNextBtn">下一个 (Next) ➡️</button>
                     <button class="btn" id="vPlayBtn" style="margin-left: 10px;">🔊 朗读 (Play)</button>
                 </div>
-                <div style="display:flex; justify-content:center; margin-top:10px;">
+                <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-top:10px;">
+                    <button id="vGotItBtn" onclick="markVocabMastered()" class="notebook-action-btn" style="color:#ef4444; border-color:#ef4444;">✓ 已掌握 (Got It)</button>
                     <button id="vNotebookBtn" onclick="toggleVocabNotebook()" class="notebook-action-btn">📒 加入笔记本</button>
+                </div>
+                <div style="text-align:center; margin-top:8px; font-size:0.85rem; color:#94a3b8; font-weight:600;">
+                    剩余 (Remaining): <span id="vRemainingCount">—</span>
                 </div>
                 <div class="swipe-hint">
                     <span style="color:#ef4444;">← 已掌握</span>
@@ -979,7 +995,8 @@
             { word: "下肢", pinyin: "xià zhī", meaning: "Lower limbs; legs.", example: "长时间坐着会让下肢感到麻木。" },
             { word: "捡起来", pinyin: "jiǎn qǐ lái", meaning: "To pick up; to lift up from the ground.", example: "她把掉落在地上的幼崽轻轻捡起来。" }
         ],
-        "笔记本": []
+        "笔记本": [],
+        "__mastered__": []
         };
 
         // ==========================================
@@ -1119,6 +1136,7 @@
 
         // Active study group
         let activeGroup = "熊猫虎子";
+        let vocabGroupTotal = 0; // original word count when group was loaded
 
         function shuffleCopy(arr) {
             const copy = [...arr];
@@ -1131,8 +1149,10 @@
 
         // Vocab State
         let vocabulary = shuffleCopy(studyGroups[activeGroup]);
+        vocabGroupTotal = vocabulary.length;
         let currentVocabIndex = 0;
         let currentVocabSessionId = 0;
+        let masteredWords = new Set(); // word strings marked Got It this session
 
         // Quiz State (Spaced Repetition System)
         // box 0: new/forgotten, box 1, 2, 3: learning, box 4: mastered
@@ -1141,12 +1161,18 @@
         let quizScore = 0;
 
         function loadGroup(name) {
-            if (!studyGroups[name]) return;
+            if (!studyGroups[name] && name !== '__mastered__') return;
+            const isGotIt = name === '__mastered__';
             activeGroup = name;
             synth.cancel();
             currentVocabSessionId++;
-
-            vocabulary = shuffleCopy(studyGroups[name]);
+            if (isGotIt) {
+                vocabulary = [...studyGroups['__mastered__']];
+                vocabGroupTotal = vocabulary.length;
+            } else {
+                vocabulary = shuffleCopy(studyGroups[name]).filter(v => !masteredWords.has(v.word));
+                vocabGroupTotal = studyGroups[name].length;
+            }
             currentVocabIndex = 0;
             quizData = vocabulary.map((v, index) => ({ ...v, originalIndex: index, box: 0, nextTime: 0 }));
             currentQuizItem = null;
@@ -1197,6 +1223,13 @@
             }
         }
 
+        function addToGotIt(wordObj) {
+            if (!masteredWords.has(wordObj.word)) {
+                masteredWords.add(wordObj.word);
+                studyGroups['__mastered__'].push({ ...wordObj });
+            }
+        }
+
         function removeFromNotebook(word) {
             studyGroups["笔记本"] = studyGroups["笔记本"].filter(v => v.word !== word);
             // If currently browsing the notebook, also remove from the live arrays
@@ -1211,11 +1244,14 @@
         function toggleVocabNotebook() {
             if (vocabulary.length === 0) return;
             const wordObj = vocabulary[currentVocabIndex];
+            const sRight = document.getElementById('swipeLabelRight');
             if (isInNotebook(wordObj.word)) {
                 removeFromNotebook(wordObj.word);
+                _hideStamp(sRight, true);
                 if (activeGroup === "笔记本") { renderVocabCard(); return; }
             } else {
                 addToNotebook(wordObj);
+                _showStamp(sRight);
             }
             updateNotebookBtns(wordObj.word);
         }
@@ -1420,15 +1456,29 @@
             if (vocabulary.length === 0) {
                 vWord.textContent = '—';
                 vPinyin.textContent = '';
-                vMeaning.textContent = '该学习组暂无词汇。(No words in this group yet.)';
+                vMeaning.textContent = activeGroup === '__mastered__'
+                    ? '暂无已掌握词汇。(No Got It words yet.)'
+                    : '该学习组暂无词汇。(No words in this group yet.)';
                 vExample.textContent = '';
                 vProgress.textContent = '0 / 0';
                 vPrevBtn.disabled = true;
                 vNextBtn.disabled = true;
                 updateNotebookBtns(null);
+                const remEl = document.getElementById('vRemainingCount');
+                if (remEl) remEl.textContent = `0 / ${vocabGroupTotal}`;
                 return;
             }
             vNextBtn.disabled = false;
+
+            // Skip any word already mastered this session (safety net — not needed for Got It group itself)
+            if (activeGroup !== '__mastered__') {
+                while (vocabulary.length > 0 && masteredWords.has(vocabulary[currentVocabIndex].word)) {
+                    vocabulary.splice(currentVocabIndex, 1);
+                    if (currentVocabIndex >= vocabulary.length)
+                        currentVocabIndex = Math.max(0, vocabulary.length - 1);
+                }
+                if (vocabulary.length === 0) { renderVocabCard(); return; }
+            }
 
             const vocab = vocabulary[currentVocabIndex];
             vWord.textContent = vocab.word;
@@ -1436,10 +1486,24 @@
             vMeaning.textContent = vocab.meaning;
             vExample.textContent = `例句 (Example)：${vocab.example}`;
 
-            vProgress.textContent = `${currentVocabIndex + 1} / ${vocabulary.length}`;
+            vProgress.textContent = `${vocabulary.length} / ${vocabGroupTotal}`;
 
             vPrevBtn.disabled = (currentVocabIndex === 0);
             updateNotebookBtns(vocab.word);
+
+            // Show/hide Got It button based on group
+            const gotItBtn = document.getElementById('vGotItBtn');
+            if (gotItBtn) gotItBtn.style.display = activeGroup === '__mastered__' ? 'none' : '';
+
+            // Show notebook stamp if word is already saved; always clear mastered stamp
+            const _sRight = document.getElementById('swipeLabelRight');
+            const _sLeft  = document.getElementById('swipeLabelLeft');
+            if (isInNotebook(vocab.word)) _showStamp(_sRight); else _hideStamp(_sRight, false);
+            _hideStamp(_sLeft, false);
+
+            // Update remaining counter
+            const remEl = document.getElementById('vRemainingCount');
+            if (remEl) remEl.textContent = `${vocabulary.length} / ${vocabGroupTotal}`;
 
             if (autoPlayVocab.checked || autoAdvanceVocab.checked) {
                 playVocabAudio();
@@ -1683,12 +1747,18 @@
         (function() {
             const sel = document.getElementById('groupSelect');
             Object.keys(studyGroups).forEach(name => {
+                if (name === '__mastered__') return; // added manually below
                 const opt = document.createElement('option');
                 opt.value = name;
                 opt.textContent = name === '笔记本' ? '📒 ' + name : name;
                 if (name === activeGroup) opt.selected = true;
                 sel.appendChild(opt);
             });
+            // Add Got It group at the end
+            const gotItOpt = document.createElement('option');
+            gotItOpt.value = '__mastered__';
+            gotItOpt.textContent = '✓ 已掌握 (Got It)';
+            sel.appendChild(gotItOpt);
         })();
 
         initSelect();
@@ -1697,6 +1767,33 @@
         renderQuizCard(); // 初始化测验数据
 
         // ==========================================
+        // ── Got It button handler ─────────────────────────────────────────────
+        function markVocabMastered() {
+            if (typeof window._vocabFireSwipe === 'function') {
+                _showStamp(document.getElementById('swipeLabelLeft'));
+                setTimeout(() => window._vocabFireSwipe('left'), 80);
+            }
+        }
+
+        // ── Stamp helpers ─────────────────────────────────────────────────────
+        function _showStamp(el) {
+            el.style.opacity = '';
+            el.classList.remove('stamp-show', 'stamp-hide');
+            void el.offsetWidth;
+            el.classList.add('stamp-show');
+        }
+        function _hideStamp(el, animate) {
+            if (animate && el.classList.contains('stamp-show')) {
+                el.classList.remove('stamp-show', 'stamp-hide');
+                void el.offsetWidth;
+                el.classList.add('stamp-hide');
+                setTimeout(() => { el.classList.remove('stamp-hide'); el.style.opacity = '0'; }, 260);
+            } else {
+                el.classList.remove('stamp-show', 'stamp-hide');
+                el.style.opacity = '0';
+            }
+        }
+
         // 9. 滑动手势 (Swipe Gesture - Tinder style)
         // ==========================================
         (function() {
@@ -1709,14 +1806,17 @@
 
             let startX = 0, startY = 0;
             let dragging = false, dirLocked = false;
+            let mouseDown = false;
 
             // Reset lblRight to its default green notebook appearance
             function resetRightLabel() {
-                lblRight.textContent        = '📒 笔记本';
+                lblRight.textContent        = '📒 已保存';
                 lblRight.style.color        = '';
                 lblRight.style.borderColor  = '';
                 lblRight.style.background   = '';
                 lblRight.style.opacity      = '0';
+                lblRight.classList.remove('stamp-show', 'stamp-hide');
+                lblLeft.classList.remove('stamp-show', 'stamp-hide');
             }
 
             // ── drag start ──────────────────────────────────────
@@ -1760,7 +1860,7 @@
                         card.style.boxShadow   = `0 10px 40px rgba(245,158,11,${(ratio * 0.4).toFixed(2)})`;
                         card.style.borderColor = `rgba(245,158,11,${(ratio * 0.8 + 0.1).toFixed(2)})`;
                     } else {
-                        lblRight.textContent       = '📒 笔记本';
+                        lblRight.textContent       = '📒 已保存';
                         lblRight.style.color       = '';
                         lblRight.style.borderColor = '';
                         lblRight.style.background  = '';
@@ -1807,6 +1907,86 @@
                 dragging = false;
             });
 
+            // ── mouse drag (desktop) ──────────────────────────────
+            card.addEventListener('mousedown', e => {
+                if (e.button !== 0) return;
+                startX    = e.clientX;
+                startY    = e.clientY;
+                mouseDown = true;
+                dragging  = false;
+                dirLocked = false;
+                card.style.transition = 'none';
+                resetRightLabel();
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', e => {
+                if (!mouseDown) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                if (!dirLocked) {
+                    if (Math.abs(dy) > Math.abs(dx) + 6) return;
+                    dirLocked = true;
+                    dragging  = true;
+                }
+                if (!dragging) return;
+
+                const rot   = Math.max(-MAX_ROT, Math.min(MAX_ROT, dx * 0.12));
+                const ratio = Math.min(Math.abs(dx) / THRESHOLD, 1);
+                card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+
+                if (dx > 0) {
+                    lblLeft.style.opacity  = 0;
+                    lblRight.style.opacity = ratio;
+                    if (activeGroup === '笔记本') {
+                        lblRight.textContent       = '已在笔记本';
+                        lblRight.style.color       = '#d97706';
+                        lblRight.style.borderColor = '#f59e0b';
+                        lblRight.style.background  = 'rgba(254,243,199,0.92)';
+                        card.style.boxShadow   = `0 10px 40px rgba(245,158,11,${(ratio * 0.4).toFixed(2)})`;
+                        card.style.borderColor = `rgba(245,158,11,${(ratio * 0.8 + 0.1).toFixed(2)})`;
+                    } else {
+                        lblRight.textContent       = '📒 已保存';
+                        lblRight.style.color       = '';
+                        lblRight.style.borderColor = '';
+                        lblRight.style.background  = '';
+                        card.style.boxShadow   = `0 10px 40px rgba(16,185,129,${(ratio * 0.5).toFixed(2)})`;
+                        card.style.borderColor = `rgba(16,185,129,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                    }
+                } else if (dx < 0) {
+                    lblLeft.style.opacity  = ratio;
+                    lblRight.style.opacity = 0;
+                    card.style.boxShadow   = `0 10px 40px rgba(239,68,68,${(ratio * 0.5).toFixed(2)})`;
+                    card.style.borderColor = `rgba(239,68,68,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                } else {
+                    lblLeft.style.opacity  = 0;
+                    lblRight.style.opacity = 0;
+                }
+            });
+
+            document.addEventListener('mouseup', e => {
+                if (!mouseDown) return;
+                mouseDown = false;
+                if (!dragging) return;
+                dragging = false;
+                const dx = e.clientX - startX;
+                lblLeft.style.opacity = 0;
+                if (dx < -THRESHOLD) {
+                    lblRight.style.opacity = 0;
+                    fireSwipe('left');
+                } else if (dx > THRESHOLD) {
+                    if (activeGroup === '笔记本') {
+                        snapBackWithFlash();
+                    } else {
+                        lblRight.style.opacity = 0;
+                        fireSwipe('right');
+                    }
+                } else {
+                    lblRight.style.opacity = 0;
+                    snapBack();
+                }
+            });
+
             // ── snap back (not enough drag) ──────────────────────
             function snapBack() {
                 card.style.transition  = 'transform 0.42s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s, border-color 0.3s';
@@ -1822,6 +2002,9 @@
                 setTimeout(() => { lblRight.style.opacity = '0'; }, 800);
                 setTimeout(() => { resetRightLabel(); }, 1150);
             }
+
+            // Expose for Got It button
+            window._vocabFireSwipe = fireSwipe;
 
             // ── fire swipe: animate fly-out then apply action ────
             function fireSwipe(direction) {
@@ -1842,12 +2025,13 @@
             // ── swipe left: master the word ──────────────────────
             function doMastered() {
                 if (vocabulary.length === 0) return;
-                const word = vocabulary[currentVocabIndex].word;
+                const wordObj = vocabulary[currentVocabIndex];
+                addToGotIt(wordObj);
                 if (activeGroup === '笔记本') {
                     // in notebook group, left-swipe removes from notebook
-                    removeFromNotebook(word);
+                    removeFromNotebook(wordObj.word);
                 } else {
-                    // session-only mastery: remove from working copy
+                    // remove from working copy so it never reappears
                     vocabulary.splice(currentVocabIndex, 1);
                     if (currentVocabIndex >= vocabulary.length)
                         currentVocabIndex = Math.max(0, vocabulary.length - 1);
