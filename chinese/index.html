@@ -376,38 +376,20 @@
         .q-feedback .q-fb-meaning { font-weight: 600; color: #1e293b; margin-bottom: 8px; }
         .q-feedback .q-fb-example { background: white; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); }
 
-        /* Study group selector */
-        .group-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: #f1f5f9;
-            border-bottom: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-        }
-        .group-bar-label {
-            font-size: 0.78rem;
-            color: #64748b;
-            font-weight: 700;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .group-btn {
-            padding: 4px 14px;
+        /* Study group dropdown */
+        .group-select {
+            padding: 4px 8px;
             border: 1.5px solid #cbd5e1;
-            border-radius: 20px;
-            background: white;
+            border-radius: 6px;
             font-size: 0.85rem;
-            cursor: pointer;
-            color: #475569;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            transition: all 0.15s;
-            line-height: 1.6;
+            color: #334155;
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.15s;
         }
-        .group-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .group-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 600; }
+        .group-select:focus { border-color: var(--primary); }
 
         /* ── Tinder-style swipe ── */
         .swipe-label {
@@ -500,12 +482,6 @@
             <span id="voiceStatusText" style="color:#64748b;">正在加载中文语音… (Loading Chinese voice…)</span>
         </div>
 
-        <div class="group-bar">
-            <span class="group-bar-label">学习组 Group:</span>
-            <button class="group-btn active" id="group-btn-熊猫虎子" onclick="loadGroup('熊猫虎子')">熊猫虎子</button>
-            <button class="group-btn" id="group-btn-笔记本" onclick="loadGroup('笔记本')">📒 笔记本</button>
-        </div>
-
         <div id="section-reading">
             <div class="header-bar">
                 <label for="articleSelect" style="font-weight: bold; white-space: nowrap;">阅读篇目:</label>
@@ -533,8 +509,13 @@
         </div>
 
         <div id="section-vocab" class="hidden">
-            <div class="controls-bar" style="justify-content: space-between; background:#f8fafc;">
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div class="controls-bar" style="justify-content: space-between; background:#f8fafc; flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                    <label style="font-size:0.85rem; font-weight:700; color:#475569; white-space:nowrap; display:flex; align-items:center; gap:6px;">
+                        学习组:
+                        <select id="groupSelect" class="group-select" onchange="loadGroup(this.value)">
+                        </select>
+                    </label>
                     <label class="checkbox-control" style="color: var(--primary);">
                         <input type="checkbox" id="autoPlayVocab" checked>
                         🔊 切换时发音 (Auto-play)
@@ -544,7 +525,7 @@
                         🔄 自动连播 (Auto-Advance)
                     </label>
                 </div>
-                
+
                 <div class="control-group">
                     <label for="vocabSpeedRate">语速: <span id="vocabSpeedValue">1.0</span>x</label>
                     <input type="range" id="vocabSpeedRate" min="0.5" max="2.0" step="0.1" value="1.0">
@@ -1173,10 +1154,9 @@
             qScoreDisplay.textContent = String(0);
             qScoreDisplay.style.color = 'var(--primary)';
 
-            // Update button active state
-            document.querySelectorAll('.group-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById('group-btn-' + name);
-            if (activeBtn) activeBtn.classList.add('active');
+            // Sync the dropdown
+            const sel = document.getElementById('groupSelect');
+            if (sel) sel.value = name;
 
             // Re-render whichever tab is visible
             if (!sectionVocab.classList.contains('hidden')) renderVocabCard(true);
@@ -1699,6 +1679,18 @@
         // ==========================================
         // 8. 初始运行
         // ==========================================
+        // Populate study group dropdown from studyGroups keys
+        (function() {
+            const sel = document.getElementById('groupSelect');
+            Object.keys(studyGroups).forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name === '笔记本' ? '📒 ' + name : name;
+                if (name === activeGroup) opt.selected = true;
+                sel.appendChild(opt);
+            });
+        })();
+
         initSelect();
         loadArticle(0);
         renderVocabCard(false);
@@ -1718,6 +1710,15 @@
             let startX = 0, startY = 0;
             let dragging = false, dirLocked = false;
 
+            // Reset lblRight to its default green notebook appearance
+            function resetRightLabel() {
+                lblRight.textContent        = '📒 笔记本';
+                lblRight.style.color        = '';
+                lblRight.style.borderColor  = '';
+                lblRight.style.background   = '';
+                lblRight.style.opacity      = '0';
+            }
+
             // ── drag start ──────────────────────────────────────
             card.addEventListener('touchstart', e => {
                 startX    = e.touches[0].clientX;
@@ -1725,6 +1726,7 @@
                 dragging  = false;
                 dirLocked = false;
                 card.style.transition = 'none';
+                resetRightLabel();
             }, { passive: true });
 
             // ── drag move ───────────────────────────────────────
@@ -1747,13 +1749,26 @@
                 card.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
 
                 if (dx > 0) {
-                    // swiping right → notebook
-                    lblRight.style.opacity = ratio;
                     lblLeft.style.opacity  = 0;
-                    card.style.boxShadow   = `0 10px 40px rgba(16,185,129,${(ratio * 0.5).toFixed(2)})`;
-                    card.style.borderColor = `rgba(16,185,129,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                    lblRight.style.opacity = ratio;
+                    if (activeGroup === '笔记本') {
+                        // already in notebook — amber warning
+                        lblRight.textContent       = '已在笔记本';
+                        lblRight.style.color       = '#d97706';
+                        lblRight.style.borderColor = '#f59e0b';
+                        lblRight.style.background  = 'rgba(254,243,199,0.92)';
+                        card.style.boxShadow   = `0 10px 40px rgba(245,158,11,${(ratio * 0.4).toFixed(2)})`;
+                        card.style.borderColor = `rgba(245,158,11,${(ratio * 0.8 + 0.1).toFixed(2)})`;
+                    } else {
+                        lblRight.textContent       = '📒 笔记本';
+                        lblRight.style.color       = '';
+                        lblRight.style.borderColor = '';
+                        lblRight.style.background  = '';
+                        card.style.boxShadow   = `0 10px 40px rgba(16,185,129,${(ratio * 0.5).toFixed(2)})`;
+                        card.style.borderColor = `rgba(16,185,129,${(ratio * 0.9 + 0.1).toFixed(2)})`;
+                    }
                 } else if (dx < 0) {
-                    // swiping left → mastered
+                    // swiping left → mastered / remove
                     lblLeft.style.opacity  = ratio;
                     lblRight.style.opacity = 0;
                     card.style.boxShadow   = `0 10px 40px rgba(239,68,68,${(ratio * 0.5).toFixed(2)})`;
@@ -1769,16 +1784,26 @@
                 if (!dragging) return;
                 dragging = false;
                 const dx = e.changedTouches[0].clientX - startX;
-                lblLeft.style.opacity  = 0;
-                lblRight.style.opacity = 0;
+                lblLeft.style.opacity = 0;
 
-                if      (dx < -THRESHOLD) fireSwipe('left');
-                else if (dx >  THRESHOLD) fireSwipe('right');
-                else                      snapBack();
+                if (dx < -THRESHOLD) {
+                    lblRight.style.opacity = 0;
+                    fireSwipe('left');
+                } else if (dx > THRESHOLD) {
+                    if (activeGroup === '笔记本') {
+                        snapBackWithFlash(); // already in notebook — no action
+                    } else {
+                        lblRight.style.opacity = 0;
+                        fireSwipe('right');
+                    }
+                } else {
+                    lblRight.style.opacity = 0;
+                    snapBack();
+                }
             });
 
             card.addEventListener('touchcancel', () => {
-                if (dragging) snapBack();
+                if (dragging) { lblRight.style.opacity = 0; snapBack(); }
                 dragging = false;
             });
 
@@ -1788,6 +1813,14 @@
                 card.style.transform   = '';
                 card.style.boxShadow   = '';
                 card.style.borderColor = '';
+            }
+
+            // ── snap back with amber "already in notebook" flash ─
+            function snapBackWithFlash() {
+                lblRight.style.opacity = '1';
+                snapBack();
+                setTimeout(() => { lblRight.style.opacity = '0'; }, 800);
+                setTimeout(() => { resetRightLabel(); }, 1150);
             }
 
             // ── fire swipe: animate fly-out then apply action ────
