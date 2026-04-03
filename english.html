@@ -7193,17 +7193,17 @@
     renderDashboard();
     updateGroupWordListSummary();
 
-    if (isAutoplaying) {
-      // During autopilot: stamp the card, let the loop advance naturally
-      _showStamp(_stampLeft);
-    } else {
-      // Outside autopilot: fly the card out so the mastered word disappears
-      _flyCardOut('left', () => {
-        const newPool = getActiveVocab();
-        if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
-        updateFlashcardUI();
-      });
+    const wasAutoplaying = isAutoplaying;
+    if (wasAutoplaying) {
+      autoplayRunId++;
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     }
+    _flyCardOut('left', () => {
+      const newPool = getActiveVocab();
+      if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
+      updateFlashcardUI();
+      if (wasAutoplaying) runAutoplayLoop(autoplayRunId);
+    });
   }
 
   function updateNotebookButtonState() {
@@ -8307,7 +8307,8 @@
   function _swipeTinderAdvance(dir) {
     listenRunId++;
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    if (isAutoplaying) stopAutoplay();
+    const wasAutoplaying = isAutoplaying;
+    if (wasAutoplaying) autoplayRunId++; // cancel current loop iteration; will restart below
 
     const activePool = getActiveVocab();
     if (activePool.length === 0) return;
@@ -8353,7 +8354,10 @@
     const inClass = dir === 'left' ? 'slide-in-right' : 'slide-in-left';
     void _fcWrapper.offsetWidth; // force reflow to restart animation
     _fcWrapper.classList.add(inClass);
-    setTimeout(() => _fcWrapper.classList.remove(inClass), 340);
+    setTimeout(() => {
+      _fcWrapper.classList.remove(inClass);
+      if (wasAutoplaying) runAutoplayLoop(autoplayRunId);
+    }, 340);
   }
 
   function _applyCardContent() {
