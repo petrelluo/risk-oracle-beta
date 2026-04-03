@@ -107,16 +107,48 @@
     .card { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; cursor: pointer; touch-action: pan-y; }
 
     /* Swipe slide animations */
-    @keyframes cardSlideOutLeft  { to   { transform: translateX(-115%); opacity: 0; } }
-    @keyframes cardSlideOutRight { to   { transform: translateX( 115%); opacity: 0; } }
-    @keyframes cardSlideInRight  { from { transform: translateX( 115%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    @keyframes cardSlideInLeft   { from { transform: translateX(-115%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    #card-wrapper.slide-out-left  { animation: cardSlideOutLeft  0.22s ease-in  forwards; }
-    #card-wrapper.slide-out-right { animation: cardSlideOutRight 0.22s ease-in  forwards; }
-    #card-wrapper.slide-in-right  { animation: cardSlideInRight  0.25s ease-out forwards; }
-    #card-wrapper.slide-in-left   { animation: cardSlideInLeft   0.25s ease-out forwards; }
+    @keyframes cardSlideOutLeft  { to { transform: translateX(-130%) rotate(-18deg); opacity: 0; } }
+    @keyframes cardSlideOutRight { to { transform: translateX( 130%) rotate( 18deg); opacity: 0; } }
+    @keyframes cardSlideInRight  { from { transform: translateX( 120%) rotate(10deg); opacity: 0; } to { transform: translateX(0) rotate(0deg); opacity: 1; } }
+    @keyframes cardSlideInLeft   { from { transform: translateX(-120%) rotate(-10deg); opacity: 0; } to { transform: translateX(0) rotate(0deg); opacity: 1; } }
+    #card-wrapper.slide-out-left  { animation: cardSlideOutLeft  0.28s ease-in  forwards; }
+    #card-wrapper.slide-out-right { animation: cardSlideOutRight 0.28s ease-in  forwards; }
+    #card-wrapper.slide-in-right  { animation: cardSlideInRight  0.32s cubic-bezier(0.175,0.885,0.32,1.1) forwards; }
+    #card-wrapper.slide-in-left   { animation: cardSlideInLeft   0.32s cubic-bezier(0.175,0.885,0.32,1.1) forwards; }
+
+    /* Tinder swipe stamp labels (inside card-wrapper, move with the card) */
+    .swipe-stamp {
+        position: absolute;
+        top: 22px;
+        padding: 5px 15px;
+        border: 3px solid;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 900;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 20;
+    }
+    .swipe-stamp-left {   /* top-right — appears when dragging left → Got It (mastered) */
+        right: 18px;
+        color: #ef4444;
+        border-color: #ef4444;
+        background: rgba(254,226,226,0.93);
+        transform: rotate(12deg);
+    }
+    .swipe-stamp-right {  /* top-left — appears when dragging right → Save to Notebook */
+        left: 18px;
+        color: #10b981;
+        border-color: #10b981;
+        background: rgba(209,250,229,0.93);
+        transform: rotate(-12deg);
+    }
 
     .btn-listen-on { background-color: var(--secondary) !important; color: white !important; border-color: var(--secondary) !important; }
+    .btn-got-it { background-color: #ef4444 !important; color: white !important; border-color: #ef4444 !important; font-weight: 700; }
+    .btn-got-it:hover { background-color: #dc2626 !important; border-color: #dc2626 !important; }
     .card.is-flipped { transform: rotateY(180deg); }
     .card-face {
       position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; box-sizing: border-box; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; overflow-y: auto;
@@ -928,7 +960,6 @@
   <div class="tabs">
     <button class="tab-btn active" id="tab-flashcard">Flashcards</button>
     <button class="tab-btn" id="tab-quiz">SRS Quiz</button>
-    <button class="tab-btn" id="tab-review">Mistakes</button>
     <button class="tab-btn" id="tab-dashboard">Dashboard</button>
     <button class="tab-btn" id="tab-add">Add Word</button>
     <button class="tab-btn" id="tab-read">Articles</button>
@@ -956,15 +987,13 @@
       <option value="15">Group 16 (4501 - 4800)</option>
       <option value="16">Group 17 (4801+)</option>
       <option value="notebook">Notebook</option>
-      <option value="wod" selected>🎲 Fresh 50</option>
+      <option value="wod" selected>🎲 Flash 100</option>
       <option value="mistakes">My Mistakes</option>
       <option value="custom">Added Words</option>
     </select>
     <div style="width:1px; height:20px; background:#e5e7eb; flex-shrink:0;"></div>
     <span id="group-wordlist-toggle" class="group-wordlist-toggle-label" onclick="toggleGroupWordList()">-- words ▾</span>
     <button type="button" class="btn-nav" onclick="printGroupWordList()" title="Print word list">🖨️</button>
-    <div style="width:1px; height:20px; background:#e5e7eb; flex-shrink:0;"></div>
-    <button type="button" class="btn-nav" onclick="showNotebookWordList()" title="View all notebook words">📋 Notebook Words</button>
   </div>
 </header>
 
@@ -992,6 +1021,8 @@
       <span class="fc-fs-pill" id="fc-fs-progress"></span>
     </div>
     <div id="card-wrapper">
+      <div class="swipe-stamp swipe-stamp-left"  id="fc-stamp-left">✓ Got It</div>
+      <div class="swipe-stamp swipe-stamp-right" id="fc-stamp-right">📒 Save</div>
       <div class="card" id="flashcard">
         <div class="card-face card-front">
           <div class="word" id="wordDisplay">Loading...</div>
@@ -1012,8 +1043,9 @@
     <button class="btn-nav" onclick="nextCard()">Next &rarr;</button>
   </div>
   <div class="controls" style="margin-top: 10px;">
+    <button class="btn-nav btn-got-it" id="btn-got-it" onclick="markCurrentWordGotIt()">✓ Got It</button>
+    <button class="btn-nav" id="btn-undo-got-it" onclick="undoGotIt()" style="display:none;">↩ Undo</button>
     <button class="btn-nav" id="btn-toggle-notebook" onclick="toggleNotebookForCurrentWord()">📒 Add to Notebook</button>
-    <button class="btn-nav" onclick="openNotebookGroup()">Open Notebook</button>
     <button class="btn-nav" id="btn-toggle-flip" onclick="toggleCardFlip()">🔄 Flip: On</button>
   </div>
   <div id="notebook-status" style="text-align: center; margin-top: 8px; color: var(--text-light); font-weight: 600;"></div>
@@ -1084,10 +1116,25 @@
       <div class="stat-value" id="stat-mastered" style="color: var(--secondary);">0</div>
       <div class="stat-label">Mastered (1hr+)</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card" onclick="openMistakesFlashcards()" style="cursor:pointer;" title="Tap to study your mistakes">
       <div class="stat-value" id="stat-struggling" style="color: var(--danger);">0</div>
-      <div class="stat-label">Struggling</div>
+      <div class="stat-label">My Mistakes 🔴</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-session-mastered" style="color: #ef4444;">0</div>
+      <div class="stat-label">Got It (Session)</div>
+    </div>
+    <div class="stat-card" onclick="showNotebookWordList()" style="cursor:pointer;" title="Tap to view notebook words">
+      <div class="stat-value" id="stat-notebook" style="color: #10b981;">0</div>
+      <div class="stat-label">In Notebook 📋</div>
+    </div>
+  </div>
+  <div class="bottom-search-wrap">
+    <div class="bottom-search-row">
+      <input type="text" id="globalSearchInput" placeholder="Search any word…" onkeydown="if(event.key==='Enter') runGlobalSearch()" />
+      <button type="button" class="btn-nav" onclick="runGlobalSearch()">Search</button>
+    </div>
+    <div id="globalSearchResult" class="lookup-result"></div>
   </div>
 </div>
 
@@ -6195,7 +6242,7 @@
 
   let currentMode = 'flashcard';
   let currentGroupIndex = 'wod'; // Controls the 100-word blocks
-  let fresh50Cache = null;       // Cleared on each group switch to force a new roll
+  let flash100Cache = null;      // Cleared on each group switch to force a new roll
   let fcIndex = 0;
   let cardFlipEnabled = window.innerWidth > 640; // desktop: flip on; mobile: flip off
   let listenToCardEnabled = false; // auto-play audio when a card is shown
@@ -6203,6 +6250,7 @@
   let isGroupWordListOpen = false;
   let flashcardOrderMap = {};
   let selectedGroupWords = new Set();
+  let sessionMasteredWords = new Set(); // words swiped-left (remembered) this session
   let sessionScore = parseInt(localStorage.getItem('vocabScore')) || 0;
   let currentQuizWord = null;
 
@@ -6693,6 +6741,37 @@
     if (fcIndex < 0) fcIndex = 0;
   }
 
+  let _lastGotItWord = null; // for undo
+
+  function markCurrentWordGotIt() {
+    const activePool = getActiveVocab();
+    if (activePool.length === 0) return;
+    const order = getFlashcardOrder(activePool);
+    const item  = activePool[order[fcIndex % order.length]];
+    if (!item) return;
+
+    _lastGotItWord = normalizeWord(item.word);
+    sessionMasteredWords.add(_lastGotItWord);
+    flashcardOrderMap[currentGroupIndex] = null;
+
+    const newPool = getActiveVocab();
+    if (newPool.length > 0) fcIndex = fcIndex % newPool.length;
+
+    document.getElementById('btn-undo-got-it').style.display = '';
+    updateFlashcardUI();
+    if (currentMode === 'dashboard') renderDashboard();
+  }
+
+  function undoGotIt() {
+    if (!_lastGotItWord) return;
+    sessionMasteredWords.delete(_lastGotItWord);
+    _lastGotItWord = null;
+    flashcardOrderMap[currentGroupIndex] = null;
+    document.getElementById('btn-undo-got-it').style.display = 'none';
+    updateFlashcardUI();
+    if (currentMode === 'dashboard') renderDashboard();
+  }
+
   function updateNotebookButtonState() {
     const btn = document.getElementById('btn-toggle-notebook');
     const status = document.getElementById('notebook-status');
@@ -6730,6 +6809,21 @@
     } else {
       updateFlashcardUI();
     }
+  }
+
+  function openMistakesFlashcards() {
+    currentGroupIndex = 'mistakes';
+    selectedGroupWords.clear();
+    sessionMasteredWords.clear();
+    _lastGotItWord = null;
+    document.getElementById('groupSelect').value = 'mistakes';
+    fcIndex = 0;
+    flashcardOrderMap['mistakes'] = null;
+    const undoBtn = document.getElementById('btn-undo-got-it');
+    if (undoBtn) undoBtn.style.display = 'none';
+    updateGroupWordListSummary();
+    if (isGroupWordListOpen) buildGroupWordList();
+    setMode('flashcard', 'tab-flashcard');
   }
 
   function toggleNotebookForCurrentWord() {
@@ -7285,8 +7379,12 @@
   // --- GROUPING LOGIC ---
   function changeGroup() {
     currentGroupIndex = document.getElementById('groupSelect').value;
-    if (currentGroupIndex === 'wod') fresh50Cache = null;
+    if (currentGroupIndex === 'wod') flash100Cache = null;
     selectedGroupWords.clear();
+    sessionMasteredWords.clear();
+    _lastGotItWord = null;
+    const undoBtn = document.getElementById('btn-undo-got-it');
+    if (undoBtn) undoBtn.style.display = 'none';
     fcIndex = 0;
     flashcardOrderMap[currentGroupIndex] = null;
     if (currentMode === 'flashcard') updateFlashcardUI();
@@ -7296,14 +7394,14 @@
     if (isGroupWordListOpen) buildGroupWordList();
   }
 
-  // --- FRESH 25 ---
+  // --- FLASH 100 ---
   function getWordsOfDay() {
-    if (fresh50Cache) return fresh50Cache;
+    if (flash100Cache) return flash100Cache;
 
     let _wodRaw; try { _wodRaw = JSON.parse(localStorage.getItem('vocabWodHistory') || '[]'); } catch(e) { _wodRaw = []; }
     const history = new Set(_wodRaw);
 
-    // Eligible: never shown in Fresh 50 before, OR in notebook, OR has mistakes
+    // Eligible: never shown in Flash 100 before, OR in notebook, OR has mistakes
     // Any one of these signals the word is still unfamiliar
     let eligible = vocabState.filter(item =>
       !history.has(normalizeWord(item.word)) ||
@@ -7312,7 +7410,7 @@
     );
 
     // Pool exhausted (all unseen words gone, nothing in notebook or mistakes) — reset history
-    if (eligible.length < 50) {
+    if (eligible.length < 100) {
       history.clear();
       eligible = vocabState.slice();
     }
@@ -7320,23 +7418,27 @@
     // Absolute fallback: use everything
     if (eligible.length === 0) eligible = vocabState.slice();
 
-    const picked = eligible.slice().sort(() => Math.random() - 0.5).slice(0, 50);
+    const picked = eligible.slice().sort(() => Math.random() - 0.5).slice(0, 100);
     picked.forEach(item => history.add(normalizeWord(item.word)));
     localStorage.setItem('vocabWodHistory', JSON.stringify([...history]));
 
-    fresh50Cache = picked;
+    flash100Cache = picked;
     return picked;
   }
 
   // Helper function that dynamically restricts the vocab deck to the selected block
   function getActiveVocab() {
-    if (currentGroupIndex === 'all') return vocabState;
-    if (currentGroupIndex === 'notebook') return vocabState.filter(item => item.isNotebook);
-    if (currentGroupIndex === 'wod') return getWordsOfDay();
-    if (currentGroupIndex === 'mistakes') return vocabState.filter(item => item.mistakes > 0).sort((a, b) => b.mistakes - a.mistakes);
-    if (currentGroupIndex === 'custom') return vocabState.filter(item => item.isCustom);
-    const start = parseInt(currentGroupIndex) * 300;
-    return vocabState.slice(start, start + 300);
+    let pool;
+    if (currentGroupIndex === 'all') pool = vocabState;
+    else if (currentGroupIndex === 'notebook') pool = vocabState.filter(item => item.isNotebook);
+    else if (currentGroupIndex === 'wod') pool = getWordsOfDay();
+    else if (currentGroupIndex === 'mistakes') pool = vocabState.filter(item => item.mistakes > 0).sort((a, b) => b.mistakes - a.mistakes);
+    else if (currentGroupIndex === 'custom') pool = vocabState.filter(item => item.isCustom);
+    else { const start = parseInt(currentGroupIndex) * 300; pool = vocabState.slice(start, start + 300); }
+    // Filter out words the user has swiped-left (remembered) this session
+    if (sessionMasteredWords.size > 0)
+      pool = pool.filter(item => !sessionMasteredWords.has(normalizeWord(item.word)));
+    return pool;
   }
 
   // --- NAVIGATION ---
@@ -7387,7 +7489,6 @@
 
   document.getElementById('tab-flashcard')?.addEventListener('click', function() { setMode('flashcard', 'tab-flashcard'); });
   document.getElementById('tab-quiz')?.addEventListener('click', function() { setMode('quiz', 'tab-quiz'); });
-  document.getElementById('tab-review')?.addEventListener('click', function() { setMode('review', 'tab-review'); });
   document.getElementById('tab-dashboard')?.addEventListener('click', function() { setMode('dashboard', 'tab-dashboard'); });
   document.getElementById('tab-add')?.addEventListener('click', function() { setMode('add', 'tab-add'); });
   document.getElementById('tab-read')?.addEventListener('click', function() { setMode('read', 'tab-read'); });
@@ -7401,12 +7502,16 @@
     const total = activePool.length;
     const due = activePool.filter(w => w.nextReview <= now).length;
     const mastered = activePool.filter(w => w.interval >= 60).length;
-    const struggling = activePool.filter(w => w.mistakes > 2).length;
+    const struggling = vocabState.filter(w => w.mistakes > 0).length;
+    const sessionMastered = sessionMasteredWords.size;
+    const notebookCount = vocabState.filter(item => item.isNotebook).length;
 
     document.getElementById('stat-total').textContent = total;
     document.getElementById('stat-due').textContent = due;
     document.getElementById('stat-mastered').textContent = mastered;
     document.getElementById('stat-struggling').textContent = struggling;
+    document.getElementById('stat-session-mastered').textContent = sessionMastered;
+    document.getElementById('stat-notebook').textContent = notebookCount;
   }
 
   // --- ADD WORD LOGIC ---
@@ -7499,32 +7604,179 @@
     flashcardElement.classList.toggle('is-flipped');
   });
 
-  // --- SWIPE GESTURE (mobile) ---
-  // Uses touch-action:pan-y on the card so WebKit owns vertical scroll;
-  // never calls preventDefault — safe for iOS PWA standalone mode.
-  let _swipeStartX = 0, _swipeStartY = 0, _swipeStartTime = 0, _didSwipe = false;
+  // --- SWIPE GESTURE (mobile) — Tinder style ---
+  let _didSwipe = false, _swipeDragging = false, _swipeDirLocked = false;
+  let _swipeStartX = 0, _swipeStartY = 0;
+  const _SWIPE_THRESHOLD = 88;
+  const _SWIPE_MAX_ROT   = 20;
+  const _FLY_MS          = 340;
+
+  const _fcWrapper  = document.getElementById('card-wrapper');
+  const _stampLeft  = document.getElementById('fc-stamp-left');   // shown when swiping left  (next)
+  const _stampRight = document.getElementById('fc-stamp-right');  // shown when swiping right (back)
 
   flashcardElement.addEventListener('touchstart', e => {
-    const t = e.changedTouches[0];
-    _swipeStartX = t.clientX;
-    _swipeStartY = t.clientY;
-    _swipeStartTime = Date.now();
-    _didSwipe = false;
+    _swipeStartX    = e.touches[0].clientX;
+    _swipeStartY    = e.touches[0].clientY;
+    _didSwipe       = false;
+    _swipeDragging  = false;
+    _swipeDirLocked = false;
+    _fcWrapper.style.transition  = 'none';
+    _stampLeft.style.opacity     = '0';
+    _stampRight.style.opacity    = '0';
   }, { passive: true });
+
+  flashcardElement.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - _swipeStartX;
+    const dy = e.touches[0].clientY - _swipeStartY;
+
+    if (!_swipeDirLocked) {
+      if (Math.abs(dy) > Math.abs(dx) + 6) return; // vertical dominant — let browser scroll
+      _swipeDirLocked = true;
+      _swipeDragging  = true;
+    }
+    if (!_swipeDragging) return;
+    e.preventDefault();
+
+    const rot   = Math.max(-_SWIPE_MAX_ROT, Math.min(_SWIPE_MAX_ROT, dx * 0.1));
+    const ratio = Math.min(Math.abs(dx) / _SWIPE_THRESHOLD, 1);
+
+    _fcWrapper.style.transform = `translateX(${dx}px) rotate(${rot}deg)`;
+
+    if (dx < 0) {
+      // dragging left → Got It (mastered)
+      _stampLeft.style.opacity   = ratio;
+      _stampRight.style.opacity  = 0;
+      _fcWrapper.style.boxShadow = `0 14px 44px rgba(239,68,68,${(ratio * 0.45).toFixed(2)})`;
+    } else if (dx > 0) {
+      // dragging right → Save to Notebook
+      _stampRight.style.opacity  = ratio;
+      _stampLeft.style.opacity   = 0;
+      _fcWrapper.style.boxShadow = `0 14px 44px rgba(16,185,129,${(ratio * 0.45).toFixed(2)})`;
+    } else {
+      _stampLeft.style.opacity  = 0;
+      _stampRight.style.opacity = 0;
+    }
+  }, { passive: false });
 
   flashcardElement.addEventListener('touchend', e => {
-    const t = e.changedTouches[0];
-    const dx = t.clientX - _swipeStartX;
-    const dy = t.clientY - _swipeStartY;
-    const dt = Date.now() - _swipeStartTime;
+    if (!_swipeDragging) return;
+    _swipeDragging = false;
+    _stampLeft.style.opacity  = '0';
+    _stampRight.style.opacity = '0';
 
-    if (dt > 400 || Math.abs(dy) > Math.abs(dx) || Math.abs(dx) < 40) return;
+    const dx = e.changedTouches[0].clientX - _swipeStartX;
 
-    // Horizontal swipe — set flag so the click listener skips the flip
-    _didSwipe = true;
-    if (dx < 0) nextCard();  // swipe left  → next
-    else         prevCard(); // swipe right → prev
+    if (Math.abs(dx) >= _SWIPE_THRESHOLD) {
+      _didSwipe = true;
+      const dir = dx < 0 ? 'left' : 'right';
+      // Guard: right swipe (notebook) — block if already in notebook or in notebook group
+      if (dir === 'right') {
+        const ap = getActiveVocab();
+        const order = getFlashcardOrder(ap);
+        const item = ap[order[fcIndex % order.length]];
+        if (currentGroupIndex === 'notebook' || (item && item.isNotebook)) {
+          // Snap back with amber flash "Already in Notebook"
+          _fcWrapper.style.transition = 'transform 0.44s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s';
+          _fcWrapper.style.transform  = '';
+          _fcWrapper.style.boxShadow  = '';
+          const stamp = _stampRight;
+          stamp.style.opacity = '1';
+          stamp.style.transition = 'opacity 0.2s';
+          stamp.textContent = '📒 Already Saved';
+          stamp.style.color = '#d97706';
+          stamp.style.borderColor = '#f59e0b';
+          stamp.style.background = 'rgba(254,243,199,0.97)';
+          setTimeout(() => {
+            stamp.style.opacity = '0';
+            setTimeout(() => {
+              stamp.textContent = '📒 Save';
+              stamp.style.color = '';
+              stamp.style.borderColor = '';
+              stamp.style.background = '';
+              stamp.style.transition = '';
+            }, 300);
+          }, 900);
+          return;
+        }
+      }
+      // Tinder fly-out
+      _fcWrapper.style.transition = `transform ${_FLY_MS}ms ease-in, opacity ${_FLY_MS}ms ease-in`;
+      _fcWrapper.style.transform  = dir === 'left' ? 'translateX(-145%) rotate(-24deg)' : 'translateX(145%) rotate(24deg)';
+      _fcWrapper.style.opacity    = '0';
+      setTimeout(() => {
+        _fcWrapper.style.transition = 'none';
+        _fcWrapper.style.transform  = '';
+        _fcWrapper.style.opacity    = '';
+        _fcWrapper.style.boxShadow  = '';
+        _swipeTinderAdvance(dir);
+      }, _FLY_MS);
+    } else {
+      // Snap back with spring
+      _fcWrapper.style.transition  = 'transform 0.44s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s';
+      _fcWrapper.style.transform   = '';
+      _fcWrapper.style.boxShadow   = '';
+    }
   }, { passive: true });
+
+  flashcardElement.addEventListener('touchcancel', () => {
+    if (_swipeDragging) {
+      _fcWrapper.style.transition = 'transform 0.44s cubic-bezier(0.175,0.885,0.32,1.275)';
+      _fcWrapper.style.transform  = '';
+      _fcWrapper.style.boxShadow  = '';
+    }
+    _swipeDragging = false;
+  }, { passive: true });
+
+  function _swipeTinderAdvance(dir) {
+    listenRunId++;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    if (isAutoplaying) stopAutoplay();
+
+    const activePool = getActiveVocab();
+    if (activePool.length === 0) return;
+
+    const order = getFlashcardOrder(activePool);
+    const item  = activePool[order[fcIndex % order.length]];
+
+    if (dir === 'left') {
+      // Mark word as mastered for this session — hide from pool
+      if (item) sessionMasteredWords.add(normalizeWord(item.word));
+      // Invalidate order so it rebuilds with the smaller pool
+      flashcardOrderMap[currentGroupIndex] = null;
+      // Pool shrinks; clamp index and advance
+      const newPool = getActiveVocab();
+      if (newPool.length === 0) {
+        flashcardElement.classList.remove('is-flipped');
+        _applyCardContent();
+        return;
+      }
+      fcIndex = fcIndex % newPool.length;
+    } else {
+      // Right: save to notebook
+      if (item) {
+        item.isNotebook = true;
+        saveState();
+        updateNotebookButtonState();
+      }
+      const newPool = getActiveVocab();
+      if (newPool.length === 0) {
+        flashcardElement.classList.remove('is-flipped');
+        _applyCardContent();
+        return;
+      }
+      fcIndex = (fcIndex + 1) % newPool.length;
+    }
+
+    flashcardElement.classList.remove('is-flipped');
+    _applyCardContent();
+
+    // Slide-in animation for the arriving card
+    const inClass = dir === 'left' ? 'slide-in-right' : 'slide-in-left';
+    void _fcWrapper.offsetWidth; // force reflow to restart animation
+    _fcWrapper.classList.add(inClass);
+    setTimeout(() => _fcWrapper.classList.remove(inClass), 340);
+  }
 
   function _applyCardContent() {
     const activePool = getActiveVocab();
@@ -7886,7 +8138,7 @@
     updateQuizNotebookButtonState();
 
     setTimeout(() => {
-      document.getElementById('quizWordDisplay')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('quiz-mode')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 30);
 
     const activePool = getActiveVocab();
@@ -8321,14 +8573,6 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
 
 </script>
 
-<div class="bottom-search-wrap">
-  <div class="bottom-search-row">
-    <input type="text" id="globalSearchInput" placeholder="Search any word…" onkeydown="if(event.key==='Enter') runGlobalSearch()" />
-    <button type="button" class="btn-nav" onclick="runGlobalSearch()">Search</button>
-  </div>
-  <div id="globalSearchResult" class="lookup-result"></div>
-</div>
-
 <!-- Notebook word list overlay -->
 <div id="notebook-word-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:999; align-items:center; justify-content:center;">
   <div style="background:#fff; border-radius:14px; padding:24px; width:min(480px,92vw); max-height:80vh; display:flex; flex-direction:column; gap:12px; box-shadow:0 8px 32px rgba(0,0,0,.25);">
@@ -8359,10 +8603,6 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     <button class="ios-tab-btn" id="ios-tab-quiz" onclick="setMode('quiz','tab-quiz')">
       <span class="ios-icon">⚡️</span>
       <span class="ios-label">Quiz</span>
-    </button>
-    <button class="ios-tab-btn" id="ios-tab-review" onclick="setMode('review','tab-review')">
-      <span class="ios-icon">🔴</span>
-      <span class="ios-label">Mistakes</span>
     </button>
     <button class="ios-tab-btn" id="ios-tab-dashboard" onclick="setMode('dashboard','tab-dashboard')">
       <span class="ios-icon">📊</span>
