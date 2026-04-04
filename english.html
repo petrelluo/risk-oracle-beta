@@ -557,8 +557,132 @@
     /* Fill-in-blank sentence display */
     .fb-sentence { font-size: 1.1rem; line-height: 1.7; color: var(--text-main); background: white; border-radius: 14px; padding: 22px 18px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 14px; text-align: center; }
     .fb-blank { display: inline-block; min-width: 90px; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: 800; font-style: normal; }
+    /* True or False */
+    .sa-type-badge.truefalse { background: #fef3c7; color: #92400e; }
+    .tf-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .tf-btn { padding: 18px 10px; font-size: 1.2rem; font-weight: 800; border-radius: 14px; border: 2px solid #e5e7eb; background: white; cursor: pointer; transition: all 0.2s; }
+    .tf-btn:hover:not(:disabled) { transform: translateY(-2px); }
+    .tf-btn.true-btn:hover:not(:disabled) { border-color: var(--secondary); background: #d1fae5; color: #065f46; }
+    .tf-btn.false-btn:hover:not(:disabled) { border-color: var(--danger); background: #fee2e2; color: #991b1b; }
+    .tf-btn.correct { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
+    .tf-btn.incorrect { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+    .tf-btn:disabled { cursor: not-allowed; transform: none; }
+    /* Speed Round */
+    .sa-type-badge.speedround { background: #fce7f3; color: #9d174d; }
+    .sr-timer-bar-wrap { background: #e5e7eb; border-radius: 99px; height: 8px; margin-bottom: 14px; overflow: hidden; }
+    .sr-timer-bar { height: 100%; background: var(--primary); border-radius: 99px; transition: width 1s linear; }
+    .sr-timer-bar.low { background: var(--danger); }
+    .sr-timer-num { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+    .sr-timer-num.low { color: var(--danger); }
+    /* Word Matching */
+    .sa-type-badge.matching { background: #ecfdf5; color: #065f46; }
+    .wm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .wm-cell { padding: 11px 10px; border-radius: 10px; border: 2px solid #e5e7eb; background: white; font-size: 0.85rem; font-weight: 600; color: var(--text-main); cursor: pointer; text-align: center; transition: all 0.15s; line-height: 1.3; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+    .wm-cell.word { font-weight: 800; font-size: 0.92rem; color: var(--primary); }
+    .wm-cell:hover:not(.matched):not(.selected) { border-color: var(--primary); background: #f5f3ff; }
+    .wm-cell.selected { border-color: var(--primary); background: #ede9fe; }
+    .wm-cell.matched { border-color: var(--secondary); background: #d1fae5; color: #065f46; cursor: default; }
+    .wm-cell.wrong { border-color: var(--danger); background: #fee2e2; animation: wm-shake 0.3s ease; }
+    @keyframes wm-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+    /* Scrambled Word */
+    .sa-type-badge.scramble { background: #fef9c3; color: #854d0e; }
+    .sc-letters { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 14px 0; }
+    .sc-letter { width: 32px; height: 36px; background: var(--primary); color: white; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
+    /* Streak Challenge */
+    .sa-type-badge.streak { background: #fff7ed; color: #9a3412; }
+    .stk-streak-display { text-align: center; }
+    .stk-streak-num { font-size: 2rem; font-weight: 900; color: var(--primary); line-height: 1; }
+    .stk-streak-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; }
+    .stk-best { font-size: 0.82rem; color: var(--text-light); text-align: right; white-space: nowrap; }
+    /* Memory Match */
+    .sa-type-badge.memory { background: #f0fdf4; color: #14532d; }
+    .mm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+    .mm-card { height: 72px; cursor: pointer; perspective: 600px; }
+    .mm-card-inner { width: 100%; height: 100%; position: relative; transition: transform 0.35s; transform-style: preserve-3d; }
+    .mm-card.flipped .mm-card-inner, .mm-card.matched .mm-card-inner { transform: rotateY(180deg); }
+    .mm-card-front, .mm-card-back { position: absolute; inset: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding: 6px; text-align: center; }
+    .mm-card-front { background: var(--primary); color: white; font-size: 1.4rem; }
+    .mm-card-back { background: white; border: 2px solid #e5e7eb; transform: rotateY(180deg); font-size: 0.7rem; font-weight: 600; color: var(--text-main); line-height: 1.3; overflow: hidden; }
+    .mm-card.word-card .mm-card-back { font-size: 0.88rem; font-weight: 800; color: var(--primary); }
+    .mm-card.matched .mm-card-back { background: #d1fae5; border-color: var(--secondary); color: #065f46; }
+    .mm-flips { font-size: 0.85rem; font-weight: 700; color: var(--text-light); white-space: nowrap; }
+    @media (max-width: 400px) { .mm-grid { grid-template-columns: repeat(3, 1fr); } .mm-card { height: 60px; } }
+    /* First Letter Hint */
+    .sa-type-badge.firstletter { background: #eff6ff; color: #1e3a8a; }
+    .fl-hint { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin: 12px 0; }
+    .fl-hint-ch { min-width: 22px; height: 28px; border-bottom: 2px solid var(--primary); display: flex; align-items: flex-end; justify-content: center; font-weight: 800; font-size: 0.95rem; color: var(--primary); padding-bottom: 2px; }
+    .fl-hint-ch.blank { color: #c4b5fd; }
+    .fl-hint-sp { width: 10px; }
+    /* Blitz Quiz */
+    .sa-type-badge.blitz { background: #fdf2f8; color: #701a75; }
+    .bz-q-timer { height: 6px; background: #e5e7eb; border-radius: 99px; margin-bottom: 14px; overflow: hidden; }
+    .bz-q-timer-bar { height: 100%; background: #a855f7; border-radius: 99px; transition: width 0.1s linear; }
+    .bz-q-timer-bar.low { background: var(--danger); }
+
+    /* New learning exercises CSS */
+    .topic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; margin-bottom:10px; }
+    .topic-sel-card { background:#f5f3ff; border:2px solid #c4b5fd; border-radius:12px; padding:14px 10px; text-align:center; cursor:pointer; transition:all .18s; }
+    .topic-sel-card:hover { border-color:#7c3aed; transform:translateY(-2px); box-shadow:0 4px 12px rgba(124,58,237,.15); }
+    .tc-emoji { font-size:1.6rem; margin-bottom:6px; }
+    .tc-name { font-size:.8rem; font-weight:700; color:#374151; }
+    .tc-cnt { font-size:.72rem; color:#7c3aed; margin-top:3px; }
+    .oo-word-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0; }
+    .oo-word-card { background:#fff; border:2px solid #e5e7eb; border-radius:12px; padding:16px 12px; text-align:center; font-size:.95rem; font-weight:700; cursor:pointer; transition:all .2s; color:#1f2937; }
+    .oo-word-card:hover { border-color:var(--primary); }
+    .oo-word-card.correct { background:#d1fae5; border-color:#10b981; color:#065f46; }
+    .oo-word-card.wrong { background:#fee2e2; border-color:#ef4444; color:#991b1b; }
+    .prefix-chips { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+    .prefix-chip { background:#ede9fe; border-radius:8px; padding:5px 11px; font-size:.8rem; font-weight:700; color:#5b21b6; cursor:pointer; transition:all .15s; border:2px solid transparent; }
+    .prefix-chip.active { background:#7c3aed; color:#fff; border-color:#5b21b6; }
+    .prefix-word-list { display:flex; flex-direction:column; gap:8px; max-height:380px; overflow-y:auto; }
+    .prefix-word-item { background:#fff; border:1.5px solid #e5e7eb; border-radius:10px; padding:10px 14px; }
+    .prefix-word-item .pw-word { font-size:.9rem; font-weight:700; color:#1f2937; }
+    .prefix-word-item .pw-def { font-size:.78rem; color:#6b7280; margin-top:2px; }
+    .diff-tier-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:360px; margin:0 auto 20px; }
+    .diff-tier-card { border-radius:14px; padding:20px 14px; text-align:center; cursor:pointer; border:2px solid transparent; transition:all .18s; }
+    .diff-tier-card:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.12); }
+    .dt-emoji { font-size:1.8rem; margin-bottom:6px; }
+    .dt-name { font-weight:800; font-size:.95rem; margin-bottom:4px; }
+    .dt-cnt { font-size:.75rem; opacity:.8; }
 
     .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+    /* Word Insights overlay */
+    #vocab-insights-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1000; align-items:flex-start; justify-content:center; overflow-y:auto; padding:20px 0 40px; }
+    #vocab-insights-overlay.open { display:flex !important; }
+    .ins-modal { background:#fff; border-radius:18px; width:min(620px,96vw); max-width:100%; box-shadow:0 12px 48px rgba(0,0,0,.3); overflow:hidden; }
+    .ins-header { background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; padding:22px 24px 18px; }
+    .ins-header h2 { margin:0 0 4px; font-size:1.25rem; }
+    .ins-header p { margin:0; font-size:.85rem; opacity:.85; }
+    .ins-body { padding:20px 22px; display:flex; flex-direction:column; gap:20px; }
+    .ins-section h3 { font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:#6b7280; margin:0 0 10px; }
+    .ins-hero-row { display:flex; gap:10px; flex-wrap:wrap; }
+    .ins-hero-chip { flex:1; min-width:100px; background:#f5f3ff; border-radius:12px; padding:12px 10px; text-align:center; }
+    .ins-big-num { font-size:1.8rem; font-weight:800; color:#7c3aed; line-height:1; }
+    .ins-hero-chip small { font-size:.72rem; color:#6b7280; display:block; margin-top:3px; }
+    .ins-topic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+    .ins-topic-chip { background:#f9fafb; border:1.5px solid #e5e7eb; border-radius:10px; padding:8px 10px; display:flex; align-items:center; justify-content:space-between; gap:6px; }
+    .ins-topic-chip .tc-label { font-size:.78rem; color:#374151; }
+    .ins-topic-chip .tc-count { font-size:.78rem; font-weight:700; color:#7c3aed; background:#ede9fe; border-radius:6px; padding:1px 6px; }
+    .ins-diff-row { display:flex; gap:8px; align-items:center; margin-bottom:6px; }
+    .ins-diff-label { font-size:.78rem; color:#374151; width:70px; flex-shrink:0; }
+    .ins-diff-bar-wrap { flex:1; background:#f3f4f6; border-radius:99px; height:10px; overflow:hidden; }
+    .ins-diff-bar-fill { height:100%; border-radius:99px; transition:width .4s; }
+    .ins-diff-count { font-size:.75rem; color:#6b7280; width:36px; text-align:right; flex-shrink:0; }
+    .ins-letter-row { display:flex; gap:4px; align-items:flex-end; height:48px; }
+    .ins-letter-col { display:flex; flex-direction:column; align-items:center; flex:1; }
+    .ins-letter-bar { width:100%; border-radius:3px 3px 0 0; background:#7c3aed; min-height:2px; }
+    .ins-letter-label { font-size:.6rem; color:#6b7280; margin-top:2px; }
+    .ins-facts-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .ins-fact-card { background:#f5f3ff; border-radius:10px; padding:10px 12px; }
+    .ins-fact-card .fc-title { font-size:.7rem; color:#7c3aed; font-weight:700; text-transform:uppercase; margin-bottom:4px; }
+    .ins-fact-card .fc-val { font-size:.85rem; color:#1f2937; font-weight:600; word-break:break-word; }
+    .ins-fact-card .fc-sub { font-size:.72rem; color:#6b7280; margin-top:2px; }
+    .ins-prog-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .ins-prog-label { font-size:.78rem; color:#374151; flex:1; }
+    .ins-prog-bar-wrap { width:120px; background:#f3f4f6; border-radius:99px; height:8px; flex-shrink:0; overflow:hidden; }
+    .ins-prog-bar-fill { height:100%; border-radius:99px; }
+    .ins-prog-pct { font-size:.72rem; color:#6b7280; width:30px; text-align:right; flex-shrink:0; }
 
     /* Forms & Dashboard CSS */
     .form-group { margin-bottom: 15px; }
@@ -1164,6 +1288,10 @@
     <div class="stat-card" onclick="showNotebookWordList()" style="cursor:pointer;" title="Tap to view notebook words">
       <div class="stat-value" id="stat-notebook" style="color: #10b981;">0</div>
       <div class="stat-label">In Notebook 📋</div>
+    </div>
+    <div class="stat-card" onclick="showVocabInsights()" style="cursor:pointer;" title="Tap to explore your vocabulary collection">
+      <div class="stat-value" style="color:#7c3aed;">📚</div>
+      <div class="stat-label">Word Insights</div>
     </div>
   </div>
   <div class="bottom-search-wrap">
@@ -7016,6 +7144,281 @@
     { word: "salami", definition: "A type of cured sausage, typically made from pork or beef, seasoned with salt and spices and sliced thinly.", examples: ["She built a charcuterie board with aged salami, sharp cheddar, olives, and crackers for the guests."] },
     { word: "scarecrow", definition: "A figure made to resemble a person, set up in fields to frighten birds away from crops.", examples: ["The farmer dressed up a scarecrow in an old coat and hat and placed it among the rows of corn."] },
     { word: "have a low opinion of (something)", definition: "To think poorly of someone or something; to consider it inferior, unworthy, or untrustworthy.", examples: ["She has always had a low opinion of reality television, refusing to watch any of it."] },
+    { word: "Lay waste to", definition: "To completely destroy or devastate something.", examples: ["The invading army laid waste to every village in its path."] },
+    { word: "in one's debt", definition: "Feeling obligated to someone because they have done something helpful for you.", examples: ["After she saved his career, he felt deeply in her debt."] },
+    { word: "hang by a thread", definition: "To be in a very precarious or uncertain situation where failure or disaster is very close.", examples: ["The peace negotiations were hanging by a thread after the latest incident."] },
+    { word: "sink or swim", definition: "To either succeed through one's own efforts or fail completely, with no outside help.", examples: ["The new recruits were thrown into the project with a sink-or-swim attitude."] },
+    { word: "glibly", definition: "In a way that is fluent and easy but often lacking in depth or sincerity.", examples: ["He glibly promised to fix all the problems without understanding how serious they were."] },
+    { word: "mend the fences", definition: "To repair a damaged relationship or resolve a disagreement with someone.", examples: ["After their argument, she called her brother to mend the fences."] },
+    { word: "line of authority", definition: "The chain of command or hierarchy through which power and responsibility flow in an organization.", examples: ["All budget requests must go through the proper line of authority before approval."] },
+    { word: "carved in stone", definition: "Fixed and unchangeable; not open to modification.", examples: ["The schedule is not carved in stone, so we can adjust it if needed."] },
+    { word: "make one's head spin", definition: "To cause someone to feel confused, overwhelmed, or dizzy from complexity or shock.", examples: ["The sheer number of regulations made her head spin."] },
+    { word: "gnarly", definition: "Something extremely difficult, unpleasant, or complicated; also used informally to mean impressively cool.", examples: ["That was a gnarly wipeout on the skateboard ramp."] },
+    { word: "put up your dukes", definition: "To raise your fists in preparation for a fight.", examples: ["The two rivals squared off in the alley, both ready to put up their dukes."] },
+    { word: "meet one's maker", definition: "To die.", examples: ["The old cowboy knew he would soon meet his maker."] },
+    { word: "rendition", definition: "A performance or interpretation of a piece of music, a role, or another work.", examples: ["Her rendition of the national anthem brought tears to the crowd's eyes."] },
+    { word: "jaywalking", definition: "The act of crossing a street illegally or at an unmarked or undesignated crossing point.", examples: ["He got a fine for jaywalking in the middle of the busy downtown block."] },
+    { word: "stretch a dollar", definition: "To make money last as long as possible by spending it carefully.", examples: ["Living on a tight budget, she learned how to stretch a dollar at the grocery store."] },
+    { word: "string along", definition: "To mislead someone by giving them false hope or keeping them waiting indefinitely.", examples: ["He strung her along for months before admitting he was not interested in the job offer."] },
+    { word: "on its feet", definition: "In a stable, functioning, or recovered condition.", examples: ["After two difficult years, the business was finally back on its feet."] },
+    { word: "baloney", definition: "Nonsense; something that is foolish, untrue, or absurd.", examples: ["That excuse about missing the meeting is complete baloney."] },
+    { word: "kiss-and-tell", definition: "Describing someone who publicly reveals private or intimate details of a relationship.", examples: ["The tabloids paid well for her kiss-and-tell story about the celebrity."] },
+    { word: "medallion", definition: "A large medal or circular decorative piece, often worn as jewelry or given as an award.", examples: ["The champion wore a gold medallion around his neck during the ceremony."] },
+    { word: "haul ass", definition: "To move very quickly; to hurry.", examples: ["We need to haul ass if we want to catch the last train."] },
+    { word: "barter", definition: "To exchange goods or services without using money.", examples: ["In the small village, people would barter vegetables for handmade tools."] },
+    { word: "meringue", definition: "A light, sweet mixture of beaten egg whites and sugar, used as a topping for pies or baked into crisp shells.", examples: ["She topped the lemon pie with a fluffy layer of golden meringue."] },
+    { word: "blouse", definition: "A loose, lightweight shirt typically worn by women.", examples: ["She tucked her silk blouse neatly into her skirt before the presentation."] },
+    { word: "jaunty", definition: "Having a lively, cheerful, and self-confident manner or appearance.", examples: ["He walked into the room with a jaunty smile and his hat tilted to one side."] },
+    { word: "big-hearted", definition: "Generous, kind, and caring toward others.", examples: ["She was so big-hearted that she donated half her bonus to the local shelter."] },
+    { word: "humdinger", definition: "Something or someone remarkably impressive or excellent.", examples: ["That last performance was a real humdinger — the audience gave a standing ovation."] },
+    { word: "of all stripes", definition: "Of every kind, type, or variety.", examples: ["The festival attracted artists of all stripes, from painters to musicians to poets."] },
+    { word: "iconoclast", definition: "A person who challenges or attacks established beliefs, customs, or institutions.", examples: ["The young philosopher was an iconoclast who questioned every tradition the university held sacred."] },
+    { word: "satanist", definition: "A person who practices or follows Satanism, a belief system that may involve worship of or identification with Satan.", examples: ["The documentary explored the beliefs and practices of a self-identified satanist."] },
+    { word: "theistic", definition: "Relating to or characterized by belief in the existence of a god or gods.", examples: ["Her theistic worldview shaped how she approached questions of morality and purpose."] },
+    { word: "outright", definition: "Completely and without qualification; totally.", examples: ["The committee rejected the proposal outright without any discussion."] },
+    { word: "apportion", definition: "To divide and distribute something among a number of recipients according to a plan or principle.", examples: ["The funds were apportioned equally among the three departments."] },
+    { word: "pander", definition: "To provide someone with whatever they want, often in a way that is considered morally questionable, in order to gain their approval.", examples: ["The politician was accused of pandering to voters rather than offering real solutions."] },
+    { word: "breadings", definition: "Coatings of breadcrumbs applied to food before frying or baking.", examples: ["The chef experimented with different breadings, mixing herbs into the crumb coating."] },
+    { word: "gunk", definition: "An unpleasantly sticky, messy, or dirty substance.", examples: ["There was a layer of gunk clogging the drain in the kitchen sink."] },
+    { word: "pop a squat", definition: "To sit down somewhere, often informally or on the ground.", examples: ["There are no chairs, so just pop a squat on the floor and we'll get started."] },
+    { word: "orgy", definition: "A wild gathering characterized by excessive indulgence, typically in sexual activity or other pleasures.", examples: ["The scandal involved a secret orgy attended by several prominent officials."] },
+    { word: "go from rags to riches", definition: "To rise from poverty to great wealth.", examples: ["Her story of going from rags to riches inspired millions around the world."] },
+    { word: "have a sticky finger", definition: "To have a tendency to steal things.", examples: ["The store manager suspected one of the employees had a sticky finger after cash kept going missing."] },
+    { word: "give a run for one's money", definition: "To provide strong competition or a serious challenge to someone.", examples: ["The underdog team gave the champions a real run for their money in the final."] },
+    { word: "to be closefisted", definition: "To be very reluctant to spend money; stingy.", examples: ["He was so closefisted that he refused to tip even when the service was excellent."] },
+    { word: "Midas touch", definition: "The ability to make everything one does profitable or successful.", examples: ["The investor seemed to have the Midas touch, turning every struggling startup into a success."] },
+    { word: "packed like sardines", definition: "Crowded very tightly together in a small space.", examples: ["The commuters on the subway were packed like sardines during rush hour."] },
+    { word: "buy a lemon", definition: "To purchase something, especially a car, that turns out to be defective or of poor quality.", examples: ["He realized he had bought a lemon when the car broke down on his first drive home."] },
+    { word: "a hard nut to crack", definition: "A person or problem that is very difficult to deal with or understand.", examples: ["The encryption algorithm proved to be a hard nut to crack for the security researchers."] },
+    { word: "calm before the storm", definition: "A period of quiet or stability that precedes a time of great activity or trouble.", examples: ["The eerie silence in the office felt like the calm before the storm of the upcoming audit."] },
+    { word: "when it rains, it pours", definition: "When one thing goes wrong, many other things tend to go wrong at the same time.", examples: ["First the car broke down, then the furnace quit — when it rains, it pours."] },
+    { word: "chase rainbows", definition: "To pursue unrealistic or unattainable goals.", examples: ["His family worried he was chasing rainbows by trying to become a movie star without any experience."] },
+    { word: "every cloud has a silver lining", definition: "Every difficult or negative situation has some positive aspect or hopeful element.", examples: ["Losing the job was hard, but it pushed her to start her own company — every cloud has a silver lining."] },
+    { word: "pour oil on troubled waters", definition: "To try to calm a conflict or difficult situation with soothing words or actions.", examples: ["The manager poured oil on troubled waters by listening to both sides before making any decision."] },
+    { word: "sail close to the wind", definition: "To act in a way that is dangerously close to breaking rules or the limits of what is acceptable.", examples: ["The journalist was sailing close to the wind by publishing unverified allegations."] },
+    { word: "walk on air", definition: "To feel extremely happy and elated.", examples: ["After getting the promotion, she was walking on air for the rest of the week."] },
+    { word: "castle in the sky", definition: "An unrealistic dream or fantasy that is unlikely to come true.", examples: ["His plan to retire at thirty on a small salary was nothing but a castle in the sky."] },
+    { word: "salt of the earth", definition: "A person or people of great kindness, honesty, and reliability.", examples: ["The volunteers who show up every week at the food bank are truly the salt of the earth."] },
+    { word: "sell ice to Eskimos", definition: "To be so persuasive that one can convince people to buy things they do not need.", examples: ["He was such a talented salesperson that he could sell ice to Eskimos."] },
+    { word: "clear as mud", definition: "Not clear at all; very confusing or hard to understand.", examples: ["The instructions in the manual were clear as mud, so she called customer support."] },
+    { word: "as cold as stone", definition: "Completely cold in temperature, or emotionally cold and unfeeling.", examples: ["By the time the paramedics arrived, the victim was as cold as stone."] },
+    { word: "hold out an olive branch", definition: "To make a gesture of peace, reconciliation, or goodwill toward an opponent or enemy.", examples: ["After months of conflict, the CEO held out an olive branch by inviting the union leaders to dinner."] },
+    { word: "scurry", definition: "To move hurriedly with short, quick steps.", examples: ["The mice scurried across the kitchen floor when the light was turned on."] },
+    { word: "musty", definition: "Having a stale, damp, or moldy smell, usually from age or lack of ventilation.", examples: ["The old library had a musty smell that reminded her of rainy afternoons as a child."] },
+    { word: "in point of fact", definition: "Used to introduce a statement that corrects or emphasizes the truth of a matter; actually.", examples: ["In point of fact, the report was submitted two days before the deadline."] },
+    { word: "raunchy", definition: "Crude, explicit, or earthy in a sexually suggestive or offensive way.", examples: ["The comedian's raunchy jokes made some audience members uncomfortable."] },
+    { word: "flair", definition: "A natural talent or stylish elegance in doing something.", examples: ["She had a real flair for interior design, transforming even the dullest rooms into beautiful spaces."] },
+    { word: "carcass", definition: "The dead body of an animal, or the remains of something after its useful parts have been removed.", examples: ["Vultures circled above the carcass of the wildebeest on the open plain."] },
+    { word: "emasculate", definition: "To deprive a man of his sense of power, authority, or masculinity; to weaken something significantly.", examples: ["The new policy effectively emasculated the manager's ability to make independent decisions."] },
+    { word: "grow a pair", definition: "A vulgar idiom urging someone to be braver or more assertive.", examples: ["His coach told him to grow a pair and stop hesitating before every shot."] },
+    { word: "banged up", definition: "Injured or damaged, often from an accident or rough treatment.", examples: ["He came home from the hockey game looking pretty banged up."] },
+    { word: "inquisitive", definition: "Curious and eager to learn or investigate.", examples: ["The inquisitive child asked her teacher a dozen questions before class even started."] },
+    { word: "blow one's wad", definition: "To spend or use up all of one's money or resources at once.", examples: ["He blew his wad at the casino on the first night of the trip."] },
+    { word: "claw back", definition: "To regain something, especially money or power, with great effort or through official action.", examples: ["The government introduced legislation to claw back bonuses paid to executives of bailed-out banks."] },
+    { word: "dildo", definition: "A sex toy shaped like a penis, used for sexual stimulation.", examples: ["The comedy sketch caused controversy when a dildo was used as a prop."] },
+    { word: "at arm's length", definition: "At a distance, especially to avoid becoming too close or involved with someone or something.", examples: ["She kept her new colleagues at arm's length until she felt she could trust them."] },
+    { word: "deep seated", definition: "Firmly established and difficult to change; ingrained.", examples: ["His deep seated fear of abandonment affected all of his relationships."] },
+    { word: "point of reference", definition: "A fact, place, or experience that can be used to help understand or evaluate something.", examples: ["The original design served as the key point of reference throughout the renovation project."] },
+    { word: "lurch", definition: "To make a sudden, unsteady, or staggering movement; or a situation of difficulty and abandonment.", examples: ["The bus lurched forward as the driver hit the brakes too hard."] },
+    { word: "straggler", definition: "A person who falls behind or arrives later than the rest of a group.", examples: ["The teacher waited at the museum entrance for the last few stragglers from the class."] },
+    { word: "alma mater", definition: "The school, college, or university that a person formerly attended.", examples: ["She donated generously to her alma mater every year in gratitude for her scholarship."] },
+    { word: "take my word for it", definition: "To trust what someone says without requiring proof.", examples: ["Take my word for it — that restaurant has the best pasta in the city."] },
+    { word: "skunky", definition: "Having an unpleasant smell resembling that of a skunk; also used to describe stale or spoiled beer.", examples: ["The beer had been left in the sun too long and tasted completely skunky."] },
+    { word: "remittance", definition: "A sum of money sent, especially from abroad, as payment or financial support.", examples: ["She sent a monthly remittance to her family back home to help cover their living expenses."] },
+    { word: "gridlock", definition: "A severe traffic jam in which vehicles cannot move in any direction; also used for any situation where progress is completely blocked.", examples: ["An overturned truck on the highway caused gridlock throughout the entire city center."] },
+    { word: "dregs", definition: "The last remnants of something, especially the sediment at the bottom of a liquid; or the lowest and most worthless part of something.", examples: ["He drained the last dregs of coffee from the pot before anyone else arrived."] },
+    { word: "out of the hole", definition: "Free from debt or a difficult situation.", examples: ["After years of careful budgeting, they finally climbed out of the hole and paid off their loans."] },
+    { word: "kinematics", definition: "The branch of physics that studies the motion of objects without considering the forces that cause the motion.", examples: ["The engineering students studied kinematics to understand how robot arms move through space."] },
+    { word: "kock one's light out", definition: "To knock someone unconscious or defeat them decisively.", examples: ["The boxer knocked his opponent's lights out in the third round."] },
+    { word: "screech", definition: "To make a loud, harsh, high-pitched cry or sound.", examples: ["The car's brakes let out a terrible screech as it skidded to a stop."] },
+    { word: "revolting", definition: "Causing a strong feeling of disgust or repulsion.", examples: ["The smell coming from the dumpster on a hot summer day was absolutely revolting."] },
+    { word: "diaphanous", definition: "Light, delicate, and translucent, especially referring to fabric.", examples: ["She wore a diaphanous white gown that floated behind her as she walked."] },
+    { word: "absolutist", definition: "A person who holds or advocates the principle that rulers or governments should have unlimited power, or that a belief or principle should be followed without exception.", examples: ["The absolutist king tolerated no opposition to his decrees."] },
+    { word: "on the heels", definition: "Following very closely or immediately after something.", examples: ["A second scandal broke on the heels of the first, deepening the crisis for the administration."] },
+    { word: "sprout", definition: "To begin to grow, develop, or emerge; also a young plant shoot.", examples: ["Small green sprouts had begun to push through the soil after just a few days of warm weather."] },
+    { word: "beside oneself", definition: "In a state of extreme agitation, distress, or excitement.", examples: ["She was beside herself with joy when she heard she had been accepted to her dream university."] },
+    { word: "pretense", definition: "An act of pretending or a false display intended to deceive.", examples: ["He kept up the pretense of being busy whenever he wanted to avoid difficult conversations."] },
+    { word: "scattershot", definition: "Covering a wide and random range of things without focus or precision.", examples: ["The marketing campaign was criticized for being scattershot rather than targeting a specific audience."] },
+    { word: "murmur", definition: "A soft, low, continuous sound, or to speak in a low, barely audible voice.", examples: ["She leaned over and murmured a warning into his ear without the others noticing."] },
+    { word: "low-slung", definition: "Positioned close to the ground, especially describing a vehicle or building with a low profile.", examples: ["The low-slung sports car hugged every curve of the mountain road."] },
+    { word: "in heat", definition: "Describing a female animal that is in a period of reproductive readiness and sexual receptivity.", examples: ["The dog was restless and vocal because she was in heat."] },
+    { word: "fractious", definition: "Easily irritated and quarrelsome; tending to cause trouble.", examples: ["The fractious toddler refused to nap and screamed throughout the entire car ride."] },
+    { word: "disquiet", definition: "A feeling of anxiety or unease; to make someone feel anxious or uneasy.", examples: ["There was a growing sense of disquiet among the staff about the company's future."] },
+    { word: "miss the mark", definition: "To fail to achieve the intended result or goal.", examples: ["The new product launch missed the mark because it did not address what customers actually wanted."] },
+    { word: "good sport", definition: "A person who accepts defeat, difficulty, or teasing with grace and good humor.", examples: ["Even though he lost the game, he shook everyone's hand and proved he was a good sport."] },
+    { word: "powder one's nose", definition: "A polite euphemism for going to the bathroom, used especially by women.", examples: ["She excused herself from the table, saying she needed to go powder her nose."] },
+    { word: "dollars to donuts", definition: "Used to express certainty or strong confidence that something is true.", examples: ["Dollars to donuts, he will show up late to the meeting again."] },
+    { word: "poached", definition: "Cooked gently in simmering liquid; also refers to something stolen or acquired illegally.", examples: ["The rival company poached three of their top engineers with offers of higher salaries."] },
+    { word: "keel", definition: "The longitudinal structure running along the center bottom of a boat or ship; also used in the phrase 'keel over' meaning to fall over suddenly.", examples: ["The old man keeled over from the heat after standing in the sun for too long."] },
+    { word: "lop off", definition: "To cut off a branch, limb, or piece of something with a sharp tool.", examples: ["The gardener lopped off the dead branches to help the tree grow back healthier."] },
+    { word: "crow's foot", definition: "A small wrinkle at the outer corner of a person's eye, typically developing with age.", examples: ["She noticed the first crow's foot forming at the corner of her eye when she smiled."] },
+    { word: "oligarch", definition: "A very wealthy and politically influential person, especially one in a country where power is held by a small group of such individuals.", examples: ["The Russian oligarch purchased a luxury yacht and a mansion in London."] },
+    { word: "mother's milk", definition: "Something that is a natural or fundamental part of a person's life or upbringing; something one is entirely comfortable or familiar with.", examples: ["Politics was mother's milk to him — he grew up attending rallies with his senator father."] },
+    { word: "demean", definition: "To cause someone to lose dignity and the respect of others; to lower someone's status.", examples: ["The supervisor's sarcastic comments in front of the team demeaned the employee publicly."] },
+    { word: "at cross purposes", definition: "Having conflicting goals or misunderstanding each other's intentions, resulting in counterproductive actions.", examples: ["The two departments were working at cross purposes, each undoing the other's progress."] },
+    { word: "Herculean", definition: "Requiring extraordinary strength or effort; enormously difficult.", examples: ["Finishing the entire marathon after an injury was a truly Herculean feat."] },
+    { word: "vignette", definition: "A short, evocative piece of writing, a scene, or an illustration that captures a particular moment or character.", examples: ["The novel was composed of a series of vivid vignettes from the protagonist's childhood."] },
+    { word: "ostracism", definition: "The exclusion of a person from a group or society by general consent.", examples: ["After the scandal, he faced social ostracism and could no longer attend community events."] },
+    { word: "shap-elbowed", definition: "Aggressively pushing one's way forward using sharp elbows; ruthlessly ambitious.", examples: ["She was sharp-elbowed in her pursuit of the promotion, never hesitating to outmaneuver her rivals."] },
+    { word: "epithet", definition: "A word or phrase used to describe a person or thing, often expressing a characteristic quality, and sometimes used as an insult.", examples: ["The crowd hurled epithets at the referee after a controversial call."] },
+    { word: "reprisal", definition: "An act of retaliation taken against an enemy or opponent in response to a harmful action.", examples: ["The soldiers feared reprisals from the local population after the raid."] },
+    { word: "solider on", definition: "To continue doing something despite difficulties or opposition; to persevere.", examples: ["Despite the setbacks, the team decided to soldier on and complete the project."] },
+    { word: "fiduciary", definition: "Relating to the legal and ethical duty to act in the best interest of another party, especially regarding financial matters.", examples: ["As a financial advisor, she had a fiduciary responsibility to put her clients' interests first."] },
+    { word: "brandish", definition: "To wave or flourish something, especially a weapon, as a threat or in excitement.", examples: ["The robber brandished a knife as he demanded the cashier hand over the money."] },
+    { word: "traipse", definition: "To walk or move wearily or reluctantly from place to place.", examples: ["She spent the afternoon traipsing through the mall looking for a birthday gift."] },
+    { word: "anst", definition: "A feeling of deep anxiety, apprehension, or dread, often without a specific cause; the standard spelling is 'angst'.", examples: ["The teenager's journal was filled with anst about fitting in and finding his place in the world."] },
+    { word: "grammarian", definition: "A person who studies or is an expert in grammar.", examples: ["The grammarian winced every time someone used 'literally' as an intensifier."] },
+    { word: "excursion", definition: "A short journey or trip, especially one taken for leisure or education.", examples: ["The class went on a day excursion to the natural history museum."] },
+    { word: "deity", definition: "A god or goddess in a religion or mythology.", examples: ["The ancient Greeks offered sacrifices to the deity Athena before major battles."] },
+    { word: "braggadocio", definition: "Boastful or arrogant behavior; empty boasting.", examples: ["His braggadocio in the locker room irritated his teammates, who found his constant boasting exhausting."] },
+    { word: "scythe", definition: "A long-handled farming tool with a curved blade, used for cutting grass or grain; also associated with the figure of Death.", examples: ["The farmer swung his scythe in wide arcs to clear the tall wheat."] },
+    { word: "legerdemain", definition: "Skillful use of one's hands to perform conjuring tricks or deceive; trickery or deception.", examples: ["The magician dazzled the audience with breathtaking legerdemain."] },
+    { word: "hand in glove", definition: "Working very closely together, often in a secret or conspiratorial way.", examples: ["The corrupt official was working hand in glove with the contractors to rig the bids."] },
+    { word: "dialogic", definition: "Relating to or characterized by dialogue; involving an exchange of ideas or perspectives.", examples: ["The professor favored a dialogic teaching style, encouraging students to challenge and discuss every idea."] },
+    { word: "gurgly", definition: "Making a gurgling or bubbling sound.", examples: ["The baby made gurgly sounds of contentment after being fed."] },
+    { word: "sleuth", definition: "A detective or investigator; to carry out a search or investigation.", examples: ["The amateur sleuth pieced together clues that the police had overlooked."] },
+    { word: "sound bite", definition: "A short, memorable excerpt from a speech or statement, especially one chosen for broadcast in news media.", examples: ["The candidate's speech was full of catchy sound bites designed to dominate the evening news."] },
+    { word: "dainty", definition: "Delicately small and pretty; or (of a person) very careful about food and cleanliness.", examples: ["She set out a plate of dainty little sandwiches for the afternoon tea."] },
+    { word: "emblazon", definition: "To decorate something prominently with a design, name, or slogan.", examples: ["The team's logo was emblazoned across the front of every jersey."] },
+    { word: "There's a method to his madness", definition: "A saying meaning that even though someone's actions or ideas seem crazy or illogical, there is actually a sensible plan behind them.", examples: ["His chaotic desk confused everyone, but there's a method to his madness — he always finds what he needs instantly."] },
+    { word: "you can't you your cake and eat it too", definition: "A proverb meaning you cannot enjoy two incompatible things at the same time; you must choose one or the other.", examples: ["You want a high salary but also total freedom — you can't have your cake and eat it too."] },
+    { word: "polyglot", definition: "A person who speaks or writes several languages fluently.", examples: ["The polyglot charmed locals effortlessly as she traveled through six countries."] },
+    { word: "baguette", definition: "A long, thin loaf of French bread with a crispy crust.", examples: ["He tucked a baguette under his arm on his way home from the bakery."] },
+    { word: "trite", definition: "Overused and lacking originality or freshness.", examples: ["The speech was full of trite phrases that the audience had heard a hundred times before."] },
+    { word: "purvey", definition: "To supply or provide food, goods, or information, especially as a business.", examples: ["The deli has purveyed fine cheeses and cured meats to the neighborhood for decades."] },
+    { word: "bevy", definition: "A large group of people or things of a particular kind.", examples: ["A bevy of reporters surrounded the celebrity as she exited the theater."] },
+    { word: "expediency", definition: "The practice of doing what is convenient and practical rather than what is morally right.", examples: ["The politician chose expediency over principle by avoiding the controversial question."] },
+    { word: "garnish", definition: "To decorate or embellish food or a drink with a small additional item.", examples: ["She garnished the cocktail with a slice of orange and a sprig of mint."] },
+    { word: "informance", definition: "A hybrid performance that combines information sharing with dramatic or artistic presentation.", examples: ["The theater company staged an informance to teach children about climate change through storytelling."] },
+    { word: "conversant", definition: "Familiar with or knowledgeable about something.", examples: ["She was conversant with the latest developments in artificial intelligence."] },
+    { word: "atrophied", definition: "Wasted away or deteriorated through lack of use or nourishment.", examples: ["His muscles had atrophied after months of bed rest following the accident."] },
+    { word: "wadded up", definition: "Crumpled or compressed into a tight, irregular ball.", examples: ["He found a wadded up receipt at the bottom of his jacket pocket."] },
+    { word: "as luck would have it", definition: "Used to indicate that something happened by chance, for better or worse.", examples: ["As luck would have it, she arrived at the station just as the last train was pulling in."] },
+    { word: "by dint of", definition: "By means of; through the use of.", examples: ["By dint of sheer determination, he finished the marathon despite his injured knee."] },
+    { word: "go under the wrecking ball", definition: "To be demolished or destroyed, typically said of a building.", examples: ["The old cinema went under the wrecking ball to make way for a new shopping center."] },
+    { word: "twirl", definition: "To spin or rotate quickly and lightly.", examples: ["She twirled across the dance floor, her skirt fanning out around her."] },
+    { word: "aerosol", definition: "A substance sealed in a pressurized container and dispersed as a fine spray.", examples: ["He reached for an aerosol can of insect repellent before heading into the woods."] },
+    { word: "legume", definition: "A plant whose seeds grow in pods, such as beans, lentils, or peas, often valued as a protein-rich food.", examples: ["Lentils are a legume packed with protein and fiber, making them a staple in vegetarian cooking."] },
+    { word: "have broad shoulders", definition: "To be able to bear a great deal of responsibility, criticism, or pressure without being overwhelmed.", examples: ["As team leader, you need to have broad shoulders and absorb the blame when things go wrong."] },
+    { word: "lay it on someone", definition: "To tell someone something difficult, unpleasant, or surprising directly.", examples: ["She sat him down and laid it on him — the project had been cancelled entirely."] },
+    { word: "uptake", definition: "The process of absorbing or making use of something, or the ability to understand quickly.", examples: ["He was quick on the uptake and grasped the new software within the first hour."] },
+    { word: "matinee", definition: "An afternoon performance of a play, film, or other show.", examples: ["They caught the Saturday matinee to avoid the crowded evening showing."] },
+    { word: "knock someone off their feet", definition: "To overwhelm or impress someone greatly.", examples: ["Her debut performance knocked the audience off their feet and earned a standing ovation."] },
+    { word: "under one's nose", definition: "Directly in front of someone; in an obvious place that is nonetheless overlooked.", examples: ["The missing keys had been sitting under his nose on the kitchen counter the whole time."] },
+    { word: "keep abreast of", definition: "To stay informed and up to date with developments in a particular area.", examples: ["She reads the news every morning to keep abreast of current events."] },
+    { word: "moose", definition: "The largest member of the deer family, native to North America and northern Eurasia, known for its large antlers.", examples: ["A massive moose stepped out of the treeline and crossed the road in front of their car."] },
+    { word: "tupperware", definition: "A brand of airtight plastic containers used for storing food, often used generically to refer to any such container.", examples: ["She packed her lunch in a tupperware container and headed off to work."] },
+    { word: "nose-bleed", definition: "A bleeding from the inside of the nose, or informally used to describe something extremely high up or expensive.", examples: ["He got a nosebleed from the dry winter air and had to pinch his nose for several minutes."] },
+    { word: "lay down the law", definition: "To state firmly and authoritatively what is expected or what the rules are.", examples: ["The coach laid down the law on the first day of practice, making clear that tardiness would not be tolerated."] },
+    { word: "stick it to one", definition: "To treat someone harshly, unfairly, or to get revenge on them.", examples: ["The new tax policy really sticks it to middle-income earners while sparing the wealthy."] },
+    { word: "demur", definition: "To raise objections or show reluctance; to hesitate before agreeing.", examples: ["She demurred when asked to sign the contract without reading the fine print first."] },
+    { word: "in a similar vein", definition: "In a related or comparable manner or style.", examples: ["His second novel, in a similar vein to his first, explored themes of isolation and identity."] },
+    { word: "subjugate", definition: "To bring under domination or control, especially by conquest.", examples: ["The empire sought to subjugate neighboring territories through military force."] },
+    { word: "soft pedal", definition: "To downplay or minimize the importance of something; to handle something gently.", examples: ["The spokesperson soft-pedaled the safety concerns, insisting the product had been thoroughly tested."] },
+    { word: "rickety", definition: "Poorly constructed and likely to collapse; unstable.", examples: ["They climbed the rickety staircase carefully, gripping the wobbly handrail with both hands."] },
+    { word: "all the gear, no idea", definition: "Having all the equipment or tools for something but lacking the skill or knowledge to use them.", examples: ["He showed up to the ski slope with top-of-the-line equipment but could barely stand — all the gear, no idea."] },
+    { word: "diction", definition: "The choice and use of words and phrases in speech or writing.", examples: ["Her precise diction made every line of the poem feel deliberate and powerful."] },
+    { word: "clear as a bell", definition: "Perfectly clear and easy to understand or hear.", examples: ["The instructions were clear as a bell, so everyone knew exactly what to do."] },
+    { word: "speak ill of someone", definition: "To say negative or unkind things about someone.", examples: ["Despite their falling out, she refused to speak ill of her former business partner."] },
+    { word: "caddy", definition: "A person who carries a golfer's clubs and provides assistance during a game.", examples: ["The caddy handed him a seven iron and advised him to aim slightly left of the flag."] },
+    { word: "kick over", definition: "To knock something over with the foot, or informally for an engine to start turning.", examples: ["She accidentally kicked over a bucket of paint while walking through the garage."] },
+    { word: "upholstery", definition: "The soft covering of fabric, padding, and springs fitted to furniture such as sofas and chairs.", examples: ["The antique sofa's upholstery was worn thin and had to be completely replaced."] },
+    { word: "blech", definition: "An exclamation expressing disgust or distaste.", examples: ["She took one sip of the sour milk and said, 'Blech — that's definitely gone off.'"] },
+    { word: "a good catch", definition: "A person who is considered highly desirable as a romantic or life partner.", examples: ["Everyone in town agreed that Marcus was a good catch — kind, successful, and funny."] },
+    { word: "souffle", definition: "A light, baked egg-based dish that puffs up during cooking and can be sweet or savory.", examples: ["The chef carefully carried the chocolate soufflé to the table before it had a chance to fall."] },
+    { word: "scrub in", definition: "To prepare for surgery by thoroughly washing one's hands and arms and putting on sterile attire.", examples: ["The surgeon scrubbed in fifteen minutes before the procedure was scheduled to begin."] },
+    { word: "alchemy", definition: "A mysterious or seemingly magical process of transforming something ordinary into something extraordinary.", examples: ["Through a kind of creative alchemy, the director turned a low-budget script into an award-winning film."] },
+    { word: "blurb", definition: "A short promotional description of a book, film, or other product.", examples: ["She read the blurb on the back of the novel and decided it sounded worth reading."] },
+    { word: "tarmac", definition: "A hard surface made of tar and crushed rock used for roads and airport runways, or the runway itself.", examples: ["The planes sat on the tarmac for over an hour waiting for clearance to take off."] },
+    { word: "blasphemous", definition: "Showing contempt or disrespect toward something sacred or deeply held as holy.", examples: ["Some members of the congregation found the satirical play blasphemous and called for it to be banned."] },
+    { word: "khakis", definition: "Pants made of a light brownish-yellow cotton fabric, typically worn as casual or semi-formal attire.", examples: ["He put on a clean shirt and his khakis for the casual Friday office gathering."] },
+    { word: "strut one's stuff", definition: "To display one's abilities or appearance with confidence and pride.", examples: ["The contestants hit the runway to strut their stuff in front of the panel of judges."] },
+    { word: "homicidal", definition: "Having a tendency toward or intent to commit murder.", examples: ["The detective noted the suspect's homicidal history when reviewing the case file."] },
+    { word: "bent out of shape", definition: "Upset, angry, or offended, often over something relatively minor.", examples: ["Don't get bent out of shape over a small misunderstanding — just talk it through."] },
+    { word: "blow over", definition: "To pass or be forgotten without serious consequences.", examples: ["He hoped the controversy would blow over by the end of the week."] },
+    { word: "polygamy", definition: "The practice of having more than one spouse at the same time.", examples: ["Polygamy is illegal in most countries but is practiced in certain cultural or religious communities."] },
+    { word: "rung", definition: "A horizontal bar forming a step on a ladder, or a level or position in a hierarchy.", examples: ["She climbed to the top rung of the corporate ladder after fifteen years of hard work."] },
+    { word: "referendum", definition: "A direct vote by the electorate on a specific political question or proposal.", examples: ["The country held a referendum on whether to adopt a new constitution."] },
+    { word: "ecstatic", definition: "Feeling or expressing overwhelming happiness or joy.", examples: ["She was ecstatic when she found out she had been accepted to her dream university."] },
+    { word: "angle", definition: "A particular way of approaching or considering a situation, or a geometric inclination between two lines.", examples: ["The journalist found a fresh angle on the story that no other reporter had explored."] },
+    { word: "blot", definition: "A spot or stain of ink or another substance, or to absorb liquid with something absorbent.", examples: ["He blotted the ink with a tissue before it could spread across the page."] },
+    { word: "blanch", definition: "To turn pale from shock or fear, or to briefly boil food before cooling it rapidly.", examples: ["She blanched when she heard the news, her face draining of all color."] },
+    { word: "luscious", definition: "Having a pleasingly rich, sweet taste or appearance; highly appealing to the senses.", examples: ["The market stall was overflowing with luscious ripe strawberries glistening in the sun."] },
+    { word: "gang up against someone", definition: "For a group of people to join together to oppose or bully a single person.", examples: ["It wasn't fair the way the whole team ganged up against the new employee over such a small mistake."] },
+    { word: "sternly", definition: "In a serious, strict, and uncompromising manner.", examples: ["The teacher looked at the class sternly and told them there would be no more disruptions."] },
+    { word: "bale", definition: "A large bundle of material such as hay, cotton, or paper tightly bound for storage or transport.", examples: ["The farmer stacked the bales of hay in the barn before the rain came."] },
+    { word: "bubelah", definition: "A Yiddish term of endearment meaning 'darling' or 'sweetheart', typically used for a child or loved one.", examples: ["'Come eat, bubelah,' her grandmother called from the kitchen."] },
+    { word: "ergonomic", definition: "Designed for efficiency and comfort in the working environment, especially to reduce strain.", examples: ["She bought an ergonomic chair to reduce the back pain she'd been experiencing from sitting at her desk all day."] },
+    { word: "barring", definition: "Except for; unless something occurs; excluding.", examples: ["Barring any unexpected delays, the project should be finished by the end of the month."] },
+    { word: "verbiage", definition: "Excessive use of words, especially when unclear or unnecessary; wordiness.", examples: ["The contract was buried in so much legal verbiage that most readers couldn't understand its basic terms."] },
+    { word: "twists and turns", definition: "Unexpected complications or changes in direction in a story, process, or situation.", examples: ["The investigation was full of twists and turns before the detective finally identified the culprit."] },
+    { word: "dysphoria", definition: "A state of unease, dissatisfaction, or profound discomfort, often used in medical contexts.", examples: ["She spoke openly about the gender dysphoria she experienced throughout her childhood."] },
+    { word: "scamp", definition: "A mischievous person, especially a child who causes trouble in a playful way.", examples: ["The little scamp had hidden all the remote controls again as a prank on his parents."] },
+    { word: "laxative", definition: "A substance that promotes bowel movements to relieve constipation.", examples: ["The doctor recommended a mild laxative after the patient reported difficulty with constipation."] },
+    { word: "gopher", definition: "A small burrowing rodent native to North America, or informally, a person who runs errands.", examples: ["The production assistant was used as a gopher, fetching coffee and supplies throughout the shoot."] },
+    { word: "hold one's head high", definition: "To remain proud and confident despite difficulties or shame.", examples: ["Even after the defeat, the team walked off the field holding their heads high."] },
+    { word: "reprimand", definition: "To formally and sharply criticize someone for their behavior or actions.", examples: ["The manager reprimanded the employee for repeatedly missing deadlines without explanation."] },
+    { word: "reprove", definition: "To express disapproval of someone's actions; to rebuke or scold gently.", examples: ["The teacher reproved the students for talking during the exam in a calm but firm tone."] },
+    { word: "patriarchal", definition: "Relating to or characteristic of a system in which men hold primary power and authority.", examples: ["She argued that many workplace cultures remain deeply patriarchal, disadvantaging women in leadership roles."] },
+    { word: "barren", definition: "Empty, bare, and lifeless; or unable to produce offspring or vegetation.", examples: ["The drought had turned the once-fertile farmland into a barren wasteland."] },
+    { word: "long face", definition: "An expression of sadness, disappointment, or unhappiness.", examples: ["He came home with a long face after hearing that he hadn't gotten the job."] },
+    { word: "barn", definition: "A large farm building used for storing grain and hay or housing livestock.", examples: ["The horses were brought into the barn before the storm rolled in."] },
+    { word: "cut it up", definition: "To perform energetically and entertainingly, often on a dance floor or stage.", examples: ["They really cut it up at the wedding reception, dancing until the DJ packed up."] },
+    { word: "goon", definition: "A foolish or violent person, especially one hired to intimidate others.", examples: ["A pair of goons stood at the entrance, making sure no one unwanted got inside."] },
+    { word: "commemorative", definition: "Existing or made to honor and preserve the memory of a person, event, or thing.", examples: ["They released a commemorative stamp to mark the hundredth anniversary of the poet's birth."] },
+    { word: "take for a spin", definition: "To try out something, such as a vehicle, by using it briefly.", examples: ["The salesperson offered to let him take the car for a spin around the block."] },
+    { word: "casket", definition: "A rectangular box, often ornate, in which a deceased person is buried.", examples: ["Family members gathered around the casket to pay their final respects before the burial."] },
+    { word: "cutie", definition: "An informally affectionate term for someone who is attractive or charming, especially in an endearing way.", examples: ["Everyone agreed that the toddler was an absolute cutie with her big brown eyes and curly hair."] },
+    { word: "husky", definition: "Having a deep, rough, or hoarse voice, or informally describing a person as large and strong-built.", examples: ["His husky voice gave him a natural authority when he spoke in front of a crowd."] },
+    { word: "soprano", definition: "The highest singing voice in women and boys, or a singer with such a voice.", examples: ["The soprano's performance of the aria left the entire audience breathless."] },
+    { word: "tablet", definition: "A small flat slab used for writing or displaying information, or a solid dose of medicine.", examples: ["She carried her tablet everywhere, using it for both reading and video calls."] },
+    { word: "pin down", definition: "To identify or define something precisely, or to make someone commit to something specific.", examples: ["It was hard to pin down exactly what had gone wrong in the negotiation."] },
+    { word: "cuckoo", definition: "A bird known for laying its eggs in other birds' nests, or informally, someone who is crazy or eccentric.", examples: ["My neighbor is completely cuckoo — he mows his lawn at midnight."] },
+    { word: "varicose", definition: "Describing veins that have become swollen, twisted, and visible beneath the skin, usually in the legs.", examples: ["After years of standing at work, she developed varicose veins and began wearing compression stockings."] },
+    { word: "smoke it", definition: "Informally, to do something with ease and excellence, or to outperform others decisively.", examples: ["She smoked it on the final exam, finishing in half the allotted time with a perfect score."] },
+    { word: "fall into one's lap", definition: "To receive something valuable or fortunate without having to work hard for it.", examples: ["The job opportunity just fell into his lap when a friend mentioned his name to the hiring manager."] },
+    { word: "expedition", definition: "An organized journey undertaken for a specific purpose, especially exploration or research.", examples: ["The research team set out on a six-week expedition into the Amazon rainforest."] },
+    { word: "wakadoo", definition: "An informal or humorous term for someone who is eccentric, wild, or behaves erratically.", examples: ["That wakadoo at the end of the bar kept shouting conspiracy theories at anyone who would listen."] },
+    { word: "ligua franca", definition: "A language adopted as a common means of communication between speakers whose native languages differ.", examples: ["English has become the lingua franca of international business and scientific research."] },
+    { word: "the word on the street", definition: "Informal information or rumors circulating among ordinary people in a community.", examples: ["The word on the street was that the restaurant was closing down, though nothing had been confirmed."] },
+    { word: "mongoose", definition: "A small carnivorous mammal known for its ability to fight and kill venomous snakes.", examples: ["The mongoose darted across the road, agile and swift in pursuit of its prey."] },
+    { word: "apex", definition: "The highest point or peak of something; the pinnacle.", examples: ["The athlete reached the apex of her career when she won gold at the world championships."] },
+    { word: "matronly", definition: "Having the appearance or manner associated with a dignified, middle-aged or older woman.", examples: ["She carried herself with a matronly confidence that immediately commanded respect."] },
+    { word: "doily", definition: "A small ornamental mat made of lace or paper, typically placed under a dish or vase.", examples: ["She placed a lace doily on the side table before setting down the delicate china teacup."] },
+    { word: "pick off", definition: "To shoot or eliminate targets one at a time, or to single someone out from a group.", examples: ["The sniper picked off the sentries one by one from his position in the trees."] },
+    { word: "waddle", definition: "To walk with short steps while swaying from side to side.", examples: ["The penguin waddled across the ice toward the water's edge."] },
+    { word: "call in a favor", definition: "To ask someone to do something for you based on a previous good deed you did for them.", examples: ["He called in a favor from his old colleague to get a last-minute meeting with the director."] },
+    { word: "playwright", definition: "A person who writes plays for the theater.", examples: ["The young playwright's debut production received rave reviews from critics across the city."] },
+    { word: "pec", definition: "Informal shorthand for pectoral muscle, located in the chest.", examples: ["He worked hard at the gym to build up his pecs and shoulders."] },
+    { word: "guilt trip", definition: "An attempt to make someone feel guilty in order to influence their behavior.", examples: ["She gave him a guilt trip about not attending the family dinner, so he eventually agreed to go."] },
+    { word: "skintight", definition: "Fitting so tightly that every contour of the body is visible.", examples: ["The dancer wore skintight leggings that allowed complete freedom of movement."] },
+    { word: "accolate", definition: "An award or privilege granted as a special honor or recognition of merit.", examples: ["Winning the national prize was the highest accolade she had received in her career."] },
+    { word: "well-tended", definition: "Carefully maintained and looked after; in good, neat condition.", examples: ["The well-tended garden was a testament to the hours she spent pruning and planting every weekend."] },
+    { word: "absent-minded", definition: "Tending to forget things or not pay attention because one is preoccupied with other thoughts.", examples: ["The absent-minded professor walked into class having forgotten both his notes and his coffee."] },
+    { word: "makeshift", definition: "Serving as a temporary substitute; improvised from whatever is available.", examples: ["They used a fallen tree branch as a makeshift walking stick on the difficult trail."] },
+    { word: "oomph", definition: "A quality of energy, excitement, or attractiveness that makes something impressive or effective.", examples: ["The presentation was solid but lacked the oomph needed to really wow the investors."] },
+    { word: "consummate", definition: "Showing extreme skill or being the ultimate example of a quality; or to complete or fulfill something.", examples: ["She was a consummate professional, handling even the most difficult clients with grace and efficiency."] },
+    { word: "sham", definition: "Something that is not what it appears to be; a fraud or pretense.", examples: ["The so-called charity turned out to be a sham, with most of the donations lining the founders' pockets."] },
+    { word: "morphine", definition: "A powerful opiate drug used medically to relieve severe pain.", examples: ["The patient was administered morphine after surgery to manage the intense post-operative pain."] },
+    { word: "verbatim", definition: "In exactly the same words as were used originally; word for word.", examples: ["She quoted the witness's testimony verbatim in her legal brief."] },
+    { word: "downpour", definition: "A sudden and heavy fall of rain.", examples: ["They were caught in a downpour without umbrellas and arrived home completely soaked."] },
+    { word: "wonky", definition: "Not straight; crooked or unsteady, or informally, not working correctly.", examples: ["The table was wonky because one leg was shorter than the others."] },
+    { word: "a token of good will", definition: "A small gesture or gift intended to show friendly or peaceful intentions.", examples: ["He brought flowers as a token of good will after the disagreement at last week's meeting."] },
+    { word: "bouillon", definition: "A clear, thin broth made by simmering meat, fish, or vegetables in water.", examples: ["She sipped a warm cup of chicken bouillon to soothe her sore throat."] },
+    { word: "hank", definition: "A coil or loop of yarn, hair, or rope, or an informal name for Henry.", examples: ["She bought a hank of wool at the craft fair and began knitting a scarf that evening."] },
+    { word: "word of mouth", definition: "The passing of information or recommendations from person to person through conversation rather than advertising.", examples: ["The restaurant had no social media presence but was packed every night thanks to word of mouth."] },
+    { word: "golden parachute", definition: "A large financial compensation package guaranteed to a company executive if they are dismissed.", examples: ["The CEO walked away with a golden parachute worth millions despite the company's poor performance."] },
+    { word: "duality", definition: "The quality or condition of consisting of two contrasting or complementary elements.", examples: ["The film explores the duality of human nature, showing how the same person can be both kind and cruel."] },
+    { word: "belabor", definition: "To argue about or explain something at excessive length; to overwork a point.", examples: ["I don't want to belabor the issue, but it's important that we all understand the risks involved."] },
+    { word: "self-effacing", definition: "Tending to make oneself, one's actions, or one's abilities seem unimportant; modest.", examples: ["Despite her remarkable achievements, she was self-effacing and deflected all praise to her team."] },
+    { word: "lucky break", definition: "An unexpected piece of good fortune that helps one succeed.", examples: ["Getting cast in that small commercial was the lucky break that launched her acting career."] },
+    { word: "overtax", definition: "To impose too great a burden on someone or something; to demand more than can be reasonably given.", examples: ["Working three jobs was beginning to overtax him, and his health started to suffer."] },
+    { word: "cadence", definition: "A rhythmic sequence or flow, especially in speech, music, or movement.", examples: ["The poet's natural cadence made her verse a pleasure to read aloud."] },
+    { word: "deleterious", definition: "Causing harm or damage; injurious.", examples: ["Prolonged exposure to loud noise can have deleterious effects on hearing."] },
+    { word: "sheen", definition: "A soft, bright luster or shine on a surface.", examples: ["The silk fabric had a beautiful sheen that caught the light as she moved."] },
+    { word: "tipster", definition: "A person who gives tips or advance information, especially about horse racing or criminal activity.", examples: ["The detective relied on an anonymous tipster to locate the suspect's hideout."] },
+    { word: "spendthrift", definition: "A person who spends money irresponsibly and wastefully.", examples: ["His reputation as a spendthrift meant that no one would lend him money anymore."] },
+    { word: "mystify", definition: "To make someone confused or unable to understand something; to bewilder.", examples: ["The magician's final trick completely mystified the audience, leaving them applauding in disbelief."] },
   ];
   // =========================================================================
 
@@ -7595,6 +7998,66 @@
           <div class="ex-hub-name">Spelling Drill</div>
           <div class="ex-hub-desc">Read the definition and type the correct word</div>
         </div>
+        <div class="ex-hub-card" onclick="initTrueFalseGame()">
+          <div class="ex-hub-icon">✅</div>
+          <div class="ex-hub-name">True or False</div>
+          <div class="ex-hub-desc">Is the definition shown correct for the word?</div>
+        </div>
+        <div class="ex-hub-card" onclick="initSpeedRound()">
+          <div class="ex-hub-icon">⏱️</div>
+          <div class="ex-hub-name">Speed Round</div>
+          <div class="ex-hub-desc">60 seconds — match as many words to definitions as you can</div>
+        </div>
+        <div class="ex-hub-card" onclick="initWordMatch()">
+          <div class="ex-hub-icon">🧩</div>
+          <div class="ex-hub-name">Word Match</div>
+          <div class="ex-hub-desc">Connect each word to its correct definition</div>
+        </div>
+        <div class="ex-hub-card" onclick="initScrambleGame()">
+          <div class="ex-hub-icon">🔀</div>
+          <div class="ex-hub-name">Scrambled Word</div>
+          <div class="ex-hub-desc">Unscramble the letters to find the word from its definition</div>
+        </div>
+        <div class="ex-hub-card" onclick="initStreakChallenge()">
+          <div class="ex-hub-icon">🔥</div>
+          <div class="ex-hub-name">Streak Challenge</div>
+          <div class="ex-hub-desc">Keep answering correctly — one wrong answer ends your streak</div>
+        </div>
+        <div class="ex-hub-card" onclick="initMemoryGame()">
+          <div class="ex-hub-icon">🧠</div>
+          <div class="ex-hub-name">Memory Match</div>
+          <div class="ex-hub-desc">Flip cards to pair each word with its definition</div>
+        </div>
+        <div class="ex-hub-card" onclick="initFirstLetterGame()">
+          <div class="ex-hub-icon">💡</div>
+          <div class="ex-hub-name">First Letter</div>
+          <div class="ex-hub-desc">Read the definition — the first letter is your only hint</div>
+        </div>
+        <div class="ex-hub-card" onclick="initBlitzGame()">
+          <div class="ex-hub-icon">⚡</div>
+          <div class="ex-hub-name">Blitz Quiz</div>
+          <div class="ex-hub-desc">3 seconds per question — True or False before time runs out</div>
+        </div>
+        <div class="ex-hub-card" onclick="initTopicExplorer()">
+          <div class="ex-hub-icon">🗺️</div>
+          <div class="ex-hub-name">Topic Explorer</div>
+          <div class="ex-hub-desc">Browse words by topic and quiz yourself within a category</div>
+        </div>
+        <div class="ex-hub-card" onclick="initOddOneOut()">
+          <div class="ex-hub-icon">🔎</div>
+          <div class="ex-hub-name">Odd One Out</div>
+          <div class="ex-hub-desc">Four words — spot the one that doesn't belong to the group</div>
+        </div>
+        <div class="ex-hub-card" onclick="initPrefixLab()">
+          <div class="ex-hub-icon">🔬</div>
+          <div class="ex-hub-name">Prefix & Suffix Lab</div>
+          <div class="ex-hub-desc">Explore words grouped by common prefixes and suffixes</div>
+        </div>
+        <div class="ex-hub-card" onclick="initDifficultyDrill()">
+          <div class="ex-hub-icon">📊</div>
+          <div class="ex-hub-name">Difficulty Drill</div>
+          <div class="ex-hub-desc">Choose your challenge level and drill words by difficulty</div>
+        </div>
       </div>`;
   }
 
@@ -7939,6 +8402,1129 @@
         <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
       </div>`;
   }
+
+  // ── True or False ─────────────────────────────────────────────────────────
+  let tfScore = 0, tfQNum = 0, tfAnswered = false, tfPool = [], tfIdx = 0, tfCurrentData = null;
+
+  function initTrueFalseGame() {
+    tfScore = 0; tfQNum = 0; tfAnswered = false; tfIdx = 0;
+    tfPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = tfPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tfPool[i], tfPool[j]] = [tfPool[j], tfPool[i]];
+    }
+    renderTrueFalseQuestion();
+  }
+
+  function renderTrueFalseQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (tfIdx >= tfPool.length || tfIdx >= 20) { renderTrueFalseGameOver(container); return; }
+    tfQNum++;
+    tfAnswered = false;
+    const item = tfPool[tfIdx++];
+    const isTrue = Math.random() < 0.5;
+    let shownDef = item.definition;
+    if (!isTrue) {
+      const others = vocabState.filter(v => v.word !== item.word && v.definition && !v.isCustom);
+      const fake = others[Math.floor(Math.random() * others.length)];
+      shownDef = fake ? fake.definition : item.definition;
+    }
+    tfCurrentData = { word: item.word, isTrue: isTrue || shownDef === item.definition };
+    const scoreCls = tfScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="tf-score-val">${tfScore > 0 ? '+' + tfScore : tfScore}</span></div>
+        <div class="sa-type-badge truefalse">✅ TRUE / FALSE</div>
+        <div class="sa-progress">${tfQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Is this definition correct for the word?</div>
+        <div class="sa-target-word">${escapeHtml(item.word)}</div>
+        <div class="sa-target-def" style="margin-top:10px; font-size:0.95rem; color:var(--text-main); font-style:normal;">${escapeHtml(shownDef)}</div>
+      </div>
+      <div class="tf-btn-row">
+        <button class="tf-btn true-btn" onclick="checkTrueFalse(this, true)">✓ True</button>
+        <button class="tf-btn false-btn" onclick="checkTrueFalse(this, false)">✗ False</button>
+      </div>
+      <div id="tf-feedback"></div>`;
+  }
+
+  function checkTrueFalse(btn, answer) {
+    if (tfAnswered) return;
+    tfAnswered = true;
+    const { isTrue } = tfCurrentData;
+    const isCorrect = answer === isTrue;
+    if (isCorrect) tfScore++; else tfScore--;
+    document.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = true;
+      const isThisTrue = b.classList.contains('true-btn');
+      if (isThisTrue === isTrue) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    const scoreEl = document.getElementById('tf-score-val');
+    if (scoreEl) { scoreEl.textContent = tfScore > 0 ? '+' + tfScore : tfScore; scoreEl.className = 'sa-score-val' + (tfScore < 0 ? ' negative' : ''); }
+    const nextLabel = (tfIdx >= tfPool.length || tfIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('tf-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ It was ${isTrue ? 'True' : 'False'}`}</div>
+      <button class="sa-next-btn" onclick="renderTrueFalseQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderTrueFalseGameOver(container) {
+    const emoji = tfScore >= 14 ? '🏆' : tfScore >= 8 ? '👍' : '💪';
+    const scoreCls = tfScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${tfScore > 0 ? '+' : ''}${tfScore}</div>
+        <div class="sa-final-label">True or False — 20 questions</div>
+        <button class="sa-start-btn" onclick="initTrueFalseGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Speed Round ───────────────────────────────────────────────────────────
+  let srScore = 0, srPool = [], srIdx = 0, srTimerId = null, srSecondsLeft = 60, srAnswered = false, srCurrentData = null;
+
+  function initSpeedRound() {
+    srScore = 0; srIdx = 0; srSecondsLeft = 60; srAnswered = false;
+    clearInterval(srTimerId);
+    srPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = srPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [srPool[i], srPool[j]] = [srPool[j], srPool[i]];
+    }
+    renderSpeedRoundQuestion();
+    srTimerId = setInterval(() => {
+      srSecondsLeft--;
+      const barEl = document.getElementById('sr-timer-bar');
+      const numEl = document.getElementById('sr-timer-num');
+      if (barEl) { barEl.style.width = (srSecondsLeft / 60 * 100) + '%'; if (srSecondsLeft <= 15) barEl.classList.add('low'); }
+      if (numEl) { numEl.textContent = srSecondsLeft + 's'; if (srSecondsLeft <= 15) numEl.classList.add('low'); }
+      if (srSecondsLeft <= 0) { clearInterval(srTimerId); renderSpeedRoundGameOver(); }
+    }, 1000);
+  }
+
+  function renderSpeedRoundQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (srIdx >= srPool.length) { srIdx = 0; for (let i = srPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [srPool[i], srPool[j]] = [srPool[j], srPool[i]]; } }
+    srAnswered = false;
+    const item = srPool[srIdx++];
+    const correct = item.definition;
+    const others = vocabState.filter(v => v.word !== item.word && v.definition && !v.isCustom);
+    const distractors = [];
+    const used = new Set();
+    while (distractors.length < 3 && used.size < others.length) {
+      const ri = Math.floor(Math.random() * others.length);
+      if (!used.has(ri)) { used.add(ri); distractors.push(others[ri].definition); }
+    }
+    const options = [correct, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [options[i], options[j]] = [options[j], options[i]]; }
+    srCurrentData = { word: item.word, correct };
+    const barPct = (srSecondsLeft / 60 * 100) + '%';
+    const barLow = srSecondsLeft <= 15 ? ' low' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val" id="sr-score-val">${srScore}</span></div>
+        <div class="sa-type-badge speedround">⏱️ SPEED</div>
+        <div class="sr-timer-num${barLow}" id="sr-timer-num">${srSecondsLeft}s</div>
+      </div>
+      <div class="sr-timer-bar-wrap"><div class="sr-timer-bar${barLow}" id="sr-timer-bar" style="width:${barPct}"></div></div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Which definition matches?</div>
+        <div class="sa-target-word">${escapeHtml(item.word)}</div>
+      </div>
+      <div class="sa-options">
+        ${options.map(opt => `<button class="sa-opt-btn" style="text-align:left;font-size:0.85rem;font-weight:500;" onclick="checkSpeedRound(this,'${escapeJsSingleQuoted(opt)}')">${escapeHtml(opt)}</button>`).join('')}
+      </div>`;
+  }
+
+  function checkSpeedRound(btn, chosen) {
+    if (srAnswered || srSecondsLeft <= 0) return;
+    srAnswered = true;
+    const { correct } = srCurrentData;
+    const isCorrect = chosen === correct;
+    if (isCorrect) srScore++;
+    document.querySelectorAll('.sa-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (b.textContent.trim() === correct) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    const scoreEl = document.getElementById('sr-score-val');
+    if (scoreEl) scoreEl.textContent = srScore;
+    setTimeout(() => { if (srSecondsLeft > 0) renderSpeedRoundQuestion(); }, isCorrect ? 400 : 800);
+  }
+
+  function renderSpeedRoundGameOver() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    const best = Math.max(srScore, parseInt(localStorage.getItem('srBestScore') || '0'));
+    if (srScore >= best) localStorage.setItem('srBestScore', srScore);
+    const emoji = srScore >= 20 ? '🏆' : srScore >= 10 ? '👍' : '💪';
+    const bestStr = best > srScore ? `<div style="font-size:0.9rem;color:var(--text-light);margin-bottom:14px;">Best: ${best}</div>` : `<div style="font-size:0.9rem;color:var(--secondary);margin-bottom:14px;">🎉 New best!</div>`;
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score">${srScore}</div>
+        <div class="sa-final-label">Words matched in 60 seconds</div>
+        ${bestStr}
+        <button class="sa-start-btn" onclick="initSpeedRound()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Word Match ────────────────────────────────────────────────────────────
+  let wmPool = [], wmWords = [], wmDefs = [], wmSelected = null, wmSelectedType = null, wmMatched = 0, wmErrors = 0;
+
+  function initWordMatch() {
+    wmPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = wmPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [wmPool[i], wmPool[j]] = [wmPool[j], wmPool[i]]; }
+    const picked = wmPool.slice(0, 6);
+    wmWords = picked.map(v => v.word);
+    wmDefs  = picked.map(v => v.definition);
+    // Shuffle defs independently
+    for (let i = wmDefs.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [wmDefs[i], wmDefs[j]] = [wmDefs[j], wmDefs[i]]; }
+    wmSelected = null; wmSelectedType = null; wmMatched = 0; wmErrors = 0;
+    renderWordMatch();
+  }
+
+  function renderWordMatch() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Errors: <span class="sa-score-val" id="wm-errors" style="color:var(--danger)">${wmErrors}</span></div>
+        <div class="sa-type-badge matching">🧩 MATCH</div>
+        <div class="sa-progress">${wmMatched} / ${wmWords.length}</div>
+      </div>
+      <div class="sa-question-card" style="padding:14px 10px;">
+        <div class="sa-prompt" style="margin-bottom:12px;">Tap a word, then tap its definition</div>
+        <div class="wm-grid" id="wm-grid">
+          ${wmWords.map((w, i) => `<div class="wm-cell word" id="wm-w-${i}" onclick="wmTap('word',${i})">${escapeHtml(w)}</div>`).join('')}
+          ${wmDefs.map((d, i) => `<div class="wm-cell def" id="wm-d-${i}" onclick="wmTap('def',${i})">${escapeHtml(d.length > 90 ? d.slice(0,90)+'…' : d)}</div>`).join('')}
+        </div>
+      </div>
+      <div id="wm-feedback"></div>`;
+  }
+
+  function wmTap(type, idx) {
+    const el = document.getElementById(`wm-${type === 'word' ? 'w' : 'd'}-${idx}`);
+    if (!el || el.classList.contains('matched')) return;
+
+    if (wmSelected === null) {
+      // First tap
+      wmSelected = idx; wmSelectedType = type;
+      document.querySelectorAll('.wm-cell.selected').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      return;
+    }
+
+    if (wmSelectedType === type) {
+      // Tapped same column — swap selection
+      document.querySelectorAll('.wm-cell.selected').forEach(e => e.classList.remove('selected'));
+      wmSelected = idx; wmSelectedType = type;
+      el.classList.add('selected');
+      return;
+    }
+
+    // Second tap — check match
+    const wordIdx  = type === 'def' ? wmSelected : idx;
+    const defIdx   = type === 'def' ? idx : wmSelected;
+    const word = wmWords[wordIdx];
+    const def  = wmDefs[defIdx];
+    const correctDef = vocabState.find(v => v.word === word)?.definition;
+    const isMatch = def === correctDef;
+
+    document.querySelectorAll('.wm-cell.selected').forEach(e => e.classList.remove('selected'));
+    wmSelected = null; wmSelectedType = null;
+
+    if (isMatch) {
+      wmMatched++;
+      document.getElementById(`wm-w-${wordIdx}`)?.classList.add('matched');
+      document.getElementById(`wm-d-${defIdx}`)?.classList.add('matched');
+      const prog = document.querySelector('.sa-progress');
+      if (prog) prog.textContent = `${wmMatched} / ${wmWords.length}`;
+      if (wmMatched === wmWords.length) {
+        setTimeout(() => {
+          const container = document.getElementById('sa-inner');
+          if (!container) return;
+          const emoji = wmErrors === 0 ? '🏆' : wmErrors <= 2 ? '👍' : '💪';
+          container.innerHTML = `
+            <div class="sa-game-over">
+              <div style="font-size:3rem; margin-bottom:10px">${emoji}</div>
+              <div class="sa-final-score">${wmErrors === 0 ? 'Perfect!' : wmErrors + ' error' + (wmErrors > 1 ? 's' : '')}</div>
+              <div class="sa-final-label">All ${wmWords.length} words matched</div>
+              <button class="sa-start-btn" onclick="initWordMatch()">Play Again ↺</button>
+              <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:10px;">← All Exercises</button>
+            </div>`;
+        }, 600);
+      }
+    } else {
+      wmErrors++;
+      const errEl = document.getElementById('wm-errors');
+      if (errEl) errEl.textContent = wmErrors;
+      const wEl = document.getElementById(`wm-w-${wordIdx}`);
+      const dEl = document.getElementById(`wm-d-${defIdx}`);
+      [wEl, dEl].forEach(e => { if (e) { e.classList.add('wrong'); setTimeout(() => e?.classList.remove('wrong'), 400); } });
+    }
+  }
+
+  // ── Scrambled Word ────────────────────────────────────────────────────────
+  let scScore = 0, scQNum = 0, scAnswered = false, scPool = [], scIdx = 0, scCurrentData = null;
+
+  function initScrambleGame() {
+    scScore = 0; scQNum = 0; scAnswered = false; scIdx = 0;
+    scPool = vocabState.filter(item =>
+      item.definition && !item.isCustom &&
+      !sessionMasteredWords.has(normalizeWord(item.word)) &&
+      !item.word.includes(' ') && item.word.length >= 4 && item.word.length <= 14
+    );
+    for (let i = scPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [scPool[i], scPool[j]] = [scPool[j], scPool[i]]; }
+    renderScrambleQuestion();
+  }
+
+  function _scramble(word) {
+    const arr = word.split('');
+    for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+    if (arr.join('').toLowerCase() === word.toLowerCase() && word.length > 2) { [arr[0], arr[1]] = [arr[1], arr[0]]; }
+    return arr.join('');
+  }
+
+  function renderScrambleQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (scIdx >= scPool.length || scIdx >= 20) { renderScrambleGameOver(container); return; }
+    scQNum++; scAnswered = false;
+    const item = scPool[scIdx++];
+    const scrambled = _scramble(item.word);
+    scCurrentData = { word: item.word };
+    const scoreCls = scScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="sc-score-val">${scScore > 0 ? '+' + scScore : scScore}</span></div>
+        <div class="sa-type-badge scramble">🔀 SCRAMBLE</div>
+        <div class="sa-progress">${scQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Unscramble the letters — use the definition as a clue:</div>
+        <div class="sa-target-def" style="font-size:1rem;color:var(--text-main);font-style:normal;font-weight:600;">${escapeHtml(item.definition)}</div>
+        <div class="sc-letters">${scrambled.split('').map(l => `<div class="sc-letter">${escapeHtml(l)}</div>`).join('')}</div>
+      </div>
+      <div class="sd-input-wrap">
+        <input id="sc-input" class="sd-input" type="text" placeholder="Type the word..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <button class="sd-submit-btn" onclick="checkScramble()">→</button>
+      </div>
+      <div id="sc-feedback"></div>`;
+    const inp = document.getElementById('sc-input');
+    if (inp) { inp.focus(); inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkScramble(); }); }
+  }
+
+  function checkScramble() {
+    if (scAnswered) return;
+    const inp = document.getElementById('sc-input');
+    if (!inp || !inp.value.trim()) return;
+    scAnswered = true;
+    const { word } = scCurrentData;
+    const isCorrect = inp.value.trim().toLowerCase() === word.toLowerCase();
+    if (isCorrect) scScore++; else scScore--;
+    inp.disabled = true;
+    const scoreEl = document.getElementById('sc-score-val');
+    if (scoreEl) { scoreEl.textContent = scScore > 0 ? '+' + scScore : scScore; scoreEl.className = 'sa-score-val' + (scScore < 0 ? ' negative' : ''); }
+    const nextLabel = (scIdx >= scPool.length || scIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('sc-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(word)}"`}</div>
+      <button class="sa-next-btn" onclick="renderScrambleQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderScrambleGameOver(container) {
+    const emoji = scScore >= 14 ? '🏆' : scScore >= 8 ? '👍' : '💪';
+    const scoreCls = scScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem;margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${scScore > 0 ? '+' : ''}${scScore}</div>
+        <div class="sa-final-label">Scrambled Word — 20 questions</div>
+        <button class="sa-start-btn" onclick="initScrambleGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Streak Challenge ──────────────────────────────────────────────────────
+  let stkStreak = 0, stkPool = [], stkIdx = 0, stkAnswered = false, stkCurrentData = null;
+
+  function initStreakChallenge() {
+    stkStreak = 0; stkIdx = 0; stkAnswered = false;
+    stkPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = stkPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [stkPool[i], stkPool[j]] = [stkPool[j], stkPool[i]]; }
+    renderStreakQuestion();
+  }
+
+  function renderStreakQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (stkIdx >= stkPool.length) { stkIdx = 0; for (let i = stkPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [stkPool[i], stkPool[j]] = [stkPool[j], stkPool[i]]; } }
+    stkAnswered = false;
+    const item = stkPool[stkIdx++];
+    const others = vocabState.filter(v => v.word !== item.word && v.definition && !v.isCustom);
+    const distractors = [];
+    const used = new Set();
+    while (distractors.length < 3 && used.size < others.length) { const ri = Math.floor(Math.random() * others.length); if (!used.has(ri)) { used.add(ri); distractors.push(others[ri].definition); } }
+    const options = [item.definition, ...distractors];
+    for (let i = options.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [options[i], options[j]] = [options[j], options[i]]; }
+    stkCurrentData = { word: item.word, correct: item.definition };
+    const best = parseInt(localStorage.getItem('stkBest') || '0');
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="stk-streak-display"><div class="stk-streak-num">🔥${stkStreak}</div><div class="stk-streak-label">Streak</div></div>
+        <div class="sa-type-badge streak">🔥 STREAK</div>
+        <div class="stk-best">Best: ${best}</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">Which definition matches?</div>
+        <div class="sa-target-word">${escapeHtml(item.word)}</div>
+      </div>
+      <div class="sa-options">
+        ${options.map(opt => `<button class="sa-opt-btn" style="text-align:left;font-size:0.85rem;font-weight:500;" onclick="checkStreakAnswer(this,'${escapeJsSingleQuoted(opt)}')">${escapeHtml(opt)}</button>`).join('')}
+      </div>`;
+  }
+
+  function checkStreakAnswer(btn, chosen) {
+    if (stkAnswered) return;
+    stkAnswered = true;
+    const { correct } = stkCurrentData;
+    const isCorrect = chosen === correct;
+    document.querySelectorAll('.sa-opt-btn').forEach(b => {
+      b.disabled = true;
+      if (b.textContent.trim() === correct) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    if (isCorrect) {
+      stkStreak++;
+      const best = parseInt(localStorage.getItem('stkBest') || '0');
+      if (stkStreak > best) localStorage.setItem('stkBest', stkStreak);
+      const fb = document.createElement('div');
+      fb.innerHTML = `<div class="sa-feedback-banner correct">✓ Keep going!</div><button class="sa-next-btn" onclick="renderStreakQuestion()">Next →</button>`;
+      document.getElementById('sa-inner')?.appendChild(fb);
+    } else {
+      const best = Math.max(stkStreak, parseInt(localStorage.getItem('stkBest') || '0'));
+      localStorage.setItem('stkBest', best);
+      const container = document.getElementById('sa-inner');
+      if (!container) return;
+      const emoji = stkStreak >= 20 ? '🏆' : stkStreak >= 10 ? '😬' : stkStreak >= 5 ? '💀' : '😵';
+      setTimeout(() => {
+        container.innerHTML = `
+          <div class="sa-game-over">
+            <div style="font-size:3rem;margin-bottom:10px">${emoji}</div>
+            <div class="sa-final-score">🔥 ${stkStreak}</div>
+            <div class="sa-final-label">Streak ended! Best: ${best}</div>
+            <div style="font-size:0.88rem;color:var(--text-light);margin-bottom:14px;">The correct answer was: <em>${escapeHtml(correct)}</em></div>
+            <button class="sa-start-btn" onclick="initStreakChallenge()">Try Again ↺</button>
+            <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>
+          </div>`;
+      }, 700);
+    }
+  }
+
+  // ── Memory Match ──────────────────────────────────────────────────────────
+  let mmCards = [], mmFlipped = [], mmMatched = 0, mmFlips = 0, mmLocked = false;
+
+  function initMemoryGame() {
+    const pool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    const pairs = pool.slice(0, 6);
+    mmCards = [];
+    pairs.forEach((item, i) => {
+      mmCards.push({ id: i * 2,     pairId: i, type: 'word', text: item.word,       matched: false });
+      mmCards.push({ id: i * 2 + 1, pairId: i, type: 'def',  text: item.definition, matched: false });
+    });
+    for (let i = mmCards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [mmCards[i], mmCards[j]] = [mmCards[j], mmCards[i]]; }
+    mmFlipped = []; mmMatched = 0; mmFlips = 0; mmLocked = false;
+    renderMemoryGame();
+  }
+
+  function renderMemoryGame() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Matched: <span class="sa-score-val" id="mm-matched">${mmMatched}</span> / 6</div>
+        <div class="sa-type-badge memory">🧠 MEMORY</div>
+        <div class="mm-flips" id="mm-flips">Flips: ${mmFlips}</div>
+      </div>
+      <div class="mm-grid">
+        ${mmCards.map(c => `
+          <div class="mm-card ${c.type === 'word' ? 'word-card' : ''} ${c.matched ? 'matched flipped' : ''}" id="mm-c-${c.id}" onclick="mmFlip(${c.id})">
+            <div class="mm-card-inner">
+              <div class="mm-card-front">?</div>
+              <div class="mm-card-back">${escapeHtml(c.type === 'def' ? (c.text.length > 80 ? c.text.slice(0, 80) + '…' : c.text) : c.text)}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  function mmFlip(id) {
+    if (mmLocked) return;
+    const card = mmCards.find(c => c.id === id);
+    if (!card || card.matched || mmFlipped.includes(id)) return;
+    const el = document.getElementById(`mm-c-${id}`);
+    if (!el) return;
+    el.classList.add('flipped');
+    mmFlipped.push(id);
+    if (mmFlipped.length === 2) {
+      mmFlips++;
+      const flipsEl = document.getElementById('mm-flips');
+      if (flipsEl) flipsEl.textContent = `Flips: ${mmFlips}`;
+      mmLocked = true;
+      const [id1, id2] = mmFlipped;
+      const c1 = mmCards.find(c => c.id === id1);
+      const c2 = mmCards.find(c => c.id === id2);
+      if (c1.pairId === c2.pairId && c1.type !== c2.type) {
+        c1.matched = true; c2.matched = true;
+        document.getElementById(`mm-c-${id1}`)?.classList.add('matched');
+        document.getElementById(`mm-c-${id2}`)?.classList.add('matched');
+        mmMatched++;
+        const mEl = document.getElementById('mm-matched');
+        if (mEl) mEl.textContent = mmMatched;
+        mmFlipped = []; mmLocked = false;
+        if (mmMatched === 6) {
+          setTimeout(() => {
+            const con = document.getElementById('sa-inner');
+            if (!con) return;
+            const emoji = mmFlips <= 8 ? '🏆' : mmFlips <= 14 ? '👍' : '💪';
+            con.innerHTML = `
+              <div class="sa-game-over">
+                <div style="font-size:3rem;margin-bottom:10px">${emoji}</div>
+                <div class="sa-final-score">${mmFlips}</div>
+                <div class="sa-final-label">Flips to match all 6 pairs</div>
+                <button class="sa-start-btn" onclick="initMemoryGame()">Play Again ↺</button>
+                <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>
+              </div>`;
+          }, 700);
+        }
+      } else {
+        setTimeout(() => {
+          document.getElementById(`mm-c-${id1}`)?.classList.remove('flipped');
+          document.getElementById(`mm-c-${id2}`)?.classList.remove('flipped');
+          mmFlipped = []; mmLocked = false;
+        }, 900);
+      }
+    }
+  }
+
+  // ── First Letter Hint ─────────────────────────────────────────────────────
+  let flScore = 0, flQNum = 0, flAnswered = false, flPool = [], flIdx = 0, flCurrentData = null;
+
+  function initFirstLetterGame() {
+    flScore = 0; flQNum = 0; flAnswered = false; flIdx = 0;
+    flPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = flPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [flPool[i], flPool[j]] = [flPool[j], flPool[i]]; }
+    renderFirstLetterQuestion();
+  }
+
+  function renderFirstLetterQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (flIdx >= flPool.length || flIdx >= 20) { renderFirstLetterGameOver(container); return; }
+    flQNum++; flAnswered = false;
+    const item = flPool[flIdx++];
+    flCurrentData = { word: item.word };
+    const scoreCls = flScore < 0 ? ' negative' : '';
+    const hintHtml = item.word.split('').map((ch, i) => {
+      if (ch === ' ') return `<div class="fl-hint-sp"></div>`;
+      if (ch === "'" || ch === '-' || ch === '/') return `<div class="fl-hint-ch">${escapeHtml(ch)}</div>`;
+      if (i === 0) return `<div class="fl-hint-ch">${escapeHtml(ch.toUpperCase())}</div>`;
+      return `<div class="fl-hint-ch blank">_</div>`;
+    }).join('');
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="fl-score-val">${flScore > 0 ? '+' + flScore : flScore}</span></div>
+        <div class="sa-type-badge firstletter">💡 FIRST LETTER</div>
+        <div class="sa-progress">${flQNum} / 20</div>
+      </div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">The first letter is shown — what's the word?</div>
+        <div class="sa-target-def" style="font-size:1rem;color:var(--text-main);font-style:normal;font-weight:600;margin-bottom:4px;">${escapeHtml(item.definition)}</div>
+        <div class="fl-hint">${hintHtml}</div>
+      </div>
+      <div class="sd-input-wrap">
+        <input id="fl-input" class="sd-input" type="text" placeholder="Type the word..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <button class="sd-submit-btn" onclick="checkFirstLetter()">→</button>
+      </div>
+      <div id="fl-feedback"></div>`;
+    const inp = document.getElementById('fl-input');
+    if (inp) { inp.focus(); inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkFirstLetter(); }); }
+  }
+
+  function checkFirstLetter() {
+    if (flAnswered) return;
+    const inp = document.getElementById('fl-input');
+    if (!inp || !inp.value.trim()) return;
+    flAnswered = true;
+    const { word } = flCurrentData;
+    const isCorrect = inp.value.trim().toLowerCase() === word.toLowerCase();
+    if (isCorrect) flScore++; else flScore--;
+    inp.disabled = true;
+    const scoreEl = document.getElementById('fl-score-val');
+    if (scoreEl) { scoreEl.textContent = flScore > 0 ? '+' + flScore : flScore; scoreEl.className = 'sa-score-val' + (flScore < 0 ? ' negative' : ''); }
+    const nextLabel = (flIdx >= flPool.length || flIdx >= 20) ? 'See Results' : 'Next →';
+    const fb = document.getElementById('fl-feedback');
+    if (fb) fb.innerHTML = `
+      <div class="sa-feedback-banner ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct!' : `✗ The answer was "${escapeHtml(word)}"`}</div>
+      <button class="sa-next-btn" onclick="renderFirstLetterQuestion()">${nextLabel}</button>`;
+  }
+
+  function renderFirstLetterGameOver(container) {
+    const emoji = flScore >= 14 ? '🏆' : flScore >= 8 ? '👍' : '💪';
+    const scoreCls = flScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem;margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${flScore > 0 ? '+' : ''}${flScore}</div>
+        <div class="sa-final-label">First Letter Hint — 20 questions</div>
+        <button class="sa-start-btn" onclick="initFirstLetterGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── Blitz Quiz ────────────────────────────────────────────────────────────
+  let bzScore = 0, bzQNum = 0, bzPool = [], bzIdx = 0, bzCurrentData = null, bzTimerId = null, bzTimeLeft = 0, bzAnswered = false;
+  const BZ_Q_TIME = 3, BZ_TOTAL = 10;
+
+  function initBlitzGame() {
+    bzScore = 0; bzQNum = 0; bzIdx = 0; bzAnswered = false;
+    clearInterval(bzTimerId);
+    bzPool = vocabState.filter(item => item.definition && !item.isCustom && !sessionMasteredWords.has(normalizeWord(item.word)));
+    for (let i = bzPool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [bzPool[i], bzPool[j]] = [bzPool[j], bzPool[i]]; }
+    renderBlitzQuestion();
+  }
+
+  function renderBlitzQuestion() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (bzQNum >= BZ_TOTAL) { renderBlitzGameOver(container); return; }
+    clearInterval(bzTimerId);
+    bzQNum++; bzAnswered = false; bzTimeLeft = BZ_Q_TIME;
+    const item = bzPool[bzIdx++ % bzPool.length];
+    const isTrue = Math.random() < 0.5;
+    let shownDef = item.definition;
+    if (!isTrue) {
+      const others = vocabState.filter(v => v.word !== item.word && v.definition && !v.isCustom);
+      const fake = others[Math.floor(Math.random() * others.length)];
+      if (fake) shownDef = fake.definition;
+    }
+    bzCurrentData = { isTrue: isTrue || shownDef === item.definition };
+    const scoreCls = bzScore < 0 ? ' negative' : '';
+    container.innerHTML = `
+      <div class="sa-header">
+        <div class="sa-score-wrap">Score: <span class="sa-score-val${scoreCls}" id="bz-score-val">${bzScore > 0 ? '+' + bzScore : bzScore}</span></div>
+        <div class="sa-type-badge blitz">⚡ BLITZ</div>
+        <div class="sa-progress">${bzQNum} / ${BZ_TOTAL}</div>
+      </div>
+      <div class="bz-q-timer"><div class="bz-q-timer-bar" id="bz-bar" style="width:100%"></div></div>
+      <div class="sa-question-card">
+        <div class="sa-prompt">True or False? — <strong id="bz-time">${BZ_Q_TIME}s</strong></div>
+        <div class="sa-target-word">${escapeHtml(item.word)}</div>
+        <div class="sa-target-def" style="margin-top:10px;font-size:0.95rem;color:var(--text-main);font-style:normal;">${escapeHtml(shownDef)}</div>
+      </div>
+      <div class="tf-btn-row">
+        <button class="tf-btn true-btn" onclick="checkBlitz(true)">✓ True</button>
+        <button class="tf-btn false-btn" onclick="checkBlitz(false)">✗ False</button>
+      </div>`;
+    bzTimerId = setInterval(() => {
+      bzTimeLeft -= 0.1;
+      const pct = Math.max(0, bzTimeLeft / BZ_Q_TIME * 100);
+      const bar = document.getElementById('bz-bar');
+      const num = document.getElementById('bz-time');
+      if (bar) { bar.style.width = pct + '%'; if (bzTimeLeft <= 1) bar.classList.add('low'); }
+      if (num) num.textContent = Math.ceil(bzTimeLeft) + 's';
+      if (bzTimeLeft <= 0 && !bzAnswered) {
+        clearInterval(bzTimerId); bzAnswered = true;
+        document.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+        bzScore--;
+        const sc = document.getElementById('bz-score-val');
+        if (sc) { sc.textContent = bzScore > 0 ? '+' + bzScore : bzScore; sc.className = 'sa-score-val' + (bzScore < 0 ? ' negative' : ''); }
+        setTimeout(() => renderBlitzQuestion(), 500);
+      }
+    }, 100);
+  }
+
+  function checkBlitz(answer) {
+    if (bzAnswered) return;
+    bzAnswered = true; clearInterval(bzTimerId);
+    const { isTrue } = bzCurrentData;
+    const isCorrect = answer === isTrue;
+    if (isCorrect) bzScore++; else bzScore--;
+    document.querySelectorAll('.tf-btn').forEach(b => {
+      b.disabled = true;
+      const bIsTrue = b.classList.contains('true-btn');
+      if (bIsTrue === isTrue) b.classList.add('correct');
+      else if (bIsTrue === answer && !isCorrect) b.classList.add('incorrect');
+    });
+    const sc = document.getElementById('bz-score-val');
+    if (sc) { sc.textContent = bzScore > 0 ? '+' + bzScore : bzScore; sc.className = 'sa-score-val' + (bzScore < 0 ? ' negative' : ''); }
+    setTimeout(() => renderBlitzQuestion(), isCorrect ? 400 : 700);
+  }
+
+  function renderBlitzGameOver(container) {
+    const prev = parseInt(localStorage.getItem('bzBest') || '-99');
+    const best = Math.max(bzScore, prev);
+    localStorage.setItem('bzBest', best);
+    const emoji = bzScore >= 8 ? '🏆' : bzScore >= 5 ? '👍' : '💪';
+    const scoreCls = bzScore < 0 ? ' negative' : '';
+    const bestStr = bzScore >= prev ? `<div style="font-size:0.9rem;color:var(--secondary);margin-bottom:14px;">🎉 New best!</div>`
+      : `<div style="font-size:0.9rem;color:var(--text-light);margin-bottom:14px;">Best: ${prev > 0 ? '+' : ''}${prev}</div>`;
+    container.innerHTML = `
+      <div class="sa-game-over">
+        <div style="font-size:3rem;margin-bottom:10px">${emoji}</div>
+        <div class="sa-final-score${scoreCls}">${bzScore > 0 ? '+' : ''}${bzScore}</div>
+        <div class="sa-final-label">Blitz Quiz — ${BZ_TOTAL} questions</div>
+        ${bestStr}
+        <button class="sa-start-btn" onclick="initBlitzGame()">Play Again ↺</button>
+        <br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>
+      </div>`;
+  }
+
+  // ── TOPICS_DATA (shared) ──────────────────────────────────────────────────
+  var TOPICS_DATA = [
+    { emoji: '💼', name: 'Business',    keys: ['money','pay','salary','profit','market','deal','invest','company','corporate','client','revenue','budget','contract','trade','barter','fiduciary','negotiate'] },
+    { emoji: '❤️', name: 'Emotions',    keys: ['feel','happy','sad','angry','love','fear','joy','grief','anxious','hope','regret','proud','shame','guilt','ecstatic','dysphoria','disquiet','forlorn','dismay'] },
+    { emoji: '🗣️', name: 'Language',    keys: ['speak','verbal','word','language','phrase','idiom','grammar','rhetoric','diction','dialect','fluent','polyglot','utterance','converse','articulate','verbose'] },
+    { emoji: '⚖️', name: 'Law & Crime', keys: ['law','crime','legal','court','judge','prison','guilty','arrest','verdict','prosecution','defense','felon','sue','litigation','indict','statute','ordinance','jaywalking','convict'] },
+    { emoji: '🏥', name: 'Health',      keys: ['health','body','disease','sick','pain','medicine','doctor','hospital','surgery','blood','mental','exercise','diet','symptom','diagnos','therapy','morphine','varicose'] },
+    { emoji: '🌿', name: 'Nature',      keys: ['nature','animal','plant','forest','ocean','river','mountain','storm','weather','earth','sky','bird','tree','flower','seed','wild','desert','rain','cloud','wind','sprout'] },
+    { emoji: '🏛️', name: 'Society',     keys: ['society','culture','social','community','public','government','politics','religion','tradition','class','race','gender','nation','democracy','freedom','rights','patriarchal','oligarch'] },
+    { emoji: '🎭', name: 'Character',   keys: ['brave','smart','honest','loyal','lazy','cunning','arrogant','kind','cruel','selfish','humble','stubborn','charismatic','braggadocio','iconoclast','intrepid','audacious'] },
+    { emoji: '🍽️', name: 'Food & Drink',keys: ['food','eat','cook','drink','taste','meal','kitchen','restaurant','recipe','flavor','spice','bread','fruit','soup','bake','bouillon','meringue','baguette','legume','garnish'] },
+    { emoji: '💰', name: 'Money',       keys: ['money','cash','rich','poor','wealth','debt','loan','bank','fund','budget','salary','price','cost','expense','invest','profit','spend','thrift','financial','economic'] },
+    { emoji: '🎮', name: 'Slang',       keys: ['gnarly','baloney','gunk','skunky','blech','wonky','raunchy','humdinger','jaunty','wakadoo','baller','rad','bonkers','dope','crass','snazzy'] },
+    { emoji: '🧠', name: 'Mind & Ideas',keys: ['think','thought','believe','idea','reason','logic','mind','brain','knowledge','wisdom','learn','memory','understand','perceive','insight','cognitive','analyze','ponder','contemplate'] },
+    { emoji: '🌍', name: 'Travel',      keys: ['travel','journey','trip','tour','explore','adventure','destination','road','flight','hotel','abroad','expedition','traipse','excursion','trek','roam','wander','voyage'] },
+    { emoji: '🎨', name: 'Arts',        keys: ['art','music','painting','film','dance','theater','story','creative','poetry','song','style','design','fashion','aesthetic','performance','rendition','artistic','cultural','literary'] }
+  ];
+
+  function _topicWords(topic) {
+    var re = new RegExp(topic.keys.map(function(k){ return k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('|'), 'i');
+    return vocabState.filter(function(w){ return re.test(w.word) || re.test(w.definition); });
+  }
+
+  function _shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function _pickRandom(arr, n, exclude) {
+    var pool = arr.filter(function(x){ return exclude.indexOf(x) === -1; });
+    _shuffle(pool);
+    return pool.slice(0, n);
+  }
+
+  // ── Topic Explorer ────────────────────────────────────────────────────────
+  var teScore = 0, teQIdx = 0, tePool = [], teAnswered = false, teTopicName = '';
+
+  function initTopicExplorer() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+    var available = TOPICS_DATA.map(function(t){
+      return { topic: t, words: _topicWords(t) };
+    }).filter(function(x){ return x.words.length >= 4; });
+
+    var cards = available.map(function(x){
+      return '<div class="topic-sel-card" onclick="teStartTopic(\'' + escapeJsSingleQuoted(x.topic.name) + '\')">'
+        + '<div class="tc-emoji">' + x.topic.emoji + '</div>'
+        + '<div class="tc-name">' + escapeHtml(x.topic.name) + '</div>'
+        + '<div class="tc-cnt">' + x.words.length + ' words</div>'
+        + '</div>';
+    }).join('');
+
+    container.innerHTML = '<div class="sa-header"><span class="sa-type-badge" style="background:#ede9fe;color:#5b21b6;">🗺️ Topic Explorer</span></div>'
+      + '<p style="color:var(--text-light);font-size:.88rem;margin:0 0 12px;">Choose a topic to quiz yourself:</p>'
+      + '<div class="topic-grid">' + cards + '</div>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:8px;">← All Exercises</button>';
+  }
+
+  function teStartTopic(topicName) {
+    var topicData = TOPICS_DATA.find(function(t){ return t.name === topicName; });
+    if (!topicData) return;
+    teTopicName = topicName;
+    teScore = 0; teQIdx = 0; teAnswered = false;
+    tePool = _shuffle(_topicWords(topicData)).slice(0, 10);
+    teRenderQuestion();
+  }
+
+  function teRenderQuestion() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (teQIdx >= tePool.length) { teShowGameOver(container); return; }
+    teAnswered = false;
+    var item = tePool[teQIdx];
+    var total = tePool.length;
+    var distractors = _pickRandom(vocabState, 3, [item]);
+    var opts = _shuffle([item].concat(distractors));
+
+    container.innerHTML = '<div class="sa-header">'
+      + '<span class="sa-type-badge" style="background:#ede9fe;color:#5b21b6;">🗺️ ' + escapeHtml(teTopicName) + '</span>'
+      + '<div class="sa-score-wrap"><span class="sa-score-val">+' + teScore + '</span></div>'
+      + '</div>'
+      + '<div class="sa-progress">' + (teQIdx + 1) + ' / ' + total + '</div>'
+      + '<div class="sa-question-card">'
+      + '<div class="sa-prompt" style="font-size:.8rem;color:var(--text-light);margin-bottom:6px;">Which word matches this definition?</div>'
+      + '<div class="sa-target-def" style="font-size:1rem;color:var(--text-main);font-style:normal;font-weight:600;">' + escapeHtml(item.definition) + '</div>'
+      + '</div>'
+      + '<div class="sa-options">'
+      + opts.map(function(o){
+          return '<button class="sa-opt-btn" onclick="teCheckAnswer(this,\'' + escapeJsSingleQuoted(o.word) + '\',\'' + escapeJsSingleQuoted(item.word) + '\')">' + escapeHtml(o.word) + '</button>';
+        }).join('')
+      + '</div>'
+      + '<div id="te-feedback"></div>';
+  }
+
+  function teCheckAnswer(btn, chosen, correct) {
+    if (teAnswered) return;
+    teAnswered = true;
+    var isCorrect = chosen === correct;
+    if (isCorrect) teScore++;
+    document.querySelectorAll('.sa-opt-btn').forEach(function(b){
+      b.disabled = true;
+      if (b.textContent === correct) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    var fb = document.getElementById('te-feedback');
+    if (fb) {
+      fb.innerHTML = '<div class="sa-feedback-banner ' + (isCorrect ? 'correct' : 'incorrect') + '">'
+        + (isCorrect ? '✓ Correct!' : '✗ The answer was "' + escapeHtml(correct) + '"') + '</div>'
+        + '<button class="sa-next-btn" onclick="teNext()">Next →</button>';
+    }
+  }
+
+  function teNext() {
+    teQIdx++;
+    teRenderQuestion();
+  }
+
+  function teShowGameOver(container) {
+    container.innerHTML = '<div class="sa-game-over">'
+      + '<div class="sa-final-score">' + teScore + ' / ' + tePool.length + '</div>'
+      + '<div class="sa-final-label">Topic: ' + escapeHtml(teTopicName) + '</div>'
+      + '<button class="sa-start-btn" onclick="teStartTopic(\'' + escapeJsSingleQuoted(teTopicName) + '\')">Try Again ↺</button>'
+      + '<br><button class="sa-start-btn" onclick="initTopicExplorer()" style="background:#7c3aed;margin-top:10px;">Change Topic</button>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>'
+      + '</div>';
+  }
+
+  // ── Odd One Out ───────────────────────────────────────────────────────────
+  var ooScore = 0, ooRound = 0, ooAnswered = false, ooCorrectWord = '';
+  var ooTopicWords = new Map();
+
+  function initOddOneOut() {
+    ooScore = 0; ooRound = 0; ooAnswered = false;
+    ooTopicWords = new Map();
+    TOPICS_DATA.forEach(function(t){
+      var words = _topicWords(t);
+      if (words.length >= 4) ooTopicWords.set(t.name, words);
+    });
+    ooNextRound();
+  }
+
+  function ooNextRound() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (ooRound >= 10) { ooShowGameOver(container); return; }
+    ooAnswered = false;
+    var topicNames = Array.from(ooTopicWords.keys());
+    if (topicNames.length < 2) { ooShowGameOver(container); return; }
+    _shuffle(topicNames);
+    var domName = topicNames[0];
+    var oddName = topicNames[1];
+    var domWords = _shuffle(ooTopicWords.get(domName).slice()).slice(0, 3);
+    var oddWords = _shuffle(ooTopicWords.get(oddName).slice()).slice(0, 1);
+    ooCorrectWord = oddWords[0].word;
+    var allWords = _shuffle(domWords.concat(oddWords));
+
+    ooRound++;
+    container.innerHTML = '<div class="sa-header">'
+      + '<span class="sa-type-badge" style="background:#fef3c7;color:#92400e;">🔎 Odd One Out</span>'
+      + '<div class="sa-score-wrap"><span class="sa-score-val">' + ooScore + ' / 10</span></div>'
+      + '</div>'
+      + '<div class="sa-progress">Round ' + ooRound + ' of 10</div>'
+      + '<div class="sa-question-card">'
+      + '<div class="sa-prompt">Which word does <strong>not</strong> belong with the others?</div>'
+      + '</div>'
+      + '<div class="oo-word-grid">'
+      + allWords.map(function(w){
+          return '<div class="oo-word-card" onclick="checkOddOneOut(this,\'' + escapeJsSingleQuoted(w.word) + '\')">' + escapeHtml(w.word) + '</div>';
+        }).join('')
+      + '</div>'
+      + '<div id="oo-feedback"></div>'
+      + '<div id="oo-next" style="display:none;margin-top:12px;"></div>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:8px;">← All Exercises</button>';
+
+    // store oddName for feedback reference
+    container.dataset.ooOddTopic = oddName;
+  }
+
+  function checkOddOneOut(btn, word) {
+    if (ooAnswered) return;
+    ooAnswered = true;
+    var isCorrect = word === ooCorrectWord;
+    if (isCorrect) ooScore++;
+    document.querySelectorAll('.oo-word-card').forEach(function(c){
+      c.style.pointerEvents = 'none';
+      if (c.textContent === ooCorrectWord) c.classList.add('correct');
+      else if (c === btn && !isCorrect) c.classList.add('wrong');
+    });
+    var container = document.getElementById('sa-inner');
+    var oddTopic = container ? container.dataset.ooOddTopic : '';
+    var fb = document.getElementById('oo-feedback');
+    if (fb) {
+      fb.innerHTML = '<div class="sa-feedback-banner ' + (isCorrect ? 'correct' : 'incorrect') + '">'
+        + (isCorrect ? '✓ Correct! "' + escapeHtml(ooCorrectWord) + '" is from ' + escapeHtml(oddTopic)
+                     : '✗ The odd one was "' + escapeHtml(ooCorrectWord) + '" (from ' + escapeHtml(oddTopic) + ')')
+        + '</div>';
+    }
+    setTimeout(function(){
+      var nx = document.getElementById('oo-next');
+      if (nx) {
+        nx.style.display = 'block';
+        nx.innerHTML = '<button class="sa-next-btn" onclick="ooNextRound()">Next Round →</button>';
+      }
+    }, 900);
+  }
+
+  function ooShowGameOver(container) {
+    container.innerHTML = '<div class="sa-game-over">'
+      + '<div class="sa-final-score">' + ooScore + ' / 10</div>'
+      + '<div class="sa-final-label">Odd One Out Complete!</div>'
+      + '<button class="sa-start-btn" onclick="initOddOneOut()">Play Again ↺</button>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>'
+      + '</div>';
+  }
+
+  // ── Prefix & Suffix Lab ───────────────────────────────────────────────────
+  var plGroups = [
+    { name: 'un-',       meaning: 'not / opposite of', test: function(w){ return /^un/i.test(w); } },
+    { name: 're-',       meaning: 'again / back',       test: function(w){ return /^re/i.test(w); } },
+    { name: 'dis-',      meaning: 'not / away',         test: function(w){ return /^dis/i.test(w); } },
+    { name: 'over-',     meaning: 'too much / above',   test: function(w){ return /^over/i.test(w); } },
+    { name: 'pre-',      meaning: 'before',             test: function(w){ return /^pre/i.test(w); } },
+    { name: 'mis-',      meaning: 'wrongly',            test: function(w){ return /^mis/i.test(w); } },
+    { name: 'out-',      meaning: 'beyond / more than', test: function(w){ return /^out/i.test(w); } },
+    { name: 'sub-',      meaning: 'under / below',      test: function(w){ return /^sub/i.test(w); } },
+    { name: 'inter-',    meaning: 'between',            test: function(w){ return /^inter/i.test(w); } },
+    { name: '-tion/-sion', meaning: 'state / action',   test: function(w){ return /(tion|sion)$/i.test(w); } },
+    { name: '-ness',     meaning: 'quality / state',    test: function(w){ return /ness$/i.test(w); } },
+    { name: '-ful',      meaning: 'full of',            test: function(w){ return /ful$/i.test(w); } },
+    { name: '-less',     meaning: 'without',            test: function(w){ return /less$/i.test(w); } },
+    { name: '-ment',     meaning: 'result / action',    test: function(w){ return /ment$/i.test(w); } },
+    { name: '-ity/-ty',  meaning: 'quality / state',    test: function(w){ return w.length >= 6 && /(ity|ty)$/i.test(w); } },
+    { name: '-ous/-ious', meaning: 'having a quality',  test: function(w){ return /ous$/i.test(w); } },
+    { name: '-ive',      meaning: 'tending to',         test: function(w){ return /ive$/i.test(w); } },
+    { name: '-al',       meaning: 'relating to',        test: function(w){ return /al$/i.test(w); } }
+  ];
+  var plSingleWords = [];
+  var plActiveGroup = null;
+
+  function initPrefixLab() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+    plSingleWords = vocabState.filter(function(w){ return !/\s/.test(w.word); });
+
+    var validGroups = plGroups.map(function(g){
+      return { group: g, words: plSingleWords.filter(function(w){ return g.test(w.word); }) };
+    }).filter(function(x){ return x.words.length >= 2; });
+
+    if (!validGroups.length) {
+      container.innerHTML = '<div class="sa-game-over"><div class="sa-final-label">Not enough single-word entries for Prefix Lab.</div>'
+        + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button></div>';
+      return;
+    }
+
+    validGroups.sort(function(a, b){ return b.words.length - a.words.length; });
+    var defaultGroup = validGroups[0].group.name;
+
+    var chips = validGroups.map(function(x){
+      return '<span class="prefix-chip" id="plchip-' + escapeHtml(x.group.name.replace(/[^a-z0-9]/gi,'_')) + '" onclick="renderPrefixGroup(\'' + escapeJsSingleQuoted(x.group.name) + '\')">' + escapeHtml(x.group.name) + '</span>';
+    }).join('');
+
+    container.innerHTML = '<div class="sa-header">'
+      + '<span class="sa-type-badge" style="background:#ede9fe;color:#5b21b6;">🔬 Prefix & Suffix Lab</span>'
+      + '</div>'
+      + '<p style="color:var(--text-light);font-size:.85rem;margin:0 0 10px;">Browse your vocabulary by word structure:</p>'
+      + '<div class="prefix-chips" id="pl-chips">' + chips + '</div>'
+      + '<div id="pl-meaning" style="font-size:.82rem;font-weight:700;color:#7c3aed;margin-bottom:10px;"></div>'
+      + '<div class="prefix-word-list" id="pl-word-list"></div>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>';
+
+    renderPrefixGroup(defaultGroup);
+  }
+
+  function renderPrefixGroup(groupName) {
+    plActiveGroup = groupName;
+    var groupData = plGroups.find(function(g){ return g.name === groupName; });
+    if (!groupData) return;
+    var matches = plSingleWords.filter(function(w){ return groupData.test(w.word); });
+
+    document.querySelectorAll('.prefix-chip').forEach(function(c){ c.classList.remove('active'); });
+    var chipId = 'plchip-' + groupName.replace(/[^a-z0-9]/gi,'_');
+    var activeChip = document.getElementById(chipId);
+    if (activeChip) activeChip.classList.add('active');
+
+    var meaningEl = document.getElementById('pl-meaning');
+    if (meaningEl) meaningEl.textContent = groupData.name + ' = ' + groupData.meaning + ' (' + matches.length + ' words)';
+
+    var listEl = document.getElementById('pl-word-list');
+    if (listEl) {
+      listEl.innerHTML = matches.map(function(w){
+        var defTrunc = w.definition.length > 80 ? w.definition.slice(0,80) + '…' : w.definition;
+        return '<div class="prefix-word-item"><div class="pw-word">' + escapeHtml(w.word) + '</div>'
+          + '<div class="pw-def">' + escapeHtml(defTrunc) + '</div></div>';
+      }).join('');
+    }
+  }
+
+  // ── Difficulty Drill ──────────────────────────────────────────────────────
+  var ddScore = 0, ddQIdx = 0, ddPool = [], ddAnswered = false, ddTierName = '', ddTierColor = '';
+  var ddTiers = [
+    { name: 'Beginner',     emoji: '🌱', color: '#10b981', bg: '#d1fae5', min: 0,  max: 20 },
+    { name: 'Intermediate', emoji: '🌿', color: '#f59e0b', bg: '#fef3c7', min: 20, max: 45 },
+    { name: 'Advanced',     emoji: '🔥', color: '#ef4444', bg: '#fee2e2', min: 45, max: 80 },
+    { name: 'Expert',       emoji: '💎', color: '#7c3aed', bg: '#ede9fe', min: 80, max: Infinity }
+  ];
+
+  function ddScore2(item) {
+    return item.word.length + (item.definition.length / 6);
+  }
+
+  function ddGetTier(item) {
+    var s = ddScore2(item);
+    for (var i = 0; i < ddTiers.length; i++) {
+      if (s >= ddTiers[i].min && s < ddTiers[i].max) return ddTiers[i];
+    }
+    return ddTiers[ddTiers.length - 1];
+  }
+
+  function initDifficultyDrill() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+
+    var tierCounts = ddTiers.map(function(t){
+      return { tier: t, count: vocabState.filter(function(w){ var s = ddScore2(w); return s >= t.min && s < t.max; }).length };
+    });
+
+    var cards = tierCounts.map(function(x){
+      return '<div class="diff-tier-card" style="background:' + x.tier.bg + ';border-color:' + x.tier.color + ';" onclick="ddStartTier(\'' + escapeJsSingleQuoted(x.tier.name) + '\')">'
+        + '<div class="dt-emoji">' + x.tier.emoji + '</div>'
+        + '<div class="dt-name" style="color:' + x.tier.color + ';">' + escapeHtml(x.tier.name) + '</div>'
+        + '<div class="dt-cnt" style="color:' + x.tier.color + ';">' + x.count + ' words</div>'
+        + '</div>';
+    }).join('');
+
+    container.innerHTML = '<div class="sa-header">'
+      + '<span class="sa-type-badge" style="background:#ede9fe;color:#5b21b6;">📊 Difficulty Drill</span>'
+      + '</div>'
+      + '<p style="color:var(--text-light);font-size:.88rem;margin:0 0 14px;text-align:center;">Choose your difficulty level:</p>'
+      + '<div class="diff-tier-grid">' + cards + '</div>'
+      + '<button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;display:block;margin:0 auto;">← All Exercises</button>';
+  }
+
+  function ddStartTier(tierName) {
+    var tierData = ddTiers.find(function(t){ return t.name === tierName; });
+    if (!tierData) return;
+    ddTierName = tierName;
+    ddTierColor = tierData.color;
+    ddScore = 0; ddQIdx = 0; ddAnswered = false;
+    var tierPool = vocabState.filter(function(w){
+      var s = ddScore2(w);
+      return s >= tierData.min && s < tierData.max && w.definition;
+    });
+    ddPool = _shuffle(tierPool).slice(0, 15);
+    ddRenderQuestion();
+  }
+
+  function ddRenderQuestion() {
+    var container = document.getElementById('sa-inner');
+    if (!container) return;
+    if (ddQIdx >= ddPool.length) { ddShowGameOver(container); return; }
+    ddAnswered = false;
+    var item = ddPool[ddQIdx];
+    var total = ddPool.length;
+
+    var tierData = ddTiers.find(function(t){ return t.name === ddTierName; }) || ddTiers[0];
+    var sameTier = vocabState.filter(function(w){
+      if (w.word === item.word || !w.definition) return false;
+      var s = ddScore2(w);
+      return s >= tierData.min && s < tierData.max;
+    });
+    var distractors = [];
+    if (sameTier.length >= 2) {
+      distractors = _pickRandom(sameTier, 3, [item]).slice(0, 3);
+    }
+    if (distractors.length < 3) {
+      var extra = _pickRandom(vocabState.filter(function(w){ return w.word !== item.word && w.definition; }), 3 - distractors.length, [item].concat(distractors));
+      distractors = distractors.concat(extra);
+    }
+    var opts = _shuffle([item].concat(distractors.slice(0,3)));
+
+    container.innerHTML = '<div class="sa-header">'
+      + '<span class="sa-type-badge" style="background:' + tierData.bg + ';color:' + tierData.color + ';">' + tierData.emoji + ' ' + escapeHtml(ddTierName) + '</span>'
+      + '<div class="sa-score-wrap"><span class="sa-score-val">+' + ddScore + '</span></div>'
+      + '</div>'
+      + '<div class="sa-progress">' + (ddQIdx + 1) + ' / ' + total + '</div>'
+      + '<div class="sa-question-card">'
+      + '<div class="sa-prompt" style="font-size:.8rem;color:var(--text-light);margin-bottom:6px;">Pick the correct definition for:</div>'
+      + '<div style="font-size:1.5rem;font-weight:800;color:var(--text-main);margin-bottom:4px;">' + escapeHtml(item.word) + '</div>'
+      + '</div>'
+      + '<div class="sa-options">'
+      + opts.map(function(o){
+          return '<button class="sa-opt-btn" style="text-align:left;font-size:.88rem;font-weight:500;" onclick="ddCheckAnswer(this,\'' + escapeJsSingleQuoted(o.word) + '\',\'' + escapeJsSingleQuoted(item.word) + '\')">' + escapeHtml(o.definition) + '</button>';
+        }).join('')
+      + '</div>'
+      + '<div id="dd-feedback"></div>';
+  }
+
+  function ddCheckAnswer(btn, chosen, correct) {
+    if (ddAnswered) return;
+    ddAnswered = true;
+    var isCorrect = chosen === correct;
+    if (isCorrect) ddScore++;
+    var correctItem = vocabState.find(function(w){ return w.word === correct; });
+    var correctDef = correctItem ? correctItem.definition : correct;
+    document.querySelectorAll('.sa-opt-btn').forEach(function(b){
+      b.disabled = true;
+      var bItem = vocabState.find(function(w){ return w.definition === b.textContent; });
+      if (bItem && bItem.word === correct) b.classList.add('correct');
+      else if (b === btn && !isCorrect) b.classList.add('incorrect');
+    });
+    var fb = document.getElementById('dd-feedback');
+    if (fb) {
+      fb.innerHTML = '<div class="sa-feedback-banner ' + (isCorrect ? 'correct' : 'incorrect') + '">'
+        + (isCorrect ? '✓ Correct!' : '✗ Correct definition: "' + escapeHtml(correctDef) + '"')
+        + '</div>'
+        + '<button class="sa-next-btn" onclick="ddNext()">Next →</button>';
+    }
+  }
+
+  function ddNext() {
+    ddQIdx++;
+    ddRenderQuestion();
+  }
+
+  function ddShowGameOver(container) {
+    var tierData = ddTiers.find(function(t){ return t.name === ddTierName; }) || ddTiers[0];
+    container.innerHTML = '<div class="sa-game-over">'
+      + '<div class="sa-final-score" style="color:' + tierData.color + ';">' + ddScore + ' / ' + ddPool.length + '</div>'
+      + '<div class="sa-final-label">' + tierData.emoji + ' ' + escapeHtml(ddTierName) + ' complete!</div>'
+      + '<button class="sa-start-btn" onclick="ddStartTier(\'' + escapeJsSingleQuoted(ddTierName) + '\')">Try Again ↺</button>'
+      + '<br><button class="sa-start-btn" onclick="initDifficultyDrill()" style="background:#7c3aed;margin-top:10px;">Change Tier</button>'
+      + '<br><button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280;margin-top:10px;">← All Exercises</button>'
+      + '</div>';
+  }
+
   // ─────────────────────────────────────────────────────────────────────────
 
   function getCurrentFlashcardItem() {
@@ -8063,7 +9649,8 @@
     const item = getCurrentFlashcardItem();
     if (!item) return;
 
-    const adding = !item.isNotebook;
+    // Snapshot autoplay state; the card-click handler must not kill it
+    const wasAutoplaying = isAutoplaying;
 
     // Always independent — never advances the card
     item.isNotebook = !item.isNotebook;
@@ -8079,6 +9666,14 @@
 
     if (isGroupWordListOpen) buildGroupWordList();
     else updateGroupWordListSummary();
+
+    // Guard: if a ghost tap accidentally stopped autopilot, restart it
+    if (wasAutoplaying && !isAutoplaying) {
+      isAutoplaying = true;
+      const btn = document.getElementById('btn-autoplay');
+      if (btn) { btn.textContent = "⏹ Stop Autopilot"; btn.classList.add('btn-autoplay-active'); }
+      runAutoplayLoop(autoplayRunId);
+    }
   }
 
   function updateQuizMasteryProgress() {
@@ -8674,6 +10269,8 @@
     // Stop audio/autoplay if switching tabs
     stopAutoplay();
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    clearInterval(srTimerId); // stop speed round timer if active
+    clearInterval(bzTimerId); // stop blitz timer if active
     if (typeof articleIsPaused !== 'undefined') { articleIsPaused = false; updateArticleButtons('stopped'); }
 
     currentMode = mode;
@@ -8768,6 +10365,168 @@
     document.getElementById('stat-struggling').textContent = struggling;
     document.getElementById('stat-session-mastered').textContent = sessionMastered;
     document.getElementById('stat-notebook').textContent = notebookCount;
+  }
+
+  // --- VOCAB INSIGHTS ---
+  function computeVocabInsights() {
+    const pool = vocabState;
+    const total = pool.length;
+    const now = Date.now();
+
+    // Word form breakdown
+    const singleWords = pool.filter(w => !w.word.includes(' ')).length;
+    const phrases = total - singleWords;
+
+    // Difficulty tiers (by word+def length)
+    const tiers = { beginner: 0, intermediate: 0, advanced: 0, expert: 0 };
+    pool.forEach(w => {
+      const score = w.word.length + (w.definition ? w.definition.length / 6 : 0);
+      if (score < 20) tiers.beginner++;
+      else if (score < 45) tiers.intermediate++;
+      else if (score < 80) tiers.advanced++;
+      else tiers.expert++;
+    });
+
+    // Topic detection via keywords
+    const topics = [
+      { label: '💼 Business',   emoji:'💼', keys: ['money','pay','salary','profit','market','deal','invest','company','corporate','client','revenue','budget','contract','trade','barter','fiduciary','entrepreneur','negotiate'] },
+      { label: '❤️ Emotions',   emoji:'❤️', keys: ['feel','happy','sad','anger','love','fear','joy','grief','anxiety','hope','regret','proud','shame','guilt','ecstatic','dysphoria','disquiet','forlorn'] },
+      { label: '🗣️ Language',   emoji:'🗣️', keys: ['speak','word','say','talk','language','phrase','idiom','grammar','rhetoric','verbal','diction','dialect','fluent','polyglot','utterance','converse'] },
+      { label: '⚖️ Law & Crime',emoji:'⚖️', keys: ['law','crime','legal','court','judge','prison','guilty','arrest','charge','verdict','sentence','prosecution','defense','felon','sue','litigation','indict','statute','ordinance','jaywalking'] },
+      { label: '🏥 Health',     emoji:'🏥', keys: ['health','body','disease','sick','pain','medicine','doctor','hospital','surgery','blood','mental','exercise','diet','symptom','diagnos','therapy','morphine','varicose'] },
+      { label: '🌿 Nature',     emoji:'🌿', keys: ['nature','animal','plant','forest','ocean','river','mountain','storm','weather','earth','sky','bird','tree','flower','seed','wild','desert','rain','cloud','wind'] },
+      { label: '🏛️ Society',    emoji:'🏛️', keys: ['society','culture','social','community','public','government','politics','religion','tradition','class','race','gender','nation','democracy','freedom','rights','inequality','patriarchal'] },
+      { label: '🎭 Character',  emoji:'🎭', keys: ['brave','smart','honest','loyal','lazy','cunning','arrogant','kind','cruel','selfish','humble','stubborn','charismatic','iconic','braggadocio','iconoclast'] },
+      { label: '🍽️ Food & Drink',emoji:'🍽️', keys: ['food','eat','cook','drink','taste','meal','kitchen','restaurant','recipe','flavor','spice','bread','fruit','soup','bake','bouillon','meringue','baguette','legume'] },
+      { label: '💰 Money',      emoji:'💰', keys: ['money','cash','pay','rich','poor','wealth','debt','loan','bank','fund','budget','salary','price','cost','expense','invest','profit','spend','thrift'] },
+      { label: '🎮 Casual/Slang',emoji:'🎮', keys: ['damn','crap','hell','ass','piss','screw','jerk','dude','buddy','cool','lame','suck','kick','gnarly','baloney','gunk','haul ass','skunky','blech','wonky','raunchy'] },
+      { label: '🧠 Mind & Thinking',emoji:'🧠', keys: ['think','thought','believe','idea','reason','logic','mind','brain','knowledge','wisdom','learn','memory','understand','perceive','insight','cognitive','analyze'] },
+      { label: '🌍 Travel',     emoji:'🌍', keys: ['travel','journey','trip','tour','explore','adventure','destination','road','flight','hotel','abroad','expedition','traipse','excursion','trek'] },
+      { label: '🎨 Arts & Culture',emoji:'🎨', keys: ['art','music','painting','film','dance','theater','story','creative','poetry','song','style','design','fashion','aesthetic','performance','rendition'] }
+    ];
+
+    const topicCounts = topics.map(t => {
+      const re = new RegExp(t.keys.join('|'), 'i');
+      const count = pool.filter(w => re.test(w.word) || re.test(w.definition || '')).length;
+      return { label: t.emoji + ' ' + t.label.split(' ').slice(1).join(' '), count };
+    }).sort((a, b) => b.count - a.count);
+
+    // Letter frequency (first letter)
+    const letterFreq = {};
+    pool.forEach(w => {
+      const c = w.word[0].toUpperCase();
+      if (/[A-Z]/.test(c)) letterFreq[c] = (letterFreq[c] || 0) + 1;
+    });
+    const topLetters = Object.entries(letterFreq).sort((a,b)=>b[1]-a[1]).slice(0,12);
+    const maxLF = topLetters[0]?.[1] || 1;
+
+    // Fun facts
+    const sorted_len = [...pool].sort((a,b) => b.word.length - a.word.length);
+    const longest = sorted_len[0]?.word || '';
+    const shortest = [...pool].filter(w=>w.word.length>1).sort((a,b)=>a.word.length-b.word.length)[0]?.word || '';
+    const mostStudied = [...pool].sort((a,b)=>(b.repetitions||0)-(a.repetitions||0))[0]?.word || 'N/A';
+    const mostMissed = pool.filter(w=>w.mistakes>0).sort((a,b)=>b.mistakes-a.mistakes)[0]?.word || 'None yet';
+
+    // Learning progress
+    const mastered = pool.filter(w => w.interval >= 60).length;
+    const learning = pool.filter(w => w.repetitions > 0 && w.interval < 60).length;
+    const unseen   = pool.filter(w => w.repetitions === 0).length;
+    const gotIt    = sessionMasteredWords.size;
+    const notebook = pool.filter(w => w.isNotebook).length;
+    const overdue  = pool.filter(w => w.nextReview <= now && w.repetitions > 0).length;
+
+    return { total, singleWords, phrases, tiers, topicCounts, topLetters, maxLF, longest, shortest, mostStudied, mostMissed, mastered, learning, unseen, gotIt, notebook, overdue };
+  }
+
+  function showVocabInsights() {
+    const d = computeVocabInsights();
+    const overlay = document.getElementById('vocab-insights-overlay');
+    document.getElementById('ins-subtitle').textContent = `${d.total.toLocaleString()} words · tap anywhere outside to close`;
+
+    const pct = (n, t) => t > 0 ? Math.round(n/t*100) : 0;
+    const bar = (pct, color) => `<div class="ins-diff-bar-fill" style="width:${pct}%;background:${color};"></div>`;
+
+    const body = document.getElementById('ins-body');
+    body.innerHTML = `
+      <div class="ins-section">
+        <h3>Collection at a Glance</h3>
+        <div class="ins-hero-row">
+          <div class="ins-hero-chip"><div class="ins-big-num">${d.total.toLocaleString()}</div><small>Total Words</small></div>
+          <div class="ins-hero-chip"><div class="ins-big-num">${d.singleWords.toLocaleString()}</div><small>Single Words</small></div>
+          <div class="ins-hero-chip"><div class="ins-big-num">${d.phrases.toLocaleString()}</div><small>Phrases / Idioms</small></div>
+          <div class="ins-hero-chip"><div class="ins-big-num">${d.notebook}</div><small>In Notebook</small></div>
+        </div>
+      </div>
+
+      <div class="ins-section">
+        <h3>Difficulty Breakdown</h3>
+        ${[
+          ['Beginner',     d.tiers.beginner,     '#10b981'],
+          ['Intermediate', d.tiers.intermediate, '#f59e0b'],
+          ['Advanced',     d.tiers.advanced,     '#ef4444'],
+          ['Expert',       d.tiers.expert,       '#7c3aed'],
+        ].map(([lbl, n, col]) => `
+          <div class="ins-diff-row">
+            <span class="ins-diff-label">${lbl}</span>
+            <div class="ins-diff-bar-wrap">${bar(pct(n, d.total), col)}</div>
+            <span class="ins-diff-count">${n}</span>
+          </div>`).join('')}
+      </div>
+
+      <div class="ins-section">
+        <h3>Topic Coverage (top 14)</h3>
+        <div class="ins-topic-grid">
+          ${d.topicCounts.slice(0,14).map(t=>`
+            <div class="ins-topic-chip">
+              <span class="tc-label">${t.label}</span>
+              <span class="tc-count">${t.count}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="ins-section">
+        <h3>Most Common Starting Letters</h3>
+        <div class="ins-letter-row">
+          ${d.topLetters.map(([l,n])=>`
+            <div class="ins-letter-col">
+              <div class="ins-letter-bar" style="height:${Math.round(n/d.maxLF*40)+4}px;" title="${l}: ${n}"></div>
+              <span class="ins-letter-label">${l}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="ins-section">
+        <h3>Fun Facts</h3>
+        <div class="ins-facts-grid">
+          <div class="ins-fact-card"><div class="fc-title">Longest Word</div><div class="fc-val">${d.longest}</div><div class="fc-sub">${d.longest.length} characters</div></div>
+          <div class="ins-fact-card"><div class="fc-title">Shortest Word</div><div class="fc-val">${d.shortest}</div><div class="fc-sub">${d.shortest.length} characters</div></div>
+          <div class="ins-fact-card"><div class="fc-title">Most Studied</div><div class="fc-val">${d.mostStudied}</div><div class="fc-sub">highest repetitions</div></div>
+          <div class="ins-fact-card"><div class="fc-title">Trickiest Word</div><div class="fc-val">${d.mostMissed}</div><div class="fc-sub">most quiz mistakes</div></div>
+        </div>
+      </div>
+
+      <div class="ins-section">
+        <h3>Learning Progress</h3>
+        ${[
+          ['Mastered (1hr+)',  d.mastered,  '#10b981'],
+          ['In Learning',      d.learning,  '#f59e0b'],
+          ['Not Yet Seen',     d.unseen,    '#9ca3af'],
+          ['Got It (saved)',   d.gotIt,     '#ef4444'],
+          ['Overdue Review',   d.overdue,   '#6366f1'],
+        ].map(([lbl, n, col]) => `
+          <div class="ins-prog-row">
+            <span class="ins-prog-label">${lbl}</span>
+            <div class="ins-prog-bar-wrap"><div class="ins-prog-bar-fill" style="width:${pct(n, d.total)}%;background:${col};"></div></div>
+            <span class="ins-prog-pct">${pct(n, d.total)}%</span>
+          </div>`).join('')}
+      </div>
+    `;
+
+    overlay.classList.add('open');
+  }
+
+  function closeVocabInsights() {
+    document.getElementById('vocab-insights-overlay').classList.remove('open');
   }
 
   // --- ADD WORD LOGIC ---
@@ -10022,6 +11781,19 @@ By finals, the team had come into their own. Coach Flynn took no victory lap —
     <div style="display:flex; gap:8px; justify-content:flex-end;">
       <button type="button" class="btn-nav" onclick="selectNotebookTextarea()">Select All</button>
       <button type="button" class="btn-nav" onclick="document.getElementById('notebook-word-overlay').style.display='none'">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="vocab-insights-overlay" onclick="if(event.target===this)closeVocabInsights()" style="display:none;">
+  <div class="ins-modal">
+    <div class="ins-header">
+      <h2>📚 Word Insights</h2>
+      <p id="ins-subtitle">Analyzing your vocabulary…</p>
+    </div>
+    <div class="ins-body" id="ins-body"></div>
+    <div style="padding:0 22px 20px; display:flex; justify-content:flex-end;">
+      <button type="button" class="btn-nav" onclick="closeVocabInsights()">Close</button>
     </div>
   </div>
 </div>
