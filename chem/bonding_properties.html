@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Malleability · Ductility · Brittleness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c14; --card:#0f1623; --card2:#141d2e;
+  --bor:#1e2d42; --txt:#e2e8f4; --mut:#64748b;
+  --met:#3b82f6; --met-l:#1d4ed8; --met-d:#0f2d5c; --met-glow:#60a5fa;
+  --ion:#f97316; --ion-l:#c2410c; --ion-d:#431407; --ion-glow:#fb923c;
+  --cation:#f97316; --anion:#a855f7;
+  --green:#22c55e; --red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.65;min-height:100vh;}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.02em;}
+
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#050810 0%,#0d1b30 50%,#050810 100%);padding:3rem 1.5rem 2.5rem;text-align:center;border-bottom:1px solid var(--bor);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(59,130,246,.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(249,115,22,.1) 0%,transparent 60%);}
+.hdr-inner{position:relative;}
+.hdr h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;background:linear-gradient(135deg,#93c5fd,#e2e8f4,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:.6rem;}
+.hdr p{color:#94a3b8;font-size:1rem;max-width:580px;margin:0 auto;}
+.hdr-badges{display:flex;justify-content:center;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap;}
+.hdr-badge{padding:.35rem .9rem;border-radius:20px;font-size:.8rem;font-weight:600;letter-spacing:.04em;}
+.badge-met{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);color:#93c5fd;}
+.badge-ion{background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.4);color:#fdba74;}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:2px;background:#040709;border-bottom:1px solid var(--bor);padding:0 1rem;position:sticky;top:0;z-index:100;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:.7rem 1.1rem;background:transparent;border:none;border-bottom:2px solid transparent;color:#64748b;cursor:pointer;font-family:'Figtree',sans-serif;font-size:.84rem;font-weight:500;white-space:nowrap;transition:.15s;}
+.tab-btn:hover{color:#94a3b8;}
+.tab-btn.active{color:#e2e8f4;border-bottom-color:#3b82f6;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ── LAYOUT ── */
+.page{max-width:1000px;margin:0 auto;padding:2rem 1.25rem;}
+.section-title{font-size:1.5rem;margin-bottom:.3rem;}
+.section-sub{color:var(--mut);margin-bottom:1.5rem;font-size:.9rem;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+@media(max-width:680px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--bor);border-radius:14px;padding:1.3rem;}
+.card-met{border-color:rgba(59,130,246,.3);background:linear-gradient(135deg,var(--met-d) 0%,var(--card) 60%);}
+.card-ion{border-color:rgba(249,115,22,.3);background:linear-gradient(135deg,var(--ion-d) 0%,var(--card) 60%);}
+.card h3{font-size:1.05rem;margin-bottom:.6rem;}
+.card p{font-size:.88rem;color:#a8b4c4;line-height:1.6;}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.73rem;font-weight:600;letter-spacing:.04em;margin-bottom:.5rem;}
+.tag-met{background:rgba(59,130,246,.18);color:#93c5fd;}
+.tag-ion{background:rgba(249,115,22,.15);color:#fdba74;}
+.tag-both{background:rgba(100,116,139,.2);color:#94a3b8;}
+.highlight-met{color:#60a5fa;font-weight:600;}
+.highlight-ion{color:#fb923c;font-weight:600;}
+.highlight-red{color:#f87171;font-weight:600;}
+.rule-box{background:var(--card2);border-left:3px solid var(--met);border-radius:0 10px 10px 0;padding:.7rem 1rem;margin:.8rem 0;font-size:.86rem;color:#93c5fd;font-weight:500;}
+.rule-box.orange{border-left-color:var(--ion);color:#fdba74;}
+
+/* ── STEP CARDS ── */
+.steps{display:flex;flex-direction:column;gap:.8rem;margin-top:1rem;}
+.step-card{display:flex;gap:1rem;background:var(--card);border:1px solid var(--bor);border-radius:12px;padding:1rem 1.2rem;align-items:flex-start;}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;font-family:'JetBrains Mono',monospace;}
+.step-num-met{background:rgba(59,130,246,.2);color:#60a5fa;border:1px solid rgba(59,130,246,.4);}
+.step-num-ion{background:rgba(249,115,22,.15);color:#fb923c;border:1px solid rgba(249,115,22,.35);}
+.step-body h4{font-size:.92rem;margin-bottom:.25rem;}
+.step-body p{font-size:.84rem;color:#94a3b8;margin:0;}
+
+/* ── 3D VIEWER ── */
+.viewer-box{background:#000;border-radius:14px;border:1px solid var(--bor);overflow:hidden;position:relative;}
+.viewer-box canvas{display:block;width:100%!important;}
+.viewer-ctrl{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;background:#060b12;border-top:1px solid var(--bor);}
+.viewer-label{font-size:.78rem;color:var(--mut);}
+.force-btn{padding:.45rem 1.1rem;border:none;border-radius:8px;font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;letter-spacing:.02em;}
+.force-btn-met{background:rgba(59,130,246,.2);color:#93c5fd;border:1px solid rgba(59,130,246,.4);}
+.force-btn-met:hover{background:rgba(59,130,246,.35);}
+.force-btn-ion{background:rgba(249,115,22,.18);color:#fdba74;border:1px solid rgba(249,115,22,.4);}
+.force-btn-ion:hover{background:rgba(249,115,22,.32);}
+.force-btn:disabled{opacity:.4;cursor:default;}
+.reset-btn{padding:.35rem .8rem;border-radius:6px;font-size:.75rem;background:rgba(100,116,139,.15);border:1px solid rgba(100,116,139,.3);color:#64748b;cursor:pointer;margin-left:.5rem;}
+.reset-btn:hover{background:rgba(100,116,139,.25);}
+.viewer-legend{display:flex;flex-wrap:wrap;gap:10px;padding:.6rem 1rem;background:#060b12;font-size:.75rem;color:#64748b;}
+.vleg{display:flex;align-items:center;gap:5px;}
+.vleg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.result-badge{display:none;padding:.3rem .8rem;border-radius:8px;font-size:.78rem;font-weight:600;margin-left:auto;}
+.result-intact{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:#86efac;}
+.result-broken{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5;}
+
+/* ── SVG MECHANISM DIAGRAMS ── */
+.mech-wrap{background:var(--card2);border:1px solid var(--bor);border-radius:12px;padding:1.2rem;margin-top:1.2rem;}
+.mech-wrap h3{font-size:.95rem;margin-bottom:.9rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;font-size:.75rem;}
+.mech-svg-row{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;}
+.mech-frame{flex-shrink:0;text-align:center;}
+.mech-frame svg{display:block;margin:0 auto 5px;}
+.mech-frame .cap{font-size:.72rem;color:#64748b;font-weight:500;}
+
+/* ── COMPARISON TABLE ── */
+.cmp-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.cmp-table th{padding:10px 14px;text-align:left;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;background:var(--card2);color:#64748b;}
+.cmp-table th:nth-child(2){color:#93c5fd;}
+.cmp-table th:nth-child(3){color:#fdba74;}
+.cmp-table td{padding:10px 14px;border-bottom:1px solid var(--bor);vertical-align:top;}
+.cmp-table tr:last-child td{border-bottom:none;}
+.cmp-table tr:hover td{background:rgba(255,255,255,.02);}
+.cmp-yes{color:#86efac;font-weight:600;}
+.cmp-no{color:#f87171;font-weight:600;}
+
+/* ── QUIZ ── */
+.quiz-wrap{max-width:800px;margin:0 auto;}
+.q-card{background:var(--card);border:1px solid var(--bor);border-radius:14px;padding:1.3rem 1.5rem;margin-bottom:1rem;}
+.q-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mut);font-weight:600;letter-spacing:.08em;margin-bottom:.4rem;}
+.q-text{font-size:.95rem;font-weight:500;margin-bottom:.9rem;line-height:1.5;}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+@media(max-width:540px){.q-opts{grid-template-columns:1fr;}}
+.q-opt{padding:.6rem .9rem;border-radius:8px;border:1.5px solid var(--bor);background:var(--card2);color:#a8b4c4;cursor:pointer;font-size:.84rem;text-align:left;transition:.12s;line-height:1.4;}
+.q-opt:hover:not(.locked){border-color:#3b82f6;color:#e2e8f4;background:rgba(59,130,246,.08);}
+.q-opt.sel{border-color:#3b82f6;background:rgba(59,130,246,.1);color:#93c5fd;}
+.q-opt.correct{border-color:#22c55e!important;background:rgba(34,197,94,.12)!important;color:#86efac!important;}
+.q-opt.wrong{border-color:#ef4444!important;background:rgba(239,68,68,.1)!important;color:#fca5a5!important;}
+.q-opt.locked{cursor:default;}
+.q-explain{display:none;margin-top:.75rem;padding:.65rem 1rem;background:rgba(59,130,246,.07);border-left:3px solid #3b82f6;border-radius:0 8px 8px 0;font-size:.83rem;color:#93c5fd;line-height:1.55;}
+.q-explain.show{display:block;}
+.quiz-actions{display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap;}
+.qbtn{padding:.6rem 1.4rem;border-radius:8px;border:none;font-family:'Figtree',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:.15s;}
+.qbtn-submit{background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;}
+.qbtn-submit:hover{background:linear-gradient(135deg,#1e40af,#2563eb);}
+.qbtn-reset{background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid var(--bor);}
+.qbtn-reset:hover{background:rgba(100,116,139,.25);}
+.score-banner{display:none;background:var(--card);border:1px solid var(--bor);border-radius:14px;padding:2rem;text-align:center;margin-bottom:1.2rem;}
+.score-banner.show{display:block;}
+.score-num{font-family:'Fraunces',serif;font-size:3rem;background:linear-gradient(135deg,#60a5fa,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.score-msg{color:#64748b;margin-top:.3rem;font-size:.9rem;}
+.quiz-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem;}
+.quiz-progress{font-size:.82rem;color:var(--mut);}
+
+/* ── OVERVIEW ICONS ── */
+.def-icon{font-size:2.2rem;margin-bottom:.6rem;display:block;}
+.def-card{background:var(--card);border:1px solid var(--bor);border-radius:14px;padding:1.4rem;text-align:center;}
+.def-card h3{font-size:1.1rem;margin-bottom:.5rem;}
+.def-card p{font-size:.84rem;color:#94a3b8;}
+.def-example{margin-top:.7rem;padding:.5rem .8rem;border-radius:8px;font-size:.78rem;font-weight:600;letter-spacing:.03em;}
+.def-example-met{background:rgba(59,130,246,.12);color:#93c5fd;}
+.def-example-ion{background:rgba(249,115,22,.12);color:#fdba74;}
+.key-question{background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(249,115,22,.06));border:1px solid rgba(59,130,246,.2);border-radius:14px;padding:1.3rem;margin:1.5rem 0;text-align:center;}
+.key-question h2{font-size:1.25rem;margin-bottom:.4rem;background:linear-gradient(135deg,#93c5fd,#fdba74);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.key-question p{font-size:.88rem;color:#94a3b8;}
+
+/* ── FORCE DIAGRAM (pure CSS) ── */
+.force-demo{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+.force-panel{background:#000;border-radius:12px;border:1px solid var(--bor);padding:.8rem;text-align:center;}
+.force-panel h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem;}
+.force-panel.metal h4{color:#60a5fa;}
+.force-panel.ionic h4{color:#fb923c;}
+@keyframes slideRight{0%{transform:translateX(0);}50%{transform:translateX(16px);}100%{transform:translateX(0);}}
+@keyframes fracture{0%,60%{transform:none;opacity:1;}80%{transform:translateX(10px) translateY(-5px);opacity:.7;}100%{transform:translateX(20px) translateY(-15px);opacity:0;}}
+@keyframes electronWander{0%{transform:translate(0,0);}25%{transform:translate(5px,-4px);}50%{transform:translate(-3px,6px);}75%{transform:translate(7px,2px);}100%{transform:translate(0,0);}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+<div class="hdr-inner">
+  <h1>Malleability · Ductility · Brittleness</h1>
+  <p>Why metals bend and ionic crystals shatter — explored through bonding, structure, and mechanics</p>
+  <div class="hdr-badges">
+    <span class="hdr-badge badge-met">⚙️ Metallic Bonding</span>
+    <span class="hdr-badge badge-ion">🔶 Ionic Bonding</span>
+  </div>
+</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="overview">🔍 Overview</button>
+  <button class="tab-btn" data-tab="metal">⚙️ Metallic Bonding</button>
+  <button class="tab-btn" data-tab="malleable">🔨 Malleable &amp; Ductile</button>
+  <button class="tab-btn" data-tab="ionic">🔶 Ionic Bonding</button>
+  <button class="tab-btn" data-tab="brittle">💥 Brittleness</button>
+  <button class="tab-btn" data-tab="compare">📊 Comparison</button>
+  <button class="tab-btn" data-tab="quiz">✏️ Quiz</button>
+</nav>
+
+<!-- ════════ OVERVIEW ════════ -->
+<div id="tab-overview" class="tab-content active"><div class="page">
+  <h2 class="section-title">The Core Question</h2>
+  <p class="section-sub">Why can you bend a copper wire with your fingers — but a salt crystal snaps when you drop it?</p>
+
+  <div class="key-question">
+    <h2>It all comes down to what happens at the atomic level when force is applied.</h2>
+    <p>The type of bonding between atoms/ions determines whether a material deforms gracefully or fractures violently.</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="def-card">
+      <span class="def-icon">🔨</span>
+      <div class="tag tag-met">METALLIC ONLY</div>
+      <h3>Malleability</h3>
+      <p>The ability to be <strong>hammered or pressed into thin sheets</strong> without breaking. The material deforms permanently but stays intact.</p>
+      <div class="def-example def-example-met">Gold leaf · Aluminium foil · Copper sheets</div>
+    </div>
+    <div class="def-card">
+      <span class="def-icon">🧵</span>
+      <div class="tag tag-met">METALLIC ONLY</div>
+      <h3>Ductility</h3>
+      <p>The ability to be <strong>drawn or stretched into thin wires</strong> without breaking. The material stretches under tension.</p>
+      <div class="def-example def-example-met">Copper wire · Steel cables · Tungsten filaments</div>
+    </div>
+    <div class="def-card">
+      <span class="def-icon">💥</span>
+      <div class="tag tag-ion">IONIC / COVALENT</div>
+      <h3>Brittleness</h3>
+      <p>Tendency to <strong>fracture suddenly</strong> without significant deformation when stress is applied. No warning — just snap.</p>
+      <div class="def-example def-example-ion">Table salt · Chalk · Glass · Ceramic tiles</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <div class="card" style="border-color:rgba(59,130,246,.25);">
+      <h3 style="margin-bottom:.8rem;">The Two Worlds: How They Respond to Force</h3>
+      <div class="grid-2">
+        <div>
+          <div class="tag tag-met">METAL — Slides</div>
+          <svg viewBox="0 0 280 120" style="width:100%;display:block;margin-top:.5rem;">
+            <defs><radialGradient id="eg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#3b82f6" stop-opacity=".3"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/></radialGradient></defs>
+            <rect x="0" y="0" width="280" height="120" fill="#050a14" rx="8"/>
+            <rect x="10" y="10" width="130" height="100" fill="url(#eg1)" rx="6"/>
+            <!-- Before -->
+            <text x="35" y="22" font-size="9" fill="#60a5fa" font-weight="600" font-family="Figtree,sans-serif">BEFORE FORCE</text>
+            <g fill="#3b82f6" opacity=".15"><ellipse cx="75" cy="60" rx="58" ry="42"/></g>
+            <g fill="#94a3b8" stroke="#475569" stroke-width=".8">
+              <circle cx="45" cy="40" r="8"/><circle cx="70" cy="40" r="8"/><circle cx="95" cy="40" r="8"/><circle cx="120" cy="40" r="8"/>
+              <circle cx="45" cy="65" r="8"/><circle cx="70" cy="65" r="8"/><circle cx="95" cy="65" r="8"/><circle cx="120" cy="65" r="8"/>
+              <circle cx="45" cy="90" r="8"/><circle cx="70" cy="90" r="8"/><circle cx="95" cy="90" r="8"/><circle cx="120" cy="90" r="8"/>
+            </g>
+            <g fill="#60a5fa" opacity=".7"><circle cx="58" cy="53" r="2.5"/><circle cx="82" cy="47" r="2"/><circle cx="105" cy="57" r="2.5"/><circle cx="62" cy="75" r="2"/><circle cx="88" cy="78" r="2.5"/><circle cx="112" cy="72" r="2"/></g>
+            <!-- After (shifted) -->
+            <text x="155" y="22" font-size="9" fill="#86efac" font-weight="600" font-family="Figtree,sans-serif">AFTER FORCE ✓ INTACT</text>
+            <g fill="#3b82f6" opacity=".15"><ellipse cx="215" cy="60" rx="58" ry="42"/></g>
+            <g fill="#94a3b8" stroke="#475569" stroke-width=".8">
+              <circle cx="165" cy="40" r="8"/><circle cx="190" cy="40" r="8"/><circle cx="215" cy="40" r="8"/><circle cx="240" cy="40" r="8"/>
+              <circle cx="175" cy="65" r="8"/><circle cx="200" cy="65" r="8"/><circle cx="225" cy="65" r="8"/><circle cx="250" cy="65" r="8"/>
+              <circle cx="165" cy="90" r="8"/><circle cx="190" cy="90" r="8"/><circle cx="215" cy="90" r="8"/><circle cx="240" cy="90" r="8"/>
+            </g>
+            <g fill="#60a5fa" opacity=".7"><circle cx="183" cy="53" r="2.5"/><circle cx="210" cy="47" r="2"/><circle cx="232" cy="57" r="2.5"/><circle cx="188" cy="75" r="2"/><circle cx="215" cy="78" r="2.5"/><circle cx="242" cy="72" r="2"/></g>
+            <text x="195" y="108" font-size="8" fill="#64748b" font-family="Figtree,sans-serif">layers slide → still bonded</text>
+            <line x1="135" y1="60" x2="152" y2="60" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-g)"/>
+            <defs><marker id="arr-g" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#64748b"/></marker></defs>
+          </svg>
+        </div>
+        <div>
+          <div class="tag tag-ion">IONIC — Fractures</div>
+          <svg viewBox="0 0 280 120" style="width:100%;display:block;margin-top:.5rem;">
+            <rect x="0" y="0" width="280" height="120" fill="#050a14" rx="8"/>
+            <!-- Before: alternating + and - -->
+            <text x="25" y="22" font-size="9" fill="#fb923c" font-weight="600" font-family="Figtree,sans-serif">BEFORE FORCE</text>
+            <g>
+              <circle cx="40" cy="40" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="40" y="44" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="65" cy="40" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="65" y="44" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="90" cy="40" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="90" y="44" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="115" cy="40" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="115" y="44" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="40" cy="65" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="40" y="69" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="65" cy="65" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="65" y="69" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="90" cy="65" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="90" y="69" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="115" cy="65" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="115" y="69" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="40" cy="90" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="40" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="65" cy="90" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="65" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="90" cy="90" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="90" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="115" cy="90" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="115" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            </g>
+            <line x1="135" y1="60" x2="152" y2="60" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-g)"/>
+            <!-- After: shifted → fracture -->
+            <text x="160" y="22" font-size="9" fill="#f87171" font-weight="600" font-family="Figtree,sans-serif">AFTER FORCE 💥 BROKEN</text>
+            <g opacity=".95">
+              <circle cx="165" cy="37" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="165" y="41" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="190" cy="37" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="190" y="41" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="215" cy="37" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="215" y="41" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="240" cy="37" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="240" y="41" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            </g>
+            <!-- Fracture line -->
+            <line x1="158" y1="52" x2="258" y2="52" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,2"/>
+            <g opacity=".95">
+              <circle cx="178" cy="67" r="9" fill="#a855f7" stroke="#c0392b" stroke-width="1.5"/><text x="178" y="71" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="203" cy="67" r="9" fill="#f97316" stroke="#c0392b" stroke-width="1.5"/><text x="203" y="71" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="228" cy="67" r="9" fill="#a855f7" stroke="#c0392b" stroke-width="1.5"/><text x="228" y="71" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="178" cy="90" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="178" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+              <circle cx="203" cy="90" r="9" fill="#a855f7" stroke="#7e22ce" stroke-width=".8"/><text x="203" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+              <circle cx="228" cy="90" r="9" fill="#f97316" stroke="#c2410c" stroke-width=".8"/><text x="228" y="94" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            </g>
+            <text x="165" y="108" font-size="8" fill="#f87171" font-family="Figtree,sans-serif">same charges align → REPEL → crack</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════════ METALLIC BONDING ════════ -->
+<div id="tab-metal" class="tab-content"><div class="page">
+  <div class="tag tag-met" style="margin-bottom:.5rem;">METALLIC BONDING</div>
+  <h2 class="section-title">Structure of a Metal</h2>
+  <p class="section-sub">Positive ion cores locked in a lattice — surrounded by a mobile "sea" of free electrons</p>
+
+  <div class="grid-2" style="margin-bottom:1.2rem;">
+    <div class="card card-met">
+      <h3 style="color:#93c5fd;">Positive Ion Cores</h3>
+      <p>Metal atoms <strong>release their outer electrons</strong>, becoming positive ions (cations). These ions arrange themselves in a <span class="highlight-met">regular, repeating 3D lattice</span> — rows and layers stacked neatly like cannonballs.</p>
+    </div>
+    <div class="card card-met">
+      <h3 style="color:#93c5fd;">The Sea of Electrons</h3>
+      <p>The released electrons are <span class="highlight-met">delocalised</span> — they don't belong to any one atom. They move freely throughout the entire structure, forming an "electron sea" that holds all the positive ions together.</p>
+    </div>
+  </div>
+
+  <div class="rule-box">🔑 Key Insight: The metallic bond is the electrostatic attraction between the <strong>positive ion lattice</strong> and the <strong>surrounding sea of free electrons</strong>. Neither is "in charge" — it's a communal, non-directional bond.</div>
+
+  <div class="viewer-box" style="margin-top:1.2rem;">
+    <canvas id="metalCanvas" height="320"></canvas>
+    <div class="viewer-ctrl">
+      <div>
+        <span class="viewer-label">🖱 Drag to rotate</span>
+        <button class="force-btn force-btn-met" id="metalForceBtn" onclick="applyMetalForce()">⚡ Apply Force</button>
+        <button class="reset-btn" onclick="resetMetal()">Reset</button>
+      </div>
+      <span class="result-badge result-intact" id="metalResult">✓ Still Intact!</span>
+    </div>
+    <div class="viewer-legend">
+      <div class="vleg"><div class="vleg-dot" style="background:#94a3b8;border:1px solid #475569;"></div>Positive metal ions (M⁺)</div>
+      <div class="vleg"><div class="vleg-dot" style="background:#60a5fa;opacity:.8;"></div>Free electrons (sea)</div>
+      <div class="vleg" style="margin-left:auto;color:#475569;font-style:italic;">Layers slide freely</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <h3 style="margin-bottom:.9rem;font-size:1.05rem;">Why is the sea of electrons so special?</h3>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🔄</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">Non-directional</h4>
+        <p>Unlike covalent bonds (fixed angle) or ionic bonds (fixed + & − pattern), the metallic bond has <em>no preferred direction</em>. Electrons flow to wherever they're needed.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">💧</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">Fluid redistribution</h4>
+        <p>When layers move, the electron sea instantly <em>redistributes</em> around the new positions. No bonds need to break and reform — the bond is maintained throughout.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">⚡</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">Electrical conductivity</h4>
+        <p>The same free electrons that enable deformation also carry electrical current — which is why all metals are good electrical conductors.</p>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════════ MALLEABLE & DUCTILE ════════ -->
+<div id="tab-malleable" class="tab-content"><div class="page">
+  <div class="tag tag-met" style="margin-bottom:.5rem;">MECHANISM</div>
+  <h2 class="section-title">Why Metals Are Malleable &amp; Ductile</h2>
+  <p class="section-sub">Step by step: what happens when you hammer a metal or pull it into a wire</p>
+
+  <div class="grid-2" style="margin-bottom:1.2rem;">
+    <div class="card card-met">
+      <h3 style="color:#93c5fd;margin-bottom:.4rem;">🔨 Malleability</h3>
+      <p style="font-size:.85rem;">Ability to be <strong>hammered into sheets</strong>. Force is applied from above — layers spread outward. Gold can be beaten to 0.1 µm thick (100× thinner than a human hair).</p>
+    </div>
+    <div class="card card-met">
+      <h3 style="color:#93c5fd;margin-bottom:.4rem;">🧵 Ductility</h3>
+      <p style="font-size:.85rem;">Ability to be <strong>stretched into wires</strong>. Tension is applied in one direction — layers slide and elongate. 1g of gold can be drawn into 2.4 km of wire.</p>
+    </div>
+  </div>
+
+  <!-- ── 3D VIEWERS: MALLEABILITY + DUCTILITY ── -->
+  <h3 style="margin-bottom:.7rem;font-size:1rem;">3D Simulations — Watch It Happen</h3>
+  <div class="grid-2" style="margin-bottom:1.5rem;align-items:start;">
+    <!-- MALLEABILITY -->
+    <div>
+      <div class="tag tag-met" style="margin-bottom:.5rem;">🔨 MALLEABILITY — hammered into a sheet</div>
+      <div class="viewer-box">
+        <canvas id="mallCanvas" height="280"></canvas>
+        <div class="viewer-ctrl">
+          <div>
+            <span class="viewer-label">🖱 Drag to rotate</span>
+            <button class="force-btn force-btn-met" id="mallForceBtn" onclick="applyMallForce()">🔨 Strike!</button>
+            <button class="reset-btn" onclick="resetMall()">Reset</button>
+          </div>
+          <span class="result-badge result-intact" id="mallResult">✓ Sheet formed!</span>
+        </div>
+        <div class="viewer-legend">
+          <div class="vleg"><div class="vleg-dot" style="background:#94a3b8;border:1px solid #475569;"></div>Metal ions</div>
+          <div class="vleg"><div class="vleg-dot" style="background:#60a5fa;opacity:.8;"></div>Free electrons</div>
+          <div class="vleg"><div class="vleg-dot" style="background:#777;"></div>Hammer</div>
+        </div>
+      </div>
+    </div>
+    <!-- DUCTILITY -->
+    <div>
+      <div class="tag tag-met" style="margin-bottom:.5rem;">🧵 DUCTILITY — stretched into a wire</div>
+      <div class="viewer-box">
+        <canvas id="ductCanvas" height="280"></canvas>
+        <div class="viewer-ctrl">
+          <div>
+            <span class="viewer-label">🖱 Drag to rotate</span>
+            <button class="force-btn force-btn-met" id="ductForceBtn" onclick="applyDuctForce()">↔ Pull!</button>
+            <button class="reset-btn" onclick="resetDuct()">Reset</button>
+          </div>
+          <span class="result-badge result-intact" id="ductResult">✓ Wire formed!</span>
+        </div>
+        <div class="viewer-legend">
+          <div class="vleg"><div class="vleg-dot" style="background:#94a3b8;border:1px solid #475569;"></div>Metal ions</div>
+          <div class="vleg"><div class="vleg-dot" style="background:#60a5fa;opacity:.8;"></div>Free electrons</div>
+          <div class="vleg"><div class="vleg-dot" style="background:#888;"></div>Grips/jaws</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:.8rem;font-size:1rem;">Step-by-step mechanism: Layers Sliding</h3>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num step-num-met">1</div>
+      <div class="step-body">
+        <h4>Initial state — regular lattice</h4>
+        <p>Metal ions sit in neat rows. The electron sea flows uniformly around and between all ions, holding them in place with equal force in all directions. The lattice is in equilibrium.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-met">2</div>
+      <div class="step-body">
+        <h4>Force applied — stress on the lattice</h4>
+        <p>A hammer blow or tension applies stress. This force acts along a <strong>slip plane</strong> — a layer of ions is pushed to slide relative to the layer below it.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-met">3</div>
+      <div class="step-body">
+        <h4>Layers slide — the electron sea flows with them</h4>
+        <p>The top layer shifts. Crucially, <span class="highlight-met">the free electrons instantly redistribute</span> around the ions in their new positions. The ions never face each other directly — electrons are always between them, maintaining attraction.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-met">4</div>
+      <div class="step-body">
+        <h4>New stable configuration — NO fracture</h4>
+        <p>The ions settle into a new equilibrium. The lattice structure is <strong>preserved</strong> — just shifted. The metal is permanently deformed but completely intact. Metallic bonds were never broken, just temporarily rearranged.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mechanism SVG Diagram -->
+  <div class="mech-wrap">
+    <h3>LAYER-BY-LAYER VISUAL</h3>
+    <div class="mech-svg-row">
+      <!-- Frame 1: Initial -->
+      <div class="mech-frame">
+        <svg width="160" height="130" viewBox="0 0 160 130">
+          <rect x="0" y="0" width="160" height="130" fill="#050a14" rx="6"/>
+          <rect x="5" y="5" width="150" height="120" fill="rgba(59,130,246,.06)" rx="4"/>
+          <!-- electron sea -->
+          <g fill="#3b82f6" opacity=".25"><ellipse cx="80" cy="65" rx="68" ry="55"/></g>
+          <!-- electron dots -->
+          <g fill="#60a5fa" opacity=".6"><circle cx="42" cy="52" r="2"/><circle cx="78" cy="45" r="2"/><circle cx="115" cy="55" r="2"/><circle cx="55" cy="78" r="2"/><circle cx="95" cy="83" r="2"/><circle cx="130" cy="68" r="2"/></g>
+          <!-- row 1 -->
+          <g fill="#78909c" stroke="#455a64" stroke-width=".8">
+            <circle cx="28" cy="28" r="11"/><text x="28" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="28" r="11"/><text x="58" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="28" r="11"/><text x="88" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="28" r="11"/><text x="118" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+          <!-- row 2 -->
+          <g fill="#78909c" stroke="#455a64" stroke-width=".8">
+            <circle cx="28" cy="65" r="11"/><text x="28" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="65" r="11"/><text x="58" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="65" r="11"/><text x="88" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="65" r="11"/><text x="118" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+          <!-- row 3 -->
+          <g fill="#78909c" stroke="#455a64" stroke-width=".8">
+            <circle cx="28" cy="102" r="11"/><text x="28" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="102" r="11"/><text x="58" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="102" r="11"/><text x="88" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="102" r="11"/><text x="118" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+        </svg>
+        <div class="cap">① Initial lattice</div>
+      </div>
+      <!-- Frame 2: Force arrow -->
+      <div class="mech-frame" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;">
+        <svg width="48" height="130" viewBox="0 0 48 130">
+          <rect x="0" y="0" width="48" height="130" fill="#050a14" rx="6"/>
+          <line x1="24" y1="90" x2="24" y2="50" stroke="#60a5fa" stroke-width="2"/>
+          <line x1="24" y1="90" x2="16" y2="82" stroke="#60a5fa" stroke-width="2"/>
+          <line x1="24" y1="90" x2="32" y2="82" stroke="#60a5fa" stroke-width="2"/>
+          <text x="24" y="108" text-anchor="middle" font-size="8" fill="#60a5fa" font-weight="600" font-family="Figtree,sans-serif">FORCE</text>
+          <text x="24" y="120" text-anchor="middle" font-size="8" fill="#64748b" font-family="Figtree,sans-serif">→</text>
+        </svg>
+      </div>
+      <!-- Frame 3: Sliding -->
+      <div class="mech-frame">
+        <svg width="160" height="130" viewBox="0 0 160 130">
+          <rect x="0" y="0" width="160" height="130" fill="#050a14" rx="6"/>
+          <rect x="5" y="5" width="150" height="120" fill="rgba(59,130,246,.06)" rx="4"/>
+          <g fill="#3b82f6" opacity=".25"><ellipse cx="80" cy="65" rx="68" ry="55"/></g>
+          <g fill="#60a5fa" opacity=".6"><circle cx="50" cy="52" r="2"/><circle cx="92" cy="45" r="2"/><circle cx="120" cy="55" r="2"/><circle cx="45" cy="78" r="2"/><circle cx="88" cy="83" r="2"/><circle cx="128" cy="68" r="2"/></g>
+          <!-- row 1: shifted right +15px -->
+          <text x="20" y="20" font-size="7.5" fill="#60a5fa" font-family="Figtree,sans-serif">← sliding →</text>
+          <line x1="10" y1="46" x2="150" y2="46" stroke="#1d4ed8" stroke-width=".5" stroke-dasharray="3,2"/>
+          <g fill="#78909c" stroke="#3b82f6" stroke-width="1.2">
+            <circle cx="43" cy="28" r="11"/><text x="43" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="73" cy="28" r="11"/><text x="73" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="103" cy="28" r="11"/><text x="103" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="133" cy="28" r="11"/><text x="133" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+          <!-- rows 2&3 fixed -->
+          <g fill="#78909c" stroke="#455a64" stroke-width=".8">
+            <circle cx="28" cy="65" r="11"/><text x="28" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="65" r="11"/><text x="58" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="65" r="11"/><text x="88" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="65" r="11"/><text x="118" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="28" cy="102" r="11"/><text x="28" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="102" r="11"/><text x="58" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="102" r="11"/><text x="88" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="102" r="11"/><text x="118" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+        </svg>
+        <div class="cap">② Top layer slides</div>
+      </div>
+      <div class="mech-frame" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <svg width="32" height="130" viewBox="0 0 32 130"><rect x="0" y="0" width="32" height="130" fill="#050a14" rx="6"/><text x="16" y="70" text-anchor="middle" font-size="14" fill="#22c55e">→</text></svg>
+      </div>
+      <!-- Frame 4: New stable state -->
+      <div class="mech-frame">
+        <svg width="170" height="130" viewBox="0 0 170 130">
+          <rect x="0" y="0" width="170" height="130" fill="#050a14" rx="6"/>
+          <rect x="5" y="5" width="160" height="120" fill="rgba(34,197,94,.04)" rx="4"/>
+          <g fill="#22c55e" opacity=".12"><ellipse cx="85" cy="65" rx="75" ry="55"/></g>
+          <g fill="#60a5fa" opacity=".6"><circle cx="55" cy="52" r="2"/><circle cx="90" cy="45" r="2"/><circle cx="125" cy="55" r="2"/><circle cx="48" cy="78" r="2"/><circle cx="92" cy="83" r="2"/><circle cx="135" cy="68" r="2"/></g>
+          <g fill="#78909c" stroke="#455a64" stroke-width=".8">
+            <circle cx="43" cy="28" r="11"/><text x="43" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="73" cy="28" r="11"/><text x="73" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="103" cy="28" r="11"/><text x="103" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="133" cy="28" r="11"/><text x="133" y="32" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="28" cy="65" r="11"/><text x="28" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="65" r="11"/><text x="58" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="65" r="11"/><text x="88" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="65" r="11"/><text x="118" y="69" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="28" cy="102" r="11"/><text x="28" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="58" cy="102" r="11"/><text x="58" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="88" cy="102" r="11"/><text x="88" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+            <circle cx="118" cy="102" r="11"/><text x="118" y="106" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">+</text>
+          </g>
+          <text x="85" y="122" text-anchor="middle" font-size="8" fill="#22c55e" font-weight="600" font-family="Figtree,sans-serif">✓ NEW STABLE LATTICE</text>
+        </svg>
+        <div class="cap">③ New equilibrium — intact!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-box" style="margin-top:1.2rem;">🔑 <strong>The electron sea is the key.</strong> Because electrons are free to move everywhere, they redistribute instantly when layers shift — so the metallic bond is maintained in the new configuration. No bonds are broken. That is why metals don't fracture.</div>
+</div></div>
+
+<!-- ════════ IONIC BONDING ════════ -->
+<div id="tab-ionic" class="tab-content"><div class="page">
+  <div class="tag tag-ion" style="margin-bottom:.5rem;">IONIC BONDING</div>
+  <h2 class="section-title">Structure of an Ionic Crystal</h2>
+  <p class="section-sub">Alternating positive and negative ions locked in a rigid 3D lattice by electrostatic forces</p>
+
+  <div class="grid-2" style="margin-bottom:1.2rem;">
+    <div class="card card-ion">
+      <h3 style="color:#fdba74;">Cations (Positive)</h3>
+      <p>Metal atoms <strong>completely transfer electrons</strong> to non-metal atoms, forming positive ions (e.g. Na⁺, Ca²⁺, Mg²⁺). These have fixed positions in the lattice.</p>
+    </div>
+    <div class="card card-ion">
+      <h3 style="color:#d8b4fe;">Anions (Negative)</h3>
+      <p>Non-metal atoms gain electrons to become negative ions (e.g. Cl⁻, O²⁻, F⁻). They alternate with cations throughout the crystal.</p>
+    </div>
+  </div>
+
+  <div class="rule-box orange">🔑 Key: Every ion is surrounded by ions of <strong>opposite charge</strong>. Na⁺ is surrounded by 6 Cl⁻, each Cl⁻ by 6 Na⁺. The pattern must stay alternating — disrupting it brings like charges together, which is catastrophic.</div>
+
+  <div class="viewer-box" style="margin-top:1.2rem;">
+    <canvas id="ionicCanvas" height="320"></canvas>
+    <div class="viewer-ctrl">
+      <div>
+        <span class="viewer-label">🖱 Drag to rotate</span>
+        <button class="force-btn force-btn-ion" id="ionicForceBtn" onclick="applyIonicForce()">⚡ Apply Force</button>
+        <button class="reset-btn" onclick="resetIonic()">Reset</button>
+      </div>
+      <span class="result-badge result-broken" id="ionicResult">💥 Fractured!</span>
+    </div>
+    <div class="viewer-legend">
+      <div class="vleg"><div class="vleg-dot" style="background:#f97316;"></div>Na⁺ (cation)</div>
+      <div class="vleg"><div class="vleg-dot" style="background:#a855f7;"></div>Cl⁻ (anion)</div>
+      <div class="vleg" style="margin-left:auto;color:#475569;font-style:italic;">Rigid: same charges repel if shifted</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;">
+    <h3 style="margin-bottom:.8rem;font-size:1rem;">Why is the ionic lattice so rigid?</h3>
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">⚡</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">Strong electrostatic forces</h4>
+        <p>Coulomb's law: force ∝ q₁×q₂/r². Opposite charges attract powerfully. In NaCl, each Na⁺ is attracted to 6 Cl⁻ simultaneously — from all six sides.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🎯</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">Directional constraint</h4>
+        <p>Unlike metallic bonds, ionic bonds <em>require a specific spatial arrangement</em>. Opposite charges must alternate — the pattern cannot be violated without triggering catastrophic repulsion.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">🚫</div>
+        <h4 style="font-size:.9rem;margin-bottom:.3rem;">No free electrons</h4>
+        <p>Electrons are fully transferred — none are free to move. There is no "sea" to redistribute when ions shift. This absence is what makes deformation impossible.</p>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════════ BRITTLENESS ════════ -->
+<div id="tab-brittle" class="tab-content"><div class="page">
+  <div class="tag tag-ion" style="margin-bottom:.5rem;">MECHANISM</div>
+  <h2 class="section-title">Why Ionic Crystals Are Brittle</h2>
+  <p class="section-sub">The same strong forces that hold the lattice together instantly tear it apart when disrupted</p>
+
+  <div class="card card-ion" style="margin-bottom:1.2rem;">
+    <h3 style="color:#fdba74;margin-bottom:.4rem;">The Fatal Shift</h3>
+    <p>In an ionic crystal, the rigid alternating pattern is everything. When a force causes layers to shift by even <strong>one ion spacing</strong>, ions of the same charge end up next to each other. Like charges <span class="highlight-red">violently repel</span> — this repulsion is as strong as the original attraction was — and the crystal shatters along that plane.</p>
+  </div>
+
+  <h3 style="margin-bottom:.8rem;font-size:1rem;">Step-by-step mechanism: The Fracture</h3>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num step-num-ion">1</div>
+      <div class="step-body">
+        <h4>Initial state — perfectly alternating lattice</h4>
+        <p>Every + ion is surrounded by − ions and vice versa. All electrostatic forces are balanced — attraction in every direction. The crystal is in stable, low-energy equilibrium.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-ion">2</div>
+      <div class="step-body">
+        <h4>Force applied — stress builds at a slip plane</h4>
+        <p>An impact or applied stress concentrates at a crystallographic plane. The upper half of the lattice begins to shift relative to the lower half along this slip plane.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-ion">3</div>
+      <div class="step-body">
+        <h4>⚠️ Critical shift — like charges align!</h4>
+        <p>After shifting just one ion width, the pattern flips: <span class="highlight-red">Na⁺ now sits next to Na⁺</span>, and Cl⁻ next to Cl⁻. The electrostatic repulsion between these identical ions is <em>enormous</em> — the same Coulomb force that used to attract now repels.</p>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num step-num-ion">4</div>
+      <div class="step-body">
+        <h4>💥 Fracture — instantaneous and complete</h4>
+        <p>The repulsive forces shoot the two halves apart. The crystal fractures cleanly along the slip plane — a flat, crystallographic cleavage face. No deformation, no warning. The crystal has a characteristic <em>cleavage angle</em> matching its crystal structure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ionic fracture mechanism SVG -->
+  <div class="mech-wrap">
+    <h3>THE FATAL SHIFT — STEP BY STEP</h3>
+    <div class="mech-svg-row">
+      <!-- Frame 1: normal -->
+      <div class="mech-frame">
+        <svg width="155" height="135" viewBox="0 0 155 135">
+          <rect x="0" y="0" width="155" height="135" fill="#050a14" rx="6"/>
+          <g>
+            <circle cx="22" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="22" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="52" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="52" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="82" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="82" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="112" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="112" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="142" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="142" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="22" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="22" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="52" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="52" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="82" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="82" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="112" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="112" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="142" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="142" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+          <line x1="5" y1="68" x2="150" y2="68" stroke="#374151" stroke-width=".8" stroke-dasharray="3,2"/>
+          <text x="5" y="63" font-size="7" fill="#374151" font-family="Figtree,sans-serif">slip plane</text>
+          <g>
+            <circle cx="22" cy="82" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="22" y="86" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="52" cy="82" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="52" y="86" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="82" cy="82" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="82" y="86" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="112" cy="82" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="112" y="86" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="142" cy="82" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="142" y="86" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="22" cy="112" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="22" y="116" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="52" cy="112" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="52" y="116" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="82" cy="112" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="82" y="116" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="112" cy="112" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="112" y="116" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="142" cy="112" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="142" y="116" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+        </svg>
+        <div class="cap">① Stable alternating lattice</div>
+      </div>
+      <!-- Arrow -->
+      <div class="mech-frame" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="38" height="135" viewBox="0 0 38 135"><rect x="0" y="0" width="38" height="135" fill="#050a14" rx="6"/>
+          <line x1="19" y1="100" x2="19" y2="60" stroke="#fb923c" stroke-width="1.8"/>
+          <line x1="19" y1="100" x2="11" y2="88" stroke="#fb923c" stroke-width="1.8"/>
+          <line x1="19" y1="100" x2="27" y2="88" stroke="#fb923c" stroke-width="1.8"/>
+          <text x="19" y="118" text-anchor="middle" font-size="8" fill="#fb923c" font-weight="600" font-family="Figtree,sans-serif">HIT!</text>
+        </svg>
+      </div>
+      <!-- Frame 2: shifted — like charges meet -->
+      <div class="mech-frame">
+        <svg width="180" height="135" viewBox="0 0 180 135">
+          <rect x="0" y="0" width="180" height="135" fill="#050a14" rx="6"/>
+          <!-- Top rows shifted right by 15px — ORANGE BORDER = danger zone -->
+          <g>
+            <circle cx="37" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="37" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="67" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="67" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="97" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="97" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="127" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="127" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="157" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="157" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="37" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="37" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="67" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="67" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="97" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="97" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="127" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="127" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="157" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="157" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+          <!-- Danger highlight on interface -->
+          <rect x="5" y="63" width="170" height="14" fill="rgba(239,68,68,.15)" rx="2"/>
+          <line x1="5" y1="68" x2="175" y2="68" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3,1"/>
+          <text x="90" y="78" text-anchor="middle" font-size="7" fill="#f87171" font-weight="700" font-family="Figtree,sans-serif">⚠ SAME CHARGES NOW ADJACENT!</text>
+          <!-- Bottom rows: same positions, different pattern now adjacent -->
+          <g>
+            <circle cx="22" cy="87" r="11" fill="#f97316" stroke="#ef4444" stroke-width="2"/><text x="22" y="91" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="52" cy="87" r="11" fill="#a855f7" stroke="#ef4444" stroke-width="2"/><text x="52" y="91" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="82" cy="87" r="11" fill="#f97316" stroke="#ef4444" stroke-width="2"/><text x="82" y="91" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="112" cy="87" r="11" fill="#a855f7" stroke="#ef4444" stroke-width="2"/><text x="112" y="91" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="142" cy="87" r="11" fill="#f97316" stroke="#ef4444" stroke-width="2"/><text x="142" y="91" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="22" cy="117" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="22" y="121" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="52" cy="117" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="52" y="121" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="82" cy="117" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="82" y="121" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="112" cy="117" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="112" y="121" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="142" cy="117" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="142" y="121" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+          <!-- Repulsion arrows -->
+          <g stroke="#ef4444" stroke-width="1.5" marker-end="url(#ra)" marker-start="url(#ra2)">
+            <line x1="22" y1="76" x2="22" y2="62"/>
+            <line x1="82" y1="76" x2="82" y2="62"/>
+            <line x1="142" y1="76" x2="142" y2="62"/>
+          </g>
+          <defs>
+            <marker id="ra" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ef4444"/></marker>
+            <marker id="ra2" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto" markerUnitstoDate="strokeWidth"><path d="M4,0 L0,2 L4,4 Z" fill="#ef4444"/></marker>
+          </defs>
+        </svg>
+        <div class="cap">② Layer shifts — like charges meet!</div>
+      </div>
+      <div class="mech-frame" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="32" height="135" viewBox="0 0 32 135"><rect x="0" y="0" width="32" height="135" fill="#050a14" rx="6"/><text x="16" y="72" text-anchor="middle" font-size="14" fill="#ef4444">→</text></svg>
+      </div>
+      <!-- Frame 3: Fractured -->
+      <div class="mech-frame">
+        <svg width="160" height="135" viewBox="0 0 160 135">
+          <rect x="0" y="0" width="160" height="135" fill="#050a14" rx="6"/>
+          <!-- Top half flying away -->
+          <g transform="translate(0,-15)" opacity=".9">
+            <circle cx="22" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="22" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="52" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="52" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="82" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="82" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="112" cy="22" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="112" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="142" cy="22" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="142" y="26" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="22" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="22" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="52" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="52" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="82" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="82" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="112" cy="52" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="112" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="142" cy="52" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="142" y="56" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+          <!-- Crack lightning bolt -->
+          <polyline points="30,62 60,58 40,70 90,55 70,72 130,62" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round"/>
+          <text x="80" y="78" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">💥 FRACTURE</text>
+          <!-- Bottom half stays -->
+          <g transform="translate(0,15)" opacity=".9">
+            <circle cx="22" cy="73" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="22" y="77" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="52" cy="73" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="52" y="77" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="82" cy="73" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="82" y="77" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="112" cy="73" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="112" y="77" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="142" cy="73" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="142" y="77" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="22" cy="103" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="22" y="107" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="52" cy="103" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="52" y="107" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="82" cy="103" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="82" y="107" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+            <circle cx="112" cy="103" r="11" fill="#f97316" stroke="#c2410c" stroke-width="1"/><text x="112" y="107" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">+</text>
+            <circle cx="142" cy="103" r="11" fill="#a855f7" stroke="#7e22ce" stroke-width="1"/><text x="142" y="107" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">−</text>
+          </g>
+        </svg>
+        <div class="cap">③ Crystal fractures cleanly</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-box orange" style="margin-top:1.2rem;">🔑 <strong>No electron sea = no escape.</strong> When ionic layers shift, there are no free electrons to redistribute and smooth over the pattern change. Like charges collide head-on. The repulsion is instant and total — fracture is unavoidable.</div>
+
+  <!-- ── 3D BRITTLENESS SHATTERING VIEWER ── -->
+  <h3 style="margin:1.5rem 0 .7rem;font-size:1rem;">3D Simulation — The Complete Fracture</h3>
+  <div class="viewer-box">
+    <canvas id="brittCanvas" height="340"></canvas>
+    <div class="viewer-ctrl">
+      <div>
+        <span class="viewer-label">🖱 Drag to rotate</span>
+        <button class="force-btn force-btn-ion" id="brittForceBtn" onclick="applyBrittForce()">💥 Strike Crystal!</button>
+        <button class="reset-btn" onclick="resetBritt()">Reset</button>
+      </div>
+      <span class="result-badge result-broken" id="brittResult">💥 Shattered!</span>
+    </div>
+    <div class="viewer-legend">
+      <div class="vleg"><div class="vleg-dot" style="background:#f97316;"></div>Na⁺ cation</div>
+      <div class="vleg"><div class="vleg-dot" style="background:#a855f7;"></div>Cl⁻ anion</div>
+      <div class="vleg"><div class="vleg-dot" style="background:#ef4444;"></div>Like-charge repulsion zone</div>
+      <div class="vleg" style="margin-left:auto;font-style:italic;color:#475569;">Watch the fracture plane form then shatter</div>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════════ COMPARISON ════════ -->
+<div id="tab-compare" class="tab-content"><div class="page">
+  <h2 class="section-title">Side-by-Side Comparison</h2>
+  <p class="section-sub">Everything you need to know at a glance</p>
+
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--bor);margin-bottom:1.5rem;">
+  <table class="cmp-table">
+    <thead><tr>
+      <th>Property / Feature</th>
+      <th>⚙️ Metallic Bonding</th>
+      <th>🔶 Ionic Bonding</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Bond type</strong></td><td>Electrostatic attraction: +ions ↔ electron sea</td><td>Electrostatic attraction: cation ↔ anion</td></tr>
+      <tr><td><strong>Free electrons?</strong></td><td><span class="cmp-yes">Yes — delocalised electron sea</span></td><td><span class="cmp-no">No — all electrons fixed</span></td></tr>
+      <tr><td><strong>Bond directionality</strong></td><td>Non-directional — electrons flow anywhere</td><td>Directional — must alternate +/−</td></tr>
+      <tr><td><strong>Malleable?</strong></td><td><span class="cmp-yes">✓ Yes — layers slide freely</span></td><td><span class="cmp-no">✗ No — layers fracture</span></td></tr>
+      <tr><td><strong>Ductile?</strong></td><td><span class="cmp-yes">✓ Yes — same mechanism as malleability</span></td><td><span class="cmp-no">✗ No — brittle fracture</span></td></tr>
+      <tr><td><strong>Brittle?</strong></td><td><span class="cmp-no">✗ No — deforms instead of fracturing</span></td><td><span class="cmp-yes">✓ Yes — layer shift → like charges → fracture</span></td></tr>
+      <tr><td><strong>What happens on force?</strong></td><td>Layers slide; electron sea redistributes; new stable lattice forms</td><td>Layer shifts → + meets + → repulsion → clean fracture</td></tr>
+      <tr><td><strong>Fracture face</strong></td><td>Rough, jagged (if it breaks at all)</td><td>Flat, smooth cleavage plane — characteristic crystal angles</td></tr>
+      <tr><td><strong>Electrical conductivity</strong></td><td>Excellent (free electrons carry current)</td><td>Only when molten or dissolved (ions mobile)</td></tr>
+      <tr><td><strong>Examples</strong></td><td>Cu, Fe, Au, Al, Na</td><td>NaCl, MgO, CaCO₃, CaF₂</td></tr>
+      <tr><td><strong>Real-world property use</strong></td><td>Gold foil, copper wiring, steel beams, aluminium cans</td><td>Salt grinding, ceramic tiles, chalk, glass cutting</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 style="margin-bottom:.9rem;font-size:1.1rem;">The ONE key difference that explains everything</h3>
+  <div class="grid-2">
+    <div class="card" style="border-color:rgba(59,130,246,.35);background:linear-gradient(135deg,rgba(29,78,216,.12),transparent);">
+      <div class="tag tag-met">METAL — Free electrons present</div>
+      <h3 style="color:#93c5fd;margin:.5rem 0;">Electron sea = shock absorber</h3>
+      <p style="font-size:.88rem;">When layers shift under force, the electron sea instantly flows to surround the ions in their new positions. <span class="highlight-met">No bonds break. No repulsion develops.</span> The metal simply takes a new shape. This is why it can be hammered flat, bent, or drawn into wires.</p>
+    </div>
+    <div class="card" style="border-color:rgba(249,115,22,.35);background:linear-gradient(135deg,rgba(194,65,12,.12),transparent);">
+      <div class="tag tag-ion">IONIC — No free electrons</div>
+      <h3 style="color:#fdba74;margin:.5rem 0;">No buffer = instant catastrophe</h3>
+      <p style="font-size:.88rem;">When layers shift, there is nothing to smooth the transition. Like charges collide. <span class="highlight-red">The repulsion is as powerful as the original attraction</span> — but now acting outward. The lattice tears itself apart along the cleavage plane.</p>
+    </div>
+  </div>
+</div></div>
+
+<!-- ════════ QUIZ ════════ -->
+<div id="tab-quiz" class="tab-content"><div class="page">
+<div class="quiz-wrap">
+  <div class="quiz-hdr">
+    <div>
+      <h2 style="font-size:1.4rem;margin-bottom:.2rem;">Knowledge Check</h2>
+      <div style="color:var(--mut);font-size:.85rem;">15 questions on metallic bonding, ionic bonding, and mechanical properties</div>
+    </div>
+    <div class="quiz-progress" id="quiz-prog">0/15 answered</div>
+  </div>
+  <div class="score-banner" id="score-banner">
+    <div class="score-num" id="score-num"></div>
+    <div class="score-msg" id="score-msg"></div>
+  </div>
+  <div id="quiz-cards"></div>
+  <div class="quiz-actions">
+    <button class="qbtn qbtn-submit" id="q-submit">Submit Quiz</button>
+    <button class="qbtn qbtn-reset" id="q-reset">Reset</button>
+  </div>
+</div>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ── TAB SWITCHING ──
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = document.getElementById('tab-'+btn.dataset.tab);
+    tab.classList.add('active');
+    if(btn.dataset.tab==='metal' && !metalInited) initMetalViewer();
+    if(btn.dataset.tab==='ionic' && !ionicInited) initIonicViewer();
+    if(btn.dataset.tab==='malleable' && !mallInited){ initMallViewer(); initDuctViewer(); }
+    if(btn.dataset.tab==='brittle' && !brittInited) initBrittViewer();
+  });
+});
+
+// ══════════════════════════════
+// METAL 3D VIEWER
+// ══════════════════════════════
+let metalInited=false, metalRenderer, metalScene, metalCamera, metalGrp;
+let metalAtoms=[], metalElectrons=[], metalTopAtoms=[];
+let metalAnim={active:false, t:0, phase:'slide'}; // phase: slide|reset
+let metalDrag={on:false,lx:0,ly:0};
+const metalResult = document.getElementById('metalResult');
+const metalForceBtn = document.getElementById('metalForceBtn');
+
+function initMetalViewer(){
+  metalInited=true;
+  const canvas=document.getElementById('metalCanvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=320;
+  metalRenderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  metalRenderer.setSize(W,320);
+  metalRenderer.setClearColor(0x020510,1);
+  metalScene=new THREE.Scene();
+  metalScene.fog=new THREE.FogExp2(0x020510,.09);
+  metalCamera=new THREE.PerspectiveCamera(42,W/320,.1,100);
+  metalCamera.position.set(0,2.5,9);
+  metalCamera.lookAt(0,0,0);
+  metalScene.add(new THREE.AmbientLight(0x6688aa,.5));
+  const dl=new THREE.DirectionalLight(0xaabbff,.9); dl.position.set(5,8,5); metalScene.add(dl);
+  const dl2=new THREE.DirectionalLight(0x4466ff,.3); dl2.position.set(-4,-3,-4); metalScene.add(dl2);
+  metalGrp=new THREE.Group(); metalScene.add(metalGrp);
+
+  // Build 4x3x4 lattice of positive ions
+  const matIon=new THREE.MeshPhongMaterial({color:0x8eaabb,shininess:80,specular:0x4488cc});
+  const geoIon=new THREE.SphereGeometry(.4,20,20);
+  const rows=['bottom','bottom','top','top'];
+  for(let x=0;x<4;x++) for(let y=0;y<4;y++) for(let z=0;z<4;z++){
+    const m=new THREE.Mesh(geoIon,matIon.clone());
+    m.position.set((x-1.5)*1.8,(y-1.5)*1.8,(z-1.5)*1.8);
+    m.userData={ox:m.position.x,oy:m.position.y,oz:m.position.z,isTop:y>=2};
+    metalGrp.add(m);
+    metalAtoms.push(m);
+    if(y>=2) metalTopAtoms.push(m);
+  }
+
+  // Free electrons — small glowing blue spheres
+  const matEl=new THREE.MeshPhongMaterial({color:0x3b82f6,emissive:0x1d4ed8,emissiveIntensity:.8,transparent:true,opacity:.75});
+  const geoEl=new THREE.SphereGeometry(.12,10,10);
+  for(let i=0;i<70;i++){
+    const m=new THREE.Mesh(geoEl,matEl.clone());
+    m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*7,(Math.random()-0.5)*7);
+    m.userData={vx:(Math.random()-.5)*.04,vy:(Math.random()-.5)*.04,vz:(Math.random()-.5)*.04};
+    metalGrp.add(m);
+    metalElectrons.push(m);
+  }
+
+  // Drag to rotate
+  canvas.addEventListener('mousedown',e=>{metalDrag.on=true;metalDrag.lx=e.clientX;metalDrag.ly=e.clientY;});
+  window.addEventListener('mouseup',()=>{metalDrag.on=false;});
+  window.addEventListener('mousemove',e=>{
+    if(!metalDrag.on)return;
+    metalGrp.rotation.y+=(e.clientX-metalDrag.lx)*.012;
+    metalGrp.rotation.x+=(e.clientY-metalDrag.ly)*.012;
+    metalDrag.lx=e.clientX; metalDrag.ly=e.clientY;
+  });
+  canvas.addEventListener('touchstart',e=>{metalDrag.on=true;metalDrag.lx=e.touches[0].clientX;metalDrag.ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>{metalDrag.on=false;});
+  canvas.addEventListener('touchmove',e=>{
+    if(!metalDrag.on)return;
+    metalGrp.rotation.y+=(e.touches[0].clientX-metalDrag.lx)*.012;
+    metalGrp.rotation.x+=(e.touches[0].clientY-metalDrag.ly)*.012;
+    metalDrag.lx=e.touches[0].clientX; metalDrag.ly=e.touches[0].clientY;
+  },{passive:true});
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!metalDrag.on) metalGrp.rotation.y+=.006;
+
+    // Animate electrons wandering
+    metalElectrons.forEach(el=>{
+      el.position.x+=el.userData.vx; el.position.y+=el.userData.vy; el.position.z+=el.userData.vz;
+      if(Math.abs(el.position.x)>3.8){el.userData.vx*=-1;}
+      if(Math.abs(el.position.y)>3.8){el.userData.vy*=-1;}
+      if(Math.abs(el.position.z)>3.8){el.userData.vz*=-1;}
+    });
+
+    // Animate layer sliding
+    if(metalAnim.active){
+      metalAnim.t+=0.018;
+      const slide=Math.sin(metalAnim.t*Math.PI)*1.8;
+      metalTopAtoms.forEach(a=>{a.position.x=a.userData.ox+slide;});
+      if(metalAnim.t>=1){
+        metalAnim.active=false;
+        metalAnim.t=0;
+        metalTopAtoms.forEach(a=>{a.position.x=a.userData.ox;});
+        metalResult.style.display='flex';
+        metalForceBtn.disabled=false;
+        setTimeout(()=>{metalResult.style.display='none';},3000);
+      }
+    }
+    metalRenderer.render(metalScene,metalCamera);
+  })();
+}
+
+window.applyMetalForce=function(){
+  if(!metalInited||metalAnim.active) return;
+  metalForceBtn.disabled=true;
+  metalResult.style.display='none';
+  metalAnim.active=true;
+  metalAnim.t=0;
+};
+window.resetMetal=function(){
+  metalAnim.active=false; metalAnim.t=0;
+  metalTopAtoms.forEach(a=>{a.position.x=a.userData.ox;});
+  metalResult.style.display='none';
+  metalForceBtn.disabled=false;
+};
+
+// ══════════════════════════════
+// IONIC 3D VIEWER
+// ══════════════════════════════
+let ionicInited=false, ionicRenderer, ionicScene, ionicCamera, ionicGrp;
+let ionicAtoms=[], ionicTopAtoms=[];
+let ionicAnim={active:false, t:0, phase:'shift'}; // shift → fracture → done
+let ionicDrag={on:false,lx:0,ly:0};
+const ionicResult = document.getElementById('ionicResult');
+const ionicForceBtn = document.getElementById('ionicForceBtn');
+
+function initIonicViewer(){
+  ionicInited=true;
+  const canvas=document.getElementById('ionicCanvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=320;
+  ionicRenderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  ionicRenderer.setSize(W,320);
+  ionicRenderer.setClearColor(0x080306,1);
+  ionicScene=new THREE.Scene();
+  ionicScene.fog=new THREE.FogExp2(0x080306,.09);
+  ionicCamera=new THREE.PerspectiveCamera(42,W/320,.1,100);
+  ionicCamera.position.set(0,2.5,9);
+  ionicCamera.lookAt(0,0,0);
+  ionicScene.add(new THREE.AmbientLight(0xffaa88,.4));
+  const dl=new THREE.DirectionalLight(0xffcc99,.9); dl.position.set(5,8,5); ionicScene.add(dl);
+  const dl2=new THREE.DirectionalLight(0xaa88ff,.4); dl2.position.set(-4,-3,-4); ionicScene.add(dl2);
+  ionicGrp=new THREE.Group(); ionicScene.add(ionicGrp);
+
+  const matNa=new THREE.MeshPhongMaterial({color:0xf97316,shininess:90,specular:0xff8844,emissive:0x441500,emissiveIntensity:.3});
+  const matCl=new THREE.MeshPhongMaterial({color:0xa855f7,shininess:90,specular:0xcc88ff,emissive:0x220044,emissiveIntensity:.3});
+  const geoIon=new THREE.SphereGeometry(.42,22,22);
+
+  for(let x=0;x<4;x++) for(let y=0;y<4;y++) for(let z=0;z<4;z++){
+    const isCat=(x+y+z)%2===0;
+    const m=new THREE.Mesh(geoIon,(isCat?matNa:matCl).clone());
+    m.position.set((x-1.5)*1.85,(y-1.5)*1.85,(z-1.5)*1.85);
+    m.userData={ox:m.position.x,oy:m.position.y,oz:m.position.z,isTop:y>=2,isCat};
+    ionicGrp.add(m);
+    ionicAtoms.push(m);
+    if(y>=2) ionicTopAtoms.push(m);
+  }
+
+  canvas.addEventListener('mousedown',e=>{ionicDrag.on=true;ionicDrag.lx=e.clientX;ionicDrag.ly=e.clientY;});
+  window.addEventListener('mouseup',()=>{ionicDrag.on=false;});
+  window.addEventListener('mousemove',e=>{
+    if(!ionicDrag.on)return;
+    ionicGrp.rotation.y+=(e.clientX-ionicDrag.lx)*.012;
+    ionicGrp.rotation.x+=(e.clientY-ionicDrag.ly)*.012;
+    ionicDrag.lx=e.clientX; ionicDrag.ly=e.clientY;
+  });
+  canvas.addEventListener('touchstart',e=>{ionicDrag.on=true;ionicDrag.lx=e.touches[0].clientX;ionicDrag.ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>{ionicDrag.on=false;});
+  canvas.addEventListener('touchmove',e=>{
+    if(!ionicDrag.on)return;
+    ionicGrp.rotation.y+=(e.touches[0].clientX-ionicDrag.lx)*.012;
+    ionicGrp.rotation.x+=(e.touches[0].clientY-ionicDrag.ly)*.012;
+    ionicDrag.lx=e.touches[0].clientX; ionicDrag.ly=e.touches[0].clientY;
+  },{passive:true});
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!ionicDrag.on) ionicGrp.rotation.y+=.006;
+
+    if(ionicAnim.active){
+      ionicAnim.t+=0.012;
+      if(ionicAnim.phase==='shift'){
+        // Shift top half by 0.9 ion spacings over 2 seconds, then fracture
+        const prog=Math.min(ionicAnim.t/1.5,1);
+        const shift=prog*1.85*0.9;
+        ionicTopAtoms.forEach(a=>{a.position.x=a.userData.ox+shift;});
+        if(prog>=1){ionicAnim.phase='fracture';ionicAnim.t=0;
+          // Turn red to show repulsion
+          ionicTopAtoms.forEach(a=>{a.material.emissive.set(0x440000);a.material.emissiveIntensity=1.0;a.material.color.set(0xff2222);});
+        }
+      } else if(ionicAnim.phase==='fracture'){
+        // Shoot top half upward rapidly
+        const prog=ionicAnim.t/1.0;
+        ionicTopAtoms.forEach(a=>{
+          a.position.y=a.userData.oy+prog*3;
+          a.position.x=a.userData.ox+1.85*0.9+prog*1.5;
+          a.material.opacity=Math.max(0,1-prog*.6);
+          a.material.transparent=true;
+        });
+        if(prog>=1){ionicAnim.active=false;ionicAnim.t=0;ionicAnim.phase='shift';
+          ionicResult.style.display='flex';ionicForceBtn.disabled=false;}
+      }
+    }
+    ionicRenderer.render(ionicScene,ionicCamera);
+  })();
+}
+
+window.applyIonicForce=function(){
+  if(!ionicInited||ionicAnim.active) return;
+  ionicForceBtn.disabled=true;
+  ionicResult.style.display='none';
+  ionicAnim.active=true; ionicAnim.t=0; ionicAnim.phase='shift';
+};
+window.resetIonic=function(){
+  ionicAnim.active=false; ionicAnim.t=0; ionicAnim.phase='shift';
+  ionicTopAtoms.forEach(a=>{
+    a.position.set(a.userData.ox,a.userData.oy,a.userData.oz);
+    a.material.transparent=false; a.material.opacity=1;
+    a.material.emissiveIntensity=.3;
+    a.material.color.set(a.userData.isCat?0xf97316:0xa855f7);
+    a.material.emissive.set(a.userData.isCat?0x441500:0x220044);
+  });
+  ionicResult.style.display='none';
+  ionicForceBtn.disabled=false;
+};
+
+// ══════════════════════════════
+// MALLEABILITY 3D VIEWER
+// ══════════════════════════════
+let mallInited=false, mallRenderer, mallScene, mallCamera, mallGrp, hammerGrp;
+let mallAtoms=[], mallElectrons=[];
+let mallAnim={active:false,t:0,phase:'descend'}; // descend→impact→rise
+let mallDrag={on:false,lx:0,ly:0};
+const mallResult=document.getElementById('mallResult');
+const mallForceBtn=document.getElementById('mallForceBtn');
+
+function initMallViewer(){
+  mallInited=true;
+  const canvas=document.getElementById('mallCanvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=280;
+  mallRenderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  mallRenderer.setSize(W,280);
+  mallRenderer.setClearColor(0x020510,1);
+  mallScene=new THREE.Scene();
+  mallScene.fog=new THREE.FogExp2(0x020510,.07);
+  mallCamera=new THREE.PerspectiveCamera(42,W/280,.1,100);
+  mallCamera.position.set(0,3.5,10); mallCamera.lookAt(0,0,0);
+  mallScene.add(new THREE.AmbientLight(0x6688aa,.5));
+  const dl=new THREE.DirectionalLight(0xaabbff,.9); dl.position.set(5,10,5); mallScene.add(dl);
+  const dl2=new THREE.DirectionalLight(0x4466ff,.3); dl2.position.set(-4,-3,-4); mallScene.add(dl2);
+  mallGrp=new THREE.Group(); mallScene.add(mallGrp);
+
+  // Hammer: head + handle as a group, positioned above
+  hammerGrp=new THREE.Group();
+  const headMat=new THREE.MeshPhongMaterial({color:0x778899,shininess:120,specular:0xaabbcc});
+  const handleMat=new THREE.MeshPhongMaterial({color:0x7a4a2a,shininess:40});
+  const hammerHead=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.4,0.65,24),headMat);
+  hammerHead.rotation.z=Math.PI/2; // lay cylinder on its side → flat striking face
+  const hammerHandle=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.18,3.2,12),handleMat);
+  hammerHandle.position.set(0,2.0,0);
+  hammerGrp.add(hammerHead);
+  hammerGrp.add(hammerHandle);
+  hammerGrp.position.set(0,6.5,0);
+  mallScene.add(hammerGrp);
+
+  // 5×3×5 metal ion lattice
+  const matIon=new THREE.MeshPhongMaterial({color:0x8eaabb,shininess:80,specular:0x4488cc});
+  const geoIon=new THREE.SphereGeometry(.38,18,18);
+  for(let x=0;x<5;x++) for(let y=0;y<3;y++) for(let z=0;z<5;z++){
+    const m=new THREE.Mesh(geoIon,matIon.clone());
+    m.position.set((x-2)*1.7,(y-1)*1.7,(z-2)*1.7);
+    m.userData={ox:m.position.x,oy:m.position.y,oz:m.position.z};
+    mallGrp.add(m); mallAtoms.push(m);
+  }
+  // Electrons
+  const matEl=new THREE.MeshPhongMaterial({color:0x3b82f6,emissive:0x1d4ed8,emissiveIntensity:.9,transparent:true,opacity:.75});
+  for(let i=0;i<65;i++){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),matEl.clone());
+    m.position.set((Math.random()-.5)*9,(Math.random()-.5)*6,(Math.random()-.5)*9);
+    m.userData={vx:(Math.random()-.5)*.05,vy:(Math.random()-.5)*.05,vz:(Math.random()-.5)*.05};
+    mallGrp.add(m); mallElectrons.push(m);
+  }
+
+  // Drag
+  canvas.addEventListener('mousedown',e=>{mallDrag.on=true;mallDrag.lx=e.clientX;mallDrag.ly=e.clientY;});
+  window.addEventListener('mouseup',()=>{mallDrag.on=false;});
+  window.addEventListener('mousemove',e=>{if(!mallDrag.on)return;mallGrp.rotation.y+=(e.clientX-mallDrag.lx)*.012;mallGrp.rotation.x+=(e.clientY-mallDrag.ly)*.012;mallDrag.lx=e.clientX;mallDrag.ly=e.clientY;});
+  canvas.addEventListener('touchstart',e=>{mallDrag.on=true;mallDrag.lx=e.touches[0].clientX;mallDrag.ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>{mallDrag.on=false;});
+  canvas.addEventListener('touchmove',e=>{if(!mallDrag.on)return;mallGrp.rotation.y+=(e.touches[0].clientX-mallDrag.lx)*.012;mallGrp.rotation.x+=(e.touches[0].clientY-mallDrag.ly)*.012;mallDrag.lx=e.touches[0].clientX;mallDrag.ly=e.touches[0].clientY;},{passive:true});
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!mallDrag.on) mallGrp.rotation.y+=.005;
+    // Wander electrons
+    mallElectrons.forEach(el=>{
+      el.position.x+=el.userData.vx; el.position.y+=el.userData.vy; el.position.z+=el.userData.vz;
+      if(Math.abs(el.position.x)>4.5)el.userData.vx*=-1;
+      if(Math.abs(el.position.y)>3.2)el.userData.vy*=-1;
+      if(Math.abs(el.position.z)>4.5)el.userData.vz*=-1;
+    });
+    if(mallAnim.active){
+      mallAnim.t+=0.016;
+      if(mallAnim.phase==='descend'){
+        // Hammer drops from y=6.5 → y=1.8 (just above top atoms)
+        const p=Math.min(mallAnim.t/0.5,1);
+        hammerGrp.position.y=6.5-(6.5-1.8)*p;
+        if(p>=1){mallAnim.phase='impact';mallAnim.t=0;}
+      } else if(mallAnim.phase==='impact'){
+        // Atoms squash Y, spread X and Z smoothly
+        const p=Math.min(mallAnim.t/0.55,1);
+        const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2; // ease in-out
+        mallAtoms.forEach(a=>{
+          a.position.y=a.userData.oy*(1-0.72*ease);
+          a.position.x=a.userData.ox*(1+0.65*ease);
+          a.position.z=a.userData.oz*(1+0.65*ease);
+          // Flatten the spheres too
+          a.scale.y=1-0.55*ease; a.scale.x=1+0.25*ease; a.scale.z=1+0.25*ease;
+        });
+        // Electrons spread with atoms
+        mallElectrons.forEach(el=>{
+          if(!el.userData.sy){el.userData.sy=1;}
+          el.scale.y=1-0.55*ease;
+        });
+        // Hammer bounces: slight downward then up
+        hammerGrp.position.y=1.8+Math.sin(mallAnim.t*Math.PI)*0.6;
+        if(p>=1){mallAnim.phase='rise';mallAnim.t=0;}
+      } else if(mallAnim.phase==='rise'){
+        // Hammer lifts away
+        const p=Math.min(mallAnim.t/0.55,1);
+        hammerGrp.position.y=1.8+(6.5-1.8)*p;
+        if(p>=1){
+          mallAnim.active=false; mallAnim.t=0; mallAnim.phase='descend';
+          mallResult.style.display='flex'; mallForceBtn.disabled=false;
+          setTimeout(()=>mallResult.style.display='none',3500);
+        }
+      }
+    }
+    mallRenderer.render(mallScene,mallCamera);
+  })();
+}
+
+window.applyMallForce=function(){
+  if(!mallInited||mallAnim.active)return;
+  mallForceBtn.disabled=true; mallResult.style.display='none';
+  mallAnim.active=true; mallAnim.t=0; mallAnim.phase='descend';
+};
+window.resetMall=function(){
+  mallAnim.active=false; mallAnim.t=0; mallAnim.phase='descend';
+  if(hammerGrp) hammerGrp.position.y=6.5;
+  mallAtoms.forEach(a=>{a.position.set(a.userData.ox,a.userData.oy,a.userData.oz);a.scale.set(1,1,1);});
+  mallElectrons.forEach(el=>el.scale.set(1,1,1));
+  mallResult.style.display='none'; mallForceBtn.disabled=false;
+};
+
+// ══════════════════════════════
+// DUCTILITY 3D VIEWER
+// ══════════════════════════════
+let ductInited=false, ductRenderer, ductScene, ductCamera, ductGrp;
+let ductAtoms=[], ductElectrons=[], ductLeftJaw, ductRightJaw;
+let ductAnim={active:false,t:0};
+let ductDrag={on:false,lx:0,ly:0};
+const ductResult=document.getElementById('ductResult');
+const ductForceBtn=document.getElementById('ductForceBtn');
+
+function initDuctViewer(){
+  ductInited=true;
+  const canvas=document.getElementById('ductCanvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=280;
+  ductRenderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  ductRenderer.setSize(W,280);
+  ductRenderer.setClearColor(0x020510,1);
+  ductScene=new THREE.Scene();
+  ductScene.fog=new THREE.FogExp2(0x020510,.07);
+  ductCamera=new THREE.PerspectiveCamera(42,W/280,.1,100);
+  ductCamera.position.set(0,2.5,10); ductCamera.lookAt(0,0,0);
+  ductScene.add(new THREE.AmbientLight(0x6688aa,.5));
+  const dl=new THREE.DirectionalLight(0xaabbff,.9); dl.position.set(5,8,5); ductScene.add(dl);
+  ductGrp=new THREE.Group(); ductScene.add(ductGrp);
+
+  // Two metallic jaws/grips — left and right
+  const jawMat=new THREE.MeshPhongMaterial({color:0x667788,shininess:120});
+  ductLeftJaw=new THREE.Mesh(new THREE.BoxGeometry(0.55,3.8,3.8),jawMat);
+  ductLeftJaw.position.set(-4.0,0,0);
+  ductScene.add(ductLeftJaw);
+  ductRightJaw=new THREE.Mesh(new THREE.BoxGeometry(0.55,3.8,3.8),jawMat);
+  ductRightJaw.position.set(4.0,0,0);
+  ductScene.add(ductRightJaw);
+
+  // Tension arrows — thin cones pointing outward from the jaws
+  const arrowMat=new THREE.MeshPhongMaterial({color:0x60a5fa,emissive:0x1d4ed8,emissiveIntensity:.5});
+  const leftArr=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.9,12),arrowMat);
+  leftArr.rotation.z=Math.PI/2; leftArr.position.set(-4.85,0,0); ductScene.add(leftArr);
+  const rightArr=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.9,12),arrowMat);
+  rightArr.rotation.z=-Math.PI/2; rightArr.position.set(4.85,0,0); ductScene.add(rightArr);
+  ductLeftJaw.userData={leftArr,rightArr};
+
+  // 4×4×4 lattice (will stretch in X)
+  const matIon=new THREE.MeshPhongMaterial({color:0x8eaabb,shininess:80,specular:0x4488cc});
+  const geoIon=new THREE.SphereGeometry(.38,18,18);
+  for(let x=0;x<4;x++) for(let y=0;y<4;y++) for(let z=0;z<4;z++){
+    const m=new THREE.Mesh(geoIon,matIon.clone());
+    m.position.set((x-1.5)*1.7,(y-1.5)*1.7,(z-1.5)*1.7);
+    m.userData={ox:m.position.x,oy:m.position.y,oz:m.position.z};
+    ductGrp.add(m); ductAtoms.push(m);
+  }
+  // Electrons
+  const matEl=new THREE.MeshPhongMaterial({color:0x3b82f6,emissive:0x1d4ed8,emissiveIntensity:.9,transparent:true,opacity:.75});
+  for(let i=0;i<55;i++){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),matEl.clone());
+    m.position.set((Math.random()-.5)*7,(Math.random()-.5)*7,(Math.random()-.5)*7);
+    m.userData={vx:(Math.random()-.5)*.05,vy:(Math.random()-.5)*.05,vz:(Math.random()-.5)*.05};
+    ductGrp.add(m); ductElectrons.push(m);
+  }
+
+  // Drag
+  canvas.addEventListener('mousedown',e=>{ductDrag.on=true;ductDrag.lx=e.clientX;ductDrag.ly=e.clientY;});
+  window.addEventListener('mouseup',()=>{ductDrag.on=false;});
+  window.addEventListener('mousemove',e=>{if(!ductDrag.on)return;ductGrp.rotation.y+=(e.clientX-ductDrag.lx)*.012;ductGrp.rotation.x+=(e.clientY-ductDrag.ly)*.012;ductDrag.lx=e.clientX;ductDrag.ly=e.clientY;});
+  canvas.addEventListener('touchstart',e=>{ductDrag.on=true;ductDrag.lx=e.touches[0].clientX;ductDrag.ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>{ductDrag.on=false;});
+  canvas.addEventListener('touchmove',e=>{if(!ductDrag.on)return;ductGrp.rotation.y+=(e.touches[0].clientX-ductDrag.lx)*.012;ductGrp.rotation.x+=(e.touches[0].clientY-ductDrag.ly)*.012;ductDrag.lx=e.touches[0].clientX;ductDrag.ly=e.touches[0].clientY;},{passive:true});
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!ductDrag.on) ductGrp.rotation.y+=.005;
+    ductElectrons.forEach(el=>{
+      el.position.x+=el.userData.vx; el.position.y+=el.userData.vy; el.position.z+=el.userData.vz;
+      if(Math.abs(el.position.x)>5.5)el.userData.vx*=-1;
+      if(Math.abs(el.position.y)>3.5)el.userData.vy*=-1;
+      if(Math.abs(el.position.z)>3.5)el.userData.vz*=-1;
+    });
+    if(ductAnim.active){
+      ductAnim.t+=0.013;
+      const p=Math.min(ductAnim.t/1.4,1);
+      const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+      // Atoms stretch X, compress Y and Z
+      ductAtoms.forEach(a=>{
+        a.position.x=a.userData.ox*(1+1.65*ease);
+        a.position.y=a.userData.oy*(1-0.52*ease);
+        a.position.z=a.userData.oz*(1-0.52*ease);
+        a.scale.x=1+0.8*ease; a.scale.y=1-0.45*ease; a.scale.z=1-0.45*ease;
+      });
+      // Jaws pull apart
+      ductLeftJaw.position.x=-4.0-(3.2*ease);
+      ductRightJaw.position.x=4.0+(3.2*ease);
+      const arr=ductLeftJaw.userData;
+      if(arr.leftArr) arr.leftArr.position.x=-4.85-(3.2*ease);
+      if(arr.rightArr) arr.rightArr.position.x=4.85+(3.2*ease);
+      if(p>=1){
+        ductAnim.active=false; ductAnim.t=0;
+        ductResult.style.display='flex'; ductForceBtn.disabled=false;
+        setTimeout(()=>ductResult.style.display='none',3500);
+      }
+    }
+    ductRenderer.render(ductScene,ductCamera);
+  })();
+}
+
+window.applyDuctForce=function(){
+  if(!ductInited||ductAnim.active)return;
+  ductForceBtn.disabled=true; ductResult.style.display='none';
+  ductAnim.active=true; ductAnim.t=0;
+};
+window.resetDuct=function(){
+  ductAnim.active=false; ductAnim.t=0;
+  ductAtoms.forEach(a=>{a.position.set(a.userData.ox,a.userData.oy,a.userData.oz);a.scale.set(1,1,1);});
+  if(ductLeftJaw){ductLeftJaw.position.x=-4.0; ductRightJaw.position.x=4.0;}
+  const arr=ductLeftJaw&&ductLeftJaw.userData;
+  if(arr&&arr.leftArr){arr.leftArr.position.x=-4.85;arr.rightArr.position.x=4.85;}
+  ductResult.style.display='none'; ductForceBtn.disabled=false;
+};
+
+// ══════════════════════════════
+// BRITTLENESS SHATTERING VIEWER
+// ══════════════════════════════
+let brittInited=false, brittRenderer, brittScene, brittCamera, brittGrp;
+let brittAtoms=[], brittTopAtoms=[];
+let brittAnim={active:false,t:0,phase:'shift'}; // shift→flash→shatter→done
+let brittDrag={on:false,lx:0,ly:0};
+const brittResult=document.getElementById('brittResult');
+const brittForceBtn=document.getElementById('brittForceBtn');
+
+function initBrittViewer(){
+  brittInited=true;
+  const canvas=document.getElementById('brittCanvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=340;
+  brittRenderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  brittRenderer.setSize(W,340);
+  brittRenderer.setClearColor(0x080204,1);
+  brittScene=new THREE.Scene();
+  brittScene.fog=new THREE.FogExp2(0x080204,.075);
+  brittCamera=new THREE.PerspectiveCamera(42,W/340,.1,100);
+  brittCamera.position.set(0,3.0,11); brittCamera.lookAt(0,0,0);
+  brittScene.add(new THREE.AmbientLight(0xffaa88,.45));
+  const dl=new THREE.DirectionalLight(0xffcc99,.85); dl.position.set(5,10,5); brittScene.add(dl);
+  const dl2=new THREE.DirectionalLight(0xaa88ff,.4); dl2.position.set(-4,-3,-4); brittScene.add(dl2);
+  brittGrp=new THREE.Group(); brittScene.add(brittGrp);
+
+  // 4×4×4 ionic lattice with alternating ions
+  const matNa=new THREE.MeshPhongMaterial({color:0xf97316,shininess:90,specular:0xff8844,emissive:0x441500,emissiveIntensity:.35});
+  const matCl=new THREE.MeshPhongMaterial({color:0xa855f7,shininess:90,specular:0xcc88ff,emissive:0x220044,emissiveIntensity:.35});
+  const geoIon=new THREE.SphereGeometry(.42,22,22);
+
+  for(let x=0;x<5;x++) for(let y=0;y<5;y++) for(let z=0;z<5;z++){
+    const isCat=(x+y+z)%2===0;
+    const m=new THREE.Mesh(geoIon,(isCat?matNa:matCl).clone());
+    m.position.set((x-2)*1.82,(y-2)*1.82,(z-2)*1.82);
+    // Random shattering velocities (used during fracture phase)
+    const vx=(m.position.x*0.15)+(Math.random()-.5)*0.18;
+    const vy=(m.position.y*0.1)+(Math.random())*0.12+0.05;
+    const vz=(m.position.z*0.15)+(Math.random()-.5)*0.18;
+    const rx=(Math.random()-.5)*.06, ry=(Math.random()-.5)*.06, rz=(Math.random()-.5)*.06;
+    m.userData={ox:m.position.x,oy:m.position.y,oz:m.position.z,isTop:y>=2,isCat,vx,vy,vz,rx,ry,rz};
+    brittGrp.add(m); brittAtoms.push(m);
+    if(y>=2) brittTopAtoms.push(m);
+  }
+
+  // Drag
+  canvas.addEventListener('mousedown',e=>{brittDrag.on=true;brittDrag.lx=e.clientX;brittDrag.ly=e.clientY;});
+  window.addEventListener('mouseup',()=>{brittDrag.on=false;});
+  window.addEventListener('mousemove',e=>{if(!brittDrag.on)return;brittGrp.rotation.y+=(e.clientX-brittDrag.lx)*.012;brittGrp.rotation.x+=(e.clientY-brittDrag.ly)*.012;brittDrag.lx=e.clientX;brittDrag.ly=e.clientY;});
+  canvas.addEventListener('touchstart',e=>{brittDrag.on=true;brittDrag.lx=e.touches[0].clientX;brittDrag.ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>{brittDrag.on=false;});
+  canvas.addEventListener('touchmove',e=>{if(!brittDrag.on)return;brittGrp.rotation.y+=(e.touches[0].clientX-brittDrag.lx)*.012;brittGrp.rotation.x+=(e.touches[0].clientY-brittDrag.ly)*.012;brittDrag.lx=e.touches[0].clientX;brittDrag.ly=e.touches[0].clientY;},{passive:true});
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    if(!brittDrag.on) brittGrp.rotation.y+=.005;
+
+    if(brittAnim.active){
+      brittAnim.t+=0.014;
+
+      if(brittAnim.phase==='shift'){
+        // Smoothly slide top half by ~1 ion spacing in X
+        const p=Math.min(brittAnim.t/0.9,1);
+        const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+        brittTopAtoms.forEach(a=>{a.position.x=a.userData.ox+ease*1.82;});
+        if(p>=1){
+          // Flash the boundary ions red
+          brittAtoms.forEach(a=>{
+            const atBoundary=(a.userData.isTop&&a.userData.oy<-0.5)||((!a.userData.isTop)&&a.userData.oy>0.5);
+            if(atBoundary){a.material.color.set(0xff2020);a.material.emissive.set(0x880000);a.material.emissiveIntensity=1.2;}
+          });
+          brittAnim.phase='flash'; brittAnim.t=0;
+        }
+      } else if(brittAnim.phase==='flash'){
+        // Brief pause to show the repulsion (0.4s), then shatter
+        if(brittAnim.t>0.4){
+          // Assign shatter velocities — make them diverge from the fracture plane
+          brittAnim.phase='shatter'; brittAnim.t=0;
+        }
+      } else if(brittAnim.phase==='shatter'){
+        const p=brittAnim.t;
+        // ALL atoms fly outward with their pre-assigned velocities
+        brittAtoms.forEach(a=>{
+          a.position.x=a.userData.ox+(a.userData.isTop?1.82:0)+a.userData.vx*p*60;
+          a.position.y=a.userData.oy+a.userData.vy*p*60-(4.9*p*p); // gravity
+          a.position.z=a.userData.oz+a.userData.vz*p*60;
+          a.rotation.x+=a.userData.rx; a.rotation.y+=a.userData.ry; a.rotation.z+=a.userData.rz;
+          // Fade
+          a.material.transparent=true;
+          a.material.opacity=Math.max(0,1-p*1.1);
+        });
+        if(p>0.9){
+          brittAnim.active=false; brittAnim.t=0; brittAnim.phase='shift';
+          brittResult.style.display='flex'; brittForceBtn.disabled=false;
+        }
+      }
+    }
+    brittRenderer.render(brittScene,brittCamera);
+  })();
+}
+
+window.applyBrittForce=function(){
+  if(!brittInited||brittAnim.active)return;
+  brittForceBtn.disabled=true; brittResult.style.display='none';
+  brittAnim.active=true; brittAnim.t=0; brittAnim.phase='shift';
+};
+window.resetBritt=function(){
+  brittAnim.active=false; brittAnim.t=0; brittAnim.phase='shift';
+  brittAtoms.forEach(a=>{
+    a.position.set(a.userData.ox,a.userData.oy,a.userData.oz);
+    a.rotation.set(0,0,0);
+    a.material.transparent=false; a.material.opacity=1;
+    a.material.color.set(a.userData.isCat?0xf97316:0xa855f7);
+    a.material.emissive.set(a.userData.isCat?0x441500:0x220044);
+    a.material.emissiveIntensity=0.35;
+  });
+  brittResult.style.display='none'; brittForceBtn.disabled=false;
+};
+
+// ══════════════════════════════
+// QUIZ
+// ══════════════════════════════
+const QS=[
+  {q:'What property describes a material that can be hammered into thin sheets without breaking?',opts:['Ductility','Malleability','Brittleness','Elasticity'],ans:1,exp:'Malleability is specifically the property of being able to be hammered or pressed into thin sheets. Gold is the most malleable metal — it can be beaten to leaf thinner than 100 nanometres.'},
+  {q:'What property describes a material that can be drawn into thin wires under tension?',opts:['Malleability','Brittleness','Ductility','Viscosity'],ans:2,exp:'Ductility is the ability to be drawn or pulled into thin wires without fracturing. Copper is highly ductile, making it ideal for electrical wiring.'},
+  {q:'A salt crystal shatters cleanly when struck. This property is called:',opts:['Malleability','Ductility','Plasticity','Brittleness'],ans:3,exp:'Brittleness describes a material that fractures suddenly under stress with little or no deformation beforehand. Ionic crystals like NaCl are classic brittle materials.'},
+  {q:'In metallic bonding, the "sea of electrons" refers to:',opts:['Water molecules trapped in the metal','Delocalised electrons that are free to move through the entire structure','Electrons fixed between specific pairs of atoms','Negative ions surrounding the metal cation'],ans:1,exp:'In metallic bonding, metal atoms release their outer electrons which become delocalised — they do not belong to any single atom and can move freely throughout the entire metallic structure.'},
+  {q:'When a metal is hammered, what happens to the electron sea?',opts:['It breaks apart, weakening the metal','It disappears temporarily then reforms','It instantly redistributes around the ions in their new positions','It escapes from the surface of the metal'],ans:2,exp:'The electron sea is non-directional and fluid. When metal layers slide to new positions, the free electrons instantly flow to surround the ions in those new positions, maintaining the metallic bond throughout.'},
+  {q:'Why can metal layers slide past each other without the bond breaking?',opts:['The ions are attracted to each other directly','The electron sea flows with the ions, maintaining the electrostatic attraction','Metal ions are negatively charged and repel','The bonds are covalent and flexible'],ans:1,exp:'The metallic bond is between positive ion cores and the surrounding electron sea — not between specific pairs of ions. Since the electron sea can move freely to any position, the bond is maintained even when layers shift.'},
+  {q:'In an ionic crystal lattice, what pattern must be maintained?',opts:['All ions must be the same charge','Cations and anions must strictly alternate throughout','Cations must outnumber anions by 2:1','Ions must be arranged in a hexagonal pattern only'],ans:1,exp:'In an ionic lattice, cations and anions must strictly alternate — every positive ion is surrounded by negative ions and vice versa. This alternating pattern is essential for the electrostatic forces to be attractive (opposite charges) rather than repulsive (like charges).'},
+  {q:'When a layer in an ionic crystal shifts by one ion spacing, what immediately happens?',opts:['The crystal becomes more stable','Like charges (+ next to + and − next to −) end up adjacent, causing repulsion','The ions exchange positions harmlessly','The electron sea absorbs the stress'],ans:1,exp:'Shifting one ion spacing flips the pattern — where cation (Na⁺) previously faced anion (Cl⁻), it now faces another cation (Na⁺). This brings identical charges together, generating enormous electrostatic repulsion.'},
+  {q:'Why is the cleavage face of a broken ionic crystal flat and smooth (not jagged)?',opts:['Ionic crystals are soft and cut easily','Fracture occurs along crystallographic planes where like charges align — a defined, flat plane through the lattice','Random fracture always produces flat surfaces','The ions melt at the fracture point'],ans:1,exp:'The shift that causes fracture occurs along a defined crystallographic plane — a specific flat slice through the lattice where the alternating pattern breaks down simultaneously. This produces the characteristic flat, smooth cleavage faces.'},
+  {q:'Which property do metals have that ionic crystals do NOT, which explains the difference in mechanical behaviour?',opts:['Higher melting point','Regular lattice structure','Delocalised (free) electrons that can redistribute during deformation','Larger atoms with more electrons'],ans:2,exp:'The key difference is delocalised electrons. Metals have a "sea" of free electrons that flows to maintain bonding when layers slide. Ionic crystals have no free electrons — all electrons are fixed in a rigid alternating pattern that cannot accommodate layer shifts.'},
+  {q:'Gold can be beaten into gold leaf just 100 nanometres thick. Which property is this?',opts:['Ductility','Malleability','Brittleness','Conductivity'],ans:1,exp:'Beating into thin sheets is malleability. Gold is the most malleable of all metals — its highly delocalised electron sea and the way its atoms pack together allow extraordinary deformation without fracture.'},
+  {q:'Why do metals generally conduct electricity well?',opts:['Their ions are positively charged','They have delocalised electrons that can carry charge through the structure','They have a regular crystal lattice','Their bonds are very strong'],ans:1,exp:'The same delocalised electrons that enable malleability and ductility also carry electrical current. When a voltage is applied, free electrons drift in one direction through the metal, constituting an electric current.'},
+  {q:'An ionic compound CAN conduct electricity in which of these conditions?',opts:['As a solid crystal at room temperature','Never — ionic compounds cannot conduct','When molten (liquid) or dissolved in water, where ions are free to move','Only when hammered into a thin sheet'],ans:2,exp:'In solid state, ions are fixed in the lattice and cannot move — no conductivity. When melted or dissolved, the ions become free to migrate through the liquid, allowing electrical conduction. This is different from metals, which conduct in all states.'},
+  {q:'A student says: "CCl₄ (tetrachloromethane) is brittle because it has ionic bonds." What is wrong with this statement?',opts:['CCl₄ is actually malleable','CCl₄ has covalent bonds, not ionic bonds. However, many covalent solids (especially network covalent) are indeed brittle for different reasons','CCl₄ has metallic bonds','Nothing — the statement is completely correct'],ans:1,exp:'CCl₄ is a covalent molecule, not an ionic compound. Brittleness can arise from covalent network solids (like diamond, glass) too — though for different reasons involving fixed, directional covalent bonds. The student confused two different bond types.'},
+  {q:'Both malleability and ductility arise from the same underlying mechanism in metals. What is that shared mechanism?',opts:['Metal ions rotating in place to accommodate stress','Electrons temporarily leaving the metal during deformation','Layers of positive ions sliding past each other while the electron sea continuously redistributes to maintain the metallic bond','Metal atoms forming temporary covalent bonds during deformation'],ans:2,exp:'Both properties share the same mechanism: slip. Layers of metal ions slide past each other along slip planes. In malleability, layers spread under compression (hammering). In ductility, layers elongate under tension (pulling). In both cases, the electron sea flows to maintain the metallic bond in every configuration.'},
+];
+
+let answered=new Array(QS.length).fill(null), submitted=false;
+function renderQuiz(){
+  document.getElementById('quiz-cards').innerHTML=QS.map((q,i)=>`
+    <div class="q-card" id="qc${i}">
+      <div class="q-num">QUESTION ${i+1} / ${QS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">${q.opts.map((o,j)=>`<button class="q-opt" data-qi="${i}" data-oi="${j}">${o}</button>`).join('')}</div>
+      <div class="q-explain" id="qe${i}">${q.exp}</div>
+    </div>`).join('');
+  document.querySelectorAll('.q-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(submitted) return;
+      const qi=+btn.dataset.qi, oi=+btn.dataset.oi;
+      answered[qi]=oi;
+      document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(b=>{b.classList.remove('sel');});
+      btn.classList.add('sel');
+      document.getElementById('quiz-prog').textContent=`${answered.filter(x=>x!==null).length}/${QS.length} answered`;
+    });
+  });
+}
+document.getElementById('q-submit').addEventListener('click',()=>{
+  if(submitted) return; submitted=true;
+  let correct=0;
+  QS.forEach((q,i)=>{
+    const ch=answered[i];
+    document.querySelectorAll(`.q-opt[data-qi="${i}"]`).forEach(b=>{
+      b.classList.add('locked'); b.classList.remove('sel');
+      const oi=+b.dataset.oi;
+      if(oi===q.ans) b.classList.add('correct');
+      else if(oi===ch) b.classList.add('wrong');
+    });
+    document.getElementById('qe'+i).classList.add('show');
+    if(ch===q.ans) correct++;
+  });
+  const pct=Math.round(correct/QS.length*100);
+  const banner=document.getElementById('score-banner');
+  banner.classList.add('show');
+  document.getElementById('score-num').textContent=`${correct} / ${QS.length}`;
+  const msgs=['Keep reviewing — go back through each tab!','Good start — re-read the mechanism sections.','Getting there — almost solid!','Great job — strong understanding!','Perfect! You understand bonding and mechanics deeply.'];
+  document.getElementById('score-msg').textContent=msgs[Math.min(4,Math.floor(pct/25))]+` (${pct}%)`;
+  banner.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+document.getElementById('q-reset').addEventListener('click',()=>{
+  submitted=false; answered=new Array(QS.length).fill(null);
+  document.getElementById('score-banner').classList.remove('show');
+  document.getElementById('quiz-prog').textContent='0/15 answered';
+  renderQuiz();
+});
+renderQuiz();
+
+})();
+</script>
+</body>
+</html>
