@@ -496,6 +496,121 @@
 
     .quiz-feedback { text-align: center; margin-top: 20px; min-height: 60px; }
 
+    /* ── Quiz Mode Toggle (MC vs Active Recall) ── */
+    .quiz-mode-toggle {
+      display: flex;
+      background: #e5e7eb;
+      border-radius: 10px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .qm-toggle-btn {
+      flex: 1;
+      padding: 9px 12px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .qm-toggle-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ── Active Recall elements ── */
+    .ar-reveal-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 14px;
+    }
+    .ar-reveal-btn:hover { background: var(--primary-hover); }
+
+    .ar-answer-box {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .ar-answer-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .ar-answer-def {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .ar-answer-ex {
+      font-size: 0.92rem;
+      font-style: italic;
+      color: var(--text-light);
+      line-height: 1.5;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 10px;
+    }
+
+    .ar-rating-label {
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .ar-rating-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .ar-rating-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 12px 6px;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 0.85rem;
+    }
+    .ar-rating-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+    .ar-rating-btn .ar-btn-interval {
+      font-size: 0.7rem;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+    .ar-rating-btn.ar-again  { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .ar-rating-btn.ar-hard   { background: #fff7ed; color: #92400e; border-color: #fcd34d; }
+    .ar-rating-btn.ar-good   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+    .ar-rating-btn.ar-easy   { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+
     /* ── Synonym / Antonym Game ── */
     .sa-header { display: flex; align-items: center; justify-content: space-between; background: white; padding: 14px 16px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 16px; gap: 8px; }
     .sa-score-wrap { font-weight: 700; font-size: 0.95rem; color: var(--text-light); white-space: nowrap; }
@@ -1253,6 +1368,11 @@
     <button class="btn-audio" style="width: auto; padding: 8px 15px;" onclick="if(currentQuizWord) speakTextAsync(currentQuizWord.word)">🔊</button>
   </div>
 
+  <div class="quiz-mode-toggle">
+    <button class="qm-toggle-btn active" id="qm-mc-btn" onclick="setQuizSubMode('mc')">⚡ Multiple Choice</button>
+    <button class="qm-toggle-btn" id="qm-ar-btn" onclick="setQuizSubMode('ar')">🧠 Active Recall</button>
+  </div>
+
   <div class="mastery-progress-card">
     <div class="mastery-progress-head">
       <span>Mastery Progress</span>
@@ -1269,13 +1389,42 @@
     <span id="quiz-notebook-status" class="quiz-notebook-status"></span>
   </div>
   <div class="quiz-word" id="quizWordDisplay">Word</div>
-  <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
 
-  <div class="options-grid" id="optionsContainer"></div>
+  <!-- Multiple Choice elements -->
+  <div id="mc-section">
+    <div id="quizInstruction" style="text-align:center; margin-bottom:15px; color:var(--text-light);">Select the correct definition:</div>
+    <div class="options-grid" id="optionsContainer"></div>
+    <div class="quiz-feedback">
+      <div id="feedbackText" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;"></div>
+      <button class="btn-next-quiz" id="btnNextQuiz" onclick="loadNextQuestion()">Next Question &rarr;</button>
+    </div>
+  </div>
 
-  <div class="quiz-feedback">
-    <div id="feedbackText" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;"></div>
-    <button class="btn-next-quiz" id="btnNextQuiz" onclick="loadNextQuestion()">Next Question &rarr;</button>
+  <!-- Active Recall elements -->
+  <div id="ar-section" style="display:none;">
+    <button class="ar-reveal-btn" id="ar-reveal-btn" onclick="showARAnswer()">👁 Show Answer</button>
+    <div class="ar-answer-box" id="ar-answer-box" style="display:none;">
+      <div class="ar-answer-label">Definition</div>
+      <div class="ar-answer-def" id="ar-def-text"></div>
+      <div class="ar-answer-ex" id="ar-ex-text"></div>
+    </div>
+    <div id="ar-rating-wrap" style="display:none;">
+      <div class="ar-rating-label">How well did you recall it?</div>
+      <div class="ar-rating-grid">
+        <button class="ar-rating-btn ar-again" onclick="rateARAnswer('again')">
+          Again<span class="ar-btn-interval" id="ar-int-again"></span>
+        </button>
+        <button class="ar-rating-btn ar-hard" onclick="rateARAnswer('hard')">
+          Hard<span class="ar-btn-interval" id="ar-int-hard"></span>
+        </button>
+        <button class="ar-rating-btn ar-good" onclick="rateARAnswer('good')">
+          Good<span class="ar-btn-interval" id="ar-int-good"></span>
+        </button>
+        <button class="ar-rating-btn ar-easy" onclick="rateARAnswer('easy')">
+          Easy<span class="ar-btn-interval" id="ar-int-easy"></span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -11303,6 +11452,7 @@
 
   // --- QUIZ & REVIEW LOGIC (SM-2 SRS) ---
   function loadNextQuestion() {
+    if (quizSubMode === 'ar') { loadARQuestion(); return; }
     updateScoreDisplay();
     updateQuizMasteryProgress();
     document.getElementById('feedbackText').textContent = "";
@@ -11379,6 +11529,9 @@
     document.querySelector('.quiz-word-actions').style.display = 'none';
     document.getElementById('quizInstruction').style.display = 'none';
     document.getElementById('optionsContainer').style.display = 'none';
+    document.getElementById('ar-reveal-btn').style.display = 'none';
+    document.getElementById('ar-answer-box').style.display = 'none';
+    document.getElementById('ar-rating-wrap').style.display = 'none';
     document.getElementById('srs-status').innerHTML = `<div class="empty-state">${msg}</div>`;
   }
 
@@ -11438,6 +11591,150 @@
     setTimeout(() => {
       nextBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 50);
+  }
+
+  // =========================================================================
+  // ACTIVE RECALL MODE (Anki-style: show word → reveal → rate Again/Hard/Good/Easy)
+  // =========================================================================
+  let quizSubMode = 'mc'; // 'mc' = multiple choice, 'ar' = active recall
+
+  function setQuizSubMode(mode) {
+    quizSubMode = mode;
+    document.getElementById('qm-mc-btn').classList.toggle('active', mode === 'mc');
+    document.getElementById('qm-ar-btn').classList.toggle('active', mode === 'ar');
+    document.getElementById('mc-section').style.display = mode === 'mc' ? '' : 'none';
+    document.getElementById('ar-section').style.display = mode === 'ar' ? '' : 'none';
+    loadNextQuestion();
+  }
+
+  function _formatInterval(minutes) {
+    if (minutes < 1) return '< 1m';
+    if (minutes < 60) return Math.round(minutes) + 'm';
+    const h = Math.round(minutes / 60);
+    if (h < 24) return h + 'h';
+    const d = Math.round(minutes / 1440);
+    if (d < 30) return d + 'd';
+    return Math.round(d / 30) + 'mo';
+  }
+
+  function loadARQuestion() {
+    updateScoreDisplay();
+    updateQuizMasteryProgress();
+    updateQuizNotebookButtonState();
+
+    // Reset UI
+    document.getElementById('ar-answer-box').style.display = 'none';
+    document.getElementById('ar-rating-wrap').style.display = 'none';
+    document.getElementById('ar-reveal-btn').style.display = 'block';
+    document.getElementById('quizWordDisplay').style.display = 'block';
+    document.querySelector('.quiz-word-actions').style.display = '';
+
+    const activePool = getActiveVocab();
+    let pool, statusText;
+
+    if (currentMode === 'review') {
+      pool = activePool.filter(w => w.mistakes > 0).sort((a, b) => b.mistakes - a.mistakes);
+      statusText = "Reviewing Your Mistakes";
+      if (pool.length === 0) { showEmptyState("No mistakes to review in this group!"); return; }
+    } else {
+      pool = activePool.filter(w => w.nextReview <= Date.now());
+      if (pool.length === 0) {
+        if (activePool.length > 0) {
+          pool = [[...activePool].sort((a, b) => a.nextReview - b.nextReview)[0]];
+          statusText = "Working Ahead (No reviews currently due)";
+        } else {
+          showEmptyState("No words in this group to quiz.");
+          return;
+        }
+      } else {
+        statusText = `Spaced Repetition: ${pool.length} word(s) due`;
+      }
+    }
+
+    document.getElementById('srs-status').textContent = statusText;
+    currentQuizWord = pool[Math.floor(Math.random() * pool.length)];
+    document.getElementById('quizWordDisplay').textContent = currentQuizWord.word;
+
+    setTimeout(() => {
+      document.getElementById('quizWordDisplay')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 30);
+  }
+
+  function showARAnswer() {
+    if (!currentQuizWord) return;
+    document.getElementById('ar-reveal-btn').style.display = 'none';
+
+    // Fill in definition + example
+    document.getElementById('ar-def-text').textContent = currentQuizWord.definition;
+    const ex = currentQuizWord.examples && currentQuizWord.examples[0] ? currentQuizWord.examples[0] : '';
+    document.getElementById('ar-ex-text').textContent = ex ? '"' + ex + '"' : '';
+    document.getElementById('ar-ex-text').style.display = ex ? '' : 'none';
+    document.getElementById('ar-answer-box').style.display = 'block';
+
+    // Compute interval estimates for each rating
+    const w = currentQuizWord;
+    const agMin = 1;
+    let hardMin, goodMin, easyMin;
+    if (w.repetitions === 0) {
+      hardMin = 1; goodMin = 1; easyMin = 6;
+    } else if (w.repetitions === 1) {
+      hardMin = Math.max(1, Math.ceil(w.interval * 1.2));
+      goodMin = 6;
+      easyMin = Math.ceil(6 * Math.max(1.3, w.easiness + 0.15) * 1.3);
+    } else {
+      hardMin = Math.max(1, Math.ceil(w.interval * 1.2));
+      goodMin = Math.ceil(w.interval * Math.max(1.3, w.easiness));
+      easyMin = Math.ceil(w.interval * Math.max(1.3, w.easiness + 0.15) * 1.3);
+    }
+
+    document.getElementById('ar-int-again').textContent = _formatInterval(agMin);
+    document.getElementById('ar-int-hard').textContent  = _formatInterval(hardMin);
+    document.getElementById('ar-int-good').textContent  = _formatInterval(goodMin);
+    document.getElementById('ar-int-easy').textContent  = _formatInterval(easyMin);
+
+    document.getElementById('ar-rating-wrap').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('ar-rating-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+
+  function rateARAnswer(rating) {
+    if (!currentQuizWord) return;
+    const wordRef = vocabState.find(w => w.word === currentQuizWord.word);
+    if (!wordRef) return;
+
+    if (rating === 'again') {
+      wordRef.repetitions = 0;
+      wordRef.interval = 1;
+      wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.2);
+      wordRef.nextReview = Date.now();
+      wordRef.mistakes++;
+      sessionScore = Math.max(0, sessionScore - 1);
+    } else if (rating === 'hard') {
+      wordRef.interval = Math.max(1, Math.ceil(wordRef.repetitions < 2 ? 1 : wordRef.interval * 1.2));
+      wordRef.easiness = Math.max(1.3, wordRef.easiness - 0.15);
+      wordRef.repetitions++;
+      wordRef.nextReview = Date.now() + wordRef.interval * 60000;
+    } else if (rating === 'good') {
+      if (wordRef.repetitions === 0) wordRef.interval = 1;
+      else if (wordRef.repetitions === 1) wordRef.interval = 6;
+      else wordRef.interval = Math.ceil(wordRef.interval * wordRef.easiness);
+      wordRef.repetitions++;
+      wordRef.easiness = Math.max(1.3, wordRef.easiness + 0.1);
+      wordRef.nextReview = Date.now() + wordRef.interval * 60000;
+      sessionScore++;
+    } else if (rating === 'easy') {
+      if (wordRef.repetitions === 0) wordRef.interval = 6;
+      else wordRef.interval = Math.ceil(wordRef.interval * Math.max(1.3, wordRef.easiness + 0.15) * 1.3);
+      wordRef.repetitions++;
+      wordRef.easiness = Math.min(4.0, wordRef.easiness + 0.15);
+      wordRef.nextReview = Date.now() + wordRef.interval * 60000;
+      sessionScore += 2;
+    }
+
+    saveState();
+    updateScoreDisplay();
+    loadARQuestion();
   }
 
   document.getElementById('autoplay-timer-select')?.addEventListener('change', () => {
