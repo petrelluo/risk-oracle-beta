@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSEPR — Geometry, Polarity & IMF</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap');
+:root{--bg:#f7f5f0;--sur:#fff;--bor:#e4e0d8;--txt:#1a1714;--mut:#6b6560;--acc:#2a5f8f;--acc-l:#e8f0f8;--nav:#0f1f30;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);font-size:15px;line-height:1.6;}
+
+.site-header{background:var(--nav);color:#fff;padding:2rem;text-align:center;}
+.site-header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);margin-bottom:.3rem;}
+.site-header p{color:#a0b4c8;font-size:.9rem;}
+
+.tabs{display:flex;flex-wrap:wrap;background:var(--nav);border-bottom:1px solid #1e3448;padding:0 1rem;gap:2px;position:sticky;top:0;z-index:200;}
+.tab-btn{padding:.65rem 1.1rem;border:none;background:transparent;color:#7a9ab8;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;border-bottom:2px solid transparent;transition:.15s;white-space:nowrap;}
+.tab-btn:hover{color:#c8dae8;}
+.tab-btn.active{color:#fff;border-bottom-color:#5ba3d9;}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.wrap{max-width:980px;margin:0 auto;padding:2rem 1.25rem;}
+.full-wrap{width:100%;padding:1.5rem 1.25rem;}
+
+/* ── TUTORIAL ── */
+.concept-card{background:var(--sur);border:1px solid var(--bor);border-radius:12px;padding:1.4rem;margin-bottom:1.2rem;}
+.concept-card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.6rem;}
+.step-num{background:var(--nav);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;}
+.rule-box{background:var(--acc-l);border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:.7rem 1rem;margin:.7rem 0;font-size:.88rem;color:var(--acc);font-weight:500;}
+.mini-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.7rem;}
+.mini-table th{background:var(--nav);color:#fff;padding:6px 9px;text-align:left;font-weight:500;}
+.mini-table td{padding:5px 9px;border-bottom:1px solid var(--bor);}
+.mini-table tr:nth-child(even) td{background:#fafaf8;}
+.mini-table tr:last-child td{border-bottom:none;}
+.imf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-top:.7rem;}
+.imf-card{border-radius:8px;padding:.9rem;font-size:.86rem;}
+.imf-card .lbl{font-weight:700;font-size:.92rem;margin-bottom:.3rem;}
+.imf-ldf{background:#f0f4f8;border:1px solid #c8d8e8;color:#1a4060;}
+.imf-dd{background:#fef3e2;border:1px solid #f0c87a;color:#7a4000;}
+.imf-hb{background:#fde8e8;border:1px solid #f0a0a0;color:#8a1f1f;}
+.step{display:flex;gap:.7rem;margin-bottom:.55rem;align-items:flex-start;}
+.step-icon{background:var(--nav);color:#fff;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;margin-top:2px;}
+.polar-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.7rem;}
+.polar-card{border-radius:8px;padding:.8rem;font-size:.85rem;}
+.polar-yes{background:#fde8e8;border:1px solid #f0a0a0;}
+.polar-no{background:#e8f5ee;border:1px solid #90d4b0;}
+.polar-card strong{display:block;margin-bottom:.3rem;}
+
+/* ── VIEWER ── */
+#viewer-wrap{padding:1.25rem;max-width:980px;margin:0 auto;}
+.mol-btn-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.9rem;}
+.mol-btn{font-size:11.5px;padding:4px 10px;border-radius:20px;border:1px solid #d0cac0;background:#fff;color:#333;cursor:pointer;font-family:'DM Mono',monospace;transition:.12s;}
+.mol-btn:hover{background:#e8f0f8;border-color:#5ba3d9;}
+.mol-btn.active{background:var(--nav);color:#fff;border-color:var(--nav);}
+#mol-canvas{width:100%;border-radius:12px;border:1px solid var(--bor);display:block;cursor:grab;background:#0a1520;}
+#mol-canvas:active{cursor:grabbing;}
+.info-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:.9rem;}
+.info-cell{background:#fff;border:1px solid var(--bor);border-radius:8px;padding:.55rem;text-align:center;}
+.info-cell .lbl{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+.info-cell .val{font-size:12.5px;font-weight:600;font-family:'DM Mono',monospace;}
+.info-rule{margin-top:.7rem;padding:.7rem 1rem;background:#fff;border:1px solid var(--bor);border-radius:8px;font-size:12.5px;color:var(--mut);line-height:1.5;}
+.viewer-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:.7rem;font-size:11px;color:var(--mut);align-items:center;}
+.leg-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle;}
+@media(max-width:700px){.info-grid{grid-template-columns:repeat(4,1fr);}}
+
+/* ── TABLE ── */
+.tbl-section{padding:1.5rem 1rem;}
+.tbl-controls{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:.9rem;align-items:center;}
+.filter-btn{padding:4px 11px;border-radius:20px;border:1px solid #d0cac0;background:#fff;color:#555;cursor:pointer;font-size:11.5px;transition:.12s;}
+.filter-btn:hover{border-color:#5ba3d9;color:#2a5f8f;}
+.filter-btn.on{background:var(--nav);color:#fff;border-color:var(--nav);}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--bor);}
+table.mol-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.mol-table thead tr{background:var(--nav);color:#fff;}
+table.mol-table th{padding:9px 10px;text-align:left;font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;user-select:none;white-space:nowrap;}
+table.mol-table th:hover{background:#1e3448;}
+table.mol-table td{padding:8px 10px;border-bottom:1px solid #ede9e2;vertical-align:middle;}
+table.mol-table tbody tr:last-child td{border-bottom:none;}
+table.mol-table tbody tr:hover td{filter:brightness(.96);}
+.formula-cell{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;}
+.lewis-td{padding:6px 8px !important;min-width:160px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500;}
+.badge-pol{background:#fde8e8;color:#8a1f1f;}
+.badge-np{background:#e8f5ee;color:#1e6b45;}
+.imf-tag{display:inline-block;padding:1px 5px;border-radius:6px;margin:1px;font-size:10px;font-weight:500;}
+.tag-ldf{background:#e8f0f8;color:#1a4060;}
+.tag-dd{background:#fef3e2;color:#7a4000;}
+.tag-hb{background:#fde8e8;color:#8a1f1f;}
+.view3d-btn{font-size:10.5px;padding:3px 7px;border-radius:6px;border:1px solid #c0bab2;background:#fff;cursor:pointer;color:#444;}
+.view3d-btn:hover{background:var(--acc-l);border-color:var(--acc);color:var(--acc);}
+.sort-arrow.asc::after{content:'↑';}
+.sort-arrow.desc::after{content:'↓';}
+.sort-arrow.none::after{content:'↕';opacity:.4;}
+.sh-linear{background:#edf5fb;} .sh-bent{background:#edfbf0;} .sh-trigplanar{background:#fbfaed;}
+.sh-trigpyr{background:#fdf0e8;} .sh-tet{background:#f5edfb;} .sh-oct{background:#edfbfb;}
+.sh-sqpl{background:#fbedf5;} .sh-sqpyr{background:#fbf5ed;}
+.legend-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:.75rem;font-size:11px;}
+.leg-sw{display:inline-block;width:11px;height:11px;border-radius:3px;border:1px solid #ccc;margin-right:3px;vertical-align:middle;}
+
+/* ── IMF DEEP DIVE ── */
+.imf-section{padding:1.5rem 1.25rem;}
+.imf-chapter{background:#fff;border:1px solid var(--bor);border-radius:12px;padding:1.4rem;margin-bottom:1.2rem;}
+.imf-chapter h2{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:.8rem;color:var(--nav);}
+.imf-chapter h3{font-size:1rem;font-weight:600;margin:.9rem 0 .4rem;}
+.chart-wrap{background:#fafaf8;border:1px solid var(--bor);border-radius:10px;padding:1rem;margin:.9rem 0;overflow-x:auto;}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin-top:.9rem;}
+.prop-card{background:#f8faff;border:1px solid #c8d8ee;border-radius:10px;padding:1rem;font-size:.86rem;}
+.prop-card h4{color:#1a4060;margin-bottom:.4rem;font-size:.92rem;}
+
+/* ── QUIZ ── */
+.quiz-wrap{max-width:860px;margin:0 auto;padding:1.5rem 1.25rem;}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:.5rem;}
+.quiz-score{font-size:1.1rem;font-weight:600;color:var(--nav);}
+.q-card{background:#fff;border:1px solid var(--bor);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem;}
+.q-card .q-num{font-size:.78rem;color:var(--mut);font-weight:600;text-transform:uppercase;margin-bottom:.35rem;}
+.q-card .q-text{font-size:.97rem;font-weight:500;margin-bottom:.9rem;line-height:1.5;}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;}
+.q-opt{padding:.6rem .9rem;border-radius:8px;border:1.5px solid #d5d0c8;background:#fafaf8;cursor:pointer;font-size:.88rem;transition:.12s;text-align:left;line-height:1.4;}
+.q-opt:hover:not(.locked){border-color:#5ba3d9;background:#f0f6fc;}
+.q-opt.correct{border-color:#22aa55;background:#e8f8ee;color:#155533;}
+.q-opt.wrong{border-color:#cc3333;background:#fde8e8;color:#7a1010;}
+.q-opt.locked{cursor:default;}
+.q-explain{margin-top:.7rem;padding:.65rem .9rem;background:#f5f8ff;border-left:3px solid #5ba3d9;border-radius:0 8px 8px 0;font-size:.84rem;color:#1a3a5c;display:none;}
+.q-explain.show{display:block;}
+.quiz-actions{display:flex;gap:.7rem;margin-top:1.2rem;flex-wrap:wrap;}
+.quiz-btn{padding:.6rem 1.4rem;border-radius:8px;border:none;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:.12s;}
+.quiz-btn-submit{background:var(--nav);color:#fff;}
+.quiz-btn-submit:hover{background:#1e3448;}
+.quiz-btn-reset{background:#f0f0eb;color:#444;border:1px solid #d0ccc4;}
+.quiz-btn-reset:hover{background:#e4e0d8;}
+.score-banner{text-align:center;padding:1.5rem;background:#fff;border:1px solid var(--bor);border-radius:12px;margin-bottom:1.2rem;display:none;}
+.score-banner.show{display:block;}
+.score-big{font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--nav);}
+@media(max-width:600px){.q-opts{grid-template-columns:1fr;}.polar-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>VSEPR &amp; Molecular Geometry</h1>
+  <p>Tutorial · 3D Viewer · Comparison Table · IMF Deep Dive · Quiz</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="tutorial">📖 Tutorial</button>
+  <button class="tab-btn" data-tab="viewer">⚛ 3D Viewer</button>
+  <button class="tab-btn" data-tab="table">📊 Table</button>
+  <button class="tab-btn" data-tab="imf">🔗 IMF Deep Dive</button>
+  <button class="tab-btn" data-tab="quiz">✏️ Quiz</button>
+</nav>
+
+<!-- ══════════ TUTORIAL ══════════ -->
+<div id="tab-tutorial" class="tab-content active"><div class="wrap">
+  <div class="concept-card">
+    <h2><span class="step-num">1</span> What is VSEPR?</h2>
+    <p><strong>VSEPR</strong> = Valence Shell Electron Pair Repulsion. The core idea:</p>
+    <div class="rule-box">Electron pairs (both bonding and lone pairs) around a central atom repel each other and arrange as far apart as possible in 3D space.</div>
+    <p>This arrangement determines the shape of the molecule. <strong>Lone pairs repel more than bonding pairs</strong> because they are closer to the nucleus and occupy more space — so lone pairs compress bond angles.</p>
+  </div>
+  <div class="concept-card">
+    <h2><span class="step-num">2</span> How to Determine Shape (Step-by-Step)</h2>
+    <div class="step"><span class="step-icon">1</span><p>Draw the <strong>Lewis dot structure</strong>.</p></div>
+    <div class="step"><span class="step-icon">2</span><p>Count <strong>electron regions</strong> around the central atom: each single/double/triple bond = 1 region; each lone pair = 1 region.</p></div>
+    <div class="step"><span class="step-icon">3</span><p>Find <strong>electron geometry</strong> — the 3D arrangement of ALL electron regions.</p></div>
+    <div class="step"><span class="step-icon">4</span><p>Find <strong>molecular shape</strong> — same as electron geometry but lone pairs are invisible; only atom positions count.</p></div>
+    <div class="step"><span class="step-icon">5</span><p>Estimate <strong>bond angles</strong> — lone pairs compress angles below the ideal.</p></div>
+    <div style="overflow-x:auto;margin-top:.8rem;">
+    <table class="mini-table">
+      <thead><tr><th>Regions</th><th>Lone Pairs</th><th>Electron Geometry</th><th>Molecular Shape</th><th>Angle</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td>0</td><td>Linear</td><td>Linear</td><td>180°</td><td>CO₂, HCN</td></tr>
+        <tr><td>3</td><td>0</td><td>Trigonal Planar</td><td>Trigonal Planar</td><td>120°</td><td>BF₃, SO₃</td></tr>
+        <tr><td>3</td><td>1</td><td>Trigonal Planar</td><td>Bent</td><td>~117–120°</td><td>SO₂, O₃</td></tr>
+        <tr><td>4</td><td>0</td><td>Tetrahedral</td><td>Tetrahedral</td><td>109.5°</td><td>CH₄, CCl₄</td></tr>
+        <tr><td>4</td><td>1</td><td>Tetrahedral</td><td>Trigonal Pyramidal</td><td>~107°</td><td>NH₃, PF₃</td></tr>
+        <tr><td>4</td><td>2</td><td>Tetrahedral</td><td>Bent</td><td>~104.5°</td><td>H₂O, H₂S</td></tr>
+        <tr><td>5</td><td>3</td><td>Trigonal Bipyramidal</td><td>Linear</td><td>180°</td><td>XeF₂</td></tr>
+        <tr><td>6</td><td>0</td><td>Octahedral</td><td>Octahedral</td><td>90°</td><td>SF₆, SeF₆</td></tr>
+        <tr><td>6</td><td>1</td><td>Octahedral</td><td>Square Pyramidal</td><td>~82°</td><td>IF₅</td></tr>
+        <tr><td>6</td><td>2</td><td>Octahedral</td><td>Square Planar</td><td>90°</td><td>XeF₄</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="concept-card">
+    <h2><span class="step-num">3</span> Electron Geometry vs. Molecular Shape</h2>
+    <div class="rule-box">Electron geometry counts ALL regions (including lone pairs).<br>Molecular shape counts only ATOM positions (lone pairs removed).</div>
+    <p>They match when there are no lone pairs. Classic example — all three have 4 electron regions (tetrahedral electron geometry):</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.75rem;">
+      <div style="background:#f5edfb;border-radius:8px;padding:.8rem;text-align:center;font-size:.86rem;"><div style="font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;margin-bottom:3px;">CH₄</div><div style="color:#5a3087;font-weight:600;">Tetrahedral</div><div style="color:#888;font-size:.78rem;">4 BP, 0 LP · 109.5°</div></div>
+      <div style="background:#fdf0e8;border-radius:8px;padding:.8rem;text-align:center;font-size:.86rem;"><div style="font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;margin-bottom:3px;">NH₃</div><div style="color:#8a4f00;font-weight:600;">Trig. Pyramidal</div><div style="color:#888;font-size:.78rem;">3 BP, 1 LP · 107°</div></div>
+      <div style="background:#edfbf0;border-radius:8px;padding:.8rem;text-align:center;font-size:.86rem;"><div style="font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;margin-bottom:3px;">H₂O</div><div style="color:#1e6b45;font-weight:600;">Bent</div><div style="color:#888;font-size:.78rem;">2 BP, 2 LP · 104.5°</div></div>
+    </div>
+  </div>
+  <div class="concept-card">
+    <h2><span class="step-num">4</span> Polarity</h2>
+    <p><strong>Bond polarity</strong>: electronegativity difference between bonded atoms creates polar bonds (δ+ and δ−).</p>
+    <div class="rule-box">Δ EN &lt; 0.5 → nonpolar bond &nbsp;|&nbsp; Δ EN 0.5–1.7 → polar covalent &nbsp;|&nbsp; Δ EN &gt; 1.7 → ionic</div>
+    <p><strong>Molecular polarity</strong>: polar bonds + asymmetric shape = polar molecule. Polar bonds + symmetric shape = dipoles cancel = nonpolar.</p>
+    <div class="polar-grid">
+      <div class="polar-card polar-no"><strong>✓ Nonpolar</strong><p>No polar bonds (H₂, N₂), OR polar bonds but symmetric shape cancels them (CO₂ linear, CCl₄ tetrahedral, BF₃ trigonal planar).</p></div>
+      <div class="polar-card polar-yes"><strong>⚡ Polar</strong><p>Polar bonds AND asymmetric shape — net dipole exists (H₂O, NH₃, HCl, CHCl₃). Also any diatomic with two different atoms.</p></div>
+    </div>
+  </div>
+  <div class="concept-card">
+    <h2><span class="step-num">5</span> Intermolecular Forces (IMF)</h2>
+    <p>IMFs act <em>between</em> molecules and control boiling point, melting point, solubility, and viscosity. Stronger IMF = higher boiling point.</p>
+    <div class="imf-grid">
+      <div class="imf-card imf-ldf"><div class="lbl">London Dispersion (LDF)</div><p>All molecules. Temporary dipoles in electron clouds. Stronger with more electrons (larger molecules). Explains why Xe boils higher than He.</p></div>
+      <div class="imf-card imf-dd"><div class="lbl">Dipole-Dipole</div><p>Polar molecules only. Permanent dipoles align (+end attracts −end). Stronger than LDF alone for similar-sized molecules.</p></div>
+      <div class="imf-card imf-hb"><div class="lbl">Hydrogen Bonding</div><p>H bonded directly to N, O, or F only. The bare H proton is strongly attracted to lone pairs on adjacent molecules. Strongest type; explains water's anomalous properties.</p></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;margin-top:.9rem;font-size:.82rem;">
+      <span style="color:var(--mut);">Weakest</span>
+      <div style="height:9px;border-radius:4px;background:#a8c8e8;width:70px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:600;">LDF</div>
+      <span style="color:#ccc;">→</span>
+      <div style="height:9px;border-radius:4px;background:#f0c87a;width:100px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#7a4000;font-weight:600;">DD + LDF</div>
+      <span style="color:#ccc;">→</span>
+      <div style="height:9px;border-radius:4px;background:#f09090;width:145px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#7a1010;font-weight:600;">H-bond + DD + LDF</div>
+      <span style="color:var(--mut);">Strongest</span>
+    </div>
+  </div>
+</div></div>
+
+<!-- ══════════ 3D VIEWER ══════════ -->
+<div id="tab-viewer" class="tab-content">
+<div id="viewer-wrap">
+  <div class="mol-btn-grid" id="mol-btn-grid"></div>
+  <canvas id="mol-canvas"></canvas>
+  <div class="info-grid">
+    <div class="info-cell"><div class="lbl">Shape</div><div class="val" id="v-shape">—</div></div>
+    <div class="info-cell"><div class="lbl">Elec. Geometry</div><div class="val" id="v-egeo" style="font-size:11px;">—</div></div>
+    <div class="info-cell"><div class="lbl">Bond Angle</div><div class="val" id="v-angle">—</div></div>
+    <div class="info-cell"><div class="lbl">Regions</div><div class="val" id="v-er">—</div></div>
+    <div class="info-cell"><div class="lbl">Bonding Pairs</div><div class="val" id="v-bp">—</div></div>
+    <div class="info-cell"><div class="lbl">Lone Pairs</div><div class="val" id="v-lp">—</div></div>
+    <div class="info-cell"><div class="lbl">Polarity</div><div class="val" id="v-polar">—</div></div>
+  </div>
+  <div class="info-rule" id="v-rule"></div>
+  <div class="viewer-legend">
+    <span><span class="leg-dot" style="background:#d8d8d8;border:1px solid #aaa;"></span>H</span>
+    <span><span class="leg-dot" style="background:#555;"></span>C</span>
+    <span><span class="leg-dot" style="background:#4466cc;"></span>N</span>
+    <span><span class="leg-dot" style="background:#dd3333;"></span>O</span>
+    <span><span class="leg-dot" style="background:#44aa55;"></span>F</span>
+    <span><span class="leg-dot" style="background:#88cc44;"></span>Cl</span>
+    <span><span class="leg-dot" style="background:#ddbb00;"></span>S</span>
+    <span><span class="leg-dot" style="background:#ff8833;"></span>P</span>
+    <span><span class="leg-dot" style="background:#cc66aa;"></span>Se</span>
+    <span><span class="leg-dot" style="background:#8899bb;"></span>Si</span>
+    <span><span class="leg-dot" style="background:#9955bb;"></span>Xe</span>
+    <span><span class="leg-dot" style="background:#885599;"></span>I</span>
+    <span><span class="leg-dot" style="background:#8888cc;opacity:.65;"></span>lone pair</span>
+    <span style="margin-left:auto;font-style:italic;font-size:11px;">drag to rotate</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ TABLE ══════════ -->
+<div id="tab-table" class="tab-content">
+<div class="tbl-section">
+  <div class="legend-row" id="shape-legend"></div>
+  <div class="tbl-controls">
+    <strong style="font-size:11.5px;color:var(--mut);margin-right:3px;">Filter:</strong>
+    <button class="filter-btn on" data-filter="all">All (30)</button>
+    <button class="filter-btn" data-filter="polar">Polar</button>
+    <button class="filter-btn" data-filter="nonpolar">Nonpolar</button>
+    <button class="filter-btn" data-filter="hbond">H-bonding</button>
+    <button class="filter-btn" data-filter="linear">Linear</button>
+    <button class="filter-btn" data-filter="bent">Bent</button>
+    <button class="filter-btn" data-filter="trig">Trig. Planar</button>
+    <button class="filter-btn" data-filter="pyramid">Pyramidal</button>
+    <button class="filter-btn" data-filter="tet">Tetrahedral</button>
+    <button class="filter-btn" data-filter="oct">Octahedral+</button>
+  </div>
+  <div class="tbl-wrap">
+    <table class="mol-table" id="mol-table">
+      <thead><tr>
+        <th data-col="num"># <span class="sort-arrow none"></span></th>
+        <th data-col="formula">Formula <span class="sort-arrow none"></span></th>
+        <th>Lewis Structure</th>
+        <th data-col="er" style="text-align:center;">Elec. Regions <span class="sort-arrow none"></span></th>
+        <th data-col="egeo">Elec. Geometry <span class="sort-arrow none"></span></th>
+        <th data-col="shape">Mol. Shape <span class="sort-arrow none"></span></th>
+        <th data-col="angle">Bond Angle <span class="sort-arrow none"></span></th>
+        <th data-col="polar">Polarity <span class="sort-arrow none"></span></th>
+        <th>IMF</th>
+        <th>3D</th>
+      </tr></thead>
+      <tbody id="mol-tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ IMF DEEP DIVE ══════════ -->
+<div id="tab-imf" class="tab-content">
+<div class="wrap imf-section" style="max-width:980px;">
+
+  <div class="imf-chapter">
+    <h2>1. London Dispersion Forces (LDF) — In Every Molecule</h2>
+    <p>Even in perfectly nonpolar molecules like He or H₂, electrons are in constant motion. At any instant, electrons may be unevenly distributed, creating a <strong>temporary (instantaneous) dipole</strong>. This induces a dipole in a neighboring molecule, and the two temporary dipoles attract each other.</p>
+    <h3>What affects LDF strength?</h3>
+    <p><strong>Polarizability</strong> — how easily the electron cloud can be distorted. More electrons = larger, "squishier" electron cloud = stronger LDF. This is why:</p>
+    <ul style="margin:.5rem 0 .5rem 1.2rem;font-size:.9rem;line-height:1.8;">
+      <li>Noble gas boiling points increase from He → Ne → Ar → Kr → Xe</li>
+      <li>Cl₂ is a gas but Br₂ is a liquid and I₂ is a solid (at room temperature)</li>
+      <li>Longer carbon chains have higher boiling points</li>
+    </ul>
+    <div class="chart-wrap">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.7rem;color:#1a4060;">Noble Gas Boiling Points — LDF increases with electron count</div>
+      <svg viewBox="0 0 500 200" style="width:100%;max-width:500px;display:block;">
+        <line x1="50" y1="10" x2="50" y2="165" stroke="#ccc" stroke-width="1"/>
+        <line x1="50" y1="165" x2="490" y2="165" stroke="#ccc" stroke-width="1"/>
+        <text x="44" y="170" text-anchor="end" font-size="9" fill="#888">−269</text>
+        <text x="44" y="148" text-anchor="end" font-size="9" fill="#888">−246</text>
+        <text x="44" y="122" text-anchor="end" font-size="9" fill="#888">−186</text>
+        <text x="44" y="80" text-anchor="end" font-size="9" fill="#888">−153</text>
+        <text x="44" y="28" text-anchor="end" font-size="9" fill="#888">−108</text>
+        <text x="5" y="90" font-size="9" fill="#888" transform="rotate(-90,5,90)">BP (°C)</text>
+        <!-- bars -->
+        <g fill="#a8c8e8" stroke="#5580aa" stroke-width=".5">
+          <rect x="70" y="162" width="50" height="3" rx="2"/><text x="95" y="180" text-anchor="middle" font-size="10" fill="#555">He</text><text x="95" y="157" text-anchor="middle" font-size="9" fill="#1a4060">−269°C</text>
+          <rect x="160" y="150" width="50" height="15" rx="2"/><text x="185" y="180" text-anchor="middle" font-size="10" fill="#555">Ne</text><text x="185" y="144" text-anchor="middle" font-size="9" fill="#1a4060">−246°C</text>
+          <rect x="250" y="125" width="50" height="40" rx="2"/><text x="275" y="180" text-anchor="middle" font-size="10" fill="#555">Ar</text><text x="275" y="119" text-anchor="middle" font-size="9" fill="#1a4060">−186°C</text>
+          <rect x="340" y="82" width="50" height="83" rx="2"/><text x="365" y="180" text-anchor="middle" font-size="10" fill="#555">Kr</text><text x="365" y="76" text-anchor="middle" font-size="9" fill="#1a4060">−153°C</text>
+          <rect x="430" y="30" width="50" height="135" rx="2"/><text x="455" y="180" text-anchor="middle" font-size="10" fill="#555">Xe</text><text x="455" y="24" text-anchor="middle" font-size="9" fill="#1a4060">−108°C</text>
+        </g>
+      </svg>
+      <p style="font-size:.8rem;color:#888;margin-top:.4rem;">Each step down the group adds 8+ electrons → stronger LDF → higher boiling point.</p>
+    </div>
+  </div>
+
+  <div class="imf-chapter">
+    <h2>2. Dipole-Dipole Forces — Polar Molecules Align</h2>
+    <p>In polar molecules, the permanent partial charges (δ+ and δ−) create an electric dipole. When polar molecules are near each other, they orient so that δ+ regions face δ− regions — this is dipole-dipole attraction.</p>
+    <p style="margin-top:.5rem;">Dipole-dipole forces are stronger than LDF for molecules of similar size. This explains why polar molecules (like HCl, SO₂) have higher boiling points than nonpolar molecules of similar molecular weight.</p>
+    <div class="chart-wrap">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.7rem;color:#7a4000;">HCl vs Ar — Same Molecular Weight (~40), Different IMF</div>
+      <svg viewBox="0 0 320 160" style="width:100%;max-width:320px;display:block;">
+        <line x1="40" y1="10" x2="40" y2="130" stroke="#ccc" stroke-width="1"/>
+        <line x1="40" y1="130" x2="300" y2="130" stroke="#ccc" stroke-width="1"/>
+        <text x="35" y="134" text-anchor="end" font-size="9" fill="#888">−186</text>
+        <text x="35" y="60" text-anchor="end" font-size="9" fill="#888">−85</text>
+        <g fill="#a8c8e8" stroke="#5580aa" stroke-width=".5">
+          <rect x="60" y="120" width="70" height="10" rx="2"/>
+          <text x="95" y="147" text-anchor="middle" font-size="10" fill="#555">Ar (nonpolar)</text>
+          <text x="95" y="113" text-anchor="middle" font-size="9" fill="#1a4060">−186°C</text>
+        </g>
+        <g fill="#f0c87a" stroke="#aa8800" stroke-width=".5">
+          <rect x="185" y="55" width="70" height="75" rx="2"/>
+          <text x="220" y="147" text-anchor="middle" font-size="10" fill="#555">HCl (polar)</text>
+          <text x="220" y="48" text-anchor="middle" font-size="9" fill="#7a4000">−85°C</text>
+        </g>
+        <text x="170" y="15" text-anchor="middle" font-size="9" fill="#888">+101°C higher due to DD forces</text>
+        <line x1="95" y1="120" x2="185" y2="55" stroke="#888" stroke-width=".8" stroke-dasharray="3,2"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="imf-chapter">
+    <h2>3. Hydrogen Bonding — Nature's Strongest Molecular Force</h2>
+    <p>Hydrogen bonding occurs when H is bonded directly to <strong>N, O, or F</strong> — the three most electronegative elements. The H–N/O/F bond is so polar that the H becomes almost a bare proton, strongly attracted to lone pairs on adjacent molecules.</p>
+    <div class="rule-box">H-bond requires: H bonded to N, O, or F — AND — a lone pair on a neighboring N, O, or F to accept it.</div>
+    <h3>The H₂O Anomaly — Why Water is Extraordinary</h3>
+    <p>Compare the boiling points of Group 16 hydrides. Without H-bonding, you'd expect H₂O to boil around −80°C (extrapolating the H₂S → H₂Se → H₂Te trend). Instead it boils at <strong>+100°C</strong> — 180°C higher than expected!</p>
+    <div class="chart-wrap">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.7rem;color:#8a1f1f;">Group 16 Hydride Boiling Points — H₂O Anomaly from H-bonding</div>
+      <svg viewBox="0 0 480 220" style="width:100%;max-width:480px;display:block;">
+        <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#cc3333"/></marker></defs>
+        <line x1="50" y1="15" x2="50" y2="185" stroke="#ccc" stroke-width="1"/>
+        <line x1="50" y1="185" x2="470" y2="185" stroke="#ccc" stroke-width="1"/>
+        <text x="44" y="189" text-anchor="end" font-size="9" fill="#888">−100</text>
+        <text x="44" y="153" text-anchor="end" font-size="9" fill="#888">−62</text>
+        <text x="44" y="120" text-anchor="end" font-size="9" fill="#888">−41</text>
+        <text x="44" y="80" text-anchor="end" font-size="9" fill="#888">0</text>
+        <text x="44" y="42" text-anchor="end" font-size="9" fill="#888">+100</text>
+        <!-- expected trend line (dashed) -->
+        <line x1="120" y1="80" x2="420" y2="153" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <!-- actual data points -->
+        <circle cx="120" cy="38" r="7" fill="#cc3333" stroke="#8a1f1f" stroke-width="1.5"/>
+        <text x="120" y="30" text-anchor="middle" font-size="10" fill="#8a1f1f" font-weight="700">H₂O</text>
+        <text x="120" y="200" text-anchor="middle" font-size="10" fill="#555">H₂O</text>
+        <text x="120" y="210" text-anchor="middle" font-size="9" fill="#cc3333">+100°C</text>
+        <circle cx="220" cy="150" r="6" fill="#a8c8e8" stroke="#5580aa" stroke-width="1.5"/>
+        <text x="220" y="200" text-anchor="middle" font-size="10" fill="#555">H₂S</text>
+        <text x="220" y="210" text-anchor="middle" font-size="9" fill="#888">−62°C</text>
+        <circle cx="320" cy="118" r="6" fill="#a8c8e8" stroke="#5580aa" stroke-width="1.5"/>
+        <text x="320" y="200" text-anchor="middle" font-size="10" fill="#555">H₂Se</text>
+        <text x="320" y="210" text-anchor="middle" font-size="9" fill="#888">−41°C</text>
+        <circle cx="420" cy="150" r="6" fill="#a8c8e8" stroke="#5580aa" stroke-width="1.5"/>
+        <text x="420" y="200" text-anchor="middle" font-size="10" fill="#555">H₂Te</text>
+        <text x="420" y="210" text-anchor="middle" font-size="9" fill="#888">−2°C</text>
+        <!-- annotation arrow -->
+        <line x1="155" y1="80" x2="140" y2="50" stroke="#cc3333" stroke-width="1.2" marker-end="url(#arr)"/>
+        <text x="170" y="78" font-size="9" fill="#cc3333">Expected: ~−80°C</text>
+        <text x="170" y="88" font-size="9" fill="#cc3333">Actual: +100°C (H-bonding!)</text>
+      </svg>
+      <p style="font-size:.8rem;color:#888;margin-top:.4rem;">H₂S, H₂Se, H₂Te follow the normal LDF trend. H₂O is a dramatic outlier due to its exceptionally strong hydrogen bonding network.</p>
+    </div>
+    <h3>The Hydrogen Bond Network in Liquid Water</h3>
+    <p>Each water molecule can form up to <strong>4 hydrogen bonds</strong> — 2 as donor (via its 2 O–H bonds) and 2 as acceptor (via its 2 lone pairs on O). This creates an extensive 3D network that gives water many unique properties.</p>
+    <div class="chart-wrap" style="text-align:center;">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.7rem;color:#1a4060;">Hydrogen Bonding Network in Water</div>
+      <svg viewBox="0 0 360 200" style="width:100%;max-width:360px;display:block;margin:0 auto;">
+        <defs>
+          <marker id="hbarr" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#5ba3d9"/></marker>
+        </defs>
+        <!-- Central water molecule -->
+        <circle cx="180" cy="100" r="18" fill="#ffd8cc" stroke="#cc3333" stroke-width="1.5"/>
+        <text x="180" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="#991111">O</text>
+        <!-- H atoms on central -->
+        <circle cx="148" cy="130" r="11" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+        <text x="148" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#555">H</text>
+        <line x1="163" y1="117" x2="157" y2="125" stroke="#555" stroke-width="2"/>
+        <circle cx="212" cy="130" r="11" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/>
+        <text x="212" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#555">H</text>
+        <line x1="195" y1="117" x2="204" y2="125" stroke="#555" stroke-width="2"/>
+        <!-- Neighbor 1 (top-left) - H-bond acceptor -->
+        <circle cx="80" cy="45" r="16" fill="#ffd8cc" stroke="#cc3333" stroke-width="1.5"/>
+        <text x="80" y="49" text-anchor="middle" font-size="10" font-weight="700" fill="#991111">O</text>
+        <circle cx="55" cy="30" r="9" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/><text x="55" y="34" text-anchor="middle" font-size="9" fill="#555">H</text>
+        <circle cx="68" cy="68" r="9" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/><text x="68" y="72" text-anchor="middle" font-size="9" fill="#555">H</text>
+        <!-- H-bond line from neighbor1 H to central O -->
+        <line x1="74" y1="62" x2="162" y2="94" stroke="#5ba3d9" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#hbarr)"/>
+        <!-- Neighbor 2 (top-right) -->
+        <circle cx="280" cy="45" r="16" fill="#ffd8cc" stroke="#cc3333" stroke-width="1.5"/>
+        <text x="280" y="49" text-anchor="middle" font-size="10" font-weight="700" fill="#991111">O</text>
+        <circle cx="305" cy="30" r="9" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/><text x="305" y="34" text-anchor="middle" font-size="9" fill="#555">H</text>
+        <circle cx="292" cy="68" r="9" fill="#f4f4f4" stroke="#aaa" stroke-width="1"/><text x="292" y="72" text-anchor="middle" font-size="9" fill="#555">H</text>
+        <line x1="286" y1="62" x2="198" y2="94" stroke="#5ba3d9" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#hbarr)"/>
+        <!-- H-bond from central H's down -->
+        <circle cx="148" cy="188" r="16" fill="#ffd8cc" stroke="#cc3333" stroke-width="1.5"/>
+        <text x="148" y="192" text-anchor="middle" font-size="10" font-weight="700" fill="#991111">O</text>
+        <line x1="148" y1="140" x2="148" y2="172" stroke="#5ba3d9" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#hbarr)"/>
+        <circle cx="212" cy="188" r="16" fill="#ffd8cc" stroke="#cc3333" stroke-width="1.5"/>
+        <text x="212" y="192" text-anchor="middle" font-size="10" font-weight="700" fill="#991111">O</text>
+        <line x1="212" y1="140" x2="212" y2="172" stroke="#5ba3d9" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#hbarr)"/>
+        <!-- legend -->
+        <line x1="10" y1="195" x2="35" y2="195" stroke="#5ba3d9" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="40" y="198" font-size="9" fill="#5ba3d9">H-bond</text>
+        <line x1="90" y1="195" x2="115" y2="195" stroke="#555" stroke-width="2"/>
+        <text x="120" y="198" font-size="9" fill="#555">covalent bond</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="imf-chapter">
+    <h2>4. Properties Explained by IMF</h2>
+    <div class="prop-grid">
+      <div class="prop-card">
+        <h4>💧 Surface Tension</h4>
+        <p>Water molecules at the surface are only pulled <em>inward and sideways</em> (not outward into air) — creating an unbalanced net inward force. This pulls the surface taut, like a stretched membrane. Water has one of the highest surface tensions of any liquid, enabling water striders to walk on it and water to form spherical droplets.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> Strong H-bonding network. Removing a molecule from the surface costs energy.</p>
+      </div>
+      <div class="prop-card">
+        <h4>🌡️ High Boiling Point</h4>
+        <p>Water boils at 100°C — much higher than similar-sized molecules (H₂S boils at −60°C). To boil, you must overcome the IMF holding molecules together. The strong H-bonding network requires a lot of energy to disrupt, keeping water liquid at room temperature.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> Each water molecule can form up to 4 H-bonds simultaneously.</p>
+      </div>
+      <div class="prop-card">
+        <h4>🧊 Ice Floats (Density Anomaly)</h4>
+        <p>Liquid water is denser than solid ice — ice floats. Most solids are denser than their liquid. In ice, water molecules lock into a rigid hexagonal lattice with fixed H-bonds, creating more empty space than liquid water (where H-bonds constantly break and reform). This protects aquatic life in winter.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> H-bond network in ice is more open/ordered than in liquid water.</p>
+      </div>
+      <div class="prop-card">
+        <h4>🌿 Capillary Action</h4>
+        <p>Water can climb up narrow tubes (like plant stems) against gravity. Two forces: <em>adhesion</em> (water H-bonding to polar surface of glass/cellulose) and <em>cohesion</em> (water H-bonding to itself). Adhesion pulls water up the walls; cohesion pulls the rest of the water up with it. Essential for water transport in plants.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> Both H-bonding to surface AND between water molecules.</p>
+      </div>
+      <div class="prop-card">
+        <h4>🌊 High Specific Heat</h4>
+        <p>Water absorbs a lot of heat before its temperature rises (4.18 J/g·°C vs 0.9 for aluminum). Heating water requires first breaking/weakening H-bonds before kinetic energy increases. This buffers temperature changes — why oceans moderate climate, why the body uses sweat to cool down efficiently.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> Energy goes into breaking H-bonds, not raising temperature.</p>
+      </div>
+      <div class="prop-card">
+        <h4>🔗 Viscosity</h4>
+        <p>Viscosity = resistance to flow. Stronger IMF between molecules means they don't slide past each other easily. Glycerol (many O–H groups → many H-bonds) is much more viscous than water (2 H-bonds per molecule). Oil is viscous due to strong LDF from large, flexible hydrocarbon chains.</p>
+        <p style="margin-top:.5rem;font-size:.82rem;color:#555;"><strong>Cause:</strong> Molecules must break IMF to flow past each other.</p>
+      </div>
+    </div>
+    <div class="chart-wrap" style="margin-top:1rem;">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.7rem;color:#1a4060;">Boiling Point Comparison — Effect of IMF Type</div>
+      <svg viewBox="0 0 520 200" style="width:100%;max-width:520px;display:block;">
+        <line x1="50" y1="10" x2="50" y2="165" stroke="#ccc" stroke-width="1"/>
+        <line x1="50" y1="165" x2="510" y2="165" stroke="#ccc" stroke-width="1"/>
+        <text x="5" y="90" font-size="9" fill="#888" transform="rotate(-90,5,90)">BP (°C)</text>
+        <text x="44" y="169" text-anchor="end" font-size="8" fill="#888">−161</text>
+        <text x="44" y="138" text-anchor="end" font-size="8" fill="#888">−85</text>
+        <text x="44" y="90" text-anchor="end" font-size="8" fill="#888">+20</text>
+        <text x="44" y="35" text-anchor="end" font-size="8" fill="#888">+100</text>
+        <!-- CH4 LDF only -->
+        <rect x="65" y="160" width="55" height="5" rx="2" fill="#a8c8e8" stroke="#5580aa" stroke-width=".5"/>
+        <text x="92" y="182" text-anchor="middle" font-size="9" fill="#555">CH₄</text>
+        <text x="92" y="155" text-anchor="middle" font-size="8" fill="#888">−161°C</text>
+        <text x="92" y="193" text-anchor="middle" font-size="8" fill="#5580aa">LDF</text>
+        <!-- HCl DD+LDF -->
+        <rect x="165" y="133" width="55" height="32" rx="2" fill="#f0c87a" stroke="#aa8800" stroke-width=".5"/>
+        <text x="192" y="182" text-anchor="middle" font-size="9" fill="#555">HCl</text>
+        <text x="192" y="126" text-anchor="middle" font-size="8" fill="#888">−85°C</text>
+        <text x="192" y="193" text-anchor="middle" font-size="8" fill="#aa8800">DD+LDF</text>
+        <!-- HF HB -->
+        <rect x="265" y="86" width="55" height="79" rx="2" fill="#f09090" stroke="#aa2222" stroke-width=".5"/>
+        <text x="292" y="182" text-anchor="middle" font-size="9" fill="#555">HF</text>
+        <text x="292" y="79" text-anchor="middle" font-size="8" fill="#888">+20°C</text>
+        <text x="292" y="193" text-anchor="middle" font-size="8" fill="#aa2222">HB+DD+LDF</text>
+        <!-- H2O HB -->
+        <rect x="365" y="31" width="55" height="134" rx="2" fill="#f09090" stroke="#aa2222" stroke-width=".5"/>
+        <text x="392" y="182" text-anchor="middle" font-size="9" fill="#555">H₂O</text>
+        <text x="392" y="24" text-anchor="middle" font-size="8" fill="#888">+100°C</text>
+        <text x="392" y="193" text-anchor="middle" font-size="8" fill="#aa2222">HB+DD+LDF</text>
+        <!-- CCl4 LDF only -->
+        <rect x="455" y="120" width="45" height="45" rx="2" fill="#a8c8e8" stroke="#5580aa" stroke-width=".5"/>
+        <text x="477" y="182" text-anchor="middle" font-size="9" fill="#555">CCl₄</text>
+        <text x="477" y="113" text-anchor="middle" font-size="8" fill="#888">+77°C</text>
+        <text x="477" y="193" text-anchor="middle" font-size="8" fill="#5580aa">LDF</text>
+        <text x="477" y="202" text-anchor="middle" font-size="7" fill="#888">(large e⁻ cloud)</text>
+      </svg>
+      <p style="font-size:.79rem;color:#888;margin-top:.4rem;">Notice: CCl₄ has only LDF yet boils at +77°C — much higher than CH₄ (also LDF-only) because CCl₄ has 4× more electrons → much larger, more polarizable electron cloud → much stronger LDF.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════ QUIZ ══════════ -->
+<div id="tab-quiz" class="tab-content">
+<div class="quiz-wrap">
+  <div class="quiz-header">
+    <div><div style="font-family:'DM Serif Display',serif;font-size:1.4rem;">VSEPR &amp; IMF Quiz</div><div style="font-size:.85rem;color:var(--mut);">20 questions · click an option to answer</div></div>
+    <div class="quiz-score" id="quiz-score-display"></div>
+  </div>
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-big"></div>
+    <div id="score-msg" style="color:var(--mut);margin-top:.4rem;font-size:.9rem;"></div>
+  </div>
+  <div id="quiz-cards"></div>
+  <div class="quiz-actions">
+    <button class="quiz-btn quiz-btn-submit" id="quiz-submit">Submit Quiz</button>
+    <button class="quiz-btn quiz-btn-reset" id="quiz-reset">Reset</button>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+// ─── TAB SWITCHING ───
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='viewer'&&!rendererStarted) initRenderer();
+  });
+});
+
+// ─── ELEMENT COLORS (Lewis SVG) ───
+const EC={H:{f:'#f3f3f3',s:'#aaa',t:'#555'},C:{f:'#ddd',s:'#555',t:'#222'},N:{f:'#d6e8ff',s:'#3355cc',t:'#1133aa'},
+  O:{f:'#ffd6cc',s:'#cc3322',t:'#991111'},F:{f:'#ccffcc',s:'#228833',t:'#115511'},
+  Cl:{f:'#ddffbb',s:'#448822',t:'#336611'},S:{f:'#fffacc',s:'#aa9900',t:'#777700'},
+  P:{f:'#ffeedd',s:'#cc6611',t:'#994400'},Se:{f:'#ffddff',s:'#9933bb',t:'#661199'},
+  Si:{f:'#ddeeff',s:'#4466aa',t:'#224488'},B:{f:'#fff0dd',s:'#cc8844',t:'#885533'},
+  Xe:{f:'#eeddff',s:'#7733bb',t:'#551199'},I:{f:'#f0ddff',s:'#773399',t:'#551177'}};
+
+// Lone pair dot offsets (2 dots per LP)
+const LPO={N:[[-4,-22],[4,-22]],S:[[-4,22],[4,22]],E:[[22,-4],[22,4]],W:[[-22,-4],[-22,4]],
+  NE:[[15,-17],[20,-10]],NW:[[-15,-17],[-20,-10]],SE:[[15,17],[20,10]],SW:[[-15,17],[-20,10]]};
+
+// ─── LEWIS STRUCTURE DATA ───
+// A: atoms [{el,x,y,lp:[dirs]}]  B: bonds [[a,b,order]]
+const LD={
+  h2:  {w:120,h:55, A:[{el:'H',x:30,y:28,lp:[]},{el:'H',x:90,y:28,lp:[]}], B:[[0,1,1]]},
+  n2:  {w:160,h:55, A:[{el:'N',x:38,y:28,lp:['W']},{el:'N',x:122,y:28,lp:['E']}], B:[[0,1,3]]},
+  cl2: {w:165,h:55, A:[{el:'Cl',x:40,y:28,lp:['N','S','W']},{el:'Cl',x:125,y:28,lp:['N','S','E']}], B:[[0,1,1]]},
+  co:  {w:148,h:55, A:[{el:'C',x:35,y:28,lp:['W']},{el:'O',x:113,y:28,lp:['E']}], B:[[0,1,3]]},
+  hf:  {w:130,h:55, A:[{el:'H',x:28,y:28,lp:[]},{el:'F',x:102,y:28,lp:['N','S','E']}], B:[[0,1,1]]},
+  hcl: {w:142,h:55, A:[{el:'H',x:28,y:28,lp:[]},{el:'Cl',x:114,y:28,lp:['N','S','E']}], B:[[0,1,1]]},
+  hcn: {w:188,h:55, A:[{el:'H',x:20,y:28,lp:[]},{el:'C',x:72,y:28,lp:[]},{el:'N',x:158,y:28,lp:['E']}], B:[[0,1,1],[1,2,3]]},
+  co2: {w:210,h:55, A:[{el:'O',x:28,y:28,lp:['N','S']},{el:'C',x:105,y:28,lp:[]},{el:'O',x:182,y:28,lp:['N','S']}], B:[[0,1,2],[1,2,2]]},
+  h2o: {w:165,h:115, A:[{el:'O',x:83,y:42,lp:['NW','NE']},{el:'H',x:28,y:90,lp:[]},{el:'H',x:137,y:90,lp:[]}], B:[[0,1,1],[0,2,1]]},
+  so2: {w:175,h:122, A:[{el:'S',x:88,y:38,lp:['N']},{el:'O',x:28,y:93,lp:['W','S']},{el:'O',x:148,y:93,lp:['E','S']}], B:[[0,1,2],[0,2,1]]},
+  o3:  {w:175,h:122, A:[{el:'O',x:88,y:38,lp:['N']},{el:'O',x:28,y:93,lp:['W','S']},{el:'O',x:148,y:93,lp:['E','S']}], B:[[0,1,2],[0,2,1]]},
+  h2s: {w:165,h:115, A:[{el:'S',x:83,y:42,lp:['NW','NE']},{el:'H',x:28,y:90,lp:[]},{el:'H',x:137,y:90,lp:[]}], B:[[0,1,1],[0,2,1]]},
+  h2se:{w:168,h:115, A:[{el:'Se',x:84,y:42,lp:['NW','NE']},{el:'H',x:28,y:90,lp:[]},{el:'H',x:140,y:90,lp:[]}], B:[[0,1,1],[0,2,1]]},
+  bf3: {w:180,h:148, A:[{el:'B',x:90,y:62,lp:[]},{el:'F',x:90,y:15,lp:['N','NE']},{el:'F',x:30,y:110,lp:['W','S']},{el:'F',x:150,y:110,lp:['E','S']}], B:[[0,1,1],[0,2,1],[0,3,1]]},
+  so3: {w:180,h:148, A:[{el:'S',x:90,y:62,lp:[]},{el:'O',x:90,y:15,lp:['N','NW']},{el:'O',x:30,y:110,lp:['W','SW']},{el:'O',x:150,y:110,lp:['E','SE']}], B:[[0,1,2],[0,2,2],[0,3,2]]},
+  ch2o:{w:178,h:138, A:[{el:'C',x:89,y:60,lp:[]},{el:'O',x:89,y:13,lp:['NW','NE']},{el:'H',x:30,y:105,lp:[]},{el:'H',x:148,y:105,lp:[]}], B:[[0,1,2],[0,2,1],[0,3,1]]},
+  nh3: {w:185,h:148, A:[{el:'N',x:93,y:50,lp:['N']},{el:'H',x:30,y:108,lp:[]},{el:'H',x:156,y:108,lp:[]},{el:'H',x:93,y:122,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1]]},
+  ph3: {w:185,h:148, A:[{el:'P',x:93,y:50,lp:['N']},{el:'H',x:30,y:108,lp:[]},{el:'H',x:156,y:108,lp:[]},{el:'H',x:93,y:122,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1]]},
+  pf3: {w:192,h:150, A:[{el:'P',x:96,y:50,lp:['N']},{el:'F',x:30,y:108,lp:['W','S']},{el:'F',x:162,y:108,lp:['E','S']},{el:'F',x:96,y:124,lp:['S']}], B:[[0,1,1],[0,2,1],[0,3,1]]},
+  pcl3:{w:205,h:158, A:[{el:'P',x:103,y:52,lp:['N']},{el:'Cl',x:30,y:112,lp:['W','S']},{el:'Cl',x:175,y:112,lp:['E','S']},{el:'Cl',x:103,y:130,lp:['S']}], B:[[0,1,1],[0,2,1],[0,3,1]]},
+  ch4: {w:188,h:168, A:[{el:'C',x:94,y:76,lp:[]},{el:'H',x:94,y:20,lp:[]},{el:'H',x:28,y:110,lp:[]},{el:'H',x:160,y:110,lp:[]},{el:'H',x:94,y:148,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  ccl4:{w:200,h:178, A:[{el:'C',x:100,y:80,lp:[]},{el:'Cl',x:100,y:20,lp:[]},{el:'Cl',x:28,y:115,lp:[]},{el:'Cl',x:172,y:115,lp:[]},{el:'Cl',x:100,y:152,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  sih4:{w:188,h:168, A:[{el:'Si',x:94,y:76,lp:[]},{el:'H',x:94,y:20,lp:[]},{el:'H',x:28,y:110,lp:[]},{el:'H',x:160,y:110,lp:[]},{el:'H',x:94,y:148,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  chcl3:{w:200,h:178, A:[{el:'C',x:100,y:80,lp:[]},{el:'H',x:100,y:20,lp:[]},{el:'Cl',x:28,y:115,lp:[]},{el:'Cl',x:172,y:115,lp:[]},{el:'Cl',x:100,y:152,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  ch3f:{w:192,h:172, A:[{el:'C',x:96,y:78,lp:[]},{el:'F',x:96,y:20,lp:['NE','NW']},{el:'H',x:28,y:112,lp:[]},{el:'H',x:164,y:112,lp:[]},{el:'H',x:96,y:150,lp:[]}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  sef6:{w:210,h:210, A:[{el:'Se',x:105,y:105,lp:[]},{el:'F',x:105,y:30,lp:['N']},{el:'F',x:105,y:180,lp:['S']},{el:'F',x:30,y:105,lp:['W']},{el:'F',x:180,y:105,lp:['E']},{el:'F',x:57,y:57,lp:['NW']},{el:'F',x:153,y:57,lp:['NE']}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1],[0,5,1],[0,6,1]]},
+  sf6: {w:210,h:210, A:[{el:'S',x:105,y:105,lp:[]},{el:'F',x:105,y:30,lp:['N']},{el:'F',x:105,y:180,lp:['S']},{el:'F',x:30,y:105,lp:['W']},{el:'F',x:180,y:105,lp:['E']},{el:'F',x:57,y:57,lp:['NW']},{el:'F',x:153,y:57,lp:['NE']}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1],[0,5,1],[0,6,1]]},
+  xef2:{w:175,h:65,  A:[{el:'F',x:22,y:33,lp:['N','S','W']},{el:'Xe',x:88,y:33,lp:['N','SE','SW']},{el:'F',x:153,y:33,lp:['N','S','E']}], B:[[0,1,1],[1,2,1]]},
+  xef4:{w:202,h:202, A:[{el:'Xe',x:101,y:101,lp:['NW','SW']},{el:'F',x:101,y:30,lp:['NE','NW']},{el:'F',x:101,y:172,lp:['SE','SW']},{el:'F',x:30,y:101,lp:['NW','SW']},{el:'F',x:172,y:101,lp:['NE','SE']}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]]},
+  if5: {w:202,h:210, A:[{el:'I',x:101,y:103,lp:['S']},{el:'F',x:101,y:28,lp:['N']},{el:'F',x:28,y:88,lp:['W']},{el:'F',x:174,y:88,lp:['E']},{el:'F',x:50,y:155,lp:['SW']},{el:'F',x:152,y:155,lp:['SE']}], B:[[0,1,1],[0,2,1],[0,3,1],[0,4,1],[0,5,1]]}
+};
+
+function makeLewis(key){
+  const d=LD[key]; if(!d) return '<em style="color:#aaa">—</em>';
+  const R=14;
+  let s=`<svg viewBox="0 0 ${d.w} ${d.h}" xmlns="http://www.w3.org/2000/svg" style="width:${d.w}px;height:${d.h}px;max-width:100%;display:block;margin:2px auto;">`;
+  // bonds
+  d.B.forEach(([ai,bi,n])=>{
+    const a=d.A[ai],b=d.A[bi];
+    const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy);
+    const ux=dx/L,uy=dy/L,px=-uy,py=ux;
+    const offs=n===1?[0]:n===2?[-2.5,2.5]:[-4,0,4];
+    const sh=R+2;
+    offs.forEach(o=>{
+      const x1=(a.x+ux*sh+px*o).toFixed(1),y1=(a.y+uy*sh+py*o).toFixed(1);
+      const x2=(b.x-ux*sh+px*o).toFixed(1),y2=(b.y-uy*sh+py*o).toFixed(1);
+      s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#555" stroke-width="2" stroke-linecap="round"/>`;
+    });
+  });
+  // lone pairs
+  d.A.forEach(({x,y,lp})=>{
+    (lp||[]).forEach(dir=>{
+      LPO[dir].forEach(([dx,dy])=>{
+        s+=`<circle cx="${x+dx}" cy="${y+dy}" r="2.5" fill="#222"/>`;
+      });
+    });
+  });
+  // atoms
+  d.A.forEach(({el,x,y})=>{
+    const c=EC[el]||{f:'#fff',s:'#888',t:'#555'};
+    s+=`<circle cx="${x}" cy="${y}" r="${R}" fill="${c.f}" stroke="${c.s}" stroke-width="1.5"/>`;
+    const fs=el.length>1?9:12;
+    s+=`<text x="${x}" y="${y+4.5}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="${c.t}" font-family="'Courier New',monospace">${el}</text>`;
+  });
+  return s+'</svg>';
+}
+
+// ─── 3D MOLECULE DATA ───
+const MOLS={
+  h2:   {label:'H₂',  name:'Linear',egeo:'Linear',angle:'180°',bp:1,lp:0,polar:false,imf:['LDF'],
+    rule:'Homodiatomic — identical atoms → no dipole → nonpolar. Only LDF. Boiling point −253°C.',
+    atoms:[{p:[-0.7,0,0],c:0xd8d8d8,r:.22,l:'H'},{p:[0.7,0,0],c:0xd8d8d8,r:.22,l:'H'}],bonds:[[0,1]],lps:[]},
+  n2:   {label:'N₂',  name:'Linear',egeo:'Linear',angle:'180°',bp:1,lp:0,polar:false,imf:['LDF'],
+    rule:'Triple bond between identical N atoms → symmetric → nonpolar. Very stable. Makes up 78% of air.',
+    atoms:[{p:[-0.65,0,0],c:0x4466cc,r:.30,l:'N'},{p:[0.65,0,0],c:0x4466cc,r:.30,l:'N'}],bonds:[[0,1]],lps:[]},
+  cl2:  {label:'Cl₂', name:'Linear',egeo:'Linear',angle:'180°',bp:1,lp:0,polar:false,imf:['LDF'],
+    rule:'Identical Cl atoms → nonpolar. Larger electron cloud than H₂ or N₂ → stronger LDF → higher BP (−34°C).',
+    atoms:[{p:[-1.0,0,0],c:0x88cc44,r:.33,l:'Cl'},{p:[1.0,0,0],c:0x88cc44,r:.33,l:'Cl'}],bonds:[[0,1]],lps:[]},
+  co:   {label:'CO',  name:'Linear',egeo:'Linear',angle:'180°',bp:1,lp:0,polar:true,imf:['DD','LDF'],
+    rule:'Triple bond C≡O. O more electronegative → small dipole. Lone pair on C partially offsets it. Still polar.',
+    atoms:[{p:[0,0,0],c:0x555555,r:.30,l:'C'},{p:[1.15,0,0],c:0xdd3333,r:.28,l:'O'}],bonds:[[0,1]],lps:[]},
+  hf:   {label:'HF',  name:'Linear',egeo:'Linear',angle:'—',bp:1,lp:3,polar:true,imf:['HB','DD','LDF'],
+    rule:'F most electronegative element → very polar H—F bond. H bonded to F → H-bonding! Boiling point +20°C despite tiny size.',
+    atoms:[{p:[0,0,0],c:0x44aa55,r:.32,l:'F'},{p:[-1.0,0,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1]],lps:[[0.65,0.52,0.38],[0.65,0.52,-0.38],[0.65,-0.52,0]]},
+  hcl:  {label:'HCl', name:'Linear',egeo:'Linear',angle:'—',bp:1,lp:3,polar:true,imf:['DD','LDF'],
+    rule:'Cl more electronegative than H → polar bond. 3 LP on Cl. No H-bonding. DD + LDF. BP −85°C.',
+    atoms:[{p:[0,0,0],c:0x88cc44,r:.36,l:'Cl'},{p:[-1.05,0,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1]],lps:[[0.65,0.52,0.38],[0.65,0.52,-0.38],[0.65,-0.52,0]]},
+  hcn:  {label:'HCN', name:'Linear',egeo:'Linear',angle:'180°',bp:2,lp:0,polar:true,imf:['DD','LDF'],
+    rule:'H—C≡N: 2 electron groups around C → linear. N more electronegative → dipole toward N → polar.',
+    atoms:[{p:[0,0,0],c:0x555555,r:.30,l:'C'},{p:[-1.2,0,0],c:0xd8d8d8,r:.18,l:'H'},{p:[1.25,0,0],c:0x4466cc,r:.30,l:'N'}],bonds:[[0,1],[0,2]],lps:[]},
+  co2:  {label:'CO₂', name:'Linear',egeo:'Linear',angle:'180°',bp:2,lp:0,polar:false,imf:['LDF'],
+    rule:'2 double bonds. Each C=O is polar, but they point in opposite directions → cancel → nonpolar. Classic shape-overrides-bond-polarity example.',
+    atoms:[{p:[0,0,0],c:0x555555,r:.30,l:'C'},{p:[1.35,0,0],c:0xdd3333,r:.28,l:'O'},{p:[-1.35,0,0],c:0xdd3333,r:.28,l:'O'}],bonds:[[0,1],[0,2]],lps:[]},
+  h2o:  {label:'H₂O', name:'Bent',egeo:'Tetrahedral',angle:'104.5°',bp:2,lp:2,polar:true,imf:['HB','DD','LDF'],
+    rule:'2 LP squeeze angle to 104.5°. H bonded to O → strong H-bonding network → boiling point +100°C (expected ~−80°C without H-bonding).',
+    atoms:[{p:[0,0,0],c:0xdd3333,r:.36,l:'O'},{p:[0.97,-0.82,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.97,-0.82,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2]],lps:[[0,0.82,0.5],[0,0.82,-0.5]]},
+  so2:  {label:'SO₂', name:'Bent',egeo:'Trigonal Planar',angle:'119°',bp:2,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'S has 1 LP + 2 bonds (resonance). Electron geometry: trig. planar. Lone pair → bent shape. Net dipole → polar. Main cause of acid rain.',
+    atoms:[{p:[0,0,0],c:0xddbb00,r:.38,l:'S'},{p:[1.1,-0.55,0],c:0xdd3333,r:.28,l:'O'},{p:[-1.1,-0.55,0],c:0xdd3333,r:.28,l:'O'}],bonds:[[0,1],[0,2]],lps:[[0,0.9,0]]},
+  o3:   {label:'O₃',  name:'Bent',egeo:'Trigonal Planar',angle:'117°',bp:2,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'Central O: 2 bonds + 1 LP → bent (117°). Resonance. Polar. Ozone in stratosphere absorbs UV radiation.',
+    atoms:[{p:[0,0,0],c:0xdd3333,r:.34,l:'O'},{p:[1.05,-0.5,0],c:0xdd3333,r:.28,l:'O'},{p:[-1.05,-0.5,0],c:0xdd3333,r:.28,l:'O'}],bonds:[[0,1],[0,2]],lps:[[0,0.85,0]]},
+  h2s:  {label:'H₂S', name:'Bent',egeo:'Tetrahedral',angle:'92°',bp:2,lp:2,polar:true,imf:['DD','LDF'],
+    rule:'Like H₂O but S larger → lone pairs more diffuse → angle ~92°. No H-bonding. DD+LDF. BP −60°C (much lower than H₂O).',
+    atoms:[{p:[0,0,0],c:0xddbb00,r:.40,l:'S'},{p:[1.05,-0.07,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.05,-0.07,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2]],lps:[[0,0.85,0.5],[0,0.85,-0.5]]},
+  h2se: {label:'H₂Se',name:'Bent',egeo:'Tetrahedral',angle:'91°',bp:2,lp:2,polar:true,imf:['DD','LDF'],
+    rule:'Se even larger than S → angle almost exactly 90°. No H-bonding. DD+LDF. BP −41°C.',
+    atoms:[{p:[0,0,0],c:0xcc66aa,r:.46,l:'Se'},{p:[1.05,-0.05,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.05,-0.05,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2]],lps:[[0,0.85,0.52],[0,0.85,-0.52]]},
+  bf3:  {label:'BF₃', name:'Trigonal Planar',egeo:'Trigonal Planar',angle:'120°',bp:3,lp:0,polar:false,imf:['LDF'],
+    rule:'3 B−F bonds spread 120° flat. Symmetric → dipoles cancel → nonpolar despite very polar bonds. B incomplete octet (good Lewis acid).',
+    atoms:[{p:[0,0,0],c:0xcc8844,r:.30,l:'B'},{p:[1.35,0,0],c:0x44aa55,r:.26,l:'F'},{p:[-0.675,0,1.17],c:0x44aa55,r:.26,l:'F'},{p:[-0.675,0,-1.17],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3]],lps:[]},
+  so3:  {label:'SO₃', name:'Trigonal Planar',egeo:'Trigonal Planar',angle:'120°',bp:3,lp:0,polar:false,imf:['LDF'],
+    rule:'3 S=O bonds, resonance, symmetric → nonpolar. Dissolves in water → H₂SO₄ (sulfuric acid).',
+    atoms:[{p:[0,0,0],c:0xddbb00,r:.38,l:'S'},{p:[1.35,0,0],c:0xdd3333,r:.26,l:'O'},{p:[-0.675,0,1.17],c:0xdd3333,r:.26,l:'O'},{p:[-0.675,0,-1.17],c:0xdd3333,r:.26,l:'O'}],bonds:[[0,1],[0,2],[0,3]],lps:[]},
+  ch2o: {label:'CH₂O',name:'Trigonal Planar',egeo:'Trigonal Planar',angle:'~120°',bp:3,lp:0,polar:true,imf:['DD','LDF'],
+    rule:'C=O + 2 C−H all in a plane. C=O very polar and not cancelled by C−H → net dipole → polar. Formaldehyde (preservative).',
+    atoms:[{p:[0,0,0],c:0x555555,r:.30,l:'C'},{p:[0,1.2,0],c:0xdd3333,r:.26,l:'O'},{p:[1.05,-0.55,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.05,-0.55,0],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3]],lps:[]},
+  nh3:  {label:'NH₃', name:'Trigonal Pyramidal',egeo:'Tetrahedral',angle:'107°',bp:3,lp:1,polar:true,imf:['HB','DD','LDF'],
+    rule:'1 LP cap pushes 3 H into pyramid (107°). H bonded to N → H-bonding! BP −33°C (expected ~−90°C without H-bonding).',
+    atoms:[{p:[0,0,0],c:0x4466cc,r:.34,l:'N'},{p:[1.1,-0.6,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.55,-0.6,0.95],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.55,-0.6,-0.95],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3]],lps:[[0,0.85,0]]},
+  ph3:  {label:'PH₃', name:'Trigonal Pyramidal',egeo:'Tetrahedral',angle:'93°',bp:3,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'Like NH₃ but P larger → lone pair more diffuse → smaller angle (93°). P−H less polar → no H-bonding. BP −88°C.',
+    atoms:[{p:[0,0,0],c:0xff8833,r:.40,l:'P'},{p:[1.1,-0.8,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.55,-0.8,0.95],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.55,-0.8,-0.95],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3]],lps:[[0,0.75,0]]},
+  pf3:  {label:'PF₃', name:'Trigonal Pyramidal',egeo:'Tetrahedral',angle:'98°',bp:3,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'3 P−F + 1 LP. Very polar P−F bonds not cancelled → polar. P larger than N → smaller angles than NH₃.',
+    atoms:[{p:[0,0,0],c:0xff8833,r:.40,l:'P'},{p:[1.35,-0.72,0],c:0x44aa55,r:.26,l:'F'},{p:[-0.675,-0.72,1.17],c:0x44aa55,r:.26,l:'F'},{p:[-0.675,-0.72,-1.17],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3]],lps:[[0,1.0,0]]},
+  pcl3: {label:'PCl₃',name:'Trigonal Pyramidal',egeo:'Tetrahedral',angle:'100°',bp:3,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'3 P−Cl + 1 LP. Similar to PF₃; Cl slightly less electronegative than F → slightly wider angles. Still polar.',
+    atoms:[{p:[0,0,0],c:0xff8833,r:.40,l:'P'},{p:[1.4,-0.65,0],c:0x88cc44,r:.32,l:'Cl'},{p:[-0.70,-0.65,1.21],c:0x88cc44,r:.32,l:'Cl'},{p:[-0.70,-0.65,-1.21],c:0x88cc44,r:.32,l:'Cl'}],bonds:[[0,1],[0,2],[0,3]],lps:[[0,0.95,0]]},
+  ch4:  {label:'CH₄', name:'Tetrahedral',egeo:'Tetrahedral',angle:'109.5°',bp:4,lp:0,polar:false,imf:['LDF'],
+    rule:'4 equal C−H bonds in perfect tetrahedron. Symmetric → nonpolar. Main component of natural gas. BP −161°C.',
+    atoms:[{p:[0,0,0],c:0x555555,r:.34,l:'C'},{p:[1.1,0.6,0.6],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.1,0.6,-0.6],c:0xd8d8d8,r:.18,l:'H'},{p:[1.1,-0.6,-0.6],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.1,-0.6,0.6],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[]},
+  ccl4: {label:'CCl₄',name:'Tetrahedral',egeo:'Tetrahedral',angle:'109.5°',bp:4,lp:0,polar:false,imf:['LDF'],
+    rule:'4 very polar C−Cl bonds pointing in 4 tetrahedral directions → cancel exactly → nonpolar. Best example of shape overriding bond polarity.',
+    atoms:[{p:[0,0,0],c:0x555555,r:.34,l:'C'},{p:[1.3,0.75,0.75],c:0x88cc44,r:.32,l:'Cl'},{p:[-1.3,0.75,-0.75],c:0x88cc44,r:.32,l:'Cl'},{p:[1.3,-0.75,-0.75],c:0x88cc44,r:.32,l:'Cl'},{p:[-1.3,-0.75,0.75],c:0x88cc44,r:.32,l:'Cl'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[]},
+  sih4: {label:'SiH₄',name:'Tetrahedral',egeo:'Tetrahedral',angle:'109.5°',bp:4,lp:0,polar:false,imf:['LDF'],
+    rule:'Like CH₄ but Si larger. 4 Si−H arranged tetrahedrally → symmetric → nonpolar. Used in semiconductor manufacturing.',
+    atoms:[{p:[0,0,0],c:0x8899bb,r:.40,l:'Si'},{p:[1.15,0.65,0.65],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.15,0.65,-0.65],c:0xd8d8d8,r:.18,l:'H'},{p:[1.15,-0.65,-0.65],c:0xd8d8d8,r:.18,l:'H'},{p:[-1.15,-0.65,0.65],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[]},
+  chcl3:{label:'CHCl₃',name:'Tetrahedral',egeo:'Tetrahedral',angle:'~107°',bp:4,lp:0,polar:true,imf:['DD','LDF'],
+    rule:'1 H + 3 Cl around C → asymmetric → net dipole toward Cl cluster → polar. Compare with nonpolar CCl₄!',
+    atoms:[{p:[0,0,0],c:0x555555,r:.34,l:'C'},{p:[0,1.1,0],c:0xd8d8d8,r:.18,l:'H'},{p:[1.3,-0.40,0],c:0x88cc44,r:.32,l:'Cl'},{p:[-0.65,-0.40,1.13],c:0x88cc44,r:.32,l:'Cl'},{p:[-0.65,-0.40,-1.13],c:0x88cc44,r:.32,l:'Cl'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[]},
+  ch3f: {label:'CH₃F',name:'Tetrahedral',egeo:'Tetrahedral',angle:'~109°',bp:4,lp:0,polar:true,imf:['DD','LDF'],
+    rule:'3 H + 1 F around C. F highly electronegative → large dipole toward F → polar. Contrast: CH₄ (nonpolar) and CF₄ (nonpolar, symmetric).',
+    atoms:[{p:[0,0,0],c:0x555555,r:.34,l:'C'},{p:[0,1.22,0],c:0x44aa55,r:.26,l:'F'},{p:[1.03,-0.38,0],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.515,-0.38,0.89],c:0xd8d8d8,r:.18,l:'H'},{p:[-0.515,-0.38,-0.89],c:0xd8d8d8,r:.18,l:'H'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[]},
+  sef6: {label:'SeF₆',name:'Octahedral',egeo:'Octahedral',angle:'90°',bp:6,lp:0,polar:false,imf:['LDF'],
+    rule:'6 Se−F along ±x,±y,±z. Perfect octahedral symmetry → all dipoles cancel pairwise → nonpolar despite very polar bonds.',
+    atoms:[{p:[0,0,0],c:0xcc66aa,r:.44,l:'Se'},{p:[1.55,0,0],c:0x44aa55,r:.26,l:'F'},{p:[-1.55,0,0],c:0x44aa55,r:.26,l:'F'},{p:[0,1.55,0],c:0x44aa55,r:.26,l:'F'},{p:[0,-1.55,0],c:0x44aa55,r:.26,l:'F'},{p:[0,0,1.55],c:0x44aa55,r:.26,l:'F'},{p:[0,0,-1.55],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]],lps:[]},
+  sf6:  {label:'SF₆', name:'Octahedral',egeo:'Octahedral',angle:'90°',bp:6,lp:0,polar:false,imf:['LDF'],
+    rule:'Identical to SeF₆ geometry. 6 S−F octahedrally symmetric → nonpolar. Excellent electrical insulator; very stable S−F bonds.',
+    atoms:[{p:[0,0,0],c:0xddbb00,r:.40,l:'S'},{p:[1.55,0,0],c:0x44aa55,r:.26,l:'F'},{p:[-1.55,0,0],c:0x44aa55,r:.26,l:'F'},{p:[0,1.55,0],c:0x44aa55,r:.26,l:'F'},{p:[0,-1.55,0],c:0x44aa55,r:.26,l:'F'},{p:[0,0,1.55],c:0x44aa55,r:.26,l:'F'},{p:[0,0,-1.55],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]],lps:[]},
+  xef2: {label:'XeF₂',name:'Linear',egeo:'Trigonal Bipyramidal',angle:'180°',bp:2,lp:3,polar:false,imf:['LDF'],
+    rule:'Xe: 2 bonds + 3 LP = 5 regions → trig. bipyramidal electron geometry. 3 LP in equatorial positions → F axial → linear. Symmetric → nonpolar.',
+    atoms:[{p:[0,0,0],c:0x9955bb,r:.48,l:'Xe'},{p:[0,1.6,0],c:0x44aa55,r:.26,l:'F'},{p:[0,-1.6,0],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2]],lps:[[1.0,0,0],[-0.5,0,0.87],[-0.5,0,-0.87]]},
+  xef4: {label:'XeF₄',name:'Square Planar',egeo:'Octahedral',angle:'90°',bp:4,lp:2,polar:false,imf:['LDF'],
+    rule:'Xe: 4 bonds + 2 LP = 6 regions → octahedral. 2 LP go to axial poles → 4 F in square equatorial plane. Symmetric → nonpolar.',
+    atoms:[{p:[0,0,0],c:0x9955bb,r:.48,l:'Xe'},{p:[1.4,0,0],c:0x44aa55,r:.26,l:'F'},{p:[-1.4,0,0],c:0x44aa55,r:.26,l:'F'},{p:[0,0,1.4],c:0x44aa55,r:.26,l:'F'},{p:[0,0,-1.4],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3],[0,4]],lps:[[0,1.0,0],[0,-1.0,0]]},
+  if5:  {label:'IF₅', name:'Square Pyramidal',egeo:'Octahedral',angle:'~82°',bp:5,lp:1,polar:true,imf:['DD','LDF'],
+    rule:'I: 5 bonds + 1 LP = 6 regions → octahedral. LP takes one axial spot → square pyramid of F atoms. Asymmetric → polar.',
+    atoms:[{p:[0,0,0],c:0x885599,r:.50,l:'I'},{p:[0,1.5,0],c:0x44aa55,r:.26,l:'F'},{p:[1.3,0,0],c:0x44aa55,r:.26,l:'F'},{p:[-1.3,0,0],c:0x44aa55,r:.26,l:'F'},{p:[0,0,1.3],c:0x44aa55,r:.26,l:'F'},{p:[0,0,-1.3],c:0x44aa55,r:.26,l:'F'}],bonds:[[0,1],[0,2],[0,3],[0,4],[0,5]],lps:[[0,-1.0,0]]}
+};
+
+// ─── TABLE DATA ───
+const TABLE=[
+  {id:'h2',  n:1, formula:'H₂',   lpNote:'no LP',          sc:'sh-linear',    polar:false},
+  {id:'n2',  n:2, formula:'N₂',   lpNote:'1 LP each N',    sc:'sh-linear',    polar:false},
+  {id:'cl2', n:3, formula:'Cl₂',  lpNote:'3 LP each Cl',   sc:'sh-linear',    polar:false},
+  {id:'co',  n:4, formula:'CO',   lpNote:'1 LP each atom',  sc:'sh-linear',    polar:true},
+  {id:'hf',  n:5, formula:'HF',   lpNote:'3 LP on F',      sc:'sh-linear',    polar:true},
+  {id:'hcl', n:6, formula:'HCl',  lpNote:'3 LP on Cl',     sc:'sh-linear',    polar:true},
+  {id:'hcn', n:7, formula:'HCN',  lpNote:'1 LP on N',      sc:'sh-linear',    polar:true},
+  {id:'co2', n:8, formula:'CO₂',  lpNote:'2 LP each O',    sc:'sh-linear',    polar:false},
+  {id:'h2o', n:9, formula:'H₂O',  lpNote:'2 LP on O',      sc:'sh-bent',      polar:true},
+  {id:'so2', n:10,formula:'SO₂',  lpNote:'1 LP on S',      sc:'sh-bent',      polar:true},
+  {id:'o3',  n:11,formula:'O₃',   lpNote:'1 LP on center O',sc:'sh-bent',     polar:true},
+  {id:'h2s', n:12,formula:'H₂S',  lpNote:'2 LP on S',      sc:'sh-bent',      polar:true},
+  {id:'h2se',n:13,formula:'H₂Se', lpNote:'2 LP on Se',     sc:'sh-bent',      polar:true},
+  {id:'bf3', n:14,formula:'BF₃',  lpNote:'3 LP each F',    sc:'sh-trigplanar',polar:false},
+  {id:'so3', n:15,formula:'SO₃',  lpNote:'2 LP each O',    sc:'sh-trigplanar',polar:false},
+  {id:'ch2o',n:16,formula:'CH₂O', lpNote:'2 LP on O',      sc:'sh-trigplanar',polar:true},
+  {id:'nh3', n:17,formula:'NH₃',  lpNote:'1 LP on N',      sc:'sh-trigpyr',   polar:true},
+  {id:'ph3', n:18,formula:'PH₃',  lpNote:'1 LP on P',      sc:'sh-trigpyr',   polar:true},
+  {id:'pf3', n:19,formula:'PF₃',  lpNote:'1 LP on P',      sc:'sh-trigpyr',   polar:true},
+  {id:'pcl3',n:20,formula:'PCl₃', lpNote:'1 LP on P',      sc:'sh-trigpyr',   polar:true},
+  {id:'ch4', n:21,formula:'CH₄',  lpNote:'no LP on C',     sc:'sh-tet',       polar:false},
+  {id:'ccl4',n:22,formula:'CCl₄', lpNote:'no LP on C',     sc:'sh-tet',       polar:false},
+  {id:'sih4',n:23,formula:'SiH₄', lpNote:'no LP on Si',    sc:'sh-tet',       polar:false},
+  {id:'chcl3',n:24,formula:'CHCl₃',lpNote:'no LP on C',    sc:'sh-tet',       polar:true},
+  {id:'ch3f',n:25,formula:'CH₃F', lpNote:'3 LP on F',      sc:'sh-tet',       polar:true},
+  {id:'sef6',n:26,formula:'SeF₆', lpNote:'no LP on Se',    sc:'sh-oct',       polar:false},
+  {id:'sf6', n:27,formula:'SF₆',  lpNote:'no LP on S',     sc:'sh-oct',       polar:false},
+  {id:'xef2',n:28,formula:'XeF₂', lpNote:'3 LP on Xe',     sc:'sh-linear',    polar:false},
+  {id:'xef4',n:29,formula:'XeF₄', lpNote:'2 LP on Xe',     sc:'sh-sqpl',      polar:false},
+  {id:'if5', n:30,formula:'IF₅',  lpNote:'1 LP on I',      sc:'sh-sqpyr',     polar:true},
+];
+
+const SHAPE_INFO={
+  'sh-linear':['#edf5fb','Linear'],'sh-bent':['#edfbf0','Bent'],
+  'sh-trigplanar':['#fbfaed','Trigonal Planar'],'sh-trigpyr':['#fdf0e8','Trig. Pyramidal'],
+  'sh-tet':['#f5edfb','Tetrahedral'],'sh-oct':['#edfbfb','Octahedral'],
+  'sh-sqpl':['#fbedf5','Square Planar'],'sh-sqpyr':['#fbf5ed','Square Pyramidal']
+};
+
+// shape legend
+const legRow=document.getElementById('shape-legend');
+Object.entries(SHAPE_INFO).forEach(([cls,[col,lbl]])=>{
+  legRow.innerHTML+=`<span><span class="leg-sw" style="background:${col};"></span>${lbl}</span>`;
+});
+
+function imfHTML(id){
+  return MOLS[id].imf.map(t=>{
+    const cls=t==='HB'?'tag-hb':t==='DD'?'tag-dd':'tag-ldf';
+    const lbl=t==='HB'?'H-bonding':t==='DD'?'Dipole-Dipole':'LDF';
+    return `<span class="imf-tag ${cls}">${lbl}</span>`;
+  }).join(' ');
+}
+
+// ─── TABLE RENDERING ───
+let sortCol='num',sortDir='asc',activeFilter='all';
+function filterRows(){
+  return TABLE.filter(r=>{
+    const m=MOLS[r.id];
+    if(activeFilter==='polar') return r.polar;
+    if(activeFilter==='nonpolar') return !r.polar;
+    if(activeFilter==='hbond') return m.imf.includes('HB');
+    if(activeFilter==='linear') return m.name==='Linear';
+    if(activeFilter==='bent') return m.name==='Bent';
+    if(activeFilter==='trig') return m.name==='Trigonal Planar';
+    if(activeFilter==='pyramid') return m.name.includes('Pyramidal');
+    if(activeFilter==='tet') return m.name==='Tetrahedral';
+    if(activeFilter==='oct') return ['Octahedral','Square Planar','Square Pyramidal'].includes(m.name);
+    return true;
+  });
+}
+function renderTable(){
+  const data=filterRows();
+  data.sort((a,b)=>{
+    const m1=MOLS[a.id],m2=MOLS[b.id]; let v1,v2;
+    if(sortCol==='num'){v1=a.n;v2=b.n;}
+    else if(sortCol==='formula'){v1=a.formula;v2=b.formula;}
+    else if(sortCol==='er'){v1=m1.bp+m1.lp;v2=m2.bp+m2.lp;}
+    else if(sortCol==='egeo'){v1=m1.egeo;v2=m2.egeo;}
+    else if(sortCol==='shape'){v1=m1.name;v2=m2.name;}
+    else if(sortCol==='angle'){v1=parseFloat(m1.angle)||0;v2=parseFloat(m2.angle)||0;}
+    else if(sortCol==='polar'){v1=a.polar?1:0;v2=b.polar?1:0;}
+    else{v1=a.n;v2=b.n;}
+    return v1<v2?(sortDir==='asc'?-1:1):v1>v2?(sortDir==='asc'?1:-1):0;
+  });
+  document.getElementById('mol-tbody').innerHTML=data.map(r=>{
+    const m=MOLS[r.id];
+    const pb=r.polar?'<span class="badge badge-pol">Polar ⚡</span>':'<span class="badge badge-np">Nonpolar</span>';
+    return `<tr class="${r.sc}">
+      <td>${r.n}</td>
+      <td class="formula-cell">${r.formula}</td>
+      <td class="lewis-td">${makeLewis(r.id)}<div style="font-size:10px;color:#999;text-align:center;margin-top:2px;">${r.lpNote}</div></td>
+      <td style="text-align:center;font-family:'DM Mono',monospace;font-weight:700;font-size:15px;">${m.bp+m.lp}</td>
+      <td>${m.egeo}</td>
+      <td><strong>${m.name}</strong></td>
+      <td style="font-family:'DM Mono',monospace;">${m.angle}</td>
+      <td>${pb}</td>
+      <td>${imfHTML(r.id)}</td>
+      <td><button class="view3d-btn" data-mk="${r.id}">3D ↗</button></td>
+    </tr>`;
+  }).join('');
+  document.querySelectorAll('.view3d-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const k=btn.dataset.mk;
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+      document.querySelector('[data-tab="viewer"]').classList.add('active');
+      document.getElementById('tab-viewer').classList.add('active');
+      if(!rendererStarted)initRenderer();
+      setMol(k);
+      setTimeout(()=>{if(rendererStarted)buildMol(k);},120);
+    });
+  });
+  document.querySelectorAll('.mol-table th[data-col]').forEach(th=>{
+    const arr=th.querySelector('.sort-arrow');
+    if(arr)arr.className='sort-arrow '+(th.dataset.col===sortCol?sortDir:'none');
+  });
+}
+document.querySelectorAll('.mol-table th[data-col]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    if(sortCol===th.dataset.col)sortDir=sortDir==='asc'?'desc':'asc';
+    else{sortCol=th.dataset.col;sortDir='asc';}
+    renderTable();
+  });
+});
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');activeFilter=btn.dataset.filter;renderTable();
+  });
+});
+renderTable();
+
+// ─── THREE.JS VIEWER ───
+let rendererStarted=false,renderer,scene,camera,grp;
+let drag=false,lx=0,ly=0;
+function initRenderer(){
+  rendererStarted=true;
+  const canvas=document.getElementById('mol-canvas');
+  const W=canvas.parentElement.clientWidth;
+  canvas.width=W; canvas.height=Math.min(W*0.55,340);
+  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setSize(canvas.width,canvas.height);
+  renderer.setPixelRatio(window.devicePixelRatio||1);
+  renderer.setClearColor(0x0a1520,1);
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(42,canvas.width/canvas.height,.1,100);
+  camera.position.set(0,1.2,7); camera.lookAt(0,0,0);
+  scene.add(new THREE.AmbientLight(0xffffff,.6));
+  const dl=new THREE.DirectionalLight(0xffffff,.9); dl.position.set(5,8,5); scene.add(dl);
+  const dl2=new THREE.DirectionalLight(0xffffff,.3); dl2.position.set(-4,-2,-4); scene.add(dl2);
+  grp=new THREE.Group(); scene.add(grp);
+  canvas.addEventListener('mousedown',e=>{drag=true;lx=e.clientX;ly=e.clientY;});
+  window.addEventListener('mouseup',()=>drag=false);
+  window.addEventListener('mousemove',e=>{if(!drag)return;grp.rotation.y+=(e.clientX-lx)*.012;grp.rotation.x+=(e.clientY-ly)*.012;lx=e.clientX;ly=e.clientY;});
+  canvas.addEventListener('touchstart',e=>{drag=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:true});
+  canvas.addEventListener('touchend',()=>drag=false);
+  canvas.addEventListener('touchmove',e=>{if(!drag)return;grp.rotation.y+=(e.touches[0].clientX-lx)*.012;grp.rotation.x+=(e.touches[0].clientY-ly)*.012;lx=e.touches[0].clientX;ly=e.touches[0].clientY;},{passive:true});
+  buildMol('co2');
+  (function loop(){requestAnimationFrame(loop);if(!drag)grp.rotation.y+=.006;renderer.render(scene,camera);})();
+}
+function mkBond(a,b){
+  const av=new THREE.Vector3(...a),bv=new THREE.Vector3(...b);
+  const dir=new THREE.Vector3().subVectors(bv,av),len=dir.length();
+  const mid=new THREE.Vector3().addVectors(av,bv).multiplyScalar(.5);
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(.065,.065,len,10),new THREE.MeshPhongMaterial({color:0x999999}));
+  m.position.copy(mid); m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize()); return m;
+}
+function buildMol(key){
+  while(grp.children.length)grp.remove(grp.children[0]);
+  const mol=MOLS[key];
+  mol.bonds.forEach(([i,j])=>grp.add(mkBond(mol.atoms[i].p,mol.atoms[j].p)));
+  mol.atoms.forEach(a=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(a.r,26,26),new THREE.MeshPhongMaterial({color:a.c,shininess:70}));
+    m.position.set(...a.p); grp.add(m);
+  });
+  mol.lps.forEach(lp=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.18,16,16),new THREE.MeshPhongMaterial({color:0x8888cc,transparent:true,opacity:.55}));
+    m.position.set(...lp); grp.add(m);
+  });
+  document.getElementById('v-shape').textContent=mol.name;
+  document.getElementById('v-egeo').textContent=mol.egeo;
+  document.getElementById('v-angle').textContent=mol.angle;
+  document.getElementById('v-er').textContent=mol.bp+mol.lp;
+  document.getElementById('v-bp').textContent=mol.bp;
+  document.getElementById('v-lp').textContent=mol.lp;
+  document.getElementById('v-polar').textContent=mol.polar?'Polar ⚡':'Nonpolar ○';
+  document.getElementById('v-polar').style.color=mol.polar?'#8a1f1f':'#1e6b45';
+  document.getElementById('v-rule').textContent=mol.rule;
+}
+function setMol(key){
+  document.querySelectorAll('.mol-btn').forEach(b=>b.classList.toggle('active',b.dataset.key===key));
+  if(rendererStarted)buildMol(key);
+}
+const btnGrid=document.getElementById('mol-btn-grid');
+Object.entries(MOLS).forEach(([key,mol])=>{
+  const btn=document.createElement('button');
+  btn.className='mol-btn'+(key==='co2'?' active':'');
+  btn.dataset.key=key; btn.textContent=mol.label;
+  btn.addEventListener('click',()=>setMol(key));
+  btnGrid.appendChild(btn);
+});
+
+// ─── QUIZ ───
+const QUIZ=[
+  {q:'How many electron regions (groups) does H₂O have around its central oxygen?',opts:['2','3','4','6'],ans:2,exp:'O has 2 bonding pairs (to H atoms) + 2 lone pairs = 4 total electron regions.'},
+  {q:'What is the molecular SHAPE of NH₃?',opts:['Tetrahedral','Trigonal Planar','Trigonal Pyramidal','Bent'],ans:2,exp:'NH₃ has 4 electron regions (3 bonds + 1 lone pair) → tetrahedral ELECTRON geometry, but the lone pair is invisible in the shape → trigonal pyramidal shape.'},
+  {q:'Which of these molecules is NONPOLAR despite having polar bonds?',opts:['HF','H₂O','CO₂','NH₃'],ans:2,exp:'CO₂ is linear: the two C=O dipoles point in exactly opposite directions (180° apart) → they cancel completely → nonpolar molecule.'},
+  {q:'What is the bond angle in a perfect tetrahedral molecule like CH₄?',opts:['90°','109.5°','120°','180°'],ans:1,exp:'Four electron pairs spread to the corners of a tetrahedron → all bond angles are exactly 109.5°.'},
+  {q:'Which type of intermolecular force is present in ALL molecules?',opts:['Dipole-Dipole','Hydrogen Bonding','London Dispersion Forces','Ion-Dipole'],ans:2,exp:'London Dispersion Forces (LDF) arise from temporary, instantaneous dipoles in any electron cloud — so every molecule has them.'},
+  {q:'What is the molecular shape of SO₂?',opts:['Linear','Trigonal Planar','Bent','Tetrahedral'],ans:2,exp:'S has 2 bonds to O + 1 lone pair = 3 electron regions → electron geometry is trigonal planar. Lone pair makes the SHAPE bent (~119°).'},
+  {q:'Which molecule has hydrogen bonding as an intermolecular force?',opts:['CH₄','CCl₄','HCl','HF'],ans:3,exp:'Hydrogen bonding requires H directly bonded to N, O, or F. HF is the only option here where H is bonded to F (the most electronegative element).'},
+  {q:'How many lone pairs does the central Xe atom have in XeF₄?',opts:['0','1','2','4'],ans:2,exp:'Xe in XeF₄: 8 valence electrons − 4 used in bonds = 4 electrons = 2 lone pairs. These go to axial positions → square planar shape.'},
+  {q:'What is the ELECTRON GEOMETRY of H₂O?',opts:['Linear','Bent','Trigonal Planar','Tetrahedral'],ans:3,exp:'H₂O has 4 electron regions (2 bonds + 2 lone pairs) around O. Four regions → tetrahedral electron geometry. The SHAPE is bent (lone pairs invisible).'},
+  {q:'Which of these is the correct bond angle for water (H₂O)?',opts:['90°','104.5°','109.5°','120°'],ans:1,exp:'Ideal tetrahedral is 109.5°. Two lone pairs on O repel more than bonding pairs, compressing the H−O−H angle to 104.5°.'},
+  {q:'CCl₄ is nonpolar because…',opts:['C−Cl bonds are nonpolar','All dipoles cancel due to symmetric tetrahedral shape','It has no electrons','It is a gas at room temperature'],ans:1,exp:'Each C−Cl bond is very polar (Cl is much more electronegative than C), BUT the tetrahedral shape makes all 4 dipoles point symmetrically → they cancel exactly → nonpolar molecule.'},
+  {q:'What is the molecular shape of XeF₂?',opts:['Bent','Trigonal Bipyramidal','T-shaped','Linear'],ans:3,exp:'Xe in XeF₂: 2 bonds + 3 lone pairs = 5 electron regions → trigonal bipyramidal electron geometry. The 3 lone pairs prefer equatorial positions → F atoms are axial → LINEAR shape.'},
+  {q:'Why does water (H₂O) have an unusually high boiling point compared to H₂S?',opts:['Water has stronger LDF','Water has hydrogen bonding; H₂S does not','Water molecules are smaller','H₂S is ionic'],ans:1,exp:'O is small and highly electronegative → O−H bonds are very polar → strong H-bonding between water molecules. S−H bonds are not polar enough for H-bonding, so H₂S has only weaker DD + LDF.'},
+  {q:'BF₃ is nonpolar even though each B−F bond is very polar. Why?',opts:['B−F bonds cancel because B and F have the same electronegativity','Trigonal planar geometry makes all 3 dipoles cancel symmetrically','BF₃ has lone pairs that cancel the dipoles','BF₃ is an ionic compound'],ans:1,exp:'The three B−F bonds point 120° apart in a flat triangle → the three dipole vectors sum to zero. Symmetric shape → nonpolar molecule despite polar bonds.'},
+  {q:'How many electron regions (groups) does XeF₄ have?',opts:['4','5','6','8'],ans:2,exp:'Xe in XeF₄: 4 bonds (to F) + 2 lone pairs = 6 total electron regions → octahedral electron geometry → square planar shape.'},
+  {q:'A molecule with 4 electron regions and 2 lone pairs has which molecular shape?',opts:['Tetrahedral','Trigonal Pyramidal','Bent','Linear'],ans:2,exp:'4 electron regions → tetrahedral electron geometry. 2 lone pairs take 2 of the 4 positions, leaving 2 bonded atoms. The shape of just the atoms is BENT.'},
+  {q:'Which molecule has the STRONGEST intermolecular forces?',opts:['CH₄','HCl','H₂O','N₂'],ans:2,exp:'H₂O has hydrogen bonding (the strongest type of IMF) due to H bonded to O. CH₄ and N₂ have only LDF; HCl has dipole-dipole + LDF but no H-bonding.'},
+  {q:'What determines the STRENGTH of London Dispersion Forces?',opts:['Bond polarity','Number of lone pairs','Size of electron cloud (number of electrons)','Bond length'],ans:2,exp:'LDF strength depends on polarizability — how easily the electron cloud distorts. More electrons = larger, more polarizable cloud = stronger LDF. This is why Xe boils higher than He.'},
+  {q:'PF₃ is polar but BF₃ is nonpolar. What is the key reason?',opts:['PF₃ has heavier atoms','PF₃ has a lone pair on P making it pyramidal (asymmetric); BF₃ has no lone pairs and is trigonal planar (symmetric)','P−F bonds are more polar than B−F bonds','BF₃ has more atoms'],ans:1,exp:'BF₃: 3 bonds, 0 lone pairs → flat trigonal planar → dipoles cancel → nonpolar. PF₃: 3 bonds, 1 lone pair → pyramidal → asymmetric → net dipole → polar. The lone pair is the key difference.'},
+  {q:'Surface tension in water is caused by…',opts:['Water molecules at the surface being pulled in all directions equally','Water molecules at the surface being pulled inward/sideways but NOT outward into air, creating a net inward force','The low molecular weight of water','The linear shape of water'],ans:1,exp:'Molecules in the bulk of liquid water are pulled equally in all directions by H-bonds. Molecules at the surface have no neighboring water molecules above them → only pulled inward and sideways → net inward force → surface tension.'},
+];
+
+let quizAnswered=new Array(QUIZ.length).fill(null);
+let submitted=false;
+
+function renderQuiz(){
+  document.getElementById('quiz-cards').innerHTML=QUIZ.map((q,i)=>{
+    const opts=q.opts.map((o,j)=>`<button class="q-opt" data-qi="${i}" data-oi="${j}">${o}</button>`).join('');
+    return `<div class="q-card" id="qcard-${i}">
+      <div class="q-num">Question ${i+1} of ${QUIZ.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-opts">${opts}</div>
+      <div class="q-explain" id="qexp-${i}">${q.exp}</div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('.q-opt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(submitted)return;
+      const qi=+btn.dataset.qi, oi=+btn.dataset.oi;
+      quizAnswered[qi]=oi;
+      document.querySelectorAll(`.q-opt[data-qi="${qi}"]`).forEach(b=>{
+        b.classList.remove('correct','wrong');
+        b.style.borderColor=''; b.style.background='';
+      });
+      btn.style.borderColor='#5ba3d9'; btn.style.background='#edf4fc';
+      updateScoreDisplay();
+    });
+  });
+}
+
+function updateScoreDisplay(){
+  const answered=quizAnswered.filter(x=>x!==null).length;
+  document.getElementById('quiz-score-display').textContent=`${answered}/${QUIZ.length} answered`;
+}
+
+document.getElementById('quiz-submit').addEventListener('click',()=>{
+  if(submitted)return;
+  submitted=true;
+  let correct=0;
+  QUIZ.forEach((q,i)=>{
+    const chosen=quizAnswered[i];
+    document.querySelectorAll(`.q-opt[data-qi="${i}"]`).forEach(btn=>{
+      btn.classList.add('locked');
+      const oi=+btn.dataset.oi;
+      if(oi===q.ans) btn.classList.add('correct');
+      else if(oi===chosen) btn.classList.add('wrong');
+    });
+    document.getElementById('qexp-'+i).classList.add('show');
+    if(chosen===q.ans) correct++;
+  });
+  const pct=Math.round(correct/QUIZ.length*100);
+  const banner=document.getElementById('score-banner');
+  banner.classList.add('show');
+  document.getElementById('score-big').textContent=`${correct} / ${QUIZ.length}`;
+  const msgs=['Keep studying — review the tutorial!','Good effort — review the areas you missed.','Solid understanding! Review a few more.','Great work! Strong grasp of VSEPR & IMF.','Perfect score! Excellent mastery.'];
+  document.getElementById('score-msg').textContent=msgs[Math.min(4,Math.floor(pct/25))]+` (${pct}%)`;
+  banner.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+
+document.getElementById('quiz-reset').addEventListener('click',()=>{
+  submitted=false;
+  quizAnswered=new Array(QUIZ.length).fill(null);
+  document.getElementById('score-banner').classList.remove('show');
+  renderQuiz();
+  updateScoreDisplay();
+});
+
+renderQuiz();
+updateScoreDisplay();
+
+})();
+</script>
+</body>
+</html>
