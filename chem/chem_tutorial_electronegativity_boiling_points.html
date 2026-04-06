@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Tutorial: Electronegativity & Boiling Points</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@500&display=swap');
+
+  :root {
+    --teal: #0d7377;
+    --teal-light: #e8f5f5;
+    --coral: #e05c3a;
+    --coral-light: #fdf0ec;
+    --gold: #c9862a;
+    --gold-light: #fdf6e8;
+    --navy: #1a2744;
+    --gray: #4a5568;
+    --light-gray: #f7f8fa;
+    --border: #dde3ed;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13pt;
+    line-height: 1.65;
+    color: #222;
+    background: #f0f2f5;
+  }
+
+  .page {
+    background: white;
+    max-width: 820px;
+    margin: 30px auto;
+    padding: 54px 64px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.10);
+    border-radius: 4px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 18px;
+    margin-bottom: 34px;
+  }
+  .subject-tag {
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28pt;
+    color: var(--navy);
+    line-height: 1.15;
+    margin: 4px 0 6px;
+  }
+  .subtitle {
+    color: var(--gray);
+    font-size: 11pt;
+  }
+  .name-line {
+    margin-top: 10px;
+    font-size: 10pt;
+    color: var(--gray);
+  }
+  .name-line span {
+    display: inline-block;
+    border-bottom: 1.5px solid #aaa;
+    width: 200px;
+    margin-left: 6px;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17pt;
+    color: var(--navy);
+    margin: 36px 0 12px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 20px 0 8px;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .box {
+    border-left: 4px solid;
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .box.concept { border-color: var(--teal); background: var(--teal-light); }
+  .box.rule    { border-color: var(--coral); background: var(--coral-light); }
+  .box.tip     { border-color: var(--gold); background: var(--gold-light); }
+
+  .box-label {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .box.concept .box-label { color: var(--teal); }
+  .box.rule    .box-label { color: var(--coral); }
+  .box.tip     .box-label { color: var(--gold); }
+
+  /* ── PERIODIC TABLE TREND DIAGRAM ── */
+  .trend-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+    margin: 20px 0;
+    align-items: start;
+  }
+  .trend-label-left {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 1px;
+    text-align: center;
+    padding-right: 8px;
+  }
+  .trend-table {
+    border: 2px solid var(--navy);
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 10pt;
+  }
+  .trend-table table { width: 100%; border-collapse: collapse; }
+  .trend-table th {
+    background: var(--navy);
+    color: white;
+    padding: 7px 10px;
+    font-size: 9pt;
+    letter-spacing: 0.5px;
+  }
+  .trend-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .trend-table tr:last-child td { border-bottom: none; }
+  .trend-table tr:nth-child(even) td { background: var(--light-gray); }
+
+  /* ── ARROW DIAGRAM ── */
+  .arrow-diagram {
+    display: flex;
+    gap: 0;
+    margin: 18px 0;
+    align-items: stretch;
+  }
+  .arrow-box {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    font-size: 10.5pt;
+    font-weight: 700;
+    border: 2px solid var(--border);
+    background: var(--light-gray);
+    position: relative;
+  }
+  .arrow-box::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16pt;
+    color: var(--coral);
+    z-index: 2;
+  }
+  .arrow-box:last-child::after { display: none; }
+  .arrow-box .element-sym {
+    font-size: 14pt;
+    color: var(--navy);
+    display: block;
+  }
+  .arrow-box .en-val {
+    font-size: 9pt;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  /* ── WORKED EXAMPLE ── */
+  .worked-example {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 6px;
+    margin: 18px 0;
+    overflow: hidden;
+  }
+  .we-header {
+    background: var(--navy);
+    color: white;
+    padding: 9px 18px;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .we-body { padding: 16px 20px; }
+  .step {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 10px;
+    margin: 10px 0;
+    align-items: start;
+  }
+  .step-num {
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 9.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .answer {
+    background: var(--teal-light);
+    border: 1.5px solid var(--teal);
+    border-radius: 4px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 11pt;
+    color: var(--navy);
+  }
+
+  /* ── IMF TABLE ── */
+  .imf-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 10.5pt;
+  }
+  .imf-table th {
+    background: var(--navy);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .imf-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .imf-table tr:nth-child(even) td { background: var(--light-gray); }
+  .imf-table .force-label {
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .strength-bar {
+    display: inline-block;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--teal);
+    vertical-align: middle;
+  }
+
+  /* ── EXERCISES ── */
+  .exercise-header {
+    background: var(--navy);
+    color: white;
+    padding: 14px 22px;
+    margin: 0 -64px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .exercise-header h2 {
+    border: none;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-size: 14pt;
+  }
+  .exercise-num {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 9pt;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  .question {
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .q-label {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+  .q-text { font-size: 11pt; margin-bottom: 12px; }
+  .blank-line {
+    border-bottom: 1.5px solid #555;
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    height: 24px;
+  }
+  .ranking-slots {
+    display: flex;
+    gap: 14px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .slot {
+    text-align: center;
+    flex: 1;
+    min-width: 80px;
+  }
+  .slot-box {
+    border: 1.5px solid #555;
+    border-radius: 4px;
+    height: 38px;
+    margin-bottom: 4px;
+  }
+  .slot-label {
+    font-size: 9pt;
+    color: var(--gray);
+  }
+  .molecule-list {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+  }
+  .molecule-chip {
+    background: var(--light-gray);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 2px dashed var(--border);
+    margin: 30px 0;
+  }
+
+  /* ── PAGE BREAK ── */
+  .page-break { page-break-before: always; }
+
+  /* ── ANSWER KEY STYLING ── */
+  .answer-key-header {
+    background: var(--coral);
+    color: white;
+    padding: 12px 22px;
+    margin: 0 -64px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .answer-key-header h2 {
+    color: white;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+  .answer-key-header .ak-badge {
+    background: white;
+    color: var(--coral);
+    font-size: 8.5pt;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  .ak-question {
+    margin: 14px 0;
+    padding: 12px 16px;
+    background: var(--light-gray);
+    border-radius: 6px;
+    border-left: 4px solid var(--coral);
+  }
+  .ak-q-label {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--coral);
+    margin-bottom: 4px;
+  }
+  .ak-answer {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 11pt;
+  }
+  .ak-explain {
+    font-size: 10pt;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+  .ranking-answer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .ra-slot {
+    text-align: center;
+  }
+  .ra-box {
+    background: white;
+    border: 2px solid var(--teal);
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .ra-label { font-size: 8.5pt; color: var(--gray); margin-top: 3px; }
+  .ra-arrow { font-size: 14pt; color: var(--coral); align-self: flex-start; margin-top: 6px; }
+
+  /* ══ PRINT ══ */
+  @media print {
+    body { background: white; font-size: 11pt; }
+    .page {
+      max-width: 100%;
+      margin: 0;
+      padding: 40px 54px;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .exercise-header, .answer-key-header { margin: 0 -54px; margin-top: 20px; }
+    .page-break { page-break-before: always; }
+    h2 { page-break-after: avoid; }
+    .question, .worked-example { page-break-inside: avoid; }
+    .ak-question { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 1 — TUTORIAL
+══════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="subject-tag">Unit 6 · Chemical Bonding</div>
+    <h1>Ranking Electronegativity &amp; Boiling Points</h1>
+    <div class="subtitle">A step-by-step tutorial with practice exercises</div>
+    <div class="name-line">Name: <span></span> &nbsp;&nbsp; Date: <span style="width:120px"></span> &nbsp;&nbsp; Period: <span style="width:60px"></span></div>
+  </div>
+
+  <!-- ────────────────────────── PART 1 ────────────────────────── -->
+  <h2>Part 1 · Ranking Electronegativity</h2>
+
+  <div class="box concept">
+    <div class="box-label">📖 Key Concept</div>
+    <strong>Electronegativity</strong> is the ability of an atom to attract electrons toward itself in a chemical bond. The higher the value, the more strongly an atom pulls electrons.
+  </div>
+
+  <h3>The Two Golden Rules</h3>
+  <div class="box rule">
+    <div class="box-label">⚡ Rule 1 — Across a Period (left → right)</div>
+    Electronegativity <strong>increases</strong> as you move left to right across a row (period). More protons = stronger pull on electrons.
+  </div>
+  <div class="box rule">
+    <div class="box-label">⚡ Rule 2 — Down a Group (top → bottom)</div>
+    Electronegativity <strong>decreases</strong> as you move down a column (group). Electrons are farther from the nucleus and more shielded.
+  </div>
+
+  <div class="box tip">
+    <div class="box-label">💡 Quick Memory Trick</div>
+    Think of a "<strong>staircase going up and to the right</strong>" on the periodic table — that's where electronegativity is highest. <strong>Fluorine (F) is always #1.</strong> Noble gases are excluded (they don't bond).
+  </div>
+
+  <h3>Periodic Table Trend at a Glance</h3>
+  <div class="trend-grid">
+    <div class="trend-label-left">INCREASES ↑ going UP</div>
+    <div class="trend-table">
+      <table>
+        <tr><th>Element</th><th>Electronegativity Value</th><th>Where on the Table</th></tr>
+        <tr><td><strong>F (Fluorine)</strong></td><td>4.0 — HIGHEST</td><td>Top-right</td></tr>
+        <tr><td>O (Oxygen)</td><td>3.5</td><td>Near top-right</td></tr>
+        <tr><td>N (Nitrogen) / Cl (Chlorine)</td><td>3.0 – 3.2</td><td>Top-right area</td></tr>
+        <tr><td>C, S, Br</td><td>2.5 – 2.8</td><td>Middle</td></tr>
+        <tr><td>Na, Mg (metals)</td><td>0.9 – 1.3</td><td>Left side</td></tr>
+        <tr><td><strong>Cs / Fr</strong></td><td>0.7 — LOWEST</td><td>Bottom-left</td></tr>
+      </table>
+    </div>
+  </div>
+  <p style="font-size:9.5pt; color:var(--gray); margin-top:4px;">← Electronegativity also INCREASES going right →</p>
+
+  <h3>Worked Example 1 — Ranking 4 elements</h3>
+  <p>Rank the following from <em>lowest to highest</em> electronegativity: <strong>Na, Cl, O, F</strong></p>
+
+  <div class="worked-example">
+    <div class="we-header">✏️ STEP-BY-STEP SOLUTION</div>
+    <div class="we-body">
+      <div class="step"><div class="step-num">1</div><div>Find each element on the periodic table and note its position (period and group).</div></div>
+      <div class="step"><div class="step-num">2</div><div><strong>Na</strong> → Period 3, Group 1 (far left) — very low EN. <br><strong>Cl</strong> → Period 3, Group 17 (right side, same row as Na) — much higher EN than Na. <br><strong>O</strong> → Period 2, Group 16 — above S/Cl, so higher than Cl. <br><strong>F</strong> → Period 2, Group 17 (top-right corner) — highest of all.</div></div>
+      <div class="step"><div class="step-num">3</div><div>Apply the rules: left→right increases; bottom→top increases.</div></div>
+      <div class="answer">Lowest → Highest: <strong>Na &lt; Cl &lt; O &lt; F</strong></div>
+    </div>
+  </div>
+
+  <h3>Worked Example 2 — Comparing within a group</h3>
+  <p>Rank <strong>F, Cl, Br, I</strong> from highest to lowest electronegativity.</p>
+  <div class="worked-example">
+    <div class="we-header">✏️ STEP-BY-STEP SOLUTION</div>
+    <div class="we-body">
+      <div class="step"><div class="step-num">1</div><div>All four are in Group 17 (halogens) — same column.</div></div>
+      <div class="step"><div class="step-num">2</div><div>Going <em>down</em> the group, EN <em>decreases</em>. F is at the top, I is at the bottom.</div></div>
+      <div class="answer">Highest → Lowest: <strong>F &gt; Cl &gt; Br &gt; I</strong></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ────────────────────────── PART 2 ────────────────────────── -->
+  <h2>Part 2 · Ranking Boiling Points</h2>
+
+  <div class="box concept">
+    <div class="box-label">📖 Key Concept</div>
+    To boil a liquid, you must break the <strong>intermolecular forces (IMFs)</strong> between molecules. Stronger IMFs → <em>more energy needed</em> → <strong>higher boiling point</strong>.
+  </div>
+
+  <h3>Step 1 — Know the 3 Types of IMFs (weakest to strongest)</h3>
+  <table class="imf-table">
+    <tr><th>IMF Type</th><th>What molecules have it?</th><th>Relative Strength</th></tr>
+    <tr>
+      <td class="force-label">London Dispersion (LD)</td>
+      <td>ALL molecules; dominant in <strong>nonpolar</strong> molecules</td>
+      <td><span class="strength-bar" style="width:40px"></span> Weakest (but grows with molecule size)</td>
+    </tr>
+    <tr>
+      <td class="force-label">Dipole-Dipole (DD)</td>
+      <td><strong>Polar</strong> molecules (uneven electron distribution)</td>
+      <td><span class="strength-bar" style="width:80px"></span> Moderate</td>
+    </tr>
+    <tr>
+      <td class="force-label">Hydrogen Bonding (HB)</td>
+      <td>Molecules with <strong>H bonded to F, O, or N</strong></td>
+      <td><span class="strength-bar" style="width:130px"></span> Strongest</td>
+    </tr>
+  </table>
+
+  <div class="box tip">
+    <div class="box-label">💡 The Big Rule</div>
+    <strong>HB &gt; DD &gt; LD</strong> in terms of boiling point. But if comparing two molecules with the <em>same</em> IMF type, the <strong>larger/heavier molecule</strong> will have the higher boiling point (stronger LD forces).
+  </div>
+
+  <h3>Step 2 — How to Rank Boiling Points (the method)</h3>
+  <div class="box rule">
+    <div class="box-label">🔧 The 3-Question Method</div>
+    <strong>Ask these in order for each molecule:</strong><br>
+    1. Does it have H bonded to F, O, or N? → If yes: <em>Hydrogen Bonding</em> (highest BP)<br>
+    2. Is the molecule polar? → If yes: <em>Dipole-Dipole</em> (medium BP)<br>
+    3. Neither? → <em>London Dispersion only</em> (lowest BP, unless molecule is very large)
+  </div>
+
+  <h3>Worked Example 3 — Ranking three small molecules</h3>
+  <p>Rank from <em>lowest to highest</em> boiling point: <strong>CH₄, HCl, H₂O</strong></p>
+
+  <div class="worked-example">
+    <div class="we-header">✏️ STEP-BY-STEP SOLUTION</div>
+    <div class="we-body">
+      <div class="step"><div class="step-num">1</div><div><strong>CH₄ (methane)</strong>: H is bonded to C, NOT to F/O/N. No dipole (symmetric, nonpolar). → <em>London Dispersion only</em>. Very small molecule. Lowest BP.</div></div>
+      <div class="step"><div class="step-num">2</div><div><strong>HCl</strong>: H is bonded to Cl (not F, O, or N). But Cl is very electronegative → molecule IS polar. → <em>Dipole-Dipole</em>. Medium BP.</div></div>
+      <div class="step"><div class="step-num">3</div><div><strong>H₂O</strong>: H is bonded to <strong>O</strong> — that's one of the magic three (F, O, N)! → <em>Hydrogen Bonding</em>. Highest BP.</div></div>
+      <div class="answer">Lowest → Highest BP: <strong>CH₄ (-161°C) &lt; HCl (-85°C) &lt; H₂O (100°C)</strong></div>
+    </div>
+  </div>
+
+  <h3>Worked Example 4 — Same IMF type, different sizes</h3>
+  <p>Rank from <em>lowest to highest</em> boiling point: <strong>CH₄, C₄H₁₀, C₈H₁₈</strong></p>
+
+  <div class="worked-example">
+    <div class="we-header">✏️ STEP-BY-STEP SOLUTION</div>
+    <div class="we-body">
+      <div class="step"><div class="step-num">1</div><div>All three are nonpolar hydrocarbons → <em>London Dispersion only</em> for all.</div></div>
+      <div class="step"><div class="step-num">2</div><div>Since they share the same IMF type, bigger molecule = more electrons = stronger LD = higher BP.</div></div>
+      <div class="step"><div class="step-num">3</div><div>CH₄ (1 carbon) &lt; C₄H₁₀ (4 carbons, butane) &lt; C₈H₁₈ (8 carbons, octane).</div></div>
+      <div class="answer">Lowest → Highest BP: <strong>CH₄ &lt; C₄H₁₀ &lt; C₈H₁₈</strong></div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────── EXERCISES ────────────────────────── -->
+  <div class="exercise-header">
+    <h2>Practice Exercises</h2>
+    <span class="exercise-num">PART A — ELECTRONEGATIVITY</span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 1</div>
+    <div class="q-text">Rank the following elements from <strong>lowest to highest</strong> electronegativity.<br>Elements: <strong>Li, F, N, Be</strong></div>
+    <div class="ranking-slots">
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Lowest (1st)</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">2nd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">3rd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Highest (4th)</div></div>
+    </div>
+    <p style="font-size:10pt; color:var(--gray);">Explain your reasoning:</p>
+    <span class="blank-line"></span>
+    <span class="blank-line"></span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 2</div>
+    <div class="q-text">Rank from <strong>highest to lowest</strong> electronegativity: <strong>O, S, Se, Te</strong></div>
+    <div class="ranking-slots">
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Highest (1st)</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">2nd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">3rd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Lowest (4th)</div></div>
+    </div>
+    <p style="font-size:10pt; color:var(--gray);">These are all in the same group. What trend did you use?</p>
+    <span class="blank-line"></span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 3</div>
+    <div class="q-text">Circle the element in each pair with the <strong>higher</strong> electronegativity:</div>
+    <table style="width:100%; border-collapse:collapse; font-size:11pt; margin-top:8px;">
+      <tr>
+        <td style="padding:8px 6px; border:1.5px solid var(--border); width:50%;">a. &nbsp; <strong>Na</strong> &nbsp; or &nbsp; <strong>K</strong></td>
+        <td style="padding:8px 6px; border:1.5px solid var(--border);">b. &nbsp; <strong>Cl</strong> &nbsp; or &nbsp; <strong>Br</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:8px 6px; border:1.5px solid var(--border);">c. &nbsp; <strong>C</strong> &nbsp; or &nbsp; <strong>O</strong></td>
+        <td style="padding:8px 6px; border:1.5px solid var(--border);">d. &nbsp; <strong>Mg</strong> &nbsp; or &nbsp; <strong>P</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="exercise-header">
+    <h2>Practice Exercises</h2>
+    <span class="exercise-num">PART B — BOILING POINTS</span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 4</div>
+    <div class="q-text">For each molecule below, identify the <strong>strongest IMF</strong> present (LD, DD, or HB):</div>
+    <table style="width:100%; border-collapse:collapse; font-size:11pt; margin-top:8px;">
+      <tr style="background:var(--navy); color:white;">
+        <th style="padding:7px 10px; text-align:left;">Molecule</th>
+        <th style="padding:7px 10px; text-align:left;">Polar or Nonpolar?</th>
+        <th style="padding:7px 10px; text-align:left;">Strongest IMF</th>
+      </tr>
+      <tr>
+        <td style="padding:9px 10px; border:1px solid var(--border);">NH₃</td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+      </tr>
+      <tr>
+        <td style="padding:9px 10px; border:1px solid var(--border);">CO₂</td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+      </tr>
+      <tr>
+        <td style="padding:9px 10px; border:1px solid var(--border);">HF</td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+      </tr>
+      <tr>
+        <td style="padding:9px 10px; border:1px solid var(--border);">Cl₂</td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+      </tr>
+      <tr>
+        <td style="padding:9px 10px; border:1px solid var(--border);">HCl</td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+        <td style="padding:9px 10px; border:1px solid var(--border);"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 5</div>
+    <div class="q-text">Rank from <strong>lowest to highest</strong> boiling point: <strong>H₂O, H₂S, H₂Se</strong></div>
+    <p style="font-size:10pt; color:var(--gray); margin-bottom:10px;">Hint: Determine the IMF for each first. H is bonded to O in H₂O — does that qualify for HB?</p>
+    <div class="ranking-slots">
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Lowest BP</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">2nd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Highest BP</div></div>
+    </div>
+    <p style="font-size:10pt; color:var(--gray);">Explanation:</p>
+    <span class="blank-line"></span>
+    <span class="blank-line"></span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 6</div>
+    <div class="q-text">Rank from <strong>lowest to highest</strong> boiling point: <strong>F₂, Cl₂, Br₂, I₂</strong></div>
+    <p style="font-size:10pt; color:var(--gray); margin-bottom:10px;">Hint: All are nonpolar diatomic molecules. Same IMF type — what else changes?</p>
+    <div class="ranking-slots">
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Lowest BP</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">2nd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">3rd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Highest BP</div></div>
+    </div>
+    <span class="blank-line"></span>
+  </div>
+
+  <div class="question">
+    <div class="q-label">Question 7 — Challenge!</div>
+    <div class="q-text">Rank from <strong>lowest to highest</strong> boiling point: <strong>CH₄, NH₃, H₂O, HF</strong></div>
+    <p style="font-size:10pt; color:var(--gray); margin-bottom:10px;">Hint: Determine the IMF type for each. Are any of them hydrogen-bonding? What is CH₄?</p>
+    <div class="ranking-slots">
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Lowest BP</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">2nd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">3rd</div></div>
+      <div class="slot"><div class="slot-box"></div><div class="slot-label">Highest BP</div></div>
+    </div>
+    <p style="font-size:10pt; color:var(--gray);">Explain the reasoning for CH₄'s position:</p>
+    <span class="blank-line"></span>
+    <span class="blank-line"></span>
+  </div>
+
+</div><!-- end page 1 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 2 — ANSWER KEY (separate printed page)
+══════════════════════════════════════════════ -->
+<div class="page page-break">
+
+  <div class="page-header">
+    <div class="subject-tag">Unit 6 · Chemical Bonding — ANSWER KEY</div>
+    <h1>Answer Key</h1>
+    <div class="subtitle">Do not distribute to students before completion of exercises</div>
+  </div>
+
+  <div class="answer-key-header">
+    <h2>Part A — Electronegativity</h2>
+    <span class="ak-badge">TEACHER COPY</span>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 1 — Rank Li, F, N, Be (lowest → highest)</div>
+    <div class="ranking-answer">
+      <div class="ra-slot"><div class="ra-box">Li</div><div class="ra-label">Lowest</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">Be</div><div class="ra-label">2nd</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">N</div><div class="ra-label">3rd</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">F</div><div class="ra-label">Highest</div></div>
+    </div>
+    <div class="ak-explain">All four are in Period 2. Moving left to right: Li (Group 1) → Be (Group 2) → N (Group 15) → F (Group 17). EN increases across the period. F is always the highest.</div>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 2 — Rank O, S, Se, Te (highest → lowest)</div>
+    <div class="ranking-answer">
+      <div class="ra-slot"><div class="ra-box">O</div><div class="ra-label">Highest</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">S</div><div class="ra-label">2nd</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">Se</div><div class="ra-label">3rd</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">Te</div><div class="ra-label">Lowest</div></div>
+    </div>
+    <div class="ak-explain">All are in Group 16. Going DOWN a group, EN decreases because electrons are farther from the nucleus and more shielded. O is at the top → highest EN.</div>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 3 — Circle the higher electronegativity</div>
+    <div class="ak-answer">
+      a. <strong>Na</strong> (same group as K but higher up the table — Na wins) &nbsp;|&nbsp;
+      b. <strong>Cl</strong> (Cl is above Br in Group 17) &nbsp;|&nbsp;
+      c. <strong>O</strong> (O is to the right of C in Period 2) &nbsp;|&nbsp;
+      d. <strong>P</strong> (P is to the right of Mg; nonmetal vs. metal)
+    </div>
+  </div>
+
+  <div class="answer-key-header" style="margin-top:24px;">
+    <h2>Part B — Boiling Points</h2>
+    <span class="ak-badge">TEACHER COPY</span>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 4 — Identify strongest IMF</div>
+    <table style="width:100%; border-collapse:collapse; font-size:10.5pt; margin-top:6px;">
+      <tr style="background:var(--navy); color:white;">
+        <th style="padding:6px 10px; text-align:left;">Molecule</th>
+        <th style="padding:6px 10px; text-align:left;">Polar or Nonpolar</th>
+        <th style="padding:6px 10px; text-align:left;">Strongest IMF</th>
+      </tr>
+      <tr><td style="padding:7px 10px; border:1px solid var(--border);">NH₃</td><td style="padding:7px 10px; border:1px solid var(--border);">Polar</td><td style="padding:7px 10px; border:1px solid var(--border); font-weight:700; color:var(--teal);">Hydrogen Bonding (H bonded to N)</td></tr>
+      <tr><td style="padding:7px 10px; border:1px solid var(--border);">CO₂</td><td style="padding:7px 10px; border:1px solid var(--border);">Nonpolar (linear, symmetric)</td><td style="padding:7px 10px; border:1px solid var(--border); font-weight:700; color:var(--teal);">London Dispersion (LD)</td></tr>
+      <tr><td style="padding:7px 10px; border:1px solid var(--border);">HF</td><td style="padding:7px 10px; border:1px solid var(--border);">Polar</td><td style="padding:7px 10px; border:1px solid var(--border); font-weight:700; color:var(--teal);">Hydrogen Bonding (H bonded to F)</td></tr>
+      <tr><td style="padding:7px 10px; border:1px solid var(--border);">Cl₂</td><td style="padding:7px 10px; border:1px solid var(--border);">Nonpolar (identical atoms)</td><td style="padding:7px 10px; border:1px solid var(--border); font-weight:700; color:var(--teal);">London Dispersion (LD)</td></tr>
+      <tr><td style="padding:7px 10px; border:1px solid var(--border);">HCl</td><td style="padding:7px 10px; border:1px solid var(--border);">Polar</td><td style="padding:7px 10px; border:1px solid var(--border); font-weight:700; color:var(--teal);">Dipole-Dipole (H bonded to Cl, not F/O/N)</td></tr>
+    </table>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 5 — Rank H₂O, H₂S, H₂Se (lowest → highest BP)</div>
+    <div class="ranking-answer">
+      <div class="ra-slot"><div class="ra-box">H₂Se</div><div class="ra-label">Lowest BP</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">H₂S</div><div class="ra-label">2nd</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">H₂O</div><div class="ra-label">Highest BP (100°C)</div></div>
+    </div>
+    <div class="ak-explain"><strong>H₂O</strong>: H bonded to O → Hydrogen Bonding (strongest IMF → highest BP). <strong>H₂S and H₂Se</strong>: H bonded to S and Se (not F/O/N) → Dipole-Dipole only. H₂Se is larger → stronger LD → slightly higher BP than H₂S, but both are far lower than H₂O.</div>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 6 — Rank F₂, Cl₂, Br₂, I₂ (lowest → highest BP)</div>
+    <div class="ranking-answer">
+      <div class="ra-slot"><div class="ra-box">F₂</div><div class="ra-label">Lowest BP (-188°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">Cl₂</div><div class="ra-label">(-34°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">Br₂</div><div class="ra-label">(59°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">I₂</div><div class="ra-label">Highest BP (184°C)</div></div>
+    </div>
+    <div class="ak-explain">All four are nonpolar → London Dispersion only. Going down Group 17, atoms get larger and heavier, so LD forces get stronger → boiling point increases. This is the same trend as electronegativity but in <em>reverse</em> — larger atoms have higher BP.</div>
+  </div>
+
+  <div class="ak-question">
+    <div class="ak-q-label">Question 7 (Challenge) — Rank CH₄, NH₃, H₂O, HF (lowest → highest BP)</div>
+    <div class="ranking-answer">
+      <div class="ra-slot"><div class="ra-box">CH₄</div><div class="ra-label">Lowest (-161°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">NH₃</div><div class="ra-label">(-33°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">HF</div><div class="ra-label">(19°C)</div></div>
+      <span class="ra-arrow">→</span>
+      <div class="ra-slot"><div class="ra-box">H₂O</div><div class="ra-label">Highest (100°C)</div></div>
+    </div>
+    <div class="ak-explain">
+      <strong>CH₄:</strong> H bonded to C (not F/O/N), symmetric/nonpolar → London Dispersion only → lowest BP.<br>
+      <strong>NH₃:</strong> H bonded to N → Hydrogen Bonding, but N is less electronegative than O or F → moderate HB → medium BP.<br>
+      <strong>HF:</strong> H bonded to F → Hydrogen Bonding, but only ONE H to donate → strong HB but fewer bonds than H₂O.<br>
+      <strong>H₂O:</strong> H bonded to O → Hydrogen Bonding, AND water can form TWO H-bonds per molecule (2 H atoms + 2 lone pairs) → the most HB → highest BP despite being a small molecule.
+    </div>
+  </div>
+
+  <div class="box tip" style="margin-top:30px;">
+    <div class="box-label">📌 Summary to share with students</div>
+    <strong>Electronegativity:</strong> Increases → and ↑ on the periodic table. F = highest always.<br>
+    <strong>Boiling Point:</strong> Determined by IMF strength. HB &gt; DD &gt; LD. For the same IMF type, bigger molecule = higher BP.<br>
+    <strong>Key link:</strong> High electronegativity difference between bonded atoms → polar bond → may lead to stronger IMF → higher BP.
+  </div>
+
+</div><!-- end page 2 -->
+
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 3 — Compound Interest & Inequalities</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11.5pt;
+    line-height: 1.55;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 0.55in 0.65in;
+    max-width: 8.5in;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    text-align: center;
+    color: #1a1a2e;
+    margin-bottom: 2px;
+  }
+  .doc-sub {
+    text-align: center;
+    font-size: 10pt;
+    color: #555;
+    margin-bottom: 14px;
+  }
+
+  hr.thick { border: none; border-top: 2.5px solid #1a1a2e; margin: 10px 0 14px; }
+  hr.thin  { border: none; border-top: 1px solid #ccc; margin: 10px 0; }
+
+  h2 {
+    font-size: 13pt;
+    font-weight: 800;
+    color: #fff;
+    background: #1a1a2e;
+    padding: 4px 12px;
+    display: inline-block;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 800;
+    color: #c0392b;
+    margin: 13px 0 5px;
+    border-left: 3.5px solid #c0392b;
+    padding-left: 8px;
+  }
+
+  p { margin-bottom: 6px; }
+
+  .concept-box {
+    border: 2px solid #1a1a2e;
+    border-radius: 6px;
+    padding: 9px 13px;
+    margin: 9px 0;
+    background: #f7f8fc;
+  }
+  .formula-box {
+    border: 2.5px solid #2980b9;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 8px 0;
+    background: #eaf4fb;
+    font-weight: 700;
+    font-size: 12pt;
+    text-align: center;
+  }
+  .formula-box.red { border-color: #c0392b; background: #fdf0ee; }
+
+  .warning-box {
+    border: 2px solid #e67e22;
+    border-radius: 6px;
+    padding: 8px 13px;
+    margin: 8px 0;
+    background: #fef9f0;
+  }
+
+  .derivation-box {
+    border: 2px solid #27ae60;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 9px 0;
+    background: #f2faf4;
+  }
+  .derivation-box h4 {
+    color: #27ae60;
+    font-weight: 800;
+    font-size: 11pt;
+    margin-bottom: 5px;
+  }
+
+  .example {
+    border-left: 4px solid #27ae60;
+    padding: 8px 12px;
+    margin: 8px 0;
+    background: #f2faf4;
+  }
+  .example-title {
+    font-weight: 800;
+    color: #27ae60;
+    font-size: 11pt;
+    margin-bottom: 4px;
+  }
+
+  .step {
+    margin: 4px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 11pt;
+  }
+  .step::before {
+    content: attr(data-n);
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+    color: #c0392b;
+  }
+
+  .cols2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 8px 0;
+  }
+  .col-box {
+    border: 1.5px solid #bbb;
+    border-radius: 5px;
+    padding: 8px 11px;
+    background: #fff;
+  }
+
+  table.t {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 10.5pt;
+    margin: 8px 0;
+  }
+  table.t th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 4px 8px;
+    text-align: center;
+    font-weight: 700;
+  }
+  table.t td {
+    border: 1px solid #bbb;
+    padding: 4px 8px;
+    text-align: center;
+  }
+  table.t tr:nth-child(even) td { background: #f4f4f8; }
+  table.t tr.emph td { background: #eaf4fb; font-weight: 700; }
+
+  .flip-rule {
+    background: #fff0f0;
+    border: 2px solid #c0392b;
+    border-radius: 6px;
+    padding: 9px 13px;
+    margin: 8px 0;
+  }
+  .noflip-rule {
+    background: #f0fff4;
+    border: 2px solid #27ae60;
+    border-radius: 6px;
+    padding: 9px 13px;
+    margin: 8px 0;
+  }
+
+  .math { font-family: 'Source Serif 4', Georgia, serif; font-size: 12pt; }
+  .highlight { color: #c0392b; font-weight: 700; }
+  .green { color: #27ae60; font-weight: 700; }
+  .blue { color: #2980b9; font-weight: 700; }
+
+  /* ---- PRACTICE PROBLEMS ---- */
+  .practice-header {
+    font-size: 15pt;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .section-label {
+    font-size: 11.5pt;
+    font-weight: 800;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 4px 11px;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 12px 0 9px;
+  }
+  .problem { margin-bottom: 9px; }
+  .problem-num { font-weight: 800; }
+  .problem-text { margin-left: 18px; font-size: 11pt; }
+  .workspace    { height: 72px;  border-bottom: 1px solid #bbb; margin: 3px 0 4px 18px; }
+  .workspace-lg { height: 96px;  border-bottom: 1px solid #bbb; margin: 3px 0 4px 18px; }
+  .box-right {
+    display: inline-block;
+    border: 1.5px solid #1a1a2e;
+    padding: 2px 10px;
+    min-width: 100px;
+    margin-left: 6px;
+    font-size: 10pt;
+    vertical-align: middle;
+  }
+  .flip-check { margin-left: 18px; margin-top: 2px; font-size: 10pt; }
+
+  /* ---- ANSWER KEY ---- */
+  .ans-header { font-size: 15pt; font-weight: 800; text-align: center; margin-bottom: 2px; }
+  .ans-sub    { text-align: center; font-size: 10pt; color: #555; margin-bottom: 12px; }
+  .ans-section {
+    font-size: 11.5pt; font-weight: 800;
+    background: #c0392b; color: #fff;
+    padding: 4px 11px; border-radius: 4px;
+    display: inline-block; margin: 10px 0 8px;
+  }
+  .ans-block {
+    border: 1.5px solid #ddd;
+    border-radius: 5px;
+    padding: 7px 11px;
+    margin-bottom: 8px;
+    background: #fafafa;
+  }
+  .ans-block .pnum { font-weight: 800; color: #c0392b; margin-bottom: 2px; font-size: 10.5pt; }
+  .ans-block .answer {
+    font-weight: 700;
+    background: #fff3cd;
+    border-left: 4px solid #f39c12;
+    padding: 2px 9px;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 3px 0;
+    font-size: 11pt;
+  }
+  .ans-block .work { font-size: 10pt; color: #333; margin-top: 4px; line-height: 1.5; }
+  .two-col-ans { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .page-break { page-break-before: always; }
+
+  @media print {
+    body { padding: 0.45in 0.55in; font-size: 10.5pt; }
+    h2, .section-label, .ans-section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .flip-rule, .noflip-rule, .formula-box, .concept-box, .warning-box,
+    .derivation-box, .example, .col-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    table.t th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .ans-block .answer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    table.t tr.emph td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     TUTORIAL
+     ══════════════════════════════════════════════════ -->
+
+<h1>Math 3 — Concepts Tutorial</h1>
+<p class="doc-sub">Big Ideas Math: Integrated Mathematics III &nbsp;|&nbsp; Chapters 5.1–5.5</p>
+<hr class="thick">
+
+<!-- ───────── PART 1 ───────── -->
+<h2>Part 1: Compound Interest</h2>
+
+<h3>Start Simple: What Is Interest?</h3>
+<div class="concept-box">
+  <p>When you deposit money in a bank, the bank pays you <strong>interest</strong> — a reward for letting them use your money. The key question is: <em>how often does the bank calculate and add that interest?</em></p>
+  <p style="margin-top:5px">Each time interest is added, the new total becomes the base for the <em>next</em> round of interest. This snowball effect is called <strong>compounding</strong>.</p>
+</div>
+
+<h3>Building the Formula: From Simple to Compound</h3>
+
+<div class="derivation-box">
+  <h4>Step 1 — Start with one year, compounded once (n = 1)</h4>
+  <p>You invest $P at annual rate r. After 1 year you earn r·P in interest, so your total is:</p>
+  <p style="text-align:center; margin:5px 0;" class="math">A = P + r·P = P(1 + r)</p>
+  <p>After 2 years: A = P(1+r)(1+r) = P(1+r)²</p>
+  <p>After t years: A = P(1+r)<sup>t</sup></p>
+</div>
+
+<div class="derivation-box" style="margin-top:8px">
+  <h4>Step 2 — Compound n times per year</h4>
+  <p>Now suppose the bank splits the year into <strong>n</strong> equal periods (e.g., n = 12 for monthly). Each period:</p>
+  <ul style="margin: 5px 0 5px 18px;">
+    <li>The rate applied is <span class="blue">r/n</span> (the annual rate divided by the number of periods)</li>
+    <li>The money grows by the factor (1 + r/n)</li>
+    <li>In one full year this happens n times, so the factor is (1 + r/n)<sup>n</sup></li>
+    <li>Over t years it happens <span class="blue">n·t</span> times total</li>
+  </ul>
+  <p style="text-align:center; margin:6px 0;" class="math">A = P(1 + r/n)<sup>nt</sup></p>
+  <p style="font-size:10.5pt; color:#555">Example: 6% monthly for 2 years → rate per period = 0.06/12 = 0.005, total periods = 12×2 = 24, so A = P(1.005)<sup>24</sup></p>
+</div>
+
+<div class="derivation-box" style="margin-top:8px">
+  <h4>Step 3 — What if n grows without bound? (Continuous compounding)</h4>
+  <p>Imagine compounding every second, every millisecond… infinitely often. Mathematically, we ask: what does P(1 + r/n)<sup>nt</sup> approach as n → ∞?</p>
+  <p style="margin: 5px 0;">It turns out this limit has a beautiful answer. The key fact from calculus is:</p>
+  <p style="text-align:center; margin: 5px 0;" class="math">lim<sub>n→∞</sub> (1 + 1/n)<sup>n</sup> = e ≈ 2.71828…</p>
+  <p style="margin: 5px 0;">By a similar argument, (1 + r/n)<sup>n</sup> → e<sup>r</sup> as n → ∞, so over t years:</p>
+  <p style="text-align:center; margin:5px 0;" class="math">(1 + r/n)<sup>nt</sup> → e<sup>rt</sup></p>
+  <p>So the final balance when compounding <em>continuously</em> is:</p>
+  <p style="text-align:center; margin:5px 0;" class="math">A = P · e<sup>rt</sup></p>
+  <p style="font-size:10.5pt; color:#555">This is the <em>maximum possible</em> amount you can earn — continuous compounding is the best-case scenario, and e<sup>rt</sup> is why the number e appears in finance.</p>
+</div>
+
+<h3>The Two Formulas Side by Side</h3>
+
+<div class="cols2">
+  <div>
+    <div class="formula-box">A = P(1 + r/n)<sup>nt</sup></div>
+    <p style="font-size:10.5pt"><strong>Compounded n times per year</strong></p>
+    <ul style="font-size:10.5pt; margin-left:16px">
+      <li><strong>P</strong> = principal (starting amount)</li>
+      <li><strong>r</strong> = annual rate as a decimal</li>
+      <li><strong>n</strong> = times compounded per year</li>
+      <li><strong>t</strong> = years</li>
+      <li><strong>r/n</strong> = rate per period</li>
+      <li><strong>nt</strong> = total number of periods</li>
+    </ul>
+  </div>
+  <div>
+    <div class="formula-box red">A = Pe<sup>rt</sup></div>
+    <p style="font-size:10.5pt"><strong>Compounded continuously</strong></p>
+    <ul style="font-size:10.5pt; margin-left:16px">
+      <li><strong>P</strong> = principal</li>
+      <li><strong>e</strong> ≈ 2.71828</li>
+      <li><strong>r</strong> = annual rate as a decimal</li>
+      <li><strong>t</strong> = years</li>
+      <li>No n — happens infinitely often</li>
+      <li>Use ln to solve for t or r</li>
+    </ul>
+  </div>
+</div>
+
+<h3>What Does n Actually Change? A Comparison</h3>
+<p>Invest $1,000 at 6% for 1 year. Watch how more frequent compounding gives slightly more:</p>
+
+<div class="cols2">
+  <div>
+    <table class="t">
+      <tr><th>Compounding</th><th>n</th><th>Result</th></tr>
+      <tr><td>Annually</td><td>1</td><td>$1,060.00</td></tr>
+      <tr><td>Semi-annually</td><td>2</td><td>$1,060.90</td></tr>
+      <tr><td>Quarterly</td><td>4</td><td>$1,061.36</td></tr>
+      <tr><td>Monthly</td><td>12</td><td>$1,061.68</td></tr>
+      <tr><td>Daily</td><td>365</td><td>$1,061.83</td></tr>
+      <tr class="emph"><td>Continuously</td><td>∞</td><td>$1,061.84</td></tr>
+    </table>
+  </div>
+  <div class="concept-box" style="margin:0">
+    <p><strong>Key insight:</strong></p>
+    <p>Annual → Monthly is a <span class="highlight">noticeable jump</span>.</p>
+    <p style="margin-top:5px">Monthly → Continuous is almost nothing (+$0.16).</p>
+    <p style="margin-top:5px">The formula <strong>A = Pe<sup>rt</sup></strong> gives the theoretical ceiling — you literally cannot earn more than this.</p>
+    <p style="margin-top:5px"><strong>n common values:</strong><br>
+    Annually: 1 &nbsp;|&nbsp; Semi: 2<br>
+    Quarterly: 4 &nbsp;|&nbsp; Monthly: 12<br>
+    Weekly: 52 &nbsp;|&nbsp; Daily: 365</p>
+  </div>
+</div>
+
+<h3>Worked Examples</h3>
+
+<div class="example">
+  <div class="example-title">📘 Example 1 — Find the Balance (n times/year)</div>
+  <p><em>$5,000 at 4% annual, compounded quarterly, after 6 years.</em></p>
+  <div class="step" data-n="1.">Identify: P = 5000, r = 0.04, n = 4, t = 6</div>
+  <div class="step" data-n="2.">A = 5000(1 + 0.04/4)<sup>4·6</sup> = 5000(1.01)<sup>24</sup></div>
+  <div class="step" data-n="3.">A = 5000 × 1.26974 ≈ <span class="highlight">$6,348.67</span></div>
+</div>
+
+<div class="example">
+  <div class="example-title">📘 Example 2 — Find the Initial Investment</div>
+  <p><em>3% annual, compounded 6 times/year, balance after 8 years is $6,715.81. Find P.</em></p>
+  <div class="step" data-n="1.">6715.81 = P(1 + 0.03/6)<sup>6·8</sup> = P(1.005)<sup>48</sup></div>
+  <div class="step" data-n="2.">P = 6715.81 ÷ (1.005)<sup>48</sup> ≈ 6715.81 ÷ 1.27049 ≈ <span class="highlight">$5,285.00</span></div>
+</div>
+
+<div class="example">
+  <div class="example-title">📘 Example 3 — Continuous, Find Balance</div>
+  <p><em>$7,004 at 4% compounded continuously for 15 years.</em></p>
+  <div class="step" data-n="1.">A = 7004 · e<sup>0.04 × 15</sup> = 7004 · e<sup>0.6</sup></div>
+  <div class="step" data-n="2.">e<sup>0.6</sup> ≈ 1.82212 &nbsp;→&nbsp; A = 7004 × 1.82212 ≈ <span class="highlight">$12,764.76</span></div>
+</div>
+
+<div class="example">
+  <div class="example-title">📘 Example 4 — Solve for Time</div>
+  <p><em>$8,385 at 3% continuous. How long to reach $11,318.57?</em></p>
+  <div class="step" data-n="1.">11318.57 = 8385 · e<sup>0.03t</sup> &nbsp;→&nbsp; 11318.57/8385 = e<sup>0.03t</sup></div>
+  <div class="step" data-n="2.">Take ln: ln(1.34986) = 0.03t</div>
+  <div class="step" data-n="3.">t = ln(1.34986) / 0.03 ≈ 0.2996 / 0.03 ≈ <span class="highlight">10 years</span></div>
+</div>
+
+<div class="warning-box">
+  <strong>⚠️ Common Mistakes:</strong>&nbsp;
+  r must be a decimal (6% → 0.06). &nbsp;The exponent is nt, not just t. &nbsp;For continuous compounding, use A = Pe<sup>rt</sup> — there is no n.
+</div>
+
+<!-- ───────── PART 2 ───────── -->
+<hr class="thin">
+<h2>Part 2: Inequalities — When to Flip the Sign</h2>
+
+<h3>The Core Rule</h3>
+
+<div class="cols2">
+  <div class="noflip-rule">
+    <strong>✅ Do NOT flip when:</strong>
+    <ul style="margin: 5px 0 0 16px; font-size:10.5pt">
+      <li>Adding or subtracting anything</li>
+      <li>Multiplying/dividing by a <strong>positive</strong> number</li>
+      <li>Exponential base <strong>&gt; 1</strong> (e.g., 2, 3, e, 10)</li>
+      <li>Log base <strong>&gt; 1</strong></li>
+    </ul>
+  </div>
+  <div class="flip-rule">
+    <strong>🔄 FLIP when:</strong>
+    <ul style="margin: 5px 0 0 16px; font-size:10.5pt">
+      <li>Multiplying/dividing by a <strong>negative</strong> number</li>
+      <li>Exponential base is between <strong>0 and 1</strong> (e.g., ½, ⅓)</li>
+      <li>Log base is between <strong>0 and 1</strong></li>
+    </ul>
+  </div>
+</div>
+
+<h3>Why Does the Base Cause a Flip?</h3>
+<div class="concept-box">
+  <p><strong>Key idea:</strong> When the base is &gt; 1, the function is <em>increasing</em> — larger exponents give larger outputs, so the inequality stays the same direction. When the base is between 0 and 1, the function is <em>decreasing</em> — larger exponents give <em>smaller</em> outputs, so the inequality flips.</p>
+  <div class="cols2" style="margin-top:8px">
+    <div>
+      <p><strong>y = 2<sup>x</sup></strong> goes UP ↗</p>
+      <p>2<sup>3</sup> = 8, &nbsp; 2<sup>4</sup> = 16 &nbsp; (bigger x → bigger y)</p>
+      <p>So if 2<sup>a</sup> &lt; 2<sup>b</sup>, then a &lt; b &nbsp;<span class="green">(same direction)</span></p>
+    </div>
+    <div>
+      <p><strong>y = (½)<sup>x</sup></strong> goes DOWN ↘</p>
+      <p>(½)<sup>3</sup> = ⅛, &nbsp; (½)<sup>4</sup> = 1/16 &nbsp; (bigger x → smaller y)</p>
+      <p>So if (½)<sup>a</sup> &lt; (½)<sup>b</sup>, then a <span class="highlight">&gt;</span> b &nbsp;<span class="highlight">(flipped!)</span></p>
+    </div>
+  </div>
+</div>
+
+<h3>Exponential Inequalities</h3>
+
+<div class="example">
+  <div class="example-title">📗 Example 5 — Base &gt; 1, No Flip</div>
+  <p><em>Solve: 3<sup>x</sup> &lt; 20</em></p>
+  <div class="step" data-n="1.">Can't rewrite 20 as a power of 3, so take log₃ of both sides.</div>
+  <div class="step" data-n="2.">log₃(3<sup>x</sup>) &lt; log₃(20) &nbsp;→&nbsp; x &lt; log₃(20)</div>
+  <div class="step" data-n="3.">Change-of-base: log₃(20) = log(20)/log(3) ≈ 2.727</div>
+  <div class="step" data-n="✓"><span class="green">x &lt; 2.727.</span> Base 3 &gt; 1 → no flip. Test: x = 0 → 1 &lt; 20 ✓; x = 3 → 27 &lt; 20? No ✓</div>
+</div>
+
+<div class="example">
+  <div class="example-title">📗 Example 6 — Base Between 0 and 1, Flip!</div>
+  <p><em>Solve: (⅓)<sup>n</sup> ≥ 15</em></p>
+  <div class="step" data-n="1.">Rewrite: (3<sup>−1</sup>)<sup>n</sup> ≥ 15 &nbsp;→&nbsp; 3<sup>−n</sup> ≥ 15</div>
+  <div class="step" data-n="2.">Take log₃: &nbsp; −n ≥ log₃(15)</div>
+  <div class="step" data-n="3.">Divide by −1 → <span class="highlight">FLIP!</span> &nbsp; n ≤ −log₃(15) ≈ −2.465</div>
+  <div class="step" data-n="✓"><span class="highlight">n ≤ −2.465.</span> Test: n = −3 → (⅓)<sup>−3</sup> = 27 ≥ 15 ✓; n = 0 → 1 ≥ 15? No ✓</div>
+</div>
+
+<div class="example">
+  <div class="example-title">📗 Example 7 — Same-Base Shortcut</div>
+  <p><em>Solve: (½)<sup>n+2</sup> &lt; (½)<sup>5</sup></em></p>
+  <div class="step" data-n="1.">Same base (½), so we can compare exponents directly — but base ½ &lt; 1, so we must flip!</div>
+  <div class="step" data-n="2.">n + 2 &gt; 5 &nbsp;→&nbsp; <span class="highlight">n &gt; 3</span></div>
+</div>
+
+<h3>Logarithmic Inequalities</h3>
+
+<div class="example">
+  <div class="example-title">📕 Example 8 — Log Base &gt; 1, No Flip</div>
+  <p><em>Solve: log₃(10x − 9) &gt; 4</em></p>
+  <div class="step" data-n="1.">Exponentiate with base 3: 10x − 9 &gt; 3⁴ = 81</div>
+  <div class="step" data-n="2.">10x &gt; 90 &nbsp;→&nbsp; <span class="green">x &gt; 9.</span> Base 3 &gt; 1 → no flip.</div>
+</div>
+
+<div class="example">
+  <div class="example-title">📕 Example 9 — Log Base Between 0 and 1, Flip!</div>
+  <p><em>Solve: log<sub>½</sub> x ≥ 5</em></p>
+  <div class="step" data-n="1.">Exponentiate with base ½: x ≥ (½)<sup>5</sup> = 1/32</div>
+  <div class="step" data-n="2.">But base ½ ∈ (0,1) → decreasing → <span class="highlight">FLIP:</span> &nbsp; x ≤ 1/32</div>
+  <div class="step" data-n="3.">Domain: x &gt; 0. &nbsp; <span class="highlight">Answer: 0 &lt; x ≤ 1/32</span></div>
+</div>
+
+<div class="example">
+  <div class="example-title">📕 Example 10 — Always Check for Extraneous Solutions!</div>
+  <p><em>Solve: log₆(6x) + log₆(x−1) = 2</em></p>
+  <div class="step" data-n="1.">Combine: log₆[6x(x−1)] = 2</div>
+  <div class="step" data-n="2.">Exponentiate: 6x(x−1) = 36 &nbsp;→&nbsp; x² − x − 6 = 0 &nbsp;→&nbsp; (x−3)(x+2) = 0</div>
+  <div class="step" data-n="3.">x = 3 or x = −2. Check: x = −2 makes log₆(−12) → undefined. <span class="highlight">Reject x = −2.</span></div>
+  <div class="step" data-n="✓"><span class="green">x = 3 only.</span></div>
+</div>
+
+<h3>Quick-Reference Table</h3>
+<table class="t">
+  <tr><th>Situation</th><th>Flip ≥ or ≤?</th><th>Quick Example</th></tr>
+  <tr><td>Divide/multiply by negative number</td><td>Always flip</td><td>−2x &gt; 6 → x &lt; −3</td></tr>
+  <tr><td>Exponential, base &gt; 1</td><td>Never flip</td><td>3<sup>x</sup> &lt; 81 → x &lt; 4</td></tr>
+  <tr><td>Exponential, 0 &lt; base &lt; 1</td><td>Always flip</td><td>(½)<sup>x</sup> &lt; 8 → x &gt; −3</td></tr>
+  <tr><td>Log, base &gt; 1</td><td>Never flip</td><td>log₂ x &gt; 3 → x &gt; 8</td></tr>
+  <tr><td>Log, 0 &lt; base &lt; 1</td><td>Always flip</td><td>log<sub>½</sub> x &gt; 3 → x &lt; ⅛</td></tr>
+</table>
+
+<div class="warning-box" style="margin-top:10px">
+  <strong>⚠️ Always check log answers!</strong> Any solution making a log argument ≤ 0 is extraneous — throw it out. This check is required every time.
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PRACTICE PROBLEMS
+     ══════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<p class="practice-header">Math 3 Practice Problems</p>
+<p class="doc-sub">Compound Interest &amp; Inequalities &nbsp;|&nbsp; Chapters 5.1–5.5</p>
+<hr class="thick">
+
+<div class="section-label">Part A: Compound Interest — Compounded n Times Per Year</div>
+
+<div class="cols2">
+
+<div class="problem">
+  <span class="problem-num">1.</span>
+  <div class="problem-text">Carlos invests $2,500 at a 5% annual interest rate compounded monthly. What is the account balance after 3 years? Round to the nearest cent.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: $</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">2.</span>
+  <div class="problem-text">Sofia deposits some money at a 6% annual rate compounded quarterly. After 4 years, the balance is $5,088.49. What was the initial deposit? Round to the nearest cent.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: $</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">3.</span>
+  <div class="problem-text">An account earns 2% annual interest compounded semi-annually. How much will $8,000 grow to in 10 years? Round to the nearest cent.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: $</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">4.</span>
+  <div class="problem-text">An account pays 4% annual interest compounded 12 times a year. After how many years will a $3,000 deposit grow to at least $3,700? Round t to 1 decimal place.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: t ≈</span><span class="box-right"></span>
+</div>
+
+</div>
+
+<hr class="thin">
+<div class="section-label">Part B: Continuous Compounding &amp; Solving for Time</div>
+
+<div class="cols2">
+
+<div class="problem">
+  <span class="problem-num">5.</span>
+  <div class="problem-text">Yuki invests $4,000 in an account with 3.5% annual interest compounded continuously. What is the balance after 8 years? Round to the nearest cent.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: $</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">6.</span>
+  <div class="problem-text">Max invests $5,200 at 5% compounded continuously. How long will it take for the balance to reach $8,000? Round to the nearest tenth of a year.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: t ≈</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">7.</span>
+  <div class="problem-text">An account with continuous compounding at 6% currently has $12,000. When did the account have exactly $7,500 (how many years ago)? Round to the nearest tenth.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: t ≈</span><span class="box-right"></span>
+</div>
+
+<div class="problem">
+  <span class="problem-num">8.</span>
+  <div class="problem-text">Amir invests an amount at 4.5% compounded daily (n = 365). After 5 years, the balance is $6,154.35. What was the initial investment? Round to the nearest cent.</div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer: $</span><span class="box-right"></span>
+</div>
+
+</div>
+
+<hr class="thin">
+<div class="section-label">Part C: Exponential Inequalities</div>
+
+<div class="cols2">
+
+<div class="problem">
+  <span class="problem-num">9.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">2<sup>x</sup> &gt; 50</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">10.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">(⅓)<sup>x</sup> ≤ 27</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">11.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">4<sup>x+1</sup> ≥ 64</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">12.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">(½)<sup>n+2</sup> &lt; (½)<sup>5</sup></span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">13.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">5<sup>2x−1</sup> &lt; 5<sup>x+3</sup></span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">14.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">7<sup>x</sup> ≤ 100</span>. &nbsp; Round to the nearest ten-thousandth.</div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+</div>
+
+<hr class="thin">
+<div class="section-label">Part D: Logarithmic Inequalities</div>
+
+<div class="cols2">
+
+<div class="problem">
+  <span class="problem-num">15.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">log₄ x &gt; 3</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">16.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">log<sub>⅓</sub> x ≤ 2</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">17.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">log₅(2x − 1) ≥ 2</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">18.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">log<sub>½</sub>(3x) &gt; −2</span></div>
+  <div class="workspace"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">19.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">log₂(x + 3) &lt; log₂(2x − 1)</span></div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+<div class="problem">
+  <span class="problem-num">20.</span>
+  <div class="problem-text">Solve: &nbsp;<span class="math">ln(x − 2) ≥ 3</span></div>
+  <div class="workspace-lg"></div>
+  <span style="margin-left:18px; font-size:10.5pt">Answer:</span><span class="box-right"></span>
+  <div class="flip-check">Flip? &nbsp; ☐ Yes &nbsp; ☐ No</div>
+</div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     ANSWER KEY
+     ══════════════════════════════════════════════════ -->
+<div class="page-break"></div>
+
+<p class="ans-header">Answer Key</p>
+<p class="ans-sub">Math 3 Practice: Compound Interest &amp; Inequalities</p>
+<hr class="thick">
+
+<div class="ans-section">Part A: Compounded n Times Per Year</div>
+<div class="two-col-ans">
+
+<div class="ans-block">
+  <div class="pnum">1. Carlos — 5% monthly, $2,500, 3 years</div>
+  <div class="answer">A ≈ $2,901.82</div>
+  <div class="work">
+    A = 2500(1 + 0.05/12)<sup>36</sup> = 2500(1.004167)<sup>36</sup><br>
+    = 2500 × 1.16073 ≈ <strong>$2,901.82</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">2. Sofia — 6% quarterly, A = $5,088.49, 4 years, find P</div>
+  <div class="answer">P ≈ $4,000.00</div>
+  <div class="work">
+    5088.49 = P(1.015)<sup>16</sup><br>
+    P = 5088.49 ÷ 1.26900 ≈ <strong>$4,010.00</strong><br>
+    <span style="font-size:9pt; color:#888">(Small rounding differences acceptable)</span>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">3. 2% semi-annual, $8,000, 10 years</div>
+  <div class="answer">A ≈ $9,752.19</div>
+  <div class="work">
+    A = 8000(1 + 0.02/2)<sup>20</sup> = 8000(1.01)<sup>20</sup><br>
+    = 8000 × 1.21900 ≈ <strong>$9,752.19</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">4. 4% monthly, $3,000 → $3,700, find t</div>
+  <div class="answer">t ≈ 5.2 years</div>
+  <div class="work">
+    3700 = 3000(1.003333)<sup>12t</sup><br>
+    ln(1.23333) = 12t · ln(1.003333)<br>
+    t = ln(1.23333) / (12 × 0.003328) ≈ <strong>5.2 years</strong>
+  </div>
+</div>
+
+</div>
+
+<div class="ans-section">Part B: Continuous Compounding</div>
+<div class="two-col-ans">
+
+<div class="ans-block">
+  <div class="pnum">5. Yuki — 3.5% continuous, $4,000, 8 years</div>
+  <div class="answer">A ≈ $5,292.52</div>
+  <div class="work">
+    A = 4000 · e<sup>0.035 × 8</sup> = 4000 · e<sup>0.28</sup><br>
+    e<sup>0.28</sup> ≈ 1.32313<br>
+    A = 4000 × 1.32313 ≈ <strong>$5,292.52</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">6. Max — 5% continuous, $5,200 → $8,000, find t</div>
+  <div class="answer">t ≈ 8.6 years</div>
+  <div class="work">
+    8000 = 5200 · e<sup>0.05t</sup> → 1.53846 = e<sup>0.05t</sup><br>
+    t = ln(1.53846) / 0.05 ≈ 0.43078 / 0.05 ≈ <strong>8.6 years</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">7. 6% continuous, $7,500 grew to $12,000, how long ago?</div>
+  <div class="answer">t ≈ 7.8 years</div>
+  <div class="work">
+    12000 = 7500 · e<sup>0.06t</sup> → 1.6 = e<sup>0.06t</sup><br>
+    t = ln(1.6) / 0.06 ≈ 0.47000 / 0.06 ≈ <strong>7.8 years</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">8. Amir — 4.5% daily, A = $6,154.35, 5 years, find P</div>
+  <div class="answer">P ≈ $4,914.71</div>
+  <div class="work">
+    6154.35 = P(1 + 0.045/365)<sup>1825</sup><br>
+    6154.35 = P × 1.25233<br>
+    P ≈ 6154.35 / 1.25233 ≈ <strong>$4,914.71</strong>
+  </div>
+</div>
+
+</div>
+
+<div class="ans-section">Part C: Exponential Inequalities</div>
+<div class="two-col-ans">
+
+<div class="ans-block">
+  <div class="pnum">9. &nbsp; 2<sup>x</sup> &gt; 50</div>
+  <div class="answer">x &gt; log₂ 50 ≈ 5.6439 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base 2 &gt; 1 → <span class="green">no flip</span><br>
+    x &gt; log(50)/log(2) = 1.69897/0.30103 ≈ <strong>5.6439</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">10. &nbsp; (⅓)<sup>x</sup> ≤ 27</div>
+  <div class="answer">x ≥ −3 &nbsp;|&nbsp; Yes flip</div>
+  <div class="work">
+    3<sup>−x</sup> ≤ 3³ → −x ≤ 3 (base 3 &gt; 1, no flip yet)<br>
+    Divide by −1 → <span class="highlight">flip!</span> &nbsp; x ≥ −3
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">11. &nbsp; 4<sup>x+1</sup> ≥ 64</div>
+  <div class="answer">x ≥ 2 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    64 = 4³ → 4<sup>x+1</sup> ≥ 4³<br>
+    Base 4 &gt; 1 → <span class="green">no flip</span><br>
+    x + 1 ≥ 3 → <strong>x ≥ 2</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">12. &nbsp; (½)<sup>n+2</sup> &lt; (½)<sup>5</sup></div>
+  <div class="answer">n &gt; 3 &nbsp;|&nbsp; Yes flip</div>
+  <div class="work">
+    Same base ½ ∈ (0,1) → <span class="highlight">flip when comparing exponents</span><br>
+    n + 2 &gt; 5 → <strong>n &gt; 3</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">13. &nbsp; 5<sup>2x−1</sup> &lt; 5<sup>x+3</sup></div>
+  <div class="answer">x &lt; 4 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Same base 5 &gt; 1 → <span class="green">no flip</span><br>
+    2x − 1 &lt; x + 3 → <strong>x &lt; 4</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">14. &nbsp; 7<sup>x</sup> ≤ 100</div>
+  <div class="answer">x ≤ 2.3665 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base 7 &gt; 1 → <span class="green">no flip</span><br>
+    x ≤ log(100)/log(7) = 2/0.84510 ≈ <strong>2.3665</strong>
+  </div>
+</div>
+
+</div>
+
+<div class="ans-section">Part D: Logarithmic Inequalities</div>
+<div class="two-col-ans">
+
+<div class="ans-block">
+  <div class="pnum">15. &nbsp; log₄ x &gt; 3</div>
+  <div class="answer">x &gt; 64 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base 4 &gt; 1 → <span class="green">no flip</span><br>
+    x &gt; 4³ = <strong>64</strong> &nbsp; (domain x &gt; 0 satisfied)
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">16. &nbsp; log<sub>⅓</sub> x ≤ 2</div>
+  <div class="answer">x ≥ 1/9 &nbsp;|&nbsp; Yes flip</div>
+  <div class="work">
+    Base ⅓ ∈ (0,1) → <span class="highlight">flip!</span><br>
+    x ≥ (⅓)² = 1/9 &nbsp; (also x &gt; 0 → <strong>x ≥ 1/9</strong>)
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">17. &nbsp; log₅(2x − 1) ≥ 2</div>
+  <div class="answer">x ≥ 13 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base 5 &gt; 1 → <span class="green">no flip</span><br>
+    2x − 1 ≥ 25 → 2x ≥ 26 → <strong>x ≥ 13</strong><br>
+    Check: 2(13)−1 = 25 &gt; 0 ✓
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">18. &nbsp; log<sub>½</sub>(3x) &gt; −2</div>
+  <div class="answer">0 &lt; x &lt; 4/3 &nbsp;|&nbsp; Yes flip</div>
+  <div class="work">
+    Base ½ ∈ (0,1) → <span class="highlight">flip!</span><br>
+    3x &lt; (½)<sup>−2</sup> = 4 → x &lt; 4/3<br>
+    Domain: 3x &gt; 0 → x &gt; 0 → <strong>0 &lt; x &lt; 4/3</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">19. &nbsp; log₂(x+3) &lt; log₂(2x−1)</div>
+  <div class="answer">x &gt; 4 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base 2 &gt; 1 → <span class="green">no flip</span><br>
+    x + 3 &lt; 2x − 1 → x &gt; 4<br>
+    Domain: x+3&gt;0 and 2x−1&gt;0 → x &gt; ½<br>
+    Binding: <strong>x &gt; 4</strong>
+  </div>
+</div>
+
+<div class="ans-block">
+  <div class="pnum">20. &nbsp; ln(x − 2) ≥ 3</div>
+  <div class="answer">x ≥ e³ + 2 ≈ 22.0855 &nbsp;|&nbsp; No flip</div>
+  <div class="work">
+    Base e &gt; 1 → <span class="green">no flip</span><br>
+    x − 2 ≥ e³ → x ≥ e³ + 2<br>
+    e³ ≈ 20.0855 → <strong>x ≥ 22.0855</strong>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
