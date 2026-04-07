@@ -764,6 +764,31 @@
     .dt-name { font-weight:800; font-size:.95rem; margin-bottom:4px; }
     .dt-cnt { font-size:.75rem; opacity:.8; }
 
+    /* ── Word Comparison Exercise ── */
+    .wc-nav-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .wc-progress { font-size:.82rem; font-weight:700; color:var(--text-light); }
+    .wc-pair-card { background:#fff; border-radius:18px; box-shadow:0 4px 18px rgba(0,0,0,.09); overflow:hidden; margin-bottom:14px; }
+    .wc-pair-header { background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; padding:14px 20px 12px; text-align:center; }
+    .wc-pair-header h3 { margin:0; font-size:1rem; font-weight:700; letter-spacing:.03em; opacity:.88; text-transform:uppercase; }
+    .wc-words-row { display:grid; grid-template-columns:1fr 1fr; }
+    .wc-words-row.triple { grid-template-columns:1fr 1fr 1fr; }
+    .wc-word-panel { padding:16px 14px; border-right:1px solid #e5e7eb; }
+    .wc-word-panel:last-child { border-right:none; }
+    .wc-word-label { font-size:1.05rem; font-weight:800; color:var(--primary); margin-bottom:6px; text-transform:capitalize; }
+    .wc-word-panel:nth-child(2) .wc-word-label { color:#059669; }
+    .wc-word-panel:nth-child(3) .wc-word-label { color:#d97706; }
+    .wc-def { font-size:.8rem; color:#374151; line-height:1.45; margin-bottom:7px; }
+    .wc-example { font-size:.75rem; color:#6b7280; font-style:italic; line-height:1.4; padding-top:6px; border-top:1px dashed #e5e7eb; }
+    .wc-nuance { background:#fef9c3; border-top:2px solid #fbbf24; padding:12px 16px; }
+    .wc-nuance-label { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:#92400e; margin-bottom:4px; }
+    .wc-nuance-text { font-size:.82rem; color:#78350f; line-height:1.5; }
+    .wc-nav-btn { background:white; border:2px solid #e5e7eb; border-radius:10px; padding:9px 18px; font-weight:700; font-size:.9rem; cursor:pointer; color:var(--text-main); transition:all .18s; }
+    .wc-nav-btn:hover:not(:disabled) { border-color:var(--primary); color:var(--primary); }
+    .wc-nav-btn:disabled { opacity:.35; cursor:default; }
+    .wc-dots { display:flex; gap:5px; flex-wrap:wrap; justify-content:center; max-width:220px; }
+    .wc-dot { width:8px; height:8px; border-radius:50%; background:#e5e7eb; cursor:pointer; transition:background .15s; flex-shrink:0; }
+    .wc-dot.active { background:var(--primary); }
+
     .empty-state { text-align: center; padding: 40px; background: white; border-radius: 15px; font-size: 1.2rem; color: var(--secondary); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
     /* Word Insights overlay */
@@ -8227,7 +8252,302 @@
           <div class="ex-hub-name">Difficulty Drill</div>
           <div class="ex-hub-desc">Choose your challenge level and drill words by difficulty</div>
         </div>
+        <div class="ex-hub-card" onclick="initWordComparison()">
+          <div class="ex-hub-icon">⚖️</div>
+          <div class="ex-hub-name">Word Comparisons</div>
+          <div class="ex-hub-desc">Words that look alike but mean different things — spot the nuance</div>
+        </div>
       </div>`;
+  }
+
+  // ── Word Comparisons ──────────────────────────────────────────────────────
+  const wordComparisonPairs = [
+    {
+      title: "interloper vs interlocutor",
+      words: [
+        { word: "interloper", def: "A person who becomes involved in a place or situation where they are not wanted or are considered not to belong.", example: "She felt like an interloper at the exclusive party." },
+        { word: "interlocutor", def: "A person who takes part in a dialogue or conversation.", example: "She served as the official interlocutor during the diplomatic talks." }
+      ],
+      nuance: "Both start with 'inter-' and involve people in social situations. The interlocutor belongs — they are a recognised participant in dialogue. The interloper does not — they intrude where they weren't invited. One is a voice in the room; the other is the uninvited guest."
+    },
+    {
+      title: "allude vs elude",
+      words: [
+        { word: "allude", def: "To refer to something indirectly without mentioning it explicitly.", example: "He alluded to internal disagreements without naming anyone specifically." },
+        { word: "elude", def: "To escape from or avoid someone or something by cleverness or skill.", example: "The suspect eluded capture for three weeks before finally being apprehended." }
+      ],
+      nuance: "One letter apart, but the direction is opposite. To allude is to gesture toward something (you bring it closer, subtly). To elude is to slip away from something. One references; the other escapes."
+    },
+    {
+      title: "flaunt vs flout",
+      words: [
+        { word: "flaunt", def: "To display something ostentatiously, especially in order to provoke envy or admiration.", example: "She liked to flaunt her wealth by arriving in a different car each day." },
+        { word: "flout", def: "To openly disregard a rule, law, or convention.", example: "The company was fined for flouting environmental regulations." }
+      ],
+      nuance: "One of the most commonly mixed-up pairs. To flaunt is to show off (peacock energy). To flout is to defy a rule (rebel energy). You flaunt your designer bag; you flout the dress code. One is about display; the other is about defiance."
+    },
+    {
+      title: "provenance vs providence",
+      words: [
+        { word: "provenance", def: "The origin or earliest known history of something, especially a work of art.", example: "The painting's provenance was unclear, raising questions about how it was acquired." },
+        { word: "providence", def: "The protective care of God or nature; timely preparation for the future.", example: "He credited providence rather than skill for the series of events that saved the company." }
+      ],
+      nuance: "Two letters' difference, two entirely different worlds. Provenance is factual — it's the paper trail of where something came from. Providence is spiritual or philosophical — it's the idea of divine guidance or fortunate timing. One is an auction house term; the other belongs in a sermon."
+    },
+    {
+      title: "intercede vs interdict",
+      words: [
+        { word: "intercede", def: "To intervene on behalf of another person; to plead for someone.", example: "His mentor interceded with the committee and secured him a second chance." },
+        { word: "interdict", def: "To prohibit or forbid something with authority; to cut off an enemy supply line.", example: "The navy was deployed to interdict shipments of illegal weapons into the region." }
+      ],
+      nuance: "Both involve intervening between parties, but with opposite intent. To intercede is to step in as an advocate — for someone. To interdict is to step in as a blocker — against something. One is a mercy plea; the other is a military veto."
+    },
+    {
+      title: "extenuating vs extraneous",
+      words: [
+        { word: "extenuating", def: "Making an offense or failure seem less serious; providing partial justification.", example: "The judge considered the extenuating circumstances before imposing a lighter sentence." },
+        { word: "extraneous", def: "Irrelevant or unrelated to the subject being discussed.", example: "Please keep to the agenda — we don't have time for extraneous discussion." }
+      ],
+      nuance: "Both start with 'ex-' and carry a sense of something extra or outside. Extenuating circumstances are relevant to the outcome — they reduce culpability. Extraneous information is irrelevant — it should be cut. One saves you in court; the other gets you cut from the meeting agenda."
+    },
+    {
+      title: "expedite vs expediency",
+      words: [
+        { word: "expedite", def: "To make a process happen faster; to speed up.", example: "She called in a favour to expedite the visa application before the conference." },
+        { word: "expediency", def: "The practice of doing what is convenient and practical rather than what is morally right.", example: "The politician chose expediency over principle by avoiding the controversial question." }
+      ],
+      nuance: "Same Latin root (expedire — to free from entanglement), but the modern senses have drifted apart. Expedite is morally neutral — just faster. Expediency carries a whiff of moral compromise — it's the faster path that isn't quite the right one. Efficiency vs. corner-cutting."
+    },
+    {
+      title: "disperse vs diffuse",
+      words: [
+        { word: "disperse", def: "To scatter or spread over a wide area, especially people or groups.", example: "The crowd dispersed quickly once the announcement was made." },
+        { word: "diffuse", def: "To spread widely or gradually; to soften or reduce the intensity of something.", example: "The mediator tried to diffuse the anger in the room before the talks collapsed." }
+      ],
+      nuance: "Both describe spreading, but disperse often implies a discrete collection breaking apart (a crowd, smoke, seeds). Diffuse suggests a gentler, more gradual spreading that reduces concentration or intensity — like light through frosted glass. One scatters; the other softens."
+    },
+    {
+      title: "presage vs prognosis",
+      words: [
+        { word: "presage", def: "A sign or warning that something significant is about to happen; to foreshadow.", example: "The sudden withdrawal of investors presaged the market crash that followed." },
+        { word: "prognosis", def: "A forecast of the likely course of a disease or situation based on evidence.", example: "The doctor's prognosis was that the patient would make a full recovery within six weeks." }
+      ],
+      nuance: "Both look into the future, but presage is literary and ominous — it's a foreboding sign, often dark. Prognosis is clinical and analytical — it's an expert's evidence-based forecast. A presage is what you feel; a prognosis is what the data says."
+    },
+    {
+      title: "overture vs prelude",
+      words: [
+        { word: "overture", def: "An introductory piece of music; or a diplomatic proposal to open negotiations.", example: "The government made peace overtures to the rebel leaders." },
+        { word: "prelude", def: "An introductory event or action that precedes something more important.", example: "The diplomatic talks were a prelude to what could be a historic peace agreement." }
+      ],
+      nuance: "Both mean 'something that comes before,' but overture carries an active, outward energy — it's an opening move, a gesture of intent toward another party. A prelude is more passive — a build-up, a preamble. You make an overture to someone; events form a prelude to something."
+    },
+    {
+      title: "exhort vs expound",
+      words: [
+        { word: "exhort", def: "To strongly encourage or urge someone to do something.", example: "The coach exhorted the players to give everything in the final quarter." },
+        { word: "expound", def: "To present and explain a theory or idea in detail.", example: "He expounded his theory for twenty minutes without pausing for questions." }
+      ],
+      nuance: "Both are verbs about speaking at length, but to very different ends. To exhort is to inspire action — it's motivational, urgent, aimed at the will. To expound is to illuminate understanding — it's analytical, explanatory, aimed at the mind. One fires you up; the other teaches you."
+    },
+    {
+      title: "proffer vs profess",
+      words: [
+        { word: "proffer", def: "To offer or hold out something to someone.", example: "He proffered a hand in friendship, and she shook it cautiously." },
+        { word: "profess", def: "To claim or assert something openly, often with a hint of insincerity.", example: "He professed his loyalty to the company while already interviewing elsewhere." }
+      ],
+      nuance: "One letter apart, both from Latin 'pro-' (forth). To proffer is to extend something tangible — a hand, an offer, a suggestion. To profess is to put forward a belief or claim — often with a subtle implication that words and reality may not match. One gives; the other declares."
+    },
+    {
+      title: "connive vs acquiesce",
+      words: [
+        { word: "connive", def: "To secretly allow or enable something dishonest; to conspire or collude.", example: "Several senior officials had connived to suppress the report for years." },
+        { word: "acquiesce", def: "To accept something reluctantly but without open protest.", example: "She acquiesced to the conditions despite finding them deeply unreasonable." }
+      ],
+      nuance: "Both describe going along with something you perhaps shouldn't — but the degree of agency is very different. To connive is active secret collaboration; you're part of the scheme. To acquiesce is passive acceptance; you don't fight back. One makes you a co-conspirator; the other makes you a reluctant bystander."
+    },
+    {
+      title: "internment vs internist vs internalize",
+      words: [
+        { word: "internment", def: "The imprisonment of people, especially for political reasons, without trial.", example: "The wartime internment of civilians was later acknowledged as a grave injustice." },
+        { word: "internist", def: "A physician who specialises in internal medicine and treats adults for a range of diseases.", example: "Her internist recommended lifestyle changes before considering medication." },
+        { word: "internalize", def: "To absorb and accept an idea or value as one's own deeply held belief.", example: "It takes time to truly internalize feedback rather than just intellectually acknowledging it." }
+      ],
+      nuance: "Three words, same 'intern-' root (Latin internus, inner), three completely different fields. Internment is political — the state confines people inside walls. Internist is medical — a doctor who looks inside the body. To internalize is psychological — to move something inside the self. Inner walls, inner body, inner mind."
+    },
+    {
+      title: "dissent vs dissonance",
+      words: [
+        { word: "dissent", def: "To hold or express opinions that are at odds with those officially or previously held.", example: "Two justices dissented from the majority opinion in a landmark ruling." },
+        { word: "dissonance", def: "A lack of harmony or agreement; a jarring clash of elements, sounds, or ideas.", example: "There was cognitive dissonance between the company's stated values and its actual behaviour." }
+      ],
+      nuance: "Both describe conflict, but at different levels. Dissent is an active, voiced disagreement — a person chooses to oppose. Dissonance is a structural clash — it can be between ideas, sounds, or expectations, often felt rather than spoken. You dissent; you experience dissonance."
+    },
+
+    // ── Semantic comparisons: similar concept, different nuance ──────────────
+    {
+      title: "rebuke vs reprimand vs excoriate",
+      words: [
+        { word: "rebuke", def: "To express sharp disapproval or criticism of someone.", example: "The chair rebuked the member for making personal comments during the session." },
+        { word: "reprimand", def: "To formally and sharply criticize someone for their behaviour, often in an official capacity.", example: "The manager reprimanded the employee for repeatedly missing deadlines without explanation." },
+        { word: "excoriate", def: "To criticize someone very harshly and publicly; a devastating denunciation.", example: "The judge excoriated the defendant for showing no remorse whatsoever." }
+      ],
+      nuance: "All three criticize — but the register and severity differ. A rebuke is personal and direct, often a single sharp moment. A reprimand is institutional: formal, on the record, usually with consequences. To excoriate is to shred someone publicly; it's the most extreme — a verbal flaying."
+    },
+    {
+      title: "upbraid vs berate vs harangue",
+      words: [
+        { word: "upbraid", def: "To find fault with or scold someone angrily, pointing out their errors.", example: "He upbraided the junior staff in front of the entire office, which only deepened the resentment." },
+        { word: "berate", def: "To scold or criticize someone angrily and at length.", example: "The director berated the entire cast for being unprepared on opening night." },
+        { word: "harangue", def: "A lengthy and aggressive speech; to lecture someone aggressively and at great length.", example: "He harangued the city council for forty minutes without letting anyone else speak." }
+      ],
+      nuance: "These three escalate in duration and theatricality. Upbraid is pointed and fault-finding. Berate is sustained and angry — a long dressing-down. Harangue becomes performance: it's a torrent of words, often one-sided, that overwhelms rather than persuades. One corrects, one punishes, one dominates."
+    },
+    {
+      title: "impugn vs denigrate vs besmirch",
+      words: [
+        { word: "impugn", def: "To challenge or dispute the truth, honesty, or validity of something; to call into question.", example: "The lawyer sought to impugn the witness's credibility by highlighting inconsistencies in her testimony." },
+        { word: "denigrate", def: "To unfairly criticize or belittle someone or something; to demean.", example: "He had a habit of denigrating his rivals rather than focusing on his own strengths." },
+        { word: "besmirch", def: "To damage someone's reputation in the eyes of others; to tarnish.", example: "He accused his opponent of trying to besmirch his good name." }
+      ],
+      nuance: "Three ways of undermining — but targeting different things. To impugn attacks the credibility of a claim or testimony (surgical, intellectual). To denigrate attacks a person's worth or standing (devaluing). To besmirch attacks a reputation — coating it with dirt so it no longer looks clean. One doubts, one demeans, one dirties."
+    },
+    {
+      title: "tenacious vs steadfast vs stalwart",
+      words: [
+        { word: "tenacious", def: "Holding firmly to something; persistent and determined to achieve a goal.", example: "The tenacious reporter refused to drop the story despite repeated threats." },
+        { word: "steadfast", def: "Resolutely firm and unwavering in purpose, loyalty, or principle.", example: "He remained steadfast in his refusal to name his sources, even under significant pressure." },
+        { word: "stalwart", def: "Loyal, reliable, and hardworking; a dependable supporter.", example: "She has been a stalwart supporter of the charity for over two decades." }
+      ],
+      nuance: "Three words for not giving up — but the emphasis shifts. Tenacious is about grip: refusing to let go of a goal despite obstacles (a quality of drive). Steadfast is about principle: not moving from your position despite pressure (a quality of integrity). Stalwart is about loyalty: showing up reliably for others over time (a quality of character). One holds on, one stands firm, one shows up."
+    },
+    {
+      title: "recalcitrant vs intractable vs inexorable",
+      words: [
+        { word: "recalcitrant", def: "Stubbornly uncooperative or unwilling to obey authority or instruction.", example: "The recalcitrant employee refused to follow the new procedure despite repeated instructions." },
+        { word: "intractable", def: "Hard to control or deal with; not easily managed or resolved.", example: "The economy faces intractable problems that won't be fixed overnight." },
+        { word: "inexorable", def: "Impossible to stop or prevent; continuing relentlessly regardless of opposition.", example: "The inexorable rise of automation was reshaping employment across every industry." }
+      ],
+      nuance: "Three kinds of 'not stopping' — all resistant, but from different angles. Recalcitrant describes a person choosing not to cooperate (defiant will). Intractable describes a situation that resists solution (complexity). Inexorable describes a force or trend that cannot be halted (unstoppable momentum). One refuses, one resists, one marches on regardless."
+    },
+    {
+      title: "intrepid vs indomitable vs plucky",
+      words: [
+        { word: "intrepid", def: "Fearless and adventurous; not deterred by danger or difficulty.", example: "The intrepid journalist traveled into the conflict zone to file her report firsthand." },
+        { word: "indomitable", def: "Impossible to defeat, subdue, or discourage; having an unyielding spirit.", example: "Despite every setback, her indomitable will kept her moving forward when others would have given up." },
+        { word: "plucky", def: "Having or showing determined courage in the face of difficulties; spirited.", example: "The plucky underdog team made it to the finals without a single star player." }
+      ],
+      nuance: "Three flavors of courage — each tells a different story. Intrepid emphasizes going toward danger without flinching (it's about the action). Indomitable emphasizes the spirit that cannot be crushed no matter how much it suffers (it's about endurance). Plucky is the underdog word — a lighter, warmer courage, often surprising in the face of odds. One charges forward, one refuses to break, one punches above its weight."
+    },
+    {
+      title: "circumspect vs judicious vs discerning",
+      words: [
+        { word: "circumspect", def: "Wary and unwilling to take risks; carefully weighing all circumstances before acting.", example: "She was circumspect about making promises before reading the full contract." },
+        { word: "judicious", def: "Having or showing good judgment; wise and sensible in making decisions.", example: "A judicious use of the budget meant they could fund three projects instead of one." },
+        { word: "discerning", def: "Having sharp judgment and careful perception, especially in matters of taste or quality.", example: "Her discerning eye for talent meant she rarely made a bad hire." }
+      ],
+      nuance: "Three kinds of good judgment — but they focus differently. Circumspect is about caution: it's the quality of looking all around before stepping. Judicious is about sound decision-making: choosing well when action is required. Discerning is about perception: spotting quality, talent, or nuance that others miss. One is cautious, one decides wisely, one sees clearly."
+    },
+    {
+      title: "presumptuous vs insolent vs cavalier",
+      words: [
+        { word: "presumptuous", def: "Overstepping social or professional limits through undue confidence or entitlement.", example: "It was presumptuous of him to assume he'd been invited without checking first." },
+        { word: "insolent", def: "Showing rude and arrogant disrespect, often toward authority.", example: "The insolent response from the junior employee shocked everyone in the room." },
+        { word: "cavalier", def: "Showing a careless lack of proper concern; dismissive and offhand.", example: "The cavalier attitude towards safety regulations was the direct cause of the accident." }
+      ],
+      nuance: "Three ways of not respecting others — but the mechanism differs. Presumptuous is about overstepping: assuming permission or status you haven't been granted (self-deception). Insolent is openly rude: deliberate disrespect, especially toward those in authority (defiance). Cavalier is indifference: not bothering to take something or someone seriously (arrogant negligence). One assumes too much, one defies, one dismisses."
+    },
+    {
+      title: "facetious vs flippant vs mordant",
+      words: [
+        { word: "facetious", def: "Treating serious matters with inappropriate humour; joking when it isn't appropriate.", example: "He was being facetious when he suggested they solve the budget crisis by selling the building." },
+        { word: "flippant", def: "Not showing proper seriousness; treating something important with casual, offhand disrespect.", example: "His flippant response to the complaint made the situation significantly worse." },
+        { word: "mordant", def: "Having a sharp, biting, and often darkly humorous quality; wit with an edge.", example: "Her mordant wit could reduce anyone to laughter while simultaneously making them uncomfortable." }
+      ],
+      nuance: "Three kinds of wit that cut — but the intent and edge differ. Facetious is playful inappropriateness: making jokes where they don't belong (more oblivious than cruel). Flippant is dismissive levity: not taking something seriously when you should (more disrespectful than funny). Mordant is dark craft: sharpness that bites and leaves a mark, often deliberately uncomfortable. One jokes badly, one dismisses, one cuts with skill."
+    },
+    {
+      title: "sycophantic vs fawning vs effusive",
+      words: [
+        { word: "sycophantic", def: "Behaving in a servile, flattering manner to gain favour or advantage; calculated praise.", example: "The sycophantic reviews ignored real problems with the product in favour of celebrity endorsement." },
+        { word: "fawning", def: "Giving excessive flattery and admiration in order to gain favour; obsequious.", example: "The fawning coverage of the celebrity was embarrassing to read." },
+        { word: "effusive", def: "Showing excessive enthusiasm or approval; expressing emotions freely and gushingly.", example: "The review was effusive in its praise, calling it the best debut novel in a decade." }
+      ],
+      nuance: "All three involve too much positive expression — but the motivation and calculation differ. Sycophantic is the most strategic: flattery as a tool to gain advantage. Fawning is more emotional and servile: excessive admiration that has a cringing quality. Effusive is the most innocent: it may simply be a personality prone to gushing, without ulterior motive. One manipulates, one cringes, one simply overflows."
+    },
+    {
+      title: "belligerent vs cantankerous vs petulant",
+      words: [
+        { word: "belligerent", def: "Hostile and aggressively combative; eager to argue, fight, or provoke conflict.", example: "The belligerent fan was removed from the stadium before the situation escalated." },
+        { word: "cantankerous", def: "Bad-tempered, argumentative, and uncooperative, especially as a persistent character trait.", example: "The cantankerous old professor argued with every student who challenged his lecture." },
+        { word: "petulant", def: "Sulkily or irritably childish; pouting because of a minor or imagined grievance.", example: "His petulant response to the criticism made him look immature in front of the entire board." }
+      ],
+      nuance: "Three kinds of difficult behaviour — different registers of hostility and age. Belligerent implies active aggression: looking for a fight, escalating tension. Cantankerous is habitual grumpiness: the person who argues for the sake of arguing, a chronic disposition. Petulant is childlike sulking: a disproportionate reaction to a perceived slight, often in someone who should know better. One fights, one grumbles, one sulks."
+    },
+    {
+      title: "stoic vs cavalier vs contrite",
+      words: [
+        { word: "stoic", def: "Enduring pain or hardship without showing feeling or complaint; accepting what cannot be changed.", example: "He remained stoic throughout the ordeal, never once asking for sympathy." },
+        { word: "cavalier", def: "Showing a careless lack of proper concern; dismissive about things that warrant seriousness.", example: "The cavalier attitude towards safety regulations was the direct cause of the accident." },
+        { word: "contrite", def: "Feeling genuine, deep regret or guilt for having done something wrong.", example: "He looked truly contrite as he apologized, and she could tell he was not just saying the words." }
+      ],
+      nuance: "Three very different ways of facing difficulty or wrongdoing. The stoic accepts suffering with quiet dignity — it is a virtue of endurance. The cavalier dismisses what deserves concern — it is the absence of care. The contrite person feels the weight of what they did — it is moral reckoning. One endures with grace, one shrugs it off, one is crushed by regret."
+    }
+  ];
+
+  let wcIdx = 0;
+
+  function initWordComparison() {
+    wcIdx = 0;
+    renderWordComparison();
+  }
+
+  function renderWordComparison() {
+    const container = document.getElementById('sa-inner');
+    if (!container) return;
+    const pair = wordComparisonPairs[wcIdx];
+    const total = wordComparisonPairs.length;
+    const isTriple = pair.words.length === 3;
+
+    const panelsHTML = pair.words.map((w) => `
+      <div class="wc-word-panel">
+        <div class="wc-word-label">${w.word}</div>
+        <div class="wc-def">${w.def}</div>
+        <div class="wc-example">"${w.example}"</div>
+      </div>`).join('');
+
+    const dotsHTML = wordComparisonPairs.map((_, i) =>
+      `<div class="wc-dot${i === wcIdx ? ' active' : ''}" onclick="wcGo(${i})"></div>`
+    ).join('');
+
+    container.innerHTML = `
+      <div style="padding:4px 0 2px;">
+        <div class="wc-nav-bar">
+          <button class="wc-nav-btn" onclick="wcGo(${wcIdx - 1})" ${wcIdx === 0 ? 'disabled' : ''}>← Prev</button>
+          <div class="wc-dots">${dotsHTML}</div>
+          <button class="wc-nav-btn" onclick="wcGo(${wcIdx + 1})" ${wcIdx === total - 1 ? 'disabled' : ''}>Next →</button>
+        </div>
+        <div style="text-align:center; margin-bottom:10px;">
+          <span class="wc-progress">${wcIdx + 1} / ${total}</span>
+        </div>
+        <div class="wc-pair-card">
+          <div class="wc-pair-header">
+            <h3>${pair.title}</h3>
+          </div>
+          <div class="wc-words-row${isTriple ? ' triple' : ''}">${panelsHTML}</div>
+          <div class="wc-nuance">
+            <div class="wc-nuance-label">Key Nuance</div>
+            <div class="wc-nuance-text">${pair.nuance}</div>
+          </div>
+        </div>
+        <button class="sa-start-btn" onclick="renderExerciseHub()" style="background:#6b7280; margin-top:6px;">← All Exercises</button>
+      </div>`;
+  }
+
+  function wcGo(idx) {
+    if (idx < 0 || idx >= wordComparisonPairs.length) return;
+    wcIdx = idx;
+    renderWordComparison();
   }
 
   // ── Fill in the Blank ─────────────────────────────────────────────────────
