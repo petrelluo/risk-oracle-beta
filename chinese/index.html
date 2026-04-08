@@ -184,12 +184,21 @@
             transition: background-color 0.2s ease;
             border-radius: 3px;
             padding: 0 2px;
+            cursor: pointer;
+        }
+
+        .sentence:hover {
+            background-color: #e0f2fe;
         }
 
         .sentence.highlight {
             background-color: var(--highlight);
             color: #000;
             box-shadow: 0 0 0 2px var(--highlight);
+        }
+
+        .sentence.highlight:hover {
+            background-color: var(--highlight);
         }
 
         /* 词汇闪卡区域样式 (词汇模式 & 测验模式) */
@@ -1505,7 +1514,7 @@
             const remEl = document.getElementById('vRemainingCount');
             if (remEl) remEl.textContent = `${vocabulary.length} / ${vocabGroupTotal}`;
 
-            if (autoPlayVocab.checked || autoAdvanceVocab.checked) {
+            if (_isTabSwitch && (autoPlayVocab.checked || autoAdvanceVocab.checked)) {
                 playVocabAudio();
             }
         }
@@ -1522,19 +1531,19 @@
             let exUtt = makeUtterance(vocab.example, rate);
 
             exUtt.onend = function() {
-                if (capturedSessionId !== currentVocabSessionId) return; 
-                
+                if (capturedSessionId !== currentVocabSessionId) return;
+
                 if (autoAdvanceVocab.checked) {
                     setTimeout(() => {
-                        if (capturedSessionId !== currentVocabSessionId) return; 
-                        if (!autoAdvanceVocab.checked) return; 
-                        
+                        if (capturedSessionId !== currentVocabSessionId) return;
+                        if (!autoAdvanceVocab.checked) return;
+
                         if (currentVocabIndex < vocabulary.length - 1) {
                             currentVocabIndex++;
                         } else {
-                            currentVocabIndex = 0; 
+                            currentVocabIndex = 0;
                         }
-                        renderVocabCard();
+                        renderVocabCard(true);
                     }, 1500);
                 }
             };
@@ -1547,7 +1556,7 @@
                         if (!autoAdvanceVocab.checked) return;
                         if (currentVocabIndex < vocabulary.length - 1) currentVocabIndex++;
                         else currentVocabIndex = 0;
-                        renderVocabCard();
+                        renderVocabCard(true);
                     }, 1500);
                 }
             };
@@ -1559,7 +1568,7 @@
         vPrevBtn.onclick = () => {
             if (currentVocabIndex > 0) {
                 currentVocabIndex--;
-                renderVocabCard();
+                renderVocabCard(true);
             }
         };
 
@@ -1567,9 +1576,9 @@
             if (currentVocabIndex < vocabulary.length - 1) {
                 currentVocabIndex++;
             } else {
-                currentVocabIndex = 0; 
+                currentVocabIndex = 0;
             }
-            renderVocabCard();
+            renderVocabCard(true);
         };
 
         vPlayBtn.onclick = () => playVocabAudio();
@@ -1634,6 +1643,10 @@
             sentencesDOM = document.querySelectorAll('.sentence');
             currentReadIndex = 0;
             textContentContainer.scrollTop = 0;
+            sentencesDOM.forEach((span, i) => {
+                span.title = '点击从此处开始播放 (Click to play from here)';
+                span.onclick = () => playReadingFrom(i);
+            });
         }
 
         function updateReadingButtons() {
@@ -2036,7 +2049,7 @@
                     if (currentVocabIndex >= vocabulary.length)
                         currentVocabIndex = Math.max(0, vocabulary.length - 1);
                 }
-                renderVocabCard();
+                renderVocabCard(true);
             }
 
             // ── swipe right: save to notebook, advance ───────────
@@ -2047,7 +2060,7 @@
                 // advance to next card
                 if (currentVocabIndex < vocabulary.length - 1) currentVocabIndex++;
                 else currentVocabIndex = 0;
-                renderVocabCard();
+                renderVocabCard(true);
             }
         })();
 
