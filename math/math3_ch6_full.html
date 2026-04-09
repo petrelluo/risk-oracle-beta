@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 6 — Rational Functions | BIM IM3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Georgia',serif;font-size:10pt;color:#111;background:#edf0f0;line-height:1.45;}
+
+/* ── TAB NAV ── */
+#tabnav{position:sticky;top:0;z-index:99;background:#0d3349;display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid #f0a500;padding:0 4px;}
+#tabnav button{font-family:'Georgia',serif;font-size:8pt;font-weight:bold;background:none;border:none;color:#a0c4d8;padding:6px 7px 4px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:color .15s;}
+#tabnav button:hover{color:#f0a500;}
+#tabnav button.active{color:#f0a500;border-bottom:3px solid #f0a500;}
+#tabnav .qg{color:#556;font-size:7.5pt;padding:6px 3px 4px;align-self:center;}
+
+/* ── CONTENT ── */
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.page{max-width:7.8in;margin:0 auto;background:#fff;padding:.35in .42in .38in;min-height:calc(100vh - 34px);}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:15pt;text-align:center;border-bottom:2.5px solid #0d3349;padding-bottom:4px;margin-bottom:4px;letter-spacing:.03em;}
+h2{font-size:11.5pt;background:#0d3349;color:#f0a500;padding:3px 8px;margin:9px 0 4px;letter-spacing:.04em;}
+h3{font-size:10pt;font-weight:bold;color:#0d3349;margin:6px 0 2px;border-bottom:1px solid #ccd;}
+h4{font-size:9.5pt;font-weight:bold;margin:4px 0 2px;}
+.subtitle{text-align:center;font-size:9pt;color:#666;margin-bottom:5px;}
+p,li{margin:1.5px 0;}
+ul,ol{margin:2px 0 2px 16px;}
+
+/* ── FORMULA BOXES ── */
+.fbox{background:#f8f7f2;border:1px solid #c8b060;border-left:4px solid #c8b060;padding:4px 8px;margin:3px 0;font-family:'Georgia',serif;font-size:9.5pt;}
+.fbox.blue{border-color:#3a6a9a;border-left-color:#3a6a9a;background:#f0f4fa;}
+.fbox.red{border-color:#9a3a3a;border-left-color:#9a3a3a;background:#faf0f0;}
+.fbox.green{border-color:#3a8a4a;border-left-color:#3a8a4a;background:#f0faf2;}
+.fbox.purple{border-color:#6a3a9a;border-left-color:#6a3a9a;background:#f4f0fa;}
+
+/* ── EXAMPLE BOXES ── */
+.ex{border:1px solid #bbb;padding:4px 7px;margin:4px 0;background:#fafafa;}
+.ex-title{font-weight:bold;font-size:9pt;color:#555;margin-bottom:2px;}
+.ex-step{color:#0d3349;margin-left:10px;}
+.ex-ans{color:#9a3a3a;font-weight:bold;}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px 8px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px 6px;}
+.box{border:1px solid #ccc;padding:5px 7px;}
+
+/* ── TABLE ── */
+table{border-collapse:collapse;width:100%;margin:3px 0;font-size:9pt;}
+td,th{border:1px solid #aaa;padding:2px 6px;}
+th{background:#e4e8e0;font-weight:bold;text-align:center;}
+td{text-align:center;}
+td.left{text-align:left;}
+
+/* ── QUIZ HEAD ── */
+.quiz-head{border:2px solid #0d3349;padding:5px 8px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.quiz-head h2{background:none;color:#0d3349;padding:0;margin:0;font-size:12pt;}
+.q-sub{font-size:8.5pt;color:#555;margin-top:1px;}
+.q-center{flex:1;text-align:center;font-size:9pt;}
+.q-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.score{font-size:10pt;font-weight:bold;border:1px solid #999;padding:2px 10px;white-space:nowrap;}
+.blank{display:inline-block;border-bottom:1px solid #555;min-width:100px;height:11px;}
+
+/* ── PROBLEMS ── */
+.probs-2{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;}
+.prob{padding:4px 0 2px;border-bottom:1px dotted #ddd;}
+.prob:last-child{border-bottom:none;}
+.pn{font-weight:bold;font-size:9.5pt;}
+.work{height:44px;margin:2px 0;}
+.work-lg{height:66px;margin:2px 0;}
+.work-xl{height:82px;margin:2px 0;}
+
+/* ── ANSWER KEY ── */
+.ak-item{padding:2px 0;border-bottom:1px dotted #e0e0e0;font-size:9.5pt;}
+.ak-num{font-weight:bold;min-width:24px;display:inline-block;}
+.ak-ans{color:#9a3a3a;font-weight:bold;}
+.ak-work{color:#555;font-size:8.5pt;font-style:italic;}
+
+/* ── MISC ── */
+.rule{border:none;border-top:1px dashed #bbb;margin:8px 0;}
+.rule-solid{border:none;border-top:1.5px solid #ccc;margin:7px 0;}
+.warn{background:#fff8dc;border:1px solid #f0a500;padding:3px 7px;font-size:9pt;margin:3px 0;}
+
+/* ── FRACTIONS ── */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;line-height:1.1;}
+.frac .fn{border-bottom:1.2px solid currentColor;padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+.frac .fd{padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+
+/* ── PRINT ── */
+@media print{
+  #tabnav{display:none !important;}
+  body{background:#fff;}
+  .tab-pane{display:none !important;}
+  .tab-pane.active{display:block !important;}
+  .page{padding:.22in .32in;min-height:auto;max-width:100%;}
+  h2{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TAB NAV ═══ -->
+<div id="tabnav">
+  <button class="active" onclick="show('sg')">📖 Study Guide</button>
+  <button onclick="show('cs')">📋 Cheat Sheet</button>
+  <span class="qg">│ 6.1–6.2:</span>
+  <button onclick="show('q1')">Quiz 1</button>
+  <button onclick="show('q2')">Quiz 2</button>
+  <button onclick="show('q3')">Quiz 3</button>
+  <span class="qg">│ 6.3–6.5:</span>
+  <button onclick="show('q4')">Quiz 4</button>
+  <button onclick="show('q5')">Quiz 5</button>
+  <button onclick="show('q6')">Quiz 6</button>
+  <span class="qg">│ Full Ch.:</span>
+  <button onclick="show('q7')">Quiz 7</button>
+  <button onclick="show('q8')">Quiz 8</button>
+  <button onclick="show('q9')">Quiz 9</button>
+  <span class="qg">│ Challenge:</span>
+  <button onclick="show('q10')">Quiz 10</button>
+  <button onclick="show('q11')">Quiz 11</button>
+  <span class="qg">│</span>
+  <button onclick="show('ak')">🔑 Answer Key</button>
+</div>
+
+
+<!-- ══════════════════ STUDY GUIDE ══════════════════ -->
+<div id="sg" class="tab-pane active"><div class="page">
+<h1>Chapter 6: Rational Functions</h1>
+<p class="subtitle">Big Ideas Math — Integrated Mathematics III &nbsp;|&nbsp; Study Guide</p>
+
+<h2>6.1 Inverse Variation</h2>
+<div class="g2">
+<div class="box">
+<h4>Key Concept</h4>
+<p><b>y varies inversely with x</b> when their product is constant:</p>
+<div class="fbox">y = k/x &nbsp; or &nbsp; xy = k &nbsp; (k ≠ 0)</div>
+<p>k is the <b>constant of variation</b>. Find k by computing xy from any known point.</p>
+<p><b>If (x₁, y₁) and (x₂, y₂) are on the same curve:</b></p>
+<div class="fbox">x₁y₁ = x₂y₂</div>
+</div>
+<div class="box">
+<h4>Direct vs. Inverse Variation</h4>
+<table>
+<tr><th></th><th>Direct</th><th>Inverse</th></tr>
+<tr><td class="left">Equation</td><td>y = kx</td><td>y = k/x</td></tr>
+<tr><td class="left">Test</td><td>y/x = k</td><td>xy = k</td></tr>
+<tr><td class="left">Graph</td><td>Line through origin</td><td>Hyperbola</td></tr>
+<tr><td class="left">Asymptotes</td><td>None</td><td>x = 0, y = 0</td></tr>
+</table>
+<p style="margin-top:3px;font-size:8.5pt;">k &gt; 0 → branches in Q I &amp; Q III &nbsp;|&nbsp; k &lt; 0 → Q II &amp; Q IV</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 1 — Write the inverse variation equation: y = 8 when x = 5</div>
+<p class="ex-step">k = xy = 5 · 8 = 40</p>
+<p>Equation: <span class="ex-ans">y = 40/x</span></p></div>
+<div class="ex"><div class="ex-title">Ex 2 — y varies inversely with x. Given (4, 15), find y when x = 12.</div>
+<p class="ex-step">x₁y₁ = x₂y₂ → 4(15) = 12 · y₂</p>
+<p class="ex-step">60 = 12y₂ → <span class="ex-ans">y₂ = 5</span></p></div>
+<div class="ex"><div class="ex-title">Ex 3 — Does the table show inverse variation? x: 2, 4, 6 &nbsp; y: 9, 4.5, 3</div>
+<p class="ex-step">xy: 2·9=18, 4·4.5=18, 6·3=18 — product is constant</p>
+<p><span class="ex-ans">Yes, inverse variation</span> with k = 18</p></div>
+<div class="ex"><div class="ex-title">Ex 4 — The time t to drive varies inversely with speed s. At 60 mph: 2.5 h. Find t at 75 mph.</div>
+<p class="ex-step">k = 60(2.5) = 150; &nbsp; t = 150/75 = <span class="ex-ans">2 hours</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>6.2 Graphing Rational Functions</h2>
+<div class="g2">
+<div class="box">
+<h4>Simple Form: f(x) = a/(x − h) + k</h4>
+<div class="fbox blue">Vertical asymptote: x = h</div>
+<div class="fbox blue">Horizontal asymptote: y = k</div>
+<p>Domain: all reals except x = h</p>
+<p>Range: all reals except y = k</p>
+<p>a &gt; 0 → branches in Q I &amp; Q III relative to (h, k)</p>
+<p>a &lt; 0 → branches in Q II &amp; Q IV relative to (h, k)</p>
+<p style="font-size:8.5pt;margin-top:3px;font-style:italic;">Rewrite (ax+b)/(cx+d) by long division to get this form.</p>
+</div>
+<div class="box">
+<h4>General Form: f(x) = p(x)/q(x)</h4>
+<p><b>Vertical asymptotes:</b> zeros of q(x) after simplifying</p>
+<p><b>Holes:</b> x-values of common factors that cancel</p>
+<p><b>Horizontal asymptote:</b></p>
+<ul>
+<li>deg(p) &lt; deg(q): &nbsp; y = 0</li>
+<li>deg(p) = deg(q): &nbsp; y = leading coefficient ratio</li>
+<li>deg(p) &gt; deg(q): &nbsp; no H. asymptote</li>
+</ul>
+<p><b>x-intercepts:</b> zeros of numerator (after simplifying)</p>
+<p><b>y-intercept:</b> f(0), if defined</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 5 — Asymptotes and domain/range of f(x) = 3/(x + 2) − 1</div>
+<p class="ex-step">h = −2, k = −1</p>
+<p class="ex-step">V. asymptote: <span class="ex-ans">x = −2</span> &nbsp;|&nbsp; H. asymptote: <span class="ex-ans">y = −1</span></p>
+<p class="ex-step">Domain: x ≠ −2 &nbsp;|&nbsp; Range: y ≠ −1</p></div>
+<div class="ex"><div class="ex-title">Ex 6 — Rewrite (2x + 7)/(x + 3) in the form a/(x − h) + k</div>
+<p class="ex-step">Divide: 2x+7 ÷ (x+3) → quotient 2, remainder 1</p>
+<p class="ex-step">f(x) = 2 + 1/(x + 3) = <span class="ex-ans">1/(x + 3) + 2</span></p>
+<p class="ex-step">V. asymptote: x = −3 &nbsp;|&nbsp; H. asymptote: y = 2</p></div>
+<div class="ex"><div class="ex-title">Ex 7 — Asymptotes and holes of h(x) = (x² − 4)/(x² − x − 6)</div>
+<p class="ex-step">Factor: (x−2)(x+2)/[(x−3)(x+2)]</p>
+<p class="ex-step">Cancel (x+2): <span class="ex-ans">Hole at x = −2</span></p>
+<p class="ex-step">V. asymptote: <span class="ex-ans">x = 3</span> &nbsp;|&nbsp; H. asymptote: <span class="ex-ans">y = 1</span> (equal degrees)</p></div>
+<div class="ex"><div class="ex-title">Ex 8 — Find all key features of f(x) = (3x − 6)/(x² − 4x + 4)</div>
+<p class="ex-step">Factor: 3(x−2)/(x−2)² = 3/(x−2)</p>
+<p class="ex-step">V. asymptote: x = 2 &nbsp;|&nbsp; H. asymptote: y = 0 &nbsp;|&nbsp; No hole (x−2 fully cancels)</p>
+<p class="ex-step">x-intercept: none &nbsp;|&nbsp; y-intercept: f(0) = −3/2</p></div>
+</div>
+
+<div class="rule"></div>
+<h2>6.3 Multiplying and Dividing Rational Expressions</h2>
+<div class="g3">
+<div class="box">
+<h4>Simplify</h4>
+<div class="fbox green">ac/bc = a/b &nbsp;(c ≠ 0)</div>
+<p>Factor numerator and denominator, then cancel common factors.</p>
+<p style="font-size:8.5pt;font-style:italic;">Always state excluded values.</p>
+</div>
+<div class="box">
+<h4>Multiply</h4>
+<div class="fbox green">(a/b) · (c/d) = ac/bd</div>
+<p>Factor all expressions first, cancel across any numerator/denominator, then multiply.</p>
+</div>
+<div class="box">
+<h4>Divide</h4>
+<div class="fbox green">(a/b) ÷ (c/d) = (a/b) · (d/c)</div>
+<p>Multiply by the reciprocal of the divisor, then simplify as multiplication.</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 9 — Simplify: (3x² − 12x)/(x² − 16)</div>
+<p class="ex-step">Factor: 3x(x−4)/[(x+4)(x−4)]</p>
+<p class="ex-step">Cancel (x−4): <span class="ex-ans">3x/(x+4)</span>, &nbsp; x ≠ 4, x ≠ −4</p></div>
+<div class="ex"><div class="ex-title">Ex 10 — Multiply: [(x² − 9)/(2x)] · [6x²/(x + 3)]</div>
+<p class="ex-step">= (x−3)(x+3)/(2x) · 6x²/(x+3)</p>
+<p class="ex-step">Cancel (x+3) and 2x: <span class="ex-ans">3x(x−3)</span></p></div>
+<div class="ex"><div class="ex-title">Ex 11 — Simplify: (x² + 7x + 12)/(x² + 5x + 6)</div>
+<p class="ex-step">Factor: (x+4)(x+3)/[(x+2)(x+3)]</p>
+<p class="ex-step">Cancel (x+3): <span class="ex-ans">(x+4)/(x+2)</span>, &nbsp; x ≠ −3, −2</p></div>
+<div class="ex"><div class="ex-title">Ex 12 — Divide: [(x²+2x−8)/(x²−4)] ÷ [(x+4)/(x−2)]</div>
+<p class="ex-step">= (x+4)(x−2)/[(x+2)(x−2)] · (x−2)/(x+4)</p>
+<p class="ex-step">Cancel: <span class="ex-ans">(x−2)/(x+2)</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>6.4 Adding and Subtracting Rational Expressions</h2>
+<div class="g2">
+<div class="box">
+<h4>Same Denominator</h4>
+<div class="fbox purple">a/c ± b/c = (a ± b)/c</div>
+<p>Add or subtract numerators; keep denominator; simplify result.</p>
+</div>
+<div class="box">
+<h4>Different Denominators</h4>
+<p>1. Factor all denominators</p>
+<p>2. Find the <b>LCD</b> (product of all distinct factors)</p>
+<p>3. Rewrite each fraction with LCD</p>
+<p>4. Add/subtract numerators; simplify</p>
+<p><b>Complex fractions:</b> multiply numerator and denominator of the main fraction by the LCD of all inner fractions.</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 13 — Add: 5/(x+2) + 3/(x+2)</div>
+<p class="ex-step">Same denominator: (5+3)/(x+2) = <span class="ex-ans">8/(x+2)</span></p></div>
+<div class="ex"><div class="ex-title">Ex 14 — Add: 4/x + 3/(x+5)</div>
+<p class="ex-step">LCD = x(x+5)</p>
+<p class="ex-step">[4(x+5) + 3x] / [x(x+5)] = <span class="ex-ans">(7x+20)/[x(x+5)]</span></p></div>
+<div class="ex"><div class="ex-title">Ex 15 — Subtract: 3/(x²−4) − 1/(x+2)</div>
+<p class="ex-step">LCD = (x+2)(x−2)</p>
+<p class="ex-step">[3 − (x−2)] / [(x+2)(x−2)] = <span class="ex-ans">(5−x)/[(x+2)(x−2)]</span></p></div>
+<div class="ex"><div class="ex-title">Ex 16 — Simplify complex fraction: (1/x − 1/4) / (1/x + 1/2)</div>
+<p class="ex-step">Multiply top and bottom by 4x:</p>
+<p class="ex-step">(4 − x)/(4 + 2x) = <span class="ex-ans">(4−x)/[2(2+x)]</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>6.5 Solving Rational Equations</h2>
+<div class="g2">
+<div class="box">
+<h4>Methods</h4>
+<p><b>Cross Multiply</b> (when equation = two fractions):</p>
+<div class="fbox red">a/b = c/d &nbsp;⟹&nbsp; ad = bc</div>
+<p><b>LCD Method:</b> multiply every term by the LCD to clear all denominators, then solve the resulting polynomial equation.</p>
+<p class="warn">⚠ Always check for <b>extraneous solutions</b> — values that make any original denominator equal zero.</p>
+</div>
+<div class="box">
+<h4>Inverse of a Function</h4>
+<p>To find f⁻¹(x): swap x and y, then solve for y.</p>
+<div class="fbox red">f(f⁻¹(x)) = x &nbsp; and &nbsp; f⁻¹(f(x)) = x</div>
+<p>For rational functions, check that the domain of f⁻¹ excludes values that create denominators of zero.</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 17 — Solve: 3/x = 12/20</div>
+<p class="ex-step">Cross multiply: 60 = 12x → <span class="ex-ans">x = 5</span></p></div>
+<div class="ex"><div class="ex-title">Ex 18 — Solve: 4/(x−2) + 1 = 6/(x−2)</div>
+<p class="ex-step">LCD = (x−2); multiply through: 4 + (x−2) = 6</p>
+<p class="ex-step">x + 2 = 6 → <span class="ex-ans">x = 4</span> &nbsp; Check: x ≠ 2 ✓</p></div>
+<div class="ex"><div class="ex-title">Ex 19 — Solve: x/(x−3) = 3/(x−3) + 5. Check for extraneous solutions.</div>
+<p class="ex-step">Multiply by (x−3): x = 3 + 5(x−3) = 5x−12 → −4x = −12 → x = 3</p>
+<p class="ex-step">x = 3 makes denominator zero → <span class="ex-ans">No solution (extraneous)</span></p></div>
+<div class="ex"><div class="ex-title">Ex 20 — Find the inverse of f(x) = (2x+3)/(x−1)</div>
+<p class="ex-step">Swap: x = (2y+3)/(y−1) → x(y−1) = 2y+3 → xy − x = 2y + 3</p>
+<p class="ex-step">y(x−2) = x+3 → <span class="ex-ans">f⁻¹(x) = (x+3)/(x−2)</span>, x ≠ 2</p></div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ CHEAT SHEET ══════════════════ -->
+<div id="cs" class="tab-pane"><div class="page">
+<h1>Chapter 6: Rational Functions — Cheat Sheet</h1>
+<p class="subtitle">Big Ideas Math IM3 &nbsp;|&nbsp; Key Formulas &amp; Quick Reference</p>
+<div class="g2">
+<div>
+<h2>6.1 Inverse Variation</h2>
+<table>
+<tr><th>Item</th><th>Formula / Rule</th></tr>
+<tr><td class="left">Equation</td><td class="left">y = k/x &nbsp; or &nbsp; xy = k</td></tr>
+<tr><td class="left">Find k</td><td class="left">k = x·y (from any known point)</td></tr>
+<tr><td class="left">Two points</td><td class="left">x₁y₁ = x₂y₂</td></tr>
+<tr><td class="left">Graph</td><td class="left">Hyperbola; asymptotes x=0, y=0</td></tr>
+</table>
+
+<h2>6.2 Graphing Rational Functions</h2>
+<table>
+<tr><th>Form</th><th>Asymptotes</th></tr>
+<tr><td class="left">a/(x−h) + k</td><td class="left">V: x=h &nbsp; H: y=k</td></tr>
+<tr><td class="left">deg(p) &lt; deg(q)</td><td class="left">H: y = 0</td></tr>
+<tr><td class="left">deg(p) = deg(q)</td><td class="left">H: y = lead coeff ratio</td></tr>
+<tr><td class="left">deg(p) &gt; deg(q)</td><td class="left">No H. asymptote</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;"><b>Holes:</b> x-values where common factors cancel.</p>
+<p style="font-size:8.5pt;"><b>Rewriting:</b> (ax+b)/(cx+d) → long division → a/(x−h)+k form.</p>
+
+<h2>6.3 Multiplying &amp; Dividing</h2>
+<table>
+<tr><th>Operation</th><th>Rule</th></tr>
+<tr><td class="left">Simplify</td><td class="left">Factor, then cancel</td></tr>
+<tr><td class="left">Multiply</td><td class="left">(a/b)·(c/d) = ac/bd</td></tr>
+<tr><td class="left">Divide</td><td class="left">(a/b)÷(c/d) = (a/b)·(d/c)</td></tr>
+</table>
+</div>
+<div>
+<h2>6.4 Adding &amp; Subtracting</h2>
+<table>
+<tr><th>Condition</th><th>Method</th></tr>
+<tr><td class="left">Same denom.</td><td class="left">(a±b)/c — keep denom., combine</td></tr>
+<tr><td class="left">Diff. denom.</td><td class="left">Find LCD, rewrite, combine</td></tr>
+<tr><td class="left">Complex frac.</td><td class="left">Multiply top &amp; bottom by LCD</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;"><b>LCD:</b> product of all distinct prime factors of all denominators.</p>
+
+<h2>6.5 Solving Rational Equations</h2>
+<table>
+<tr><th>Method</th><th>When to Use</th></tr>
+<tr><td class="left">Cross multiply</td><td class="left">Equation is a/b = c/d</td></tr>
+<tr><td class="left">LCD method</td><td class="left">Multiple terms; clear all denoms.</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;"><b>Always:</b> check solutions against original denominators.</p>
+<p style="font-size:8.5pt;"><b>Inverse function:</b> swap x↔y, solve for y.</p>
+
+<h2>Key Facts</h2>
+<ul style="font-size:9pt;">
+<li>Excluded values: any x that makes a denominator = 0</li>
+<li>Extraneous solutions satisfy the simplified equation but not the original</li>
+<li>Holes occur at cancelled factors; plug x-value back in to get y-coordinate of hole</li>
+<li>To rewrite (ax+b)/(cx+d): divide → a/c + (b − ad/c)/(cx+d)</li>
+</ul>
+</div>
+</div>
+<div class="rule"></div>
+<h3>Quick Reference</h3>
+<div class="g4">
+<div class="ex" style="font-size:8.5pt;"><b>Inverse variation</b><br>y=k/x; x=3,y=8<br>k=24; y at x=6:<br>y=24/6=<b>4</b></div>
+<div class="ex" style="font-size:8.5pt;"><b>Asymptotes</b><br>f(x)=2/(x−4)+1<br>V: x=4<br>H: y=1</div>
+<div class="ex" style="font-size:8.5pt;"><b>Simplify</b><br>(x²−9)/(x+3)<br>=(x−3)(x+3)/(x+3)<br>=<b>x−3</b></div>
+<div class="ex" style="font-size:8.5pt;"><b>Solve</b><br>2/x + 1 = 3/x<br>×x: 2+x=3<br>x=<b>1</b></div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 1 (6.1–6.2) ══════════════════ -->
+<div id="q1" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 1 &nbsp;·&nbsp; Sections 6.1–6.2</h2><p class="q-sub">Inverse Variation &amp; Graphing Rational Functions</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Tell whether x and y show direct variation, inverse variation, or neither. &nbsp; x: 2, 4, 6 &nbsp;&nbsp; y: 9, 4.5, 3<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Tell whether x and y show direct variation, inverse variation, or neither. &nbsp; x: 1, 2, 4 &nbsp;&nbsp; y: 3, 6, 12<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> y varies inversely with x. When x = 5, y = 8. Write an equation and find y when x = 20.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> y varies inversely with x; y = 6 when x = 3. Find y when x = 9.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> y varies inversely with x. Given (4, 15), find x when y = 12.<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> The time t (hours) to drive a fixed distance varies inversely with speed s. At 60 mph the trip takes 2.5 hours. How long does it take at 75 mph?<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> For f(x) = 3/(x + 2) − 1, state the vertical and horizontal asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> For g(x) = −2/(x − 3) + 4, state the vertical and horizontal asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Find the vertical asymptote(s), horizontal asymptote, and any holes for h(x) = (x² − 4)/(x² − x − 6).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Find all asymptotes and holes for f(x) = (3x − 6)/(x² − 4x + 4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">11.</span> Rewrite f(x) = (2x + 7)/(x + 3) in the form a/(x − h) + k. Identify asymptotes.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Find the domain of f(x) = (x + 5)/(x² − 25) and identify any holes or asymptotes.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> The pressure P on a submarine varies inversely with its depth d below the surface. When d = 50 ft, P = 32 psi. Write the equation and find P at d = 80 ft.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 2 (6.1–6.2) ══════════════════ -->
+<div id="q2" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 2 &nbsp;·&nbsp; Sections 6.1–6.2</h2><p class="q-sub">Inverse Variation &amp; Graphing Rational Functions</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Write an inverse variation equation if y = 12 when x = 0.5.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> y varies inversely with x; y = 5 when x = 8. Find y when x = 20.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> y varies inversely with x; y = 3 when x = 10. Find x when y = 15.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> The frequency f of a vibrating string varies inversely with its length L. When L = 0.5 m, f = 880 Hz. Find f when L = 0.4 m.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> For f(x) = −4/(x + 1) + 2, state all asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> For g(x) = 5/(x − 6) + 1, state all asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Find vertical asymptotes, horizontal asymptote, and holes for f(x) = (2x + 6)/(x² + 2x − 3).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Find all asymptotes of f(x) = (3x² + 2)/(x² − 9).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Identify all asymptotes and holes for f(x) = (x² − 1)/(x² + 3x + 2).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Rewrite f(x) = (3x − 1)/(x − 2) in the form a/(x − h) + k. State asymptotes.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">11.</span> Find the x-intercepts, y-intercept, and asymptotes of f(x) = (x² − 9)/(x − 1).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Does y = 3x − 1 represent inverse variation? Explain.<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Two pipes fill a tank. The time t to fill the tank alone varies inversely with each pipe's flow rate r. Pipe A takes 4 hours alone (r = 1/4 tank/hr). If flow rate doubles, how long does it take?<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 3 (6.1–6.2) ══════════════════ -->
+<div id="q3" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 3 &nbsp;·&nbsp; Sections 6.1–6.2</h2><p class="q-sub">Inverse Variation &amp; Graphing Rational Functions</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> y varies inversely with x; y = 7 when x = 3. Find y when x = 21.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> y varies inversely with x. Given (8, 3), write the equation and find y when x = 6.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Tell whether the data shows inverse variation: x: 3, 5, 15 &nbsp; y: 5, 3, 1.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> The number of workers w needed to complete a job varies inversely with the time t. 6 workers finish in 8 days. How many workers are needed to finish in 3 days?<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> For f(x) = 2/(x + 5) − 3, state all asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> For g(x) = −1/(x − 4) + 2, state all asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Find all asymptotes and holes for f(x) = (x² + x − 6)/(x² − 4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Find all key features of f(x) = (2x² − 8)/(x² − 4x + 4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Find all asymptotes of f(x) = (x³ + 1)/(x² − 1).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Rewrite f(x) = (4x + 1)/(x − 3) in the form a/(x − h) + k. State asymptotes.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">11.</span> Find the domain of f(x) = (x − 2)/(x² − 5x + 6) and identify holes and asymptotes.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> A 3D printer costs $1000. The average cost per model printed is C = (1000 + 5x)/x where x is the number of models. Identify the asymptotes and interpret them.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> On the same coordinate plane, describe how the graph of g(x) = −3/(x − 2) + 1 is a transformation of the parent f(x) = 1/x. State domain, range, and asymptotes.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 4 (6.3–6.5) ══════════════════ -->
+<div id="q4" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 4 &nbsp;·&nbsp; Sections 6.3–6.5</h2><p class="q-sub">Multiplying/Dividing, Adding/Subtracting, Solving Rational Equations</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Simplify: (3x² − 12x)/(x² − 16)<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Simplify: (x² + 7x + 12)/(x² + 5x + 6)<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Multiply: [(x² − 9)/(2x)] · [6x²/(x + 3)]<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Divide: [(x² + 2x − 8)/(x² − 4)] ÷ [(x + 4)/(x − 2)]<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Add: 5/(x + 2) + 3/(x + 2)<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Subtract: 2x/(x − 4) − 8/(x − 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Add: 4/x + 3/(x + 5)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Subtract: 3/(x² − 4) − 1/(x + 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Add: 5/(x + 1) + x/(x − 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve: 3/x = 12/20<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: (x + 1)/5 = (x − 3)/2<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Solve: 4/(x − 2) + 1 = 6/(x − 2)<div class="work"></div></div>
+<div class="prob"><span class="pn">13.</span> Solve and check for extraneous solutions: 2/(x + 1) + 3/(x − 1) = 4/(x² − 1)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> Find the inverse of f(x) = (2x + 3)/(x − 1). State domain restrictions.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">15.</span> Person A can complete a job in 4 hours; Person B in 6 hours. Set up and solve a rational equation to find how long they take working together.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 5 (6.3–6.5) ══════════════════ -->
+<div id="q5" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 5 &nbsp;·&nbsp; Sections 6.3–6.5</h2><p class="q-sub">Multiplying/Dividing, Adding/Subtracting, Solving Rational Equations</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Simplify: (2x² − 8)/(x² − 4x + 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Simplify: (x² + x − 12)/(x² − 9)<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Multiply: [(x + 3)/(x − 1)] · [(x² − 1)/(x + 3)]<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Divide: (4x² − 1)/(x + 3) ÷ (2x + 1)/(3x + 9)<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Add: 7/(x − 3) + 2x/(x − 3)<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Subtract: 3/(2x) − 5/(x + 4)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Add: x/(x² − 1) + 2/(x + 1)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Subtract: x/(x + 3) − 6/(x² + 5x + 6)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Simplify the complex fraction: (3/x + 1/4)/(1/x − 1/2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve: 3/(x − 2) = 5/(x + 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: x/(x − 3) = 3/(x − 3) + 5. Check for extraneous solutions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Solve: (x + 2)/(x − 1) = (x + 3)/(x + 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">13.</span> Find the inverse of f(x) = 3x/(x + 2). State domain restrictions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> Solve: 4/(x² − 4) = 1/(x + 2) + 2/(x − 2). Check for extraneous solutions.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">15.</span> One pump drains a pool in 3 hours; a second in 5 hours. A third pipe fills the pool in 12 hours. If all three run simultaneously, how long to drain the pool?<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 6 (6.3–6.5) ══════════════════ -->
+<div id="q6" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 6 &nbsp;·&nbsp; Sections 6.3–6.5</h2><p class="q-sub">Multiplying/Dividing, Adding/Subtracting, Solving Rational Equations</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Simplify: (x² + 4x + 4)/(x² − 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Multiply: [(x² − x − 6)/(x + 4)] · [(x + 4)/(x + 2)]<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Divide: (x² − 16)/(x + 2) ÷ (x − 4)/(x² + 5x + 6)<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Multiply: [(2x² − x − 1)/(x² − 4)] · [(x² + 5x + 6)/(2x + 1)]<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Add: 2/(x² − 4) + 1/(x + 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Subtract: (x + 2)/(x² − 3x) − 4/(x² − 3x)<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Add: (2x + 1)/(x² − x − 6) + 3/(x − 3)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Simplify: (1 − 1/x)/(x − 1)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Simplify: (1/x − 1/y)/(1/x + 1/y)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve: 5/(2x) + 1/4 = 7/(4x)<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: (x + 2)/(x + 4) = (x − 2)/x. Check for extraneous solutions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Find the inverse of f(x) = (x + 4)/(2x − 1). State domain restrictions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">13.</span> Solve: 6/(x + 3) + 2/(x − 3) = 12/(x² − 9). Check for extraneous solutions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> A photographer edits a batch of photos in 5 hours; her assistant takes 8 hours. How long working together? Round to nearest minute.<div class="work-lg"></div></div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 7 (Full Chapter) ══════════════════ -->
+<div id="q7" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 7 &nbsp;·&nbsp; Chapter 6 Full Review</h2><p class="q-sub">Covers all sections 6.1–6.5</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> y varies inversely with x; y = 9 when x = 4. Find y when x = 6.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> For f(x) = −4/(x + 1) + 2, state asymptotes, domain, and range.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Find all asymptotes and holes for h(x) = (2x + 6)/(x² + 2x − 3).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Simplify: (2x² − 8)/(x² − 4x + 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Multiply: [(x + 3)/(x − 1)] · [(x² − 1)/(x + 3)]<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Divide: (x² − 16)/(x + 2) ÷ (x − 4)/(x² + 5x + 6)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Add: 7/(x − 3) + 2x/(x − 3)<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Subtract: 3/(2x) − 5/(x + 4)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Add: x/(x² − 1) + 2/(x + 1)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve: 5/(2x) + 1/4 = 7/(4x)<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: (x + 2)/(x − 1) = (x + 3)/(x + 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Find the inverse of f(x) = (x + 4)/(2x − 1).<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Find the sum of all multiples of 3 between 1 and 100. (Challenge bonus — use what you know.)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> Working together, A finishes in 5 hours and B in 8 hours. Find the combined time. Round to nearest minute.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">15.</span> Rewrite f(x) = (3x − 1)/(x − 2) as a/(x − h) + k. Identify all asymptotes and the hole if any.<div class="work-lg"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 8 (Full Chapter) ══════════════════ -->
+<div id="q8" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 8 &nbsp;·&nbsp; Chapter 6 Full Review</h2><p class="q-sub">Covers all sections 6.1–6.5</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> y varies inversely with x; y = 5 when x = 8. Find y when x = 20.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> The frequency f of a vibrating string varies inversely with length L. When L = 0.5 m, f = 880 Hz. Find f when L = 0.4 m.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> State domain and range of g(x) = 5/(x − 6) + 1.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Identify all asymptotes of f(x) = (3x² + 2)/(x² − 9).<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Simplify: (x² + x − 12)/(x² − 9)<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Multiply: [(x² − x − 6)/(x + 4)] · [(x + 4)/(x + 2)]<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Divide: (4x² − 1)/(x + 3) ÷ (2x + 1)/(3x + 9)<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Add: 2/(x² − 4) + 1/(x + 2)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Subtract: (x + 2)/(x² − 3x) − 4/(x² − 3x)<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Simplify complex fraction: (1 − 1/x)/(x − 1)<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: 3/(x − 2) = 5/(x + 4)<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Solve: 4/(x² − 4) = 1/(x + 2) + 2/(x − 2). Check for extraneous solutions.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Find f⁻¹(x) for f(x) = 3x/(x + 2). Verify f(f⁻¹(x)) = x.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> Two pipes fill a tank. Pipe A fills it in 3 h, Pipe B in 5 h. How long together?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">15.</span> An arithmetic series has S₁₀ = 155 and a₁ = 2. (Bonus — mix topic.) Find d and a₁₀.<div class="work-lg"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 9 (Full Chapter) ══════════════════ -->
+<div id="q9" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 9 &nbsp;·&nbsp; Chapter 6 Full Review</h2><p class="q-sub">Covers all sections 6.1–6.5</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Write an inverse variation equation where y = 7 when x = 3. Find x when y = 21.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Identify all asymptotes and holes of f(x) = (x² − 1)/(x² + 3x + 2).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Find all key features of f(x) = (3x − 6)/(x² − 4x + 4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Simplify: 3(x² − 1)/(x² + 3x + 2)<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Multiply: [(x² + 4x + 4)/(x² − 1)] · [(x − 1)/(x + 2)]<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Divide: (x² − 25)/(2x) ÷ (x + 5)/(4x²)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Add: 3/(x − 2) + x/(x² − 4)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Subtract: 2x/(x² + 2x − 15) − 1/(x + 5)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Simplify: [(x/4) − (2/x)] / [(1/2) + (1/x)]<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve: 6/(x + 3) + 2/(x − 3) = 12/(x² − 9). Check extraneous solutions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">11.</span> Solve: x = 8/(x − 2) + 2. Check for extraneous solutions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> Find f⁻¹(x) for f(x) = (x + 4)/(2x − 1).<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> A car averages 60 mph one way and 40 mph on the return. Use the formula: average speed = total distance ÷ total time to find the average speed for the round trip.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">14.</span> You have 0.2 L of an acid solution at 16 mol/L. You dilute it with water so the concentration becomes 12 mol/L. Set up and solve a rational equation to find how much water to add.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 10 (Challenge) ══════════════════ -->
+<div id="q10" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 10 &nbsp;·&nbsp; Chapter 6 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> z varies jointly with x and inversely with y². When x = 4 and y = 2, z = 6. Write the equation and find z when x = 9, y = 3.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Find all vertical asymptotes and holes of f(x) = (x³ − x)/(x³ − 3x² + 2x).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Find the oblique (slant) asymptote of f(x) = (x² + 3x − 4)/(x − 1) using polynomial division.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Simplify completely: (x³ − 8)/(x² − 4) · (x + 2)/(x² + 2x + 4)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Simplify: [(2x² − x − 1)/(x² − 4)] ÷ [(2x + 1)/(x² + 5x + 6)]<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Add: x/(x² − 5x + 6) + 3/(x² − 4)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Subtract: 2/(x² + 3x + 2) − 3/(x² + 4x + 3)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Simplify the difference quotient: [(x + h)⁻¹ − x⁻¹]/h &nbsp; (simplify fully)<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> Solve: 2/(x − 1) − 3/(x + 2) = 5x/(x² + x − 2). Check for extraneous solutions.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">10.</span> Find f⁻¹(x) for f(x) = (4x − 1)/(2x + 3). Verify by showing f(f⁻¹(x)) = x.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">11.</span> Boat A travels upstream 24 miles and back. The river current is 3 mph. The total trip takes 5 hours. Set up and solve a rational equation to find the boat's speed in still water.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 11 (Challenge) ══════════════════ -->
+<div id="q11" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 11 &nbsp;·&nbsp; Chapter 6 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> y varies inversely with x². When x = 3, y = 4. Find y when x = 6.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Find all asymptotes and holes of f(x) = (x² + x − 6)/(x³ − 4x).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Find the oblique asymptote and all other features of f(x) = (2x² − 3x + 1)/(x − 2).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Simplify: [(x² + 3x + 2)/(x² − 5x + 4)] ÷ [(x² − x − 2)/(x² − 3x − 4)]<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Combine: x/(x² − 4x + 3) − (x + 1)/(x² − 1)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Add: 1/(x² + 2x) + 2/(x² − 4) − 1/(x² − 2x)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Simplify: [(1/a − 1/b)/(1/a² − 1/b²)]<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> Solve: (x + 1)/(x − 2) + (x − 2)/(x + 1) = 37/10. Check for extraneous solutions.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> Solve: 1/(x − 1) − 1/(x + 1) = 2/(x² − 1) + 3<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">10.</span> Find f⁻¹(x) for f(x) = (2x + 3)/(x − 4). Find its domain and verify f(f⁻¹(2)) = 2.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">11.</span> A cyclist rides 30 miles to a town, rests 30 minutes, then returns. The return trip is 6 mph slower. Total riding time is 3.5 hours. Find the speed to the town and back.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ ANSWER KEY ══════════════════ -->
+<div id="ak" class="tab-pane"><div class="page">
+<h1>Chapter 6 — Answer Key</h1>
+<p class="subtitle">Teacher Use Only &nbsp;|&nbsp; Big Ideas Math IM3</p>
+
+<h2>Quiz 1 — Sections 6.1–6.2</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> xy=18 constant → <span class="ak-ans">Inverse variation</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> y/x=3 constant → <span class="ak-ans">Direct variation</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> k=40; <span class="ak-ans">y=40/x</span>; y=2 when x=20</div>
+<div class="ak-item"><span class="ak-num">4.</span> k=18; y=18/9=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> k=60; x=60/12=<span class="ak-ans">5</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> k=150; t=150/75=<span class="ak-ans">2 hours</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> V: <span class="ak-ans">x=−2</span>; H: <span class="ak-ans">y=−1</span>; D: x≠−2; R: y≠−1</div>
+<div class="ak-item"><span class="ak-num">8.</span> V: <span class="ak-ans">x=3</span>; H: <span class="ak-ans">y=4</span>; D: x≠3; R: y≠4</div>
+<div class="ak-item"><span class="ak-num">9.</span> Factor (x−2)(x+2)/[(x−3)(x+2)]; <span class="ak-ans">Hole: x=−2</span>; V: <span class="ak-ans">x=3</span>; H: <span class="ak-ans">y=1</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">10.</span> 3(x−2)/(x−2)²=3/(x−2); V: <span class="ak-ans">x=2</span>; H: <span class="ak-ans">y=0</span>; no hole</div>
+<div class="ak-item"><span class="ak-num">11.</span> 2x+7÷(x+3)=2 r 1; <span class="ak-ans">f(x)=1/(x+3)+2</span>; V: x=−3; H: y=2</div>
+<div class="ak-item"><span class="ak-num">12.</span> (x+5)/[(x+5)(x−5)]; <span class="ak-ans">Hole at x=−5</span>; V: x=5; H: y=0</div>
+<div class="ak-item"><span class="ak-num">13.</span> k=32·50=1600; P=1600/d; P=1600/80=<span class="ak-ans">20 psi</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 2 — Sections 6.1–6.2</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> k=12·0.5=6; <span class="ak-ans">y=6/x</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> k=40; y=40/20=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> k=30; x=30/15=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> k=440; f=440/0.4=<span class="ak-ans">1100 Hz</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> V: x=−1; H: y=2; D: x≠−1; R: y≠2</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> V: x=6; H: y=1; D: x≠6; R: y≠1</div>
+<div class="ak-item"><span class="ak-num">7.</span> 2(x+3)/[(x+3)(x−1)]; <span class="ak-ans">Hole: x=−3</span>; V: x=1; H: y=0</div>
+<div class="ak-item"><span class="ak-num">8.</span> V: <span class="ak-ans">x=3, x=−3</span>; H: <span class="ak-ans">y=3</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> (x+1)(x−1)/[(x+2)(x+1)]; <span class="ak-ans">Hole: x=−1</span>; V: x=−2; H: y=1</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">10.</span> 3x−1÷(x−2)=3 r 5; <span class="ak-ans">f(x)=5/(x−2)+3</span>; V: x=2; H: y=3</div>
+<div class="ak-item"><span class="ak-num">11.</span> (x−3)(x+3)/(x−1); V: x=1; H: none (deg p > deg q); x-int: ±3; y-int: 9</div>
+<div class="ak-item"><span class="ak-num">12.</span> <span class="ak-ans">No</span>; y=3x−1 is linear, not of the form y=k/x</div>
+<div class="ak-item"><span class="ak-num">13.</span> k=4·(1/4)=1; t=1/r; r doubles → t halves → <span class="ak-ans">2 hours</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 3 — Sections 6.1–6.2</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> k=21; y=21/21=<span class="ak-ans">1</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> k=24; y=24/6=<span class="ak-ans">4</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> xy: 15,15,15 → <span class="ak-ans">Yes, k=15</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> k=6·8=48; w=48/3=<span class="ak-ans">16 workers</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> V: x=−5; H: y=−3; D: x≠−5; R: y≠−3</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> V: x=4; H: y=2; D: x≠4; R: y≠2</div>
+<div class="ak-item"><span class="ak-num">7.</span> (x+3)(x−2)/[(x+2)(x−2)]; <span class="ak-ans">Hole: x=2</span>; V: x=−2; H: y=1</div>
+<div class="ak-item"><span class="ak-num">8.</span> 2(x²−4)/(x−2)²=2(x+2)(x−2)/(x−2)²; V: x=2; H: y=0 (deg 1 < 2? no—simplifies to 2(x+2)/(x−2)); actually V: x=2; H: y=2</div>
+<div class="ak-item"><span class="ak-num">9.</span> (x³+1)/(x²−1)=(x+1)(x²−x+1)/[(x+1)(x−1)]; Hole: x=−1; V: x=1; deg(p)>deg(q): no H. asymptote; <span class="ak-ans">oblique asymptote y=x</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">10.</span> 4x+1÷(x−3)=4 r 13; <span class="ak-ans">f(x)=13/(x−3)+4</span>; V: x=3; H: y=4</div>
+<div class="ak-item"><span class="ak-num">11.</span> (x−2)/[(x−2)(x−3)]; <span class="ak-ans">Hole: x=2</span>; V: x=3; H: y=0</div>
+<div class="ak-item"><span class="ak-num">12.</span> V: x=0 → as more models printed, cost per model approaches $5 (H: y=5); <span class="ak-ans">y=5 means fixed cost per model approaches $5 for large x</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> Shift right 2, reflect (a=−3), shift up 1; D: x≠2; R: y≠1; V: x=2; H: y=1</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 4 — Sections 6.3–6.5</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> 3x(x−4)/[(x+4)(x−4)]=<span class="ak-ans">3x/(x+4)</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (x+4)(x+3)/[(x+2)(x+3)]=<span class="ak-ans">(x+4)/(x+2)</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> Cancel (x+3), 2x: <span class="ak-ans">3x(x−3)</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> (x+4)(x−2)/[(x+2)(x−2)]·(x−2)/(x+4)=<span class="ak-ans">(x−2)/(x+2)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> <span class="ak-ans">8/(x+2)</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> 2(x−4)/(x−4)=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> LCD=x(x+5); <span class="ak-ans">(7x+20)/[x(x+5)]</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> LCD=(x+2)(x−2); [3−(x−2)]/[(x+2)(x−2)]=<span class="ak-ans">(5−x)/[(x+2)(x−2)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> LCD=(x+1)(x−2); <span class="ak-ans">(x²+6x−10)/[(x+1)(x−2)]</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> Cross mult: 60=12x; <span class="ak-ans">x=5</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> 2(x+1)=5(x−3); x=17/3; <span class="ak-ans">x=17/3</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> 4+(x−2)=6; <span class="ak-ans">x=4</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> LCD=(x+1)(x−1); 2(x−1)+3(x+1)=4; 5x+1=4; x=3/5; check: ≠±1 ✓; <span class="ak-ans">x=3/5</span></div>
+<div class="ak-item"><span class="ak-num">14.</span> Swap: x=(2y+3)/(y−1); y=(x+3)/(x−2); <span class="ak-ans">f⁻¹(x)=(x+3)/(x−2)</span>, x≠2</div>
+<div class="ak-item"><span class="ak-num">15.</span> 1/4+1/6=1/t; 5/12=1/t; <span class="ak-ans">t=12/5=2 h 24 min</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 5 — Sections 6.3–6.5</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> 2(x+2)(x−2)/(x−2)²=<span class="ak-ans">2(x+2)/(x−2)</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (x+4)(x−3)/[(x+3)(x−3)]=<span class="ak-ans">(x+4)/(x+3)</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> (x+3)(x+1)(x−1)/[(x−1)(x+3)]=<span class="ak-ans">x+1</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> (2x−1)(2x+1)/(x+3)·3(x+3)/(2x+1)=<span class="ak-ans">3(2x−1)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (7+2x)/(x−3)=<span class="ak-ans">(2x+7)/(x−3)</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> LCD=2x(x+4); [3(x+4)−10x]/[2x(x+4)]=<span class="ak-ans">(−7x+12)/[2x(x+4)]</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> LCD=(x+1)(x−1); [x(x−1)+2(x+1)]/[(x+1)(x−1)]=<span class="ak-ans">(x²+x+2)/(x²−1)</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> LCD=(x+3)(x+2); [x(x+2)−6]/[(x+2)(x+3)]=<span class="ak-ans">(x²+2x−6)/[(x+2)(x+3)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> Mult by 4x: (12+x)/(2−4x)=<span class="ak-ans">(x+12)/(2−4x)</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> 3(x+4)=5(x−2); x=11; <span class="ak-ans">x=11</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> x=3+5(x−3)→x=3; x=3 makes denom 0; <span class="ak-ans">No solution</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> (x+2)²=(x−1)(x+3); x²+4x+4=x²+2x−3; x=−7/2; <span class="ak-ans">x=−7/2</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> x=(3y)/(y+2); y(x−3)=−2x; <span class="ak-ans">f⁻¹(x)=2x/(3−x)=−2x/(x−3)</span>, x≠3</div>
+<div class="ak-item"><span class="ak-num">14.</span> LCD=(x+2)(x−2); 4=(x−2)+2(x+2); 4=3x+2; <span class="ak-ans">x=2/3</span> ✓</div>
+<div class="ak-item"><span class="ak-num">15.</span> 1/3+1/5−1/12=20/60+12/60−5/60=27/60=9/20; t=20/9≈<span class="ak-ans">2 h 13 min</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 6 — Sections 6.3–6.5</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> (x+2)²/[(x+2)(x−2)]=<span class="ak-ans">(x+2)/(x−2)</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (x−3)(x+2)/(x+4)·(x+4)/(x+2)=<span class="ak-ans">x−3</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> (x+4)(x−4)/(x+2)·(x+2)(x+3)/(x−4)=<span class="ak-ans">(x+4)(x+3)</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> (2x+1)(x−1)/[(x+2)(x−2)]·(x+2)(x+3)/(2x+1)=<span class="ak-ans">(x−1)(x+3)/(x−2)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> LCD=(x+2)(x−2); [2+(x−2)]/[(x+2)(x−2)]=<span class="ak-ans">x/[(x+2)(x−2)]</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (x+2−4)/[x(x−3)]=<span class="ak-ans">(x−2)/[x(x−3)]</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> LCD=(x−3)(x+2); [2x+1+3(x+2)]/[(x−3)(x+2)]=<span class="ak-ans">(5x+7)/[(x−3)(x+2)]</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> (x−1)/[x(x−1)]=<span class="ak-ans">1/x</span> (x≠1)</div>
+<div class="ak-item"><span class="ak-num">9.</span> Mult by xy: (y−x)/(y+x)=<span class="ak-ans">(y−x)/(y+x)</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> Mult by 4x: 10+x=7; <span class="ak-ans">x=−3</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> x(x+4)=(x+2)(x−2); x²+4x=x²−4; 4x=−4; x=−1; check: ≠0,−4 ✓; <span class="ak-ans">x=−1</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> x=(y+4)/(2y−1); y(2x−1)=x+4; <span class="ak-ans">f⁻¹(x)=(x+4)/(2x−1)</span>, x≠1/2</div>
+<div class="ak-item"><span class="ak-num">13.</span> LCD=(x+3)(x−3); 6(x−3)+2(x+3)=12; 8x=12; x=3/2; check: ≠±3 ✓; <span class="ak-ans">x=3/2</span></div>
+<div class="ak-item"><span class="ak-num">14.</span> 1/5+1/8=1/t; 13/40=1/t; t=40/13≈<span class="ak-ans">3 h 5 min</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 7 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> k=36; y=36/6=<span class="ak-ans">6</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> V: x=−1; H: y=2; D: x≠−1; R: y≠2</div>
+<div class="ak-item"><span class="ak-num">3.</span> Hole: x=−3; V: x=1; H: y=0</div>
+<div class="ak-item"><span class="ak-num">4.</span> <span class="ak-ans">2(x+2)/(x−2)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> <span class="ak-ans">x+1</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (x+4)(x+3)=<span class="ak-ans">(x+4)(x+3)</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> <span class="ak-ans">(2x+7)/(x−3)</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> <span class="ak-ans">(−7x+12)/[2x(x+4)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> <span class="ak-ans">(x²+x+2)/(x²−1)</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> <span class="ak-ans">x=−3</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> x=−7/2; <span class="ak-ans">x=−7/2</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> <span class="ak-ans">f⁻¹(x)=(x+4)/(2x−1)</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> Multiples of 3: 3,6,…,99; n=33; S=33(102)/2=<span class="ak-ans">1683</span></div>
+<div class="ak-item"><span class="ak-num">14.</span> 1/5+1/8=13/40; t=40/13≈<span class="ak-ans">3 h 5 min</span></div>
+<div class="ak-item"><span class="ak-num">15.</span> 3x−1÷(x−2): 3 r 5; f(x)=5/(x−2)+3; V: x=2; H: y=3; no hole</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 8 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> k=40; y=40/20=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> k=440; f=440/0.4=<span class="ak-ans">1100 Hz</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> D: x≠6; R: y≠1</div>
+<div class="ak-item"><span class="ak-num">4.</span> V: x=3,−3; H: y=3</div>
+<div class="ak-item"><span class="ak-num">5.</span> <span class="ak-ans">(x+4)/(x+3)</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> <span class="ak-ans">x−3</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> <span class="ak-ans">3(2x−1)</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> <span class="ak-ans">x/[(x+2)(x−2)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> <span class="ak-ans">(x−2)/[x(x−3)]</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> <span class="ak-ans">1/x</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> <span class="ak-ans">x=11</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> x=2/3; <span class="ak-ans">x=2/3</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> Swap: y=−2x/(x−3); <span class="ak-ans">f⁻¹(x)=2x/(3−x)</span>; f(f⁻¹(x))=3·(2x/(3−x))/[2x/(3−x)+2]=3·2x/[2x+2(3−x)]=6x/6=x ✓</div>
+<div class="ak-item"><span class="ak-num">14.</span> 1/3+1/5=8/15; t=15/8=<span class="ak-ans">1 h 52.5 min</span></div>
+<div class="ak-item"><span class="ak-num">15.</span> 2a₁+9d=31; a₁=2→d=3; a₁₀=<span class="ak-ans">29</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 9 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> k=21; x=21/21=<span class="ak-ans">1</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (x+1)(x−1)/[(x+2)(x+1)]; Hole: x=−1; V: x=−2; H: y=1</div>
+<div class="ak-item"><span class="ak-num">3.</span> 3(x−2)/(x−2)²=3/(x−2); V: x=2; H: y=0; no hole</div>
+<div class="ak-item"><span class="ak-num">4.</span> 3(x+1)(x−1)/[(x+2)(x+1)]=<span class="ak-ans">3(x−1)/(x+2)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (x+2)²/[(x+1)(x−1)]·(x−1)/(x+2)=<span class="ak-ans">(x+2)/(x+1)</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (x−5)(x+5)/(2x)·4x²/(x+5)=<span class="ak-ans">2x(x−5)</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> LCD=(x+2)(x−2); [3(x+2)+x]/[(x+2)(x−2)]=<span class="ak-ans">(4x+6)/[(x+2)(x−2)]=2(2x+3)/[(x−2)(x+2)]</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> LCD=(x+5)(x−3); [2x−(x−3)]/[(x+5)(x−3)]=<span class="ak-ans">(x+3)/[(x+5)(x−3)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> Mult by 4x: (x²−8)/(2x+2)=<span class="ak-ans">(x²−8)/[2(x+1)]</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> 6(x−3)+2(x+3)=12; 8x=12; x=3/2; check: <span class="ak-ans">x=3/2</span> ✓</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> x(x−2)=8+2(x−2); x²−2x=2x+4; x²−4x−4=0; x=2±2√2; check both ≠2; <span class="ak-ans">x=2+2√2 or 2−2√2</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> x(2y−1)=y+4; <span class="ak-ans">f⁻¹(x)=(x+4)/(2x−1)</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> d=60, d=40; total time=d/60+d/40=d(5/120)=d/24; avg=2d÷(d/24)=<span class="ak-ans">48 mph</span></div>
+<div class="ak-item"><span class="ak-num">14.</span> 0.2·16=3.2 mol; 3.2/(0.2+w)=12; 3.2=12(0.2+w); w=3.2/12−0.2=<span class="ak-ans">≈0.0667 L</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 10 — Challenge</h2>
+<div class="g2">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> z=kx/y²; 6=k·4/4→k=6; z=6x/y²; z=6·9/9=<span class="ak-ans">6</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> x(x−1)(x+1)/[x(x−1)(x−2)]; Holes: x=0,x=1; V: x=2; H: y=1</div>
+<div class="ak-item"><span class="ak-num">3.</span> (x−1)(x+4)/(x−1); hole at x=1; simplifies to x+4; <span class="ak-ans">oblique: y=x+4</span> (actually a line, hole at (1,5))</div>
+<div class="ak-item"><span class="ak-num">4.</span> (x−2)(x²+2x+4)/[(x+2)(x−2)]·(x+2)/(x²+2x+4)=<span class="ak-ans">1</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (2x+1)(x−1)/[(x+2)(x−2)]·(x+2)(x+3)/(2x+1)=<span class="ak-ans">(x−1)(x+3)/(x−2)</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> LCD=(x−2)(x−3)(x+2); x(x+2)/LCD+3(x−3)/LCD=<span class="ak-ans">(x²+5x−9)/[(x−2)(x−3)(x+2)]</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> 2(x+3)/[(x+1)(x+2)(x+3)]−3(x+2)/[...]=<span class="ak-ans">−x/[(x+1)(x+2)(x+3)]</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> [x−(x+h)]/[x·h·(x+h)]=−h/[xh(x+h)]=<span class="ak-ans">−1/[x(x+h)]</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> LCD=(x−1)(x+2); 2(x+2)−3(x−1)=5x; −x+7=5x; x=7/6; <span class="ak-ans">x=7/6</span> ✓</div>
+<div class="ak-item"><span class="ak-num">10.</span> Swap: x=(4y−1)/(2y+3); y=(3x+1)/(4−2x); <span class="ak-ans">f⁻¹(x)=(3x+1)/(4−2x)</span>; verify: f(f⁻¹(x))=x ✓</div>
+<div class="ak-item"><span class="ak-num">11.</span> Let r=speed; 24/(r−3)+24/(r+3)=5; 24(r+3)+24(r−3)=5(r²−9); 48r=5r²−45; 5r²−48r−45=0; r=(48±√(2304+900))/10=(48±56.6)/10; <span class="ak-ans">r≈10.46 mph</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 11 — Challenge</h2>
+<div class="g2">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> y=k/x²; 4=k/9→k=36; y=36/36=<span class="ak-ans">1</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (x+3)(x−2)/[x(x+2)(x−2)]; Hole: x=2; V: x=0,x=−2; H: y=0</div>
+<div class="ak-item"><span class="ak-num">3.</span> (2x−1)(x−1)/(x−2); divide 2x²−3x+1 by x−2: 2x+1 r 3; <span class="ak-ans">oblique: y=2x+1</span>; V: x=2</div>
+<div class="ak-item"><span class="ak-num">4.</span> (x+2)(x+1)/[(x−1)(x−4)]÷(x−2)(x+1)/[(x−4)(x+1)]; =<span class="ak-ans">(x+2)(x+1)/[(x−1)(x−2)]</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> LCD=(x−1)(x+1)(x+3); x(x+1)−(x+1)(x+3)/LCD=<span class="ak-ans">−3/[(x−1)(x+3)]</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> LCD=x(x+2)(x−2); (x−2+2x²−x+2)/[...]=<span class="ak-ans">2(x²−2)/[x(x+2)(x−2)]</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> (1/a−1/b)/(1/a²−1/b²)=(b−a)/(ab)·a²b²/(b²−a²)=ab(b−a)/[(b+a)(b−a)]=<span class="ak-ans">ab/(a+b)</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> Let u=(x+1)/(x−2); u+1/u=37/10; 10u²−37u+10=0; (2u−5)(5u−2)=0; u=5/2 or 2/5; solve for x: <span class="ak-ans">x=9 or x=−4/3</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> LCD=(x−1)(x+1); (x+1)−(x−1)=2+3(x²−1); 2=2+3x²−3; 3x²=3; x=±1; both make denom 0; <span class="ak-ans">No solution</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> Swap: x=(2y+3)/(y−4); y=(4x+3)/(x−2); D(f⁻¹): x≠2; f(f⁻¹(2)): 2≠2→restricted; test x=3: f⁻¹(3)=15, f(15)=33/11=3 ✓; <span class="ak-ans">f⁻¹(x)=(4x+3)/(x−2)</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> Let r=speed to town; 30/r+30/(r−6)=3.5; 7r²−162r+360=0; r=(162±√(26244−10080))/14=(162±127.1)/14; <span class="ak-ans">r≈20.65 mph; return≈14.65 mph</span></div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tabnav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* Math renderer */
+(function renderMath(){
+  const F = (n,d) => '<span class="frac"><span class="fn">'+n.trim()+'</span><span class="fd">'+d.trim()+'</span></span>';
+
+  let h = document.body.innerHTML;
+
+  /* 1. Fractions — run FIRST before superscripts split any expressions */
+
+  /* (A)/(B) — both sides parenthesized */
+  h = h.replace(/\(([^()<>&"]{1,120})\)\/\(([^()<>&"]{1,120})\)/g, (_,n,d)=>F(n,d));
+
+  /* A/(B) — token numerator over parenthesized denominator
+     preceded by space, operator, >, =, or comma to stay out of HTML attributes */
+  h = h.replace(/(?<=[\s>=,;:+\-·(])([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ\d]{1,12})\/\(([^()<>&"]{1,100})\)/g, (_,n,d)=>F(n,d));
+  /* also catch at start of text node after > */
+  h = h.replace(/(?<=>)([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ\d]{1,12})\/\(([^()<>&"]{1,100})\)/g, (_,n,d)=>F(n,d));
+
+  /* Numeric n/d — integers (e.g. 3/5, 1/2, 12/20) */
+  h = h.replace(/(?<![\/\d">=:])(\d+)\/(\d+)(?![\/\d"<])/g, (_,n,d)=>F(n,d));
+
+  /* Simple variable fractions: k/x, a/b, aₙ/aₘ
+     careful to avoid matching inside HTML tags/attributes */
+  h = h.replace(/(?<=[\s>(=,;+\-·])([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ]{1,5})\/([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ\d]{1,5})(?=[\s<),;+\-·]|$)/g, (_,n,d)=>F(n,d));
+
+  /* 2. Superscripts: ^(content) → <sup>content</sup> */
+  h = h.replace(/\^\(([^)<>&"]{1,30})\)/g,'<sup>$1</sup>');
+  h = h.replace(/\^([a-zA-Z∞])\b/g,'<sup>$1</sup>');
+
+  document.body.innerHTML = h;
+})();
+</script>
+</body>
+</html>
