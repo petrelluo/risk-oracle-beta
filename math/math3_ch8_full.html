@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 8 — Trigonometric Ratios &amp; Functions | BIM IM3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Georgia',serif;font-size:10pt;color:#111;background:#e8eeec;line-height:1.45;}
+
+/* ── TAB NAV ── */
+#tabnav{position:sticky;top:0;z-index:99;background:#1a3a28;display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid #d4a030;padding:0 4px;}
+#tabnav button{font-family:'Georgia',serif;font-size:8pt;font-weight:bold;background:none;border:none;color:#a0c8b0;padding:6px 7px 4px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:color .15s;}
+#tabnav button:hover{color:#d4a030;}
+#tabnav button.active{color:#d4a030;border-bottom:3px solid #d4a030;}
+#tabnav .qg{color:#556;font-size:7.5pt;padding:6px 3px 4px;align-self:center;}
+
+/* ── CONTENT ── */
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+.page{max-width:7.8in;margin:0 auto;background:#fff;padding:.35in .42in .38in;min-height:calc(100vh - 34px);}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:15pt;text-align:center;border-bottom:2.5px solid #1a3a28;padding-bottom:4px;margin-bottom:4px;letter-spacing:.03em;}
+h2{font-size:11.5pt;background:#1a3a28;color:#d4a030;padding:3px 8px;margin:9px 0 4px;letter-spacing:.04em;}
+h3{font-size:10pt;font-weight:bold;color:#1a3a28;margin:6px 0 2px;border-bottom:1px solid #ccd;}
+h4{font-size:9.5pt;font-weight:bold;margin:4px 0 2px;}
+.subtitle{text-align:center;font-size:9pt;color:#666;margin-bottom:5px;}
+p,li{margin:1.5px 0;}
+ul,ol{margin:2px 0 2px 16px;}
+
+/* ── FORMULA BOXES ── */
+.fbox{background:#f7f8f4;border:1px solid #a0b878;border-left:4px solid #a0b878;padding:4px 8px;margin:3px 0;font-family:'Georgia',serif;font-size:9.5pt;}
+.fbox.blue{border-color:#3a6a9a;border-left-color:#3a6a9a;background:#f0f4fa;}
+.fbox.red{border-color:#9a4a2a;border-left-color:#9a4a2a;background:#faf2f0;}
+.fbox.green{border-color:#2a7a4a;border-left-color:#2a7a4a;background:#f0faf4;}
+.fbox.purple{border-color:#6a4a9a;border-left-color:#6a4a9a;background:#f4f0fa;}
+.fbox.amber{border-color:#c08820;border-left-color:#c08820;background:#fdf8ec;}
+
+/* ── EXAMPLE BOXES ── */
+.ex{border:1px solid #bbb;padding:4px 7px;margin:4px 0;background:#fafafa;}
+.ex-title{font-weight:bold;font-size:9pt;color:#555;margin-bottom:2px;}
+.ex-step{color:#1a3a28;margin-left:10px;}
+.ex-ans{color:#9a4a2a;font-weight:bold;}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px 8px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px 6px;}
+.box{border:1px solid #ccc;padding:5px 7px;}
+
+/* ── TABLE ── */
+table{border-collapse:collapse;width:100%;margin:3px 0;font-size:9pt;}
+td,th{border:1px solid #aaa;padding:2px 6px;}
+th{background:#e4ebe0;font-weight:bold;text-align:center;}
+td{text-align:center;}
+td.left{text-align:left;}
+
+/* ── QUIZ HEAD ── */
+.quiz-head{border:2px solid #1a3a28;padding:5px 8px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.quiz-head h2{background:none;color:#1a3a28;padding:0;margin:0;font-size:12pt;}
+.q-sub{font-size:8.5pt;color:#555;margin-top:1px;}
+.q-center{flex:1;text-align:center;font-size:9pt;}
+.q-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.score{font-size:10pt;font-weight:bold;border:1px solid #999;padding:2px 10px;white-space:nowrap;}
+.blank{display:inline-block;border-bottom:1px solid #555;min-width:100px;height:11px;}
+
+/* ── PROBLEMS ── */
+.probs-2{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;}
+.prob{padding:4px 0 2px;border-bottom:1px dotted #ddd;}
+.prob:last-child{border-bottom:none;}
+.pn{font-weight:bold;font-size:9.5pt;}
+.work{height:44px;margin:2px 0;}
+.work-lg{height:66px;margin:2px 0;}
+.work-xl{height:82px;margin:2px 0;}
+
+/* ── FRACTIONS ── */
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;line-height:1.1;}
+.frac .fn{border-bottom:1.2px solid currentColor;padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+.frac .fd{padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+
+/* ── SQUARE ROOTS ── */
+.rt{display:inline-flex;align-items:flex-end;vertical-align:middle;margin:0 1px;}
+.rt .rt-rad{font-size:1.05em;line-height:1;margin-right:-2px;}
+.rt .rt-body{border-top:1.3px solid currentColor;padding:0 3px;display:inline-block;}
+
+/* ── ANSWER KEY ── */
+.ak-item{padding:2px 0;border-bottom:1px dotted #e0e0e0;font-size:9.5pt;}
+.ak-num{font-weight:bold;min-width:24px;display:inline-block;}
+.ak-ans{color:#9a4a2a;font-weight:bold;}
+.ak-work{color:#555;font-size:8.5pt;font-style:italic;}
+
+/* ── MISC ── */
+.rule{border:none;border-top:1px dashed #bbb;margin:8px 0;}
+.rule-solid{border:none;border-top:1.5px solid #ccc;margin:7px 0;}
+.warn{background:#fffbec;border:1px solid #d4a030;padding:3px 7px;font-size:9pt;margin:3px 0;}
+
+/* ── PRINT ── */
+@media print{
+  #tabnav{display:none !important;}
+  body{background:#fff;}
+  .tab-pane{display:none !important;}
+  .tab-pane.active{display:block !important;}
+  .page{padding:.22in .32in;min-height:auto;max-width:100%;}
+  h2{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TAB NAV ═══ -->
+<div id="tabnav">
+  <button class="active" onclick="show('sg')">📖 Study Guide</button>
+  <button onclick="show('cs')">📋 Cheat Sheet</button>
+  <span class="qg">│ 8.1–8.3:</span>
+  <button onclick="show('q1')">Quiz 1</button>
+  <button onclick="show('q2')">Quiz 2</button>
+  <button onclick="show('q3')">Quiz 3</button>
+  <span class="qg">│ 8.4–8.6:</span>
+  <button onclick="show('q4')">Quiz 4</button>
+  <button onclick="show('q5')">Quiz 5</button>
+  <button onclick="show('q6')">Quiz 6</button>
+  <span class="qg">│ Full Ch.:</span>
+  <button onclick="show('q7')">Quiz 7</button>
+  <button onclick="show('q8')">Quiz 8</button>
+  <button onclick="show('q9')">Quiz 9</button>
+  <span class="qg">│ Challenge:</span>
+  <button onclick="show('q10')">Quiz 10</button>
+  <button onclick="show('q11')">Quiz 11</button>
+  <span class="qg">│</span>
+  <button onclick="show('ak')">🔑 Answer Key</button>
+</div>
+
+
+<!-- ══════════════════ STUDY GUIDE ══════════════════ -->
+<div id="sg" class="tab-pane active"><div class="page">
+<h1>Chapter 8: Trigonometric Ratios and Functions</h1>
+<p class="subtitle">Big Ideas Math — Integrated Mathematics III &nbsp;|&nbsp; Study Guide</p>
+
+<h2>8.1 Right Triangle Trigonometry</h2>
+<div class="g3">
+<div class="box">
+<h4>Six Trig Ratios (SOH-CAH-TOA)</h4>
+<svg viewBox="0 0 210 145" width="100%" style="max-height:115px;display:block;margin-bottom:4px">
+  <polygon points="16,128 194,128 194,16" fill="rgba(26,58,40,0.07)" stroke="#1a3a28" stroke-width="1.5"/>
+  <polyline points="178,128 178,112 194,112" fill="none" stroke="#1a3a28" stroke-width="1.2"/>
+  <path d="M50,128 A29,29 0 0 1 47.5,100.5" fill="none" stroke="#d4a030" stroke-width="1.5"/>
+  <text x="58" y="118" font-size="13" fill="#d4a030" font-style="italic" font-family="Georgia,serif">θ</text>
+  <text x="103" y="142" text-anchor="middle" font-size="11" fill="#1a3a28" font-family="Georgia,serif">adjacent</text>
+  <text x="204" y="78" font-size="11" fill="#1a3a28" font-family="Georgia,serif">opp</text>
+  <text x="82" y="52" text-anchor="middle" font-size="11" fill="#9a4a2a" font-family="Georgia,serif" transform="rotate(-35,82,52)">hypotenuse</text>
+</svg>
+<div class="fbox" style="font-size:8.5pt;">sin θ = opp/hyp &nbsp; csc θ = hyp/opp</div>
+<div class="fbox" style="font-size:8.5pt;">cos θ = adj/hyp &nbsp; sec θ = hyp/adj</div>
+<div class="fbox" style="font-size:8.5pt;">tan θ = opp/adj &nbsp; cot θ = adj/opp</div>
+<p style="margin-top:3px;font-size:8pt;"><b>Pythagorean:</b> sin²θ + cos²θ = 1</p>
+</div>
+<div class="box">
+<h4>30°–60°–90° Triangle</h4>
+<svg viewBox="0 0 200 155" width="100%" style="max-height:125px;display:block">
+  <polygon points="16,135 184,135 184,28" fill="rgba(59,139,212,0.07)" stroke="#3b8bd4" stroke-width="1.5"/>
+  <polyline points="167,135 167,118 184,118" fill="none" stroke="#3b8bd4" stroke-width="1.2"/>
+  <path d="M50,135 A32,32 0 0 1 47,104" fill="none" stroke="#d4a030" stroke-width="1.5"/>
+  <text x="58" y="125" font-size="11" fill="#d4a030" font-family="Georgia,serif">30°</text>
+  <path d="M184,57 A22,22 0 0 0 163,50" fill="none" stroke="#38a064" stroke-width="1.5"/>
+  <text x="146" y="63" font-size="11" fill="#38a064" font-family="Georgia,serif">60°</text>
+  <text x="98" y="150" text-anchor="middle" font-size="12" fill="#1a3a28" font-family="Georgia,serif" font-weight="500">√3</text>
+  <text x="193" y="88" font-size="12" fill="#1a3a28" font-family="Georgia,serif" font-weight="500">1</text>
+  <text x="76" y="68" text-anchor="middle" font-size="12" fill="#9a4a2a" font-family="Georgia,serif" font-weight="500" transform="rotate(-30.5,76,68)">2</text>
+</svg>
+<table style="font-size:8.5pt;margin-top:2px">
+<tr><th>angle</th><th>sin</th><th>cos</th><th>tan</th></tr>
+<tr><td>30°</td><td>1/2</td><td>√3/2</td><td>√3/3</td></tr>
+<tr><td>60°</td><td>√3/2</td><td>1/2</td><td>√3</td></tr>
+</table>
+</div>
+<div class="box">
+<h4>45°–45°–90° Triangle</h4>
+<svg viewBox="0 0 200 155" width="100%" style="max-height:125px;display:block">
+  <polygon points="16,135 184,135 184,20" fill="rgba(186,117,23,0.07)" stroke="#ba7517" stroke-width="1.5"/>
+  <polyline points="167,135 167,118 184,118" fill="none" stroke="#ba7517" stroke-width="1.2"/>
+  <path d="M50,135 A30,30 0 0 1 48,106" fill="none" stroke="#d4a030" stroke-width="1.5"/>
+  <text x="58" y="125" font-size="11" fill="#d4a030" font-family="Georgia,serif">45°</text>
+  <path d="M184,49 A22,22 0 0 0 163,42" fill="none" stroke="#ba7517" stroke-width="1.5"/>
+  <text x="146" y="56" font-size="11" fill="#ba7517" font-family="Georgia,serif">45°</text>
+  <text x="98" y="150" text-anchor="middle" font-size="12" fill="#1a3a28" font-family="Georgia,serif" font-weight="500">1</text>
+  <text x="193" y="85" font-size="12" fill="#1a3a28" font-family="Georgia,serif" font-weight="500">1</text>
+  <text x="76" y="62" text-anchor="middle" font-size="12" fill="#9a4a2a" font-family="Georgia,serif" font-weight="500" transform="rotate(-40,76,62)">√2</text>
+</svg>
+<table style="font-size:8.5pt;margin-top:2px">
+<tr><th>angle</th><th>sin</th><th>cos</th><th>tan</th></tr>
+<tr><td>45°</td><td>√2/2</td><td>√2/2</td><td>1</td></tr>
+</table>
+<p style="font-size:8pt;margin-top:4px;"><b>Solving angles:</b> θ = sin⁻¹, cos⁻¹, or tan⁻¹</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 1 — Right triangle: legs 5 and 12; find all 6 ratios for the angle opposite the leg of 5.</div>
+<p class="ex-step">hyp = √(25+144) = 13; opp = 5, adj = 12</p>
+<p class="ex-step">sin θ = 5/13, cos θ = 12/13, tan θ = 5/12</p>
+<p class="ex-step">csc θ = 13/5, sec θ = 13/12, cot θ = 12/5</p></div>
+<div class="ex"><div class="ex-title">Ex 2 — Find the side x: right triangle, hyp = 10, one angle = 30°, x is opposite to 30°.</div>
+<p class="ex-step">sin 30° = x/10 → x = 10·sin 30° = 10·(1/2) = <span class="ex-ans">5</span></p></div>
+<div class="ex"><div class="ex-title">Ex 3 — Find angle θ: right triangle, opp = 8, adj = 6.</div>
+<p class="ex-step">tan θ = 8/6 = 4/3 → θ = tan⁻¹(4/3) ≈ <span class="ex-ans">53.13°</span></p></div>
+<div class="ex"><div class="ex-title">Ex 4 — Angle of elevation: from 80 ft away, the top of a building has angle of elevation 40°. Find the height.</div>
+<p class="ex-step">tan 40° = h/80 → h = 80·tan 40° ≈ <span class="ex-ans">67.1 ft</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>8.2 Angles and Radian Measure</h2>
+<div class="g2">
+<div class="box">
+<h4>Degrees ↔ Radians</h4>
+<div class="fbox blue">radians = degrees · π/180</div>
+<div class="fbox blue">degrees = radians · 180/π</div>
+<p><b>Coterminal angles:</b> add or subtract multiples of 360° (or 2π)</p>
+<p><b>Reference angle:</b> acute angle between terminal side and x-axis</p>
+</div>
+<div class="box">
+<h4>Arc Length &amp; Sector Area</h4>
+<div class="fbox green">Arc length: &nbsp; s = rθ &nbsp; (θ in radians)</div>
+<div class="fbox green">Sector area: &nbsp; A = (1/2)r²θ &nbsp; (θ in radians)</div>
+<p style="font-size:8.5pt;">Always convert θ to radians before using these formulas.</p>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 5 — Convert 135° to radians.</div>
+<p class="ex-step">135 · π/180 = 135π/180 = <span class="ex-ans">3π/4</span></p></div>
+<div class="ex"><div class="ex-title">Ex 6 — Convert 7π/6 to degrees.</div>
+<p class="ex-step">(7π/6) · 180/π = 7·180/6 = <span class="ex-ans">210°</span></p></div>
+<div class="ex"><div class="ex-title">Ex 7 — Find two coterminal angles for −50°.</div>
+<p class="ex-step">Positive: −50 + 360 = <span class="ex-ans">310°</span></p>
+<p class="ex-step">Negative: −50 − 360 = <span class="ex-ans">−410°</span></p></div>
+<div class="ex"><div class="ex-title">Ex 8 — Arc length: r = 6, θ = 2π/3.</div>
+<p class="ex-step">s = 6·(2π/3) = <span class="ex-ans">4π ≈ 12.57</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>8.3 Trigonometric Functions of Any Angle</h2>
+<div class="g2">
+<div class="box">
+<h4>Unit Circle — Signs &amp; Key Angles</h4>
+<svg viewBox="0 0 310 300" width="100%" style="max-height:240px;display:block">
+  <!-- Quadrant fills -->
+  <path d="M155,150 L155,18 A137,137 0 0 1 292,150 Z" fill="rgba(56,160,100,0.1)"/>
+  <path d="M155,150 L18,150 A137,137 0 0 1 155,18 Z" fill="rgba(59,139,212,0.1)"/>
+  <path d="M155,150 L155,282 A137,137 0 0 1 18,150 Z" fill="rgba(186,117,23,0.1)"/>
+  <path d="M155,150 L292,150 A137,137 0 0 1 155,282 Z" fill="rgba(178,60,50,0.1)"/>
+  <!-- Axes -->
+  <line x1="8" y1="150" x2="302" y2="150" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="155" y1="5" x2="155" y2="295" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <!-- Circle -->
+  <circle cx="155" cy="150" r="137" fill="none" stroke="var(--color-text-primary)" stroke-width="1.3" opacity="0.45"/>
+  <!-- Center -->
+  <circle cx="155" cy="150" r="3" fill="var(--color-text-secondary)" opacity="0.6"/>
+  <!-- 16 angle points and labels -->
+  <!-- 0° -->
+  <circle cx="292" cy="150" r="4" fill="#38a064"/>
+  <text x="294" y="143" font-size="8.5" fill="var(--color-text-primary)" font-family="Georgia,serif">0°</text>
+  <!-- 30° -->
+  <circle cx="274" cy="81" r="4" fill="#38a064"/>
+  <text x="276" y="77" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">30°=π/6</text>
+  <!-- 45° -->
+  <circle cx="252" cy="53" r="4" fill="#38a064"/>
+  <text x="254" y="49" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">45°=π/4</text>
+  <!-- 60° -->
+  <circle cx="224" cy="31" r="4" fill="#38a064"/>
+  <text x="196" y="26" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">60°=π/3</text>
+  <!-- 90° -->
+  <circle cx="155" cy="13" r="4" fill="#38a064"/>
+  <text x="114" y="10" font-size="8.5" fill="var(--color-text-primary)" font-family="Georgia,serif">90°=π/2</text>
+  <!-- 120° -->
+  <circle cx="86" cy="31" r="4" fill="#3b8bd4"/>
+  <text x="22" y="28" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">120°=2π/3</text>
+  <!-- 135° -->
+  <circle cx="58" cy="53" r="4" fill="#3b8bd4"/>
+  <text x="0" y="52" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">135°=3π/4</text>
+  <!-- 150° -->
+  <circle cx="36" cy="81" r="4" fill="#3b8bd4"/>
+  <text x="0" y="83" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">150°=5π/6</text>
+  <!-- 180° -->
+  <circle cx="18" cy="150" r="4" fill="#3b8bd4"/>
+  <text x="0" y="144" font-size="8.5" fill="var(--color-text-primary)" font-family="Georgia,serif">180°=π</text>
+  <!-- 210° -->
+  <circle cx="36" cy="219" r="4" fill="#ba7517"/>
+  <text x="0" y="223" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">210°=7π/6</text>
+  <!-- 225° -->
+  <circle cx="58" cy="247" r="4" fill="#ba7517"/>
+  <text x="0" y="252" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">225°=5π/4</text>
+  <!-- 240° -->
+  <circle cx="86" cy="269" r="4" fill="#ba7517"/>
+  <text x="22" y="277" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">240°=4π/3</text>
+  <!-- 270° -->
+  <circle cx="155" cy="287" r="4" fill="#ba7517"/>
+  <text x="112" y="297" font-size="8.5" fill="var(--color-text-primary)" font-family="Georgia,serif">270°=3π/2</text>
+  <!-- 300° -->
+  <circle cx="224" cy="269" r="4" fill="#b23c32"/>
+  <text x="182" y="279" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">300°=5π/3</text>
+  <!-- 315° -->
+  <circle cx="252" cy="247" r="4" fill="#b23c32"/>
+  <text x="215" y="254" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">315°=7π/4</text>
+  <!-- 330° -->
+  <circle cx="274" cy="219" r="4" fill="#b23c32"/>
+  <text x="220" y="224" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">330°=11π/6</text>
+  <!-- Quadrant sign labels -->
+  <text x="224" y="110" text-anchor="middle" font-size="9" fill="#38a064" font-family="Georgia,serif" font-weight="500">Q I: all +</text>
+  <text x="86" y="110" text-anchor="middle" font-size="9" fill="#3b8bd4" font-family="Georgia,serif" font-weight="500">Q II: sin+</text>
+  <text x="86" y="200" text-anchor="middle" font-size="9" fill="#ba7517" font-family="Georgia,serif" font-weight="500">Q III: tan+</text>
+  <text x="224" y="200" text-anchor="middle" font-size="9" fill="#b23c32" font-family="Georgia,serif" font-weight="500">Q IV: cos+</text>
+</svg>
+</div>
+<div class="box">
+<h4>General Definitions (point (x, y), r = √(x²+y²))</h4>
+<div class="fbox">sin θ = y/r &nbsp;&nbsp;&nbsp; cos θ = x/r &nbsp;&nbsp;&nbsp; tan θ = y/x</div>
+<p style="margin-top:4px;"><b>Signs by quadrant</b> — "All Students Take Calculus":</p>
+<table>
+<tr><th>Q</th><th>+</th></tr>
+<tr><td>I</td><td>all</td></tr>
+<tr><td>II</td><td>sin, csc</td></tr>
+<tr><td>III</td><td>tan, cot</td></tr>
+<tr><td>IV</td><td>cos, sec</td></tr>
+</table>
+<h4 style="margin-top:6px;">Reference Angle θ'</h4>
+<p>Acute angle between terminal side and x-axis.</p>
+<table style="margin-top:4px">
+<tr><th>θ</th><th>θ'</th><th>sin θ</th><th>cos θ</th></tr>
+<tr><td>150°</td><td>30°</td><td>1/2</td><td>−√3/2</td></tr>
+<tr><td>135°</td><td>45°</td><td>√2/2</td><td>−√2/2</td></tr>
+<tr><td>240°</td><td>60°</td><td>−√3/2</td><td>−1/2</td></tr>
+<tr><td>300°</td><td>60°</td><td>−√3/2</td><td>1/2</td></tr>
+</table>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 9 — Find sin θ, cos θ, tan θ for point (−3, 4).</div>
+<p class="ex-step">r = √(9+16) = 5</p>
+<p class="ex-step">sin θ = 4/5, cos θ = −3/5, tan θ = 4/(−3) = <span class="ex-ans">−4/3</span></p></div>
+<div class="ex"><div class="ex-title">Ex 10 — Evaluate sin 210° and tan 300°.</div>
+<p class="ex-step">210° → Q III, θ' = 30°; sin 210° = <span class="ex-ans">−1/2</span></p>
+<p class="ex-step">300° → Q IV, θ' = 60°; tan 300° = <span class="ex-ans">−√3</span></p></div>
+<div class="ex"><div class="ex-title">Ex 11 — Evaluate cos(−π/3).</div>
+<p class="ex-step">cos(−π/3) = cos(π/3) = <span class="ex-ans">1/2</span> (cosine is even)</p></div>
+<div class="ex"><div class="ex-title">Ex 12 — Find all 6 trig values for 5π/4.</div>
+<p class="ex-step">5π/4 → Q III, θ' = π/4</p>
+<p class="ex-step">sin = −√2/2, cos = −√2/2, tan = 1; csc = −√2, sec = −√2, cot = 1</p></div>
+</div>
+
+<div class="rule"></div>
+<h2>8.4 Graphing Sine and Cosine Functions</h2>
+<div class="g2">
+<div class="box">
+<h4>General Form</h4>
+<div class="fbox amber">y = a sin(bx − h) + k &nbsp;&nbsp; y = a cos(bx − h) + k</div>
+<table>
+<tr><th>Feature</th><th>Formula</th></tr>
+<tr><td class="left">Amplitude</td><td class="left">|a|</td></tr>
+<tr><td class="left">Period</td><td class="left">2π/|b|</td></tr>
+<tr><td class="left">Phase shift</td><td class="left">h/b (right if positive)</td></tr>
+<tr><td class="left">Midline</td><td class="left">y = k</td></tr>
+<tr><td class="left">Max/Min</td><td class="left">k ± |a|</td></tr>
+</table>
+</div>
+<div class="box">
+<h4>Key Cycle Points</h4>
+<p>For y = a sin(bx − h) + k, one full cycle starts at x = h/b:</p>
+<ul>
+<li>Start: (h/b, k)</li>
+<li>Peak: (h/b + T/4, k + |a|)</li>
+<li>Middle: (h/b + T/2, k)</li>
+<li>Trough: (h/b + 3T/4, k − |a|)</li>
+<li>End: (h/b + T, k)</li>
+</ul>
+<p style="font-size:8.5pt;margin-top:2px;">where T = period = 2π/|b|</p>
+</div>
+</div>
+<!-- Labeled sine/cosine wave diagram -->
+<svg id="w84" viewBox="0 0 680 155" width="100%" style="max-height:138px;display:block;margin:4px 0 6px">
+  <defs><marker id="aw84" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+  <!-- Max/min dashed lines -->
+  <line x1="30" y1="22" x2="655" y2="22" stroke="var(--color-text-secondary)" stroke-width="0.6" stroke-dasharray="4 3" opacity="0.4"/>
+  <line x1="30" y1="130" x2="655" y2="130" stroke="var(--color-text-secondary)" stroke-width="0.6" stroke-dasharray="4 3" opacity="0.4"/>
+  <!-- Midline -->
+  <line x1="30" y1="76" x2="655" y2="76" stroke="var(--color-text-secondary)" stroke-width="0.8" stroke-dasharray="6 4" opacity="0.5"/>
+  <!-- Axes -->
+  <line x1="30" y1="8" x2="30" y2="148" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <path id="sp84" fill="none" stroke="#3b8bd4" stroke-width="2.2"/>
+  <path id="cp84" fill="none" stroke="#38a064" stroke-width="1.8" stroke-dasharray="7 3" opacity="0.75"/>
+  <!-- Amplitude double arrow -->
+  <line x1="14" y1="76" x2="14" y2="22" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#aw84)" marker-start="url(#aw84)"/>
+  <text x="10" y="52" text-anchor="middle" font-size="9" fill="#d4a030" font-family="Georgia,serif" transform="rotate(-90,10,52)">|a|</text>
+  <!-- Period arrow -->
+  <line x1="120" y1="148" x2="660" y2="148" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#aw84)" marker-start="url(#aw84)"/>
+  <text x="390" y="143" text-anchor="middle" font-size="9" fill="#ba7517" font-family="Georgia,serif">T = 2π/|b|  (period)</text>
+  <!-- Phase shift arrow -->
+  <line x1="30" y1="136" x2="120" y2="136" stroke="var(--color-text-secondary)" stroke-width="1" marker-end="url(#aw84)" marker-start="url(#aw84)"/>
+  <text x="75" y="131" text-anchor="middle" font-size="9" fill="#9a4a2a" font-family="Georgia,serif">h/b</text>
+  <!-- Axis labels -->
+  <text x="33" y="19" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">k+|a|</text>
+  <text x="33" y="80" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">k</text>
+  <text x="33" y="134" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">k−|a|</text>
+  <!-- Legend -->
+  <line x1="560" y1="14" x2="590" y2="14" stroke="#3b8bd4" stroke-width="2"/>
+  <text x="594" y="18" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">a sin(bx−h)+k</text>
+  <line x1="560" y1="28" x2="590" y2="28" stroke="#38a064" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="594" y="32" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">a cos(bx−h)+k</text>
+</svg>
+<script>
+(function(){
+  const w=540,ox=120,mid=76,amp=54,period=540;
+  let s='',c='';
+  for(let i=0;i<=w;i++){
+    const x=30+i, t=i*Math.PI*2/period;
+    s+=(i===0?`M${x},${mid-amp*Math.sin(t)}`:`L${x},${mid-amp*Math.sin(t)}`);
+    c+=(i===0?`M${x},${mid-amp*Math.cos(t)}`:`L${x},${mid-amp*Math.cos(t)}`);
+  }
+  ['sp84','cp84'].forEach((id,k)=>{const e=document.getElementById(id);if(e)e.setAttribute('d',k===0?s:c);});
+})();
+</script>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 13 — Amplitude &amp; period of y = −3sin(2x).</div>
+<p class="ex-step">a = −3 → Amplitude = |−3| = <span class="ex-ans">3</span></p>
+<p class="ex-step">b = 2 → Period = 2π/2 = <span class="ex-ans">π</span></p></div>
+<div class="ex"><div class="ex-title">Ex 14 — Features of y = 2cos(x − π/3) + 1.</div>
+<p class="ex-step">Amplitude: 2 &nbsp;|&nbsp; Period: 2π</p>
+<p class="ex-step">Phase shift: π/3 (right) &nbsp;|&nbsp; Midline: y = 1</p>
+<p class="ex-step">Max: 3 at x = π/3 &nbsp;|&nbsp; Min: −1 at x = 4π/3</p></div>
+<div class="ex"><div class="ex-title">Ex 15 — Write a sine equation: amplitude 4, period π, phase shift π/4 right, midline y = −2.</div>
+<p class="ex-step">b = 2π/π = 2; h = π/4·b = π/2; k = −2</p>
+<p class="ex-step">y = <span class="ex-ans">4sin(2x − π/2) − 2</span></p></div>
+<div class="ex"><div class="ex-title">Ex 16 — Identify features of y = (1/2)cos(πx/2 + π/4).</div>
+<p class="ex-step">a = 1/2; b = π/2; h = −π/4</p>
+<p class="ex-step">Amplitude: 1/2 &nbsp;|&nbsp; Period: 2π/(π/2) = 4</p>
+<p class="ex-step">Phase shift: (−π/4)/(π/2) = −1/2 (left 1/2)</p></div>
+</div>
+
+<div class="rule"></div>
+<h2>8.5 Graphing Other Trigonometric Functions</h2>
+<div class="g2">
+<div class="box">
+<h4>Tangent &amp; Cotangent</h4>
+<div class="fbox blue">y = a tan(bx − h) + k</div>
+<p>Period = π/|b| &nbsp;|&nbsp; No amplitude</p>
+<p>Vertical asymptotes where cos = 0: x = π/(2b) + h/b + nπ/b</p>
+<div class="fbox blue">y = a cot(bx − h) + k</div>
+<p>Period = π/|b| &nbsp;|&nbsp; Asymptotes where sin = 0</p>
+</div>
+<div class="box">
+<h4>Secant &amp; Cosecant</h4>
+<p>Reciprocal functions — graph by drawing the base first:</p>
+<p>sec x = 1/cos x &nbsp;→ graph from y = cos x</p>
+<p>csc x = 1/sin x &nbsp;→ graph from y = sin x</p>
+<p><b>Key:</b> Where cos = 0 → V. asymptote of sec; where sin = 0 → V. asymptote of csc</p>
+<p>Period of sec and csc = 2π/|b|</p>
+</div>
+</div>
+<!-- Tangent and Secant curve reference diagrams -->
+<div class="g2" style="margin:4px 0 6px">
+<div>
+<p style="font-size:8.5pt;font-weight:bold;color:#1a3a28;margin-bottom:2px;">y = tan(x)</p>
+<svg viewBox="0 0 320 150" width="100%" style="max-height:130px;display:block">
+  <!-- asymptotes -->
+  <line x1="80" y1="5" x2="80" y2="145" stroke="#9a4a2a" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+  <line x1="240" y1="5" x2="240" y2="145" stroke="#9a4a2a" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+  <!-- axes -->
+  <line x1="5" y1="75" x2="315" y2="75" stroke="var(--color-text-secondary)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="160" y1="5" x2="160" y2="145" stroke="var(--color-text-secondary)" stroke-width="0.8" opacity="0.3"/>
+  <!-- tan curve left branch -->
+  <path id="tl" fill="none" stroke="#ba7517" stroke-width="2"/>
+  <!-- tan curve middle -->
+  <path id="tm" fill="none" stroke="#ba7517" stroke-width="2"/>
+  <!-- tan curve right -->
+  <path id="tr2" fill="none" stroke="#ba7517" stroke-width="2"/>
+  <!-- labels -->
+  <text x="80" y="12" text-anchor="middle" font-size="8.5" fill="#9a4a2a" font-family="Georgia,serif">−π/2</text>
+  <text x="240" y="12" text-anchor="middle" font-size="8.5" fill="#9a4a2a" font-family="Georgia,serif">π/2</text>
+  <text x="160" y="72" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="5" y="140" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">period=π</text>
+</svg>
+</div>
+<div>
+<p style="font-size:8.5pt;font-weight:bold;color:#1a3a28;margin-bottom:2px;">y = sec(x) &amp; y = cos(x)</p>
+<svg viewBox="0 0 320 150" width="100%" style="max-height:130px;display:block">
+  <!-- asymptotes -->
+  <line x1="80" y1="5" x2="80" y2="145" stroke="#9a4a2a" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+  <line x1="240" y1="5" x2="240" y2="145" stroke="#9a4a2a" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+  <!-- axes -->
+  <line x1="5" y1="75" x2="315" y2="75" stroke="var(--color-text-secondary)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="160" y1="5" x2="160" y2="145" stroke="var(--color-text-secondary)" stroke-width="0.8" opacity="0.3"/>
+  <!-- cos base -->
+  <path id="cosr" fill="none" stroke="#38a064" stroke-width="1.3" stroke-dasharray="5 3" opacity="0.6"/>
+  <!-- sec curve -->
+  <path id="secl" fill="none" stroke="#3b8bd4" stroke-width="2"/>
+  <path id="secm" fill="none" stroke="#3b8bd4" stroke-width="2"/>
+  <path id="secr" fill="none" stroke="#3b8bd4" stroke-width="2"/>
+  <text x="5" y="140" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">period=2π</text>
+  <line x1="200" y1="12" x2="224" y2="12" stroke="#38a064" stroke-width="1.3" stroke-dasharray="5 3"/>
+  <text x="227" y="16" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">cos x</text>
+  <line x1="200" y1="24" x2="224" y2="24" stroke="#3b8bd4" stroke-width="2"/>
+  <text x="227" y="28" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">sec x</text>
+</svg>
+</div>
+</div>
+<script>
+(function(){
+  const ns='http://www.w3.org/2000/svg';
+  // Tan curve helpers — 3 branches in viewBox 0 0 320 150, period=160px, cx=160, cy=75
+  function tanPath(x0,x1,cx,cy,scale,period){
+    let d=''; let first=true;
+    for(let i=x0;i<=x1;i+=1){
+      const t=(i-cx)*Math.PI/period;
+      if(Math.abs(t-Math.PI/2)<0.08||Math.abs(t+Math.PI/2)<0.08){first=true;continue;}
+      const y=cy-scale*Math.tan(t);
+      if(Math.abs(y-cy)>68){first=true;continue;}
+      d+=(first?`M${i},${y}`:`L${i},${y}`); first=false;
+    }
+    return d;
+  }
+  const tl=document.getElementById('tl'),tm=document.getElementById('tm'),tr2=document.getElementById('tr2');
+  if(tl)tl.setAttribute('d',tanPath(5,78,0,75,45,160));
+  if(tm)tm.setAttribute('d',tanPath(82,238,160,75,45,160));
+  if(tr2)tr2.setAttribute('d',tanPath(242,315,320,75,45,160));
+  // Cos and Sec
+  let cosd='',secld='',secmd='',secrd='';
+  for(let i=0;i<=320;i++){
+    const t=(i-160)*Math.PI/160;
+    const cy=75-45*Math.cos(t);
+    cosd+=(i===0?`M${i},${cy}`:`L${i},${cy}`);
+    // sec = 1/cos, skip near asymptotes
+    const cosV=Math.cos(t);
+    if(Math.abs(cosV)<0.12) continue;
+    const sy=75-45/cosV;
+    if(Math.abs(sy-75)>68) continue;
+    if(i<79) secld+=(secld===''?`M${i},${sy}`:`L${i},${sy}`);
+    else if(i<239) secmd+=(secmd===''?`M${i},${sy}`:`L${i},${sy}`);
+    else secrd+=(secrd===''?`M${i},${sy}`:`L${i},${sy}`);
+  }
+  ['cosr','secl','secm','secr'].forEach((id,k)=>{
+    const el=document.getElementById(id);
+    if(el) el.setAttribute('d',[cosd,secld,secmd,secrd][k]);
+  });
+})();
+</script>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 17 — Period and asymptotes of y = 2tan(3x).</div>
+<p class="ex-step">Period = π/3</p>
+<p class="ex-step">Asymptotes: 3x = π/2 + nπ → x = π/6 + nπ/3</p></div>
+<div class="ex"><div class="ex-title">Ex 18 — Period and asymptotes of y = csc(x/2).</div>
+<p class="ex-step">Based on y = sin(x/2); Period = 2π/(1/2) = 4π</p>
+<p class="ex-step">Asymptotes: x/2 = nπ → x = 2nπ &nbsp;(n = 0, ±1, ±2, …)</p></div>
+<div class="ex"><div class="ex-title">Ex 19 — Features of y = −sec(2x) + 1.</div>
+<p class="ex-step">Based on y = cos(2x): amplitude n/a, period π</p>
+<p class="ex-step">Asymptotes: 2x = π/2 + nπ → x = π/4 + nπ/2</p>
+<p class="ex-step">Midline: y = 1; branches go to y ≤ 0 and y ≥ 2</p></div>
+<div class="ex"><div class="ex-title">Ex 20 — Period and phase shift of y = cot(2x − π/2).</div>
+<p class="ex-step">b = 2; h = π/2; Period = π/2</p>
+<p class="ex-step">Phase shift = h/b = (π/2)/2 = π/4 (right)</p></div>
+</div>
+
+<div class="rule"></div>
+<h2>8.6 Modeling with Trigonometric Functions</h2>
+<div class="g2">
+<div class="box">
+<h4>Writing Sinusoidal Models</h4>
+<p>Given max M and min m of a sinusoidal data set:</p>
+<div class="fbox red">Amplitude = (M − m)/2</div>
+<div class="fbox red">Midline k = (M + m)/2</div>
+<div class="fbox red">Period T from data; then b = 2π/T</div>
+<p>Choose sin or cos based on starting position; adjust h for phase shift.</p>
+</div>
+<div class="box">
+<h4>Strategy for Real-World Models</h4>
+<ol>
+<li>Identify max, min → compute amplitude and midline</li>
+<li>Identify period from data (time for one full cycle)</li>
+<li>Write y = a sin(bx − h) + k or cosine version</li>
+<li>Adjust phase shift h to match the starting point</li>
+<li>Verify with given data points</li>
+</ol>
+</div>
+</div>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 21 — Temperature: high 88°F, low 54°F; period 365 days; max on day 200. Write a model.</div>
+<p class="ex-step">Amplitude = (88−54)/2 = 17 &nbsp;|&nbsp; Midline k = (88+54)/2 = 71</p>
+<p class="ex-step">b = 2π/365; max at day 200 → phase shift: h = 200·b = 400π/365</p>
+<p class="ex-step">y = <span class="ex-ans">17sin(2πt/365 − 400π/365) + 71</span></p></div>
+<div class="ex"><div class="ex-title">Ex 22 — Write an equation for a graph: max 5, min −1, period 4π, starts at midline going up at x = 0.</div>
+<p class="ex-step">a = (5−(−1))/2 = 3; k = (5+(−1))/2 = 2</p>
+<p class="ex-step">b = 2π/(4π) = 1/2; starts at midline going up → sine, h = 0</p>
+<p class="ex-step">y = <span class="ex-ans">3sin(x/2) + 2</span></p></div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ CHEAT SHEET ══════════════════ -->
+<div id="cs" class="tab-pane"><div class="page">
+<h1>Chapter 8: Trig Ratios &amp; Functions — Cheat Sheet</h1>
+<p class="subtitle">Big Ideas Math IM3 &nbsp;|&nbsp; Key Formulas &amp; Quick Reference</p>
+<div class="g2">
+<div>
+<h2>8.1 Right Triangle Trig</h2>
+<table>
+<tr><th>Ratio</th><th>Formula</th><th>Reciprocal</th></tr>
+<tr><td class="left">sin θ</td><td>opp/hyp</td><td>csc θ = hyp/opp</td></tr>
+<tr><td class="left">cos θ</td><td>adj/hyp</td><td>sec θ = hyp/adj</td></tr>
+<tr><td class="left">tan θ</td><td>opp/adj</td><td>cot θ = adj/opp</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;">sin²θ + cos²θ = 1 &nbsp;&nbsp; tan θ = sin θ/cos θ</p>
+
+<h2>8.2 Angles &amp; Radians</h2>
+<table>
+<tr><th>Conversion</th><th>Formula</th></tr>
+<tr><td class="left">Deg → Rad</td><td class="left">× π/180</td></tr>
+<tr><td class="left">Rad → Deg</td><td class="left">× 180/π</td></tr>
+<tr><td class="left">Arc length</td><td class="left">s = rθ</td></tr>
+<tr><td class="left">Sector area</td><td class="left">A = (1/2)r²θ</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;"><b>Common conversions:</b> 30°=π/6, 45°=π/4, 60°=π/3, 90°=π/2, 180°=π, 270°=3π/2, 360°=2π</p>
+
+<h2>8.3 Trig of Any Angle</h2>
+<table>
+<tr><th>Q</th><th>sin</th><th>cos</th><th>tan</th></tr>
+<tr><td>I</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><td>II</td><td>+</td><td>−</td><td>−</td></tr>
+<tr><td>III</td><td>−</td><td>−</td><td>+</td></tr>
+<tr><td>IV</td><td>−</td><td>+</td><td>−</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;">Reference angle: acute angle between terminal side and x-axis.<br>sin θ = y/r; cos θ = x/r; tan θ = y/x; &nbsp; r = √(x²+y²)</p>
+</div>
+<div>
+<h2>8.4 Sine &amp; Cosine Graphs</h2>
+<p style="font-size:8.5pt;">y = a sin(bx − h) + k &nbsp;or&nbsp; y = a cos(bx − h) + k</p>
+<table>
+<tr><th>Feature</th><th>Value</th></tr>
+<tr><td class="left">Amplitude</td><td class="left">|a|</td></tr>
+<tr><td class="left">Period</td><td class="left">2π/|b|</td></tr>
+<tr><td class="left">Phase shift</td><td class="left">h/b (→ if +)</td></tr>
+<tr><td class="left">Midline</td><td class="left">y = k</td></tr>
+<tr><td class="left">Max</td><td class="left">k + |a|</td></tr>
+<tr><td class="left">Min</td><td class="left">k − |a|</td></tr>
+</table>
+
+<h2>8.5 Other Trig Graphs</h2>
+<table>
+<tr><th>Function</th><th>Period</th><th>Asymptotes when:</th></tr>
+<tr><td class="left">tan(bx)</td><td class="left">π/|b|</td><td class="left">cos = 0</td></tr>
+<tr><td class="left">cot(bx)</td><td class="left">π/|b|</td><td class="left">sin = 0</td></tr>
+<tr><td class="left">sec(bx)</td><td class="left">2π/|b|</td><td class="left">cos = 0</td></tr>
+<tr><td class="left">csc(bx)</td><td class="left">2π/|b|</td><td class="left">sin = 0</td></tr>
+</table>
+
+<h2>8.6 Sinusoidal Modeling</h2>
+<table>
+<tr><th>Feature</th><th>From Data</th></tr>
+<tr><td class="left">Amplitude a</td><td class="left">(max − min)/2</td></tr>
+<tr><td class="left">Midline k</td><td class="left">(max + min)/2</td></tr>
+<tr><td class="left">Period T</td><td class="left">time for one full cycle</td></tr>
+<tr><td class="left">b</td><td class="left">2π/T</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;">Adjust h for phase shift to match starting point of data.</p>
+</div>
+</div>
+<div class="rule"></div>
+<h3>Unit Circle — Key Values</h3>
+<div class="g4">
+<div class="ex" style="font-size:8.5pt;"><b>0° / 0</b><br>sin=0, cos=1, tan=0</div>
+<div class="ex" style="font-size:8.5pt;"><b>30° / π/6</b><br>sin=1/2, cos=√3/2, tan=√3/3</div>
+<div class="ex" style="font-size:8.5pt;"><b>45° / π/4</b><br>sin=√2/2, cos=√2/2, tan=1</div>
+<div class="ex" style="font-size:8.5pt;"><b>60° / π/3</b><br>sin=√3/2, cos=1/2, tan=√3</div>
+<div class="ex" style="font-size:8.5pt;"><b>90° / π/2</b><br>sin=1, cos=0, tan=undef</div>
+<div class="ex" style="font-size:8.5pt;"><b>120° / 2π/3</b><br>sin=√3/2, cos=−1/2, tan=−√3</div>
+<div class="ex" style="font-size:8.5pt;"><b>135° / 3π/4</b><br>sin=√2/2, cos=−√2/2, tan=−1</div>
+<div class="ex" style="font-size:8.5pt;"><b>150° / 5π/6</b><br>sin=1/2, cos=−√3/2, tan=−√3/3</div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 1 (8.1–8.3) ══════════════════ -->
+<div id="q1" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 1 &nbsp;·&nbsp; Sections 8.1–8.3</h2><p class="q-sub">Right Triangle Trig, Radian Measure &amp; Trig of Any Angle</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A right triangle has legs 5 and 12. Find all 6 trigonometric ratios for the acute angle θ opposite the leg of length 5.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Given sin θ = 3/5 and θ is in Q I, find cos θ and tan θ.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Find the missing side x: right triangle with hypotenuse 14 and one angle of 45°; x is the side opposite the 45° angle.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Find the missing side: right triangle, one leg = 9, one angle = 60°; find the hypotenuse.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Find the six trig ratios for angle θ in the right triangle shown.
+<svg viewBox="0 0 240 140" width="100%" style="max-height:120px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <polygon points="30,120 210,120 210,28" fill="rgba(26,58,40,0.06)" stroke="#1a3a28" stroke-width="1.5"/>
+  <polyline points="193,120 193,103 210,103" fill="none" stroke="#1a3a28" stroke-width="1.2"/>
+  <path d="M64,120 A32,32 0 0 1 61.5,89.5" fill="none" stroke="#d4a030" stroke-width="1.5"/>
+  <text x="72" y="110" font-size="13" fill="#d4a030" font-style="italic" font-family="Georgia,serif">θ</text>
+  <text x="118" y="136" text-anchor="middle" font-size="12" fill="#1a3a28" font-weight="500" font-family="Georgia,serif">7</text>
+  <text x="224" y="80" font-size="12" fill="#1a3a28" font-weight="500" font-family="Georgia,serif">24</text>
+  <text x="98" y="60" text-anchor="middle" font-size="12" fill="#9a4a2a" font-weight="500" font-family="Georgia,serif" transform="rotate(-73,98,60)">?</text>
+</svg>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> From a point 50 feet from the base of a building, the angle of elevation to the top is 65°. Find the height of the building.<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Convert to radians: &nbsp; (a) 150° &nbsp; (b) 270° &nbsp; (c) −120°<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Convert to degrees: &nbsp; (a) 5π/6 &nbsp; (b) 7π/4 &nbsp; (c) −π/3<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> Find one positive and one negative angle coterminal with 130°.<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Find the arc length of a sector with r = 8 cm and θ = 3π/4.<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Find the reference angle for each: &nbsp; (a) 225° &nbsp; (b) 5π/3 &nbsp; (c) −150°<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Evaluate exactly: &nbsp; (a) sin 150° &nbsp; (b) cos 240° &nbsp; (c) tan 135°<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> A wheel of radius 2 ft rotates at 3 revolutions per second. Find the angular velocity in radians per second and the linear speed of a point on the rim.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 2 (8.1–8.3) ══════════════════ -->
+<div id="q2" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 2 &nbsp;·&nbsp; Sections 8.1–8.3</h2><p class="q-sub">Right Triangle Trig, Radian Measure &amp; Trig of Any Angle</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A right triangle has hypotenuse 17 and one leg 8. Find all 6 trig ratios for the acute angle opposite the leg of length 8.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Given tan θ = 5/12 and θ is in Q III, find sin θ and cos θ.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Find the missing side: right triangle, hypotenuse 20, one angle 30°; find the side adjacent to 30°.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> A ladder 15 ft long leans against a wall making a 72° angle with the ground. Find the height the ladder reaches.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> The terminal side of angle θ passes through the point shown. Find all 6 trig ratios for θ.
+<svg viewBox="0 0 200 170" width="100%" style="max-height:148px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="10" y1="90" x2="190" y2="90" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="100" y1="10" x2="100" y2="160" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <!-- Q II quadrant fill (terminal side is in Q II) -->
+  <path d="M100,90 L10,90 A90,90 0 0 1 100,10 Z" fill="rgba(59,139,212,0.07)"/>
+  <!-- Terminal ray from origin to point (-8, 6) -->
+  <!-- scale: origin at (100,90), x unit = 10px, y unit = 10px (y flipped) -->
+  <!-- point: x=-8 → svgX=100-80=20, y=6 → svgY=90-60=30 -->
+  <line x1="100" y1="90" x2="20" y2="30" stroke="#1a3a28" stroke-width="1.5" marker-end="url(#arq2)"/>
+  <defs><marker id="arq2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#1a3a28" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+  <!-- Angle arc -->
+  <path d="M130,90 A30,30 0 0 0 118,72" fill="none" stroke="#d4a030" stroke-width="1.5"/>
+  <text x="138" y="82" font-size="12" fill="#d4a030" font-style="italic" font-family="Georgia,serif">θ</text>
+  <!-- Reference lines (dashed right triangle) -->
+  <line x1="20" y1="30" x2="20" y2="90" stroke="var(--color-text-secondary)" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.5"/>
+  <line x1="20" y1="90" x2="100" y2="90" stroke="var(--color-text-secondary)" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.5"/>
+  <!-- Point label -->
+  <circle cx="20" cy="30" r="4" fill="#1a3a28"/>
+  <text x="6" y="26" font-size="10" fill="#1a3a28" font-family="Georgia,serif">(−8, 6)</text>
+  <!-- Axis labels -->
+  <text x="188" y="87" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">x</text>
+  <text x="103" y="13" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">y</text>
+</svg>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> From the top of a 200 ft cliff, the angle of depression to a boat is 15°. How far is the boat from the base of the cliff?<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Convert to radians: &nbsp; (a) 210° &nbsp; (b) −45° &nbsp; (c) 315°<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Convert to degrees: &nbsp; (a) 4π/3 &nbsp; (b) 3π/2 &nbsp; (c) 11π/6<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> Find two coterminal angles (one positive, one negative) for −250°.<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> A sector has r = 12 and θ = 2π/3. Find its arc length and area.<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Find the reference angle: &nbsp; (a) 310° &nbsp; (b) 7π/6 &nbsp; (c) −80°<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Evaluate exactly: &nbsp; (a) cos 300° &nbsp; (b) sin 330° &nbsp; (c) tan 210°<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Find all 6 trig values for the angle θ in standard position whose terminal side passes through the point (−5, 12).<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 3 (8.1–8.3) ══════════════════ -->
+<div id="q3" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 3 &nbsp;·&nbsp; Sections 8.1–8.3</h2><p class="q-sub">Right Triangle Trig, Radian Measure &amp; Trig of Any Angle</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Find sin θ, cos θ, tan θ for a right triangle with legs 8 and 15.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Given cos θ = −4/5 and θ is in Q II, find sin θ, tan θ, and cot θ.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Solve the right triangle: one leg = 7, one angle = 38°. Find the other leg and hypotenuse.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> A surveyor measures the angle of elevation to a mountaintop to be 32° from a distance of 1.2 km. Find the height of the mountain.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Convert to radians: &nbsp; (a) 72° &nbsp; (b) 300° &nbsp; (c) 540°<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Convert to degrees: &nbsp; (a) 7π/4 &nbsp; (b) 5π/3 &nbsp; (c) 4π<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> A pendulum swings through an angle of π/6 radians. If the pendulum arm is 90 cm long, find the arc length swept.<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Find the area of a sector with r = 10 cm and θ = 150°. (Convert θ first.)<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> Evaluate exactly: &nbsp; (a) sin(−90°) &nbsp; (b) cos 180° &nbsp; (c) tan 90°<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Evaluate: &nbsp; (a) sin(7π/6) &nbsp; (b) cos(5π/4) &nbsp; (c) tan(4π/3)<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Find all angles θ in [0°, 360°] where sin θ = −√3/2.<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Find all angles θ in [0, 2π] where cos θ = √2/2.<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> A clock has an hour hand 5 cm long. How far does the tip of the hour hand travel in 4 hours? What is the area swept by the hand?<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 4 (8.4–8.6) ══════════════════ -->
+<div id="q4" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 4 &nbsp;·&nbsp; Sections 8.4–8.6</h2><p class="q-sub">Graphing Sine, Cosine, Other Trig Functions &amp; Modeling</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> State the amplitude and period of y = 4sin(3x).<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> State the amplitude and period of y = −2cos(πx/3).<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> State amplitude, period, phase shift, and midline of y = 3sin(2x − π/2) + 1. Then sketch one complete cycle on the axes below.
+<div class="work"></div>
+<svg viewBox="0 0 280 110" width="100%" style="max-height:100px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="70" y1="8" x2="70" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="140" y1="8" x2="140" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="210" y1="8" x2="210" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="8" x2="270" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="28" x2="276" y2="28" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="80" x2="276" y2="80" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="5" x2="26" y2="104" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <line x1="23" y1="54" x2="278" y2="54" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <text x="70" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="140" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="210" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="21" y="57" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="21" y="31" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">max</text>
+  <text x="21" y="83" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">min</text>
+</svg>
+</div>
+<div class="prob"><span class="pn">4.</span> State all features of y = −cos(x + π/4) − 2. Then sketch one complete cycle on the axes below.
+<div class="work"></div>
+<svg viewBox="0 0 280 110" width="100%" style="max-height:100px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="70" y1="8" x2="70" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="140" y1="8" x2="140" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="210" y1="8" x2="210" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="8" x2="270" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="28" x2="276" y2="28" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="80" x2="276" y2="80" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="5" x2="26" y2="104" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <line x1="23" y1="54" x2="278" y2="54" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <text x="70" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="140" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="210" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="21" y="57" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="21" y="31" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">max</text>
+  <text x="21" y="83" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">min</text>
+</svg>
+</div>
+<div class="prob"><span class="pn">5.</span> The graph of a sinusoidal function is shown. Identify the amplitude, period, phase shift, midline, and write its equation.
+<svg id="g4p5" viewBox="0 0 280 134" width="100%" style="max-height:122px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="90" y1="9" x2="90" y2="121" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="150" y1="9" x2="150" y2="121" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="210" y1="9" x2="210" y2="121" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="9" x2="270" y2="121" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="28" y1="18" x2="274" y2="18" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.6"/>
+  <line x1="28" y1="118" x2="274" y2="118" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.6"/>
+  <line x1="28" y1="68" x2="274" y2="68" stroke="#3b8bd4" stroke-width="0.9" stroke-dasharray="5 3" opacity="0.55"/>
+  <line x1="28" y1="5" x2="28" y2="126" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="25" y1="93" x2="276" y2="93" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <path id="g4p5w" fill="none" stroke="#3b8bd4" stroke-width="2.2"/>
+  <text x="90" y="130" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="150" y="130" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="210" y="130" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="130" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="23" y="21" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3</text>
+  <text x="23" y="71" text-anchor="end" font-size="8" fill="#3b8bd4" font-family="Georgia,serif">1</text>
+  <text x="23" y="96" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="23" y="121" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−1</text>
+</svg>
+<script>(function(){
+  var ox=28,W=242,fn=function(x){return 2*Math.sin(x-Math.PI/3)+1;};
+  var sY=function(y){return 118-(y+1)*25;};
+  var d='';for(var i=0;i<=W;i++)d+=(i===0?'M':'L')+(ox+i)+','+sY(fn(i*2*Math.PI/W)).toFixed(1);
+  var p=document.getElementById('g4p5w');if(p){p.setAttribute('d',d);
+    var ns='http://www.w3.org/2000/svg';
+    var dot=document.createElementNS(ns,'circle');
+    var mx=ox+W*5/12, my=sY(3);
+    dot.setAttribute('cx',mx.toFixed(1));dot.setAttribute('cy',my.toFixed(1));dot.setAttribute('r','3.5');dot.setAttribute('fill','#d4a030');
+    p.parentNode.insertBefore(dot,p.nextSibling);
+    var lbl=document.createElementNS(ns,'text');
+    lbl.setAttribute('x',(mx+5).toFixed(1));lbl.setAttribute('y',(my+4).toFixed(1));
+    lbl.setAttribute('font-size','8');lbl.setAttribute('fill','#d4a030');lbl.setAttribute('font-family','Georgia,serif');
+    lbl.textContent='(5π/6, 3)';p.parentNode.insertBefore(lbl,dot.nextSibling);
+  }
+})()</script>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Write the equation of the function whose graph is shown. Identify all key features.
+<svg id="g4p6" viewBox="0 0 280 130" width="100%" style="max-height:118px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="89" y1="8" x2="89" y2="118" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="150" y1="8" x2="150" y2="118" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="211" y1="8" x2="211" y2="118" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="271" y1="8" x2="271" y2="118" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="28" y1="14" x2="274" y2="14" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="114" x2="274" y2="114" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="64" x2="274" y2="64" stroke="#38a064" stroke-width="0.9" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="28" y1="5" x2="28" y2="122" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="25" y1="81" x2="274" y2="81" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <path id="g4p6w" fill="none" stroke="#38a064" stroke-width="2.2"/>
+  <text x="89" y="126" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="150" y="126" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="211" y="126" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="271" y="126" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="23" y="17" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">4</text>
+  <text x="23" y="67" text-anchor="end" font-size="8" fill="#38a064" font-family="Georgia,serif">1</text>
+  <text x="23" y="84" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="23" y="117" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−2</text>
+</svg>
+<script>(function(){
+  var ox=28,W=243,fn=function(x){return -3*Math.cos(2*x)+1;};
+  var sY=function(y){return 14+(4-y)*(100/6);};
+  var d='';for(var i=0;i<=W;i++)d+=(i===0?'M':'L')+(ox+i)+','+sY(fn(i*2*Math.PI/W)).toFixed(1);
+  var p=document.getElementById('g4p6w');if(p){p.setAttribute('d',d);
+    var ns='http://www.w3.org/2000/svg';
+    [{cx:89,cy:sY(4),lbl:'(π/2, 4)',col:'#d4a030'},{cx:28,cy:sY(-2),lbl:'(0, −2)',col:'#9a4a2a'}].forEach(function(pt){
+      var dot=document.createElementNS(ns,'circle');
+      dot.setAttribute('cx',pt.cx);dot.setAttribute('cy',pt.cy.toFixed(1));dot.setAttribute('r','3.5');dot.setAttribute('fill',pt.col);
+      p.parentNode.appendChild(dot);
+      var lbl=document.createElementNS(ns,'text');
+      lbl.setAttribute('x',pt.cx+5);lbl.setAttribute('y',(pt.cy+4).toFixed(1));
+      lbl.setAttribute('font-size','8');lbl.setAttribute('fill',pt.col);lbl.setAttribute('font-family','Georgia,serif');
+      lbl.textContent=pt.lbl;p.parentNode.appendChild(lbl);
+    });
+  }
+})()</script>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> State the period and equations of vertical asymptotes for y = tan(x/2).<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> State the period and asymptotes of y = 3cot(2x).<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> Find the period and vertical asymptotes of y = sec(πx).<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Find the vertical asymptotes of y = 2csc(x/3) on [0, 6π].<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> The water depth at a dock follows d = 4sin(πt/6) + 7, where t is hours. Find the max and min depths and the period.<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> A Ferris wheel with diameter 50 m completes one revolution in 3 minutes. A rider starts at the bottom (height 0). Write a sine model for height h as a function of time t.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Average monthly temperature (°F) in a city: Jan = 28, Jul = 76. Write a sinusoidal model y = a·cos(b(t − h)) + k where t = month number (Jan=1).<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 5 (8.4–8.6) ══════════════════ -->
+<div id="q5" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 5 &nbsp;·&nbsp; Sections 8.4–8.6</h2><p class="q-sub">Graphing Sine, Cosine, Other Trig Functions &amp; Modeling</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> State amplitude, period, phase shift, and midline of y = (1/2)sin(4x + π) − 3.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> State all features of y = 5cos(2x − π/3) + 2.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Write the equation of the sinusoidal function whose graph is shown. Identify amplitude, period, phase shift, and midline.
+<svg id="g5p3" viewBox="0 0 280 130" width="100%" style="max-height:118px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="89" y1="8" x2="89" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="150" y1="8" x2="150" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="211" y1="8" x2="211" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="271" y1="8" x2="271" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="28" y1="12" x2="274" y2="12" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="112" x2="274" y2="112" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="5" x2="28" y2="124" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="25" y1="62" x2="274" y2="62" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <path id="g5p3w" fill="none" stroke="#ba7517" stroke-width="2.2"/>
+  <text x="89" y="128" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="150" y="128" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="211" y="128" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="271" y="128" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="23" y="15" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3</text>
+  <text x="23" y="65" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="23" y="115" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−3</text>
+</svg>
+<script>(function(){
+  var ox=28,W=243,fn=function(x){return 3*Math.sin(x+Math.PI/4);};
+  var sY=function(y){return 62-y*(100/6);};
+  var d='';for(var i=0;i<=W;i++)d+=(i===0?'M':'L')+(ox+i)+','+sY(fn(i*2*Math.PI/W)).toFixed(1);
+  var p=document.getElementById('g5p3w');if(p){p.setAttribute('d',d);
+    var ns='http://www.w3.org/2000/svg';
+    var maxX=ox+W/8, maxY=sY(3);
+    var dot=document.createElementNS(ns,'circle');
+    dot.setAttribute('cx',maxX.toFixed(1));dot.setAttribute('cy',maxY.toFixed(1));dot.setAttribute('r','3.5');dot.setAttribute('fill','#d4a030');
+    p.parentNode.appendChild(dot);
+    var lbl=document.createElementNS(ns,'text');
+    lbl.setAttribute('x',(maxX+5).toFixed(1));lbl.setAttribute('y',(maxY+4).toFixed(1));
+    lbl.setAttribute('font-size','8');lbl.setAttribute('fill','#d4a030');lbl.setAttribute('font-family','Georgia,serif');
+    lbl.textContent='(π/4, 3)';p.parentNode.appendChild(lbl);
+    var z1=document.createElementNS(ns,'circle');
+    var z1x=ox+W*3/8;
+    z1.setAttribute('cx',z1x.toFixed(1));z1.setAttribute('cy','62');z1.setAttribute('r','2.5');z1.setAttribute('fill','var(--color-text-secondary)');z1.setAttribute('opacity','0.5');
+    p.parentNode.appendChild(z1);
+  }
+})()</script>
+<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> A sinusoidal graph has max value 7 and min value −3. What are the amplitude and midline?<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> State the period and asymptotes of y = −2tan(x/3).<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> State the period and asymptotes of y = cot(πx/2).<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> The asymptotes of y = a·sec(bx) occur at x = π/6 + nπ/3 for integers n. Find b.<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Describe how y = 2csc(x) − 1 relates to y = 2sin(x) − 1. Where are the asymptotes?<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> A sinusoidal graph passes through (0, 3) and reaches its first max at (π/4, 7). Plot these points on the axes and write an equation.
+<svg viewBox="0 0 280 110" width="100%" style="max-height:100px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="70" y1="8" x2="70" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="140" y1="8" x2="140" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="210" y1="8" x2="210" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="8" x2="270" y2="100" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="28" x2="276" y2="28" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="80" x2="276" y2="80" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="5" x2="26" y2="104" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <line x1="23" y1="54" x2="278" y2="54" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <text x="70" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="140" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="210" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="108" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="21" y="57" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+</svg>
+<div class="work"></div>
+</div>
+<div class="prob"><span class="pn">10.</span> A sound wave has frequency 440 Hz (cycles per second) and amplitude 0.5. Write a model y = A·sin(2πft).<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> The height of a buoy in meters: h = 2.5sin(πt/4) + 1. Find the period, max height, time of first max.<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> A sinusoidal function has zeros at x = 0 and x = π and reaches max value 4 at x = π/2. Write the equation.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Use the data to write a sinusoidal model: Monthly average temperature (°C): Jan=2, Apr=10, Jul=24, Oct=12. Identify amplitude, midline, period, and write y = a·sin(bx − h) + k.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 6 (8.4–8.6) ══════════════════ -->
+<div id="q6" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 6 &nbsp;·&nbsp; Sections 8.4–8.6</h2><p class="q-sub">Graphing Sine, Cosine, Other Trig Functions &amp; Modeling</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> For y = 4sin(πx/2 − π/4) + 1, find: amplitude, period, phase shift, midline, max, min.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> For y = −3cos(2x + π/2) − 2, find: amplitude, period, phase shift, midline.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> The graph below shows one branch of a tangent function. Find the period, vertical asymptotes, and write its equation.
+<svg id="g6p3" viewBox="0 0 280 130" width="100%" style="max-height:118px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <!-- Asymptotes -->
+  <line x1="28" y1="5" x2="28" y2="122" stroke="#9a4a2a" stroke-width="1" stroke-dasharray="5 3" opacity="0.7"/>
+  <line x1="154" y1="5" x2="154" y2="122" stroke="#9a4a2a" stroke-width="1" stroke-dasharray="5 3" opacity="0.7"/>
+  <line x1="280" y1="5" x2="280" y2="122" stroke="#9a4a2a" stroke-width="1" stroke-dasharray="5 3" opacity="0.7"/>
+  <!-- Grid -->
+  <line x1="91" y1="8" x2="91" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="217" y1="8" x2="217" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <!-- Axes -->
+  <line x1="25" y1="65" x2="278" y2="65" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <!-- Tangent curves -->
+  <path id="g6p3w1" fill="none" stroke="#ba7517" stroke-width="2.2"/>
+  <path id="g6p3w2" fill="none" stroke="#ba7517" stroke-width="2.2"/>
+  <!-- Labels -->
+  <text x="28" y="127" text-anchor="middle" font-size="8" fill="#9a4a2a" font-family="Georgia,serif">−π/2</text>
+  <text x="91" y="127" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−π/4</text>
+  <text x="154" y="127" text-anchor="middle" font-size="8" fill="#9a4a2a" font-family="Georgia,serif">π/2</text>
+  <text x="217" y="127" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/4</text>
+  <text x="21" y="65" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="21" y="36" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3</text>
+  <text x="21" y="98" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−3</text>
+  <text x="33" y="12" font-size="8" fill="#9a4a2a" font-family="Georgia,serif">asym.</text>
+</svg>
+<script>(function(){
+  var ox=28,W=252,cyS=65,scale=10;
+  var sX=function(x){return ox+(x+Math.PI/2)*W/Math.PI;};
+  var sY=function(y){return cyS-y*scale;};
+  var branches=['g6p3w1','g6p3w2'];
+  var ranges=[[-Math.PI/2+0.05,Math.PI/2-0.05],[Math.PI/2+0.05,3*Math.PI/2-0.05]];
+  branches.forEach(function(id,bi){
+    var p=document.getElementById(id);if(!p)return;
+    var d='';var xMin=ranges[bi][0],xMax=ranges[bi][1];var steps=200;
+    for(var i=0;i<=steps;i++){
+      var x=xMin+(xMax-xMin)*i/steps;
+      var y=2*Math.tan(x);
+      if(Math.abs(y)>6){d+=' ';continue;}
+      var svgX=sX(x),svgY=sY(y);
+      d+=(d===''||d[d.length-1]===' '?'M':'L')+svgX.toFixed(1)+','+svgY.toFixed(1);
+    }
+    p.setAttribute('d',d);
+  });
+  var ns='http://www.w3.org/2000/svg';
+  var px=ox+W/4,py=sY(2);
+  var dot=document.createElementNS(ns,'circle');
+  dot.setAttribute('cx',px.toFixed(1));dot.setAttribute('cy',py.toFixed(1));dot.setAttribute('r','3');dot.setAttribute('fill','#d4a030');
+  document.getElementById('g6p3w1').parentNode.appendChild(dot);
+  var lbl=document.createElementNS(ns,'text');
+  lbl.setAttribute('x',(px+5).toFixed(1));lbl.setAttribute('y',(py+4).toFixed(1));
+  lbl.setAttribute('font-size','8');lbl.setAttribute('fill','#d4a030');lbl.setAttribute('font-family','Georgia,serif');
+  lbl.textContent='(π/4, 2)';document.getElementById('g6p3w1').parentNode.appendChild(lbl);
+})()</script>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Write the equation of the function graphed below. (Hint: it is a cosine function — read the max, min, and phase shift carefully.)
+<svg id="g6p4" viewBox="0 0 280 130" width="100%" style="max-height:118px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="89" y1="8" x2="89" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="150" y1="8" x2="150" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="211" y1="8" x2="211" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="271" y1="8" x2="271" y2="120" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="28" y1="22" x2="274" y2="22" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="111" x2="274" y2="111" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2" opacity="0.5"/>
+  <line x1="28" y1="66" x2="274" y2="66" stroke="#3b8bd4" stroke-width="0.9" stroke-dasharray="5 3" opacity="0.5"/>
+  <line x1="28" y1="5" x2="28" y2="124" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="25" y1="88" x2="274" y2="88" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <path id="g6p4w" fill="none" stroke="#3b8bd4" stroke-width="2.2"/>
+  <text x="89" y="127" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="150" y="127" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">π</text>
+  <text x="211" y="127" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="271" y="127" text-anchor="middle" font-size="8.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="23" y="25" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3</text>
+  <text x="23" y="69" text-anchor="end" font-size="8" fill="#3b8bd4" font-family="Georgia,serif">0</text>
+  <text x="23" y="91" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−1</text>
+  <text x="23" y="114" text-anchor="end" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">−3</text>
+</svg>
+<script>(function(){
+  var ox=28,W=243;
+  var fn=function(x){return -3*Math.cos(x-Math.PI/3);};
+  var sY=function(y){return 22+(3-y)*(89/6);};
+  var d='';for(var i=0;i<=W;i++)d+=(i===0?'M':'L')+(ox+i)+','+sY(fn(i*2*Math.PI/W)).toFixed(1);
+  var p=document.getElementById('g6p4w');if(p){p.setAttribute('d',d);
+    var ns='http://www.w3.org/2000/svg';
+    var mnX=ox+W/3, mnY=sY(-3);
+    var dot=document.createElementNS(ns,'circle');
+    dot.setAttribute('cx',mnX.toFixed(1));dot.setAttribute('cy',mnY.toFixed(1));dot.setAttribute('r','3.5');dot.setAttribute('fill','#9a4a2a');
+    p.parentNode.appendChild(dot);
+    var lbl=document.createElementNS(ns,'text');
+    lbl.setAttribute('x',(mnX+5).toFixed(1));lbl.setAttribute('y',(mnY-3).toFixed(1));
+    lbl.setAttribute('font-size','8');lbl.setAttribute('fill','#9a4a2a');lbl.setAttribute('font-family','Georgia,serif');
+    lbl.textContent='(4π/3, −3)';p.parentNode.appendChild(lbl);
+  }
+})()</script>
+<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Find the period and all asymptotes in [−π, π] for y = tan(2x + π/2).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Sketch y = cos(x) and y = sec(x) on the axes below for x ∈ [0, 2π]. State where sec(x) has local minima and maxima.
+<svg viewBox="0 0 280 120" width="100%" style="max-height:110px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="70" y1="8" x2="70" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="140" y1="8" x2="140" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="210" y1="8" x2="210" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="8" x2="270" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="24" x2="276" y2="24" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="90" x2="276" y2="90" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="5" x2="26" y2="112" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <line x1="23" y1="57" x2="278" y2="57" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <text x="70" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="140" y="117" text-anchor="middle" font-size="8" fill="#9a4a2a" font-family="Georgia,serif">π</text>
+  <text x="210" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="21" y="60" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="21" y="27" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">1</text>
+  <text x="21" y="93" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">−1</text>
+  <text x="140" y="8" text-anchor="middle" font-size="7.5" fill="#9a4a2a" font-family="Georgia,serif">asym.</text>
+</svg>
+<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Find the vertical asymptotes of y = csc(2x − π/2) on [0, 2π].<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> A spring oscillates: x(t) = 3cos(4πt) − 1. Find the amplitude, period, and equilibrium position.<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> Tidal heights (meters): high = 4.2 at t=3h, low = 0.8 at t=9h. Write a cosine model h(t).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> For what values of x in [0, 2π] is y = 2sin(x) + 1 ≥ 2?<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">11.</span> A Ferris wheel has radius 30 ft and its center is 35 ft above the ground. It rotates once every 40 seconds. A rider boards at the bottom. Write a sinusoidal function for the rider's height h(t) and find the height after 15 seconds.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 7 (Full Chapter) ══════════════════ -->
+<div id="q7" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 7 &nbsp;·&nbsp; Chapter 8 Full Review</h2><p class="q-sub">Covers all sections 8.1–8.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A right triangle has legs 9 and 40. Find sin θ, cos θ, tan θ for the acute angle θ opposite the leg of 9.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Find the missing sides of a 30-60-90 triangle whose shortest side is 5.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Convert 225° to radians and find its reference angle.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Find the area of a sector with r = 9 and θ = 4π/3.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Find sin θ, cos θ, tan θ for the angle whose terminal side passes through (−6, −8).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Evaluate: (a) cos(−π/4) &nbsp; (b) sin(5π/3) &nbsp; (c) tan(7π/6)<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> Find amplitude, period, phase shift, midline of y = 3sin(2x − π/3) + 2.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> State features of y = −4cos(πx/2 + π/4) − 1.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Find period and asymptotes of y = 2tan(x/4).<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Write a cosine model: amplitude 8, period 6π, midline y = −3, phase shift π to the right.<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Find all θ in [0°, 360°] such that cos θ = −1/2.<div class="work"></div></div>
+<div class="prob"><span class="pn">12.</span> Find vertical asymptotes of y = csc(x − π/4) on [0, 2π].<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> A buoy bobs up and down. Its height above the ocean floor: max 14 ft, min 6 ft, period 8 seconds. At t=0 the buoy is at its minimum. Write a sinusoidal model and find the height at t=5 seconds.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 8 (Full Chapter) ══════════════════ -->
+<div id="q8" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 8 &nbsp;·&nbsp; Chapter 8 Full Review</h2><p class="q-sub">Covers all sections 8.1–8.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> From a point 30 m from a tree, the angle of elevation to the top is 52°. Find the height of the tree.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Given cot θ = −3/4 and sin θ > 0, find all 6 trig values for θ.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> A sector has arc length 15 cm and radius 9 cm. Find the central angle θ in radians and degrees.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Evaluate exactly: (a) sin(11π/6) &nbsp; (b) cos(3π/4) &nbsp; (c) tan(−π/6)<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Find all angles θ in [0, 2π] where tan θ = 1.<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> Find amplitude, period, phase shift, midline of y = (3/2)sin(x/2 + π/4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Write a sine function: amplitude 5, period 3π, midline y = 1, graph passes through (0, 1) going upward.<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Describe the relationship between y = cot(x) and y = tan(x). Are there values of x where they are equal?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Find the period and asymptotes of y = 4sec(2x − π/2).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> For y = 3cos(2x) + 1, find: (a) all zeros on [0, 2π] and (b) when y ≥ 1.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">11.</span> The displacement of a mass on a spring is x(t) = 4cos(3t) + 2sin(3t). Find the amplitude of the combined oscillation using the identity A·cos(3t − φ) form, where A = √(4²+2²) and tan φ = 2/4.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">12.</span> Monthly high temperatures (°F): Jan=38, Apr=58, Jul=86, Oct=62. Write a cosine model, stating all parameters.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 9 (Full Chapter) ══════════════════ -->
+<div id="q9" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 9 &nbsp;·&nbsp; Chapter 8 Full Review</h2><p class="q-sub">Covers all sections 8.1–8.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Two observers on opposite sides of a tower measure angles of elevation of 35° and 42°. The tower stands between them 200 m apart. Find the tower height.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Given sec θ = −13/5 and tan θ < 0, find sin θ, cos θ, and csc θ.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> A circle has a sector with area 24π cm² and central angle 3π/4. Find the radius.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Evaluate: (a) csc(7π/4) &nbsp; (b) sec(2π/3) &nbsp; (c) cot(5π/6)<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Find amplitude, period, phase shift, midline of y = −2cos(3x + π) + 4.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Write a cosine model for a graph with max 10, min 2, period 6, reaching its max at x = 1.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Find the period and all asymptotes in [0, 2π] of y = tan(2x − π/4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> State amplitude, period, midline, asymptotes of y = −(1/2)csc(x/2 + π/4).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">9.</span> Solve for x in [0, 2π]: 2sin(x) − √3 = 0<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> Solve for x in [0°, 360°]: 2cos²(x) + cos(x) − 1 = 0<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">11.</span> A 20 ft flagpole casts a shadow. At 2 PM the shadow is 14 ft long. Find the angle of elevation of the sun. Then find the shadow length when the angle of elevation is 60°.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">12.</span> Daylight hours in a city: max 15.5 h on June 21 (day 172), min 8.5 h on Dec 21 (day 355). Write a sinusoidal model D(t) for daylight hours as a function of day number t.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 10 (Challenge) ══════════════════ -->
+<div id="q10" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 10 &nbsp;·&nbsp; Chapter 8 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A 12 ft ladder leans against a wall. The base slides away at 2 ft/sec. When the base is 6 ft from the wall, find the rate at which the top of the ladder slides down and the angle θ the ladder makes with the ground.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Prove that (sin θ + cos θ)² = 1 + 2sin θ cos θ using the Pythagorean identity. Then evaluate this expression when θ = π/4.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Given sin θ = 5/13 and θ in Q II, find the exact value of: (a) cos(2θ) using cos(2θ) = 1 − 2sin²θ &nbsp; (b) sin(π − θ)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> A sector with central angle θ is inscribed in a circle of radius r. Show that for fixed arc length s, the area A = s·r/2 and then find the area when s = 10 and r = 6.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Find all solutions in [0, 2π] of: sin(2x) = sin(x). (Use double angle: sin(2x) = 2sin(x)cos(x).)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> For y = A·sin(bx − h) + k, one maximum occurs at (π/6, 11) and an adjacent minimum at (5π/6, 3). Find A, b, h, k.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">7.</span> The tide height at a harbor: H(t) = 6 + 4sin(π·t/6 − π/2), where t is hours after midnight. Find: (a) the max and min tide heights and when they occur; (b) when the tide height is exactly 8 ft during the first 12 hours; (c) total rise from low tide to high tide.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> A Ferris wheel of radius 25 m has its center 30 m above ground and rotates once every 60 seconds. A rider's height is h(t) = −25cos(πt/30) + 30. (a) Verify this formula at t=0 (bottom) and t=30 (top). (b) Find all times in the first revolution when h = 42.5 m. (c) Convert the model to use sine instead of cosine.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 11 (Challenge) ══════════════════ -->
+<div id="q11" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 11 &nbsp;·&nbsp; Chapter 8 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> From the top of a 100 m building, you observe two cars on the street. Car A has an angle of depression of 20° and Car B of 35°, both in the same direction. Find the distance between the two cars.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> An angle α has sin α = p. Express cos(2α) in terms of p only. Then evaluate when p = 3/5.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> Find all x in [0, 2π] satisfying: 4cos²(x) − 3 = 0. Express answers exactly.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Find all x in [0, 2π] satisfying: sin(x) + cos(x) = 1. (Square both sides; check for extraneous solutions.)<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> The function f(x) = a·sin(bx) + c·cos(bx) can be written as R·sin(bx + φ) where R = √(a²+c²) and tan φ = c/a. Rewrite f(x) = 3sin(2x) + 4cos(2x) in this form. Find R and φ.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Graph y = 2cos(x) and y = sec(x) on the axes below for x ∈ [0, 2π]. State all intersections. Explain why at points of intersection, cos²(x) = 1/2.
+<svg viewBox="0 0 280 120" width="100%" style="max-height:110px;display:block;border:0.5px solid var(--color-border-tertiary);margin:2px 0">
+  <line x1="70" y1="8" x2="70" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="140" y1="8" x2="140" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="210" y1="8" x2="210" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="270" y1="8" x2="270" y2="108" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="24" x2="276" y2="24" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="90" x2="276" y2="90" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+  <line x1="26" y1="5" x2="26" y2="112" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <line x1="23" y1="57" x2="278" y2="57" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.55"/>
+  <text x="70" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">π/2</text>
+  <text x="140" y="117" text-anchor="middle" font-size="8" fill="#9a4a2a" font-family="Georgia,serif">π</text>
+  <text x="210" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">3π/2</text>
+  <text x="270" y="117" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2π</text>
+  <text x="21" y="60" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">0</text>
+  <text x="21" y="27" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">2</text>
+  <text x="21" y="93" text-anchor="end" font-size="7.5" fill="var(--color-text-secondary)" font-family="Georgia,serif">−2</text>
+</svg>
+<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">7.</span> A weight on a spring is pulled 8 cm below equilibrium and released. Its position as a function of time is x(t) = 8cos(3πt), where x is in cm and t in seconds. (a) Find the period and frequency of oscillation. (b) Find when the weight first passes through equilibrium. (c) Find all times in the first second when |x| = 4. (d) Find the average position over one full period.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> A surveillance camera rotates back and forth. The angle of rotation from center is θ(t) = 40sin(πt/6) degrees. (a) Find the max angle and period of rotation. (b) The horizontal width d the camera covers on a wall 20 ft away is d(t) = 2·20·tan(θ(t)) — use degree mode. Simplify this expression. (c) Find d when t = 3 seconds.<div class="work-xl"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ ANSWER KEY ══════════════════ -->
+<div id="ak" class="tab-pane"><div class="page">
+<h1>Chapter 8 — Answer Key</h1>
+<p class="subtitle">Teacher Use Only &nbsp;|&nbsp; Big Ideas Math IM3</p>
+
+<h2>Quiz 1 — Sections 8.1–8.3</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> hyp=13; sin=5/13, cos=12/13, tan=5/12; <span class="ak-ans">csc=13/5, sec=13/12, cot=12/5</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> sin²+cos²=1; cos²=1−9/25=16/25; <span class="ak-ans">cos=4/5, tan=3/4</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> sin45°=x/14; x=14·(√2/2)=<span class="ak-ans">7√2</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> sin60°=9/hyp; hyp=9/(√3/2)=<span class="ak-ans">6√3</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> tan θ=7/24; θ=tan⁻¹(7/24)≈<span class="ak-ans">16.3°</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> h=50·tan65°≈<span class="ak-ans">107.2 ft</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> (a) 5π/6 &nbsp;(b) 3π/2 &nbsp;(c) <span class="ak-ans">−2π/3</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> (a) 150° &nbsp;(b) 315° &nbsp;(c) <span class="ak-ans">−60°</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> Positive: 130+360=<span class="ak-ans">490°</span>; Negative: 130−360=<span class="ak-ans">−230°</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> s=8·(3π/4)=<span class="ak-ans">6π cm</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> (a) 45° &nbsp;(b) π/3 &nbsp;(c) <span class="ak-ans">30°</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> (a) sin150°=<span class="ak-ans">1/2</span> &nbsp;(b) cos240°=<span class="ak-ans">−1/2</span> &nbsp;(c) tan135°=<span class="ak-ans">−1</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> ω=3·2π=6π rad/s; v=r·ω=2·6π=<span class="ak-ans">12π ft/s ≈ 37.7 ft/s</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 2 — Sections 8.1–8.3</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> other leg=√(289−64)=15; sin=8/17, cos=15/17, tan=8/15; <span class="ak-ans">csc=17/8, sec=17/15, cot=15/8</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> Q III: both negative; r=√(25+144)=13; <span class="ak-ans">sin=−5/13, cos=−12/13</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> adj=20·cos30°=20·(√3/2)=<span class="ak-ans">10√3</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> h=15·sin72°≈<span class="ak-ans">14.27 ft</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> sin θ=11/20; θ=sin⁻¹(11/20)≈<span class="ak-ans">33.4°</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> tan15°=200/d; d=200/tan15°≈<span class="ak-ans">746.4 ft</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> (a) 7π/6 &nbsp;(b) −π/4 &nbsp;(c) <span class="ak-ans">7π/4</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> (a) 240° &nbsp;(b) 270° &nbsp;(c) <span class="ak-ans">330°</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> Positive: 110°; Negative: <span class="ak-ans">−610°</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> s=12·(2π/3)=8π; A=(1/2)(144)(2π/3)=<span class="ak-ans">48π</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> (a) 50° &nbsp;(b) π/6 &nbsp;(c) <span class="ak-ans">80°</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> (a) 1/2 &nbsp;(b) −1/2 &nbsp;(c) <span class="ak-ans">1/√3 = √3/3</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> r=√(25+144)=13; sin=12/13, cos=−5/13, tan=−12/5; <span class="ak-ans">csc=13/12, sec=−13/5, cot=−5/12</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 3 — Sections 8.1–8.3</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> hyp=17; <span class="ak-ans">sin=8/17, cos=15/17, tan=8/15</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> cos=−4/5; sin=3/5 (Q II, sin>0); <span class="ak-ans">tan=−3/4, cot=−4/3</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> adj=7/tan38°≈8.96; hyp=7/sin38°≈<span class="ak-ans">11.36</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> h=1200·tan32°≈<span class="ak-ans">749.9 m ≈ 0.75 km</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (a) 2π/5 &nbsp;(b) 5π/3 &nbsp;(c) <span class="ak-ans">3π</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (a) 315° &nbsp;(b) 300° &nbsp;(c) <span class="ak-ans">720°</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> s=90·(π/6)=15π≈<span class="ak-ans">47.1 cm</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> θ=150°=5π/6; A=(1/2)(100)(5π/6)=<span class="ak-ans">250π/6 ≈ 130.9 cm²</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> (a) −1 &nbsp;(b) −1 &nbsp;(c) <span class="ak-ans">undefined</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> (a) −1/2 &nbsp;(b) −√2/2 &nbsp;(c) <span class="ak-ans">√3</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> θ'=60°; Q III and Q IV: <span class="ak-ans">240° and 300°</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> θ'=π/4; Q I and Q IV: <span class="ak-ans">π/4 and 7π/4</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> 4 hours = 4/12 of circle = θ=2π/3; s=5·(2π/3)=10π/3≈<span class="ak-ans">10.47 cm</span>; A=(1/2)(25)(2π/3)=<span class="ak-ans">25π/3≈26.2 cm²</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 4 — Sections 8.4–8.6</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> Amp=4; Period=2π/3</div>
+<div class="ak-item"><span class="ak-num">2.</span> Amp=2; Period=2π/(π/3)=6</div>
+<div class="ak-item"><span class="ak-num">3.</span> Amp=3; Period=π; Phase shift=π/4 right; Midline y=1</div>
+<div class="ak-item"><span class="ak-num">4.</span> Amp=1; Period=2π; Phase shift=π/4 left; Midline y=−2</div>
+<div class="ak-item"><span class="ak-num">5.</span> b=2π/(4π)=1/2; h=π/4; <span class="ak-ans">y=6sin(x/2 − π/4)+3</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> b=2π/π=2; <span class="ak-ans">y=2cos(2x)−1</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">7.</span> Period=2π; Asymptotes: x=π+2nπ, i.e. x=π, −π, 3π, …</div>
+<div class="ak-item"><span class="ak-num">8.</span> Period=π/2; Asymptotes: 2x=nπ → x=nπ/2</div>
+<div class="ak-item"><span class="ak-num">9.</span> Period=2; Asymptotes: πx=(2n+1)π/2 → x=(2n+1)/2</div>
+<div class="ak-item"><span class="ak-num">10.</span> x/3=nπ → x=3nπ; on [0,6π]: x=<span class="ak-ans">0, 3π, 6π</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> Max=11 ft, Min=3 ft; Period=12 hours</div>
+<div class="ak-item"><span class="ak-num">12.</span> Amp=25; Period=3 min; k=25 (center height); min at t=0; <span class="ak-ans">h=−25cos(2πt/3)+25</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">13.</span> a=(88−28)/2=30; k=(88+28)/2=58; T=12 months; b=2π/12=π/6; Jan=month 1 is min → cosine with negative: <span class="ak-ans">y=30cos(π(t−7)/6)+58</span> or use min at Jan: y=−30cos(π(t−1)/6)+58</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 5 — Sections 8.4–8.6</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> Amp=1/2; Period=π/2; Phase shift=π/4 left; Midline y=−3</div>
+<div class="ak-item"><span class="ak-num">2.</span> Amp=5; Period=π; Phase shift=π/6 right; Midline y=2; Max=7; Min=−3</div>
+<div class="ak-item"><span class="ak-num">3.</span> b=3; h=π/2; <span class="ak-ans">y=3sin(3x − π/2)</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> Amp=(7−(−3))/2=<span class="ak-ans">5</span>; Midline=(7+(−3))/2=<span class="ak-ans">2</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">5.</span> Period=3π; Asymptotes: x/3=π/2+nπ → x=3π/2+3nπ</div>
+<div class="ak-item"><span class="ak-num">6.</span> Period=2; Asymptotes: πx/2=nπ → x=2n (integers)</div>
+<div class="ak-item"><span class="ak-num">7.</span> sec(bx) has asymptotes at bx=π/2+nπ; given x=π/6+nπ/3: b·x=π/2 when x=π/6 → b=3; <span class="ak-ans">b=3</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> csc is reciprocal of sin; midline y=−1; asymptotes where sin=0: x=nπ, i.e. x=0, π, 2π</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">9.</span> midline k=(7+3)/2=5... wait: at x=0, y=3 (not midline if midline is 5); a=2; k=5; midline is y=5; at x=0, y=3=5+a·sin(−h)... need sin(−h)=−1 → h=π/2. Period: T=4·(π/4)=π; b=2; <span class="ak-ans">y=2sin(2x − π/2)+5</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> <span class="ak-ans">y=0.5sin(2π·440·t)=0.5sin(880πt)</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> Period=8s; Max=3.5m; first max at πt/4=π/2 → t=2s</div>
+<div class="ak-item"><span class="ak-num">12.</span> zeros at 0, π; max at π/2 → amplitude 4, k=0; <span class="ak-ans">y=4sin(x)</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> max=24 (Jul), min=2 (Jan); a=11; k=13; T=12; b=π/6; Jul is month 7 → max at t=7; <span class="ak-ans">y=11sin(πt/6 − 7π/6)+13</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 6 — Sections 8.4–8.6</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> b=π/2; Amp=4; Period=4; Phase shift=(π/4)/(π/2)=1/2 right; Midline=1; Max=5; Min=−3</div>
+<div class="ak-item"><span class="ak-num">2.</span> Amp=3; Period=π; Phase shift=π/4 left; Midline=−2</div>
+<div class="ak-item"><span class="ak-num">3.</span> b=2π/(3π)=2/3; phase shift=−π/3; <span class="ak-ans">y=5cos(2x/3 + 2π/9)+2</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> Max=6 → a=6; peak at (π/4,6) → sin(b·π/4)=1 → b·π/4=π/2 → b=2; <span class="ak-ans">a=6, b=2</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">5.</span> Period=π/2; 2x+π/2=π/2+nπ → x=nπ/2; in [−π,π]: <span class="ak-ans">x=−π, −π/2, 0, π/2, π</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> sec=1/cos; local min of sec at cos=1 → y=1; local max at cos=−1 → y=−1; <span class="ak-ans">min at x=0,2π; max at x=π</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> csc(2x−π/2)=0 has no solution; asymptotes where sin(2x−π/2)=0: 2x−π/2=nπ → x=π/4+nπ/2; on [0,2π]: <span class="ak-ans">x=π/4, 3π/4, 5π/4, 7π/4</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> Amp=3; Period=1/(2π) s; equilibrium x=−1</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">9.</span> a=(4.2−0.8)/2=1.7; k=2.5; Period=12h; b=2π/12=π/6; max at t=3 → cosine: h(t)=1.7cos(π(t−3)/6)+2.5; <span class="ak-ans">h(t)=1.7cos(πt/6 − π/2)+2.5</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> 2sin(x)≥1; sin(x)≥1/2; <span class="ak-ans">x∈[π/6, 5π/6]</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> a=30; k=35; min=5 ft at t=0; h(t)=−30cos(2πt/40)+35=−30cos(πt/20)+35; t=15: h=−30cos(3π/4)+35=−30(−√2/2)+35=15√2+35≈<span class="ak-ans">56.2 ft</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 7 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> hyp=41; <span class="ak-ans">sin=9/41, cos=40/41, tan=9/40</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> sides: 5, 5√3, 10; <span class="ak-ans">other leg=5√3, hyp=10</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> 225°=5π/4; θ'=45°=<span class="ak-ans">π/4</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> A=(1/2)(81)(4π/3)=<span class="ak-ans">54π</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> r=10; sin=−4/5, cos=−3/5, <span class="ak-ans">tan=4/3</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (a) √2/2 &nbsp;(b) −√3/2 &nbsp;(c) <span class="ak-ans">√3/3</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> Amp=3; Period=π; Phase shift=π/6 right; Midline y=2</div>
+<div class="ak-item"><span class="ak-num">8.</span> Amp=4; Period=4; Phase shift=π/2 left; Midline y=−1</div>
+<div class="ak-item"><span class="ak-num">9.</span> Period=4π; Asymptotes: x/4=π/2+nπ → <span class="ak-ans">x=2π+4nπ</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> b=2π/(6π)=1/3; h=π; <span class="ak-ans">y=8cos(x/3 − π/3)−3</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> θ'=60°; Q II and Q III: <span class="ak-ans">120° and 240°</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> csc(x−π/4)=0 has no solution; asymptotes: x−π/4=nπ → x=π/4+nπ; on [0,2π]: <span class="ak-ans">x=π/4 and x=5π/4</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> a=4; k=10; Period=8; min at t=0 → cos inverted: h=−4cos(πt/4)+10; t=5: h=−4cos(5π/4)+10=−4(−√2/2)+10=2√2+10≈<span class="ak-ans">12.83 ft</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 8 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> h=30·tan52°≈<span class="ak-ans">38.4 m</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> cot=−3/4 in Q II (sin>0): tan=−4/3; r=5; <span class="ak-ans">sin=4/5, cos=−3/5, csc=5/4, sec=−5/3, tan=−4/3</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> θ=s/r=15/9=5/3 rad; ×180/π≈<span class="ak-ans">95.5°</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> (a) −1/2 &nbsp;(b) −√2/2 &nbsp;(c) <span class="ak-ans">−1/√3=−√3/3</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> tan=1 in Q I and Q III: <span class="ak-ans">π/4 and 5π/4</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> Amp=3/2; Period=4π; Phase shift=π/2 left; Midline y=0</div>
+<div class="ak-item"><span class="ak-num">7.</span> b=2π/(3π)=2/3; no phase shift; passes (0,1) going up → sin; <span class="ak-ans">y=5sin(2x/3)+1</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> cot=cos/sin=1/tan; cot(x)=tan(x) when tan²(x)=1 → tan=±1 → <span class="ak-ans">x=π/4, 3π/4, 5π/4, 7π/4</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> Period=π; 2x−π/2=π/2+nπ → x=π/2+nπ/2; asymptotes: <span class="ak-ans">x=π/2, π, 3π/2, ...</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">10.</span> 3cos(2x)=−1; cos(2x)=−1/3; zeros: 3cos(2x)+1=0 not exact; <span class="ak-work">for zeros of y=3cos(2x)+1=0: cos(2x)=−1/3, 2x=±cos⁻¹(−1/3)+2nπ</span>; y≥1 when cos(2x)≥0: <span class="ak-ans">x∈[0,π/4]∪[3π/4,5π/4]∪[7π/4,2π]</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> A=√(16+4)=√20=2√5; tan φ=2/4=1/2; φ=tan⁻¹(1/2)≈26.57°; <span class="ak-ans">f(x)=2√5·cos(3t−26.57°)</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> max=86, min=38; a=24; k=62; T=12; Jan min → cosine inverted: <span class="ak-ans">y=24cos(π(t−7)/6)+62</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 9 — Full Chapter</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> Let h=height; from side 1: h=x·tan35°; from side 2: h=(200−x)tan42°; x·tan35°=(200−x)tan42°; x=200tan42°/(tan35°+tan42°)≈ 200(0.9004)/(0.7002+0.9004)≈112.3; h≈<span class="ak-ans">78.7 m</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> sec=hyp/adj=−13/5 → Q II (sec<0, tan<0); adj=−5, hyp=13, opp=12; <span class="ak-ans">sin=12/13, cos=−5/13, csc=13/12</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> A=(1/2)r²θ=24π; r²=48π/(3π/4)=64; r=<span class="ak-ans">8 cm</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> (a) −√2 &nbsp;(b) −2 &nbsp;(c) <span class="ak-ans">−√3</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> Amp=2; Period=2π/3; Phase shift=π/3 left; Midline y=4</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> a=4; k=6; T=6; b=2π/6=π/3; max at x=1 → cosine: <span class="ak-ans">y=4cos(π(x−1)/3)+6</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> Period=π/2; asymptotes: 2x−π/4=π/2+nπ → x=3π/8+nπ/2; on [0,2π]: <span class="ak-ans">x=3π/8, 7π/8, 11π/8, 15π/8</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> Period=4π; midline y=0; asymptotes: x/2+π/4=nπ → x=2nπ−π/2; no amp for csc</div>
+<div class="ak-item"><span class="ak-num">9.</span> sin(x)=√3/2; x=<span class="ak-ans">π/3 and 2π/3</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> (2cos x−1)(cos x+1)=0; cos x=1/2 → 60°,300°; cos x=−1 → 180°; <span class="ak-ans">60°, 180°, 300°</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> tan θ=20/14=10/7; θ=tan⁻¹(10/7)≈55.0°; shadow at 60°: tan60°=20/s → s=20/√3=<span class="ak-ans">≈11.55 ft</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> a=(15.5−8.5)/2=3.5; k=12; T=365; b=2π/365; max on day 172; cosine: <span class="ak-ans">D(t)=3.5cos(2π(t−172)/365)+12</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 10 — Challenge</h2>
+<div class="g2">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> x²+y²=144; dx/dt=2; 2x(dx/dt)+2y(dy/dt)=0; at x=6: y=√108=6√3; dy/dt=−6·2/(6√3)=<span class="ak-ans">−2/√3=−2√3/3 ft/s</span>; θ=arccos(6/12)=60°</div>
+<div class="ak-item"><span class="ak-num">2.</span> (sin+cos)²=sin²+2sincos+cos²=1+2sincos ✓; at π/4: sin=cos=√2/2; expression=1+2(1/2)=<span class="ak-ans">2</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> sin=5/13, Q II: cos=−12/13; (a) cos(2θ)=1−2(25/169)=<span class="ak-ans">119/169</span>; (b) sin(π−θ)=sinθ=<span class="ak-ans">5/13</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> s=rθ; A=(1/2)r²θ=(1/2)r·(rθ)=(1/2)r·s; A=(1/2)(6)(10)=<span class="ak-ans">30</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">5.</span> 2sin(x)cos(x)=sin(x); sin(x)(2cos(x)−1)=0; sin(x)=0 → x=0,π,2π; cos(x)=1/2 → x=π/3,5π/3; <span class="ak-ans">x=0, π/3, π, 5π/3, 2π</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> max−min=11−3=8 → 2A=8 → A=4; midpoint in time=(π/6+5π/6)/2=π/2 → max; k=(11+3)/2=7; period=2(5π/6−π/6)=2(2π/3)... wait half-period=5π/6−π/6=2π/3 → period=4π/3 → b=2π/(4π/3)=3/2; h at max: b·h=3π/2·(π/6)=... max at x=π/6: b(π/6−h/b)=0 → h=b·(π/6)=(3/2)(π/6)=π/4; <span class="ak-ans">A=4, b=3/2, h=π/4, k=7; y=4sin(3x/2 − π/4)+7</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> (a) max=10 ft at t=6h (π·6/6−π/2=π−π/2=π/2 → sin=1); min=2 ft at t=0 (sin(−π/2)=−1) ✓; (b) H=8: 4sin(πt/6−π/2)=2; sin=0.5; πt/6−π/2=π/6 → t=4h or =5π/6 → t=8h; <span class="ak-ans">t=4 h and t=8 h</span>; (c) rise=4 ft (8 to 12 at t=6, or 2 to 6... total rise is 2|a|=8 ft)</div>
+<div class="ak-item"><span class="ak-num">8.</span> (a) h(0)=−25(1)+30=5 ft ✓ (bottom); h(30)=−25(−1)+30=55 ft ✓; (b) h=42.5: −25cos(πt/30)+30=42.5; cos(πt/30)=−0.5; πt/30=2π/3 → t=20s or πt/30=4π/3 → t=40s; <span class="ak-ans">t=20s and t=40s</span>; (c) h(t)=25sin(πt/30−π/2)+30</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 11 — Challenge</h2>
+<div class="g2">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> Car A: d_A=100/tan20°≈274.7m; Car B: d_B=100/tan35°≈142.8m; distance=274.7−142.8≈<span class="ak-ans">131.9 m</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> cos(2α)=1−2sin²α=1−2p²; at p=3/5: 1−2(9/25)=1−18/25=<span class="ak-ans">7/25</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> cos²(x)=3/4; cos(x)=±√3/2; x=<span class="ak-ans">π/6, 5π/6, 7π/6, 11π/6</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> Square: 1+2sinxcosx=1; sin(2x)=0; 2x=0,π,2π,3π,4π → x=0,π/2,π,3π/2,2π; check: x=π/2: sin+cos=1✓; x=3π/2: −1+0=−1≠1 (extraneous); <span class="ak-ans">x=0, π/2, 2π</span> (also x=π works? sin π+cos π=0+(−1)=−1≠1, no)</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">5.</span> R=√(9+16)=5; tan φ=4/3; φ=tan⁻¹(4/3)≈53.13°≈0.927 rad; <span class="ak-ans">f(x)=5sin(2x+0.927)</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> Intersect where 2cos(x)=sec(x)=1/cos(x); 2cos²(x)=1; cos²(x)=1/2 ✓; cos(x)=±√2/2; x=π/4,3π/4,5π/4,7π/4; <span class="ak-ans">4 intersections; y=√2 or y=−√2 at those points</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> Period=2π/(3π)=2/3 s; Freq=3π/(2π)=1.5 Hz... period of cos(3πt) is 2π/(3π)=2/3 s; first zero: 3πt=π/2 → t=1/6 s; |x|=4: cos(3πt)=±1/2; 3πt=π/3,2π/3,4π/3,5π/3 in [0,2π] → t=1/9,2/9,4/9,5/9; avg=0 (full period of cosine)</div>
+<div class="ak-item"><span class="ak-num">8.</span> (a) max=40°, period=12s; (b) d=2·20·tan(θ) where θ in deg/rad=20tan(40sin(πt/6)·π/180); (c) t=3: θ=40sin(π/2)=40°; d=40·tan(40°)≈<span class="ak-ans">33.6 ft</span></div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tabnav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+(function renderMath(){
+  const F=(n,d)=>'<span class="frac"><span class="fn">'+n.trim()+'</span><span class="fd">'+d.trim()+'</span></span>';
+  const RT=s=>'<span class="rt"><span class="rt-rad">√</span><span class="rt-body">'+s+'</span></span>';
+  let h=document.body.innerHTML;
+
+  /* 1. Square roots — FIRST */
+  h=h.replace(/√\(([^()<>&"]{1,80})\)\/(\d+)/g,(_,s,d)=>F(RT(s),d));
+  h=h.replace(/√([a-zA-Z\d]{1,8})\/(\d+)/g,(_,s,d)=>F(RT(s),d));
+  h=h.replace(/(?<![\/\d])(\d+)\/√([a-zA-Z\d]{1,8})/g,(_,n,s)=>F(n,RT(s)));
+  h=h.replace(/√\(([^()<>&"]{1,100})\)/g,(_,s)=>RT(s));
+  h=h.replace(/√([a-zA-Z\d]+)/g,(_,s)=>RT(s));
+
+  /* 2. Fractions */
+  h=h.replace(/\(([^()<>&"]{1,120})\)\/\(([^()<>&"]{1,120})\)/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<=[\s>=,;:+\-·(])([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ⁰¹²³⁴⁵⁶⁷⁸⁹ⁿ\d]{1,12})\/\(([^()<>&"]{1,100})\)/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<=>)([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ\d]{1,12})\/\(([^()<>&"]{1,100})\)/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<![\/\d">=:])(\d+)\/(\d+)(?![\/\d"<])/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<=[\s>(=,;+\-·])([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ]{1,5})\/([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ\d]{1,5})(?=[\s<),;+\-·]|$)/g,(_,n,d)=>F(n,d));
+
+  /* 3. Superscripts */
+  h=h.replace(/\^\(([^)<>&"]{1,30})\)/g,'<sup>$1</sup>');
+  h=h.replace(/\^([a-zA-Z∞])\b/g,'<sup>$1</sup>');
+
+  document.body.innerHTML=h;
+})();
+</script>
+</body>
+</html>
