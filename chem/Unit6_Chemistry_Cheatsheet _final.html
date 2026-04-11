@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 6 Chemistry Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #000;
+    --dark: #1a1a1a;
+    --mid: #444;
+    --light: #888;
+    --rule: #bbb;
+    --bg-light: #f5f5f5;
+    --bg-stripe: #ebebeb;
+    --border: 1.5px solid #000;
+    --border-thin: 1px solid #bbb;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans: 'Source Sans 3', Arial, sans-serif;
+    --mono: 'Source Code Pro', monospace;
+    --radius: 3px;
+  }
+
+  body {
+    font-family: var(--sans);
+    font-size: 8.5pt;
+    line-height: 1.35;
+    color: var(--dark);
+    background: white;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* ===== PAGE LAYOUT ===== */
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    padding: 0.45in 0.4in 0.35in;
+    page-break-after: always;
+    position: relative;
+  }
+
+  /* ===== HEADER ===== */
+  .page-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--black);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-size: 16pt;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .page-header .subtitle {
+    font-size: 8pt;
+    color: var(--dark);
+    font-style: italic;
+  }
+  .page-num {
+    font-size: 7.5pt;
+    color: var(--dark);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== COLUMN GRID ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+  .span-4 { grid-column: span 4; }
+
+  /* ===== SECTION BOX ===== */
+  .box {
+    border: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    break-inside: avoid;
+  }
+  .box-header {
+    background: var(--black);
+    color: white;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 3px 7px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .box-header .num {
+    background: white;
+    color: var(--black);
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1;
+  }
+  .box-body {
+    padding: 6px 7px;
+    background: white;
+  }
+
+  /* Shaded header variant */
+  .box.shaded .box-header {
+    background: var(--dark);
+  }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.8pt;
+  }
+  th {
+    background: var(--bg-stripe);
+    font-weight: 700;
+    text-align: left;
+    padding: 2.5px 5px;
+    border: var(--border-thin);
+    font-size: 7.5pt;
+  }
+  td {
+    padding: 2.5px 5px;
+    border: var(--border-thin);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  /* ===== COMPACT LIST ===== */
+  ul.compact, ol.compact {
+    padding-left: 14px;
+    margin: 0;
+  }
+  ul.compact li, ol.compact li {
+    margin-bottom: 1.5px;
+  }
+  ul.compact li::marker { font-size: 7pt; }
+
+  /* ===== KEY-VALUE ROW ===== */
+  .kv { display: flex; gap: 4px; align-items: baseline; margin-bottom: 2px; }
+  .kv .k { font-weight: 700; white-space: nowrap; }
+  .kv .v { color: var(--dark); }
+
+  /* ===== TAGS / PILLS ===== */
+  .tag {
+    display: inline-block;
+    border: 1px solid var(--dark);
+    font-size: 6.8pt;
+    font-weight: 700;
+    padding: 0 4px;
+    border-radius: 2px;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+  .tag.ionic { background: #1a1a1a; color: white; }
+  .tag.polar { background: var(--bg-stripe); }
+  .tag.nonpolar { background: white; }
+
+  /* ===== CHEMISTRY FORMULA RENDERING ===== */
+  .formula {
+    font-family: var(--mono);
+    font-size: 8pt;
+    background: var(--bg-light);
+    padding: 1px 4px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  sub { font-size: 6.5pt; }
+  sup { font-size: 6.5pt; }
+
+  /* ===== LEWIS STRUCTURES (text-based) ===== */
+  .lewis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 3px;
+  }
+  .lewis-box {
+    border: var(--border-thin);
+    border-radius: 2px;
+    padding: 4px 5px;
+    text-align: center;
+    background: #fafafa;
+  }
+  .lewis-box .mol-name {
+    font-weight: 700;
+    font-size: 8pt;
+    margin-bottom: 3px;
+    font-family: var(--mono);
+  }
+  .lewis-box .info {
+    font-size: 6.5pt;
+    color: var(--dark);
+    margin-top: 2px;
+    text-align: center;
+  }
+  .ls-tbl { border-collapse: collapse; margin: 2px auto; font-family: var(--mono); font-size: 8pt; line-height: 1; }
+  .ls-tbl td { padding: 0; min-width: 11px; height: 13px; text-align: center; vertical-align: middle; border: none; font-weight: 700; }
+  .ls-lp { font-size: 7pt !important; font-weight: 400 !important; }
+
+  /* ===== VSEPR TABLE ===== */
+  .vsepr-table table { font-size: 7.5pt; }
+  .vsepr-table th { text-align: center; }
+  .vsepr-table td { text-align: center; vertical-align: middle; }
+  .vsepr-table td:first-child { font-weight: 700; font-size: 9pt; }
+  .vsepr-table .shape-name { font-weight: 700; font-size: 8pt; }
+  .vsepr-table .angle { font-style: italic; }
+  .vsepr-table .examples { font-size: 6.8pt; color: var(--dark); font-family: var(--mono); }
+
+  /* ===== VSEPR GEOMETRY ASCII DIAGRAMS ===== */
+  .geo-art {
+    font-family: var(--mono);
+    font-size: 7pt;
+    line-height: 1.5;
+    white-space: pre;
+    text-align: center;
+    color: var(--dark);
+  }
+
+  /* ===== BOND CONTINUUM BAR ===== */
+  .bond-bar {
+    margin: 5px 0 3px;
+    position: relative;
+  }
+  .bond-bar-track {
+    height: 14px;
+    background: linear-gradient(to right, #fff 0%, #aaa 50%, #000 100%);
+    border: 1px solid #000;
+    border-radius: 2px;
+    position: relative;
+    display: flex;
+  }
+  .bond-bar-seg {
+    flex: 1;
+    border-right: 1.5px dashed #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: var(--dark);
+    position: relative;
+  }
+  .bond-bar-seg:last-child { border-right: none; }
+  .bond-bar-seg.np { color: #000; }
+  .bond-bar-seg.pc { color: #000; }
+  .bond-bar-seg.io { color: #fff; }
+  .bond-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+    font-size: 6.5pt;
+    color: var(--dark);
+  }
+
+  /* ===== IMF STRENGTH LADDER ===== */
+  .imf-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 3px 0;
+  }
+  .imf-rung {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 6px;
+    border-left: 3px solid var(--dark);
+    background: var(--bg-light);
+  }
+  .imf-rung.strongest { border-left-color: #000; background: #e8e8e8; }
+  .imf-rung.mid { border-left-color: #666; background: #f0f0f0; }
+  .imf-rung.weakest { border-left-color: #aaa; background: #f8f8f8; }
+  .imf-rung .imf-name { font-weight: 700; font-size: 7.5pt; min-width: 80px; }
+  .imf-rung .imf-rule { font-size: 7pt; color: var(--dark); flex: 1; }
+  .imf-rung .imf-ex { font-family: var(--mono); font-size: 6.8pt; color: var(--dark); }
+
+  /* ===== ALLOY TABLE ===== */
+  .alloy-table td:first-child { font-weight: 700; }
+  .alloy-table td:nth-child(2) { font-family: var(--mono); font-size: 7.5pt; }
+
+  /* ===== PROPERTY COMPARISON ===== */
+  .prop-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 7.5pt;
+  }
+  .prop-col-head {
+    background: var(--black);
+    color: white;
+    font-weight: 700;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: center;
+    border-right: 1px solid #666;
+  }
+  .prop-col-head:last-child { border-right: none; }
+  .prop-cell {
+    padding: 3px 6px;
+    border-right: 1px solid var(--rule);
+    border-top: 1px solid var(--rule);
+  }
+  .prop-cell:last-child { border-right: none; }
+  .prop-cell ul { padding-left: 12px; }
+  .prop-cell li { margin-bottom: 1px; }
+  .prop-reason { font-size: 6.5pt; color: var(--dark); margin-top: 2px; font-style: italic; }
+
+  /* ===== ELECTRONEGATIVITY TABLE ===== */
+  .en-table td:first-child { font-family: var(--mono); font-weight: 600; }
+  .en-table td:nth-child(2) { text-align: center; }
+
+  /* ===== OCTET EXCEPTIONS ===== */
+  .octet-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 3px;
+  }
+  .octet-card {
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    padding: 4px;
+    text-align: center;
+    background: #fafafa;
+  }
+  .octet-card .atom { font-weight: 700; font-size: 9pt; font-family: var(--mono); }
+  .octet-card .electrons { font-size: 6.8pt; color: var(--dark); }
+  .octet-card .example { font-family: var(--mono); font-size: 7pt; border-top: 1px solid var(--rule); margin-top: 2px; padding-top: 2px; }
+
+  /* ===== RESONANCE ===== */
+  .resonance-art {
+    font-family: var(--mono);
+    font-size: 7.5pt;
+    white-space: pre;
+    display: inline-block;
+    line-height: 1.5;
+  }
+  .resonance-eq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 4px 0;
+    flex-wrap: wrap;
+  }
+  .reso-arrow {
+    font-size: 11pt;
+    font-weight: 700;
+  }
+
+  /* ===== HYBRIDIZATION TABLE ===== */
+  .hyb-table td:first-child { font-family: var(--mono); font-weight: 700; text-align: center; }
+  .hyb-table td:nth-child(2) { text-align: center; }
+  .hyb-table td:nth-child(3) { font-weight: 700; }
+
+  /* ===== SPACER ===== */
+  .gap { margin-top: 8px; }
+  .gap-sm { margin-top: 4px; }
+
+  /* ===== FOOTNOTE ===== */
+  .footnote {
+    font-size: 6.5pt;
+    color: var(--dark);
+    border-top: 1px solid var(--rule);
+    padding-top: 3px;
+    margin-top: 6px;
+  }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    background: var(--bg-stripe);
+    border-left: 3px solid var(--dark);
+    padding: 4px 6px;
+    margin: 4px 0;
+    font-size: 7.5pt;
+  }
+  .callout strong { display: block; margin-bottom: 1px; }
+
+  /* ===== RULE / DIVIDER ===== */
+  hr.section-rule { border: none; border-top: 1.5px solid var(--dark); margin: 7px 0; }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { font-size: 8.5pt; }
+    .page { page-break-after: always; margin: 0; padding: 0.45in 0.4in 0.35in; }
+    @page { size: letter; margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    .no-print { display: none; }
+  }
+
+  @media screen {
+    body { background: #ccc; }
+    .page { background: white; margin: 20px auto; box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 ===================== -->
+<div class="page">
+  <div class="page-header">
+    <h1>Unit 6 Chemistry Cheat Sheet</h1>
+    <span class="subtitle">Chemical Bonding &amp; Properties · CK-12 Ch. 6.21, 8.1–8.12, 9.2</span>
+    <span class="page-num">Page 1 of 2</span>
+  </div>
+
+  <!-- 3-column layout: [1+5] | [3+4] | [2+6] -->
+  <div class="grid-3" style="align-items: start;">
+
+    <!-- COLUMN 1: Bond Prediction + Lewis Structures -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- BOX 1: PREDICTING BOND TYPES -->
+      <div class="box">
+        <div class="box-header"><span class="num">1</span> Predicting Bond Type</div>
+        <div class="box-body">
+          <p style="margin-bottom:4px;font-size:7.5pt;"><strong>Method 1 — Element Types</strong></p>
+          <table style="margin-bottom:5px;">
+            <tr><th>Elements Involved</th><th>Bond Type</th></tr>
+            <tr><td>Metal + Nonmetal</td><td><span class="tag ionic">IONIC</span></td></tr>
+            <tr><td>Nonmetal + Nonmetal</td><td><span class="tag polar">COVALENT</span></td></tr>
+            <tr><td>Metal + Metal</td><td><span class="tag">METALLIC</span></td></tr>
+          </table>
+          <p style="margin-bottom:3px;font-size:7.5pt;"><strong>Method 2 — Electronegativity Difference (ΔEN)</strong></p>
+          <div class="bond-bar">
+            <div class="bond-bar-track">
+              <div class="bond-bar-seg np">Nonpolar<br>Covalent</div>
+              <div class="bond-bar-seg pc">Polar<br>Covalent</div>
+              <div class="bond-bar-seg io">Ionic</div>
+            </div>
+            <div class="bond-bar-labels">
+              <span>ΔEN = 0</span>
+              <span>0.4</span>
+              <span>2.0</span>
+              <span>≥ 2.0</span>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:4px;">
+            <strong>⚠ Only way to know for certain:</strong> Examine the physical properties of the substance!
+          </div>
+        </div>
+      </div>
+
+      <!-- BOX 4: METAL ALLOYS -->
+      <div class="box">
+        <div class="box-header"><span class="num">4</span> Common Metal Alloys</div>
+        <div class="box-body">
+          <table class="alloy-table">
+            <tr><th>Alloy</th><th>Composition</th><th>Common Uses</th></tr>
+            <tr><td>Solder</td><td>Pb + Sn</td><td>Electrical connections, plumbing joints</td></tr>
+            <tr><td>Bronze</td><td>Cu + Sn</td><td>Bells, statues, coins, bearings</td></tr>
+            <tr><td>Brass</td><td>Cu + Zn</td><td>Musical instruments, fittings, fixtures</td></tr>
+            <tr><td>Gold (jewelry)</td><td>Au + Cu</td><td>24K = pure; 18K, 14K, 10K = mixed with Cu for hardness</td></tr>
+            <tr><td>Sterling Silver</td><td>Ag + Cu</td><td>Jewelry, silverware (92.5% Ag)</td></tr>
+            <tr><td>Stainless Steel</td><td>Fe + Cr + Ni + C</td><td>Cookware, medical instruments, cutlery</td></tr>
+          </table>
+          <div style="margin-top:5px;font-size:7.5pt;">
+            <strong>Why make alloys?</strong> Alloys have <em>different physical properties</em> than pure metals alone:
+            <ul class="compact" style="margin-top:2px;">
+              <li>Often <strong>lower melting points</strong> than either base metal</li>
+              <li><strong>Higher strength</strong> and durability</li>
+              <li>Improved <strong>corrosion resistance</strong></li>
+              <li>Better hardness (e.g., gold too soft pure → mixed with Cu)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOX 5: LEWIS STRUCTURES -->
+      <div class="box">
+        <div class="box-header"><span class="num">5</span> Lewis (Electron Dot) Structures</div>
+        <div class="box-body">
+          <p style="font-size:7pt;margin-bottom:4px;"><strong>Bonding preferences:</strong> H=1 · C=4 · N=3 · O=2 · F/Cl/Br/I=1 · Be=2 · B=3</p>
+          <div class="lewis-grid">
+
+            <!-- CH₃I: C center; H top/left/bottom; I right with 3 lone pairs -->
+            <div class="lewis-box">
+              <div class="mol-name">CH₃I</div>
+              <table class="ls-tbl">
+                <tr><td></td><td></td><td>H</td><td></td><td class="ls-lp">..</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td>H</td><td>—</td><td>C</td><td>—</td><td>I</td><td class="ls-lp">..</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td></td><td></td><td>H</td><td></td><td class="ls-lp">..</td></tr>
+              </table>
+              <div class="info">3 LP on I: top, right, bottom</div>
+            </div>
+
+            <!-- NH₃: N center; LP above; H left/right/bottom -->
+            <div class="lewis-box">
+              <div class="mol-name">NH₃</div>
+              <table class="ls-tbl">
+                <tr><td></td><td></td><td class="ls-lp">..</td></tr>
+                <tr><td>H</td><td>—</td><td>N</td><td>—</td><td>H</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td></td><td></td><td>H</td></tr>
+              </table>
+              <div class="info">1 LP on N: top</div>
+            </div>
+
+            <!-- H₂S: S center; LP above and below; H left/right -->
+            <div class="lewis-box">
+              <div class="mol-name">H₂S</div>
+              <table class="ls-tbl">
+                <tr><td></td><td></td><td class="ls-lp">..</td></tr>
+                <tr><td>H</td><td>—</td><td>S</td><td>—</td><td>H</td></tr>
+                <tr><td></td><td></td><td class="ls-lp">..</td></tr>
+              </table>
+              <div class="info">2 LP on S: top, bottom</div>
+            </div>
+
+            <!-- C₂H₂: linear triple bond -->
+            <div class="lewis-box">
+              <div class="mol-name">C₂H₂</div>
+              <table class="ls-tbl">
+                <tr><td>H</td><td>—</td><td>C</td><td>≡</td><td>C</td><td>—</td><td>H</td></tr>
+              </table>
+              <div class="info">no lone pairs</div>
+            </div>
+
+            <!-- PH₃: P center; LP above; H left/right/bottom -->
+            <div class="lewis-box">
+              <div class="mol-name">PH₃</div>
+              <table class="ls-tbl">
+                <tr><td></td><td></td><td class="ls-lp">..</td></tr>
+                <tr><td>H</td><td>—</td><td>P</td><td>—</td><td>H</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td></td><td></td><td>H</td></tr>
+              </table>
+              <div class="info">1 LP on P: top</div>
+            </div>
+
+            <!-- CH₃Cl: C center; H top/left/bottom; Cl right with 3 lone pairs -->
+            <div class="lewis-box">
+              <div class="mol-name">CH₃Cl</div>
+              <table class="ls-tbl">
+                <tr><td></td><td></td><td>H</td><td></td><td class="ls-lp">..</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td>H</td><td>—</td><td>C</td><td>—</td><td>Cl</td><td class="ls-lp">..</td></tr>
+                <tr><td></td><td></td><td>|</td></tr>
+                <tr><td></td><td></td><td>H</td><td></td><td class="ls-lp">..</td></tr>
+              </table>
+              <div class="info">3 LP on Cl: top, right, bottom</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /column 1 -->
+
+    <!-- COLUMN 2: Metallic Bond only -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- BOX 3: METALLIC BOND -->
+      <div class="box">
+        <div class="box-header"><span class="num">2</span> Metallic Bond</div>
+        <div class="box-body">
+          <div class="callout" style="margin-bottom:5px;">
+            <strong>Structure:</strong> Positive metal cations surrounded by a <em>"sea"</em> of freely moving (delocalized) valence electrons.
+          </div>
+          <table>
+            <tr><th>Property</th><th>Reason (Delocalized Electrons)</th></tr>
+            <tr>
+              <td><strong>Conducts heat &amp; electricity</strong></td>
+              <td>Mobile electrons carry charge and thermal energy freely through the metal</td>
+            </tr>
+            <tr>
+              <td><strong>Malleable</strong> (hammered into shapes)</td>
+              <td>Metal nuclei slide past each other; mobile electrons keep them bonded in new positions</td>
+            </tr>
+            <tr>
+              <td><strong>Ductile</strong> (stretched into wire)</td>
+              <td>Same electron sea holds atoms together during deformation</td>
+            </tr>
+            <tr>
+              <td><strong>Shiny / Lustrous</strong></td>
+              <td>Free electrons absorb &amp; re-emit light at all wavelengths</td>
+            </tr>
+            <tr>
+              <td><strong>High MP &amp; BP</strong></td>
+              <td>Strong attraction between cations and electron sea; much energy needed to break</td>
+            </tr>
+            <tr>
+              <td><strong>Solid at room temp</strong> (except Hg)</td>
+              <td>Strong metallic bonds hold structure rigid</td>
+            </tr>
+          </table>
+          <div style="margin-top:5px;font-size:7.5pt;">
+            <strong>Metallic Bond Strength</strong> varies with:
+            <table style="margin-top:3px;">
+              <tr><th>Factor</th><th>Effect on Bond Strength</th></tr>
+              <tr><td>↑ Valence electrons contributed</td><td>Stronger bond (more e⁻ in the sea = stronger attraction)</td></tr>
+              <tr><td>↑ Nuclear charge of metal ion</td><td>Stronger bond (greater pull on the electron sea)</td></tr>
+            </table>
+            <div style="margin-top:3px;"><strong>Measure:</strong> Metallic bond strength is indicated by the metal's <strong>boiling point</strong> — a higher boiling point means a stronger metallic bond.</div>
+          </div>
+          <div style="margin-top:5px;font-size:7.5pt;">
+            <strong>Bond &amp; IMF Strength Hierarchy</strong> <span style="font-size:6.8pt;">(↑ strength = ↑ MP/BP)</span>
+            <table style="margin-top:3px;font-size:7pt;">
+              <tr>
+                <th style="text-align:center;background:#000;color:#fff;padding:2px 4px;">STRONGER ↑</th>
+                <th style="text-align:left;padding:2px 6px;">Bond / Force</th>
+                <th style="text-align:left;padding:2px 4px;">Type</th>
+              </tr>
+              <tr><td style="text-align:center;font-weight:700;background:#1a1a1a;color:#fff;">1</td><td><strong>Ionic</strong></td><td style="font-size:6.5pt;">Intramolecular</td></tr>
+              <tr><td style="text-align:center;font-weight:700;background:#333;color:#fff;">2</td><td><strong>Metallic</strong></td><td style="font-size:6.5pt;">Intramolecular</td></tr>
+              <tr><td style="text-align:center;font-weight:700;background:#555;color:#fff;">3</td><td><strong>Covalent</strong></td><td style="font-size:6.5pt;">Intramolecular</td></tr>
+              <tr style="border-top:2px solid #000;"><td style="text-align:center;font-weight:700;background:#777;color:#fff;">4</td><td><strong>Hydrogen Bonding</strong></td><td style="font-size:6.5pt;">Intermolecular</td></tr>
+              <tr><td style="text-align:center;font-weight:700;background:#999;color:#fff;">5</td><td><strong>Dipole–Dipole</strong></td><td style="font-size:6.5pt;">Intermolecular</td></tr>
+              <tr><td style="text-align:center;font-weight:700;background:#bbb;">6</td><td><strong>London Dispersion</strong></td><td style="font-size:6.5pt;">Intermolecular</td></tr>
+              <tr>
+                <th style="text-align:center;background:#ddd;padding:2px 4px;">WEAKER ↓</th>
+                <th colspan="2" style="text-align:left;padding:2px 6px;font-size:6.5pt;font-weight:400;font-style:italic;">Double line separates bonds (within molecules) from forces (between molecules)</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /column 2 -->
+
+    <!-- COLUMN 3: Ionic Properties + Octet Exceptions -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- BOX 2: IONIC COMPOUND PROPERTIES -->
+      <div class="box">
+        <div class="box-header"><span class="num">3</span> Ionic Compound</div>
+        <div class="box-body">
+          <table>
+            <tr><th>Property</th><th>Reason (Crystal Lattice)</th></tr>
+            <tr>
+              <td><strong>Hard solid</strong> at room temp</td>
+              <td>Ions locked in rigid 3-D lattice; strong electrostatic attractions hold positions</td>
+            </tr>
+            <tr>
+              <td><strong>Brittle</strong></td>
+              <td>Pressure shifts layers → like charges align → repel and shatter</td>
+            </tr>
+            <tr>
+              <td><strong>High MP &amp; BP</strong></td>
+              <td>Large amounts of energy needed to overcome strong ionic bonds in lattice</td>
+            </tr>
+            <tr>
+              <td><strong>Conducts electricity</strong> when molten or dissolved in H₂O</td>
+              <td>Ions become mobile (free to carry charge) when liquid or dissociated in water</td>
+            </tr>
+            <tr>
+              <td><strong>Does NOT conduct</strong> as solid</td>
+              <td>Ions fixed in lattice; no mobile charge carriers</td>
+            </tr>
+            <tr>
+              <td><strong>Soluble in water</strong> (most)</td>
+              <td>Polar water molecules attract and surround ions, pulling them free</td>
+            </tr>
+          </table>
+          <div style="margin-top:4px;font-size:7.5pt;">Metal transfers e⁻ → <strong>cation (+)</strong>; nonmetal receives → <strong>anion (−)</strong>. Opposite charges attract → ionic bond in a 3-D crystal lattice.</div>
+        </div>
+      </div>
+
+      <!-- BOX 6: OCTET EXCEPTIONS -->
+      <div class="box">
+        <div class="box-header"><span class="num">6</span> Octet Rule &amp; Exceptions</div>
+        <div class="box-body">
+          <p style="font-size:7.5pt;font-weight:700;margin-bottom:3px;">Exceptions (atoms that do NOT follow the octet rule):</p>
+          <div class="octet-grid">
+            <div class="octet-card">
+              <div class="atom">H</div>
+              <div class="electrons">Stable with 2 e⁻<br>(duet rule)</div>
+              <div class="example">H—Cl</div>
+            </div>
+            <div class="octet-card">
+              <div class="atom">Be</div>
+              <div class="electrons">Only 4 e⁻<br>(incomplete)</div>
+              <div class="example">H—Be—H</div>
+            </div>
+            <div class="octet-card">
+              <div class="atom">B / Al</div>
+              <div class="electrons">Only 6 e⁻<br>(incomplete)</div>
+              <div class="example">BCl₃, AlBr₃</div>
+            </div>
+            <div class="octet-card">
+              <div class="atom">P, S, Xe…</div>
+              <div class="electrons">Period 3+<br><strong>expanded</strong> octet (10–12 e⁻)</div>
+              <div class="example">PF₅, SF₆</div>
+            </div>
+          </div>
+          <div style="margin-top:5px;">
+            <table>
+              <tr><th>Molecule</th><th>Lewis Structure</th><th>e⁻ on Central</th><th>Geometry</th></tr>
+              <tr><td class="formula">BCl₃</td><td style="font-family:var(--mono);font-size:7pt;">Cl—B—Cl (lone Cl below)</td><td>6 e⁻ (deficient)</td><td>Trigonal planar</td></tr>
+              <tr><td class="formula">BeF₂</td><td style="font-family:var(--mono);font-size:7pt;">F—Be—F</td><td>4 e⁻ (deficient)</td><td>Linear</td></tr>
+              <tr><td class="formula">PF₅</td><td style="font-family:var(--mono);font-size:7pt;">5 F around P</td><td>10 e⁻ (expanded)</td><td>Trig. bipyramid</td></tr>
+              <tr><td class="formula">SF₆</td><td style="font-family:var(--mono);font-size:7pt;">6 F around S</td><td>12 e⁻ (expanded)</td><td>Octahedral</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /column 3 -->
+
+  </div><!-- /grid-3 -->
+
+</div><!-- /page 1 -->
+
+
+<!-- ===================== PAGE 2 ===================== -->
+<div class="page" style="padding-top:0.25in;padding-bottom:0.2in;">
+
+  <!-- ROW 1: VSEPR full table -->
+  <div class="box vsepr-table">
+    <div class="box-header"><span class="num">7</span> VSEPR Theory — Molecular Geometry &amp; Bond Angles</div>
+    <div class="box-body">
+      <p style="font-size:7.5pt;margin-bottom:4px;">
+        <strong>VSEPR = Valence Shell Electron Pair Repulsion.</strong> Electron regions (bonds + lone pairs) repel each other and spread as far apart as possible.
+        &nbsp;|&nbsp; <strong>Electron regions = # of bond areas + # of lone pairs</strong> (double/triple bonds still count as 1 region).
+      </p>
+      <table>
+        <tr>
+          <th style="text-align:center;">Electron<br>Regions</th>
+          <th style="text-align:center;">Lone<br>Pairs</th>
+          <th style="text-align:center;">Molecular<br>Geometry</th>
+          <th style="text-align:center;">Bond<br>Angle(s)</th>
+          <th>Hybridization</th>
+          <th>Example Molecules</th>
+          <th>Polar?</th>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">2</td>
+          <td style="text-align:center;">0</td>
+          <td><span class="shape-name">Linear</span></td>
+          <td class="angle" style="text-align:center;"><strong>180°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp</td>
+          <td class="examples">CO₂, BeCl₂, HCN, C₂H₂</td>
+          <td>Nonpolar (if symmetric)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">3</td>
+          <td style="text-align:center;">0</td>
+          <td><span class="shape-name">Trigonal Planar</span></td>
+          <td class="angle" style="text-align:center;"><strong>120°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp²</td>
+          <td class="examples">BCl₃, CH₂O, SO₃, BF₃</td>
+          <td>NP if sym. (BCl₃); Polar if not (CH₂O)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">3</td>
+          <td style="text-align:center;">1</td>
+          <td><span class="shape-name">Bent / V-shape</span></td>
+          <td class="angle" style="text-align:center;"><strong>&lt;120°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp²</td>
+          <td class="examples">SO₂, O₃</td>
+          <td>Polar</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">4</td>
+          <td style="text-align:center;">0</td>
+          <td><span class="shape-name">Tetrahedral</span></td>
+          <td class="angle" style="text-align:center;"><strong>109.5°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp³</td>
+          <td class="examples">CH₄, CCl₄, SiCl₄, CF₄, CBr₄</td>
+          <td>Nonpolar (if all same atoms)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">4</td>
+          <td style="text-align:center;">1</td>
+          <td><span class="shape-name">Trigonal Pyramidal</span></td>
+          <td class="angle" style="text-align:center;"><strong>&lt;109.5°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp³</td>
+          <td class="examples">NH₃, PH₃, NF₃, PCl₃</td>
+          <td>Polar</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">4</td>
+          <td style="text-align:center;">2</td>
+          <td><span class="shape-name">Bent / V-shape</span></td>
+          <td class="angle" style="text-align:center;"><strong>&lt;109.5°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp³</td>
+          <td class="examples">H₂O, H₂S, SF₂, SCl₂</td>
+          <td>Polar</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">5</td>
+          <td style="text-align:center;">0</td>
+          <td><span class="shape-name">Trigonal Bipyramidal</span></td>
+          <td class="angle" style="text-align:center;"><strong>90° &amp; 120°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp³d</td>
+          <td class="examples">PCl₅, PF₅, AsF₅</td>
+          <td>Nonpolar (if all same atoms)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;font-size:10pt;text-align:center;">6</td>
+          <td style="text-align:center;">0</td>
+          <td><span class="shape-name">Octahedral</span></td>
+          <td class="angle" style="text-align:center;"><strong>90°</strong></td>
+          <td style="font-family:var(--mono);font-weight:700;">sp³d²</td>
+          <td class="examples">SF₆, SeF₆, XeF₄ (with 2 LPs)</td>
+          <td>Nonpolar (if all same atoms)</td>
+        </tr>
+      </table>
+      <div style="margin-top:4px;font-size:7pt;">
+        <strong>Key Rule:</strong> Lone pairs take up MORE space than bonding pairs → they compress bond angles below the "ideal" value. NH₃ (1 LP) → &lt;109.5°; H₂O (2 LP) → &lt;&lt;109.5°.
+        &nbsp;|&nbsp; <strong>Polarity check:</strong> Draw arrows (→) toward more electronegative atom. If arrows cancel (symmetric molecule, same atoms) → nonpolar. If they don't cancel (asymmetric, or different surrounding atoms) → polar.
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Hybridization + Resonance -->
+  <div class="grid-2" style="margin-top:6px;">
+    <!-- HYBRIDIZATION -->
+    <div class="box">
+      <div class="box-header"><span class="num">8</span> Hybridization Summary</div>
+      <div class="box-body">
+        <p style="font-size:7.5pt;margin-bottom:4px;"><strong>Hybrid orbitals</strong> form when valence electrons rearrange to maximize distance between electron regions. <strong>No. of electron regions = hybridization type.</strong> Lone pairs count as regions for hybridization but <em>not</em> for shape name.</p>
+        <table class="hyb-table">
+          <tr>
+            <th>Hybridization</th>
+            <th>Electron Regions</th>
+            <th>Geometry</th>
+            <th>Bond Angle</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>sp</td><td>2</td><td>Linear</td><td>180°</td><td style="font-family:var(--mono);font-size:7pt;">CO₂, C₂H₂</td>
+          </tr>
+          <tr>
+            <td>sp²</td><td>3</td><td>Trigonal Planar</td><td>120°</td><td style="font-family:var(--mono);font-size:7pt;">BF₃, CH₂O, C₂H₄</td>
+          </tr>
+          <tr>
+            <td>sp³</td><td>4</td><td>Tetrahedral</td><td>109.5°</td><td style="font-family:var(--mono);font-size:7pt;">CH₄, NH₃, H₂O</td>
+          </tr>
+          <tr>
+            <td>sp³d</td><td>5</td><td>Trig. Bipyramidal</td><td>90°/120°</td><td style="font-family:var(--mono);font-size:7pt;">PCl₅, PF₅</td>
+          </tr>
+          <tr>
+            <td>sp³d²</td><td>6</td><td>Octahedral</td><td>90°</td><td style="font-family:var(--mono);font-size:7pt;">SF₆</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- RESONANCE -->
+    <div class="box">
+      <div class="box-header"><span class="num">9</span> Resonance</div>
+      <div class="box-body">
+        <p style="font-size:7.5pt;margin-bottom:4px;"><strong>Resonance:</strong> When 2+ equivalent Lewis structures can be drawn, the actual bonding is a <strong>blend of all structures</strong> — electrons are <strong>delocalized</strong> over multiple bonds. No single structure is correct; proof is that all bond lengths and strengths are equal.</p>
+        <p style="font-size:7.5pt;font-weight:700;margin-bottom:3px;">Example 1: Ozone (O₃)</p>
+        <div class="resonance-eq">
+          <div class="lewis-art" style="font-family:var(--mono);font-size:7.5pt;white-space:pre;line-height:1.5;display:inline-block;">O=O—O:
+  ¨¨  ¨¨</div>
+          <span class="reso-arrow">⟺</span>
+          <div class="lewis-art" style="font-family:var(--mono);font-size:7.5pt;white-space:pre;line-height:1.5;display:inline-block;">:O—O=O
+¨¨  ¨¨</div>
+          <span style="font-size:7.5pt;">→ actual: O–O bonds identical length &amp; strength</span>
+        </div>
+        <p style="font-size:7.5pt;font-weight:700;margin:4px 0 3px;">Example 2: Carbonate Ion (CO₃²⁻)</p>
+        <div style="font-family:var(--mono);font-size:7pt;background:var(--bg-light);padding:4px 6px;border-radius:2px;line-height:1.6;">
+          Three equivalent structures: C=O on different O each time<br>
+          Actual: all three C–O bonds are <em>equivalent</em> (bond order = 1⅓)<br>
+          Electrons are delocalized over all three C–O bonds
+        </div>
+        <table style="margin-top:5px;">
+          <tr><th>Clue for Resonance</th><th>Key Evidence</th></tr>
+          <tr><td>Can draw 2+ valid Lewis structures</td><td>All bond lengths are <em>equal</em> (not what a single Lewis structure would predict)</td></tr>
+          <tr><td>Molecule seems "stuck" between two structures</td><td>Bond strengths are equal too</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: IMF + BP Effects -->
+  <div class="grid-2" style="margin-top:6px;">
+    <!-- IMF TYPES -->
+    <div class="box">
+      <div class="box-header"><span class="num">10</span> Intermolecular Forces (IMFs)</div>
+      <div class="box-body">
+        <table style="margin-bottom:4px;">
+          <tr>
+            <th>IMF (strongest → weakest)</th>
+            <th>Condition</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td><strong>Hydrogen Bonding</strong></td>
+            <td>H bonded to <strong>F, O, or N</strong> attracted to lone pair on neighboring F/O/N</td>
+            <td style="font-family:var(--mono);font-size:7pt;">H₂O, HF, NH₃</td>
+          </tr>
+          <tr>
+            <td><strong>Dipole–Dipole</strong></td>
+            <td>Between <strong>polar molecules</strong> (δ+ end ↔ δ− end)</td>
+            <td style="font-family:var(--mono);font-size:7pt;">HCl, H₂S, SO₂</td>
+          </tr>
+          <tr>
+            <td><strong>London Dispersion</strong></td>
+            <td>All molecules; stronger with <strong>more electrons / larger size</strong></td>
+            <td style="font-family:var(--mono);font-size:7pt;">CH₄, I₂, noble gases</td>
+          </tr>
+        </table>
+        <table>
+          <tr><th>Molecule</th><th>IMF Type(s)</th><th>Polar?</th></tr>
+          <tr><td class="formula">H₂O</td><td>HB + DD + LD</td><td>Polar</td></tr>
+          <tr><td class="formula">NH₃</td><td>HB + DD + LD</td><td>Polar</td></tr>
+          <tr><td class="formula">HCl</td><td>DD + LD</td><td>Polar</td></tr>
+          <tr><td class="formula">CH₄</td><td>LD only</td><td>Nonpolar</td></tr>
+          <tr><td class="formula">I₂</td><td>LD only</td><td>Nonpolar</td></tr>
+          <tr><td class="formula">CH₂Cl₂</td><td>DD + LD</td><td>Polar</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- BOILING POINTS & IMF EFFECTS -->
+    <div class="box">
+      <div class="box-header"><span class="num">11</span> Effects on Boiling Point &amp; Vapor Pressure</div>
+      <div class="box-body">
+        <p style="font-size:7.5pt;margin-bottom:4px;">↑ IMF strength = ↑ BP &amp; MP (<em>direct</em>); ↓ vapor pressure (<em>inverse</em>). <em>Volatile</em> = weak IMFs, easily vaporizes, high vapor pressure.</p>
+        <table style="margin-bottom:4px;">
+          <tr>
+            <th>Property</th>
+            <th>Stronger IMF →</th>
+            <th>Weaker IMF →</th>
+          </tr>
+          <tr>
+            <td><strong>Boiling Point</strong></td>
+            <td>⬆ Higher BP</td>
+            <td>⬇ Lower BP</td>
+          </tr>
+          <tr>
+            <td><strong>Melting Point</strong></td>
+            <td>⬆ Higher MP</td>
+            <td>⬇ Lower MP</td>
+          </tr>
+          <tr>
+            <td><strong>Vapor Pressure</strong></td>
+            <td>⬇ Lower VP</td>
+            <td>⬆ Higher VP (volatile)</td>
+          </tr>
+        </table>
+        <p style="font-size:7.5pt;font-weight:700;margin-bottom:2px;">Worked Examples:</p>
+        <table>
+          <tr><th>Comparison</th><th>Higher BP &amp; Why</th></tr>
+          <tr>
+            <td>H₂O (100°C) vs. H₂S (−60°C)</td>
+            <td><strong>H₂O</strong>: H–O → hydrogen bonding. H₂S: H–S → dipole–dipole only (weaker).</td>
+          </tr>
+          <tr>
+            <td>H₂O (100°C) vs. isopropyl alcohol (82.5°C)</td>
+            <td><strong>H₂O</strong>: smaller, same H-bonding → stronger attraction.</td>
+          </tr>
+          <tr>
+            <td>F₂ (−188°C) vs. I₂ (+184°C)</td>
+            <td><strong>I₂</strong>: larger molecule → stronger London dispersion forces.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div><!-- /grid-2 -->
+
+</div><!-- /page 2 -->
+
+</body>
+</html>
