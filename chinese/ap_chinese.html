@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP 中文语言与文化 — 自由回答题练习册</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "SimSun", "宋体", "Arial", serif;
+    font-size: 11pt;
+    line-height: 1.8;
+    color: #111;
+    background: #ccc;
+  }
+
+  .page {
+    width: 816px;
+    margin: 24px auto;
+    background: #fff;
+    padding: 60px 72px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    page-break-after: always;
+  }
+
+  /* ── Cover page ── */
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 980px;
+    text-align: center;
+    border: 3px solid #1a3a6b;
+  }
+  .cover-ap-label {
+    font-size: 11pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #1a3a6b;
+    margin-bottom: 12px;
+    font-weight: bold;
+  }
+  .cover-h1 {
+    font-size: 26pt;
+    font-weight: 900;
+    color: #1a3a6b;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .cover-h2 {
+    font-size: 14pt;
+    color: #333;
+    margin-bottom: 40px;
+  }
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: #1a3a6b;
+    margin: 0 auto 40px;
+  }
+  .cover-info {
+    font-size: 10.5pt;
+    color: #555;
+    line-height: 2.2;
+  }
+  .cover-info td:first-child {
+    text-align: right;
+    padding-right: 16px;
+    color: #888;
+    white-space: nowrap;
+  }
+  .cover-info td:last-child {
+    text-align: left;
+    font-weight: bold;
+    color: #222;
+  }
+  .cover-notice {
+    margin-top: 48px;
+    font-size: 9pt;
+    color: #888;
+    border-top: 1px solid #ddd;
+    padding-top: 16px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── Section page ── */
+  .section-page {
+    min-height: 980px;
+  }
+  .section-banner {
+    background: #1a3a6b;
+    color: #fff;
+    text-align: center;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+  }
+  .section-banner .part-label {
+    font-size: 9pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .section-banner h2 {
+    font-size: 16pt;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+  .section-banner .sub {
+    font-size: 10pt;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  /* ── Instructions block ── */
+  .directions {
+    border: 1.5px solid #1a3a6b;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+    background: #f8faff;
+  }
+  .directions-title {
+    font-size: 10pt;
+    font-weight: bold;
+    color: #1a3a6b;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .directions p {
+    font-size: 10.5pt;
+    margin-bottom: 8px;
+    line-height: 1.9;
+  }
+  .directions p:last-child { margin-bottom: 0; }
+  .directions ul {
+    margin: 8px 0 8px 24px;
+    font-size: 10.5pt;
+  }
+  .directions li {
+    margin-bottom: 4px;
+    line-height: 1.9;
+  }
+  .note {
+    margin-top: 10px;
+    font-size: 9.5pt;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* ── Problem ── */
+  .problem {
+    margin-bottom: 0;
+    page-break-before: always;
+  }
+  .problem:first-of-type {
+    page-break-before: avoid;
+  }
+  .problem-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #1a3a6b;
+    padding-bottom: 6px;
+    margin-bottom: 18px;
+  }
+  .problem-num {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #1a3a6b;
+  }
+  .problem-time {
+    font-size: 9.5pt;
+    color: #555;
+  }
+
+  /* ── Email ── */
+  .email-wrapper {
+    border: 1px solid #999;
+    margin-bottom: 0;
+  }
+  .email-header-bar {
+    background: #e8e8e8;
+    border-bottom: 1px solid #999;
+    padding: 0;
+  }
+  .email-field {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    font-size: 10.5pt;
+  }
+  .email-field:last-child { border-bottom: none; }
+  .email-field .field-name {
+    background: #ddd;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+    min-width: 58px;
+    border-right: 1px solid #bbb;
+    font-size: 10pt;
+  }
+  .email-field .field-val {
+    padding: 5px 12px;
+    flex: 1;
+    color: #111;
+  }
+  .email-body {
+    padding: 16px 18px;
+    font-size: 11.5pt;
+    line-height: 2;
+    color: #111;
+    border-top: 1px solid #bbb;
+  }
+
+  /* ── Story pictures 2×2 grid ── */
+  .picture-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border: 1px solid #888;
+    margin-bottom: 0;
+  }
+  .pic-cell {
+    border: 1px solid #888;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .pic-num-bar {
+    background: #1a3a6b;
+    color: #fff;
+    font-size: 9pt;
+    font-weight: bold;
+    text-align: center;
+    padding: 3px 0;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+  .pic-cell svg {
+    display: block;
+    width: 100%;
+    flex: 1;
+    height: auto;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    margin-top: 40px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: #aaa;
+  }
+
+  @page {
+    size: letter;
+    margin: 0.7in 0.8in;
+  }
+  @media print {
+    body { background: #fff; }
+    .page {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    .section-banner, .pic-num-bar, .email-field .field-name {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     封面
+════════════════════════════════ -->
+<div class="page cover-page">
+  <div class="cover-ap-label">Advanced Placement Examination</div>
+  <div class="cover-h1">AP® 中文语言与文化</div>
+  <div class="cover-h2">Chinese Language and Culture</div>
+  <div class="cover-divider"></div>
+  <table class="cover-info">
+    <tr><td>考试部分：</td><td>第二部分　自由回答题</td></tr>
+    <tr><td>题型：</td><td>作文练习册（共20题）</td></tr>
+    <tr><td>第一节：</td><td>电子邮件回复（10题，每题15分钟）</td></tr>
+    <tr><td>第二节：</td><td>看图叙述（10题，每题15分钟）</td></tr>
+    <tr><td>书写语言：</td><td>简体中文或繁体中文</td></tr>
+  </table>
+  <div class="cover-notice">
+    本练习册仅供课堂练习与自主备考使用。<br>
+    College Board®、AP® 为大学理事会的注册商标。
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     第一节 说明页
+════════════════════════════════ -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="directions">
+    <div class="directions-title">写作说明</div>
+    <p>你会收到一封电子邮件。请阅读邮件，然后用中文写一封回信。在15分钟内完成回信。</p>
+    <p>你的回信须做到以下几点：</p>
+    <ul>
+      <li>使用恰当的称谓语开头；</li>
+      <li>回答邮件中提出的所有问题，并就每个问题提供充分的细节；</li>
+      <li>使用恰当的结束语结尾。</li>
+    </ul>
+    <p class="note">注意：你可以用简体中文或繁体中文书写。请检查你的用词、语法和标点是否正确。</p>
+  </div>
+
+  <!-- E1 -->
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第1题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">王华 &lt;wanghua@exchange.edu.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年9月3日，星期二</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">关于您即将到来的交流项目</div></div>
+      </div>
+      <div class="email-body">
+        您好！<br><br>
+        我是负责本学期交换生项目的协调员王华。您将于下个月到我们学校开始为期一学期的学习，全体师生都非常期待您的到来！<br><br>
+        为了帮助您尽快适应新环境，请问您对宿舍住宿有什么特别的要求？例如，您更倾向于住单人间还是双人间？另外，您在饮食方面有没有禁忌或过敏情况需要我们特别注意？最后，课余时间您对哪些活动或社团最感兴趣？<br><br>
+        期待您的回复！<br><br>
+        王华敬上
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第1题</span></div>
+</div>
+
+<!-- E2 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第2题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">李明 &lt;liming@zhongxue.edu.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年10月8日，星期二</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">邀请参加全市中学生研究报告比赛</div></div>
+      </div>
+      <div class="email-body">
+        同学，你好！<br><br>
+        我是你的语文老师李明。我注意到你最近几次作文的思路都非常清晰，逻辑性很强，因此特别想鼓励你参加今年的全市中学生研究报告比赛。本次比赛要求提交一篇不少于一千字的关于"传统文化在现代社会中的作用"的报告，截止日期为下个月底。<br><br>
+        你愿意参加吗？如果愿意，请告诉我你打算选择哪方面的传统文化作为切入点，以及你计划如何收集和整理资料。我很乐意在写作过程中为你提供指导。<br><br>
+        李明老师
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第2题</span></div>
+</div>
+
+<!-- E3 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第3题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">招生办公室 &lt;admissions@daxue.edu.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年11月12日，星期二</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">您的大学入学申请——需补充材料</div></div>
+      </div>
+      <div class="email-body">
+        尊敬的申请人，您好！<br><br>
+        感谢您申请我校国际汉语专业。经初步审核，您的申请材料基本齐全，但我们还需要您进一步补充以下信息：<br><br>
+        第一，请简述您学习中文的经历以及您选择这一专业的原因；第二，请具体说明您打算如何在大学期间平衡学业与课外活动；第三，请提供一位老师的姓名及联系方式，以便我们向其索取推荐信。<br><br>
+        请于收到此邮件后两周内回复。感谢您的配合与耐心。<br><br>
+        招生办公室 敬上
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第3题</span></div>
+</div>
+
+<!-- E4 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第4题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">陈小雨 &lt;chenxiaoyu@mail.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年2月18日，星期日</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">想了解你们国家的节日庆祝方式</div></div>
+      </div>
+      <div class="email-body">
+        你好！<br><br>
+        我是你的中国笔友陈小雨。最近我们刚刚过了春节，一家人聚在一起吃年夜饭、看春晚、放鞭炮，热闹极了！这是我最喜欢的节日。<br><br>
+        我一直很好奇你们国家最重要的节日是什么，你们是怎么庆祝的。有没有什么特别的传统食物或者只有这个节日才有的特别活动？这个节日对你和你的家人来说有什么特殊的意义？<br><br>
+        期待了解你们的文化！<br><br>
+        陈小雨
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第4题</span></div>
+</div>
+
+<!-- E5 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第5题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">志愿者协会 &lt;volunteer@community.org.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年5月20日，星期一</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">暑期山区支教志愿活动——报名确认</div></div>
+      </div>
+      <div class="email-body">
+        亲爱的同学，您好！<br><br>
+        感谢您报名参加今年夏天我们协会在山区农村开展的支教志愿活动！本次活动为期三周，主要面向当地小学生进行语文、数学等基础科目的辅导。<br><br>
+        为了更好地进行分组安排，请问您最擅长哪些科目，希望负责哪方面的教学工作？另外，您此前是否有辅导儿童或从事教学的相关经验，请简要介绍。最后，本次活动要求志愿者自备部分教学材料，请问您是否方便自行准备？<br><br>
+        期待您的回复与确认！<br><br>
+        志愿者协会 敬启
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第5题</span></div>
+</div>
+
+<!-- E6 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第6题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">张伟 &lt;zhangwei@student.edu.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年3月11日，星期一</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">诚邀参与学校国际文化节</div></div>
+      </div>
+      <div class="email-body">
+        同学，你好！<br><br>
+        我是学校学生会主席张伟。我们正在积极筹备下个月举办的国际文化节，希望邀请来自不同文化背景的同学代表各自的文化参与展示活动，让大家能够相互了解、共同学习。<br><br>
+        请问你愿意参加吗？如果愿意，你计划展示哪方面的文化内容（例如饮食、音乐、舞蹈、传统服饰或手工艺等），并且为什么选择这些内容？此外，你在活动当天是否需要学校提供特定的设备或场地支持？<br><br>
+        非常期待你的参与！<br><br>
+        张伟
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第6题</span></div>
+</div>
+
+<!-- E7 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第7题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">舅舅 李建国 &lt;lijg@family.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年4月22日，星期一</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">暑假来中国探亲——行程安排</div></div>
+      </div>
+      <div class="email-body">
+        孩子，你好！<br><br>
+        你妈妈说你今年暑假打算来中国看我们，全家人都非常高兴，已经开始盼望了！请问你大概会在哪几天到达北京？打算在这里住多长时间？<br><br>
+        在中国期间，你有没有特别想参观的地方或者想体验的活动？比如，想不想去爬长城、参观故宫，或者体验一下北京的传统小吃和胡同文化？另外，你现在中文说得怎么样了，来了之后能用中文正常交流吗？我们需要帮你安排翻译吗？<br><br>
+        全家盼着见你！<br><br>
+        舅舅 李建国
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第7题</span></div>
+</div>
+
+<!-- E8 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第8题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">绿色校园俱乐部 &lt;green@school.org.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年9月24日，星期二</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">关于校园环保活动的意见征集</div></div>
+      </div>
+      <div class="email-body">
+        同学，您好！<br><br>
+        我们学校绿色校园俱乐部正在策划一系列以环境保护为主题的校园活动，希望广泛听取同学们的意见和建议，使活动更加贴近大家的需求。<br><br>
+        请问您认为目前学校在环境保护方面最迫切需要改进的是哪个方面？您有什么具体的活动建议，能够吸引更多同学积极参与？另外，您是否有兴趣加入我们的俱乐部，参与活动的策划与组织工作？<br><br>
+        感谢您抽出时间提供宝贵意见！<br><br>
+        绿色校园俱乐部 敬上
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第8题</span></div>
+</div>
+
+<!-- E9 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第9题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">学习云平台 &lt;support@xuexiyun.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年7月5日，星期五</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">感谢您的课程评价——后续意见征集</div></div>
+      </div>
+      <div class="email-body">
+        尊敬的用户，您好！<br><br>
+        感谢您上个月完成了我们平台的"现代汉语写作"在线课程，并给予了四星好评。您的反馈对我们改进课程质量非常重要！<br><br>
+        为了进一步提升课程体验，我们希望向您了解以下几点：您对课程哪部分内容最为满意，认为对您帮助最大？哪部分内容您认为仍有较大的改进空间？另外，您是否会向周围的朋友或同学推荐这门课程，原因是什么？<br><br>
+        感谢您的宝贵时间！<br><br>
+        学习云平台团队
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第9题</span></div>
+</div>
+
+<!-- E10 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第一节</div>
+    <h2>电子邮件回复</h2>
+    <div class="sub">Email Response　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第10题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="email-wrapper">
+      <div class="email-header-bar">
+        <div class="email-field"><div class="field-name">发件人</div><div class="field-val">未来职业发展中心 &lt;intern@future.cn&gt;</div></div>
+        <div class="email-field"><div class="field-name">日　期</div><div class="field-val">2024年4月3日，星期三</div></div>
+        <div class="email-field"><div class="field-name">主　题</div><div class="field-val">暑期实习申请——初步通过通知</div></div>
+      </div>
+      <div class="email-body">
+        申请人，您好！<br><br>
+        恭喜您通过了我们暑期实习项目的初步筛选！本次实习将在一家跨国贸易公司的中文部门进行，工作内容主要涉及中英文翻译、市场调研以及客户沟通。<br><br>
+        为了进一步考察您与该职位的匹配程度，请您回答以下问题：您具体拥有哪些与该职位相关的技能或实践经验？您认为自己哪方面的性格特点最适合这份工作？另外，请说明您能否承担全天实习，还是只能半天出勤，并说明原因。<br><br>
+        期待您的回复！<br><br>
+        未来职业发展中心
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第一节　电子邮件回复　第10题</span></div>
+</div>
+
+
+<!-- ══════════════════════════════
+     第二节 说明页
+════════════════════════════════ -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="directions">
+    <div class="directions-title">写作说明</div>
+    <p>下面有四幅图片，描绘了一个故事。请阅读图片，然后用中文写一篇叙述文，讲述图片中的故事。在15分钟内完成这篇叙述文。</p>
+    <p>你的叙述文须做到以下几点：</p>
+    <ul>
+      <li>按照四幅图片的顺序讲述故事；</li>
+      <li>故事应有明确的开始、经过和结尾；</li>
+      <li>对图片中的人物、场景和动作进行充分描述；</li>
+      <li>使用恰当的词汇、语法结构和过渡词语。</li>
+    </ul>
+    <p class="note">注意：你可以用简体中文或繁体中文书写。请检查你的用词、语法和标点是否正确。</p>
+  </div>
+
+  <!-- S1 -->
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第1题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <!-- 图一 -->
+      <div class="pic-cell">
+        <div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0efe8"/>
+          <rect x="110" y="15" width="80" height="6" fill="#c8a87a" rx="1"/>
+          <rect x="110" y="32" width="80" height="6" fill="#c8a87a" rx="1"/>
+          <rect x="113" y="21" width="10" height="11" fill="#e8c060" rx="1"/>
+          <rect x="127" y="20" width="13" height="12" fill="#d07040" rx="1"/>
+          <rect x="144" y="22" width="9" height="10" fill="#6090c0" rx="1"/>
+          <rect x="158" y="21" width="11" height="11" fill="#d06060" rx="1"/>
+          <rect x="50" y="95" width="130" height="14" fill="#a07850" rx="2"/>
+          <rect x="50" y="106" width="130" height="54" fill="#8a6640"/>
+          <rect x="100" y="78" width="32" height="18" fill="#444" rx="2"/>
+          <rect x="104" y="81" width="24" height="9" fill="#222" rx="1"/>
+          <rect x="106" y="90" width="18" height="4" fill="#888" rx="1"/>
+          <ellipse cx="155" cy="72" rx="13" ry="13" fill="#f5d0a0"/>
+          <rect x="142" y="85" width="26" height="30" fill="#3060a0" rx="2"/>
+          <ellipse cx="52" cy="70" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="39" y="83" width="26" height="32" fill="#5080d0" rx="2"/>
+          <rect x="56" y="92" width="18" height="11" fill="#8B4513" rx="1"/>
+          <rect x="57" y="93" width="16" height="3" fill="#a0522d" rx="0"/>
+          <rect x="52" y="82" width="24" height="8" fill="#5080d0" rx="2" transform="rotate(15 64 86)"/>
+          <ellipse cx="79" cy="78" rx="8" ry="7" fill="#f5c890"/>
+        </svg>
+      </div>
+      <!-- 图二 -->
+      <div class="pic-cell">
+        <div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5f0e8"/>
+          <rect x="140" y="8" width="52" height="144" fill="#d4c8b0" rx="2"/>
+          <rect x="145" y="20" width="42" height="8" fill="#c8a87a" rx="1"/>
+          <rect x="145" y="36" width="42" height="8" fill="#c8a87a" rx="1"/>
+          <rect x="145" y="52" width="42" height="8" fill="#c8a87a" rx="1"/>
+          <ellipse cx="82" cy="62" rx="16" ry="16" fill="#f5c890"/>
+          <circle cx="76" cy="58" r="4" fill="#fff"/>
+          <circle cx="88" cy="58" r="4" fill="#fff"/>
+          <circle cx="76" cy="58" r="2" fill="#333"/>
+          <circle cx="88" cy="58" r="2" fill="#333"/>
+          <ellipse cx="82" cy="68" rx="5" ry="4" fill="#c04040"/>
+          <rect x="66" y="78" width="32" height="36" fill="#5080d0" rx="2"/>
+          <rect x="42" y="72" width="26" height="9" fill="#5080d0" rx="2" transform="rotate(-30 55 76)"/>
+          <ellipse cx="36" cy="66" rx="9" ry="8" fill="#f5c890"/>
+          <rect x="96" y="72" width="26" height="9" fill="#5080d0" rx="2" transform="rotate(30 109 76)"/>
+          <ellipse cx="124" cy="66" rx="9" ry="8" fill="#f5c890"/>
+          <path d="M68 92 Q82 105 96 92" stroke="#fff" stroke-width="2.5" fill="none"/>
+          <text x="32" y="44" font-size="20" fill="#c04040" font-weight="bold">?</text>
+          <text x="128" y="44" font-size="20" fill="#c04040" font-weight="bold">?</text>
+        </svg>
+      </div>
+      <!-- 图三 -->
+      <div class="pic-cell">
+        <div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#eef2f8"/>
+          <rect x="65" y="72" width="128" height="16" fill="#6080b0" rx="2"/>
+          <rect x="65" y="85" width="128" height="72" fill="#4a6090" rx="0"/>
+          <rect x="82" y="58" width="64" height="18" fill="#2050a0" rx="2"/>
+          <text x="90" y="71" font-size="11" fill="#fff" font-family="Arial">服 务 台</text>
+          <ellipse cx="162" cy="70" rx="13" ry="13" fill="#f5d0a0"/>
+          <rect x="149" y="83" width="26" height="22" fill="#d04020" rx="2"/>
+          <path d="M154 74 Q162 80 170 74" stroke="#a05030" stroke-width="2" fill="none"/>
+          <ellipse cx="36" cy="68" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="23" y="81" width="26" height="34" fill="#5080d0" rx="2"/>
+          <rect x="46" y="75" width="28" height="8" fill="#5080d0" rx="2" transform="rotate(-15 60 79)"/>
+          <ellipse cx="76" cy="69" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="65" cy="44" rx="30" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.5"/>
+          <path d="M46 58 L38 67" stroke="#aaa" stroke-width="1.5" fill="#fff"/>
+          <text x="42" y="42" font-size="11" fill="#333">钱包不见了！</text>
+        </svg>
+      </div>
+      <!-- 图四 -->
+      <div class="pic-cell">
+        <div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f5ee"/>
+          <rect x="50" y="92" width="140" height="14" fill="#6080b0" rx="2"/>
+          <rect x="50" y="103" width="140" height="57" fill="#4a6090" rx="0"/>
+          <ellipse cx="142" cy="68" rx="12" ry="12" fill="#f5d0a0"/>
+          <rect x="130" y="80" width="24" height="22" fill="#d04020" rx="2"/>
+          <ellipse cx="148" cy="48" rx="12" ry="12" fill="#e8b878"/>
+          <rect x="136" y="60" width="24" height="26" fill="#508040" rx="2"/>
+          <rect x="120" y="64" width="18" height="12" fill="#8B4513" rx="1"/>
+          <rect x="121" y="66" width="16" height="3" fill="#a0522d"/>
+          <rect x="131" y="66" width="24" height="8" fill="#508040" rx="2" transform="rotate(15 143 70)"/>
+          <ellipse cx="52" cy="62" rx="13" ry="13" fill="#f5c890"/>
+          <path d="M44 68 Q52 74 60 68" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <rect x="39" y="75" width="26" height="34" fill="#5080d0" rx="2"/>
+          <rect x="62" y="77" width="24" height="8" fill="#5080d0" rx="2" transform="rotate(-10 74 81)"/>
+          <ellipse cx="87" cy="73" rx="8" ry="7" fill="#f5c890"/>
+          <text x="92" y="40" font-size="20" fill="#e05060">♥</text>
+          <text x="16" y="36" font-size="16" fill="#508040">谢谢！</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第1题</span></div>
+</div>
+
+<!-- S2 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第2题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fdf5e8"/>
+          <polygon points="8,40 192,40 185,24 15,24" fill="#e05030"/>
+          <rect x="8" y="37" width="184" height="5" fill="#c04020"/>
+          <rect x="20" y="68" width="22" height="20" fill="#c05020" rx="1"/>
+          <rect x="17" y="85" width="28" height="5" fill="#a04010" rx="1"/>
+          <rect x="50" y="71" width="20" height="18" fill="#d06030" rx="1"/>
+          <rect x="47" y="86" width="26" height="5" fill="#a04010" rx="1"/>
+          <rect x="90" y="72" width="16" height="16" fill="#e8c040" rx="1"/>
+          <rect x="112" y="73" width="16" height="14" fill="#80c040" rx="1"/>
+          <rect x="134" y="72" width="16" height="16" fill="#e05050" rx="1"/>
+          <rect x="17" y="88" width="166" height="8" fill="#a07840" rx="1"/>
+          <rect x="17" y="94" width="166" height="64" fill="#8a6430"/>
+          <ellipse cx="34" cy="56" rx="13" ry="13" fill="#f5d0a0"/>
+          <path d="M21 48 Q34 38 47 48" stroke="#aaa" stroke-width="5" fill="none"/>
+          <rect x="21" y="69" width="26" height="32" fill="#8060a0" rx="2"/>
+          <ellipse cx="68" cy="60" rx="12" ry="12" fill="#f5c890"/>
+          <rect x="56" y="72" width="24" height="30" fill="#e06080" rx="2"/>
+          <ellipse cx="58" cy="53" rx="5" ry="7" fill="#4a2800" transform="rotate(-20 58 53)"/>
+          <ellipse cx="78" cy="53" rx="5" ry="7" fill="#4a2800" transform="rotate(20 78 53)"/>
+          <rect x="78" y="70" width="24" height="6" fill="#e06080" rx="2" transform="rotate(-20 90 73)"/>
+          <ellipse cx="104" cy="62" rx="7" ry="6" fill="#f5c890"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#e8f4ff"/>
+          <rect width="200" height="88" fill="#c8e8ff"/>
+          <circle cx="158" cy="28" r="16" fill="#ffe040"/>
+          <line x1="158" y1="6" x2="158" y2="13" stroke="#ffe040" stroke-width="3"/>
+          <line x1="158" y1="43" x2="158" y2="50" stroke="#ffe040" stroke-width="3"/>
+          <line x1="134" y1="28" x2="141" y2="28" stroke="#ffe040" stroke-width="3"/>
+          <line x1="175" y1="28" x2="182" y2="28" stroke="#ffe040" stroke-width="3"/>
+          <rect width="200" height="88" fill="#c8e8ff" opacity="0.4"/>
+          <rect x="0" y="100" width="200" height="14" fill="#d0b888" rx="2"/>
+          <rect x="0" y="110" width="200" height="50" fill="#c0a870"/>
+          <rect x="16" y="100" width="5" height="60" fill="#b89860" rx="1"/>
+          <rect x="46" y="100" width="5" height="60" fill="#b89860" rx="1"/>
+          <rect x="76" y="100" width="5" height="60" fill="#b89860" rx="1"/>
+          <rect x="106" y="100" width="5" height="60" fill="#b89860" rx="1"/>
+          <rect x="120" y="82" width="32" height="22" fill="#c05020" rx="2"/>
+          <rect x="116" y="100" width="40" height="6" fill="#a04010" rx="1"/>
+          <ellipse cx="136" cy="84" rx="13" ry="5" fill="#6a3a10"/>
+          <line x1="136" y1="84" x2="136" y2="70" stroke="#50a030" stroke-width="3"/>
+          <ellipse cx="126" cy="72" rx="7" ry="4" fill="#60b040" transform="rotate(-20 126 72)"/>
+          <ellipse cx="146" cy="68" rx="7" ry="4" fill="#60b040" transform="rotate(20 146 68)"/>
+          <rect x="154" y="72" width="28" height="18" fill="#4080c0" rx="2"/>
+          <path d="M154 76 Q144 82 140 88" stroke="#4080c0" stroke-width="3.5" fill="none"/>
+          <rect x="174" y="64" width="8" height="12" fill="#4080c0" rx="1" transform="rotate(20 178 70)"/>
+          <ellipse cx="136" cy="95" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <ellipse cx="142" cy="99" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <ellipse cx="162" cy="56" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="149" y="69" width="26" height="32" fill="#e06080" rx="2"/>
+          <rect x="172" y="69" width="22" height="8" fill="#e06080" rx="2" transform="rotate(10 183 73)"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f4f2ee"/>
+          <rect x="8" y="8" width="184" height="120" fill="#d8e8f5" rx="3"/>
+          <rect x="8" y="8" width="184" height="120" fill="none" stroke="#888" stroke-width="4" rx="3"/>
+          <rect x="95" y="8" width="6" height="120" fill="#888"/>
+          <rect x="8" y="64" width="184" height="6" fill="#888"/>
+          <rect x="120" y="12" width="64" height="44" fill="#fff" stroke="#bbb" stroke-width="1.5" rx="1"/>
+          <text x="128" y="24" font-size="10" fill="#8b0000" font-weight="bold">日历</text>
+          <line x1="124" y1="29" x2="134" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="134" y1="29" x2="124" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="139" y1="29" x2="149" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="149" y1="29" x2="139" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="154" y1="29" x2="164" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="164" y1="29" x2="154" y2="39" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="124" y1="42" x2="134" y2="50" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="134" y1="42" x2="124" y2="50" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="139" y1="42" x2="149" y2="50" stroke="#c04040" stroke-width="2.5"/>
+          <line x1="149" y1="42" x2="139" y2="50" stroke="#c04040" stroke-width="2.5"/>
+          <rect x="28" y="82" width="36" height="26" fill="#c05020" rx="2"/>
+          <rect x="24" y="104" width="44" height="6" fill="#a04010" rx="1"/>
+          <ellipse cx="46" cy="84" rx="14" ry="5.5" fill="#6a3a10"/>
+          <ellipse cx="106" cy="70" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="92" y="84" width="28" height="35" fill="#e06080" rx="2"/>
+          <path d="M100 76 Q106 70 112 76" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <rect x="70" y="96" width="30" height="8" fill="#e06080" rx="2" transform="rotate(-5 85 100)"/>
+          <ellipse cx="68" cy="98" rx="10" ry="8" fill="#f5c890"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8f0"/>
+          <rect width="200" height="160" fill="#fff4e0"/>
+          <rect x="0" y="108" width="200" height="14" fill="#d0b888" rx="2"/>
+          <rect x="0" y="118" width="200" height="44" fill="#c0a870"/>
+          <rect x="16" y="108" width="5" height="52" fill="#b89860" rx="1"/>
+          <rect x="50" y="108" width="5" height="52" fill="#b89860" rx="1"/>
+          <rect x="84" y="108" width="5" height="52" fill="#b89860" rx="1"/>
+          <rect x="96" y="88" width="36" height="24" fill="#c05020" rx="2"/>
+          <rect x="92" y="108" width="44" height="6" fill="#a04010" rx="1"/>
+          <ellipse cx="114" cy="90" rx="14" ry="5" fill="#6a3a10"/>
+          <line x1="114" y1="90" x2="114" y2="60" stroke="#50a030" stroke-width="4"/>
+          <ellipse cx="100" cy="74" rx="10" ry="5" fill="#60b040" transform="rotate(-30 100 74)"/>
+          <ellipse cx="128" cy="68" rx="10" ry="5" fill="#60b040" transform="rotate(30 128 68)"/>
+          <ellipse cx="114" cy="46" rx="8" ry="13" fill="#ffb0d0"/>
+          <ellipse cx="114" cy="46" rx="13" ry="8" fill="#ffb0d0"/>
+          <ellipse cx="106" cy="51" rx="8" ry="13" fill="#ff90c0" transform="rotate(45 106 51)"/>
+          <ellipse cx="122" cy="51" rx="8" ry="13" fill="#ff90c0" transform="rotate(-45 122 51)"/>
+          <circle cx="114" cy="46" r="8" fill="#ffe040"/>
+          <ellipse cx="36" cy="62" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="22" y="76" width="28" height="32" fill="#e06080" rx="2"/>
+          <ellipse cx="22" cy="52" rx="6" ry="8" fill="#4a2800" transform="rotate(-30 22 52)"/>
+          <ellipse cx="50" cy="52" rx="6" ry="8" fill="#4a2800" transform="rotate(30 50 52)"/>
+          <path d="M28 68 Q36 76 44 68" stroke="#a05030" stroke-width="3" fill="none"/>
+          <rect x="2" y="72" width="22" height="8" fill="#e06080" rx="2" transform="rotate(-40 13 76)"/>
+          <ellipse cx="-2" cy="66" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="48" y="72" width="22" height="8" fill="#e06080" rx="2" transform="rotate(40 59 76)"/>
+          <ellipse cx="72" cy="66" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="162" cy="70" rx="13" ry="13" fill="#f5d0a0"/>
+          <path d="M149 62 Q162 52 175 62" stroke="#aaa" stroke-width="5" fill="none"/>
+          <rect x="149" y="83" width="26" height="32" fill="#8060a0" rx="2"/>
+          <path d="M154 74 Q162 80 170 74" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <text x="138" y="34" font-size="16" fill="#ffc020">✦</text>
+          <text x="90" y="30" font-size="13" fill="#ffc020">✦</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第2题</span></div>
+</div>
+
+<!-- S3 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第3题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#eef2ff"/>
+          <rect width="200" height="160" fill="#f0eff5"/>
+          <rect width="200" height="20" fill="#4060a0"/>
+          <rect x="40" y="28" width="120" height="72" fill="#f5e8c0" rx="2" stroke="#a08040" stroke-width="2.5"/>
+          <text x="58" y="48" font-size="12" fill="#8b0000" font-weight="bold">志愿者报名</text>
+          <text x="52" y="63" font-size="10" fill="#333">养老院服务活动</text>
+          <text x="52" y="78" font-size="10" fill="#333">时间：本周六上午</text>
+          <text x="52" y="93" font-size="9" fill="#555">请在下方签名报名</text>
+          <ellipse cx="32" cy="124" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="21" y="135" width="22" height="24" fill="#4080c0" rx="2"/>
+          <rect x="38" y="132" width="32" height="6" fill="#4080c0" rx="2" transform="rotate(-20 54 135)"/>
+          <ellipse cx="72" cy="123" rx="9" ry="7" fill="#f5c890"/>
+          <ellipse cx="105" cy="122" rx="11" ry="11" fill="#e8b878"/>
+          <rect x="94" y="133" width="22" height="24" fill="#e04060" rx="2"/>
+          <ellipse cx="162" cy="124" rx="11" ry="11" fill="#f5d0b0"/>
+          <rect x="151" y="135" width="22" height="24" fill="#40a060" rx="2"/>
+          <rect x="78" y="112" width="20" height="26" fill="#f5e8d0" rx="1" stroke="#aaa" stroke-width="1.2"/>
+          <line x1="81" y1="121" x2="95" y2="121" stroke="#888" stroke-width="1.2"/>
+          <line x1="81" y1="127" x2="95" y2="127" stroke="#888" stroke-width="1.2"/>
+          <line x1="81" y1="133" x2="93" y2="133" stroke="#888" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8f0"/>
+          <rect x="0" y="96" width="200" height="64" fill="#f5e0c8"/>
+          <rect x="0" y="92" width="200" height="8" fill="#c8a878"/>
+          <path d="M0 0 Q32 48 0 96" fill="#c03030"/>
+          <path d="M200 0 Q168 48 200 96" fill="#c03030"/>
+          <ellipse cx="65" cy="50" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="54" y="61" width="22" height="28" fill="#4080c0" rx="2"/>
+          <rect x="38" y="58" width="20" height="6" fill="#4080c0" rx="2" transform="rotate(40 48 61)"/>
+          <ellipse cx="31" cy="52" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="70" y="58" width="20" height="6" fill="#4080c0" rx="2" transform="rotate(-40 80 61)"/>
+          <ellipse cx="92" cy="52" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="100" cy="48" rx="11" ry="11" fill="#e8b878"/>
+          <rect x="89" y="59" width="22" height="28" fill="#e04060" rx="2"/>
+          <ellipse cx="135" cy="50" rx="11" ry="11" fill="#f5d0b0"/>
+          <rect x="124" y="61" width="22" height="28" fill="#40a060" rx="2"/>
+          <ellipse cx="32" cy="114" rx="11" ry="11" fill="#f5d0a0"/>
+          <path d="M21 106 Q32 96 43 106" stroke="#ccc" stroke-width="5" fill="none"/>
+          <rect x="21" y="125" width="22" height="20" fill="#9070b0" rx="2"/>
+          <ellipse cx="21" cy="128" rx="7" ry="5" fill="#f5d0a0"/>
+          <ellipse cx="43" cy="128" rx="7" ry="5" fill="#f5d0a0"/>
+          <ellipse cx="100" cy="114" rx="11" ry="11" fill="#f5c890"/>
+          <path d="M89 106 Q100 96 111 106" stroke="#aaa" stroke-width="5" fill="none"/>
+          <rect x="89" y="125" width="22" height="20" fill="#7080b0" rx="2"/>
+          <ellipse cx="168" cy="114" rx="11" ry="11" fill="#f5d0b0"/>
+          <path d="M157 106 Q168 96 179 106" stroke="#bbb" stroke-width="5" fill="none"/>
+          <rect x="157" y="125" width="22" height="20" fill="#9060a0" rx="2"/>
+          <text x="60" y="106" font-size="15" fill="#e05030">♪</text>
+          <text x="125" y="102" font-size="15" fill="#e05030">♪</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5f0e8"/>
+          <rect x="0" y="112" width="200" height="48" fill="#e8dcc8"/>
+          <rect x="50" y="84" width="100" height="8" fill="#c8a870" rx="1"/>
+          <rect x="42" y="90" width="116" height="70" fill="#b09060"/>
+          <rect x="58" y="54" width="84" height="84" fill="#f5e8c8" rx="1" stroke="#888" stroke-width="1.5"/>
+          <line x1="58" y1="64" x2="142" y2="64" stroke="#888" stroke-width="0.8"/>
+          <line x1="58" y1="74" x2="142" y2="74" stroke="#888" stroke-width="0.8"/>
+          <line x1="58" y1="84" x2="142" y2="84" stroke="#888" stroke-width="0.8"/>
+          <line x1="58" y1="94" x2="142" y2="94" stroke="#888" stroke-width="0.8"/>
+          <line x1="58" y1="104" x2="142" y2="104" stroke="#888" stroke-width="0.8"/>
+          <line x1="58" y1="114" x2="142" y2="114" stroke="#888" stroke-width="0.8"/>
+          <line x1="70" y1="54" x2="70" y2="138" stroke="#888" stroke-width="0.8"/>
+          <line x1="82" y1="54" x2="82" y2="138" stroke="#888" stroke-width="0.8"/>
+          <line x1="94" y1="54" x2="94" y2="138" stroke="#888" stroke-width="0.8"/>
+          <line x1="106" y1="54" x2="106" y2="138" stroke="#888" stroke-width="0.8"/>
+          <line x1="118" y1="54" x2="118" y2="138" stroke="#888" stroke-width="0.8"/>
+          <line x1="130" y1="54" x2="130" y2="138" stroke="#888" stroke-width="0.8"/>
+          <circle cx="70" cy="64" r="5" fill="#333"/>
+          <circle cx="94" cy="74" r="5" fill="#eee" stroke="#333" stroke-width="1.2"/>
+          <circle cx="106" cy="94" r="5" fill="#333"/>
+          <circle cx="118" cy="84" r="5" fill="#eee" stroke="#333" stroke-width="1.2"/>
+          <circle cx="82" cy="104" r="5" fill="#eee" stroke="#333" stroke-width="1.2"/>
+          <circle cx="130" cy="114" r="5" fill="#333"/>
+          <ellipse cx="24" cy="66" rx="13" ry="13" fill="#f5d0a0"/>
+          <path d="M11 58 Q24 48 37 58" stroke="#eee" stroke-width="5" fill="none"/>
+          <rect x="11" y="79" width="26" height="32" fill="#7060a0" rx="2"/>
+          <rect x="36" y="82" width="22" height="6" fill="#7060a0" rx="2" transform="rotate(10 47 85)"/>
+          <ellipse cx="59" cy="78" rx="8" ry="7" fill="#f5d0a0"/>
+          <ellipse cx="176" cy="66" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="163" y="79" width="26" height="32" fill="#4080c0" rx="2"/>
+          <rect x="142" y="82" width="22" height="6" fill="#4080c0" rx="2" transform="rotate(-10 153 85)"/>
+          <ellipse cx="141" cy="78" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="40" cy="42" rx="28" ry="13" fill="#fff" stroke="#bbb" stroke-width="1.5"/>
+          <path d="M24 54 L24 65" stroke="#bbb" stroke-width="1.5"/>
+          <text x="16" y="40" font-size="10" fill="#555">下得好！</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f8f6f0"/>
+          <rect x="0" y="104" width="200" height="56" fill="#e8dcc8"/>
+          <rect x="16" y="84" width="168" height="10" fill="#c8a870" rx="1"/>
+          <rect x="25" y="94" width="150" height="66" fill="#b09060"/>
+          <rect x="132" y="44" width="5" height="42" fill="#888" rx="1"/>
+          <ellipse cx="134" cy="44" rx="20" ry="8" fill="#e8c840"/>
+          <ellipse cx="96" cy="82" rx="50" ry="13" fill="#fff8d0" opacity="0.5"/>
+          <rect x="34" y="58" width="90" height="60" fill="#fff" rx="2" stroke="#ddd" stroke-width="1.5"/>
+          <line x1="79" y1="58" x2="79" y2="118" stroke="#ccc" stroke-width="1.5"/>
+          <line x1="36" y1="70" x2="78" y2="70" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="36" y1="80" x2="78" y2="80" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="36" y1="90" x2="78" y2="90" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="36" y1="100" x2="78" y2="100" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="36" y1="110" x2="78" y2="110" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="81" y1="70" x2="122" y2="70" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="81" y1="80" x2="122" y2="80" stroke="#ddd" stroke-width="1.2"/>
+          <line x1="81" y1="90" x2="122" y2="90" stroke="#ddd" stroke-width="1.2"/>
+          <text x="37" y="68" font-size="9" fill="#555">今天的志愿</text>
+          <text x="37" y="78" font-size="9" fill="#555">服务让我...</text>
+          <ellipse cx="168" cy="57" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="154" y="71" width="28" height="36" fill="#4080c0" rx="2"/>
+          <rect x="126" y="82" width="28" height="6" fill="#4080c0" rx="2" transform="rotate(-15 140 85)"/>
+          <ellipse cx="124" cy="86" rx="8" ry="7" fill="#f5c890"/>
+          <line x1="120" y1="88" x2="112" y2="98" stroke="#333" stroke-width="2.5"/>
+          <ellipse cx="50" cy="28" rx="36" ry="18" fill="#e8f0ff" stroke="#bbb" stroke-width="1.2"/>
+          <circle cx="74" cy="47" r="5" fill="#e8f0ff" stroke="#bbb" stroke-width="1.2"/>
+          <circle cx="82" cy="56" r="3.5" fill="#e8f0ff" stroke="#bbb" stroke-width="1.2"/>
+          <ellipse cx="36" cy="26" rx="8" ry="8" fill="#f5d0a0"/>
+          <path d="M28 21 Q36 14 44 21" stroke="#ccc" stroke-width="3.5" fill="none"/>
+          <ellipse cx="58" cy="26" rx="8" ry="8" fill="#f5c890"/>
+          <text x="20" y="38" font-size="9" fill="#4060a0">♥</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第3题</span></div>
+</div>
+
+<!-- S4 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第4题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#d8eeff"/>
+          <rect width="200" height="96" fill="#b8e0ff"/>
+          <circle cx="150" cy="28" r="18" fill="#ffe840"/>
+          <rect x="0" y="96" width="200" height="64" fill="#888"/>
+          <rect x="0" y="90" width="200" height="10" fill="#6a8030"/>
+          <rect x="16" y="124" width="32" height="5" fill="#fff" rx="1"/>
+          <rect x="72" y="124" width="32" height="5" fill="#fff" rx="1"/>
+          <rect x="128" y="124" width="32" height="5" fill="#fff" rx="1"/>
+          <circle cx="82" cy="114" r="16" fill="none" stroke="#333" stroke-width="3.5"/>
+          <circle cx="134" cy="114" r="16" fill="none" stroke="#333" stroke-width="3.5"/>
+          <line x1="82" y1="114" x2="108" y2="90" stroke="#333" stroke-width="3"/>
+          <line x1="134" y1="114" x2="108" y2="90" stroke="#333" stroke-width="3"/>
+          <line x1="88" y1="104" x2="126" y2="104" stroke="#333" stroke-width="3"/>
+          <circle cx="108" cy="90" r="4" fill="#333"/>
+          <line x1="108" y1="90" x2="94" y2="80" stroke="#333" stroke-width="3"/>
+          <line x1="90" y1="80" x2="100" y2="80" stroke="#333" stroke-width="3.5"/>
+          <ellipse cx="108" cy="63" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="97" y="74" width="22" height="22" fill="#e06080" rx="2"/>
+          <rect x="116" y="72" width="16" height="22" fill="#4080c0" rx="2"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#8090b0"/>
+          <rect width="200" height="160" fill="#9098b5"/>
+          <ellipse cx="50" cy="22" rx="44" ry="22" fill="#556"/>
+          <ellipse cx="116" cy="18" rx="56" ry="28" fill="#445"/>
+          <ellipse cx="176" cy="28" rx="34" ry="18" fill="#556"/>
+          <path d="M146 12 L132 40 L142 40 L124 66" stroke="#ffe040" stroke-width="3.5" fill="none"/>
+          <line x1="16" y1="46" x2="11" y2="66" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="40" y1="42" x2="35" y2="62" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="64" y1="50" x2="59" y2="70" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="88" y1="46" x2="83" y2="66" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="110" y1="52" x2="105" y2="72" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="158" y1="44" x2="153" y2="64" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="182" y1="50" x2="177" y2="70" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="28" y1="72" x2="23" y2="92" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="72" y1="76" x2="67" y2="96" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="120" y1="70" x2="115" y2="90" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="166" y1="76" x2="161" y2="96" stroke="#80b0ff" stroke-width="2.5"/>
+          <rect x="0" y="108" width="200" height="52" fill="#667"/>
+          <rect x="0" y="104" width="200" height="8" fill="#4a5a30"/>
+          <circle cx="56" cy="122" r="13" fill="none" stroke="#444" stroke-width="3"/>
+          <circle cx="96" cy="124" r="13" fill="none" stroke="#444" stroke-width="3"/>
+          <line x1="56" y1="122" x2="76" y2="104" stroke="#444" stroke-width="2.5"/>
+          <line x1="96" y1="124" x2="76" y2="104" stroke="#444" stroke-width="2.5"/>
+          <path d="M66 118 Q72 124 70 130" stroke="#888" stroke-width="3" fill="none" stroke-dasharray="3,2"/>
+          <ellipse cx="140" cy="100" rx="13" ry="13" fill="#e8b878"/>
+          <rect x="127" y="113" width="26" height="32" fill="#e06080" rx="2"/>
+          <line x1="136" y1="86" x2="134" y2="96" stroke="#80b0ff" stroke-width="2.5"/>
+          <line x1="144" y1="84" x2="142" y2="94" stroke="#80b0ff" stroke-width="2.5"/>
+          <path d="M130 106 Q140 100 150 106" stroke="#a05030" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#8090a8"/>
+          <rect width="200" height="88" fill="#9098b5"/>
+          <line x1="12" y1="8" x2="9" y2="25" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="36" y1="12" x2="33" y2="30" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="62" y1="8" x2="59" y2="25" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="90" y1="12" x2="87" y2="30" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="116" y1="8" x2="113" y2="25" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="148" y1="12" x2="145" y2="30" stroke="#a0b8d0" stroke-width="2"/>
+          <line x1="178" y1="8" x2="175" y2="25" stroke="#a0b8d0" stroke-width="2"/>
+          <rect x="0" y="100" width="200" height="60" fill="#666"/>
+          <rect x="0" y="95" width="200" height="8" fill="#4a5a30"/>
+          <rect x="96" y="84" width="48" height="28" fill="#e04020" rx="4"/>
+          <circle cx="99" cy="114" r="10" fill="#333"/>
+          <circle cx="138" cy="114" r="10" fill="#333"/>
+          <rect x="106" y="70" width="32" height="20" fill="#c03010" rx="3"/>
+          <rect x="130" y="72" width="26" height="26" fill="#f5c040" rx="1"/>
+          <text x="132" y="87" font-size="10" fill="#333">外卖</text>
+          <ellipse cx="64" cy="86" rx="11" ry="11" fill="#e8b060"/>
+          <rect x="53" y="97" width="22" height="22" fill="#c06010" rx="2"/>
+          <rect x="44" y="106" width="28" height="8" fill="#c06010" rx="2" transform="rotate(30 58 110)"/>
+          <line x1="30" y1="118" x2="50" y2="113" stroke="#888" stroke-width="3"/>
+          <circle cx="16" cy="124" r="12" fill="none" stroke="#555" stroke-width="3"/>
+          <line x1="16" y1="124" x2="36" y2="106" stroke="#555" stroke-width="2.5"/>
+          <ellipse cx="148" cy="84" rx="11" ry="11" fill="#e8b878"/>
+          <rect x="137" y="95" width="22" height="29" fill="#e06080" rx="2"/>
+          <path d="M142 88 Q148 93 154 88" stroke="#a05030" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#d0dce8"/>
+          <rect width="200" height="88" fill="#c8dcf0"/>
+          <circle cx="24" cy="28" r="13" fill="#ffe878" opacity="0.9"/>
+          <rect x="50" y="48" width="130" height="88" fill="#d8c8a8" rx="2"/>
+          <rect x="50" y="32" width="130" height="22" fill="#b0906a" rx="2"/>
+          <rect x="60" y="48" width="10" height="88" fill="#c8b898" rx="1"/>
+          <rect x="90" y="48" width="10" height="88" fill="#c8b898" rx="1"/>
+          <rect x="120" y="48" width="10" height="88" fill="#c8b898" rx="1"/>
+          <rect x="150" y="48" width="10" height="88" fill="#c8b898" rx="1"/>
+          <rect x="72" y="58" width="16" height="22" fill="#80b0d0" rx="1"/>
+          <rect x="102" y="58" width="16" height="22" fill="#80b0d0" rx="1"/>
+          <rect x="132" y="58" width="16" height="22" fill="#80b0d0" rx="1"/>
+          <rect x="72" y="34" width="82" height="12" fill="#8b0000" rx="1"/>
+          <text x="78" y="44" font-size="11" fill="#fff" font-weight="bold">图　书　馆</text>
+          <rect x="98" y="104" width="32" height="32" fill="#a07850" rx="1"/>
+          <circle cx="108" cy="120" r="2.5" fill="#c8a050"/>
+          <circle cx="20" cy="122" r="11" fill="none" stroke="#555" stroke-width="3"/>
+          <circle cx="48" cy="122" r="11" fill="none" stroke="#555" stroke-width="3"/>
+          <line x1="20" y1="122" x2="34" y2="104" stroke="#555" stroke-width="2.5"/>
+          <line x1="48" y1="122" x2="34" y2="104" stroke="#555" stroke-width="2.5"/>
+          <line x1="22" y1="112" x2="46" y2="112" stroke="#555" stroke-width="2.5"/>
+          <ellipse cx="32" cy="90" rx="11" ry="11" fill="#e8b878"/>
+          <rect x="21" y="101" width="22" height="20" fill="#e06080" rx="2"/>
+          <path d="M26 95 Q32 100 38 95" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <rect x="38" y="99" width="14" height="16" fill="#4080c0" rx="2"/>
+          <ellipse cx="86" cy="70" rx="28" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.2" opacity="0.9"/>
+          <circle cx="62" cy="88" r="5" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <circle cx="56" cy="98" r="3.5" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <ellipse cx="84" cy="69" rx="7" ry="7" fill="#e8b060"/>
+          <text x="66" y="76" font-size="9" fill="#4060a0">好人！</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第4题</span></div>
+</div>
+
+<!-- S5 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第5题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8f0"/>
+          <rect x="0" y="112" width="200" height="48" fill="#e8dcc8"/>
+          <rect width="200" height="56" fill="#c8a878" rx="2"/>
+          <rect x="8" y="6" width="52" height="42" fill="#d8b888" rx="1" stroke="#a08858" stroke-width="1.5"/>
+          <rect x="70" y="6" width="52" height="42" fill="#d8b888" rx="1" stroke="#a08858" stroke-width="1.5"/>
+          <rect x="132" y="6" width="60" height="42" fill="#d8b888" rx="1" stroke="#a08858" stroke-width="1.5"/>
+          <rect x="0" y="88" width="200" height="13" fill="#d0c0a0" rx="1"/>
+          <rect x="96" y="60" width="40" height="30" fill="#e8c0a0" rx="1" stroke="#c0a080" stroke-width="1.5"/>
+          <text x="102" y="76" font-size="9" fill="#8b0000">蛋糕食谱</text>
+          <rect x="12" y="62" width="20" height="26" fill="#f5f5d8" rx="1" stroke="#ccc" stroke-width="1.2"/>
+          <text x="14" y="78" font-size="8" fill="#555">面粉</text>
+          <ellipse cx="52" cy="78" rx="13" ry="9" fill="#a05030" rx="5"/>
+          <text x="43" y="80" font-size="8" fill="#fff">可可粉</text>
+          <ellipse cx="148" cy="62" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="135" y="75" width="26" height="32" fill="#5080d0" rx="2"/>
+          <rect x="158" y="65" width="20" height="6" fill="#5080d0" rx="2" transform="rotate(-45 168 68)"/>
+          <ellipse cx="172" cy="57" rx="7" ry="6" fill="#f5c890"/>
+          <rect x="0" y="56" width="20" height="60" fill="#c8a878" rx="1"/>
+          <rect x="2" y="58" width="16" height="56" fill="#d8b888" rx="1"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff5f0"/>
+          <rect x="0" y="88" width="200" height="72" fill="#e8dcc8"/>
+          <rect x="0" y="84" width="200" height="12" fill="#d0c0a0"/>
+          <ellipse cx="96" cy="80" rx="40" ry="16" fill="#e0d0b8" stroke="#bbb" stroke-width="1.5"/>
+          <ellipse cx="96" cy="74" rx="36" ry="12" fill="#f5f0e8"/>
+          <ellipse cx="64" cy="130" rx="32" ry="13" fill="#f5e880" opacity="0.7"/>
+          <ellipse cx="112" cy="140" rx="24" ry="10" fill="#f5e880" opacity="0.7"/>
+          <path d="M48 120 Q56 112 64 120" stroke="#e8d890" stroke-width="2.5" fill="#f5e8a0"/>
+          <path d="M84 124 Q90 116 96 124" stroke="#e8d890" stroke-width="2.5" fill="#f5e8a0"/>
+          <ellipse cx="148" cy="80" rx="28" ry="8" fill="#f5f5e8" opacity="0.8"/>
+          <rect x="150" y="48" width="26" height="38" fill="#f5f5e8" rx="1" stroke="#ddd" stroke-width="1.2" transform="rotate(25 163 67)"/>
+          <ellipse cx="88" cy="44" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="74" y="58" width="28" height="36" fill="#5080d0" rx="2"/>
+          <circle cx="82" cy="41" r="4.5" fill="#fff"/>
+          <circle cx="94" cy="41" r="4.5" fill="#fff"/>
+          <circle cx="82" cy="41" r="2.2" fill="#333"/>
+          <circle cx="94" cy="41" r="2.2" fill="#333"/>
+          <ellipse cx="88" cy="50" rx="4.5" ry="3.5" fill="#c04040"/>
+          <rect x="48" y="55" width="26" height="8" fill="#5080d0" rx="2" transform="rotate(20 61 59)"/>
+          <ellipse cx="43" cy="50" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="102" y="55" width="26" height="8" fill="#5080d0" rx="2" transform="rotate(-20 115 59)"/>
+          <ellipse cx="130" cy="50" rx="8" ry="7" fill="#f5c890"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8f0"/>
+          <rect x="0" y="88" width="200" height="72" fill="#e8dcc8"/>
+          <rect x="0" y="80" width="200" height="12" fill="#d0c0a0"/>
+          <ellipse cx="72" cy="136" rx="36" ry="13" fill="#f5e880" opacity="0.6"/>
+          <ellipse cx="120" cy="140" rx="24" ry="8" fill="#f5e880" opacity="0.5"/>
+          <rect x="92" y="52" width="44" height="30" fill="#e8c0a0" rx="1" stroke="#c0a080" stroke-width="1.5"/>
+          <text x="97" y="65" font-size="9" fill="#8b0000">生日蛋糕</text>
+          <text x="97" y="78" font-size="8" fill="#8b0000">食谱 ♥</text>
+          <rect x="0" y="64" width="72" height="8" fill="#c8a878" rx="2"/>
+          <ellipse cx="36" cy="56" rx="14" ry="14" fill="#f5c890"/>
+          <path d="M22 50 Q36 40 50 50" stroke="#aaa" stroke-width="5" fill="none"/>
+          <rect x="22" y="70" width="28" height="38" fill="#9060a0" rx="2"/>
+          <circle cx="30" cy="52" r="4" fill="#fff"/>
+          <circle cx="42" cy="52" r="4" fill="#fff"/>
+          <circle cx="30" cy="52" r="2" fill="#333"/>
+          <circle cx="42" cy="52" r="2" fill="#333"/>
+          <ellipse cx="36" cy="60" rx="4" ry="3" fill="#c04040"/>
+          <rect x="46" y="66" width="20" height="8" fill="#9060a0" rx="2" transform="rotate(-20 56 70)"/>
+          <ellipse cx="66" cy="62" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="162" cy="70" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="151" y="81" width="22" height="30" fill="#5080d0" rx="2"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff0f0"/>
+          <rect x="0" y="104" width="200" height="56" fill="#e8d8c8"/>
+          <rect x="0" y="96" width="200" height="12" fill="#d0c0a0"/>
+          <rect x="68" y="66" width="58" height="32" fill="#f5c0c0" rx="2" stroke="#e0a0a0" stroke-width="1.5"/>
+          <rect x="62" y="60" width="70" height="12" fill="#e08080" rx="2"/>
+          <path d="M70 60 Q74 68 70 74" stroke="#f5e8e8" stroke-width="3" fill="none"/>
+          <path d="M97" y1="60" Q101 68 97 74" stroke="#f5e8e8" stroke-width="3" fill="none"/>
+          <path d="M122 60 Q126 68 122 74" stroke="#f5e8e8" stroke-width="3" fill="none"/>
+          <rect x="84" y="47" width="5" height="16" fill="#ffe040" rx="1"/>
+          <rect x="97" y="44" width="5" height="19" fill="#60c0ff" rx="1"/>
+          <rect x="110" y="47" width="5" height="16" fill="#ff80a0" rx="1"/>
+          <ellipse cx="86" cy="45" rx="3.5" ry="5" fill="#ff8020"/>
+          <ellipse cx="99" cy="42" rx="3.5" ry="5" fill="#ff8020"/>
+          <ellipse cx="112" cy="45" rx="3.5" ry="5" fill="#ff8020"/>
+          <text x="72" y="86" font-size="8" fill="#8b0000">生日快乐！</text>
+          <ellipse cx="48" cy="62" rx="14" ry="14" fill="#f5c890"/>
+          <path d="M34 56 Q48 44 62 56" stroke="#4a2800" stroke-width="6" fill="none"/>
+          <rect x="34" y="76" width="28" height="36" fill="#9060a0" rx="2"/>
+          <path d="M40 68 Q48 75 56 68" stroke="#a05030" stroke-width="3" fill="none"/>
+          <rect x="60" y="74" width="32" height="8" fill="#9060a0" rx="2" transform="rotate(-15 76 78)"/>
+          <ellipse cx="104" cy="62" rx="12" ry="12" fill="#f5c890"/>
+          <rect x="92" y="74" width="24" height="32" fill="#5080d0" rx="2"/>
+          <path d="M98 67 Q104 73 110 67" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <text x="128" y="44" font-size="22" fill="#e05060">♥</text>
+          <text x="16" y="44" font-size="16" fill="#e05060">♥</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第5题</span></div>
+</div>
+
+<!-- S6 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第6题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f0f8"/>
+          <rect x="0" y="108" width="200" height="52" fill="#e0e0d0"/>
+          <rect x="32" y="12" width="136" height="90" fill="#f5e8c0" rx="2" stroke="#a08040" stroke-width="3"/>
+          <text x="50" y="32" font-size="11" fill="#8b0000" font-weight="bold">演讲比赛报名</text>
+          <text x="44" y="50" font-size="10" fill="#333">主题：我的梦想</text>
+          <text x="44" y="66" font-size="10" fill="#333">时间：下周六上午</text>
+          <text x="44" y="82" font-size="10" fill="#333">地点：学校礼堂</text>
+          <rect x="44" y="88" width="72" height="10" fill="#8b0000" rx="1"/>
+          <text x="48" y="97" font-size="9" fill="#fff">点此报名</text>
+          <ellipse cx="152" cy="76" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="138" y="90" width="28" height="36" fill="#e06080" rx="2"/>
+          <path d="M146 80 Q152 74 158 80" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <ellipse cx="120" cy="48" rx="26" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.5"/>
+          <circle cx="138" cy="62" r="5" fill="#fff" stroke="#aaa" stroke-width="1.5"/>
+          <circle cx="145" cy="70" r="3.5" fill="#fff" stroke="#aaa" stroke-width="1.5"/>
+          <text x="102" y="44" font-size="9.5" fill="#666">我能行吗？</text>
+          <text x="120" y="40" font-size="15" fill="#c04040">?</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f8f8ff"/>
+          <rect x="0" y="112" width="200" height="48" fill="#e8e0d8"/>
+          <rect x="88" y="8" width="84" height="104" fill="#d8e8f5" rx="2" stroke="#a0b0c0" stroke-width="3"/>
+          <rect x="91" y="11" width="78" height="98" fill="#cce0f0" rx="1"/>
+          <text x="116" y="28" font-size="10" fill="#888">镜</text>
+          <ellipse cx="130" cy="54" rx="11" ry="11" fill="#f5c890" opacity="0.8"/>
+          <rect x="119" y="65" width="22" height="30" fill="#e06080" rx="2" opacity="0.8"/>
+          <rect x="122" y="71" width="16" height="18" fill="#f5e8c0" rx="1" opacity="0.8"/>
+          <ellipse cx="48" cy="60" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="34" y="74" width="28" height="36" fill="#e06080" rx="2"/>
+          <rect x="60" y="71" width="32" height="8" fill="#e06080" rx="2" transform="rotate(-20 76 75)"/>
+          <ellipse cx="94" cy="64" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="18" y="76" width="20" height="26" fill="#f5e8c0" rx="1" stroke="#aaa" stroke-width="1.2"/>
+          <line x1="21" y1="83" x2="35" y2="83" stroke="#bbb" stroke-width="1.2"/>
+          <line x1="21" y1="90" x2="35" y2="90" stroke="#bbb" stroke-width="1.2"/>
+          <line x1="21" y1="97" x2="33" y2="97" stroke="#bbb" stroke-width="1.2"/>
+          <rect x="16" y="68" width="22" height="6" fill="#e06080" rx="2" transform="rotate(10 27 71)"/>
+          <ellipse cx="66" cy="36" rx="32" ry="16" fill="#f0fff0" stroke="#80b080" stroke-width="1.2"/>
+          <path d="M50 50 L44 60" stroke="#80b080" stroke-width="1.2" fill="none"/>
+          <text x="48" y="32" font-size="9" fill="#338833">我的梦想</text>
+          <text x="44" y="44" font-size="9" fill="#338833">是成为……</text>
+          <ellipse cx="178" cy="72" rx="10" ry="10" fill="#f5d0a0"/>
+          <ellipse cx="164" cy="76" rx="8" ry="8" fill="#f5c890"/>
+          <rect x="168" y="86" width="20" height="22" fill="#808060" rx="2" opacity="0.8"/>
+          <text x="154" y="92" font-size="16" fill="#4080c0">👍</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#1a0a2a"/>
+          <rect x="0" y="80" width="200" height="80" fill="#3a1a5a" opacity="0.5"/>
+          <rect x="0" y="96" width="200" height="64" fill="#2a1a3a"/>
+          <path d="M100 0 L50 104 L150 104 Z" fill="#ffe880" opacity="0.15"/>
+          <path d="M0 0 Q36 56 0 104" fill="#8b0030"/>
+          <path d="M200 0 Q164 56 200 104" fill="#8b0030"/>
+          <rect x="75" y="72" width="50" height="32" fill="#6a4a2a" rx="2"/>
+          <rect x="66" y="70" width="68" height="8" fill="#8a6a3a" rx="1"/>
+          <rect x="97" y="48" width="6" height="26" fill="#555" rx="1"/>
+          <ellipse cx="100" cy="44" rx="8" ry="11" fill="#777"/>
+          <ellipse cx="100" cy="44" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="87" y="57" width="26" height="32" fill="#e06080" rx="2"/>
+          <ellipse cx="24" cy="136" rx="13" ry="13" fill="#222"/>
+          <ellipse cx="64" cy="140" rx="11" ry="11" fill="#222"/>
+          <ellipse cx="100" cy="137" rx="13" ry="13" fill="#222"/>
+          <ellipse cx="136" cy="140" rx="11" ry="11" fill="#222"/>
+          <ellipse cx="176" cy="136" rx="13" ry="13" fill="#222"/>
+          <ellipse cx="46" cy="144" rx="10" ry="10" fill="#2a2a2a"/>
+          <ellipse cx="120" cy="144" rx="11" ry="11" fill="#2a2a2a"/>
+          <ellipse cx="158" cy="144" rx="10" ry="10" fill="#2a2a2a"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#2a1040"/>
+          <path d="M32 0 L8 88 L56 88 Z" fill="#ffe880" opacity="0.12"/>
+          <path d="M100 0 L76 88 L124 88 Z" fill="#ffe880" opacity="0.12"/>
+          <path d="M168 0 L144 88 L192 88 Z" fill="#ffe880" opacity="0.12"/>
+          <rect x="84" y="35" width="26" height="32" fill="#e0a020" rx="2"/>
+          <rect x="90" y="64" width="14" height="8" fill="#c88010" rx="1"/>
+          <rect x="82" y="71" width="32" height="6" fill="#c88010" rx="1"/>
+          <text x="90" y="54" font-size="16" fill="#fff">★</text>
+          <ellipse cx="100" cy="96" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="86" y="110" width="28" height="30" fill="#e06080" rx="2"/>
+          <path d="M88 100 Q100 108 112 100" stroke="#a05030" stroke-width="3" fill="none"/>
+          <ellipse cx="88" cy="103" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <ellipse cx="112" cy="103" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <rect x="108" y="88" width="22" height="8" fill="#e06080" rx="2" transform="rotate(-35 119 92)"/>
+          <ellipse cx="128" cy="78" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="32" cy="127" rx="11" ry="11" fill="#f5d0a0"/>
+          <path d="M21 119 Q32 110 43 119" stroke="#aaa" stroke-width="5" fill="none"/>
+          <ellipse cx="60" cy="130" rx="11" ry="11" fill="#f5c890"/>
+          <ellipse cx="22" cy="136" rx="6" ry="5" fill="#f5d0a0"/>
+          <ellipse cx="42" cy="136" rx="6" ry="5" fill="#f5d0a0"/>
+          <rect x="144" y="18" width="7" height="7" fill="#e04040" rx="1" transform="rotate(25 147 21)"/>
+          <rect x="172" y="32" width="7" height="7" fill="#40a040" rx="1" transform="rotate(-15 175 35)"/>
+          <rect x="12" y="28" width="7" height="7" fill="#4040e0" rx="1" transform="rotate(40 15 31)"/>
+          <text x="146" y="80" font-size="13" fill="#ffe040">★</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第6题</span></div>
+</div>
+
+<!-- S7 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第7题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#e8f4e8"/>
+          <rect x="0" y="96" width="200" height="64" fill="#8a9a70"/>
+          <rect x="0" y="88" width="200" height="12" fill="#6a8a50"/>
+          <rect x="48" y="88" width="96" height="72" fill="#d0c8b0"/>
+          <ellipse cx="24" cy="88" rx="28" ry="16" fill="#50a040"/>
+          <ellipse cx="176" cy="88" rx="28" ry="16" fill="#50a040"/>
+          <ellipse cx="126" cy="98" rx="16" ry="11" fill="#e8d0a0"/>
+          <ellipse cx="142" cy="90" rx="11" ry="9" fill="#e8d0a0"/>
+          <path d="M134 82 L137 74 L140 82" fill="#e8d0a0"/>
+          <path d="M140 82 L144 74 L147 82" fill="#e8d0a0"/>
+          <ellipse cx="140" cy="91" rx="2.5" ry="1.5" fill="#333"/>
+          <ellipse cx="144" cy="91" rx="2.5" ry="1.5" fill="#333"/>
+          <path d="M108 98 Q116 106 110 114" stroke="#e8d0a0" stroke-width="5" fill="none"/>
+          <rect x="122" y="95" width="12" height="5" fill="#ff8888" opacity="0.6" rx="1.5"/>
+          <ellipse cx="56" cy="64" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="43" y="77" width="26" height="32" fill="#4080c0" rx="2"/>
+          <rect x="64" y="80" width="18" height="22" fill="#5090d0" rx="2"/>
+          <rect x="67" y="88" width="32" height="8" fill="#4080c0" rx="2" transform="rotate(20 83 92)"/>
+          <ellipse cx="100" cy="83" rx="8" ry="7" fill="#f5c890"/>
+          <circle cx="50" cy="61" r="3.5" fill="#fff"/>
+          <circle cx="62" cy="61" r="3.5" fill="#fff"/>
+          <circle cx="50" cy="61" r="1.7" fill="#333"/>
+          <circle cx="62" cy="61" r="1.7" fill="#333"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f8f5f0"/>
+          <rect x="0" y="109" width="200" height="51" fill="#e8dcc8"/>
+          <rect width="200" height="112" fill="#f5f0e8"/>
+          <rect x="112" y="8" width="70" height="56" fill="#d0e8f5" rx="2" stroke="#888" stroke-width="3"/>
+          <rect x="144" y="8" width="6" height="56" fill="#888"/>
+          <rect x="112" y="35" width="70" height="6" fill="#888"/>
+          <rect x="12" y="57" width="32" height="26" fill="#fff" stroke="#c04040" stroke-width="2.5" rx="1"/>
+          <text x="18" y="72" font-size="16" fill="#c04040">+</text>
+          <ellipse cx="60" cy="76" rx="14" ry="10" fill="#fff" stroke="#ddd" stroke-width="1.5"/>
+          <ellipse cx="74" cy="79" rx="20" ry="11" fill="#e8d0a0"/>
+          <ellipse cx="92" cy="84" rx="11" ry="7" fill="#e8d0a0"/>
+          <ellipse cx="102" cy="76" rx="11" ry="9" fill="#e8d0a0"/>
+          <path d="M93 68 L96 61 L99 68" fill="#e8d0a0"/>
+          <path d="M99 68 L103 61 L106 68" fill="#e8d0a0"/>
+          <rect x="62" y="82" width="16" height="6" fill="#fff" stroke="#ddd" stroke-width="1.2" rx="1.5"/>
+          <ellipse cx="96" cy="77" rx="2.5" ry="2.5" fill="#333"/>
+          <ellipse cx="102" cy="77" rx="2.5" ry="2.5" fill="#333"/>
+          <ellipse cx="144" cy="78" rx="14" ry="14" fill="#e8b060"/>
+          <rect x="130" y="92" width="28" height="32" fill="#4080c0" rx="2"/>
+          <rect x="140" y="88" width="22" height="8" fill="#4080c0" rx="2" transform="rotate(-10 151 92)"/>
+          <ellipse cx="140" cy="64" rx="14" ry="8" fill="#fff" stroke="#ddd" stroke-width="1.5"/>
+          <ellipse cx="48" cy="97" rx="13" ry="5.5" fill="#888" rx="2"/>
+          <ellipse cx="48" cy="95" rx="10" ry="4" fill="#80c0ff"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f0e8"/>
+          <rect x="0" y="104" width="200" height="56" fill="#d0c8a8"/>
+          <rect x="16" y="12" width="168" height="88" fill="#f5f0e8" rx="2" stroke="#aaa" stroke-width="2.5"/>
+          <rect x="24" y="19" width="46" height="28" fill="#e8f0ff" stroke="#bbb" stroke-width="1.2" rx="1"/>
+          <rect x="78" y="22" width="36" height="22" fill="#fff8e8" stroke="#bbb" stroke-width="1.2" rx="1"/>
+          <rect x="122" y="19" width="48" height="32" fill="#f0ffe8" stroke="#bbb" stroke-width="1.2" rx="1"/>
+          <rect x="36" y="48" width="124" height="48" fill="#fff" stroke="#e04040" stroke-width="2.5" rx="2"/>
+          <text x="50" y="65" font-size="11" fill="#8b0000" font-weight="bold">寻　猫　启　事</text>
+          <rect x="42" y="70" width="28" height="22" fill="#f5e8c0" rx="1" stroke="#bbb" stroke-width="1.2"/>
+          <ellipse cx="56" cy="80" rx="9" ry="6" fill="#e8d0a0"/>
+          <ellipse cx="64" cy="76" rx="6" ry="5.5" fill="#e8d0a0"/>
+          <path d="M60 71 L62 65 L65 71" fill="#e8d0a0"/>
+          <text x="74" y="77" font-size="8" fill="#333">颜色：橙白</text>
+          <text x="74" y="87" font-size="8" fill="#333">联系：138-XXXX</text>
+          <ellipse cx="156" cy="76" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="143" y="89" width="26" height="32" fill="#4080c0" rx="2"/>
+          <rect x="116" y="86" width="28" height="8" fill="#4080c0" rx="2" transform="rotate(-5 130 90)"/>
+          <rect x="112" y="82" width="16" height="13" fill="#888" rx="1"/>
+          <rect x="154" y="96" width="22" height="30" fill="#fff" stroke="#ddd" stroke-width="1.2" rx="1"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f8f0"/>
+          <rect x="0" y="104" width="200" height="56" fill="#c8d8b8"/>
+          <rect x="130" y="16" width="58" height="40" fill="#f5f0e8" rx="1" stroke="#aaa" stroke-width="1.5"/>
+          <rect x="134" y="20" width="50" height="32" fill="#fff" stroke="#e04040" stroke-width="1.5" rx="1"/>
+          <text x="138" y="34" font-size="9" fill="#8b0000">寻猫启事</text>
+          <ellipse cx="60" cy="62" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="46" y="76" width="28" height="36" fill="#4080c0" rx="2"/>
+          <path d="M52 68 Q60 74 68 68" stroke="#a05030" stroke-width="3" fill="none"/>
+          <ellipse cx="48" cy="88" rx="16" ry="11" fill="#e8d0a0"/>
+          <ellipse cx="38" cy="78" rx="10" ry="9" fill="#e8d0a0"/>
+          <path d="M33 73 L35 64 L39 73" fill="#e8d0a0"/>
+          <path d="M39 73 L43 64 L46 73" fill="#e8d0a0"/>
+          <path d="M33 80 Q34 76 36 80" stroke="#333" stroke-width="1.5" fill="none"/>
+          <path d="M40 80 Q41 76 43 80" stroke="#333" stroke-width="1.5" fill="none"/>
+          <ellipse cx="152" cy="68" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="139" y="81" width="26" height="32" fill="#e060a0" rx="2"/>
+          <ellipse cx="140" cy="58" rx="5" ry="6.5" fill="#4a2800" transform="rotate(-20 140 58)"/>
+          <ellipse cx="164" cy="58" rx="5" ry="6.5" fill="#4a2800" transform="rotate(20 164 58)"/>
+          <path d="M146 72 Q152 78 158 72" stroke="#a05030" stroke-width="3" fill="none"/>
+          <ellipse cx="146" cy="75" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <ellipse cx="158" cy="75" rx="2.5" ry="3.5" fill="#80c0ff"/>
+          <rect x="116" y="76" width="26" height="8" fill="#e060a0" rx="2" transform="rotate(30 129 80)"/>
+          <ellipse cx="112" cy="70" rx="8" ry="7" fill="#f5c890"/>
+          <text x="88" y="40" font-size="21" fill="#e05060">♥</text>
+          <text x="16" y="36" font-size="16" fill="#e05060">♥</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第7题</span></div>
+</div>
+
+<!-- S8 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第8题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f4ff"/>
+          <rect x="0" y="109" width="200" height="51" fill="#dde0f0"/>
+          <rect x="24" y="24" width="150" height="88" fill="#222" rx="4"/>
+          <rect x="27" y="27" width="144" height="82" fill="#4060e0" rx="2"/>
+          <rect x="30" y="30" width="138" height="13" fill="#3050c0" rx="1"/>
+          <text x="36" y="41" font-size="9" fill="#fff">🛒 购物网站</text>
+          <rect x="34" y="48" width="62" height="56" fill="#fff" rx="1"/>
+          <rect x="37" y="51" width="56" height="36" fill="#e8e8f0" rx="1"/>
+          <ellipse cx="65" cy="69" rx="20" ry="10" fill="#c04040"/>
+          <rect x="58" y="63" width="22" height="13" fill="#c04040" rx="3"/>
+          <rect x="56" y="76" width="28" height="5" fill="#888" rx="1"/>
+          <text x="38" y="96" font-size="7.5" fill="#e04040" font-weight="bold">¥299</text>
+          <text x="60" y="96" font-size="6.5" fill="#aaa" style="text-decoration:line-through">¥599</text>
+          <rect x="38" y="98" width="56" height="8" fill="#e04040" rx="1"/>
+          <text x="50" y="105" font-size="6.5" fill="#fff">立即购买</text>
+          <ellipse cx="146" cy="83" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="133" y="96" width="26" height="36" fill="#e06080" rx="2"/>
+          <path d="M138 88 Q146 95 154 88" stroke="#a05030" stroke-width="3" fill="none"/>
+          <rect x="152" y="102" width="32" height="19" fill="#4060c0" rx="3"/>
+          <rect x="155" y="106" width="26" height="5" fill="#ffe040" rx="1"/>
+          <text x="158" y="118" font-size="6.5" fill="#fff">VISA</text>
+          <text x="110" y="62" font-size="15" fill="#e05060">♥</text>
+          <text x="158" y="58" font-size="13" fill="#ffe040">✦</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8f0"/>
+          <rect x="0" y="109" width="200" height="51" fill="#e8dcc8"/>
+          <rect x="32" y="76" width="82" height="64" fill="#e8c878" rx="2" stroke="#c0a050" stroke-width="2.5"/>
+          <rect x="32" y="70" width="40" height="12" fill="#d8b868" rx="1" transform="rotate(-25 52 76)"/>
+          <rect x="74" y="66" width="40" height="12" fill="#d8b868" rx="1" transform="rotate(20 94 72)"/>
+          <rect x="38" y="82" width="48" height="28" fill="#fff" stroke="#ddd" stroke-width="1.2" rx="1"/>
+          <text x="42" y="95" font-size="8" fill="#333">收件人：</text>
+          <text x="42" y="107" font-size="8" fill="#333">李同学</text>
+          <ellipse cx="100" cy="89" rx="24" ry="13" fill="#4060c0"/>
+          <rect x="88" y="80" width="28" height="16" fill="#4060c0" rx="4"/>
+          <rect x="80" y="94" width="38" height="6" fill="#333" rx="1.5"/>
+          <text x="126" y="82" font-size="22" fill="#e04040" font-weight="bold">✗</text>
+          <ellipse cx="156" cy="61" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="142" y="75" width="28" height="36" fill="#e06080" rx="2"/>
+          <rect x="126" y="70" width="26" height="8" fill="#e06080" rx="2" transform="rotate(15 139 74)"/>
+          <ellipse cx="124" cy="65" rx="8" ry="7" fill="#f5c890"/>
+          <path d="M148 65 Q156 59 164 65" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <rect x="126" y="82" width="26" height="13" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="1.5"/>
+          <text x="128" y="92" font-size="8" fill="#e04040">42码？!</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f8f0f0"/>
+          <rect x="0" y="109" width="200" height="51" fill="#e0d0c8"/>
+          <rect x="32" y="19" width="58" height="96" fill="#222" rx="6"/>
+          <rect x="35" y="22" width="52" height="90" fill="#f0f0f0" rx="4"/>
+          <rect x="44" y="28" width="36" height="13" fill="#4080e0" rx="4"/>
+          <text x="46" y="38" font-size="6.5" fill="#fff">颜色不对!</text>
+          <rect x="44" y="47" width="36" height="13" fill="#4080e0" rx="4"/>
+          <text x="46" y="57" font-size="6.5" fill="#fff">要退款!</text>
+          <rect x="38" y="66" width="32" height="13" fill="#e0e0e0" rx="4"/>
+          <text x="40" y="76" font-size="6.5" fill="#333">不能退!</text>
+          <rect x="38" y="84" width="36" height="13" fill="#e0e0e0" rx="4"/>
+          <text x="40" y="94" font-size="6.5" fill="#333">说明写了</text>
+          <rect x="35" y="102" width="52" height="6" fill="#ddd" rx="1"/>
+          <ellipse cx="140" cy="62" rx="16" ry="16" fill="#f5c890"/>
+          <rect x="124" y="78" width="32" height="40" fill="#e06080" rx="2"/>
+          <rect x="115" y="62" width="13" height="26" fill="#222" rx="4"/>
+          <line x1="130" y1="52" x2="134" y2="55" stroke="#4a2800" stroke-width="3"/>
+          <line x1="134" y1="55" x2="148" y2="52" stroke="#4a2800" stroke-width="3"/>
+          <path d="M130 68 Q140 62 150 68" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <path d="M148 46 Q152 36 156 46" stroke="#e08040" stroke-width="3" fill="none"/>
+          <path d="M158 40 Q162 30 166 40" stroke="#e08040" stroke-width="3" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0fff0"/>
+          <rect x="0" y="109" width="200" height="51" fill="#d0e8d0"/>
+          <rect x="16" y="16" width="120" height="80" fill="#222" rx="4"/>
+          <rect x="19" y="19" width="114" height="74" fill="#fff" rx="2"/>
+          <rect x="22" y="21" width="108" height="13" fill="#4080c0" rx="1"/>
+          <text x="27" y="31" font-size="9" fill="#fff">平台客服介入调解</text>
+          <rect x="25" y="38" width="106" height="48" fill="#f0f8ff" rx="1"/>
+          <text x="29" y="50" font-size="8" fill="#333">订单号: TXN-9823</text>
+          <text x="29" y="62" font-size="8" fill="#e04040">问题：商品与描述不符</text>
+          <text x="29" y="74" font-size="8" fill="#40a040">结果：全额退款 ✓</text>
+          <text x="90" y="82" font-size="22" fill="#40a040">✓</text>
+          <rect x="132" y="35" width="52" height="84" fill="#222" rx="6"/>
+          <rect x="135" y="38" width="46" height="78" fill="#f0fff0" rx="4"/>
+          <rect x="135" y="38" width="46" height="13" fill="#40a040" rx="3"/>
+          <text x="137" y="48" font-size="7.5" fill="#fff">退款成功!</text>
+          <text x="140" y="62" font-size="9" fill="#333">¥299.00</text>
+          <text x="140" y="74" font-size="7.5" fill="#40a040">已退回账户</text>
+          <text x="152" y="90" font-size="19" fill="#40a040">💰</text>
+          <ellipse cx="72" cy="124" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="58" y="138" width="28" height="22" fill="#e06080" rx="2"/>
+          <path d="M66 129 Q72 135 78 129" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <ellipse cx="116" cy="108" rx="32" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <circle cx="88" cy="124" r="5" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <circle cx="80" cy="132" r="3.5" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <text x="92" y="106" font-size="7.5" fill="#4060a0">看清尺码</text>
+          <text x="92" y="118" font-size="7.5" fill="#4060a0">看评价！</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第8题</span></div>
+</div>
+
+<!-- S9 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第9题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f0f5ff"/>
+          <rect x="0" y="112" width="200" height="48" fill="#e0e8d0"/>
+          <rect x="8" y="72" width="184" height="10" fill="#c8a870" rx="1"/>
+          <rect x="16" y="29" width="168" height="44" fill="#f5e8c0" rx="2" stroke="#c0a060" stroke-width="2.5"/>
+          <ellipse cx="100" cy="51" rx="48" ry="29" fill="none" stroke="#a08040" stroke-width="1.2"/>
+          <ellipse cx="100" cy="51" rx="32" ry="19" fill="none" stroke="#a08040" stroke-width="1.2"/>
+          <ellipse cx="100" cy="51" rx="16" ry="10" fill="none" stroke="#a08040" stroke-width="1.2"/>
+          <circle cx="100" cy="51" r="5" fill="#e04040"/>
+          <path d="M32 67 Q64 61 100 51" stroke="#e04040" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+          <line x1="100" y1="51" x2="100" y2="32" stroke="#e04040" stroke-width="1.5"/>
+          <rect x="100" y="32" width="16" height="10" fill="#e04040" rx="1"/>
+          <ellipse cx="29" cy="57" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="18" y="68" width="22" height="26" fill="#4060a0" rx="2"/>
+          <rect x="36" y="64" width="24" height="6" fill="#4060a0" rx="2" transform="rotate(-10 48 67)"/>
+          <ellipse cx="61" cy="61" rx="7" ry="6" fill="#f5c890"/>
+          <ellipse cx="163" cy="57" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="152" y="68" width="22" height="26" fill="#c06080" rx="2"/>
+          <ellipse cx="100" cy="58" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="89" y="69" width="22" height="26" fill="#40a060" rx="2"/>
+          <path d="M96 62 Q100 67 104 62" stroke="#a05030" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#e8f0e0"/>
+          <rect width="200" height="88" fill="#a8c888"/>
+          <rect width="200" height="48" fill="#c8e0f0"/>
+          <polygon points="0,88 100,16 200,88" fill="#8a9870"/>
+          <polygon points="32,88 121,24 200,72 200,88" fill="#7a8860"/>
+          <path d="M16 152 Q48 128 72 112 Q88 99 96 88" stroke="#c8b888" stroke-width="10" fill="none"/>
+          <rect x="112" y="60" width="8" height="26" fill="#6a4a28" rx="1"/>
+          <ellipse cx="116" cy="57" rx="16" ry="19" fill="#4a8030"/>
+          <rect x="136" y="67" width="6" height="19" fill="#6a4a28" rx="1"/>
+          <ellipse cx="139" cy="63" rx="13" ry="16" fill="#508040"/>
+          <ellipse cx="80" cy="109" rx="13" ry="8" fill="#aaa"/>
+          <ellipse cx="48" cy="128" rx="10" ry="6" fill="#bbb"/>
+          <ellipse cx="40" cy="120" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="29" y="131" width="22" height="22" fill="#40a060" rx="2"/>
+          <path d="M34 124 Q40 118 46 124" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <ellipse cx="42" cy="110" rx="2.5" ry="4" fill="#80c0ff"/>
+          <ellipse cx="80" cy="102" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="69" y="113" width="22" height="22" fill="#4060a0" rx="2"/>
+          <rect x="64" y="110" width="24" height="8" fill="#4060a0" rx="2" transform="rotate(20 76 114)"/>
+          <ellipse cx="57" cy="102" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="16" cy="102" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="5" y="113" width="22" height="22" fill="#c06080" rx="2"/>
+          <ellipse cx="80" cy="76" rx="28" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.2"/>
+          <path d="M72 91 L68 102" stroke="#aaa" stroke-width="1.2" fill="none"/>
+          <text x="56" y="74" font-size="9" fill="#4060a0">加油！快到了！</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#d0e8f5"/>
+          <rect width="200" height="104" fill="#b8d0e8"/>
+          <rect x="0" y="64" width="200" height="96" fill="#9090a0"/>
+          <rect x="56" y="99" width="80" height="8" fill="#c0b898" rx="1"/>
+          <rect x="60" y="88" width="72" height="8" fill="#c0b898" rx="1"/>
+          <rect x="67" y="77" width="58" height="8" fill="#c0b898" rx="1"/>
+          <path d="M32 104 Q56 80 80 60 Q104 40 128 24" stroke="#888" stroke-width="3" stroke-dasharray="6,3"/>
+          <circle cx="32" cy="104" r="4" fill="#888"/>
+          <circle cx="80" cy="60" r="4" fill="#888"/>
+          <circle cx="128" cy="24" r="4" fill="#888"/>
+          <ellipse cx="104" cy="60" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="91" y="73" width="26" height="29" fill="#4060a0" rx="2"/>
+          <rect x="74" y="83" width="26" height="8" fill="#4060a0" rx="2" transform="rotate(15 87 87)"/>
+          <ellipse cx="72" cy="80" rx="7" ry="6" fill="#f5c890"/>
+          <ellipse cx="68" cy="93" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="57" y="104" width="22" height="26" fill="#40a060" rx="2"/>
+          <rect x="72" y="90" width="20" height="6" fill="#40a060" rx="2" transform="rotate(-25 82 93)"/>
+          <ellipse cx="90" cy="85" rx="7" ry="6" fill="#f5c890"/>
+          <ellipse cx="35" cy="109" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="24" y="120" width="22" height="26" fill="#c06080" rx="2"/>
+          <ellipse cx="160" cy="28" rx="35" ry="19" fill="#fff" opacity="0.7"/>
+          <ellipse cx="136" cy="22" rx="26" ry="16" fill="#fff" opacity="0.6"/>
+          <circle cx="168" cy="13" r="13" fill="#ffe840" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#fff8e8"/>
+          <rect width="200" height="104" fill="#ffcc60"/>
+          <rect width="200" height="80" fill="#ff9040" opacity="0.3"/>
+          <circle cx="100" cy="83" r="36" fill="#ffe040" opacity="0.9"/>
+          <circle cx="100" cy="83" r="29" fill="#ffee80"/>
+          <line x1="100" y1="40" x2="100" y2="29" stroke="#ffe040" stroke-width="4"/>
+          <line x1="61" y1="53" x2="51" y2="43" stroke="#ffe040" stroke-width="4"/>
+          <line x1="139" y1="53" x2="149" y2="43" stroke="#ffe040" stroke-width="4"/>
+          <line x1="48" y1="83" x2="36" y2="83" stroke="#ffe040" stroke-width="4"/>
+          <line x1="152" y1="83" x2="164" y2="83" stroke="#ffe040" stroke-width="4"/>
+          <polygon points="0,104 0,160 200,160 200,104 163,72 130,93 100,60 70,93 37,72" fill="#4a5840"/>
+          <rect x="93" y="44" width="5" height="29" fill="#888" rx="1"/>
+          <rect x="98" y="44" width="18" height="13" fill="#e04040" rx="1"/>
+          <text x="99" y="54" font-size="7.5" fill="#fff">顶!</text>
+          <ellipse cx="56" cy="92" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="43" y="105" width="26" height="29" fill="#4060a0" rx="2"/>
+          <rect x="22" y="96" width="22" height="8" fill="#4060a0" rx="2" transform="rotate(40 33 100)"/>
+          <ellipse cx="17" cy="88" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="64" y="96" width="22" height="8" fill="#4060a0" rx="2" transform="rotate(-40 75 100)"/>
+          <ellipse cx="88" cy="88" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="100" cy="96" rx="11" ry="11" fill="#f5c890"/>
+          <rect x="89" y="107" width="22" height="26" fill="#40a060" rx="2"/>
+          <rect x="70" y="100" width="20" height="6" fill="#40a060" rx="2" transform="rotate(45 80 103)"/>
+          <ellipse cx="64" cy="90" rx="7" ry="6" fill="#f5c890"/>
+          <rect x="109" y="100" width="20" height="6" fill="#40a060" rx="2" transform="rotate(-45 119 103)"/>
+          <ellipse cx="131" cy="90" rx="7" ry="6" fill="#f5c890"/>
+          <ellipse cx="148" cy="92" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="135" y="105" width="26" height="29" fill="#c06080" rx="2"/>
+          <rect x="155" y="96" width="22" height="8" fill="#c06080" rx="2" transform="rotate(-35 166 100)"/>
+          <ellipse cx="180" cy="88" rx="8" ry="7" fill="#f5c890"/>
+          <path d="M52 96 Q56 102 60 96" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <path d="M144 96 Q148 102 152 96" stroke="#a05030" stroke-width="2.5" fill="none"/>
+          <path d="M96 100 Q100 106 104 100" stroke="#a05030" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第9题</span></div>
+</div>
+
+<!-- S10 -->
+<div class="page section-page">
+  <div class="section-banner">
+    <div class="part-label">第二部分　第二节</div>
+    <h2>看图叙述</h2>
+    <div class="sub">Story Narration　· 共10题 ·　每题建议用时15分钟</div>
+  </div>
+  <div class="problem">
+    <div class="problem-header">
+      <span class="problem-num">第10题（共10题）</span>
+      <span class="problem-time">写作时间：15分钟</span>
+    </div>
+    <div class="picture-grid">
+      <div class="pic-cell"><div class="pic-num-bar">图　一</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5ede0"/>
+          <rect x="0" y="104" width="200" height="56" fill="#c8b888"/>
+          <rect width="200" height="56" fill="#87ceeb"/>
+          <rect x="152" y="48" width="10" height="56" fill="#6a4a28" rx="2"/>
+          <ellipse cx="157" cy="45" rx="25" ry="29" fill="#4a8030"/>
+          <rect x="62" y="69" width="17" height="9" fill="#a07850"/>
+          <rect x="70" y="75" width="8" height="32" fill="#8a6440" rx="1"/>
+          <rect x="84" y="75" width="8" height="32" fill="#8a6440" rx="1"/>
+          <ellipse cx="61" cy="61" rx="14" ry="14" fill="#f5d0a0"/>
+          <path d="M47 53 Q61 41 75 53" stroke="#eee" stroke-width="6" fill="none"/>
+          <rect x="47" y="75" width="28" height="32" fill="#7060a0" rx="2"/>
+          <ellipse cx="90" cy="88" rx="28" ry="19" fill="#c8b060" stroke="#a09040" stroke-width="2.5"/>
+          <line x1="64" y1="88" x2="116" y2="88" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="66" y1="75" x2="114" y2="75" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="66" y1="101" x2="114" y2="101" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="78" y1="70" x2="78" y2="107" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="90" y1="69" x2="90" y2="107" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="102" y1="70" x2="102" y2="107" stroke="#a09040" stroke-width="1.2"/>
+          <rect x="68" y="75" width="28" height="8" fill="#7060a0" rx="2"/>
+          <ellipse cx="66" cy="73" rx="8" ry="7" fill="#f5d0a0"/>
+          <ellipse cx="140" cy="85" rx="10" ry="10" fill="#f5c890"/>
+          <rect x="130" y="95" width="20" height="22" fill="#e06050" rx="2"/>
+          <ellipse cx="168" cy="87" rx="10" ry="10" fill="#f5d0b0"/>
+          <rect x="158" y="97" width="20" height="22" fill="#4080c0" rx="2"/>
+          <path d="M137 89 Q140 93 143 89" stroke="#a05030" stroke-width="1.5" fill="none"/>
+          <path d="M165 91 Q168 95 171 91" stroke="#a05030" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　二</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5ede0"/>
+          <rect x="0" y="112" width="200" height="48" fill="#c8b888"/>
+          <rect width="200" height="61" fill="#87ceeb"/>
+          <rect x="104" y="47" width="16" height="9" fill="#a07850"/>
+          <rect x="110" y="54" width="8" height="58" fill="#8a6440" rx="1"/>
+          <rect x="126" y="54" width="8" height="58" fill="#8a6440" rx="1"/>
+          <ellipse cx="104" cy="56" rx="14" ry="14" fill="#f5d0a0"/>
+          <path d="M90 48 Q104 36 118 48" stroke="#eee" stroke-width="6" fill="none"/>
+          <rect x="90" y="70" width="28" height="32" fill="#7060a0" rx="2"/>
+          <ellipse cx="124" cy="88" rx="26" ry="16" fill="#c8b060" stroke="#a09040" stroke-width="2"/>
+          <line x1="100" y1="88" x2="148" y2="88" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="104" y1="75" x2="144" y2="75" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="104" y1="101" x2="144" y2="101" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="112" y1="70" x2="112" y2="107" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="124" y1="69" x2="124" y2="108" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="136" y1="70" x2="136" y2="107" stroke="#a09040" stroke-width="1.2"/>
+          <rect x="108" y="74" width="28" height="8" fill="#7060a0" rx="2"/>
+          <ellipse cx="106" cy="72" rx="8" ry="7" fill="#f5d0a0"/>
+          <ellipse cx="44" cy="72" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="31" y="85" width="26" height="30" fill="#40a060" rx="2"/>
+          <circle cx="38" cy="69" r="4" fill="#fff"/>
+          <circle cx="50" cy="69" r="4" fill="#fff"/>
+          <circle cx="38" cy="69" r="2" fill="#333"/>
+          <circle cx="50" cy="69" r="2" fill="#333"/>
+          <rect x="55" y="82" width="28" height="6" fill="#40a060" rx="2" transform="rotate(-10 69 85)"/>
+          <ellipse cx="85" cy="78" rx="8" ry="7" fill="#f5c890"/>
+          <ellipse cx="36" cy="46" rx="26" ry="16" fill="#fff" stroke="#aaa" stroke-width="1.5"/>
+          <path d="M35 60 L36 70" stroke="#aaa" stroke-width="1.5" fill="none"/>
+          <text x="18" y="42" font-size="10" fill="#333">爷爷，</text>
+          <text x="18" y="54" font-size="10" fill="#333">教我吧！</text>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　三</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5ede0"/>
+          <rect x="0" y="109" width="200" height="51" fill="#c8b888"/>
+          <rect x="16" y="83" width="168" height="12" fill="#d0c0a0" rx="1"/>
+          <ellipse cx="92" cy="90" rx="32" ry="16" fill="#d8c878" stroke="#b0a050" stroke-width="1.5"/>
+          <path d="M62" y1="86" Q74 80 86 90 Q94 99 104 90 Q114 80 120 90" stroke="#a09040" stroke-width="2" fill="none"/>
+          <path d="M64 93 Q78 87 90 96 Q100 104 114 96" stroke="#a09040" stroke-width="2" fill="none"/>
+          <line x1="116" y1="76" x2="130" y2="64" stroke="#c8b060" stroke-width="2.5"/>
+          <line x1="104" y1="73" x2="108" y2="57" stroke="#c8b060" stroke-width="2.5"/>
+          <ellipse cx="96" cy="56" rx="14" ry="14" fill="#f5c890"/>
+          <rect x="82" y="70" width="28" height="32" fill="#40a060" rx="2"/>
+          <rect x="109" y="73" width="26" height="8" fill="#40a060" rx="2" transform="rotate(-5 122 77)"/>
+          <ellipse cx="136" cy="71" rx="10" ry="9" fill="#f5c890"/>
+          <rect x="134" y="67" width="13" height="6" fill="#ff9090" rx="1.5"/>
+          <rect x="137" y="65" width="3" height="10" fill="#fff" rx="0.8"/>
+          <line x1="45" y1="52" x2="57" y2="54" stroke="#4a2800" stroke-width="2.5"/>
+          <line x1="57" y1="54" x2="67" y2="52" stroke="#4a2800" stroke-width="2.5"/>
+          <path d="M88 60 Q96 56 104 60" stroke="#a05030" stroke-width="2" fill="none"/>
+          <ellipse cx="29" cy="61" rx="13" ry="13" fill="#f5d0a0"/>
+          <path d="M16 53 Q29 41 42 53" stroke="#eee" stroke-width="5" fill="none"/>
+          <rect x="16" y="74" width="26" height="26" fill="#7060a0" rx="2"/>
+          <path d="M22 65 Q29 70 36 65" stroke="#a05030" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div class="pic-cell"><div class="pic-num-bar">图　四</div>
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="160" fill="#f5ede0"/>
+          <rect width="200" height="64" fill="#ffe8b0" opacity="0.6"/>
+          <rect x="0" y="104" width="200" height="56" fill="#c8b888"/>
+          <ellipse cx="68" cy="52" rx="22" ry="14" fill="#c8b060" stroke="#a09040" stroke-width="2"/>
+          <line x1="48" y1="52" x2="88" y2="52" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="50" y1="41" x2="86" y2="41" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="50" y1="61" x2="84" y2="61" stroke="#a09040" stroke-width="1.2"/>
+          <line x1="58" y1="38" x2="59" y2="66" stroke="#a09040" stroke-width="1.1"/>
+          <line x1="68" y1="37" x2="69" y2="67" stroke="#a09040" stroke-width="1.1"/>
+          <line x1="78" y1="38" x2="79" y2="66" stroke="#a09040" stroke-width="1.1"/>
+          <ellipse cx="68" cy="36" rx="13" ry="13" fill="#f5c890"/>
+          <rect x="55" y="49" width="26" height="32" fill="#40a060" rx="2"/>
+          <rect x="36" y="52" width="22" height="8" fill="#40a060" rx="2" transform="rotate(30 47 56)"/>
+          <ellipse cx="32" cy="46" rx="8" ry="7" fill="#f5c890"/>
+          <rect x="80" y="52" width="22" height="8" fill="#40a060" rx="2" transform="rotate(-30 91 56)"/>
+          <ellipse cx="104" cy="46" rx="8" ry="7" fill="#f5c890"/>
+          <path d="M62 41 Q68 47 74 41" stroke="#a05030" stroke-width="3" fill="none"/>
+          <ellipse cx="152" cy="72" rx="14" ry="14" fill="#f5d0a0"/>
+          <path d="M138 64 Q152 52 166 64" stroke="#eee" stroke-width="6" fill="none"/>
+          <rect x="138" y="86" width="28" height="32" fill="#7060a0" rx="2"/>
+          <path d="M145 78 Q152 85 159 78" stroke="#a05030" stroke-width="3" fill="none"/>
+          <path d="M148 68 Q151 63 154 68" stroke="#4a2800" stroke-width="2.5" fill="none"/>
+          <path d="M156 68 Q159 63 162 68" stroke="#4a2800" stroke-width="2.5" fill="none"/>
+          <rect x="120" y="84" width="26" height="8" fill="#7060a0" rx="2" transform="rotate(10 133 88)"/>
+          <ellipse cx="116" cy="82" rx="8" ry="7" fill="#f5d0a0"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><span>AP® 中文语言与文化　练习册</span><span>第二节　看图叙述　第10题</span></div>
+</div>
+
+</body>
+</html>
