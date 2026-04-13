@@ -495,6 +495,7 @@
         
         <div class="tabs">
             <button class="tab-btn active" id="tab-reading">📖 文章阅读</button>
+            <button class="tab-btn" id="tab-apreading">📘 AP阅读</button>
             <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习</button>
             <button class="tab-btn" id="tab-quiz">🧠 记忆测验</button>
         </div>
@@ -526,6 +527,32 @@
             </div>
 
             <div class="text-content" id="textContent">
+            </div>
+        </div>
+
+        <div id="section-apreading" class="hidden">
+            <div class="header-bar">
+                <label for="apArticleSelect" style="font-weight: bold; white-space: nowrap;">AP阅读篇目:</label>
+                <select id="apArticleSelect"></select>
+            </div>
+
+            <div class="controls-bar">
+                <button class="btn" id="apPlayBtn">▶ 播放全文</button>
+                <button class="btn" id="apPauseBtn" disabled>⏸ 暂停</button>
+                <button class="btn" id="apStopBtn" disabled>⏹ 停止</button>
+
+                <div class="control-group">
+                    <label for="apSpeedRate">语速: <span id="apSpeedValue">1.0</span>x</label>
+                    <input type="range" id="apSpeedRate" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <label class="checkbox-control">
+                    <input type="checkbox" id="apLoopCheck" checked>
+                    全文循环
+                </label>
+            </div>
+
+            <div class="text-content" id="apTextContent">
             </div>
         </div>
 
@@ -866,6 +893,70 @@
             }
         ];
 
+        // --- AP 阅读文章列表 ---
+        const apArticles = [
+            {
+                title: "第1篇：共享单车的兴起与问题",
+                content: `近年来，共享单车在中国各大城市迅速普及，为市民提供了一种便捷、经济的短途出行方式。用户只需用手机扫描二维码，即可在任意地点取车，骑行结束后将车停在路边即可。这种【随取随还】的模式极大地方便了人们的日常生活，尤其是解决了地铁站与目的地之间【最后一公里】的出行难题。
+然而，共享单车的快速发展也带来了一系列问题。大量单车被随意停放，占用人行道和盲道，影响城市秩序。部分用户甚至将车辆私锁据为己用，或将其丢入河道。面对这些挑战，多个城市出台政策，规划专用停车区域，并对违规停放行为进行处罚。共享单车企业也开始引入GPS定位和电子围栏技术，限制车辆只能停放在指定区域。
+总体而言，共享单车作为绿色出行方式，对缓解城市交通压力、减少碳排放具有积极意义。如何在方便市民的同时有效管理，仍是相关部门和企业面临的重要课题。`
+            },
+            {
+                title: "第2篇：春节习俗的传承与变迁",
+                content: `春节是中国最重要的传统节日，承载着丰富的文化内涵和家庭情感。贴春联、放鞭炮、吃年夜饭、发红包……这些习俗世代相传，象征着对新年的美好祝愿和对家人的深厚情意。每逢春节，无论身在何处的中国人都会尽力回家团圆，形成了世界上规模最大的人口迁移现象——春运。
+然而，随着时代的变迁，春节的庆祝方式也在悄然改变。许多城市出于环保和安全考虑，已禁止或限制燃放烟花爆竹。电子红包逐渐取代了传统的纸质红包，人们通过手机互发祝福，线上拜年成为新风尚。年轻一代也开始以旅游、聚会等方式庆祝新年，传统的守岁习俗在不少家庭中已不再坚持。
+对于这些变化，社会上存在不同声音。一些长辈认为，传统习俗是文化根脉，不应轻易放弃。另一些人则认为，习俗本应与时俱进，形式的改变并不影响节日的本质——团聚与祝福。`
+            },
+            {
+                title: "第3篇：中国年轻人的职业观变化",
+                content: `过去，中国年轻人普遍认为考取公务员或进入国有企业是最理想的职业选择，因为这类工作稳定、福利好，被称为『铁饭碗』。然而，近年来这种观念正在发生明显变化。越来越多的年轻人选择进入互联网企业、创业或从事自由职业，追求更高的薪资和更大的发展空间。
+与此同时，一种被称为『躺平』的生活态度在部分年轻人中悄然流行。这些人对激烈的社会竞争感到疲惫，选择降低物质欲望，不追求高薪工作或购房买车，只维持基本生活需求。这一现象引发了社会各界的广泛讨论，有人批评其消极颓废，也有人认为这是年轻人在高压社会下的一种自我保护。
+专家指出，年轻人职业观和生活态度的变化，折射出中国社会在经济转型期面临的深层矛盾：房价高企、教育竞争激烈、就业压力增大。要从根本上改变这一现状，需要社会各方共同努力，为年轻人创造更公平的发展机会。`
+            },
+            {
+                title: "第4篇：人工智能对教育的影响",
+                content: `人工智能技术的飞速发展正在深刻改变教育领域。智能辅导系统能够根据每个学生的学习进度和薄弱环节，提供个性化的练习题和讲解，使因材施教成为可能。在线教育平台借助AI技术，不仅能自动批改作业、实时分析学习数据，还能预测学生可能遇到的困难，提前进行干预。
+然而，人工智能在教育中的广泛应用也引发了一些担忧。批评者认为，过度依赖技术可能削弱学生的独立思考能力和创造力。此外，不同地区、不同家庭在获取先进教育技术方面存在明显差距，可能进一步加剧教育不平等。还有学者担心，随着AI承担更多教学任务，教师的角色和职业价值将受到冲击。
+教育专家建议，应将人工智能视为辅助工具，而非替代教师的手段。未来的教育应更加注重培养学生的批判性思维、协作能力和人文素养——这些是人工智能难以替代的核心素质。`
+            },
+            {
+                title: "第5篇：中国传统医学与现代医学的融合",
+                content: `中医作为中国几千年传承下来的医学体系，以整体观念和辨证论治为核心，注重人体内部的平衡与和谐。针灸、中草药、推拿等传统疗法在中国乃至世界各地都有着广泛的应用，尤其在慢性病调理、术后康复和亚健康状态改善方面被认为具有独特价值。
+近年来，中西医结合的治疗模式在中国得到了大力推广。在新冠疫情期间，中医药被纳入官方诊疗方案，中医治疗方法在部分患者的康复中发挥了作用，引发国际社会的广泛关注。然而，西方医学界对中医的科学性仍存在质疑，认为许多中医疗法缺乏严格的临床对照试验支持，疗效难以量化评估。
+支持者认为，中医的价值在于数千年的实践积累，不能简单地用西方医学的标准来衡量。双方应当相互借鉴，共同探索更有效的医疗方案，而非对立排斥。这一议题的讨论，也折射出传统文化与现代科学之间更深层的张力。`
+            },
+            {
+                title: "第6篇：环境保护与经济发展的平衡",
+                content: `改革开放以来，中国经济取得了举世瞩目的高速增长，但随之而来的环境污染问题也日益严峻。大气污染、水资源短缺、土地退化等问题严重威胁着民众的健康和生态系统的可持续性。为此，中国政府提出了【绿色发展】理念，将生态文明建设纳入国家发展战略。
+近年来，中国在可再生能源领域取得了显著进展，成为全球最大的太阳能和风能生产国。多个重污染城市的空气质量逐年改善，一批高污染企业被迫关停或搬迁。然而，对于依赖传统制造业的地区而言，转型绿色经济意味着大量工人面临失业，地方政府的财政收入也随之减少，经济与环境的矛盾仍十分突出。
+专家认为，经济发展与环境保护并非不可调和。推动绿色技术创新、发展循环经济、建立碳排放交易市场，都是实现两者共赢的有效路径。中国正在探索一条符合自身国情的可持续发展道路。`
+            },
+            {
+                title: "第7篇：网络语言对汉语的影响",
+                content: `随着互联网和社交媒体的普及，网络语言已经渗透到中国年轻人日常交流的各个角落。【yyds】（永远的神）、【躺平】、【内卷】、【打工人】等词汇迅速走红，甚至被收入权威词典。这些网络新词往往简洁生动，能够精准捕捉当代社会现象，展现出汉语强大的创造力与适应力。
+然而，语言学家和教育工作者对网络语言的泛滥表示忧虑。他们认为，过度使用缩写、谐音和表情符号，可能使年轻人的书面表达能力退化，无法写出结构完整、逻辑清晰的文章。部分学者还担忧，网络语言中混杂大量英文字母和数字，长此以往可能稀释汉语的纯洁性。
+支持者则认为，语言本就是活的，每个时代都会产生属于自己的新词汇。网络语言是年轻人创造力的体现，也是时代精神的记录。问题的关键不在于禁止，而在于培养学生在不同语境中灵活切换正式与非正式语言的能力。`
+            },
+            {
+                title: "第8篇：中国老龄化社会与养老问题",
+                content: `根据最新人口数据，中国正以前所未有的速度步入老龄化社会。预计到本世纪中叶，65岁以上人口将占总人口的三分之一以上。这一趋势与生育率持续下降、人均寿命不断延长密切相关，给国家的养老保障体系和医疗资源带来了巨大压力。
+在中国传统文化中，【养儿防老】的观念根深蒂固，子女赡养父母被视为天经地义的责任。然而，随着城镇化进程加快，大量年轻人离开家乡到城市工作，空巢老人的数量急剧增加。农村地区的老人往往缺乏稳定的养老金，主要依赖子女汇款或自力更生维持生计。
+为应对这一挑战，政府积极扩建养老机构，推行社区居家养老服务，并鼓励商业养老保险的发展。与此同时，也有越来越多的人开始提倡【积极老龄化】，鼓励老年人通过参与社会活动、继续学习和从事志愿服务保持身心健康，实现有尊严、有价值的晚年生活。`
+            },
+            {
+                title: "第9篇：海外华人的文化认同",
+                content: `随着全球化的深入发展，海外华人群体不断壮大。他们在保留中华文化传统的同时，也积极融入所在国的社会生活，形成了独特的跨文化身份认同。唐人街、华人学校、中文媒体和传统节日庆典，成为海外华人凝聚社区、传承文化的重要纽带。
+然而，在文化融合的过程中，许多华人家庭面临两代人之间的文化冲突。移民第一代往往坚持在家说中文、保持传统饮食和习俗，而在当地出生长大的第二代则更倾向于认同所在国的文化，有时甚至对父母强调的中华文化感到疏离。这种代际文化差异，在许多华人家庭中制造了沟通的障碍。
+文化学者指出，双重文化身份并非负担，而是宝贵的资源。能够在两种文化之间自如切换的人，往往在理解多元视角、建立跨文化沟通方面具有独特优势。如何帮助新生代华人建立兼容并蓄的文化认同，是海外华人社区面临的重要议题。`
+            },
+            {
+                title: "第10篇：中国饮食文化的全球传播",
+                content: `中国饮食文化历史悠久，博大精深，是中华文明的重要组成部分。川菜的麻辣、粤菜的清淡、淮扬菜的精细，各大菜系各具特色，共同构成了丰富多彩的中国饮食版图。随着中国国际影响力的提升和海外华人群体的扩大，中餐正以前所未有的速度走向世界。
+然而，中餐在海外传播的过程中，往往经历了不同程度的本土化改造。左宗棠鸡、芙蓉蛋等在中国本土几乎不存在的菜肴，却在北美华人餐馆中大受欢迎。这种改良既是为了迎合当地口味，也反映出文化传播过程中不可避免的变异与适应。正宗与改良之间的争论，在美食界引发了持续的讨论。
+近年来，随着中国游客和留学生的增多，海外出现了越来越多提供正宗中国口味的餐厅，满足了华人群体对家乡味道的思念，也吸引了对中国文化感兴趣的当地食客。饮食，正成为促进中外文化交流的一座美味桥梁。`
+            }
+        ];
+
         // --- 词汇列表 ---
         const studyGroups = {
         "熊猫虎子": [
@@ -1014,10 +1105,12 @@
         
         // Tabs
         const tabReadingBtn = document.getElementById('tab-reading');
+        const tabApReadingBtn = document.getElementById('tab-apreading');
         const tabVocabBtn = document.getElementById('tab-vocab');
         const tabQuizBtn = document.getElementById('tab-quiz');
-        
+
         const sectionReading = document.getElementById('section-reading');
+        const sectionApReading = document.getElementById('section-apreading');
         const sectionVocab = document.getElementById('section-vocab');
         const sectionQuiz = document.getElementById('section-quiz');
 
@@ -1030,6 +1123,16 @@
         const speedRate = document.getElementById('speedRate');
         const speedValue = document.getElementById('speedValue');
         const loopCheck = document.getElementById('loopCheck');
+
+        // AP Reading Elements
+        const apArticleSelect = document.getElementById('apArticleSelect');
+        const apTextContentContainer = document.getElementById('apTextContent');
+        const apPlayBtn = document.getElementById('apPlayBtn');
+        const apPauseBtn = document.getElementById('apPauseBtn');
+        const apStopBtn = document.getElementById('apStopBtn');
+        const apSpeedRate = document.getElementById('apSpeedRate');
+        const apSpeedValue = document.getElementById('apSpeedValue');
+        const apLoopCheck = document.getElementById('apLoopCheck');
 
         // Vocab Elements
         const vWord = document.getElementById('vWord');
@@ -1137,11 +1240,17 @@
         // ────────────────────────────────────────────────────────────────
 
         // Reading State
-        let sentencesDOM = []; 
+        let sentencesDOM = [];
         let currentReadIndex = 0;
-        let readState = 'STOPPED'; 
-        let currentSessionId = 0; 
-        let keepAliveArray = [];  
+        let readState = 'STOPPED';
+        let currentSessionId = 0;
+        let keepAliveArray = [];
+
+        // AP Reading State
+        let apSentencesDOM = [];
+        let apCurrentReadIndex = 0;
+        let apReadState = 'STOPPED';
+        let apCurrentSessionId = 0;
 
         // Active study group
         let activeGroup = "熊猫虎子";
@@ -1281,14 +1390,17 @@
         // ==========================================
         function switchTab(mode) {
             stopReadingPlayback();
+            stopApReadingPlayback();
             synth.cancel();
             currentVocabSessionId++; // 中断任何正在进行的词汇连播
 
             // 隐藏所有
             tabReadingBtn.classList.remove('active');
+            tabApReadingBtn.classList.remove('active');
             tabVocabBtn.classList.remove('active');
             tabQuizBtn.classList.remove('active');
             sectionReading.classList.add('hidden');
+            sectionApReading.classList.add('hidden');
             sectionVocab.classList.add('hidden');
             sectionQuiz.classList.add('hidden');
 
@@ -1297,6 +1409,11 @@
                 sectionReading.classList.remove('hidden');
                 speedRate.value = vocabSpeedRate.value;
                 speedValue.textContent = speedRate.value;
+            } else if (mode === 'apreading') {
+                tabApReadingBtn.classList.add('active');
+                sectionApReading.classList.remove('hidden');
+                apSpeedRate.value = vocabSpeedRate.value;
+                apSpeedValue.textContent = apSpeedRate.value;
             } else if (mode === 'vocab') {
                 tabVocabBtn.classList.add('active');
                 sectionVocab.classList.remove('hidden');
@@ -1311,6 +1428,7 @@
         }
 
         tabReadingBtn.onclick = () => switchTab('reading');
+        tabApReadingBtn.onclick = () => switchTab('apreading');
         tabVocabBtn.onclick = () => switchTab('vocab');
         tabQuizBtn.onclick = () => switchTab('quiz');
 
@@ -1751,6 +1869,135 @@
         speedRate.oninput = (e) => speedValue.textContent = Number(e.target.value).toFixed(1);
         speedRate.onchange = () => { if (readState === 'PLAYING') playReadingFrom(currentReadIndex); };
 
+        // ==========================================
+        // 7b. AP 文章阅读 (AP Reading) 核心功能
+        // ==========================================
+        function apInitSelect() {
+            apArticles.forEach((article, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = article.title;
+                apArticleSelect.appendChild(option);
+            });
+            apArticleSelect.addEventListener('change', (e) => {
+                apLoadArticle(e.target.value);
+            });
+        }
+
+        function apLoadArticle(index) {
+            stopApReadingPlayback();
+            const article = apArticles[index];
+            apTextContentContainer.innerHTML = parseTextToHTML(article.content);
+            apSentencesDOM = apTextContentContainer.querySelectorAll('.sentence');
+            apCurrentReadIndex = 0;
+            apTextContentContainer.scrollTop = 0;
+            apSentencesDOM.forEach((span, i) => {
+                span.title = '点击从此处开始播放 (Click to play from here)';
+                span.onclick = () => apPlayReadingFrom(i);
+            });
+        }
+
+        function apUpdateReadingButtons() {
+            if (apReadState === 'STOPPED') {
+                apPlayBtn.disabled = false;
+                apPauseBtn.disabled = true;
+                apStopBtn.disabled = true;
+            } else if (apReadState === 'PLAYING') {
+                apPlayBtn.disabled = true;
+                apPauseBtn.disabled = false;
+                apStopBtn.disabled = false;
+            } else if (apReadState === 'PAUSED') {
+                apPlayBtn.disabled = false;
+                apPauseBtn.disabled = true;
+                apStopBtn.disabled = false;
+            }
+        }
+
+        function apRemoveHighlights() {
+            apSentencesDOM.forEach(s => s.classList.remove('highlight'));
+        }
+
+        function apPlayReadingFrom(index) {
+            apCurrentSessionId++;
+            synth.cancel();
+            apCurrentReadIndex = index;
+            apReadState = 'PLAYING';
+            apUpdateReadingButtons();
+
+            setTimeout(() => {
+                if (apReadState === 'PLAYING') apSpeakReadingSentence(apCurrentReadIndex);
+            }, 250);
+        }
+
+        function apSpeakReadingSentence(index) {
+            if (!apSentencesDOM || apSentencesDOM.length === 0) return;
+
+            if (index >= apSentencesDOM.length) {
+                if (apLoopCheck.checked) apPlayReadingFrom(0);
+                else stopApReadingPlayback();
+                return;
+            }
+
+            apRemoveHighlights();
+            const currentSpan = apSentencesDOM[index];
+            currentSpan.classList.add('highlight');
+            currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            let utterance = makeUtterance(currentSpan.textContent, parseFloat(apSpeedRate.value));
+
+            keepAliveArray.push(utterance);
+            if (keepAliveArray.length > 50) keepAliveArray.shift();
+
+            let capturedSessionId = apCurrentSessionId;
+
+            utterance.onend = function() {
+                if (capturedSessionId !== apCurrentSessionId) return;
+                if (apReadState === 'PLAYING') {
+                    apCurrentReadIndex++;
+                    setTimeout(() => {
+                        if (capturedSessionId === apCurrentSessionId && apReadState === 'PLAYING') {
+                            apSpeakReadingSentence(apCurrentReadIndex);
+                        }
+                    }, 150);
+                }
+            };
+
+            utterance.onerror = function() {
+                if (capturedSessionId !== apCurrentSessionId) return;
+                if (apReadState === 'PLAYING') {
+                    apCurrentReadIndex++;
+                    setTimeout(() => apSpeakReadingSentence(apCurrentReadIndex), 150);
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        function stopApReadingPlayback() {
+            apCurrentSessionId++;
+            apReadState = 'STOPPED';
+            synth.cancel();
+            apRemoveHighlights();
+            apCurrentReadIndex = 0;
+            apUpdateReadingButtons();
+        }
+
+        apPlayBtn.onclick = () => {
+            if (apReadState === 'STOPPED') apPlayReadingFrom(0);
+            else if (apReadState === 'PAUSED') {
+                apReadState = 'PLAYING'; synth.resume(); apUpdateReadingButtons();
+            }
+        };
+        apPauseBtn.onclick = () => {
+            if (apReadState === 'PLAYING') {
+                apReadState = 'PAUSED'; synth.pause(); apUpdateReadingButtons();
+            }
+        };
+        apStopBtn.onclick = () => stopApReadingPlayback();
+
+        apSpeedRate.oninput = (e) => apSpeedValue.textContent = Number(e.target.value).toFixed(1);
+        apSpeedRate.onchange = () => { if (apReadState === 'PLAYING') apPlayReadingFrom(apCurrentReadIndex); };
+
         window.onbeforeunload = () => synth.cancel();
 
         // ==========================================
@@ -1776,6 +2023,8 @@
 
         initSelect();
         loadArticle(0);
+        apInitSelect();
+        apLoadArticle(0);
         renderVocabCard(false);
         renderQuizCard(); // 初始化测验数据
 
