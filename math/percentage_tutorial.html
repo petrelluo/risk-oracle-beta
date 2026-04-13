@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Percentage Change — Step by Step</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Architects+Daughter&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#fdf6ee;--card:#fff;--dark:#2c3e50;--muted:#7f8c8d;--border:#ddd;
+  --g:#2ecc71;--gl:#eafaf1;--r:#e74c3c;--rl:#fdf0ef;
+  --b:#3498db;--bl:#eaf4fb;--y:#f39c12;--yl:#fef9ec;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--dark);font-size:14px;line-height:1.5}
+.container{max-width:780px;margin:0 auto;padding:16px 20px}
+
+.print-btn{display:flex;justify-content:flex-end;margin-bottom:12px}
+.print-btn button{background:var(--dark);color:#fff;border:none;border-radius:8px;
+  padding:8px 18px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer}
+.print-btn button:hover{background:#3d5a80}
+
+.page-header{background:linear-gradient(135deg,#2c3e50,#3d5a80);color:#fff;
+  border-radius:14px;padding:20px 24px;margin-bottom:14px;display:flex;
+  align-items:center;justify-content:space-between;gap:16px}
+.page-header h1{font-size:1.4rem;font-weight:900;line-height:1.2}
+.page-header h1 span{color:#2ecc71}
+.page-header p{font-size:0.82rem;opacity:.8;margin-top:4px}
+.header-formula{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;padding:10px 16px;text-align:center;flex-shrink:0;white-space:nowrap}
+.header-formula .lbl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;margin-bottom:3px}
+.header-formula .f{font-family:'Architects Daughter',cursive;font-size:0.95rem;color:#f39c12}
+
+/* ── WHY SECTION ──────────────────────── */
+.why-section{background:#fff;border:1.5px solid var(--border);border-radius:14px;
+  padding:16px 18px;margin-bottom:12px}
+.why-section .why-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.why-section .why-header .badge{background:var(--dark);color:#fff;border-radius:20px;
+  padding:4px 12px;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+.why-section .why-header p{font-size:0.82rem;font-weight:700;color:var(--muted)}
+.why-intro{font-size:0.88rem;font-weight:700;color:var(--dark);
+  background:var(--yl);border-radius:10px;padding:10px 14px;margin-bottom:12px;border-left:3px solid var(--y)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.why-card{border-radius:10px;padding:10px 12px;border:1.5px solid}
+.why-card .wc-icon{font-size:1.4rem;margin-bottom:5px}
+.why-card .wc-title{font-size:0.78rem;font-weight:800;margin-bottom:3px}
+.why-card .wc-body{font-size:0.72rem;font-weight:600;line-height:1.4}
+.why-card .wc-punchline{font-size:0.7rem;font-weight:800;margin-top:5px;padding:3px 7px;
+  border-radius:5px;display:inline-block}
+.why-card.c1{background:#fef0fb;border-color:#d98ae8}
+.why-card.c1 .wc-title{color:#7d2d91}
+.why-card.c1 .wc-punchline{background:#f3d9fa;color:#6a1f82}
+.why-card.c2{background:#eaf6ff;border-color:#74b9e8}
+.why-card.c2 .wc-title{color:#1a5276}
+.why-card.c2 .wc-punchline{background:var(--bl);color:#1a5276}
+.why-card.c3{background:#eafaf1;border-color:#58d68d}
+.why-card.c3 .wc-title{color:#1e8449}
+.why-card.c3 .wc-punchline{background:var(--gl);color:#1e8449}
+.why-card.c4{background:#fff8e6;border-color:#f5c842}
+.why-card.c4 .wc-title{color:#9a6e00}
+.why-card.c4 .wc-punchline{background:var(--yl);color:#7d5a00}
+.why-card.c5{background:#fdf0ef;border-color:#e8938a}
+.why-card.c5 .wc-title{color:#922b21}
+.why-card.c5 .wc-punchline{background:var(--rl);color:#922b21}
+.why-card.c6{background:#f0f4ff;border-color:#7b97e8}
+.why-card.c6 .wc-title{color:#2c3e8a}
+.why-card.c6 .wc-punchline{background:#dce6ff;color:#2c3e8a}
+.why-bottom{font-size:0.8rem;font-weight:700;color:var(--muted);text-align:center;
+  margin-top:12px;padding-top:10px;border-top:1px dashed var(--border)}
+.why-bottom strong{color:var(--dark)}
+
+.sign-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sign-card{border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:1.5px solid}
+.sign-card.up{background:var(--gl);border-color:var(--g)}
+.sign-card.down{background:var(--rl);border-color:var(--r)}
+.sign-card .ico{font-size:1.4rem}
+.sign-card .txt strong{display:block;font-size:0.88rem;font-weight:800}
+.sign-card.up .txt strong{color:#1e8449}
+.sign-card.down .txt strong{color:#922b21}
+.sign-card .txt span{font-size:0.75rem;color:var(--muted)}
+
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.ex-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px}
+.ex-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ex-num{background:var(--dark);color:#fff;border-radius:50%;width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:900;flex-shrink:0}
+.ex-title{font-size:0.88rem;font-weight:800}
+.scenario{background:var(--bl);border-left:3px solid var(--b);border-radius:0 8px 8px 0;
+  padding:7px 10px;font-size:0.78rem;font-weight:700;color:#1a5276;margin-bottom:10px}
+
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:8px;padding:5px 0;border-bottom:1px dashed #eee}
+.step:last-child{border-bottom:none}
+.s-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;margin-top:1px}
+.s-num.g{background:var(--gl);color:#1e8449}
+.s-num.b{background:var(--bl);color:#1a5276}
+.s-num.y{background:var(--yl);color:#b7770d}
+.s-body{flex:1}
+.s-lbl{font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px}
+.s-lbl.g{color:#1e8449}.s-lbl.b{color:#1a5276}.s-lbl.y{color:#b7770d}
+.s-math{font-family:'Architects Daughter',cursive;font-size:0.82rem;
+  padding:3px 8px;border-radius:6px;display:inline-block;margin-top:2px}
+.s-math.g{background:var(--gl);color:#1e8449}
+.s-math.b{background:var(--bl);color:#1a5276}
+.s-math.y{background:var(--yl);color:#b7770d}
+.s-math.r{background:var(--rl);color:#922b21}
+
+.ans{border-radius:8px;padding:7px 10px;margin-top:8px;font-size:0.8rem;
+  font-weight:700;display:flex;align-items:center;gap:6px}
+.ans.good{background:var(--gl);color:#1e8449;border:1.5px solid var(--g)}
+.ans.bad{background:var(--rl);color:#922b21;border:1.5px solid var(--r)}
+
+.warning{background:var(--yl);border:1.5px solid var(--y);border-radius:10px;
+  padding:10px 14px;margin-bottom:12px}
+.warning .wh{font-size:0.82rem;font-weight:800;color:#b7770d;margin-bottom:4px}
+.warning p{font-size:0.78rem;font-weight:600;color:#7d6608}
+.warning code{display:inline-block;background:#fff;border-radius:6px;
+  padding:3px 8px;margin-top:4px;font-family:'Architects Daughter',cursive;font-size:0.82rem;color:var(--dark)}
+
+.ref-wrap{background:var(--card);border-radius:12px;overflow:hidden;
+  border:1.5px solid var(--border);margin-bottom:12px}
+.ref-table{width:100%;border-collapse:collapse;font-size:0.78rem}
+.ref-table th{background:var(--dark);color:#fff;padding:8px 12px;font-size:0.7rem;
+  text-transform:uppercase;letter-spacing:.8px;text-align:left}
+.ref-table td{padding:7px 12px;font-weight:600;border-bottom:1px solid var(--border)}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:nth-child(even) td{background:#faf6f0}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:0.68rem;font-weight:800}
+.tag.up{background:var(--gl);color:#1e8449}
+.tag.down{background:var(--rl);color:#922b21}
+
+.calc-section{background:var(--dark);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.calc-section h3{color:#fff;font-size:1rem;font-weight:900;margin-bottom:2px}
+.calc-section p{color:rgba(255,255,255,.6);font-size:0.78rem;margin-bottom:12px}
+.calc-row{display:flex;gap:10px;margin-bottom:10px}
+.calc-field{flex:1}
+.calc-field label{display:block;color:rgba(255,255,255,.65);font-size:0.7rem;
+  font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
+.calc-field input{width:100%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);
+  border-radius:8px;padding:9px 12px;color:#fff;font-family:'Nunito',sans-serif;
+  font-size:0.95rem;font-weight:700;outline:none;transition:border-color .2s}
+.calc-field input:focus{border-color:#2ecc71}
+.calc-field input::placeholder{color:rgba(255,255,255,.3)}
+.calc-btn{width:100%;background:#2ecc71;color:#fff;border:none;border-radius:10px;
+  padding:11px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:900;
+  cursor:pointer;transition:background .2s,transform .15s}
+.calc-btn:hover{background:#27ae60;transform:translateY(-1px)}
+.calc-result{display:none;margin-top:12px;border-radius:10px;padding:14px 16px;animation:fadeIn .3s ease}
+.calc-result.show{display:block}
+.calc-result.positive{background:var(--gl);border:1.5px solid var(--g)}
+.calc-result.negative{background:var(--rl);border:1.5px solid var(--r)}
+.calc-result .rpct{font-size:1.6rem;font-weight:900}
+.calc-result.positive .rpct{color:#1e8449}
+.calc-result.negative .rpct{color:#922b21}
+.calc-result .rexp{font-size:0.82rem;font-weight:700;color:var(--dark);margin-top:2px}
+.calc-result .rsteps{margin-top:8px;padding-top:8px;border-top:1px dashed #ccc;
+  font-size:0.75rem;font-weight:600;color:var(--muted);line-height:1.9}
+
+.practice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pq{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px}
+.pq .qn{font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px}
+.pq .qt{font-size:0.82rem;font-weight:700;color:var(--dark);margin-bottom:10px}
+.reveal-btn{background:var(--dark);color:#fff;border:none;border-radius:7px;
+  padding:6px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.75rem;cursor:pointer}
+.reveal-btn:hover{background:#3d5a80}
+.ans-reveal{display:none;margin-top:8px;background:var(--gl);border:1.5px solid var(--g);
+  border-radius:8px;padding:10px 12px;font-size:0.75rem;font-weight:700;color:#1e8449;animation:fadeIn .3s ease}
+.ans-reveal.show{display:block}
+.ans-reveal code{display:block;margin-top:4px;font-family:'Architects Daughter',cursive;
+  font-size:0.8rem;color:var(--dark)}
+
+.footer{text-align:center;padding:14px;font-size:0.75rem;color:var(--muted)}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════════════════════════════
+   PRINT STYLES
+   ════════════════════════════════════ */
+@media print{
+  @page{size:A4;margin:13mm 13mm 13mm 13mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important;font-size:11px;line-height:1.35}
+  .container{max-width:100%;padding:0}
+  .print-btn,.calc-section,.reveal-btn,.footer{display:none!important}
+  .ex-grid,.sign-row,.practice-grid,.ref-wrap{page-break-inside:avoid}
+  .page-header{border-radius:8px;padding:12px 16px;margin-bottom:9px}
+  .page-header h1{font-size:1.1rem}
+  .page-header p{font-size:0.72rem}
+  .why-section{padding:10px 12px;margin-bottom:8px;border-radius:8px}
+  .why-intro{font-size:0.72rem;padding:7px 10px;margin-bottom:8px}
+  .why-grid{gap:6px}
+  .why-card{padding:7px 9px}
+  .why-card .wc-icon{font-size:1.1rem;margin-bottom:3px}
+  .why-card .wc-title{font-size:0.68rem}
+  .why-card .wc-body{font-size:0.65rem}
+  .why-card .wc-punchline{font-size:0.62rem}
+  .why-bottom{font-size:0.68rem;margin-top:8px;padding-top:7px}
+  .why-section .why-header p{font-size:0.72rem}
+  .sign-row{gap:6px;margin-bottom:8px}
+  .sign-card{padding:6px 10px}
+  .sign-card .ico{font-size:1rem}
+  .sign-card .txt strong{font-size:0.76rem}
+  .sign-card .txt span{font-size:0.65rem}
+  .ex-grid{gap:7px;margin-bottom:8px}
+  .ex-card{padding:8px 10px;border-radius:8px}
+  .scenario{padding:5px 8px;font-size:0.7rem;margin-bottom:6px}
+  .step{padding:3px 0}
+  .s-math{font-size:0.72rem;padding:2px 6px}
+  .s-lbl{font-size:0.58rem}
+  .ans{padding:5px 8px;font-size:0.7rem;margin-top:5px}
+  .warning{padding:8px 12px;margin-bottom:8px;border-radius:7px}
+  .warning .wh,.warning p{font-size:0.72rem}
+  .warning code{font-size:0.72rem}
+  .ref-wrap{margin-bottom:8px}
+  .ref-table th{padding:5px 10px;font-size:0.6rem}
+  .ref-table td{padding:5px 10px;font-size:0.7rem}
+  .practice-grid{gap:7px;margin-bottom:0}
+  .pq{padding:8px 10px;border-radius:8px}
+  .pq .qt{font-size:0.72rem;margin-bottom:6px}
+  /* show all answers when printing */
+  .ans-reveal{display:block!important;font-size:0.68rem;padding:6px 9px;margin-top:4px}
+  .ans-reveal code{font-size:0.7rem}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="print-btn"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>
+
+  <div class="page-header">
+    <div>
+      <h1>Percentage Change — <span>Step by Step</span></h1>
+      <p>Real-life money examples. Same 3 steps every single time — no surprises.</p>
+    </div>
+    <div class="header-formula">
+      <div class="lbl">The Formula</div>
+      <div class="f">(New − Old) ÷ Old × 100</div>
+    </div>
+  </div>
+
+  <!-- WHY DOES THIS MATTER FOR CLAIRE -->
+  <div class="why-section">
+    <div class="why-header">
+      <div class="badge">👋 Hey Claire</div>
+      <p>Before the formula — here's why this actually matters to you right now.</p>
+    </div>
+    <div class="why-intro">
+      🤔 You might be thinking: <em>"Why do I need percentage change? I just want to pass the test."</em><br>
+      Fair enough. But here's the thing — <strong>you already use this in your head every single day.</strong> You just don't know it has a name yet.
+    </div>
+    <div class="why-grid">
+      <div class="why-card c1">
+        <div class="wc-icon">🛍️</div>
+        <div class="wc-title">Shopping Sales</div>
+        <div class="wc-body">That hoodie was $60, now $42. Is 30% off actually a good deal, or is the store just trying to make it sound big?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+      <div class="why-card c2">
+        <div class="wc-icon">📝</div>
+        <div class="wc-title">Your Grades</div>
+        <div class="wc-body">You scored 58 last semester and 71 this semester. How much did you actually improve? Enough to show your parents?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+      <div class="why-card c3">
+        <div class="wc-icon">📱</div>
+        <div class="wc-title">Phone Plan Bill</div>
+        <div class="wc-body">Your plan went from $35/month to $42. Doesn't sound like much — but is it a small bump or a big rip-off?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+      <div class="why-card c4">
+        <div class="wc-icon">🎮</div>
+        <div class="wc-title">Game / App Prices</div>
+        <div class="wc-body">That game you want went from $25 to $40. Your friend says it's "not that much more." Are they right?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+      <div class="why-card c5">
+        <div class="wc-icon">⛽</div>
+        <div class="wc-title">Gas &amp; Prices</div>
+        <div class="wc-body">Gas was $3.20 last year and now it's $4.10. News says prices are "surging." By how much exactly?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+      <div class="why-card c6">
+        <div class="wc-icon">💵</div>
+        <div class="wc-title">First Job / Raise</div>
+        <div class="wc-body">You earn $12/hr. Your boss offers $13.50. Sounds nice — but is that actually a good raise or barely anything?</div>
+        <div class="wc-punchline">→ Percentage change tells you.</div>
+      </div>
+    </div>
+    <div class="why-bottom">Every single one of those uses the <strong>exact same formula</strong> you're about to learn. One formula. Real life. Every day. 💡</div>
+  </div>
+
+  <div class="sign-row">
+    <div class="sign-card up">
+      <div class="ico">📈</div>
+      <div class="txt"><strong>Positive answer = Went UP</strong><span>e.g. +25% means it grew by a quarter</span></div>
+    </div>
+    <div class="sign-card down">
+      <div class="ico">📉</div>
+      <div class="txt"><strong>Negative answer = Went DOWN</strong><span>e.g. −30% means it shrank by nearly a third</span></div>
+    </div>
+  </div>
+
+  <div class="ex-grid">
+
+    <div class="ex-card">
+      <div class="ex-head"><div class="ex-num">1</div><div class="ex-title">💰 Savings Grew</div></div>
+      <div class="scenario">You had $200. Now you have $250. By how much did it grow?</div>
+      <div class="steps">
+        <div class="step"><div class="s-num g">1</div><div class="s-body"><div class="s-lbl g">Find the change</div><div class="s-math g">$250 − $200 = <strong>$50</strong></div></div></div>
+        <div class="step"><div class="s-num b">2</div><div class="s-body"><div class="s-lbl b">Divide by original</div><div class="s-math b">$50 ÷ $200 = <strong>0.25</strong></div></div></div>
+        <div class="step"><div class="s-num y">3</div><div class="s-body"><div class="s-lbl y">× 100</div><div class="s-math y">0.25 × 100 = <strong>25%</strong></div></div></div>
+      </div>
+      <div class="ans good">✅ Savings grew by <strong>25%</strong></div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head"><div class="ex-num">2</div><div class="ex-title">📉 Stock Dropped</div></div>
+      <div class="scenario">You bought a stock at $80. It's now $60. How much did it drop?</div>
+      <div class="steps">
+        <div class="step"><div class="s-num g">1</div><div class="s-body"><div class="s-lbl g">Find the change</div><div class="s-math r">$60 − $80 = <strong>−$20</strong></div></div></div>
+        <div class="step"><div class="s-num b">2</div><div class="s-body"><div class="s-lbl b">Divide by original</div><div class="s-math b">−$20 ÷ $80 = <strong>−0.25</strong></div></div></div>
+        <div class="step"><div class="s-num y">3</div><div class="s-body"><div class="s-lbl y">× 100</div><div class="s-math y">−0.25 × 100 = <strong>−25%</strong></div></div></div>
+      </div>
+      <div class="ans bad">📉 Stock dropped by <strong>25%</strong></div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head"><div class="ex-num">3</div><div class="ex-title">🏠 Rent Went Up</div></div>
+      <div class="scenario">Rent was $1,200. Raised to $1,350. How big an increase is that?</div>
+      <div class="steps">
+        <div class="step"><div class="s-num g">1</div><div class="s-body"><div class="s-lbl g">Find the change</div><div class="s-math g">$1,350 − $1,200 = <strong>$150</strong></div></div></div>
+        <div class="step"><div class="s-num b">2</div><div class="s-body"><div class="s-lbl b">Divide by original</div><div class="s-math b">$150 ÷ $1,200 = <strong>0.125</strong></div></div></div>
+        <div class="step"><div class="s-num y">3</div><div class="s-body"><div class="s-lbl y">× 100</div><div class="s-math y">0.125 × 100 = <strong>12.5%</strong></div></div></div>
+      </div>
+      <div class="ans bad">😬 Rent jumped by <strong>12.5%</strong> — significant!</div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-head"><div class="ex-num">4</div><div class="ex-title">💼 Investment Return</div></div>
+      <div class="scenario">You invested $5,000. Two years later it's $6,200. How well did it do?</div>
+      <div class="steps">
+        <div class="step"><div class="s-num g">1</div><div class="s-body"><div class="s-lbl g">Find the change</div><div class="s-math g">$6,200 − $5,000 = <strong>$1,200</strong></div></div></div>
+        <div class="step"><div class="s-num b">2</div><div class="s-body"><div class="s-lbl b">Divide by original</div><div class="s-math b">$1,200 ÷ $5,000 = <strong>0.24</strong></div></div></div>
+        <div class="step"><div class="s-num y">3</div><div class="s-body"><div class="s-lbl y">× 100</div><div class="s-math y">0.24 × 100 = <strong>24%</strong></div></div></div>
+      </div>
+      <div class="ans good">🎉 Investment grew by <strong>24%</strong> — solid return!</div>
+    </div>
+
+  </div>
+
+  <div class="warning">
+    <div class="wh">⚠️ Watch Out — This Trips Everyone Up!</div>
+    <p>A <strong>50% drop is NOT canceled by a 50% gain.</strong> The gain is calculated on the new smaller amount, not the original.</p>
+    <code>$100 → drops 50% → $50 → gains 50% → only $75 😲 &nbsp;(still down $25!)</code>
+  </div>
+
+  <div class="ref-wrap">
+    <table class="ref-table">
+      <thead><tr><th>Situation</th><th>Formula</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>How much did it increase or decrease?</td><td>(New − Old) ÷ Old × 100</td><td><span class="tag up">📈 UP</span> or <span class="tag down">📉 DOWN</span></td></tr>
+        <tr><td>New value after X% increase</td><td>Old × (1 + rate as decimal)</td><td><span class="tag up">📈 UP</span></td></tr>
+        <tr><td>New value after X% drop</td><td>Old × (1 − rate as decimal)</td><td><span class="tag down">📉 DOWN</span></td></tr>
+        <tr><td>Find original before an increase</td><td>Current ÷ (1 + rate as decimal)</td><td><span class="tag up">📈 UP</span></td></tr>
+        <tr><td>Find original before a drop</td><td>Current ÷ (1 − rate as decimal)</td><td><span class="tag down">📉 DOWN</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calc-section">
+    <h3>🧮 Try It — Percentage Change Calculator</h3>
+    <p>Type in any two numbers and see the full working shown step by step.</p>
+    <div class="calc-row">
+      <div class="calc-field">
+        <label>Old Value (where you started)</label>
+        <input type="number" id="oldVal" placeholder="e.g. 200"/>
+      </div>
+      <div class="calc-field">
+        <label>New Value (where you ended up)</label>
+        <input type="number" id="newVal" placeholder="e.g. 250"/>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calculate()">Calculate →</button>
+    <div class="calc-result" id="calcResult">
+      <div class="rpct" id="resPct"></div>
+      <div class="rexp" id="resExplain"></div>
+      <div class="rsteps" id="resSteps"></div>
+    </div>
+  </div>
+
+  <div class="practice-grid">
+
+    <div class="pq">
+      <div class="qn">Practice 1</div>
+      <div class="qt">A house was worth $300,000. Now it's $360,000. By what percent did it increase?</div>
+      <button class="reveal-btn" onclick="reveal('a1')">👀 Show Answer</button>
+      <div class="ans-reveal" id="a1">✅ <strong>+20% increase</strong>
+        <code>$360k − $300k = $60k</code>
+        <code>$60k ÷ $300k × 100 = 20%</code>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="qn">Practice 2</div>
+      <div class="qt">A stock dropped from $500 to $350. What is the percentage drop?</div>
+      <button class="reveal-btn" onclick="reveal('a2')">👀 Show Answer</button>
+      <div class="ans-reveal" id="a2">✅ <strong>−30% drop</strong>
+        <code>$350 − $500 = −$150</code>
+        <code>−$150 ÷ $500 × 100 = −30%</code>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="qn">Practice 3</div>
+      <div class="qt">After a 20% raise, your salary is $60,000. What was it before?</div>
+      <button class="reveal-btn" onclick="reveal('a3')">👀 Show Answer</button>
+      <div class="ans-reveal" id="a3">✅ <strong>$50,000 original salary</strong>
+        <code>$60,000 ÷ (1 + 0.20)</code>
+        <code>$60,000 ÷ 1.20 = $50,000</code>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="qn">Practice 4 — Challenge!</div>
+      <div class="qt">Friend A: $1,000→$1,200. Friend B: $4,000→$4,600. Who got the better % return?</div>
+      <button class="reveal-btn" onclick="reveal('a4')">👀 Show Answer</button>
+      <div class="ans-reveal" id="a4">✅ <strong>Friend A — 20% vs 15%</strong>
+        <code>A: $200 ÷ $1,000 × 100 = 20% 🏆</code>
+        <code>B: $600 ÷ $4,000 × 100 = 15%</code>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Always compare to where you <strong>started.</strong> &nbsp;Three steps every time: subtract → divide → × 100. 💪</div>
+
+</div>
+
+<script>
+function calculate(){
+  const o=parseFloat(document.getElementById('oldVal').value);
+  const n=parseFloat(document.getElementById('newVal').value);
+  const res=document.getElementById('calcResult');
+  if(isNaN(o)||isNaN(n)||o===0){alert('Please enter valid numbers. Old value cannot be zero.');return;}
+  const change=n-o,pct=(change/o)*100,isUp=pct>=0;
+  res.className='calc-result show '+(isUp?'positive':'negative');
+  document.getElementById('resPct').textContent=(isUp?'+':'−')+Math.abs(pct).toFixed(2)+'%';
+  document.getElementById('resExplain').textContent=isUp
+    ?`It went UP by ${Math.abs(pct).toFixed(2)}% 📈`
+    :`It went DOWN by ${Math.abs(pct).toFixed(2)}% 📉`;
+  document.getElementById('resSteps').innerHTML=
+    `Step 1: ${n} − ${o} = ${change>=0?'+':''}${change.toFixed(2)}<br>`+
+    `Step 2: ${change.toFixed(2)} ÷ ${o} = ${(change/o).toFixed(4)}<br>`+
+    `Step 3: ${(change/o).toFixed(4)} × 100 = ${isUp?'+':''}${pct.toFixed(2)}%`;
+}
+function reveal(id){document.getElementById(id).classList.toggle('show')}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&['oldVal','newVal'].includes(document.activeElement?.id))calculate();
+});
+</script>
+</body>
+</html>

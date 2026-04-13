@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ch 10 — Statistics &amp; Data Analysis | BIM IM3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Georgia',serif;font-size:10pt;color:#111;background:#f0eef8;line-height:1.45;}
+#tabnav{position:sticky;top:0;z-index:99;background:#3a1848;display:flex;flex-wrap:wrap;gap:0;border-bottom:3px solid #c89028;padding:0 4px;}
+#tabnav button{font-family:'Georgia',serif;font-size:8pt;font-weight:bold;background:none;border:none;color:#b090c8;padding:6px 7px 4px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;transition:color .15s;}
+#tabnav button:hover{color:#c89028;}
+#tabnav button.active{color:#c89028;border-bottom:3px solid #c89028;}
+#tabnav .qg{color:#665;font-size:7.5pt;padding:6px 3px 4px;align-self:center;}
+.tab-pane{display:none;} .tab-pane.active{display:block;}
+.page{max-width:7.8in;margin:0 auto;background:#fff;padding:.35in .42in .38in;min-height:calc(100vh - 34px);}
+h1{font-size:15pt;text-align:center;border-bottom:2.5px solid #3a1848;padding-bottom:4px;margin-bottom:4px;letter-spacing:.03em;}
+h2{font-size:11.5pt;background:#3a1848;color:#c89028;padding:3px 8px;margin:9px 0 4px;letter-spacing:.04em;}
+h3{font-size:10pt;font-weight:bold;color:#3a1848;margin:6px 0 2px;border-bottom:1px solid #c0b0d8;}
+h4{font-size:9.5pt;font-weight:bold;margin:4px 0 2px;}
+.subtitle{text-align:center;font-size:9pt;color:#666;margin-bottom:5px;}
+p,li{margin:1.5px 0;} ul,ol{margin:2px 0 2px 16px;}
+.fbox{background:#f6f2fc;border:1px solid #8060b0;border-left:4px solid #8060b0;padding:4px 8px;margin:3px 0;font-size:9.5pt;}
+.fbox.green{border-color:#2a7a4a;border-left-color:#2a7a4a;background:#f0faf4;}
+.fbox.amber{border-color:#b07820;border-left-color:#b07820;background:#fdf7ea;}
+.fbox.blue{border-color:#3a6a9a;border-left-color:#3a6a9a;background:#f0f4fa;}
+.fbox.red{border-color:#9a3a3a;border-left-color:#9a3a3a;background:#faf0f0;}
+.ex{border:1px solid #bbb;padding:4px 7px;margin:4px 0;background:#fafafa;}
+.ex-title{font-weight:bold;font-size:9pt;color:#555;margin-bottom:2px;}
+.ex-step{color:#3a1848;margin-left:10px;} .ex-ans{color:#9a3a3a;font-weight:bold;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px 8px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px 6px;}
+.box{border:1px solid #ccc;padding:5px 7px;}
+table{border-collapse:collapse;width:100%;margin:3px 0;font-size:9pt;}
+td,th{border:1px solid #aaa;padding:2px 6px;}
+th{background:#e8e0f0;font-weight:bold;text-align:center;} td{text-align:center;} td.left{text-align:left;}
+.quiz-head{border:2px solid #3a1848;padding:5px 8px;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.quiz-head h2{background:none;color:#3a1848;padding:0;margin:0;font-size:12pt;}
+.q-sub{font-size:8.5pt;color:#555;margin-top:1px;}
+.q-center{flex:1;text-align:center;font-size:9pt;}
+.q-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.score{font-size:10pt;font-weight:bold;border:1px solid #999;padding:2px 10px;white-space:nowrap;}
+.blank{display:inline-block;border-bottom:1px solid #555;min-width:100px;height:11px;}
+.probs-2{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;}
+.prob{padding:4px 0 2px;border-bottom:1px dotted #ddd;} .prob:last-child{border-bottom:none;}
+.pn{font-weight:bold;font-size:9.5pt;}
+.work{height:44px;margin:2px 0;} .work-lg{height:66px;margin:2px 0;}
+.work-xl{height:88px;margin:2px 0;} .work-2x{height:120px;margin:2px 0;}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 2px;line-height:1.1;}
+.frac .fn{border-bottom:1.2px solid currentColor;padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+.frac .fd{padding:0 3px;text-align:center;white-space:nowrap;line-height:1.5;font-size:.88em;}
+.rt{display:inline-flex;align-items:flex-end;vertical-align:middle;margin:0 1px;}
+.rt .rt-rad{font-size:1.05em;line-height:1;margin-right:-2px;}
+.rt .rt-body{border-top:1.3px solid currentColor;padding:0 3px;display:inline-block;}
+.ak-item{padding:2px 0;border-bottom:1px dotted #e0e0e0;font-size:9.5pt;}
+.ak-num{font-weight:bold;min-width:24px;display:inline-block;} .ak-ans{color:#9a3a3a;font-weight:bold;}
+.rule{border:none;border-top:1px dashed #bbb;margin:8px 0;}
+.rule-solid{border:none;border-top:1.5px solid #ccc;margin:7px 0;}
+.warn{background:#fef8e8;border:1px solid #c89028;padding:3px 7px;font-size:9pt;margin:3px 0;}
+.scenario{background:#f8f4fc;border:1px solid #c0b0d8;border-radius:4px;padding:5px 8px;margin:3px 0;font-size:9pt;}
+@media print{#tabnav{display:none !important;}body{background:#fff;}.tab-pane{display:none !important;}.tab-pane.active{display:block !important;}.page{padding:.22in .32in;min-height:auto;max-width:100%;}h2{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<div id="tabnav">
+  <button class="active" onclick="show('sg')">📖 Study Guide</button>
+  <button onclick="show('cs')">📋 Cheat Sheet</button>
+  <span class="qg">│ 10.1–10.3:</span>
+  <button onclick="show('q1')">Quiz 1</button><button onclick="show('q2')">Quiz 2</button><button onclick="show('q3')">Quiz 3</button>
+  <span class="qg">│ 10.4–10.6:</span>
+  <button onclick="show('q4')">Quiz 4</button><button onclick="show('q5')">Quiz 5</button><button onclick="show('q6')">Quiz 6</button>
+  <span class="qg">│ Full Ch.:</span>
+  <button onclick="show('q7')">Quiz 7</button><button onclick="show('q8')">Quiz 8</button><button onclick="show('q9')">Quiz 9</button>
+  <span class="qg">│ Challenge:</span>
+  <button onclick="show('q10')">Quiz 10</button><button onclick="show('q11')">Quiz 11</button>
+  <span class="qg">│</span>
+  <button onclick="show('ak')">🔑 Answer Key</button>
+</div>
+
+<!-- ══════════════════ STUDY GUIDE ══════════════════ -->
+<div id="sg" class="tab-pane active"><div class="page">
+<h1>Chapter 10: Statistics and Data Analysis</h1>
+<p class="subtitle">Big Ideas Math — Integrated Mathematics III &nbsp;|&nbsp; Study Guide</p>
+
+<h2>10.1 Using Normal Distributions</h2>
+<div class="g2">
+<div class="box">
+<h4>Normal Distribution Properties</h4>
+<p>A normal distribution is symmetric and bell-shaped, defined by mean μ and standard deviation σ.</p>
+<div class="fbox blue"><b>Empirical Rule (68-95-99.7):</b><br>
+68% of data within 1σ of mean (μ±σ)<br>
+95% of data within 2σ of mean (μ±2σ)<br>
+99.7% of data within 3σ of mean (μ±3σ)</div>
+<div class="fbox">z-score: &nbsp; z = (x − μ)/σ</div>
+<p style="font-size:8.5pt;margin-top:2px;">z-score = number of standard deviations from the mean.</p>
+</div>
+<div class="box">
+<h4>Using z-scores and z-tables</h4>
+<p>A <b>standard normal distribution</b> has μ=0 and σ=1.</p>
+<p>The z-table gives P(Z &lt; z) — the area to the LEFT of z.</p>
+<p style="margin-top:3px;"><b>Finding probabilities:</b></p>
+<ul style="font-size:8.5pt;">
+<li>P(X &lt; a) = P(Z &lt; z_a)</li>
+<li>P(X &gt; a) = 1 − P(Z &lt; z_a)</li>
+<li>P(a &lt; X &lt; b) = P(Z &lt; z_b) − P(Z &lt; z_a)</li>
+</ul>
+<div class="warn">⚠ Always draw and shade the normal curve before computing.</div>
+</div>
+</div>
+<!-- Normal distribution bell curve diagram -->
+<svg id="norm-curve" viewBox="0 0 680 155" width="100%" style="max-height:140px;display:block;margin:4px 0">
+  <!-- Shaded regions -->
+  <path id="shade68" fill="rgba(58,24,72,0.12)" d=""/>
+  <path id="shade95" fill="rgba(58,24,72,0.06)" d=""/>
+  <!-- Axes -->
+  <line x1="40" y1="125" x2="640" y2="125" stroke="var(--color-text-secondary)" stroke-width="1" opacity="0.5"/>
+  <line x1="340" y1="15" x2="340" y2="128" stroke="var(--color-text-secondary)" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.4"/>
+  <!-- Bell curve -->
+  <path id="bell" fill="none" stroke="#3a1848" stroke-width="2"/>
+  <!-- Labels -->
+  <text x="340" y="144" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">μ</text>
+  <text x="256" y="144" text-anchor="middle" font-size="9" fill="#3a1848" font-family="Georgia,serif">μ−σ</text>
+  <text x="424" y="144" text-anchor="middle" font-size="9" fill="#3a1848" font-family="Georgia,serif">μ+σ</text>
+  <text x="172" y="144" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">μ−2σ</text>
+  <text x="508" y="144" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">μ+2σ</text>
+  <text x="88" y="144" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">μ−3σ</text>
+  <text x="592" y="144" text-anchor="middle" font-size="9" fill="var(--color-text-secondary)" font-family="Georgia,serif">μ+3σ</text>
+  <!-- Region labels -->
+  <text x="340" y="82" text-anchor="middle" font-size="9.5" fill="#3a1848" font-family="Georgia,serif" font-weight="500">68%</text>
+  <text x="214" y="102" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">13.5%</text>
+  <text x="466" y="102" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">13.5%</text>
+  <text x="130" y="118" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2.35%</text>
+  <text x="550" y="118" text-anchor="middle" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">2.35%</text>
+  <text x="500" y="48" text-anchor="start" font-size="8.5" fill="#3a1848" font-family="Georgia,serif">95%</text>
+  <line x1="180" y1="52" x2="500" y2="52" stroke="#3a1848" stroke-width="0.8" stroke-dasharray="4 2"/>
+  <line x1="96" y1="62" x2="584" y2="62" stroke="var(--color-text-secondary)" stroke-width="0.6" stroke-dasharray="3 2" opacity="0.5"/>
+  <text x="500" y="60" text-anchor="start" font-size="8" fill="var(--color-text-secondary)" font-family="Georgia,serif">99.7%</text>
+</svg>
+<script>
+(function(){
+  const cx=340,cy=125,σx=84,scale=110;
+  let bell='';
+  for(let i=-4;i<=4;i+=0.05){
+    const x=cx+i*σx, y=cy-scale*Math.exp(-0.5*i*i);
+    bell+=(i<=-3.99?'M':'L')+x.toFixed(1)+','+y.toFixed(1);
+  }
+  document.getElementById('bell').setAttribute('d',bell);
+  let s68='M'+(cx-σx)+','+(cy-scale*Math.exp(-0.5));
+  for(let i=-1;i<=1;i+=0.05){const x=cx+i*σx,y=cy-scale*Math.exp(-0.5*i*i);s68+='L'+x.toFixed(1)+','+y.toFixed(1);}
+  s68+='L'+(cx+σx)+','+cy+'L'+(cx-σx)+','+cy+'Z';
+  document.getElementById('shade68').setAttribute('d',s68);
+})();
+</script>
+<h3>Examples</h3>
+<div class="g2">
+<div class="ex"><div class="ex-title">Ex 1 — Test scores: μ=72, σ=8. What % score between 64 and 88?</div>
+<p class="ex-step">64=72−8=μ−σ; 88=72+2σ</p>
+<p class="ex-step">P(μ−σ&lt;X&lt;μ+2σ)=34%+34%+13.5%=<span class="ex-ans">81.5%</span></p></div>
+<div class="ex"><div class="ex-title">Ex 2 — Height: μ=67 in, σ=3 in. Find z-score for 73 in and P(X&lt;73).</div>
+<p class="ex-step">z=(73−67)/3=2.0; P(Z&lt;2.0)=<span class="ex-ans">0.9772 (97.72%)</span></p></div>
+<div class="ex"><div class="ex-title">Ex 3 — P(X&gt;70): μ=65, σ=5. Find z; use table.</div>
+<p class="ex-step">z=(70−65)/5=1.0; P(Z&gt;1.0)=1−0.8413=<span class="ex-ans">0.1587 (15.87%)</span></p></div>
+<div class="ex"><div class="ex-title">Ex 4 — P(60&lt;X&lt;75): μ=65, σ=5.</div>
+<p class="ex-step">z₁=(60−65)/5=−1; z₂=(75−65)/5=2</p>
+<p class="ex-step">P=P(Z&lt;2)−P(Z&lt;−1)=0.9772−0.1587=<span class="ex-ans">0.8185 (81.85%)</span></p></div>
+</div>
+
+<div class="rule"></div>
+<h2>10.2 Populations, Samples, and Hypotheses</h2>
+<div class="g2">
+<div class="box">
+<h4>Population vs. Sample</h4>
+<p><b>Population:</b> the entire group being studied</p>
+<p><b>Sample:</b> a subset of the population used to draw conclusions</p>
+<p><b>Parameter:</b> a numerical summary of a population (e.g., μ, σ)</p>
+<p><b>Statistic:</b> a numerical summary of a sample (e.g., x̄, s)</p>
+<p style="margin-top:4px;"><b>Types of samples:</b></p>
+<ul style="font-size:8.5pt;">
+<li><b>Simple random:</b> every member equally likely to be chosen</li>
+<li><b>Stratified:</b> divide into groups (strata), randomly sample each</li>
+<li><b>Systematic:</b> choose every k-th member of a list</li>
+<li><b>Cluster:</b> randomly select groups (clusters), sample all within</li>
+<li><b>Convenience:</b> use whoever is easy to reach (often biased)</li>
+</ul>
+</div>
+<div class="box">
+<h4>Hypotheses</h4>
+<p><b>Null hypothesis H₀:</b> claims no effect or no difference; the "status quo."</p>
+<p><b>Alternative hypothesis Hₐ:</b> claims there IS an effect or difference.</p>
+<p style="margin-top:3px;"><b>Example:</b></p>
+<p style="font-size:9pt;">H₀: The new drug has no effect on blood pressure.</p>
+<p style="font-size:9pt;">Hₐ: The new drug reduces blood pressure.</p>
+<p style="margin-top:3px;"><b>Error types:</b></p>
+<p style="font-size:8.5pt;"><b>Type I (α):</b> Reject H₀ when it's actually true (false positive)</p>
+<p style="font-size:8.5pt;"><b>Type II (β):</b> Fail to reject H₀ when Hₐ is true (false negative)</p>
+</div>
+</div>
+
+<div class="rule"></div>
+<h2>10.3 Collecting Data</h2>
+<div class="g3">
+<div class="box">
+<h4>Study Types</h4>
+<p><b>Survey:</b> collects data via questions; no treatment given.</p>
+<p style="margin-top:3px;"><b>Experiment:</b> applies a treatment; can establish cause-and-effect.</p>
+<p style="margin-top:3px;"><b>Observational study:</b> observes without interfering; can only show correlation, not causation.</p>
+</div>
+<div class="box">
+<h4>Sources of Bias</h4>
+<ul style="font-size:8.5pt;">
+<li><b>Voluntary response:</b> people opt in (self-selection)</li>
+<li><b>Undercoverage:</b> some groups excluded from sample</li>
+<li><b>Nonresponse:</b> chosen subjects don't respond</li>
+<li><b>Wording bias:</b> leading or misleading questions</li>
+<li><b>Convenience sampling:</b> only accessible people sampled</li>
+</ul>
+</div>
+<div class="box">
+<h4>Simulation</h4>
+<p>A simulation uses a model to imitate a real process when direct data collection is impractical.</p>
+<p style="margin-top:3px;">Steps: define model → assign random digits/outcomes → run trials → analyze results.</p>
+<p style="font-size:8.5pt;margin-top:2px;">Example: flip a coin 50 times using a random-number generator.</p>
+</div>
+</div>
+
+<div class="rule"></div>
+<h2>10.4 Experimental Design</h2>
+<div class="g2">
+<div class="box">
+<h4>Elements of a Well-Designed Experiment</h4>
+<p><b>Experimental units:</b> the subjects or objects being tested.</p>
+<p><b>Treatment:</b> the condition applied to experimental units.</p>
+<p><b>Control group:</b> receives no treatment (or a placebo).</p>
+<p><b>Treatment group:</b> receives the treatment being tested.</p>
+<p><b>Randomization:</b> randomly assign subjects to groups to reduce bias.</p>
+<p><b>Replication:</b> repeat the experiment to reduce variability.</p>
+<p><b>Blinding:</b> subjects don't know which group they're in.</p>
+<p><b>Double-blinding:</b> neither subjects nor researchers know assignments.</p>
+<p><b>Placebo effect:</b> improvement seen just from believing one is receiving treatment.</p>
+</div>
+<div class="box">
+<h4>Confounding Variables &amp; Blocking</h4>
+<p>A <b>confounding variable</b> is a variable that affects the response but is NOT the factor being studied. It can create a false appearance of cause-and-effect.</p>
+<p style="margin-top:4px;"><b>Blocking:</b> divide subjects into groups (blocks) based on a known variable (e.g., gender, age), then randomize within each block.</p>
+<!-- Simple experiment flow diagram -->
+<svg viewBox="0 0 290 110" width="100%" style="max-height:100px;display:block;margin-top:4px">
+  <rect x="5" y="40" width="60" height="30" rx="5" fill="rgba(58,24,72,0.1)" stroke="#3a1848" stroke-width="1.2"/>
+  <text x="35" y="57" text-anchor="middle" font-size="9" fill="#3a1848" font-family="Georgia,serif">Subjects</text>
+  <line x1="65" y1="55" x2="90" y2="55" stroke="#3a1848" stroke-width="1" marker-end="url(#earr)"/>
+  <defs><marker id="earr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#3a1848" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+  <rect x="92" y="40" width="60" height="30" rx="5" fill="rgba(58,24,72,0.1)" stroke="#3a1848" stroke-width="1.2"/>
+  <text x="122" y="53" text-anchor="middle" font-size="9" fill="#3a1848" font-family="Georgia,serif">Random</text>
+  <text x="122" y="66" text-anchor="middle" font-size="9" fill="#3a1848" font-family="Georgia,serif">Assign</text>
+  <line x1="152" y1="48" x2="180" y2="30" stroke="#3a1848" stroke-width="1" marker-end="url(#earr)"/>
+  <line x1="152" y1="62" x2="180" y2="80" stroke="#3a1848" stroke-width="1" marker-end="url(#earr)"/>
+  <rect x="182" y="16" width="60" height="24" rx="5" fill="rgba(42,122,74,0.15)" stroke="#2a7a4a" stroke-width="1.2"/>
+  <text x="212" y="28" text-anchor="middle" font-size="9" fill="#2a7a4a" font-family="Georgia,serif">Treatment</text>
+  <rect x="182" y="66" width="60" height="24" rx="5" fill="rgba(154,58,58,0.1)" stroke="#9a3a3a" stroke-width="1.2"/>
+  <text x="212" y="78" text-anchor="middle" font-size="9" fill="#9a3a3a" font-family="Georgia,serif">Control</text>
+  <line x1="242" y1="28" x2="265" y2="50" stroke="#2a7a4a" stroke-width="1" marker-end="url(#earr)"/>
+  <line x1="242" y1="78" x2="265" y2="60" stroke="#9a3a3a" stroke-width="1" marker-end="url(#earr)"/>
+  <rect x="267" y="40" width="22" height="20" rx="4" fill="rgba(58,24,72,0.1)" stroke="#3a1848" stroke-width="1"/>
+  <text x="278" y="53" text-anchor="middle" font-size="8" fill="#3a1848" font-family="Georgia,serif">⊕</text>
+</svg>
+</div>
+</div>
+
+<div class="rule"></div>
+<h2>10.5 Making Inferences from Sample Surveys</h2>
+<div class="g2">
+<div class="box">
+<h4>Margin of Error &amp; Confidence Intervals</h4>
+<div class="fbox green">Margin of Error (95% CI): ME = 1/√n</div>
+<div class="fbox green">Confidence interval: p̂ ± ME = p̂ ± 1/√n</div>
+<p><b>Interpretation:</b> "We are 95% confident the true population proportion p is within the interval [p̂−ME, p̂+ME]."</p>
+<p style="margin-top:3px;"><b>Sample size:</b> larger n → smaller ME → more precise estimate</p>
+<p style="font-size:8.5pt;">To halve ME, quadruple sample size: ME ∝ 1/√n</p>
+</div>
+<div class="box">
+<h4>Examples</h4>
+<div class="ex"><div class="ex-title">Ex 5 — Survey: 400 people; 52% prefer Brand A. Find 95% CI.</div>
+<p class="ex-step">ME = 1/√400 = 1/20 = 0.05 (5%)</p>
+<p class="ex-step">CI: 0.52 ± 0.05 = <span class="ex-ans">[0.47, 0.57] or 47% to 57%</span></p></div>
+<div class="ex"><div class="ex-title">Ex 6 — To achieve ME ≤ 2%, what sample size is needed?</div>
+<p class="ex-step">1/√n ≤ 0.02 → √n ≥ 50 → n ≥ 2500</p>
+<p class="ex-ans">At least 2500 respondents</p></div>
+</div>
+</div>
+
+<div class="rule"></div>
+<h2>10.6 Making Inferences from Experiments</h2>
+<div class="g2">
+<div class="box">
+<h4>Statistical Significance</h4>
+<p>A result is <b>statistically significant</b> when it is unlikely to have occurred by chance alone.</p>
+<p style="margin-top:3px;"><b>Significance level α:</b> typically 0.05. If the probability of observing a result as extreme as the one obtained (the p-value) is less than α, we reject H₀.</p>
+<div class="fbox amber">p-value &lt; α → Reject H₀ (statistically significant)</div>
+<div class="fbox">p-value ≥ α → Fail to reject H₀ (not significant)</div>
+</div>
+<div class="box">
+<h4>Comparing Results Using Simulations</h4>
+<p>To determine if a difference between treatment and control groups is significant:</p>
+<ol style="font-size:8.5pt;">
+<li>Assume H₀: no difference (any difference is due to chance)</li>
+<li>Simulate many re-randomizations of subjects</li>
+<li>Find what proportion of simulated differences ≥ observed difference</li>
+<li>If that proportion &lt; 5%, the result is significant</li>
+</ol>
+<p style="font-size:8.5pt;margin-top:2px;">A result in the outer 5% of the simulated distribution is considered statistically significant at the 0.05 level.</p>
+</div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ CHEAT SHEET ══════════════════ -->
+<div id="cs" class="tab-pane"><div class="page">
+<h1>Chapter 10: Statistics — Cheat Sheet</h1>
+<p class="subtitle">Big Ideas Math IM3 &nbsp;|&nbsp; Key Concepts &amp; Quick Reference</p>
+<div class="g2">
+<div>
+<h2>10.1 Normal Distributions</h2>
+<table>
+<tr><th>Rule</th><th>Formula / Fact</th></tr>
+<tr><td class="left">z-score</td><td class="left">z = (x−μ)/σ</td></tr>
+<tr><td class="left">68%</td><td class="left">within μ±1σ</td></tr>
+<tr><td class="left">95%</td><td class="left">within μ±2σ</td></tr>
+<tr><td class="left">99.7%</td><td class="left">within μ±3σ</td></tr>
+<tr><td class="left">P(X&gt;a)</td><td class="left">1−P(Z&lt;z_a)</td></tr>
+<tr><td class="left">P(a&lt;X&lt;b)</td><td class="left">P(Z&lt;z_b)−P(Z&lt;z_a)</td></tr>
+</table>
+
+<h2>10.2 Population vs. Sample</h2>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td class="left">Population</td><td class="left">Entire group studied</td></tr>
+<tr><td class="left">Sample</td><td class="left">Subset used for inference</td></tr>
+<tr><td class="left">Parameter</td><td class="left">Number describing population (μ, σ)</td></tr>
+<tr><td class="left">Statistic</td><td class="left">Number from sample (x̄, s)</td></tr>
+<tr><td class="left">H₀</td><td class="left">Null hypothesis: no effect</td></tr>
+<tr><td class="left">Hₐ</td><td class="left">Alternative: there IS an effect</td></tr>
+</table>
+
+<h2>10.3 Collecting Data</h2>
+<ul style="font-size:9pt;">
+<li><b>Experiment:</b> can establish causation</li>
+<li><b>Observational study:</b> only shows association</li>
+<li><b>Survey:</b> collects opinions / self-reported data</li>
+<li><b>Bias types:</b> voluntary response, undercoverage, wording, nonresponse, convenience</li>
+</ul>
+</div>
+<div>
+<h2>10.4 Experimental Design</h2>
+<ul style="font-size:9pt;">
+<li><b>Control group:</b> receives no treatment (baseline)</li>
+<li><b>Treatment group:</b> receives the variable being tested</li>
+<li><b>Randomization:</b> assign subjects randomly to groups</li>
+<li><b>Blinding:</b> subjects don't know their group</li>
+<li><b>Double-blind:</b> neither subjects nor researchers know</li>
+<li><b>Placebo:</b> inactive treatment given to control group</li>
+<li><b>Confounding variable:</b> lurking variable that affects results</li>
+<li><b>Blocking:</b> group by similar traits before randomizing</li>
+</ul>
+
+<h2>10.5 Sample Survey Inferences</h2>
+<table>
+<tr><th>Concept</th><th>Formula</th></tr>
+<tr><td class="left">Margin of error</td><td class="left">ME = 1/√n</td></tr>
+<tr><td class="left">95% CI</td><td class="left">p̂ ± 1/√n</td></tr>
+<tr><td class="left">Sample size</td><td class="left">n ≥ (1/ME)²</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;">4× sample size → halves margin of error</p>
+
+<h2>10.6 Experimental Inferences</h2>
+<table>
+<tr><th>Concept</th><th>Meaning</th></tr>
+<tr><td class="left">p-value</td><td class="left">P(result as extreme | H₀ true)</td></tr>
+<tr><td class="left">α = 0.05</td><td class="left">5% significance level</td></tr>
+<tr><td class="left">p-val &lt; α</td><td class="left">Reject H₀ — significant result</td></tr>
+<tr><td class="left">p-val ≥ α</td><td class="left">Fail to reject H₀</td></tr>
+</table>
+<p style="font-size:8.5pt;margin-top:2px;"><b>Simulation approach:</b> if fewer than 5% of re-randomizations produce a difference as large as observed, the result is statistically significant.</p>
+</div>
+</div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 1 (10.1–10.3) ══════════════════ -->
+<div id="q1" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 1 &nbsp;·&nbsp; Sections 10.1–10.3</h2><p class="q-sub">Normal Distributions, Populations/Samples &amp; Collecting Data</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A normal distribution has μ=50 and σ=5. What percent of data falls between 40 and 60?<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> A normal distribution has μ=100 and σ=15. What percent of data is above 130?<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Heights of adults: μ=67 in, σ=3 in. Find the z-score for a height of 73 in. What percent of adults are shorter than 73 in?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Using the empirical rule (no z-table needed): μ=20, σ=4. What percent of data is between 12 and 24?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Identify each as a parameter or a statistic: (a) The average age of all students at a school &nbsp; (b) The average age of a survey of 50 students &nbsp; (c) The proportion of voters who favor a policy.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> A school surveys every 10th student on the roster. What type of sample is this?<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> A researcher divides a city into neighborhoods, randomly selects 5 neighborhoods, and surveys every resident in those neighborhoods. What type of sample is this?<div class="work"></div></div>
+<div class="prob"><span class="pn">8.</span> Identify the type of study and whether causation can be concluded:<br>(a) Researchers observe children's screen time and their grades — no treatment assigned.<br>(b) Researchers randomly assign 200 patients to either a new drug or a placebo and measure outcomes.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">9.</span> A survey question asks: "Don't you agree that our school's cafeteria food is terrible?" What type of bias is this?<div class="work"></div></div>
+<div class="prob"><span class="pn">10.</span> A radio station asks listeners to call in to vote on a political question. What type of bias is this?<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">11.</span> Test scores are normally distributed with μ=78 and σ=9. (a) What percent of students score above 96? (b) What is the score at the 16th percentile? (c) Between what two scores does the middle 95% of students fall?<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">12.</span> A researcher wants to study whether drinking coffee improves focus. She observes 100 adults: 60 drink coffee daily, 40 do not. She measures their focus scores. (a) Is this an experiment or an observational study? (b) Can she conclude coffee causes better focus? (c) Name a possible confounding variable.<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 2 (10.1–10.3) ══════════════════ -->
+<div id="q2" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 2 &nbsp;·&nbsp; Sections 10.1–10.3</h2><p class="q-sub">Normal Distributions, Sampling Methods &amp; Data Collection</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A machine fills bottles with μ=500 mL and σ=6 mL. What percent of bottles have between 488 and 512 mL?<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> IQ scores: μ=100, σ=15. Find P(IQ &gt; 130) using the empirical rule.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> A data set is normally distributed with μ=40 and σ=6. Find P(34 &lt; X &lt; 52).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> A data value has a z-score of −1.5. If μ=80 and σ=10, what is the data value?<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> Write the null and alternative hypotheses for each: (a) A new fertilizer is claimed to increase crop yield above the current average of 50 bushels/acre. (b) A coin is suspected of being unfair (not 50% heads).<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">6.</span> A researcher surveys only students from the top-ranked universities in the country. What type of bias is this, and how could it be corrected?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Classify each sampling method: (a) randomly choose 5 from each class period (b) randomly choose any 50 students from the school (c) randomly select 3 homerooms and survey every student in them.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> A poll is conducted on a social media app asking users whether they prefer app-based learning. Identify two sources of bias in this survey.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> The given data set shows the results of a simulation of 100 coin flips. From the histogram, normal curve, and empirical rule, determine:<br>(a) If you flip a coin 100 times, about how many heads would you expect?<br>(b) Between what two values would you expect approximately 95% of results to fall?<br>(c) If a student got 62 heads in 100 flips, is this surprising? Use z-score = (x−50)/5 to answer.
+<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">10.</span> Explain the difference between an experiment and an observational study. Give one example of each in the context of nutrition research. Which one can establish causation and why?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 3 (10.1–10.3) ══════════════════ -->
+<div id="q3" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 3 &nbsp;·&nbsp; Sections 10.1–10.3</h2><p class="q-sub">Normal Distributions, Sampling &amp; Data Collection</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Lifetimes of light bulbs: μ=1200 h, σ=100 h. What percent last between 1000 and 1400 hours?<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> Baby weights at birth: μ=7.5 lb, σ=1 lb. What percent weigh less than 5.5 lb (below μ−2σ)?<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> μ=200, σ=20. Find the z-scores for 175 and 230. Then find P(175 &lt; X &lt; 230) using the z-table: P(Z&lt;−1.25)≈0.1056 and P(Z&lt;1.5)≈0.9332.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">4.</span> If the top 16% of applicants are accepted to a program, and scores are normally distributed with μ=70 and σ=8, what is the minimum score to be accepted?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Classify as parameter or statistic: (a) A company's true average employee satisfaction score (b) The mean salary from a sample of 200 tech workers (c) The proportion of voters supporting a ballot measure, estimated from 1000 interviews.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Identify each as random, stratified, systematic, cluster, or convenience: (a) A professor selects every 5th paper turned in. (b) A school divides students into grade levels and randomly samples from each grade. (c) A researcher stops people in a shopping mall to ask questions.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> A study reports: "Students who take music lessons score higher on math tests." Can we conclude that music lessons cause higher math scores? Identify a possible confounding variable.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> A school wants to know students' opinions on a new lunch policy. They put a comment box in the cafeteria and ask students to voluntarily write responses. What are two problems with this approach?<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> A soft-drink company claims their bottles contain exactly 20 oz. A consumer tests 36 bottles and finds x̄=19.8 oz and s=0.6 oz. Write appropriate hypotheses (H₀ and Hₐ), and explain what a Type I error and a Type II error would mean in this context.<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">10.</span> Design a study to investigate whether sleep duration affects academic performance. Specify: (a) population and sample (b) type of study you'd use (c) how you'd collect the data (d) potential sources of bias.<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 4 (10.4–10.6) ══════════════════ -->
+<div id="q4" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 4 &nbsp;·&nbsp; Sections 10.4–10.6</h2><p class="q-sub">Experimental Design, Margin of Error &amp; Statistical Inferences</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> An experiment assigns 80 patients randomly to receive either a new medication or a placebo. Neither the patients nor the doctors know who received which. Name the type of experimental design used.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> In a study testing a fertilizer, all plants on the sunny side get the fertilizer while plants on the shady side get none. What is the confounding variable here?<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Explain how blocking could be used in a drug trial where participants differ significantly by age group (teens, adults, seniors).<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> What is the margin of error for a survey of 625 people? Write the formula and compute.<div class="work"></div></div>
+<div class="prob"><span class="pn">5.</span> A survey of 1600 voters finds 58% support a ballot measure. Construct a 95% confidence interval for the true proportion.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> A school wants a margin of error of no more than 3% in a survey. What is the minimum sample size needed?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> Two surveys on the same issue give different results: Survey A (n=100) shows 62%, Survey B (n=2500) shows 58%. Which survey do you trust more, and why?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> A confidence interval for a proportion is reported as (0.44, 0.56). What is p̂ and what is the margin of error?<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> A treatment group averaged 12 fewer headaches per month than the control group. A simulation of 1000 random re-assignments under H₀ showed a difference of 12 or more in only 38 of the 1000 trials. (a) What is the approximate p-value? (b) Is the result significant at the 0.05 level? (c) What conclusion should be drawn?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">10.</span> A company tests a new training program. 30 employees are randomly split into a training group and a control group. After 6 weeks, the training group improved 20% and the control group improved 12%. To decide if the difference is significant, they run a simulation of 500 re-randomizations and find only 22 produce a difference ≥ 8%. Is the result significant? Justify.<div class="work-xl"></div></div>
+</div>
+<div class="prob"><span class="pn">11.</span> Design a complete experiment to test whether listening to classical music while studying improves test scores. Include: (a) clear H₀ and Hₐ (b) control and treatment groups (c) how you'd randomize (d) how you'd reduce confounding (e) how you'd determine significance.<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 5 (10.4–10.6) ══════════════════ -->
+<div id="q5" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 5 &nbsp;·&nbsp; Sections 10.4–10.6</h2><p class="q-sub">Experimental Design &amp; Statistical Inferences</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A survey of 900 households finds 34% own a pet. Find the margin of error and construct the 95% confidence interval.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Current survey has ME=5% with n=400. If you want ME=2.5%, what sample size is needed?<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> Identify the flaw in each experiment: (a) Students who volunteer for extra tutoring are compared to those who don't, to test if tutoring helps. (b) A study on the effects of exercise on mood requires participants to know which group they're in to schedule workouts.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">4.</span> A new teaching method is tested. Class A (treatment) scored an average of 84; Class B (control) scored 79. A simulation of 200 random reassignments under H₀ showed a difference ≥ 5 points in 48 of 200 trials. (a) What is the p-value? (b) Is the result significant at α=0.05?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">5.</span> A drug trial has 40 patients. 20 receive the drug, 20 receive a placebo. The drug group had a mean recovery of 8 days; the placebo group recovered in 11 days. 500 simulations show 18 produce a difference ≥ 3 days. (a) p-value = ? (b) Conclusion?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">6.</span> A national poll reports "56% of Americans favor the new policy, ± 3 percentage points, 95% confidence." (a) What sample size was used? (b) Interpret the confidence interval in plain language.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">7.</span> What is the difference between a Type I error and a Type II error? Give one example of each in the context of testing a new medicine.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> A medical screening test has a 10% false positive rate. Does this mean the test is bad? Explain using the concepts of Type I and Type II errors.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> A school district wants to compare two math curricula. They assign Curriculum A to all schools in one region and Curriculum B to schools in another region. Students are tested at the end of the year. (a) What type of study is this? (b) Is random assignment achieved? (c) What confounding variables might exist? (d) How could the design be improved?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 6 (10.4–10.6) ══════════════════ -->
+<div id="q6" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 6 &nbsp;·&nbsp; Sections 10.4–10.6</h2><p class="q-sub">Experimental Design &amp; Statistical Inferences — Mixed</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A survey of 2500 likely voters finds 47% support Candidate X. Construct a 95% confidence interval. Can we say Candidate X has a majority of support?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">2.</span> Two confidence intervals are reported: (0.38, 0.52) and (0.61, 0.75). Do these intervals overlap? What does this suggest about whether two groups differ significantly?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> An experiment tests a new reading program. 100 students are randomly split: 50 use the new program (treatment) and 50 use the standard curriculum (control). After 6 months, the treatment group improved by an average of 8 points, the control by 4 points. 500 re-randomization simulations show 31 produce a difference ≥ 4 points. (a) p-value? (b) Significant at α=0.05? (c) Can we conclude the new program caused improvement?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">4.</span> Describe how a researcher could reduce the placebo effect in a clinical trial.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Identify confounding variables in each scenario: (a) A study finds that people who eat breakfast daily have lower rates of obesity. (b) Counties with more libraries have higher literacy rates.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> A researcher claims: "Because p-value = 0.03, we proved the new therapy works." Identify two things wrong with this statement.<div class="work-lg"></div></div>
+</div>
+<div class="prob"><span class="pn">7.</span> A study compares two groups: people who exercise regularly (Group A, n=200) and people who don't (Group B, n=150). Group A reported average stress level 3.2 out of 10; Group B reported 5.8 out of 10. (a) Is this an experiment or observational study? (b) Can we say exercise CAUSES lower stress? (c) What would we need to do differently to establish causation? (d) What two possible confounding variables should the researchers consider?<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">8.</span> Compare these two sampling strategies for a school survey on homework load: Strategy A: Post a survey link on the school website. Strategy B: Use a random number generator to select 150 student ID numbers and survey those students. (a) Identify the type and any bias in each strategy. (b) Which would give more reliable results? (c) What confidence interval could be constructed from Strategy B?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 7 (Full Chapter) ══════════════════ -->
+<div id="q7" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 7 &nbsp;·&nbsp; Chapter 10 Full Review</h2><p class="q-sub">Covers all sections 10.1–10.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> μ=55, σ=10. What percent of data lies between 35 and 75?<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> μ=30, σ=4. Find P(X &gt; 38) using the empirical rule.<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> A value has z=−2.3. If μ=100, σ=20, find the value of x.<div class="work"></div></div>
+<div class="prob"><span class="pn">4.</span> Identify population, sample, parameter, and statistic: "A company surveys 500 of its 12,000 employees and finds that 72% are satisfied with benefits."<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> Classify: A researcher randomly assigns 60 adults to either a Mediterranean or Standard American diet for 12 weeks and measures cholesterol levels.<div class="work"></div></div>
+<div class="prob"><span class="pn">6.</span> What type of sampling is used: "To survey opinions on a new park, the city randomly selects 10 of its 50 zip codes and surveys every household in those zip codes."<div class="work"></div></div>
+<div class="prob"><span class="pn">7.</span> A survey of n=500 finds p̂=0.64. Find ME and the 95% CI.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">8.</span> To reduce ME from 4% to 2%, how must the sample size change?<div class="work"></div></div>
+<div class="prob"><span class="pn">9.</span> A simulation of 1000 random re-assignments produces a result as extreme as observed in 38 trials. Is the result significant at α=0.05? Explain.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">10.</span> Name the type of bias: A magazine surveys its subscribers about media consumption habits.<div class="work"></div></div>
+<div class="prob"><span class="pn">11.</span> Write H₀ and Hₐ: "A researcher believes a new energy drink improves reaction time above the known average of 250 ms."<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">12.</span> An experiment is conducted with proper randomization. The treatment group improved by 15 points; the control group by 6 points. 1000 simulations show 29 produce a difference ≥ 9. (a) p-value? (b) Conclusion?<div class="work-xl"></div></div>
+</div>
+<div class="prob"><span class="pn">13.</span> Test scores in a district are normally distributed with μ=76 and σ=11. (a) What percent of students score between 54 and 87? (b) What score separates the top 2.5%? (c) A student scored 91. Find her z-score and percentile. (d) A new curriculum raised the mean to 82. Without changing σ, what percent now score above 87?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 8 (Full Chapter) ══════════════════ -->
+<div id="q8" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 8 &nbsp;·&nbsp; Chapter 10 Full Review</h2><p class="q-sub">Covers all sections 10.1–10.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Reaction times: μ=280 ms, σ=30 ms. Find P(250 &lt; X &lt; 340) using empirical rule.<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> A dataset is approx. normal with μ=45 and σ=7. What value is at the 84th percentile?<div class="work"></div></div>
+<div class="prob"><span class="pn">3.</span> A student scored 88 on a test (μ=75, σ=10). Find her z-score. Using z-table: P(Z&lt;1.3)≈0.9032. What percent of students scored below her?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> Classify each as experiment, observational study, or survey: (a) Asking students how many hours they sleep per night (b) Comparing lung cancer rates between smokers and non-smokers without assigning smoking (c) Randomly assigning plants to fertilizer types and measuring growth.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> A survey of 3600 people finds 41% approve of the mayor. Find the 95% CI and interpret it.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> Two surveys report CIs of (0.52, 0.68) and (0.55, 0.71). Do these CIs overlap? What does overlapping suggest?<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">7.</span> A study gives half of 80 volunteers a caffeine supplement and half a placebo. It is double-blind. (a) What does double-blind mean here? (b) Why is a placebo used? (c) Why is random assignment important?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> State the flaw: "A study found that carrying an umbrella is correlated with getting wet. Therefore, umbrellas cause people to get wet."<div class="work"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> A new app claims to improve vocabulary. 200 students are randomly assigned: 100 use the app for 8 weeks, 100 use traditional methods. Vocabulary scores increase by an average of 18 words (app) vs. 11 words (traditional). 1000 simulations show 44 produce a difference ≥ 7. (a) p-value? (b) Significant at 5%? (c) Write a complete conclusion addressing causation.<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">10.</span> A school wants to survey student stress levels. They have a list of 1200 students. Describe how to collect a simple random sample of 60 students and a stratified sample of 60 students (by grade level: 300 freshmen, 300 sophomores, 300 juniors, 300 seniors). For the stratified sample, how many from each grade would be surveyed?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 9 (Full Chapter) ══════════════════ -->
+<div id="q9" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 9 &nbsp;·&nbsp; Chapter 10 Full Review</h2><p class="q-sub">Covers all sections 10.1–10.6</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> Light bulb lifetimes: μ=1000 h, σ=80 h. What percent last more than 1160 h?<div class="work"></div></div>
+<div class="prob"><span class="pn">2.</span> A test has μ=72, σ=8. A student scored 56. Find the z-score and the percentile. Using z-table: P(Z&lt;−2)=0.0228.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">3.</span> The middle 68% of a dataset spans from 42 to 58. Find μ and σ.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">4.</span> A study surveys 200 adults about daily water intake. The sample mean is 6.8 cups. Identify: (a) the population, (b) the sample, (c) the parameter being estimated, (d) the statistic.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">5.</span> A health agency surveys 1000 adults and finds 34% exercise at least 3x/week. (a) ME = ? (b) 95% CI = ? (c) Can the agency claim a majority exercise? Explain.<div class="work-lg"></div></div>
+<div class="prob"><span class="pn">6.</span> How would you design an experiment to test whether standing desks improve student attention spans? State H₀ and Hₐ, describe your experimental design, and explain how you'd determine significance.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">7.</span> Read the study scenario: "In a town, researchers find that neighborhoods with more fast food restaurants have higher obesity rates. They conclude fast food restaurants cause obesity." (a) What type of study is this? (b) Why can't causation be concluded? (c) Name two confounding variables.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">8.</span> 400 simulated re-randomizations under H₀ produce these differences in means: 12 trials show a difference ≥ 6, the observed difference. (a) p-value? (b) α=0.05: significant? (c) α=0.01: significant?<div class="work-xl"></div></div>
+</div>
+<div class="prob"><span class="pn">9.</span> A city conducts a survey of 100 residents asking about satisfaction with city services. 64% say they are satisfied. (a) Find the margin of error and CI. (b) The mayor says "We have majority support." Is this claim supported? (c) A new survey of 1600 residents finds 58% satisfied. Find the new ME and CI. (d) Does the 95% CI in part (c) include 50%? What does this mean?<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">10.</span> A researcher wants to test a new weight loss drug. She gives all patients who show up Monday the drug and all patients who show up Tuesday the placebo. (a) Is this a proper experiment? (b) What is the main flaw? (c) What is the flaw called? (d) How should the study be redesigned?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 10 (Challenge) ══════════════════ -->
+<div id="q10" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 10 &nbsp;·&nbsp; Chapter 10 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A normal distribution has μ=500 and σ=100. (a) What value is at the 97.5th percentile? (b) What is P(300 &lt; X &lt; 700)? (c) A score of 620 is at what percentile? Use: P(Z&lt;1.2)≈0.885.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">2.</span> Three polls on the same issue: Poll A (n=400) shows 55%, Poll B (n=1600) shows 52%, Poll C (n=100) shows 60%. (a) Find the 95% CI for each. (b) Which overlaps with the others? (c) Based on these CIs, what range would you report as most likely for the true proportion?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">3.</span> An experiment testing a new fertilizer uses 60 plots of land. A researcher wants to control for soil type (sandy, clay, loam — 20 plots each). (a) Describe how to use blocking in this design. (b) Why is blocking better than simply randomizing all 60? (c) Within each block, 10 get treatment, 10 get control — is this valid?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">4.</span> A study claims that spending more on advertising increases sales, based on data from 50 companies. (a) Is this experimental or observational? (b) What confounders might exist? (c) How would you design an experiment to actually test the causal claim? (d) Why would randomization matter here?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">5.</span> 800 patients are enrolled in a clinical trial. 400 receive Treatment A, 400 receive Treatment B. Results: Treatment A: 320/400 recovered (80%). Treatment B: 296/400 recovered (74%). (a) Find the 95% CI for each recovery rate. (b) Do the intervals overlap? (c) 1000 re-randomization simulations produce a difference ≥ 6% in only 31 cases. p-value? Significant?<div class="work-xl"></div></div>
+</div>
+<div class="prob"><span class="pn">6.</span> A news article states: "A study of 50 volunteers found that eating chocolate daily improved memory scores significantly (p = 0.04). Chocolate boosts brain power!" Critique this study on as many grounds as you can: sample size, causation vs. correlation, experiment vs. observational, p-value interpretation, replication, publication bias. Write a paragraph-length response.<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">7.</span> Salary data for a company is approximately normally distributed with μ=$65,000 and σ=$12,000. (a) What salary is at the 84th percentile? (b) The top 2.5% of earners make at least how much? (c) A new hire is offered $41,000. What z-score does this represent, and what fraction of employees earn less? (d) HR claims "nearly all employees earn between $29,000 and $101,000." Verify using the empirical rule.<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ QUIZ 11 (Challenge) ══════════════════ -->
+<div id="q11" class="tab-pane"><div class="page">
+<div class="quiz-head">
+  <div><h2>Quiz 11 &nbsp;·&nbsp; Chapter 10 Challenge</h2><p class="q-sub">Multi-step reasoning required throughout</p></div>
+  <div class="q-center">Date: <span class="blank"></span></div>
+  <div class="q-right"><div class="score">______ / 50</div></div>
+</div>
+<div class="probs-2">
+<div class="prob"><span class="pn">1.</span> A school wants to estimate the proportion of students who get 8+ hours of sleep. (a) How large a sample is needed for ME ≤ 4%? (b) They survey 625 students and find 42% get enough sleep. Construct and interpret the 95% CI. (c) A school administrator says "More than half our students are sleep-deprived." Is this supported by the data?<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">2.</span> Two independent surveys on the same question produce CIs of (0.46, 0.58) and (0.41, 0.53). (a) What is p̂ and ME for each? (b) Do the intervals overlap? (c) Can we conclude the two populations differ significantly? Explain.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">3.</span> In a clinical trial, 200 patients are split 50/50 between a new blood pressure medication and a placebo. After 3 months: drug group mean BP = 128 mmHg, placebo group = 135 mmHg. 1000 re-randomizations produce a mean difference ≥ 7 mmHg in 18 trials. (a) p-value? (b) Significant at α=0.05? (c) Write H₀ and Hₐ. (d) Identify what Type I and Type II errors would mean here.<div class="work-xl"></div></div>
+<div class="prob"><span class="pn">4.</span> A researcher collects data from 50 schools: those with arts programs have higher graduation rates. (a) What kind of study is this? (b) Name three confounding variables. (c) What would the researcher need to show to establish causation? (d) Write an observational conclusion and an experimental conclusion statement for these findings.<div class="work-xl"></div></div>
+</div>
+<div class="prob"><span class="pn">5.</span> A factory monitors the weight of items produced. The process is normally distributed with μ=500 g, σ=10 g. Items below 480 g or above 520 g are defective. (a) What percent of items are defective? (b) The process drifts so μ increases to 508 g. Now what percent are defective? [Use: P(Z&lt;−2.8)≈0.003 and P(Z&lt;1.2)≈0.885.] (c) Should the process be adjusted? Justify using both percentages.<div class="work-2x"></div></div>
+<div class="prob"><span class="pn">6.</span> A researcher runs a large study (n=10,000) comparing two teaching methods and finds Method A produces test scores 0.5 points higher than Method B (p=0.001, statistically significant). A classroom teacher sees this result and switches all her students to Method A. (a) Why might this decision be premature even though the result is "significant"? (b) Explain the difference between statistical significance and practical significance. (c) What additional information would you want before changing teaching methods?<div class="work-2x"></div></div>
+</div></div>
+
+
+<!-- ══════════════════ ANSWER KEY ══════════════════ -->
+<div id="ak" class="tab-pane"><div class="page">
+<h1>Chapter 10 — Answer Key</h1>
+<p class="subtitle">Teacher Use Only &nbsp;|&nbsp; Big Ideas Math IM3</p>
+
+<h2>Quiz 1 — Sections 10.1–10.3</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> 40=μ−2σ, 60=μ+2σ → <span class="ak-ans">95%</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> 130=μ+2σ → above = (100−95)/2 = <span class="ak-ans">2.5%</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> z=(73−67)/3=2.0; P(Z&lt;2)≈<span class="ak-ans">97.72%</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> 12=μ−2σ, 24=μ+σ → P(−2σ to +σ)=13.5%+34%+34%=<span class="ak-ans">81.5%</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (a)parameter; (b)statistic; (c)<span class="ak-ans">statistic</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> <span class="ak-ans">Systematic sampling</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> <span class="ak-ans">Cluster sampling</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> (a) <span class="ak-ans">Observational study — no causation</span>; (b) <span class="ak-ans">Experiment — causation can be established</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> <span class="ak-ans">Wording/leading question bias</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> <span class="ak-ans">Voluntary response bias</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11.</span> (a) 96=78+2σ → above μ+2σ → <span class="ak-ans">2.5%</span>; (b) 16th percentile = μ−σ = <span class="ak-ans">69</span>; (c) 78±18 → <span class="ak-ans">[60, 96]</span></div>
+<div class="ak-item"><span class="ak-num">12.</span> (a)<span class="ak-ans">Observational study</span>; (b)<span class="ak-ans">No — no random assignment; can't establish causation</span>; (c)e.g. <span class="ak-ans">sleep quality, stress level, personality type</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 2 — Selected Answers</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> 488=500−2σ, 512=500+2σ → <span class="ak-ans">95%</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> 130=μ+2σ → P(X&gt;130)= <span class="ak-ans">2.5%</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> z₁=(34−40)/6=−1; z₂=(52−40)/6=2; P=34%+34%+13.5%=<span class="ak-ans">81.5%</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> x=80+10(−1.5)=<span class="ak-ans">65</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">5.</span> (a) H₀:μ=50; Hₐ:μ&gt;50; (b) H₀:p=0.5; Hₐ:p≠0.5</div>
+<div class="ak-item"><span class="ak-num">6.</span> <span class="ak-ans">Undercoverage bias</span>; corrected by using a random sample from all universities</div>
+<div class="ak-item"><span class="ak-num">7.</span> (a)Stratified; (b)Simple random; (c)Cluster</div>
+<div class="ak-item"><span class="ak-num">8.</span> Voluntary response bias; technology/access bias (not all have the app)</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">9.</span> (a)50 heads expected; (b)Using σ=5: 40 to 60; (c)z=(62−50)/5=2.4 — beyond 2σ → <span class="ak-ans">somewhat surprising but not extremely so (&lt;2%)</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quiz 3 — Selected Answers</h2>
+<div class="g3">
+<div>
+<div class="ak-item"><span class="ak-num">1.</span> 1000=μ−2σ, 1400=μ+2σ → <span class="ak-ans">95%</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> 5.5=μ−2σ → below μ−2σ → <span class="ak-ans">2.5%</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> z₁=−1.25, z₂=1.5; P=0.9332−0.1056=<span class="ak-ans">0.8276 (82.76%)</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> Top 16% → above μ+1σ=70+8=<span class="ak-ans">78</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> (a)parameter; (b)statistic; (c)statistic</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">6.</span> (a)Systematic; (b)Stratified; (c)Convenience</div>
+<div class="ak-item"><span class="ak-num">7.</span> <span class="ak-ans">Cannot conclude causation — observational; confounders: family income, parental education</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> Voluntary response bias; nonresponse — students with strong opinions (positive or negative) more likely to write</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">9.</span> H₀: μ=20 oz; Hₐ: μ≠20 oz; Type I: conclude the bottles are underfilled when they're actually fine; Type II: fail to detect underfilling when it's actually occurring</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quizzes 4–6 — Selected Answers</h2>
+<div class="g3">
+<div>
+<h4 style="color:#3a1848">Quiz 4</h4>
+<div class="ak-item"><span class="ak-num">1.</span> <span class="ak-ans">Double-blind, randomized, placebo-controlled experiment</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> <span class="ak-ans">Amount of sunlight (confounding variable)</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> ME=1/√625=1/25=<span class="ak-ans">0.04 (4%)</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> ME=1/√1600=0.025; CI=0.58±0.025=<span class="ak-ans">(0.555, 0.605) or 55.5% to 60.5%</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> n≥(1/0.03)²=1111; <span class="ak-ans">at least 1112 respondents</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> Survey B: larger n → smaller ME → more reliable; ME_A=10%, ME_B=2%</div>
+<div class="ak-item"><span class="ak-num">8.</span> p̂=(0.44+0.56)/2=<span class="ak-ans">0.50</span>; ME=(0.56−0.44)/2=<span class="ak-ans">0.06 (6%)</span></div>
+<div class="ak-item"><span class="ak-num">9.</span> (a)p=38/1000=0.038; (b)<span class="ak-ans">Yes, 0.038&lt;0.05</span>; (c)Reject H₀; medication significantly reduces headaches</div>
+</div>
+<div>
+<h4 style="color:#3a1848">Quiz 5</h4>
+<div class="ak-item"><span class="ak-num">1.</span> ME=1/√900=1/30≈0.033; CI=0.34±0.033=<span class="ak-ans">(0.307, 0.373)</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> 4×n=4×400=<span class="ak-ans">n=1600</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> p=48/200=0.24>0.05 → <span class="ak-ans">not significant at α=0.05</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> p=18/500=0.036&lt;0.05 → <span class="ak-ans">significant; reject H₀; drug appears to reduce recovery time</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> ME=3%=0.03; n=(1/0.03)²≈1111; <span class="ak-ans">n≈1112</span>; "We are 95% confident the true proportion falls between 53% and 59%"</div>
+</div>
+<div>
+<h4 style="color:#3a1848">Quiz 6</h4>
+<div class="ak-item"><span class="ak-num">1.</span> ME=1/√2500=0.02; CI=0.47±0.02=(0.45,0.49); <span class="ak-ans">CI does NOT include 0.5 → cannot claim majority</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> (0.38,0.52) and (0.61,0.75) do NOT overlap → <span class="ak-ans">groups likely differ significantly</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> p=31/500=0.062>0.05 → <span class="ak-ans">not significant at α=0.05</span>; cannot conclude new program caused improvement</div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quizzes 7–9 (Selected)</h2>
+<div class="g3">
+<div>
+<h4 style="color:#3a1848">Quiz 7</h4>
+<div class="ak-item"><span class="ak-num">1.</span> 35=μ−2σ, 75=μ+2σ → <span class="ak-ans">95%</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> 38=μ+2σ → P(X>38)=<span class="ak-ans">2.5%</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> x=100+20(−2.3)=<span class="ak-ans">54</span></div>
+<div class="ak-item"><span class="ak-num">4.</span> Pop=12,000 employees; Sample=500; Param=true proportion satisfied; Stat=72%</div>
+<div class="ak-item"><span class="ak-num">5.</span> <span class="ak-ans">Experiment — random assignment made</span></div>
+<div class="ak-item"><span class="ak-num">6.</span> <span class="ak-ans">Cluster sampling</span></div>
+<div class="ak-item"><span class="ak-num">7.</span> ME=1/√500≈0.0447; CI=0.64±0.045=(0.595,0.685)</div>
+<div class="ak-item"><span class="ak-num">8.</span> ME∝1/√n; halve ME → quadruple n: <span class="ak-ans">4× sample size</span></div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">9.</span> p=38/1000=0.038&lt;0.05 → <span class="ak-ans">significant; reject H₀</span></div>
+<div class="ak-item"><span class="ak-num">10.</span> <span class="ak-ans">Undercoverage / voluntary response bias</span></div>
+<div class="ak-item"><span class="ak-num">11.</span> H₀:μ=250ms; Hₐ:μ&lt;250ms</div>
+<div class="ak-item"><span class="ak-num">12.</span> p=29/1000=0.029&lt;0.05 → <span class="ak-ans">significant; reject H₀; new curriculum appears to improve scores</span></div>
+<div class="ak-item"><span class="ak-num">13.</span> (a)54=μ−2σ,87=μ+σ→13.5+34+34=<span class="ak-ans">81.5%</span>; (b)μ+2σ=76+22=<span class="ak-ans">98</span>; (c)z=(91−76)/11≈1.36, ≈91st percentile; (d)87=82+σ → P(X&gt;μ+σ)=<span class="ak-ans">16%</span></div>
+</div>
+<div>
+<h4 style="color:#3a1848">Quiz 9</h4>
+<div class="ak-item"><span class="ak-num">1.</span> 1160=μ+2σ → <span class="ak-ans">2.5%</span></div>
+<div class="ak-item"><span class="ak-num">2.</span> z=(56−72)/8=−2; percentile≈<span class="ak-ans">2.28% (2nd percentile)</span></div>
+<div class="ak-item"><span class="ak-num">3.</span> μ=(42+58)/2=50; σ=(58−50)/1=<span class="ak-ans">8</span></div>
+<div class="ak-item"><span class="ak-num">5.</span> ME=1/√1000≈0.032; CI=0.34±0.032=(0.308,0.372); <span class="ak-ans">cannot claim majority (CI below 50%)</span></div>
+<div class="ak-item"><span class="ak-num">8.</span> p=12/400=0.03; (b)α=0.05:<span class="ak-ans">Yes, significant</span>; (c)α=0.01:<span class="ak-ans">No, not significant (0.03>0.01)</span></div>
+</div>
+</div>
+
+<div class="rule-solid"></div>
+<h2>Quizzes 10–11 (Selected)</h2>
+<div class="g2">
+<div>
+<div class="ak-item"><span class="ak-num">10-1.</span> (a)μ+2σ=700; (b)300=μ−2σ,700=μ+2σ → <span class="ak-ans">95%</span>; (c)z=(620−500)/100=1.2; P(Z&lt;1.2)≈<span class="ak-ans">88.5th percentile</span></div>
+<div class="ak-item"><span class="ak-num">10-2.</span> ME_A=1/20=5%; CI_A=(50%,60%); ME_B=2.5%; CI_B=(49.5%,54.5%); ME_C=10%; CI_C=(50%,70%); <span class="ak-ans">A and B overlap; C overlaps with both</span></div>
+<div class="ak-item"><span class="ak-num">10-5.</span> ME_A=1/√400=5%; CI_A=(75%,85%); ME_B=1/√400=5%; CI_B=(69%,79%); <span class="ak-ans">CIs overlap (75 to 79 in common)</span>; p=31/1000=0.031&lt;0.05 → <span class="ak-ans">significant</span></div>
+<div class="ak-item"><span class="ak-num">10-7.</span> (a)μ+σ=$77,000; (b)μ+2σ=$89,000; (c)z=(41000−65000)/12000=−2; P(Z&lt;−2)≈2.28%; (d)μ±3σ=(29000,101000) → "nearly all" = 99.7% ✓</div>
+</div>
+<div>
+<div class="ak-item"><span class="ak-num">11-1.</span> (a)n≥(1/0.04)²=625; (b)ME=1/25=4%; CI=(38%,46%); (c) CI does not include 50% → <span class="ak-ans">Yes, data supports majority are sleep-deprived</span></div>
+<div class="ak-item"><span class="ak-num">11-3.</span> p=18/1000=0.018&lt;0.05 → <span class="ak-ans">significant at α=0.05; reject H₀</span>; H₀: μ_drug=μ_placebo; Hₐ: μ_drug&lt;μ_placebo; Type I: conclude drug works when it actually doesn't; Type II: fail to detect a real benefit of the drug</div>
+<div class="ak-item"><span class="ak-num">11-5.</span> (a) P(&lt;480)=P(Z&lt;−2)≈2.28%; P(&gt;520)=P(Z&gt;2)≈2.28%; total defective≈<span class="ak-ans">4.56%</span>; (b) P(&lt;480)=P(Z&lt;−2.8)≈0.3%; P(&gt;520)=P(Z&gt;1.2)≈11.5%; defective≈<span class="ak-ans">11.8%</span>; (c) Yes — defect rate nearly tripled from 4.56% to 11.8%</div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tabnav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+(function renderMath(){
+  const F=(n,d)=>'<span class="frac"><span class="fn">'+n.trim()+'</span><span class="fd">'+d.trim()+'</span></span>';
+  const RT=s=>'<span class="rt"><span class="rt-rad">√</span><span class="rt-body">'+s+'</span></span>';
+  let h=document.body.innerHTML;
+  h=h.replace(/√\(([^()<>&"]{1,80})\)\/(\d+)/g,(_,s,d)=>F(RT(s),d));
+  h=h.replace(/√([a-zA-Z\d]{1,8})\/(\d+)/g,(_,s,d)=>F(RT(s),d));
+  h=h.replace(/(?<![\/\d])(\d+)\/√([a-zA-Z\d]{1,8})/g,(_,n,s)=>F(n,RT(s)));
+  h=h.replace(/√\(([^()<>&"]{1,100})\)/g,(_,s)=>RT(s));
+  h=h.replace(/√([a-zA-Z\d]+)/g,(_,s)=>RT(s));
+  h=h.replace(/\(([^()<>&"]{1,120})\)\/\(([^()<>&"]{1,120})\)/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<=[\s>=,;:+\-·(])([a-zA-Z₀₁₂₃₄₅₆₇₈₉ₙₘ\d]{1,12})\/\(([^()<>&"]{1,100})\)/g,(_,n,d)=>F(n,d));
+  h=h.replace(/(?<![\/\d">=:])(\d+)\/(\d+)(?![\/\d"<])/g,(_,n,d)=>F(n,d));
+  document.body.innerHTML=h;
+})();
+</script>
+</body>
+</html>

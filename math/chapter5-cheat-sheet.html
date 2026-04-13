@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 5 Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 9pt;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 8mm 9mm 8mm;
+  }
+
+  .sheet-header {
+    border-top: 2.5px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 2px 0 3px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .sheet-title { font-size: 11pt; font-weight: 700; letter-spacing: 0.02em; }
+  .sheet-sub { font-size: 7.5pt; font-style: italic; }
+
+  /* SECTION */
+  .section { margin-bottom: 7px; }
+  .section-header {
+    background: #000;
+    color: #fff;
+    padding: 2px 7px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 14px; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px 10px; }
+
+  .formula-box {
+    border: 1.5px solid #000;
+    padding: 4px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10pt;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .label {
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 2px;
+    margin-top: 4px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin: 2px 0; }
+  th { background: #000; color: #fff; padding: 2px 5px; text-align: left; font-family: 'EB Garamond', serif; font-size: 8pt; font-weight: 700; }
+  td { border: 0.5px solid #000; padding: 2px 5px; vertical-align: top; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; }
+
+  .ex-block {
+    border-left: 2px solid #000;
+    padding: 2px 6px;
+    margin: 3px 0;
+    font-size: 8.5pt;
+    line-height: 1.4;
+  }
+  .ex-title {
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1px;
+  }
+
+  .warn {
+    border: 1.5px solid #000;
+    padding: 3px 7px;
+    margin: 3px 0;
+    font-size: 8.5pt;
+  }
+  .warn-title {
+    font-weight: 700;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 0.5px solid #000;
+    margin-bottom: 2px;
+    padding-bottom: 1px;
+  }
+
+  .note {
+    border: 1px dashed #000;
+    padding: 2px 6px;
+    font-size: 8pt;
+    font-style: italic;
+    margin: 3px 0;
+  }
+
+  hr { border: none; border-top: 0.5px solid #000; margin: 6px 0; }
+  hr.thick { border-top: 1.5px solid #000; margin: 7px 0; }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="sheet-header">
+    <div class="sheet-title">Chapter 5 Cheat Sheet</div>
+    <div class="sheet-sub">Big Ideas Math: Integrated Mathematics III &nbsp;|&nbsp; Larson &amp; Boswell</div>
+  </div>
+
+  <!-- ══════════ SECTION 1 ══════════ -->
+  <div class="section">
+    <div class="section-header">1 — Compound Interest Formulas</div>
+    <div class="cols-2">
+
+      <div>
+        <div class="label">Compounded n Times Per Year</div>
+        <div class="formula-box">A = P (1 + r/n)<sup>nt</sup></div>
+        <table>
+          <tr><th>Frequency</th><th>n</th></tr>
+          <tr><td>Annually</td><td>1</td></tr>
+          <tr><td>Semi-annually</td><td>2</td></tr>
+          <tr><td>Quarterly</td><td>4</td></tr>
+          <tr><td>Monthly</td><td>12</td></tr>
+          <tr><td>Daily</td><td>365</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div class="label">Compounded Continuously</div>
+        <div class="formula-box">A = Pe<sup>rt</sup></div>
+        <div class="note">Use when the problem says <em>"continuously."</em> This is the limit as n → ∞.</div>
+        <div class="note" style="margin-top:2px;">A = balance &nbsp;|&nbsp; P = principal &nbsp;|&nbsp; r = annual rate (decimal) &nbsp;|&nbsp; t = years &nbsp;|&nbsp; n = compounds/year</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="thick">
+
+  <!-- ══════════ SECTION 2 ══════════ -->
+  <div class="section">
+    <div class="section-header">2 — Newton's Law of Cooling</div>
+    <div class="cols-2">
+
+      <div>
+        <div class="formula-box">T = (T₀ − T<sub>R</sub>) · e<sup>−rt</sup> + T<sub>R</sub></div>
+        <div class="note">T = final &nbsp;|&nbsp; T₀ = initial &nbsp;|&nbsp; T<sub>R</sub> = room temp &nbsp;|&nbsp; r = cooling rate &nbsp;|&nbsp; t = time</div>
+        <div class="warn" style="margin-top:4px;">
+          <div class="warn-title">⚠ Common Mistakes</div>
+          <ul style="padding-left:12px; line-height:1.55;">
+            <li>Don't confuse T<sub>R</sub> (room temp) with T (target temp).</li>
+            <li>Subtract T<sub>R</sub> from both sides <em>before</em> taking ln.</li>
+            <li>r is positive — the negative sign is already in the exponent.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="ex-block">
+          <div class="ex-title">Worked Example</div>
+          Chili: T₀=212°F, T<sub>R</sub>=75°F, r=0.051. Find t when T=95°F:<br>
+          <span class="math">95 = (212−75)·e<sup>−0.051t</sup> + 75</span><br>
+          <span class="math">20/137 = e<sup>−0.051t</sup></span><br>
+          <span class="math">ln(20/137) = −0.051t</span><br>
+          <span class="math">t = ln(20/137) ÷ (−0.051) ≈ 38 min</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="thick">
+
+  <!-- ══════════ SECTION 3 ══════════ -->
+  <div class="section">
+    <div class="section-header">3 — Exponential &amp; Logarithmic Inequalities</div>
+
+    <div class="warn">
+      <div class="warn-title">★ When Does the Inequality Sign Flip?</div>
+      <div class="cols-3" style="gap:5px; margin-top:4px;">
+        <div style="border:1px solid #000; padding:4px 6px;">
+          <div style="font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px;">Multiply/Divide by Negative</div>
+          <span class="math">−2x &lt; 6 &nbsp;→&nbsp; x <b>&gt;</b> −3</span><br>
+          <span style="font-size:7.5pt; font-style:italic;">Always flip. No exceptions.</span>
+        </div>
+        <div style="border:1px solid #000; padding:4px 6px;">
+          <div style="font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px;">Base 0 &lt; b &lt; 1 (Decreasing)</div>
+          <span class="math">log<sub>½</sub>x ≥ 5 &nbsp;→&nbsp; x <b>≤</b> (½)⁵</span><br>
+          <span style="font-size:7.5pt; font-style:italic;">Flip — function is decreasing.</span>
+        </div>
+        <div style="border:1px solid #000; padding:4px 6px;">
+          <div style="font-size:7pt; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px;">Base b &gt; 1 (Increasing)</div>
+          <span class="math">log<sub>3</sub>x ≥ 5 &nbsp;→&nbsp; x <b>≥</b> 3⁵</span><br>
+          <span style="font-size:7.5pt; font-style:italic;">No flip — function is increasing.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols-2" style="margin-top:5px; gap:14px;">
+
+      <div>
+        <div class="label">Exponential Inequalities — Examples</div>
+        <div class="ex-block">
+          <div class="ex-title">Base &gt; 1 — No Flip</div>
+          <span class="math">3<sup>x</sup> &lt; 20 &nbsp;→&nbsp; x &lt; log<sub>3</sub>20 ≈ 2.7</span><br>
+          Test x=0: <span class="math">1 &lt; 20 ✓</span> &nbsp; <strong>Answer: x &lt; 2.7</strong>
+        </div>
+        <div class="ex-block">
+          <div class="ex-title">Base &lt; 1 — Flip</div>
+          <span class="math">(1/3)<sup>n</sup> ≥ 15</span><br>
+          <span class="math">n ≤ log<sub>1/3</sub>15 = ln15/ln(1/3) ≈ −2.46</span><br>
+          <strong>Answer: n ≤ −2.46</strong>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">Logarithmic Inequalities — Examples</div>
+        <div class="note" style="margin-bottom:3px;">State domain (argument &gt; 0) first. Intersect with domain at the end.</div>
+        <div class="ex-block">
+          <div class="ex-title">Base &lt; 1 — Flip</div>
+          <span class="math">log<sub>½</sub>x ≥ 5</span> &nbsp; Domain: x &gt; 0<br>
+          <span class="math">x ≤ (½)⁵ = 1/32</span><br>
+          Test x=1: <span class="math">log<sub>½</sub>1 = 0 ≥ 5</span>? FALSE ✓<br>
+          <strong>Answer: 0 &lt; x ≤ 1/32</strong>
+        </div>
+        <div class="ex-block">
+          <div class="ex-title">Condense First, Base &gt; 1 — No Flip</div>
+          <span class="math">log<sub>2</sub>(x+1)+log<sub>2</sub>(x−1) &gt; 3</span> &nbsp; Domain: x &gt; 1<br>
+          <span class="math">log<sub>2</sub>(x²−1) &gt; 3 &nbsp;→&nbsp; x²−1 &gt; 8 &nbsp;→&nbsp; x² &gt; 9</span><br>
+          <span class="math">x &gt; 3 or x &lt; −3</span>, intersect with x &gt; 1:<br>
+          <strong>Answer: x &gt; 3</strong>
+        </div>
+      </div>
+
+    </div>
+
+    <hr style="margin:5px 0 4px;">
+    <div class="label">Summary — Sign Flip at a Glance</div>
+    <table>
+      <tr><th>Situation</th><th>Example</th><th>Flip?</th></tr>
+      <tr>
+        <td>Divide/multiply both sides by a negative</td>
+        <td class="math">−3x &lt; 9 → x &gt; −3</td>
+        <td><strong>YES</strong></td>
+      </tr>
+      <tr>
+        <td>Exponentiate or take log, base &gt; 1</td>
+        <td class="math">log<sub>3</sub>x ≥ 2 → x ≥ 9</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Exponentiate or take log, 0 &lt; b &lt; 1</td>
+        <td class="math">log<sub>½</sub>x ≥ 5 → x ≤ 1/32</td>
+        <td><strong>YES</strong></td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+</body>
+</html>
