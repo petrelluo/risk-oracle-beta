@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BIM IM3 Ch. 7 — Tricky Sequence Patterns Practice (10 Problems)</title>
+<style>
+  @page { size: letter; margin: 0.6in; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 24px;
+    color: #000;
+    line-height: 1.5;
+    background: #fff;
+  }
+  h1 {
+    font-family: Arial, sans-serif;
+    color: #000;
+    border-bottom: 3px solid #000;
+    padding-bottom: 8px;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-style: italic;
+    color: #000;
+    margin-bottom: 18px;
+    font-size: 13px;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #000;
+  }
+  .tab {
+    padding: 8px 18px;
+    background: #fff;
+    border: 1px solid #000;
+    border-bottom: none;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000;
+    font-size: 14px;
+  }
+  .tab.active { background: #000; color: #fff; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .intro-box {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 4px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  .intro-box strong { color: #000; }
+  .problem {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 5px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+  .problem-num {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000;
+    font-size: 15px;
+  }
+  .sequence {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    display: inline-block;
+    margin: 6px 0;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+  .hint {
+    font-size: 12px;
+    color: #000;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .strategy {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 4px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .strategy h3 {
+    margin-top: 0;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    text-decoration: underline;
+  }
+  .strategy ol { margin: 6px 0 0 20px; padding: 0; }
+  .strategy li { margin-bottom: 6px; }
+  .answer {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 5px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+  .answer .problem-num { color: #000; }
+  .pattern-name {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 2px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  .formula {
+    font-family: 'Cambria Math', Georgia, serif;
+    font-style: italic;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 2px 8px;
+    display: inline-block;
+    font-size: 15px;
+  }
+  .work {
+    font-size: 13px;
+    color: #000;
+    margin-top: 6px;
+    padding-left: 12px;
+    border-left: 2px solid #000;
+  }
+  sup { font-size: 11px; vertical-align: super; }
+  sub { font-size: 11px; vertical-align: sub; }
+  @media print {
+    .tabs { display: none; }
+    .panel { display: block !important; page-break-before: always; }
+    .panel:first-of-type { page-break-before: auto; }
+    body { background: #fff; }
+    .tab.active, .pattern-name { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Tricky Sequence Patterns &mdash; 10-Problem Trainer</h1>
+<div class="subtitle">Big Ideas Math: Integrated Mathematics III &middot; Chapter 7 &middot; Sequences that are <em>neither</em> arithmetic nor geometric</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab(0)">Strategy</div>
+  <div class="tab" onclick="showTab(1)">Problems</div>
+  <div class="tab" onclick="showTab(2)">Answer Key</div>
+</div>
+
+<!-- STRATEGY PANEL -->
+<div class="panel active">
+  <div class="intro-box">
+    <strong>Why these are hard:</strong> If a sequence isn't arithmetic (no constant difference) and isn't geometric (no constant ratio), the formula could be almost anything. The trick is to have a short checklist of patterns you always try &mdash; in order &mdash; before giving up.
+  </div>
+
+  <div class="strategy">
+    <h3>Claire's Checklist &mdash; Try these IN ORDER</h3>
+    <ol>
+      <li><strong>Check differences.</strong> First differences constant &rarr; arithmetic. If not, check <em>second</em> differences. Constant second differences &rarr; <span class="formula">a<sub>n</sub> = An&sup2; + Bn + C</span> (quadratic).</li>
+      <li><strong>Check ratios.</strong> Constant ratio &rarr; geometric. If ratios are 2, 3, 4, 5&hellip; (changing in a pattern), the formula likely involves <span class="formula">n!</span> (factorials).</li>
+      <li><strong>Compare to familiar families:</strong>
+        <ul style="margin: 4px 0 0 0;">
+          <li>Squares: 1, 4, 9, 16, 25 &rarr; <span class="formula">n&sup2;</span></li>
+          <li>Cubes: 1, 8, 27, 64, 125 &rarr; <span class="formula">n&sup3;</span></li>
+          <li>Triangular: 1, 3, 6, 10, 15 &rarr; <span class="formula">n(n+1)/2</span></li>
+          <li>Factorial: 1, 2, 6, 24, 120 &rarr; <span class="formula">n!</span></li>
+          <li>Fibonacci: 1, 1, 2, 3, 5, 8 &rarr; each = sum of previous two</li>
+        </ul>
+      </li>
+      <li><strong>Check signs.</strong> Alternating + and &minus; means a factor of <span class="formula">(&minus;1)<sup>n</sup></span> or <span class="formula">(&minus;1)<sup>n+1</sup></span>.</li>
+      <li><strong>Try "close to a square/cube."</strong> If terms are 2, 5, 10, 17, 26&hellip; they're <span class="formula">n&sup2; + 1</span>. Always compare to n&sup2; and n&sup3; and see what you have to add or subtract.</li>
+      <li><strong>Try recursive.</strong> If each term depends on the one(s) before it in a simple way, write <span class="formula">a<sub>n</sub> = a<sub>n&minus;1</sub> + (something)</span> or <span class="formula">a<sub>n</sub> = a<sub>n&minus;1</sub> + a<sub>n&minus;2</sub></span>.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- PROBLEMS PANEL -->
+<div class="panel">
+  <div class="intro-box">
+    <strong>Directions:</strong> For each sequence, find an explicit formula <span class="formula">a<sub>n</sub></span> (or a recursive rule if explicit is too hard). Then find <span class="formula">a<sub>7</sub></span>. Assume n = 1, 2, 3, &hellip;
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 1.</div>
+    <div class="sequence">2, 5, 10, 17, 26, 37, &hellip;</div>
+    <div class="hint">Hint: Compare each term to a perfect square.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 2.</div>
+    <div class="sequence">1, 2, 6, 24, 120, 720, &hellip;</div>
+    <div class="hint">Hint: Look at the ratios between consecutive terms.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 3.</div>
+    <div class="sequence">1, 1, 2, 3, 5, 8, 13, &hellip;</div>
+    <div class="hint">Hint: Explicit formula is hard &mdash; try a recursive rule.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 4.</div>
+    <div class="sequence">1, 3, 6, 10, 15, 21, &hellip;</div>
+    <div class="hint">Hint: Think about stacking dots in a triangle.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 5.</div>
+    <div class="sequence">&minus;1, 4, &minus;9, 16, &minus;25, 36, &hellip;</div>
+    <div class="hint">Hint: Two patterns stacked &mdash; magnitude and sign.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 6.</div>
+    <div class="sequence">0, 2, 6, 12, 20, 30, &hellip;</div>
+    <div class="hint">Hint: Check first and second differences.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 7.</div>
+    <div class="sequence">1, 8, 27, 64, 125, &hellip;</div>
+    <div class="hint">Hint: One of the named families from the checklist.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 8.</div>
+    <div class="sequence">3, 5, 9, 15, 23, 33, &hellip;</div>
+    <div class="hint">Hint: First differences are 2, 4, 6, 8, &hellip; &mdash; what does that tell you about second differences?</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 9.</div>
+    <div class="sequence">2, 6, 24, 120, 720, &hellip;</div>
+    <div class="hint">Hint: Similar to problem 2, but shifted. What is a<sub>1</sub>?</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 10.</div>
+    <div class="sequence">1, 3, 7, 15, 31, 63, &hellip;</div>
+    <div class="hint">Hint: Add 1 to each term. Do you see a familiar pattern?</div>
+  </div>
+</div>
+
+<!-- ANSWER KEY PANEL -->
+<div class="panel">
+  <div class="intro-box">
+    <strong>Answer Key:</strong> Each answer shows the <em>type</em> of pattern, the formula, and the key observation that unlocks it.
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 1.</span> <span class="pattern-name">Quadratic (shifted square)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup2; + 1</span></div>
+    <div class="work">
+      Compare: n&sup2; = 1, 4, 9, 16, 25, 36. Each given term is exactly 1 more. So a<sub>n</sub> = n&sup2; + 1.<br>
+      a<sub>7</sub> = 49 + 1 = <strong>50</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 2.</span> <span class="pattern-name">Factorial</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n!</span></div>
+    <div class="work">
+      Ratios: 2/1=2, 6/2=3, 24/6=4, 120/24=5. The ratios themselves form 2, 3, 4, 5&hellip; &mdash; classic factorial signature. 1! = 1, 2! = 2, 3! = 6, 4! = 24.<br>
+      a<sub>7</sub> = 7! = <strong>5040</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 3.</span> <span class="pattern-name">Fibonacci (recursive)</span>
+    <div>Recursive rule: <span class="formula">a<sub>1</sub> = 1, a<sub>2</sub> = 1, a<sub>n</sub> = a<sub>n&minus;1</sub> + a<sub>n&minus;2</sub></span></div>
+    <div class="work">
+      1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8, 5 + 8 = 13. Each term is the sum of the previous two. (An explicit formula exists &mdash; Binet's &mdash; but it's beyond IM3.)<br>
+      a<sub>7</sub> = 8 + 13 = <strong>21</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 4.</span> <span class="pattern-name">Triangular numbers</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n(n+1)/2</span></div>
+    <div class="work">
+      Check: 1(2)/2=1, 2(3)/2=3, 3(4)/2=6, 4(5)/2=10. &#10003; First differences grow arithmetically (2, 3, 4, 5&hellip;), so second differences are constant &mdash; confirming a quadratic formula.<br>
+      a<sub>7</sub> = 7(8)/2 = <strong>28</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 5.</span> <span class="pattern-name">Alternating squares</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = (&minus;1)<sup>n</sup> &middot; n&sup2;</span></div>
+    <div class="work">
+      |terms| = 1, 4, 9, 16, 25, 36 = n&sup2;. Signs alternate starting with negative when n=1, so use (&minus;1)<sup>n</sup>: (&minus;1)&sup1; = &minus;1 &#10003;<br>
+      a<sub>7</sub> = (&minus;1)&#8311; &middot; 49 = <strong>&minus;49</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 6.</span> <span class="pattern-name">Quadratic (n&sup2; &minus; n)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup2; &minus; n</span> &nbsp; (equivalently, n(n&minus;1))</div>
+    <div class="work">
+      First differences: 2, 4, 6, 8, 10 &mdash; not constant. Second differences: 2, 2, 2, 2 &mdash; constant! So it's quadratic. Check: 1&minus;1=0, 4&minus;2=2, 9&minus;3=6, 16&minus;4=12, 25&minus;5=20. &#10003;<br>
+      a<sub>7</sub> = 49 &minus; 7 = <strong>42</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 7.</span> <span class="pattern-name">Cubes</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup3;</span></div>
+    <div class="work">
+      1&sup3;=1, 2&sup3;=8, 3&sup3;=27, 4&sup3;=64, 5&sup3;=125. One of the families on the checklist &mdash; recognize instantly.<br>
+      a<sub>7</sub> = <strong>343</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 8.</span> <span class="pattern-name">Quadratic</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup2; &minus; n + 3</span></div>
+    <div class="work">
+      First differences: 2, 4, 6, 8, 10. Second differences: 2, 2, 2, 2 &mdash; constant, so quadratic. Since second difference is 2, the n&sup2; coefficient is 1 (because 2A = 2). Subtract n&sup2; from each term: 3&minus;1=2, 5&minus;4=1, 9&minus;9=0, 15&minus;16=&minus;1, 23&minus;25=&minus;2. That's arithmetic: &minus;n + 3. So a<sub>n</sub> = n&sup2; &minus; n + 3.<br>
+      a<sub>7</sub> = 49 &minus; 7 + 3 = <strong>45</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 9.</span> <span class="pattern-name">Factorial (shifted)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = (n+1)!</span></div>
+    <div class="work">
+      2 = 2!, 6 = 3!, 24 = 4!, 120 = 5!, 720 = 6!. Index is shifted by 1 compared to problem 2.<br>
+      a<sub>7</sub> = 8! = <strong>40,320</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 10.</span> <span class="pattern-name">Exponential minus 1 (Mersenne)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = 2<sup>n</sup> &minus; 1</span></div>
+    <div class="work">
+      Add 1 to each: 2, 4, 8, 16, 32, 64 &mdash; powers of 2! So each term = 2<sup>n</sup> &minus; 1. Note this is <em>not</em> geometric (ratios are 3, 7/3, 15/7&hellip; not constant), but is built from a geometric pattern.<br>
+      a<sub>7</sub> = 128 &minus; 1 = <strong>127</strong>
+    </div>
+  </div>
+
+  <div class="intro-box" style="margin-top: 20px;">
+    <strong>Pattern summary &mdash; what Claire should memorize:</strong>
+    <div style="margin-top: 8px; font-size: 13px;">
+      &bull; <strong>Constant 2nd differences</strong> &rarr; quadratic (try n&sup2; &plusmn; something)<br>
+      &bull; <strong>Ratios forming 2, 3, 4, 5&hellip;</strong> &rarr; factorial<br>
+      &bull; <strong>Each term depends on previous two</strong> &rarr; Fibonacci-type recursive<br>
+      &bull; <strong>Alternating signs</strong> &rarr; factor of (&minus;1)<sup>n</sup><br>
+      &bull; <strong>Terms look like a known family &plusmn; something</strong> &rarr; rewrite as (family) + correction<br>
+      &bull; <strong>Adding 1 gives powers of 2</strong> &rarr; 2<sup>n</sup> &minus; 1
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  document.querySelectorAll('.panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
+}
+</script>
+
+</body>
+</html>

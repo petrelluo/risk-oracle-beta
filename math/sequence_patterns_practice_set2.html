@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BIM IM3 Ch. 7 — Tricky Sequence Patterns Practice: Set 2 (Consolidation)</title>
+<style>
+  @page { size: letter; margin: 0.6in; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 24px;
+    color: #000;
+    line-height: 1.5;
+    background: #fff;
+  }
+  h1 {
+    font-family: Arial, sans-serif;
+    color: #000;
+    border-bottom: 3px solid #000;
+    padding-bottom: 8px;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-style: italic;
+    color: #000;
+    margin-bottom: 18px;
+    font-size: 13px;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #000;
+  }
+  .tab {
+    padding: 8px 18px;
+    background: #fff;
+    border: 1px solid #000;
+    border-bottom: none;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000;
+    font-size: 14px;
+  }
+  .tab.active { background: #000; color: #fff; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .intro-box {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 4px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+  }
+  .intro-box strong { color: #000; }
+  .problem {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 5px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+  .problem-num {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #000;
+    font-size: 15px;
+  }
+  .sequence {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    display: inline-block;
+    margin: 6px 0;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+  .hint {
+    font-size: 12px;
+    color: #000;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .strategy {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 4px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .strategy h3 {
+    margin-top: 0;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    text-decoration: underline;
+  }
+  .strategy ol { margin: 6px 0 0 20px; padding: 0; }
+  .strategy li { margin-bottom: 6px; }
+  .answer {
+    background: #fff;
+    border: 1px solid #000;
+    border-left: 5px solid #000;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    page-break-inside: avoid;
+  }
+  .answer .problem-num { color: #000; }
+  .pattern-name {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 2px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  .formula {
+    font-family: 'Cambria Math', Georgia, serif;
+    font-style: italic;
+    background: #fff;
+    border: 1px solid #000;
+    padding: 2px 8px;
+    display: inline-block;
+    font-size: 15px;
+  }
+  .work {
+    font-size: 13px;
+    color: #000;
+    margin-top: 6px;
+    padding-left: 12px;
+    border-left: 2px solid #000;
+  }
+  sup { font-size: 11px; vertical-align: super; }
+  sub { font-size: 11px; vertical-align: sub; }
+  @media print {
+    .tabs { display: none; }
+    .panel { display: block !important; page-break-before: always; }
+    .panel:first-of-type { page-break-before: auto; }
+    body { background: #fff; }
+    .tab.active, .pattern-name { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Tricky Sequence Patterns &mdash; Set 2: Consolidation</h1>
+<div class="subtitle">Big Ideas Math: Integrated Mathematics III &middot; Chapter 7 &middot; Same pattern families as Set 1, different disguises</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab(0)">Strategy</div>
+  <div class="tab" onclick="showTab(1)">Problems</div>
+  <div class="tab" onclick="showTab(2)">Answer Key</div>
+</div>
+
+<!-- STRATEGY PANEL -->
+<div class="panel active">
+  <div class="intro-box">
+    <strong>How to use this set:</strong> These 10 problems use the <em>same</em> six pattern families from Set 1, but in different forms. The goal is automaticity &mdash; when Claire sees a sequence, she should reach for the checklist without thinking.
+  </div>
+
+  <div class="strategy">
+    <h3>The Six-Step Checklist (same as Set 1)</h3>
+    <ol>
+      <li><strong>Check differences.</strong> Constant 1st difference &rarr; arithmetic. Constant 2nd difference &rarr; quadratic <span class="formula">a<sub>n</sub> = An&sup2; + Bn + C</span>.</li>
+      <li><strong>Check ratios.</strong> Constant &rarr; geometric. Ratios forming 2, 3, 4, 5&hellip; &rarr; factorial.</li>
+      <li><strong>Compare to known families:</strong> squares (n&sup2;), cubes (n&sup3;), triangular (n(n+1)/2), factorial (n!), Fibonacci.</li>
+      <li><strong>Check signs.</strong> Alternating &rarr; factor of (&minus;1)<sup>n</sup> or (&minus;1)<sup>n+1</sup>.</li>
+      <li><strong>Close to a known family?</strong> Compare term-by-term to n&sup2;, n&sup3;, 2<sup>n</sup>, etc. and note the correction (e.g. n&sup2; &minus; 1, 2<sup>n</sup> + 1).</li>
+      <li><strong>Try recursive.</strong> If each term depends on the previous term(s) in a simple way.</li>
+    </ol>
+  </div>
+
+  <div class="strategy">
+    <h3>Two new tactics for Set 2</h3>
+    <ol>
+      <li><strong>Coefficient on n&sup2; isn't always 1.</strong> If second differences equal 2A (not just 2), then the n&sup2; coefficient is A. So 2nd diff = 4 &rarr; 2n&sup2; + &hellip; ; 2nd diff = 6 &rarr; 3n&sup2; + &hellip; .</li>
+      <li><strong>Mixed formulas.</strong> Some sequences combine two patterns &mdash; e.g. a polynomial <em>times</em> an exponential, like <span class="formula">n &middot; 2<sup>n&minus;1</sup></span>. If one lens alone fails, try building up from two.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- PROBLEMS PANEL -->
+<div class="panel">
+  <div class="intro-box">
+    <strong>Directions:</strong> For each sequence, find an explicit formula <span class="formula">a<sub>n</sub></span> (or a recursive rule if explicit is too hard). Then find <span class="formula">a<sub>7</sub></span>. Assume n = 1, 2, 3, &hellip;
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 11.</div>
+    <div class="sequence">2, 6, 12, 20, 30, 42, &hellip;</div>
+    <div class="hint">Hint: Check second differences. Also, try n(n+1).</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 12.</div>
+    <div class="sequence">2, 9, 28, 65, 126, 217, &hellip;</div>
+    <div class="hint">Hint: Compare to perfect cubes.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 13.</div>
+    <div class="sequence">1, 2, 6, 24, 120, 720, &hellip;</div>
+    <div class="hint">Hint: You've seen this before! Now write a <em>recursive</em> rule instead of an explicit one.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 14.</div>
+    <div class="sequence">2, 5, 9, 14, 20, 27, &hellip;</div>
+    <div class="hint">Hint: First differences are 3, 4, 5, 6, 7. What does that signal?</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 15.</div>
+    <div class="sequence">1, &minus;4, 9, &minus;16, 25, &minus;36, &hellip;</div>
+    <div class="hint">Hint: Same magnitudes as Set 1 #5, but signs start differently.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 16.</div>
+    <div class="sequence">2, 1, 3, 4, 7, 11, 18, &hellip;</div>
+    <div class="hint">Hint: Same rule as Fibonacci, but with different starting values. (These are called Lucas numbers.)</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 17.</div>
+    <div class="sequence">&minus;1, 2, 7, 14, 23, 34, &hellip;</div>
+    <div class="hint">Hint: Compare to n&sup2;.</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 18.</div>
+    <div class="sequence">3, 5, 9, 17, 33, 65, &hellip;</div>
+    <div class="hint">Hint: Compare to powers of 2. What's the correction?</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 19.</div>
+    <div class="sequence">1, 9, 36, 100, 225, 441, &hellip;</div>
+    <div class="hint">Hint: Take the square root of each term. Do you recognize <em>those</em>?</div>
+  </div>
+
+  <div class="problem">
+    <div class="problem-num">Problem 20.</div>
+    <div class="sequence">1, 4, 12, 32, 80, 192, &hellip;</div>
+    <div class="hint">Hint: This one combines <em>two</em> patterns. Try dividing each term by a power of 2.</div>
+  </div>
+</div>
+
+<!-- ANSWER KEY PANEL -->
+<div class="panel">
+  <div class="intro-box">
+    <strong>Answer Key:</strong> Each answer shows the pattern <em>family</em>, the formula, and the key observation. Compare with Set 1 to see how the same family shows up in different disguises.
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 11.</span> <span class="pattern-name">Quadratic (n&sup2; + n)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup2; + n</span> &nbsp; (equivalently, n(n+1))</div>
+    <div class="work">
+      First differences: 4, 6, 8, 10, 12. Second differences: 2, 2, 2, 2 &mdash; constant, so quadratic with n&sup2; coefficient = 1. Subtract n&sup2;: 2&minus;1=1, 6&minus;4=2, 12&minus;9=3, 20&minus;16=4. That's just n. So a<sub>n</sub> = n&sup2; + n. (This is 2&times; the triangular numbers &mdash; see Set 1 #4.)<br>
+      a<sub>7</sub> = 49 + 7 = <strong>56</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 12.</span> <span class="pattern-name">Cubes + 1</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup3; + 1</span></div>
+    <div class="work">
+      Compare: n&sup3; = 1, 8, 27, 64, 125, 216. Each given term is exactly 1 more. Same "shifted family" idea as Set 1 #1, but with cubes instead of squares.<br>
+      a<sub>7</sub> = 343 + 1 = <strong>344</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 13.</span> <span class="pattern-name">Factorial (recursive form)</span>
+    <div>Recursive rule: <span class="formula">a<sub>1</sub> = 1, a<sub>n</sub> = n &middot; a<sub>n&minus;1</sub></span></div>
+    <div class="work">
+      Same sequence as Set 1 #2 (n!), but now expressed as a recursive rule. Check: a<sub>2</sub> = 2&middot;1 = 2, a<sub>3</sub> = 3&middot;2 = 6, a<sub>4</sub> = 4&middot;6 = 24. &#10003; This is the <em>definition</em> of factorial &mdash; recursive and explicit forms describe the same sequence.<br>
+      a<sub>7</sub> = 7! = <strong>5040</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 14.</span> <span class="pattern-name">Quadratic</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = &frac12;n&sup2; + &frac32;n</span> &nbsp; (equivalently, n(n+3)/2)</div>
+    <div class="work">
+      First differences: 3, 4, 5, 6, 7. Second differences: 1, 1, 1, 1. Since 2A = 1, the n&sup2; coefficient is &frac12;. Subtract &frac12;n&sup2;: 2&minus;&frac12;=1.5, 5&minus;2=3, 9&minus;4.5=4.5, 14&minus;8=6, 20&minus;12.5=7.5. Those grow by 1.5 each time &mdash; arithmetic with first term 1.5. So add &frac32;n: a<sub>n</sub> = &frac12;n&sup2; + &frac32;n.<br>
+      a<sub>7</sub> = &frac12;(49) + &frac32;(7) = 24.5 + 10.5 = <strong>35</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 15.</span> <span class="pattern-name">Alternating squares (opposite parity)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = (&minus;1)<sup>n+1</sup> &middot; n&sup2;</span></div>
+    <div class="work">
+      Magnitudes are still n&sup2;. But signs now start <em>positive</em> when n=1, so we need (&minus;1)<sup>n+1</sup> instead of (&minus;1)<sup>n</sup>: (&minus;1)&sup2; = +1 &#10003;. Compare to Set 1 #5, where signs started negative.<br>
+      a<sub>7</sub> = (&minus;1)&#8312; &middot; 49 = <strong>+49</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 16.</span> <span class="pattern-name">Lucas numbers (Fibonacci family)</span>
+    <div>Recursive rule: <span class="formula">a<sub>1</sub> = 2, a<sub>2</sub> = 1, a<sub>n</sub> = a<sub>n&minus;1</sub> + a<sub>n&minus;2</sub></span></div>
+    <div class="work">
+      Exact same recurrence as Fibonacci, just different starting values. 2+1=3, 1+3=4, 3+4=7, 4+7=11, 7+11=18. &#10003; This shows that the "Fibonacci rule" isn't one specific sequence &mdash; it's a rule that defines a whole family based on starting values.<br>
+      a<sub>7</sub> = 11 + 18 = <strong>29</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 17.</span> <span class="pattern-name">Quadratic (n&sup2; &minus; 2)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n&sup2; &minus; 2</span></div>
+    <div class="work">
+      Compare: n&sup2; = 1, 4, 9, 16, 25, 36. Each given term is exactly 2 less. Alternatively, first differences 3, 5, 7, 9, 11 and second differences 2, 2, 2, 2 &mdash; confirms quadratic with n&sup2; coefficient = 1.<br>
+      a<sub>7</sub> = 49 &minus; 2 = <strong>47</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 18.</span> <span class="pattern-name">Exponential + 1</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = 2<sup>n</sup> + 1</span></div>
+    <div class="work">
+      Compare to 2<sup>n</sup> = 2, 4, 8, 16, 32, 64. Each given term is exactly 1 more. Mirror of Set 1 #10 (2<sup>n</sup> &minus; 1) &mdash; same trick, opposite correction. Also not geometric (ratios aren't constant).<br>
+      a<sub>7</sub> = 128 + 1 = <strong>129</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 19.</span> <span class="pattern-name">Squared triangular (Nicomachus)</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = [n(n+1)/2]&sup2;</span></div>
+    <div class="work">
+      Take square roots: &radic;1=1, &radic;9=3, &radic;36=6, &radic;100=10, &radic;225=15, &radic;441=21. Those are the triangular numbers! So a<sub>n</sub> = (triangular<sub>n</sub>)&sup2; = [n(n+1)/2]&sup2;. This is also the famous identity: sum of first n cubes = [n(n+1)/2]&sup2;.<br>
+      a<sub>7</sub> = [7&middot;8/2]&sup2; = 28&sup2; = <strong>784</strong>
+    </div>
+  </div>
+
+  <div class="answer">
+    <span class="problem-num">Problem 20.</span> <span class="pattern-name">Polynomial &times; exponential</span>
+    <div>Formula: <span class="formula">a<sub>n</sub> = n &middot; 2<sup>n&minus;1</sup></span></div>
+    <div class="work">
+      Divide each term by 2<sup>n&minus;1</sup>: 1/1=1, 4/2=2, 12/4=3, 32/8=4, 80/16=5, 192/32=6. That leaves 1, 2, 3, 4, 5, 6 &mdash; just n! So a<sub>n</sub> = n &middot; 2<sup>n&minus;1</sup>. This is the hardest type in the set: the formula is a product of an arithmetic factor (n) and a geometric factor (2<sup>n&minus;1</sup>).<br>
+      a<sub>7</sub> = 7 &middot; 2&#8310; = 7 &middot; 64 = <strong>448</strong>
+    </div>
+  </div>
+
+  <div class="intro-box" style="margin-top: 20px;">
+    <strong>What Set 2 reinforces:</strong>
+    <div style="margin-top: 8px; font-size: 13px;">
+      &bull; Problems 11, 14, 17 &rarr; <strong>quadratic</strong> family (now including non-integer coefficients in #14)<br>
+      &bull; Problem 12 &rarr; <strong>cubes</strong>, same "shifted family" trick as Set 1 #1<br>
+      &bull; Problem 13 &rarr; <strong>factorial</strong>, shown as recursive instead of explicit<br>
+      &bull; Problem 15 &rarr; <strong>alternating signs</strong>, opposite parity from Set 1<br>
+      &bull; Problem 16 &rarr; <strong>Fibonacci-style recursion</strong> with different seeds<br>
+      &bull; Problem 18 &rarr; <strong>exponential &plusmn; 1</strong>, mirror of Set 1 #10<br>
+      &bull; Problem 19 &rarr; <strong>composed families</strong> (triangular, squared)<br>
+      &bull; Problem 20 &rarr; <strong>mixed</strong> polynomial &times; exponential &mdash; the stretch problem
+    </div>
+  </div>
+
+  <div class="intro-box">
+    <strong>Diagnostic:</strong> If Claire nails 11, 12, 15, 17, 18 easily but struggles with 14, 19, 20, that's a good sign &mdash; it means she has the basic families down and just needs more exposure to <em>composite</em> patterns. If she struggles with the "easy" ones too, go back to Set 1 and focus on differences/ratios before trying more problems.
+  </div>
+</div>
+
+<script>
+function showTab(i) {
+  document.querySelectorAll('.tab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  document.querySelectorAll('.panel').forEach((p, idx) => p.classList.toggle('active', idx === i));
+}
+</script>
+
+</body>
+</html>
