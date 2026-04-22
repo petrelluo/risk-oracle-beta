@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemical Reactions — Unit 8B Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1814;
+    --ink-soft:#3d382f;
+    --ink-muted:#6b6558;
+    --paper:#f4efe4;
+    --paper-warm:#ebe3d1;
+    --paper-dark:#e1d6bd;
+    --accent:#8b2c1e;
+    --accent-deep:#5a1a10;
+    --teal:#2a5c4f;
+    --amber:#b8761a;
+    --green:#556b2b;
+    --blue:#2e4a6b;
+    --rule:#c9bda0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Fraunces', Georgia, serif;
+    font-size:18px;
+    line-height:1.65;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(139,44,30,0.04), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(42,92,79,0.04), transparent 50%);
+    min-height:100vh;
+  }
+  /* Subtle paper texture */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 3px);
+    opacity:0.6;
+  }
+  .container{
+    max-width:920px;
+    margin:0 auto;
+    padding:60px 48px 120px;
+    position:relative;
+    z-index:2;
+  }
+  /* ===== Header ===== */
+  header{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:32px;
+    margin-bottom:48px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:500;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+  }
+  .eyebrow .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:300;
+    font-size:clamp(48px, 7vw, 86px);
+    line-height:0.95;
+    letter-spacing:-0.03em;
+    color:var(--ink);
+    margin-bottom:20px;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--accent);
+  }
+  .subtitle{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-style:italic;
+    font-size:22px;
+    color:var(--ink-muted);
+    max-width:640px;
+  }
+  .meta{
+    display:flex;
+    gap:32px;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-top:28px;
+    padding-top:20px;
+    border-top:1px dashed var(--rule);
+  }
+  .meta span strong{color:var(--ink);font-weight:500;margin-left:6px}
+
+  /* ===== TOC ===== */
+  nav.toc{
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+    padding:32px 40px;
+    margin-bottom:64px;
+    position:relative;
+  }
+  nav.toc::before{
+    content:"§";
+    position:absolute;
+    top:-18px;left:32px;
+    background:var(--paper);
+    padding:0 12px;
+    font-size:28px;
+    color:var(--accent);
+    font-family:'Fraunces', serif;
+    font-style:italic;
+  }
+  .toc-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:20px;
+  }
+  .toc ol{
+    list-style:none;
+    columns:2;
+    column-gap:48px;
+  }
+  .toc li{
+    padding:8px 0;
+    border-bottom:1px dotted var(--rule);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    break-inside:avoid;
+  }
+  .toc a{
+    color:var(--ink);
+    text-decoration:none;
+    font-size:17px;
+    flex:1;
+    transition:color 0.2s;
+  }
+  .toc a:hover{color:var(--accent)}
+  .toc .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--ink-muted);
+  }
+
+  /* ===== Section styling ===== */
+  section{
+    margin-bottom:80px;
+    scroll-margin-top:20px;
+  }
+  .section-number{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.25em;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin-bottom:12px;
+    display:block;
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:clamp(36px, 4.5vw, 52px);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+    margin-bottom:28px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--ink);
+    position:relative;
+  }
+  h2 .italic{font-style:italic;color:var(--accent)}
+  h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:26px;
+    line-height:1.2;
+    color:var(--ink);
+    margin-top:40px;
+    margin-bottom:16px;
+    letter-spacing:-0.01em;
+  }
+  h4{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-top:28px;
+    margin-bottom:12px;
+  }
+  p{margin-bottom:16px;color:var(--ink-soft)}
+  p.lead{
+    font-size:22px;
+    font-style:italic;
+    color:var(--ink);
+    line-height:1.5;
+    max-width:680px;
+    margin-bottom:28px;
+  }
+  /* Drop cap for section intros */
+  .intro::first-letter{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:72px;
+    line-height:0.85;
+    float:left;
+    padding:6px 10px 0 0;
+    color:var(--accent);
+  }
+
+  strong{color:var(--ink);font-weight:500}
+  em{font-style:italic}
+
+  /* ===== Equations ===== */
+  .eq{
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px;
+    background:var(--paper-warm);
+    padding:16px 24px;
+    margin:20px 0;
+    border-left:3px solid var(--accent);
+    color:var(--ink);
+    overflow-x:auto;
+    letter-spacing:-0.01em;
+  }
+  .eq.centered{text-align:center;font-size:18px}
+  .eq .state{color:var(--ink-muted);font-size:14px}
+  .eq .yes{color:var(--green);font-weight:500}
+  .eq .no{color:var(--accent);font-weight:500}
+
+  /* ===== Callouts ===== */
+  .callout{
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+    padding:24px 28px;
+    margin:24px 0;
+    position:relative;
+  }
+  .callout-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+    display:block;
+  }
+  .callout.key{
+    background:linear-gradient(to right, rgba(139,44,30,0.06), transparent);
+    border-left:4px solid var(--accent);
+  }
+  .callout.tip{
+    background:linear-gradient(to right, rgba(42,92,79,0.06), transparent);
+    border-left:4px solid var(--teal);
+  }
+  .callout.tip .callout-label{color:var(--teal)}
+  .callout.warn{
+    background:linear-gradient(to right, rgba(184,118,26,0.08), transparent);
+    border-left:4px solid var(--amber);
+  }
+  .callout.warn .callout-label{color:var(--amber)}
+
+  /* ===== Lists ===== */
+  ul.fancy, ol.fancy{
+    list-style:none;
+    padding-left:0;
+    margin:20px 0;
+  }
+  ul.fancy li{
+    padding:10px 0 10px 36px;
+    position:relative;
+    color:var(--ink-soft);
+    border-bottom:1px dotted var(--rule);
+  }
+  ul.fancy li:last-child{border-bottom:none}
+  ul.fancy li::before{
+    content:"❦";
+    position:absolute;
+    left:8px;
+    color:var(--accent);
+    font-size:14px;
+    top:11px;
+  }
+  ol.fancy{counter-reset:step}
+  ol.fancy li{
+    padding:14px 0 14px 56px;
+    position:relative;
+    color:var(--ink-soft);
+    counter-increment:step;
+    border-bottom:1px dotted var(--rule);
+  }
+  ol.fancy li:last-child{border-bottom:none}
+  ol.fancy li::before{
+    content:counter(step, decimal-leading-zero);
+    position:absolute;
+    left:0;top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:500;
+    color:var(--accent);
+    letter-spacing:0.1em;
+    background:var(--paper-warm);
+    padding:4px 10px;
+    border:1px solid var(--rule);
+  }
+
+  /* ===== Tables ===== */
+  .table-wrap{
+    margin:24px 0;
+    overflow-x:auto;
+    border:1px solid var(--rule);
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:16px;
+    background:var(--paper);
+  }
+  thead{
+    background:var(--ink);
+    color:var(--paper);
+  }
+  th{
+    padding:14px 18px;
+    text-align:left;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  td{
+    padding:14px 18px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+    color:var(--ink-soft);
+  }
+  tr:last-child td{border-bottom:none}
+  tr:nth-child(even) td{background:rgba(201,189,160,0.12)}
+  td.soluble{color:var(--green);font-weight:500}
+  td.insoluble{color:var(--accent);font-weight:500}
+
+  /* ===== Activity Series ===== */
+  .activity-series{
+    display:flex;
+    align-items:stretch;
+    margin:28px 0;
+    gap:20px;
+  }
+  .activity-col{
+    flex:1;
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+    padding:20px;
+  }
+  .activity-col h4{
+    margin-top:0;
+    text-align:center;
+    color:var(--ink);
+    border-bottom:1px solid var(--rule);
+    padding-bottom:10px;
+    margin-bottom:14px;
+  }
+  .metal-list{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    line-height:1.9;
+    color:var(--ink);
+    text-align:center;
+  }
+  .metal-list .top{color:var(--accent);font-weight:500}
+  .metal-list .bot{color:var(--teal)}
+  .reactivity-arrow{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--ink-muted);
+    writing-mode:vertical-rl;
+    text-transform:uppercase;
+  }
+
+  /* ===== Practice cards ===== */
+  .practice-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:16px;
+    margin:24px 0;
+  }
+  .practice-card{
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+    padding:20px;
+    cursor:pointer;
+    transition:all 0.25s;
+    position:relative;
+  }
+  .practice-card:hover{
+    background:var(--paper-dark);
+    transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(26,24,20,0.08);
+  }
+  .practice-card .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .practice-card .q{
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px;
+    color:var(--ink);
+    margin-bottom:12px;
+  }
+  .practice-card .a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s ease, padding 0.4s ease, opacity 0.3s;
+    opacity:0;
+    font-size:15px;
+    line-height:1.5;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .practice-card.open .a{
+    max-height:300px;
+    padding-top:12px;
+    margin-top:12px;
+    border-top:1px dashed var(--rule);
+    opacity:1;
+  }
+  .practice-card::after{
+    content:"tap to reveal";
+    position:absolute;
+    bottom:10px;right:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    letter-spacing:0.15em;
+    color:var(--ink-muted);
+    text-transform:uppercase;
+  }
+  .practice-card.open::after{content:""}
+
+  /* ===== Reaction type cards ===== */
+  .reaction-types{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:16px;
+    margin:24px 0;
+  }
+  .rtype{
+    background:var(--paper-warm);
+    border-top:3px solid var(--accent);
+    padding:20px 22px;
+    min-height:180px;
+  }
+  .rtype:nth-child(2){border-top-color:var(--teal)}
+  .rtype:nth-child(3){border-top-color:var(--amber)}
+  .rtype:nth-child(4){border-top-color:var(--blue)}
+  .rtype:nth-child(5){border-top-color:var(--green)}
+  .rtype:nth-child(6){border-top-color:var(--accent-deep)}
+  .rtype h4{margin-top:0;color:var(--ink)}
+  .rtype .formula{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    background:var(--paper);
+    padding:8px 12px;
+    margin:10px 0;
+    color:var(--ink);
+    border:1px solid var(--rule);
+  }
+  .rtype p{font-size:15px;line-height:1.5;margin-bottom:0}
+
+  /* ===== Flowchart (CSS-only) ===== */
+  .flow{
+    margin:32px 0;
+    padding:32px;
+    background:var(--paper-warm);
+    border:1px solid var(--rule);
+  }
+  .flow-box{
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    padding:14px 20px;
+    text-align:center;
+    font-family:'Fraunces', serif;
+    margin:0 auto;
+    max-width:420px;
+    position:relative;
+  }
+  .flow-box .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.2em;
+    color:var(--accent);
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:4px;
+  }
+  .flow-box.yes{border-color:var(--green);background:rgba(85,107,43,0.06)}
+  .flow-box.yes .label{color:var(--green)}
+  .flow-box.no{border-color:var(--accent);background:rgba(139,44,30,0.06)}
+  .flow-arrow{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:10px 0;
+    color:var(--ink-muted);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+  }
+  .flow-arrow::before{content:"↓";font-size:18px;margin-right:8px;color:var(--accent)}
+  .flow-branch{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:16px;
+    margin:16px 0;
+  }
+  .flow-branch .flow-box{max-width:100%}
+
+  /* Essential question block */
+  .eq-block{
+    background:var(--ink);
+    color:var(--paper);
+    padding:40px 44px;
+    margin:32px 0;
+    position:relative;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:24px;
+    line-height:1.4;
+  }
+  .eq-block::before{
+    content:"Essential Question";
+    position:absolute;
+    top:-10px;left:32px;
+    background:var(--accent);
+    color:var(--paper);
+    padding:4px 16px;
+    font-family:'JetBrains Mono', monospace;
+    font-style:normal;
+    font-size:10px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:80px;
+    padding-top:32px;
+    border-top:2px solid var(--ink);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  footer .ornament{
+    text-align:center;
+    width:100%;
+    font-size:20px;
+    color:var(--accent);
+    font-family:'Fraunces', serif;
+    margin-bottom:24px;
+    letter-spacing:0.5em;
+  }
+
+  /* Back to top */
+  .top-link{
+    display:inline-block;
+    margin-top:16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid var(--accent);
+    padding-bottom:2px;
+  }
+  .top-link:hover{color:var(--accent-deep)}
+
+  /* Responsive */
+  @media (max-width:700px){
+    .container{padding:40px 24px 80px}
+    .toc ol{columns:1}
+    .activity-series{flex-direction:column}
+    .reactivity-arrow{writing-mode:horizontal-tb;padding:8px 0;justify-content:center}
+    .flow-branch{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="eyebrow">
+      <span><span class="dot"></span> Chemistry · Unit 8B</span>
+      <span>Quiz Preparation</span>
+    </div>
+    <h1>Chemical <em>Reactions</em><br>&amp; Balancing</h1>
+    <p class="subtitle">A complete study guide on word equations, balancing, the six reaction types, and how to predict whether a double replacement reaction will actually occur.</p>
+    <div class="meta">
+      <span>Unit <strong>8B</strong></span>
+      <span>CK-12 Ch. <strong>11.1 – 11.9</strong></span>
+      <span>Teacher Slides <strong>S26</strong></span>
+      <span>Focus <strong>Double Replacement</strong></span>
+    </div>
+  </header>
+
+  <!-- ============ TOC ============ -->
+  <nav class="toc">
+    <div class="toc-title">Table of Contents</div>
+    <ol>
+      <li><a href="#objectives">Unit Objectives</a><span class="num">00</span></li>
+      <li><a href="#word-eq">Word Equations · 11.1</a><span class="num">01</span></li>
+      <li><a href="#writing-eq">Writing Chemical Equations · 11.2</a><span class="num">02</span></li>
+      <li><a href="#balancing">Balancing Equations · 11.3</a><span class="num">03</span></li>
+      <li><a href="#combination">Combination Reactions · 11.4</a><span class="num">04</span></li>
+      <li><a href="#decomposition">Decomposition Reactions · 11.5</a><span class="num">05</span></li>
+      <li><a href="#combustion">Combustion Reactions · 11.6</a><span class="num">06</span></li>
+      <li><a href="#single-rep">Single Replacement · 11.7</a><span class="num">07</span></li>
+      <li><a href="#activity">Activity Series · 11.8</a><span class="num">08</span></li>
+      <li><a href="#double-rep">Double Replacement · 11.9</a><span class="num">09</span></li>
+      <li><a href="#predict-guide">★ How to Predict Double Replacement</a><span class="num">10</span></li>
+      <li><a href="#practice">Practice &amp; Self-Check</a><span class="num">11</span></li>
+    </ol>
+  </nav>
+
+  <!-- ============ OBJECTIVES ============ -->
+  <section id="objectives">
+    <span class="section-number">§ 00 · Orientation</span>
+    <h2>Unit <span class="italic">Objectives</span></h2>
+    <p class="intro">The Unit 8B goals, straight from your teacher's slides. These are the things you should be able to <em>do</em> by quiz day — not just recognize.</p>
+    <ul class="fancy">
+      <li>Describe how to read and write a chemical equation.</li>
+      <li>Identify if components in a reaction are elements or compounds; for compounds, identify whether they are ionically or covalently bonded.</li>
+      <li>Recognize the patterns of reactants and products to identify the <strong>6 types</strong> of chemical reactions.</li>
+      <li>Explain how balanced chemical equations illustrate the <strong>conservation of matter</strong>.</li>
+      <li>Relate reactivity to predicting whether a <strong>single replacement</strong> reaction will occur.</li>
+      <li>Predict the formation of a <strong>precipitate</strong> in a double replacement reaction.</li>
+    </ul>
+  </section>
+
+  <!-- ============ 11.1 WORD EQ ============ -->
+  <section id="word-eq">
+    <span class="section-number">§ 01 · Chapter 11.1</span>
+    <h2>Word <span class="italic">Equations</span></h2>
+    <p class="intro">A word equation is a chemical reaction described entirely in words. It names the reactants and products without any formulas. It's the first stage of translation from English sentence → chemical formula equation → balanced equation.</p>
+
+    <h3>The structure</h3>
+    <div class="eq centered">reactants &nbsp;→&nbsp; products</div>
+    <p>The arrow is read as "yields" or "produces." A plus sign between substances is read as "reacts with" (on the reactant side) or "and" (on the product side).</p>
+
+    <h4>Example translations</h4>
+    <div class="eq">Sentence: Hydrogen gas reacts with oxygen gas to form liquid water.<br>
+    Word equation: hydrogen + oxygen → water</div>
+    <div class="eq">Sentence: Solid magnesium sulfide reacts with hydrochloric acid to form hydrogen sulfide gas and magnesium chloride solution.<br>
+    Word equation: magnesium sulfide + hydrochloric acid → hydrogen sulfide + magnesium chloride</div>
+
+    <div class="callout tip">
+      <span class="callout-label">Study tip</span>
+      <p style="margin:0">Pay attention to <em>state descriptors</em> in the sentence — "solid," "aqueous solution," "gas bubbles." These tell you the phase labels (s), (aq), (g), (l) that you'll need later.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.2 WRITING EQ ============ -->
+  <section id="writing-eq">
+    <span class="section-number">§ 02 · Chapter 11.2</span>
+    <h2>Writing Chemical <span class="italic">Equations</span></h2>
+    <p class="intro">Once you have the word equation, the next step is to translate each name into a correct chemical formula. The result — before balancing — is called the <em>skeleton equation</em>.</p>
+
+    <h3>Step-by-step translation</h3>
+    <ol class="fancy">
+      <li>Write the word equation.</li>
+      <li>Replace each name with the correct chemical formula (use ionic charges to build correct ratios).</li>
+      <li>Include physical state symbols in parentheses after each formula: <strong>(s)</strong> solid, <strong>(l)</strong> liquid, <strong>(g)</strong> gas, <strong>(aq)</strong> aqueous (dissolved in water).</li>
+      <li>Indicate reaction conditions above the arrow: <strong>Δ</strong> for heat, <strong>catalyst name</strong> (like Pt), or <strong>electricity</strong>.</li>
+    </ol>
+
+    <h4>Worked example (from slides)</h4>
+    <div class="eq">Hydrogen gas reacts with oxygen gas when heated to produce liquid water.<br>
+    Skeleton equation: H₂<span class="state">(g)</span> + O₂<span class="state">(g)</span> → H₂O<span class="state">(l)</span> + Energy</div>
+
+    <h4>More skeleton equation examples</h4>
+    <div class="eq">MgS<span class="state">(s)</span> + HCl<span class="state">(aq)</span> → H₂S<span class="state">(g)</span> + MgCl₂<span class="state">(aq)</span></div>
+    <div class="eq">N₂O₅<span class="state">(g)</span> —[Pt, Δ]→ N₂<span class="state">(g)</span> + O₂<span class="state">(g)</span></div>
+    <div class="eq">FeCl₃<span class="state">(aq)</span> —[electricity]→ Cl₂<span class="state">(g)</span> + Fe<span class="state">(s)</span></div>
+    <div class="eq">H₂S<span class="state">(aq)</span> + NaOH<span class="state">(aq)</span> → Na₂S<span class="state">(aq)</span> + H₂O<span class="state">(l)</span></div>
+
+    <div class="callout key">
+      <span class="callout-label">Phase label rules of thumb</span>
+      <p style="margin:0">Acids and bases are usually aqueous. Ionic compound solubility is determined using the solubility table. Gases escape from solution; precipitates drop out as solids. The reaction type is a strong hint about which phases to expect.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.3 BALANCING ============ -->
+  <section id="balancing">
+    <span class="section-number">§ 03 · Chapter 11.3</span>
+    <h2>Balancing <span class="italic">Equations</span></h2>
+    <p class="intro">A balanced chemical equation has the <strong>same number of atoms of each element on both sides of the arrow</strong>. This is a direct expression of the law of conservation of mass — atoms are neither created nor destroyed.</p>
+
+    <h3>What you can &amp; cannot change</h3>
+    <ul class="fancy">
+      <li><strong>You CAN change coefficients</strong> — the numbers in front of a formula. 2 H₂O means two molecules of water.</li>
+      <li><strong>You CANNOT change subscripts</strong> — the small numbers inside a formula. Changing H₂O to H₂O₂ changes it from water into hydrogen peroxide, a completely different substance.</li>
+    </ul>
+
+    <h4>Balanced example</h4>
+    <div class="eq centered">2 H₂<span class="state">(g)</span> + O₂<span class="state">(g)</span> → 2 H₂O<span class="state">(l)</span></div>
+    <div class="eq">
+      Left side: 2 × 2 = 4 H atoms &nbsp;·&nbsp; 1 × 2 = 2 O atoms<br>
+      Right side: 2 × 2 = 4 H atoms &nbsp;·&nbsp; 2 × 1 = 2 O atoms ✓
+    </div>
+
+    <h3>A systematic approach</h3>
+    <ol class="fancy">
+      <li>Write the correct formulas and skeleton equation.</li>
+      <li>Count atoms of each element on both sides.</li>
+      <li>Balance elements that appear in only one reactant and one product first.</li>
+      <li>Balance hydrogen and oxygen last (they appear in many compounds).</li>
+      <li>Use the smallest whole-number ratio of coefficients. If fractions appear, multiply through.</li>
+      <li>Double-check by recounting every element.</li>
+    </ol>
+
+    <div class="callout warn">
+      <span class="callout-label">Common trap</span>
+      <p style="margin:0">Polyatomic ions (NO₃⁻, SO₄²⁻, OH⁻, CO₃²⁻, PO₄³⁻) often travel together unchanged through a reaction. Balance them as a <em>unit</em> rather than as individual atoms — it's faster and less error-prone.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.4 COMBINATION ============ -->
+  <section id="combination">
+    <span class="section-number">§ 04 · Chapter 11.4</span>
+    <h2>Combination <span class="italic">(Synthesis)</span> Reactions</h2>
+    <p class="intro">Two or more reactants combine to form a single product. The telltale sign: many reactants → <strong>one</strong> product.</p>
+
+    <div class="eq centered">A + B → AB</div>
+
+    <h3>Common patterns</h3>
+
+    <h4>Binary compound formation (metal + nonmetal)</h4>
+    <div class="eq">2 Al + 3 F₂ → 2 AlF₃</div>
+    <div class="eq">2 Cs + Cl₂ → 2 CsCl</div>
+    <div class="eq">4 Li + O₂ → 2 Li₂O</div>
+    <div class="eq">6 K + N₂ → 2 K₃N</div>
+
+    <h4>Synthesis of a base (metal oxide + water)</h4>
+    <div class="eq">Na₂O + H₂O → 2 NaOH</div>
+    <div class="eq">CaO + H₂O → Ca(OH)₂</div>
+
+    <h4>Synthesis of an acid (nonmetal oxide + water)</h4>
+    <div class="eq">CO₂ + H₂O → H₂CO₃</div>
+
+    <div class="callout tip">
+      <span class="callout-label">Prediction shortcut</span>
+      <p style="margin:0">If you see <strong>two reactants and only one product</strong>, it's a combination reaction. The product's formula is determined by the ionic charges of the reactants (for metal + nonmetal).</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.5 DECOMPOSITION ============ -->
+  <section id="decomposition">
+    <span class="section-number">§ 05 · Chapter 11.5</span>
+    <h2>Decomposition <span class="italic">Reactions</span></h2>
+    <p class="intro">A single compound breaks apart into two or more simpler substances. The reverse of a combination reaction. Almost always requires an energy input — heat (Δ) or electricity.</p>
+
+    <div class="eq centered">AB → A + B</div>
+
+    <h3>Common patterns</h3>
+
+    <h4>Binary compound decomposition</h4>
+    <div class="eq">MgCl₂ —[Δ]→ Mg + Cl₂</div>
+    <div class="eq">CO₂ → C + O₂</div>
+    <div class="eq">2 FeCl₃ —[Δ]→ 2 Fe + 3 Cl₂</div>
+
+    <h4>Metal carbonates decompose into a metal oxide + CO₂</h4>
+    <div class="eq centered">MCO₃ → MO + CO₂</div>
+    <div class="eq">CaCO₃ —[Δ]→ CaO + CO₂</div>
+
+    <h4>Metal chlorates decompose into a metal chloride + O₂</h4>
+    <div class="eq centered">MClO₃ → MCl + O₂</div>
+    <div class="eq">2 KClO₃ —[Δ]→ 2 KCl + 3 O₂</div>
+    <div class="eq">2 NaClO₃ —[Δ]→ 2 NaCl + 3 O₂</div>
+
+    <h4>Classic fun one</h4>
+    <div class="eq">2 H₂O₂ —[yeast catalyst]→ 2 H₂O + O₂ <span class="state">(the "elephant toothpaste" reaction)</span></div>
+
+    <div class="callout key">
+      <span class="callout-label">Identifier</span>
+      <p style="margin:0">One reactant → two or more products. Look for Δ (heat) or "electricity" over the arrow.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.6 COMBUSTION ============ -->
+  <section id="combustion">
+    <span class="section-number">§ 06 · Chapter 11.6</span>
+    <h2>Combustion <span class="italic">Reactions</span></h2>
+    <p class="intro">A substance reacts rapidly with oxygen gas, releasing heat and light. When the fuel is a <em>hydrocarbon</em> (contains only C and H, sometimes with O), the products are always carbon dioxide and water.</p>
+
+    <div class="eq centered">hydrocarbon + O₂ → CO₂ + H₂O</div>
+
+    <h4>Worked examples</h4>
+    <div class="eq">CH₄ + 2 O₂ → CO₂ + 2 H₂O <span class="state">(methane, natural gas)</span></div>
+    <div class="eq">2 C₂H₆ + 7 O₂ → 4 CO₂ + 6 H₂O <span class="state">(ethane)</span></div>
+    <div class="eq">C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O <span class="state">(propane)</span></div>
+    <div class="eq">2 C₈H₁₈ + 25 O₂ → 16 CO₂ + 18 H₂O <span class="state">(octane, gasoline)</span></div>
+
+    <h4>Balancing combustion — the sequence</h4>
+    <ol class="fancy">
+      <li>Balance <strong>carbon</strong> atoms first (set CO₂ coefficient equal to C in hydrocarbon).</li>
+      <li>Balance <strong>hydrogen</strong> atoms next (set H₂O coefficient equal to H/2 in hydrocarbon).</li>
+      <li>Balance <strong>oxygen</strong> atoms last (count O on product side, divide by 2 for the O₂ coefficient).</li>
+      <li>If the O₂ coefficient is a fraction, multiply the whole equation by 2.</li>
+    </ol>
+
+    <div class="callout warn">
+      <span class="callout-label">Incomplete combustion</span>
+      <p style="margin:0">When oxygen is limited, combustion can produce CO (carbon monoxide) or even pure C (soot) instead of CO₂. For quiz purposes, assume complete combustion unless stated otherwise.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.7 SINGLE REP ============ -->
+  <section id="single-rep">
+    <span class="section-number">§ 07 · Chapter 11.7</span>
+    <h2>Single Replacement <span class="italic">Reactions</span></h2>
+    <p class="intro">One element replaces another element in a compound. The pattern: a lone element swaps with a similar element (metal with metal, halogen with halogen) in an aqueous compound.</p>
+
+    <div class="eq centered">A + BC → AC + B &nbsp;&nbsp; <span class="state">(A replaces B)</span></div>
+
+    <p><strong>Reactants:</strong> an element plus an aqueous compound. <strong>Rule:</strong> the reaction only occurs if the lone element is <em>more reactive</em> than the similar element it's trying to replace. Reactivity is determined using the Activity Series (next section).</p>
+
+    <h4>Metal replacing metal</h4>
+    <div class="eq">Zn<span class="state">(s)</span> + CuCl₂<span class="state">(aq)</span> → ZnCl₂<span class="state">(aq)</span> + Cu<span class="state">(s)</span> <span class="yes">✓ Zn &gt; Cu in activity</span></div>
+    <div class="eq">Ag<span class="state">(s)</span> + HBr<span class="state">(aq)</span> → <span class="no">No reaction</span> &nbsp; <span class="state">(Ag is below H — less reactive)</span></div>
+
+    <h4>Halogen replacing halogen</h4>
+    <div class="eq">Cl₂<span class="state">(g)</span> + 2 NaBr<span class="state">(aq)</span> → 2 NaCl<span class="state">(aq)</span> + Br₂<span class="state">(l)</span> <span class="yes">✓ Cl &gt; Br in activity</span></div>
+    <div class="eq">Cl₂<span class="state">(g)</span> + 2 NaF<span class="state">(aq)</span> → <span class="no">No reaction</span> &nbsp; <span class="state">(F &gt; Cl — F is more reactive)</span></div>
+
+    <div class="callout key">
+      <span class="callout-label">The rule in one sentence</span>
+      <p style="margin:0"><strong>The lone element must be more reactive than the element it replaces.</strong> Metals replace less reactive metals; halogens replace less reactive halogens. Otherwise: no reaction.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.8 ACTIVITY ============ -->
+  <section id="activity">
+    <span class="section-number">§ 08 · Chapter 11.8</span>
+    <h2>Activity <span class="italic">Series</span></h2>
+    <p class="intro">The Activity Series is a ranking of elements by reactivity, used to predict whether a single replacement reaction will happen. An element can only replace an element <em>below</em> it on the list.</p>
+
+    <div class="activity-series">
+      <div class="activity-col">
+        <h4>Metals</h4>
+        <div class="metal-list">
+          <div class="top">Li · K · Ba · Ca · Na</div>
+          <div>Mg · Al · Zn</div>
+          <div>Cr · Fe · Cd · Ni</div>
+          <div>Sn · Pb</div>
+          <div><strong>H</strong></div>
+          <div>Cu · Hg</div>
+          <div class="bot">Ag · Pt · Au</div>
+        </div>
+      </div>
+      <div class="reactivity-arrow">Most reactive ↑</div>
+      <div class="activity-col">
+        <h4>Halogens</h4>
+        <div class="metal-list">
+          <div class="top">F₂</div>
+          <div>Cl₂</div>
+          <div>Br₂</div>
+          <div class="bot">I₂</div>
+        </div>
+      </div>
+    </div>
+
+    <h3>How to use the series</h3>
+    <ol class="fancy">
+      <li>Identify the lone element (metal or halogen).</li>
+      <li>Identify the similar element inside the aqueous compound.</li>
+      <li>Locate both on the activity series.</li>
+      <li>If the lone element is <strong>higher</strong> on the list → reaction occurs, element swap takes place.</li>
+      <li>If the lone element is <strong>lower</strong> (or equal) → <strong>no reaction</strong>.</li>
+    </ol>
+
+    <h4>Why hydrogen appears on the metal series</h4>
+    <p>Hydrogen is included because metals above it can replace hydrogen from acids (producing H₂ gas), while metals below it cannot.</p>
+    <div class="eq">Mg + 2 HCl → MgCl₂ + H₂<span class="state">(g)</span> &nbsp;<span class="yes">✓ Mg &gt; H</span></div>
+    <div class="eq">Cu + HCl → <span class="no">No reaction</span> &nbsp;<span class="state">(Cu &lt; H)</span></div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ 11.9 DOUBLE REP ============ -->
+  <section id="double-rep">
+    <span class="section-number">§ 09 · Chapter 11.9</span>
+    <h2>Double Replacement <span class="italic">Reactions</span></h2>
+    <p class="intro">Also called double displacement or metathesis. Two aqueous ionic compounds exchange partners — the cation of one compound pairs with the anion of the other, and vice versa.</p>
+
+    <div class="eq centered">AB + CD → AD + CB</div>
+    <p>A and C are positively-charged cations. B and D are negatively-charged anions. They simply swap partners.</p>
+
+    <div class="eq-block">
+      How does the strength of attraction between ions impact double replacement reactions?
+    </div>
+
+    <h3>The core concept</h3>
+    <p>When two ionic solutions are mixed, the ions are already floating freely, each surrounded by water molecules (ion-dipole interactions). A reaction <strong>only occurs</strong> if the new bonds between swapped ions would be <em>stronger</em> than those ion-dipole attractions to water. If they're not, the ions just stay dissolved — nothing happens.</p>
+
+    <div class="callout key">
+      <span class="callout-label">Key idea · from the slides</span>
+      <p style="margin:0">When a reaction between two aqueous compounds forms a precipitate, molecular liquid, or molecular gas, it's because the new ionic or covalent bonds are <strong>stronger</strong> than the original ion-dipole interactions in solution.</p>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ GUIDE ============ -->
+  <section id="predict-guide">
+    <span class="section-number">§ 10 · The Main Event</span>
+    <h2>How to Predict a Double <span class="italic">Replacement</span></h2>
+    <p class="lead">A double replacement reaction will occur only if one of the products is a precipitate, water (or weak acid), or a gas. Otherwise, the ions stay dissolved and there is no reaction.</p>
+
+    <h3>The three driving forces</h3>
+    <div class="reaction-types">
+      <div class="rtype">
+        <h4>1 · Precipitate (s)</h4>
+        <div class="formula">CaBr₂(aq) + 2 AgNO₃(aq) →<br>Ca(NO₃)₂(aq) + 2 AgBr(s)</div>
+        <p>An insoluble ionic compound forms and drops out of solution. Use the solubility rules to check.</p>
+      </div>
+      <div class="rtype">
+        <h4>2 · Water or weak acid (l)</h4>
+        <div class="formula">HCl(aq) + NaOH(aq) →<br>NaCl(aq) + H₂O(l)</div>
+        <p>Often a neutralization — an acid reacts with a base to form water.</p>
+      </div>
+      <div class="rtype">
+        <h4>3 · Gas (g)</h4>
+        <div class="formula">Na₂S(aq) + 2 HCl(aq) →<br>2 NaCl(aq) + H₂S(g)</div>
+        <p>A molecular gas bubbles out of solution — H₂S, CO₂, HCN, NH₃, etc.</p>
+      </div>
+    </div>
+
+    <h3>Step-by-step prediction procedure</h3>
+    <ol class="fancy">
+      <li><strong>Identify the ions.</strong> Break each reactant into its cation and anion. Example: AgNO₃ → Ag⁺ + NO₃⁻; NaCl → Na⁺ + Cl⁻.</li>
+      <li><strong>Swap partners.</strong> The cation of compound 1 pairs with the anion of compound 2, and vice versa. Use <em>ionic charges</em> to write correct formulas — don't just copy subscripts.</li>
+      <li><strong>Check each product.</strong> Is either product insoluble (precipitate)? Water or weak acid? A gas? If yes to any → reaction occurs. If no to all → no reaction.</li>
+      <li><strong>Write and balance</strong> the complete equation with phase labels.</li>
+    </ol>
+
+    <h3>The decision flowchart</h3>
+    <div class="flow">
+      <div class="flow-box"><span class="label">Start</span>AB(aq) + CD(aq)</div>
+      <div class="flow-arrow">Swap ions</div>
+      <div class="flow-box"><span class="label">Products</span>AD + CB</div>
+      <div class="flow-arrow">Check each product</div>
+      <div class="flow-branch">
+        <div class="flow-box yes"><span class="label">Precipitate?</span>Check solubility rules</div>
+        <div class="flow-box yes"><span class="label">Water?</span>Acid + base → H₂O</div>
+        <div class="flow-box yes"><span class="label">Gas?</span>H₂S, CO₂, HCN</div>
+      </div>
+      <div class="flow-arrow">If any is yes</div>
+      <div class="flow-box yes"><span class="label">Result</span>Reaction occurs ✓ · Balance equation</div>
+      <div class="flow-arrow">If none is yes</div>
+      <div class="flow-box no"><span class="label">Result</span>No reaction ✗ · Ions stay dissolved</div>
+    </div>
+
+    <h3>Solubility rules (Table 11.3 from your slides)</h3>
+    <p>Memorize this table. It's the difference between "reaction" and "no reaction" on precipitate problems.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Compound type</th><th>Solubility</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Salts of alkali metals (Li⁺, Na⁺, K⁺…) and ammonium (NH₄⁺)</td><td class="soluble">Soluble — always</td></tr>
+          <tr><td>Nitrates (NO₃⁻) and chlorates (ClO₃⁻)</td><td class="soluble">Soluble — always</td></tr>
+          <tr><td>Sulfates (SO₄²⁻)</td><td class="soluble">Soluble, <em>except</em> with Pb²⁺, Ag⁺, Hg₂²⁺, Ba²⁺, Sr²⁺, Ca²⁺</td></tr>
+          <tr><td>Chlorides, bromides, iodides (Cl⁻, Br⁻, I⁻)</td><td class="soluble">Soluble, <em>except</em> with Ag⁺, Pb²⁺, Hg₂²⁺</td></tr>
+          <tr><td>Carbonates (CO₃²⁻), phosphates (PO₄³⁻), chromates (CrO₄²⁻), sulfides (S²⁻), hydroxides (OH⁻)</td><td class="insoluble">Mostly insoluble</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">Memory mnemonic</span>
+      <ul class="fancy" style="margin:10px 0 0">
+        <li><strong>"Always friendly"</strong> — Group 1 ions, ammonium, nitrates, chlorates: these dissolve with anyone.</li>
+        <li><strong>"Always grumpy"</strong> — carbonates, phosphates, chromates, sulfides, hydroxides: these usually don't dissolve.</li>
+        <li><strong>"It depends"</strong> — sulfates and halides: check the exception list.</li>
+      </ul>
+    </div>
+
+    <h3>Special cases to recognize</h3>
+    <div class="reaction-types">
+      <div class="rtype">
+        <h4>Acid + carbonate</h4>
+        <div class="formula">Na₂CO₃ + 2 HCl →<br>2 NaCl + CO₂(g) + H₂O(l)</div>
+        <p>Produces CO₂ gas + water. Intermediate H₂CO₃ is unstable and decomposes.</p>
+      </div>
+      <div class="rtype">
+        <h4>Acid + sulfide</h4>
+        <div class="formula">MgS + 2 HCl →<br>MgCl₂ + H₂S(g)</div>
+        <p>Produces H₂S gas (rotten-egg smell).</p>
+      </div>
+      <div class="rtype">
+        <h4>Acid + base</h4>
+        <div class="formula">HCl + NaOH →<br>NaCl + H₂O(l)</div>
+        <p>Classic neutralization. Always produces water.</p>
+      </div>
+      <div class="rtype">
+        <h4>Ammonium + hydroxide</h4>
+        <div class="formula">NH₄Cl + NaOH →<br>NaCl + NH₃(g) + H₂O(l)</div>
+        <p>Produces ammonia gas and water. NH₄OH is unstable.</p>
+      </div>
+    </div>
+
+    <h3>The six reaction types at a glance</h3>
+    <div class="reaction-types">
+      <div class="rtype">
+        <h4>Synthesis</h4>
+        <div class="formula">A + B → AB</div>
+        <p>Two or more → one product.</p>
+      </div>
+      <div class="rtype">
+        <h4>Decomposition</h4>
+        <div class="formula">AB → A + B</div>
+        <p>One → two or more. Needs heat/electricity.</p>
+      </div>
+      <div class="rtype">
+        <h4>Combustion</h4>
+        <div class="formula">CₓHᵧ + O₂ → CO₂ + H₂O</div>
+        <p>Hydrocarbon burned in oxygen.</p>
+      </div>
+      <div class="rtype">
+        <h4>Single replacement</h4>
+        <div class="formula">A + BC → AC + B</div>
+        <p>Predicted with Activity Series.</p>
+      </div>
+      <div class="rtype">
+        <h4>Double replacement</h4>
+        <div class="formula">AB + CD → AD + CB</div>
+        <p>Predicted with solubility rules + water/gas check.</p>
+      </div>
+      <div class="rtype">
+        <h4>Acid-base (neutralization)</h4>
+        <div class="formula">HX + MOH → MX + H₂O</div>
+        <p>A special type of double replacement.</p>
+      </div>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section id="practice">
+    <span class="section-number">§ 11 · Self-check</span>
+    <h2>Practice <span class="italic">Problems</span></h2>
+    <p class="intro">Click any card to reveal the answer. Try predicting each reaction before peeking — does it occur? If yes, what drives it?</p>
+
+    <h3>Double replacement predictions</h3>
+    <div class="practice-grid">
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 01</div>
+        <div class="q">KBr(aq) + AgNO₃(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: KNO₃(aq) + AgBr(s). The AgBr precipitates — silver halides are insoluble (Ag⁺ exception on the halides row).</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 02</div>
+        <div class="q">HNO₃(aq) + KOH(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: KNO₃(aq) + H₂O(l). Neutralization — H⁺ and OH⁻ combine to form water.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 03</div>
+        <div class="q">NaNO₃(aq) + KCl(aq) → ?</div>
+        <div class="a"><strong>No reaction ✗</strong><br>All four possible products (Na⁺, K⁺, NO₃⁻, Cl⁻ pairings) are soluble. No precipitate, no gas, no water. Ions stay dissolved.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 04</div>
+        <div class="q">Na₂CO₃(aq) + 2 HCl(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: 2 NaCl(aq) + CO₂(g) + H₂O(l). Acid + carbonate — always produces CO₂ gas plus water.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 05</div>
+        <div class="q">Pb(NO₃)₂(aq) + 2 KI(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: 2 KNO₃(aq) + PbI₂(s). Brilliant yellow precipitate — Pb²⁺ with halides is insoluble.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 06</div>
+        <div class="q">(NH₄)₂SO₄(aq) + Ba(NO₃)₂(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: 2 NH₄NO₃(aq) + BaSO₄(s). BaSO₄ precipitates — Ba²⁺ is on the sulfate exception list.</div>
+      </div>
+    </div>
+
+    <h3>Single replacement predictions</h3>
+    <div class="practice-grid">
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 07</div>
+        <div class="q">Zn(s) + CuCl₂(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: ZnCl₂(aq) + Cu(s). Zn is above Cu on the activity series — Zn replaces Cu.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 08</div>
+        <div class="q">Ag(s) + HBr(aq) → ?</div>
+        <div class="a"><strong>No reaction ✗</strong><br>Ag is below H on the activity series — Ag cannot replace H.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 09</div>
+        <div class="q">Cl₂(g) + 2 NaBr(aq) → ?</div>
+        <div class="a"><strong>Reaction ✓</strong><br>Products: 2 NaCl(aq) + Br₂(l). Cl is above Br on the halogen activity series.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 10</div>
+        <div class="q">Cl₂(g) + 2 NaF(aq) → ?</div>
+        <div class="a"><strong>No reaction ✗</strong><br>F is above Cl — fluorine is more reactive than chlorine, so Cl cannot replace F.</div>
+      </div>
+    </div>
+
+    <h3>Reaction type identification</h3>
+    <div class="practice-grid">
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 11</div>
+        <div class="q">2 H₂ + O₂ → 2 H₂O</div>
+        <div class="a"><strong>Combination (synthesis)</strong> — two reactants combine into one product. Also qualifies as combustion of H₂.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 12</div>
+        <div class="q">2 KClO₃ → 2 KCl + 3 O₂</div>
+        <div class="a"><strong>Decomposition</strong> — metal chlorate breaking into a metal chloride and O₂ gas.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 13</div>
+        <div class="q">C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O</div>
+        <div class="a"><strong>Combustion</strong> — hydrocarbon + O₂ producing CO₂ and H₂O.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 14</div>
+        <div class="q">Mg + 2 HCl → MgCl₂ + H₂</div>
+        <div class="a"><strong>Single replacement</strong> — Mg replaces H from the acid. Mg is above H on the activity series.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 15</div>
+        <div class="q">AgNO₃ + NaCl → AgCl + NaNO₃</div>
+        <div class="a"><strong>Double replacement</strong> — two ionic compounds exchange partners. AgCl is the precipitate.</div>
+      </div>
+      <div class="practice-card" onclick="this.classList.toggle('open')">
+        <div class="num">Problem 16</div>
+        <div class="q">CaCO₃ → CaO + CO₂</div>
+        <div class="a"><strong>Decomposition</strong> — metal carbonate breaking into metal oxide + CO₂. Requires heat.</div>
+      </div>
+    </div>
+    <a href="#" class="top-link">↑ Back to top</a>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="ornament">❦&nbsp;&nbsp;&nbsp;❦&nbsp;&nbsp;&nbsp;❦</div>
+    <span>Study Guide · Unit 8B Chemical Reactions</span>
+    <span>Quiz Prep Edition</span>
+  </footer>
+
+</div>
+</body>
+</html>

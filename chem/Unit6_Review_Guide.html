@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 6 Chemical Bonding — Review Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #1a1714;
+    --mid: #3d3530;
+    --soft: #6b5f58;
+    --rule: #c8bdb6;
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --tint-blue: #edf3fb;
+    --tint-amber: #fdf5e6;
+    --tint-green: #edf7f0;
+    --tint-rose: #fdf0f0;
+    --tint-purple: #f4f0fb;
+    --accent-blue: #2256a0;
+    --accent-amber: #b56a00;
+    --accent-green: #1a7a3f;
+    --accent-rose: #b03030;
+    --accent-purple: #5e30a0;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 10.5pt;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--bg);
+  }
+
+  /* ─── LAYOUT ─── */
+  .wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* ─── HEADER ─── */
+  .doc-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 18px;
+    margin-bottom: 36px;
+  }
+  .doc-header .kicker {
+    font-family: var(--mono);
+    font-size: 8pt;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 6px;
+  }
+  .doc-header h1 {
+    font-family: var(--serif);
+    font-size: 26pt;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .doc-header .byline {
+    margin-top: 8px;
+    font-size: 9.5pt;
+    color: var(--soft);
+  }
+
+  /* ─── SECTION HEADINGS ─── */
+  .section {
+    margin-bottom: 44px;
+    page-break-inside: avoid;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 5px;
+    margin-bottom: 18px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 8.5pt;
+    color: var(--soft);
+    min-width: 28px;
+  }
+  .section-header h2 {
+    font-family: var(--serif);
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .section-header .goal {
+    font-size: 8.5pt;
+    color: var(--soft);
+    margin-left: auto;
+    font-style: italic;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 20px 0 8px;
+  }
+  h3:first-child { margin-top: 0; }
+
+  p { margin-bottom: 10px; }
+  p:last-child { margin-bottom: 0; }
+
+  ul, ol {
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  li { margin-bottom: 4px; }
+  li:last-child { margin-bottom: 0; }
+
+  strong { font-weight: 600; }
+  em { font-style: italic; color: var(--mid); }
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout {
+    border-radius: 6px;
+    padding: 13px 16px;
+    margin: 14px 0;
+    font-size: 10pt;
+    line-height: 1.6;
+  }
+  .callout-label {
+    font-family: var(--mono);
+    font-size: 7.5pt;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .callout.key { background: var(--tint-amber); border-left: 3px solid var(--accent-amber); }
+  .callout.key .callout-label { color: var(--accent-amber); }
+  .callout.tip { background: var(--tint-blue); border-left: 3px solid var(--accent-blue); }
+  .callout.tip .callout-label { color: var(--accent-blue); }
+  .callout.example { background: var(--tint-green); border-left: 3px solid var(--accent-green); }
+  .callout.example .callout-label { color: var(--accent-green); }
+  .callout.watch { background: var(--tint-rose); border-left: 3px solid var(--accent-rose); }
+  .callout.watch .callout-label { color: var(--accent-rose); }
+  .callout.vocab { background: var(--tint-purple); border-left: 3px solid var(--accent-purple); }
+  .callout.vocab .callout-label { color: var(--accent-purple); }
+
+  /* ─── TABLES ─── */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9.5pt;
+    margin: 12px 0;
+  }
+  th {
+    background: var(--ink);
+    color: white;
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-family: var(--sans);
+    font-size: 8.5pt;
+    letter-spacing: .02em;
+  }
+  td {
+    border: 1px solid var(--rule);
+    padding: 6px 10px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #faf8f5; }
+
+  /* ─── FORMULA / CODE ─── */
+  code {
+    font-family: var(--mono);
+    font-size: 9.5pt;
+    background: #ede8e2;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 28px 0;
+  }
+
+  /* ─── STEP BOX ─── */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .steps li::before {
+    content: counter(step);
+    min-width: 22px;
+    height: 22px;
+    background: var(--ink);
+    color: white;
+    font-family: var(--mono);
+    font-size: 8.5pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ─── DEFINITION LIST ─── */
+  .def-list { margin: 10px 0; }
+  .def-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 8px 16px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 10pt;
+  }
+  .def-item:last-child { border-bottom: none; }
+  .def-term { font-weight: 600; color: var(--ink); }
+  .def-body { color: var(--mid); }
+
+  /* ─── COMPARISON BOX ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .compare-col {
+    border: 1.5px solid var(--rule);
+    border-radius: 5px;
+    padding: 10px 12px;
+  }
+  .compare-col h4 {
+    font-family: var(--serif);
+    font-size: 10pt;
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--rule);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .compare-col ul {
+    padding-left: 14px;
+  }
+  .compare-col li {
+    font-size: 9.5pt;
+    margin-bottom: 3px;
+  }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: white; font-size: 9.5pt; }
+    .wrapper { padding: 0; max-width: 100%; }
+    .doc-header { margin-bottom: 24px; }
+    .section { page-break-inside: avoid; margin-bottom: 28px; }
+    .callout, table, .compare-grid { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ══ HEADER ══ -->
+  <div class="doc-header">
+    <div class="kicker">Unit 6 · Chemical Bonding · Comprehensive Review Guide</div>
+    <h1>Chemical Bonding<br>Review Guide</h1>
+    <div class="byline">Covers all teacher guided notes (Topics 6.1–6.9) &amp; CK-12 chapters 6.21, 8.1, 8.2, 8.6, 8.9, 8.10, 8.12, 9.2 &nbsp;·&nbsp; Aim for 100%.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 1 — TYPES OF CHEMICAL BONDS
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.1</span>
+      <h2>Types of Chemical Bonds</h2>
+      <span class="goal">Goal: predict bond type from element type &amp; electronegativity</span>
+    </div>
+
+    <h3>Why do atoms bond at all?</h3>
+    <p>When atoms bond, their valence shells become completely (or more nearly) filled with electrons. This makes the resulting substance <strong>more stable</strong> and <strong>lower in energy</strong>. Stability is the driving force behind all chemical bonding.</p>
+
+    <h3>The four types of bonding</h3>
+    <p>There are four main types of chemical bonds covered in this unit:</p>
+    <ul>
+      <li><strong>Ionic bonding</strong> — electrons are <em>transferred</em> from a metal to a nonmetal, forming oppositely charged ions held together by electrostatic attraction.</li>
+      <li><strong>Nonpolar covalent bonding</strong> — electrons are <em>shared equally</em> between two atoms (identical or very similar electronegativity).</li>
+      <li><strong>Polar covalent bonding</strong> — electrons are <em>shared unequally</em>; the more electronegative atom pulls the electrons closer to itself.</li>
+      <li><strong>Metallic bonding</strong> — metal atoms release their valence electrons into a shared "sea," forming a lattice of cations in a mobile electron cloud.</li>
+    </ul>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Chemical bond</span><span class="def-body">A force of attraction between atoms or ions that holds them together.</span></div>
+        <div class="def-item"><span class="def-term">Ionic bonding</span><span class="def-body">Bonding between a metal that transfers an electron to a nonmetal, forming ions.</span></div>
+        <div class="def-item"><span class="def-term">Covalent bonding</span><span class="def-body">Bonding between two nonmetals that share electrons.</span></div>
+        <div class="def-item"><span class="def-term">Polar covalent bond</span><span class="def-body">A covalent bond where electrons are shared unequally due to electronegativity differences.</span></div>
+        <div class="def-item"><span class="def-term">Nonpolar covalent bond</span><span class="def-body">A covalent bond where electrons are shared equally.</span></div>
+      </div>
+    </div>
+
+    <h3>Method 1: Predicting bond type by element type</h3>
+    <table>
+      <tr><th>Elements involved</th><th>Predicted bond type</th></tr>
+      <tr><td>Metal + Nonmetal</td><td>Ionic (usually)</td></tr>
+      <tr><td>Nonmetal + Nonmetal</td><td>Covalent (usually)</td></tr>
+      <tr><td>Metal + Metal</td><td>Metallic</td></tr>
+    </table>
+
+    <h3>Method 2: Predicting bond type by electronegativity difference (ΔEN)</h3>
+    <p>Calculate <strong>ΔEN = |EN<sub>A</sub> − EN<sub>B</sub>|</strong> (the absolute difference in electronegativity values of the two bonded atoms).</p>
+    <table>
+      <tr><th>ΔEN range</th><th>Bond type</th><th>Electron behavior</th></tr>
+      <tr><td>0.0 – &lt;0.4</td><td>Nonpolar covalent</td><td>Electrons shared equally</td></tr>
+      <tr><td>0.4 – 1.9</td><td>Polar covalent</td><td>Electrons shared unequally</td></tr>
+      <tr><td>≥ 2.0</td><td>Ionic</td><td>Electron transferred</td></tr>
+    </table>
+
+    <div class="callout watch">
+      <div class="callout-label">Important Note</div>
+      Different textbooks use slightly different cutoff values — the teacher uses 0 / 0.4 / 2.0. These boundaries are a "gray area." The <strong>only way to know a bond type for certain</strong> is to examine the physical properties of the substance.
+    </div>
+
+    <div class="callout example">
+      <div class="callout-label">Worked Examples from Class</div>
+      <table>
+        <tr><th>Bond</th><th>Type by element</th><th>ΔEN</th><th>Type by ΔEN</th></tr>
+        <tr><td>H—Cl</td><td>Covalent (nonmetal + nonmetal)</td><td>0.9</td><td>Polar covalent</td></tr>
+        <tr><td>Mg—O</td><td>Ionic (metal + nonmetal)</td><td>2.3</td><td>Ionic</td></tr>
+        <tr><td>N—N</td><td>Covalent (nonmetal + nonmetal)</td><td>0.0</td><td>Nonpolar covalent</td></tr>
+        <tr><td>K—F</td><td>Ionic (metal + nonmetal)</td><td>3.2</td><td>Ionic</td></tr>
+        <tr><td>H—S</td><td>Covalent (nonmetal + nonmetal)</td><td>0.4</td><td>Polar covalent</td></tr>
+        <tr><td>Al—O</td><td>Ionic (metal + nonmetal)</td><td>2.0</td><td>Ionic</td></tr>
+      </table>
+    </div>
+
+    <h3>Electronegativity trend review (CK-12 Ch. 6.21)</h3>
+    <p>Electronegativity measures how strongly an atom attracts electrons toward itself in a bond. The trend on the periodic table is:</p>
+    <ul>
+      <li><strong>Increases left → right</strong> across a period (more protons, stronger pull on electrons)</li>
+      <li><strong>Decreases top → bottom</strong> down a group (electrons farther from nucleus, weaker pull)</li>
+      <li><strong>Fluorine (F) is the most electronegative element</strong> of all — always the highest.</li>
+    </ul>
+    <p>In a polar covalent bond, the more electronegative atom gets a partial negative charge (δ−) and the less electronegative atom gets a partial positive charge (δ+). This charge separation creates a <strong>dipole</strong>.</p>
+
+    <h3>Bond strength hierarchy</h3>
+    <p>In terms of strength, intramolecular (within-molecule) bonds rank as:</p>
+    <p style="text-align:center; font-family: var(--mono); background:#ede8e2; padding:8px 12px; border-radius:4px; font-size:10pt;">
+      Ionic &gt; Metallic &gt; Covalent
+    </p>
+    <p>Stronger bonds mean higher melting and boiling points.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 2 — IONIC BOND FORMATION
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.2</span>
+      <h2>Formation of Ionic Compounds</h2>
+      <span class="goal">Goal: describe how an ionic compound forms</span>
+    </div>
+
+    <h3>How ionic bonds form</h3>
+    <p>An ionic bond forms when a <strong>metal atom transfers one or more valence electrons</strong> to a <strong>nonmetal atom</strong>. This transfer completes the octet of both atoms, making them more stable.</p>
+    <ul>
+      <li>The metal atom <em>loses</em> electrons → becomes a positively charged <strong>cation</strong> (and shrinks in size).</li>
+      <li>The nonmetal atom <em>gains</em> electrons → becomes a negatively charged <strong>anion</strong> (and grows in size).</li>
+      <li>The opposite charges attract strongly: this electrostatic attraction <em>is</em> the ionic bond.</li>
+    </ul>
+
+    <div class="callout example">
+      <div class="callout-label">Classic Example: NaCl</div>
+      Sodium (Na, a metal) has 1 valence electron. Chlorine (Cl, a nonmetal) needs 1 electron to complete its octet. Na transfers its 1 valence electron to Cl. Na becomes Na⁺; Cl becomes Cl⁻. These oppositely charged ions attract each other, forming an ionic bond.
+    </div>
+
+    <h3>Crystal lattice and formula unit (CK-12 Ch. 8.6)</h3>
+    <p>Ionic compounds do not form individual molecules. Instead, billions of cations and anions self-assemble into a highly ordered, three-dimensional repeating structure called a <strong>crystal lattice</strong>. In this structure, each cation is surrounded by anions and each anion is surrounded by cations — maximizing attraction and minimizing repulsion.</p>
+    <p>The <strong>formula unit</strong> is the lowest whole-number ratio of ions in the ionic compound. For NaCl, the formula unit is 1 Na⁺ : 1 Cl⁻. For MgCl₂, the formula unit is 1 Mg²⁺ : 2 Cl⁻.</p>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Ionic compound</span><span class="def-body">A hard, brittle solid formed from electron transfer; conducts when molten or dissolved in water.</span></div>
+        <div class="def-item"><span class="def-term">Crystal lattice</span><span class="def-body">The 3-dimensional repeating structure of cations and anions held together by ionic bonds.</span></div>
+        <div class="def-item"><span class="def-term">Formula unit</span><span class="def-body">The lowest whole-number ratio of ions in an ionic compound (NOT a discrete molecule).</span></div>
+        <div class="def-item"><span class="def-term">Cation</span><span class="def-body">A positively charged ion (metal lost electrons); smaller than the original atom.</span></div>
+        <div class="def-item"><span class="def-term">Anion</span><span class="def-body">A negatively charged ion (nonmetal gained electrons); larger than the original atom.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 3 — PROPERTIES OF IONIC COMPOUNDS
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.3</span>
+      <h2>Properties of Ionic Compounds</h2>
+      <span class="goal">Goal: relate properties to the crystal lattice structure</span>
+    </div>
+
+    <p>All physical properties of ionic compounds trace back to the <strong>crystal lattice</strong> — the strong, ordered arrangement of positive and negative ions throughout the solid.</p>
+
+    <table>
+      <tr><th>Property</th><th>Explanation (WHY)</th></tr>
+      <tr>
+        <td><strong>Hard solid at room temperature</strong></td>
+        <td>Ions are locked in rigid fixed positions in the crystal lattice.</td>
+      </tr>
+      <tr>
+        <td><strong>Brittle (shatters when struck)</strong></td>
+        <td>When pressure is applied, the ionic layers slide so that like charges (+ and +) align. These like charges repel strongly, causing the crystal to crack and shatter.</td>
+      </tr>
+      <tr>
+        <td><strong>High melting and boiling points</strong></td>
+        <td>The strong electrostatic attractions between ions throughout the entire lattice require a large amount of energy to overcome.</td>
+      </tr>
+      <tr>
+        <td><strong>Conducts electricity when molten or dissolved in water</strong></td>
+        <td>In solid form, ions are locked in place and cannot move — no charge carriers. When melted or dissolved, ions become mobile and can carry electric current.</td>
+      </tr>
+      <tr>
+        <td><strong>Does NOT conduct electricity as a solid</strong></td>
+        <td>Ions are not free to move in the solid state.</td>
+      </tr>
+      <tr>
+        <td><strong>Soluble in water (often)</strong></td>
+        <td>Water molecules (which are polar) surround individual ions and pull them away from the lattice ("like dissolves like").</td>
+      </tr>
+    </table>
+
+    <div class="callout watch">
+      <div class="callout-label">Special Case: Acids</div>
+      Acids are molecular compounds (not ionic), yet many conduct electricity when dissolved in water — because they release H⁺ ions when dissolved. Acids are their own category; don't confuse them with ionic compounds.
+    </div>
+
+    <div class="callout key">
+      <div class="callout-label">Key Idea</div>
+      If you're told a substance is a solid at room temperature but does <em>not</em> conduct electricity when dissolved in water, it is <strong>not</strong> ionic — it's likely covalent/molecular. Physical properties are the only reliable way to classify bond type.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 4 — COVALENT BONDS
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">9.2</span>
+      <h2>Covalent Bonds</h2>
+      <span class="goal">Goal: describe covalent bonding and its properties</span>
+    </div>
+
+    <h3>What is a covalent bond? (CK-12 Ch. 9.2)</h3>
+    <p>A covalent bond forms when two nonmetal atoms <strong>share electrons</strong> to complete their octets. Unlike ionic bonds (where electrons are fully transferred), both atoms in a covalent bond "own" a share of the bonding electrons.</p>
+    <ul>
+      <li>A <strong>single bond</strong> = 2 shared electrons (1 pair)</li>
+      <li>A <strong>double bond</strong> = 4 shared electrons (2 pairs)</li>
+      <li>A <strong>triple bond</strong> = 6 shared electrons (3 pairs)</li>
+    </ul>
+    <p>Double and triple bonds are <strong>shorter</strong> and <strong>stronger</strong> than single bonds. A triple bond is the strongest and shortest covalent bond.</p>
+
+    <h3>Properties of covalent (molecular) compounds</h3>
+    <p>Because covalent compounds have weaker intermolecular forces (between molecules) compared to ionic or metallic bonds:</p>
+    <ul>
+      <li>They can be <strong>solid, liquid, or gas</strong> at room temperature.</li>
+      <li>They have <strong>relatively low melting and boiling points</strong>.</li>
+      <li>They are <strong>poor electrical conductors</strong> (no ions or free electrons).</li>
+      <li><strong>Polar</strong> molecular compounds tend to be soluble in water; <strong>nonpolar</strong> ones are not ("like dissolves like").</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 5 — ELECTRON DOT DIAGRAMS & LEWIS STRUCTURES
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.5</span>
+      <h2>Electron Dot Diagrams &amp; Lewis Structures</h2>
+      <span class="goal">Goal: draw Lewis structures for molecular compounds</span>
+    </div>
+
+    <h3>What are electron dot diagrams? (CK-12 Ch. 8.1)</h3>
+    <p>An <strong>electron dot diagram</strong> (Lewis dot structure) shows the valence electrons of an atom as dots placed around the element's symbol. The number of dots equals the number of valence electrons (group number for main group elements).</p>
+    <p>In a Lewis structure for a molecule, bonds are shown as lines (one line = one pair of shared electrons) and lone pairs (non-bonding electrons) are shown as pairs of dots.</p>
+
+    <h3>Rules for drawing Lewis structures</h3>
+    <ol class="steps">
+      <li><strong>Count total valence electrons.</strong> Add up all valence electrons from every atom in the molecule. For ions, add one electron per negative charge or subtract one per positive charge.</li>
+      <li><strong>Draw the skeleton.</strong> Carbon (C) is always the central atom when present. Hydrogen (H) is never the central atom. Otherwise, the least electronegative atom is central.</li>
+      <li><strong>Place one bond between each atom and the central atom.</strong> Each bond uses 2 valence electrons.</li>
+      <li><strong>Complete the octets on all outer (terminal) atoms</strong> by placing lone pairs. (H only needs 2 electrons — the duet rule.)</li>
+      <li><strong>Check remaining valence electrons.</strong>
+        <ul>
+          <li>If you run out of electrons before all atoms have an octet, form double or triple bonds by moving lone pairs from outer atoms to bonding regions.</li>
+          <li>If unused electrons remain, place them on the central atom as lone pairs.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="callout example">
+      <div class="callout-label">Worked Examples from Class</div>
+      <table>
+        <tr><th>Molecule</th><th>Total valence e⁻</th><th>Key features of structure</th></tr>
+        <tr><td>CH₃I</td><td>14</td><td>C center bonded to 3 H and 1 I; I has 3 lone pairs; no lone pair on C</td></tr>
+        <tr><td>NH₃</td><td>8</td><td>N center bonded to 3 H; N has 1 lone pair on top</td></tr>
+        <tr><td>H₂S</td><td>8</td><td>S center bonded to 2 H; S has 2 lone pairs</td></tr>
+        <tr><td>CO₂</td><td>16</td><td>C center; two C=O double bonds; O has 2 lone pairs each; linear</td></tr>
+        <tr><td>N₂</td><td>10</td><td>N≡N triple bond; each N has 1 lone pair</td></tr>
+        <tr><td>HCN</td><td>10</td><td>H–C≡N triple bond; N has 1 lone pair; linear</td></tr>
+        <tr><td>NH₄⁺</td><td>8 (9 − 1 for + charge)</td><td>N center bonded to 4 H; no lone pairs on N; tetrahedral</td></tr>
+      </table>
+    </div>
+
+    <h3>Bonding preferences to know</h3>
+    <ul>
+      <li><strong>C</strong> — typically forms 4 bonds (no lone pairs on C when fully bonded)</li>
+      <li><strong>N</strong> — typically forms 3 bonds + 1 lone pair</li>
+      <li><strong>O</strong> — typically forms 2 bonds + 2 lone pairs</li>
+      <li><strong>F, Cl, Br, I</strong> (halogens) — typically form 1 bond + 3 lone pairs</li>
+      <li><strong>H</strong> — always forms exactly 1 bond (needs only 2 electrons total)</li>
+    </ul>
+
+    <h3>The Octet Rule (CK-12 Ch. 8.2)</h3>
+    <p>The <strong>octet rule</strong> states that atoms tend to bond until they have 8 electrons in their valence shell (like a noble gas). This drives both ionic and covalent bonding. However, there are important exceptions:</p>
+
+    <table>
+      <tr><th>Exception</th><th>Element(s)</th><th>Electron count</th><th>Example</th></tr>
+      <tr><td>Duet rule</td><td>H</td><td>2 electrons (not 8)</td><td>H₂, HCl, H₂O</td></tr>
+      <tr><td>Incomplete octet</td><td>Be</td><td>4 electrons</td><td>BeH₂ (2 bonds, no lone pairs)</td></tr>
+      <tr><td>Incomplete octet</td><td>B, Al</td><td>6 electrons</td><td>BCl₃, AlBr₃ (3 bonds, no lone pairs)</td></tr>
+      <tr><td>Expanded octet</td><td>P, S, and any nonmetal in Period 3 or beyond</td><td>10 or 12 electrons</td><td>PCl₅ (10e), SF₆ (12e)</td></tr>
+    </table>
+
+    <div class="callout key">
+      <div class="callout-label">Key Idea</div>
+      Atoms don't actually "follow rules" — they bond to achieve stability (lower energy). The octet rule is a useful guideline, not an absolute law. Atoms in Period 3 and beyond have access to d orbitals, which is why they can hold more than 8 electrons around the central atom.
+    </div>
+
+    <h3>Resonance (CK-12 Ch. 8.2)</h3>
+    <p>Sometimes more than one valid Lewis structure can be drawn for the same molecule, with double bonds in different positions. This is called <strong>resonance</strong>. The actual structure is a <strong>hybrid</strong> — a blend of all resonance structures — and cannot be accurately represented by a single Lewis structure. Electrons are <strong>delocalized</strong> (spread out) across multiple bonds.</p>
+    <p><strong>How to recognize resonance:</strong> if you can draw two or more equally valid Lewis structures that differ only in where a double bond (or lone pair) is placed, the molecule has resonance.</p>
+    <ul>
+      <li><strong>Ozone (O₃):</strong> Two resonance structures exist (O=O–O ↔ O–O=O). The actual molecule has both O–O bonds equal in length — neither is a pure single or double bond.</li>
+      <li><strong>Carbonate ion (CO₃²⁻):</strong> Three resonance structures exist. All three C–O bonds are equal in length (~1.33 bond order).</li>
+    </ul>
+    <p><strong>Proof of resonance:</strong> If bond lengths and strengths are equal for bonds that look different in any one Lewis structure, the molecule has resonance.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 6 — METALLIC BONDING
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.4</span>
+      <h2>Metallic Bonding &amp; Metal Alloys</h2>
+      <span class="goal">Goal: explain metallic properties using the sea of electrons model</span>
+    </div>
+
+    <h3>What is metallic bonding? (CK-12 Ch. 8.10)</h3>
+    <p>In metals, the valence electrons are <strong>delocalized</strong> — they are not bound to any one atom but are free to move throughout the entire metal sample. This creates a model where:</p>
+    <ul>
+      <li>Positive metal cations sit in fixed, ordered positions.</li>
+      <li>A "sea" of mobile valence electrons surrounds them on all sides.</li>
+      <li>The bond is the <strong>coulombic attraction</strong> between the positively charged cations and the negatively charged electron sea.</li>
+    </ul>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Metallic bonding</span><span class="def-body">Bonding formed by the coulombic attraction between delocalized valence electrons and positive metal cations.</span></div>
+        <div class="def-item"><span class="def-term">Malleability</span><span class="def-body">Ability to be hammered or bent into shapes without breaking or cracking.</span></div>
+        <div class="def-item"><span class="def-term">Ductility</span><span class="def-body">Ability to be stretched into a wire without breaking or cracking.</span></div>
+        <div class="def-item"><span class="def-term">Alloy</span><span class="def-body">A solution (mixture) formed from a metal and one or more other substances (metals or nonmetals).</span></div>
+      </div>
+    </div>
+
+    <h3>Properties of metals — explained by the sea of electrons</h3>
+    <table>
+      <tr><th>Property</th><th>Explanation using delocalized electrons</th></tr>
+      <tr><td>Conducts electricity (solid and liquid)</td><td>Delocalized electrons are mobile and carry electrical charge through the metal in any direction.</td></tr>
+      <tr><td>Conducts heat</td><td>Mobile electrons rapidly transfer kinetic energy throughout the metal.</td></tr>
+      <tr><td>Malleable</td><td>When pressure is applied, metal cation layers slide past one another. The electron sea reforms the metallic bond in the new arrangement, so the metal bends instead of shattering (unlike ionic solids).</td></tr>
+      <tr><td>Ductile</td><td>Same reason as malleability — the electron sea maintains the bond as layers shift.</td></tr>
+      <tr><td>Lustrous (shiny)</td><td>The mobile electrons at the surface reflect light.</td></tr>
+      <tr><td>High melting &amp; boiling points (generally)</td><td>The strong attraction between the cations and the electron sea throughout the entire structure requires a large amount of energy to break.</td></tr>
+      <tr><td>Not soluble in water</td><td>Water cannot disrupt the metallic lattice because the metallic bonds are not electrostatic attractions between discrete ions.</td></tr>
+    </table>
+
+    <h3>Metallic bond strength</h3>
+    <p>Not all metallic bonds are equally strong. Bond strength varies with two factors:</p>
+    <ul>
+      <li><strong>Number of valence electrons contributed:</strong> More electrons in the sea → stronger attraction to the cations → stronger bond.</li>
+      <li><strong>Nuclear charge of the metal cation:</strong> Higher nuclear charge → greater pull on the electron sea → stronger bond.</li>
+    </ul>
+    <p><strong>How to measure metallic bond strength:</strong> Look at the <strong>boiling point</strong> of the metal. A higher boiling point means more energy is required to separate the atoms, which means a stronger metallic bond.</p>
+
+    <h3>Alloys (CK-12 Ch. 8.12)</h3>
+    <p>An alloy is a mixture (solid solution) of a metal with one or more other elements (usually other metals, but sometimes nonmetals). Alloys are made because they typically have better properties than the pure metals they are made from.</p>
+    <p><strong>Benefits of alloys over pure metals:</strong></p>
+    <ul>
+      <li>Higher strength and hardness</li>
+      <li>Greater durability</li>
+      <li>Better corrosion resistance</li>
+      <li>Lower melting point (useful for solder)</li>
+    </ul>
+
+    <h3>Two types of alloys</h3>
+    <ul>
+      <li><strong>Substitutional alloy:</strong> Atoms of the added element are similar in size to the host metal atoms and substitute (replace) them in the crystal lattice. Example: brass (Zn atoms replace some Cu atoms) and bronze (Sn atoms replace some Cu atoms).</li>
+      <li><strong>Interstitial alloy:</strong> Small atoms of the added element fit into the spaces (interstices) between the larger host metal atoms. Example: steel (small C atoms fit into the gaps between Fe atoms), which makes the structure harder to deform.</li>
+    </ul>
+
+    <div class="callout example">
+      <div class="callout-label">Common Alloys to Know</div>
+      <table>
+        <tr><th>Alloy</th><th>Composition</th><th>Type</th><th>Notable property / use</th></tr>
+        <tr><td>Bronze</td><td>Cu + Sn</td><td>Substitutional</td><td>Harder than Cu; tools, sculpture, musical instruments</td></tr>
+        <tr><td>Brass</td><td>Cu + Zn</td><td>Substitutional</td><td>Corrosion-resistant; musical instruments, plumbing</td></tr>
+        <tr><td>Solder</td><td>Sn + Pb (or Ag)</td><td>Substitutional</td><td>Lower melting point; used in electronics</td></tr>
+        <tr><td>Sterling Silver</td><td>Ag + Cu (7.5%)</td><td>Substitutional</td><td>Harder than pure Ag; jewelry, silverware</td></tr>
+        <tr><td>18K Gold</td><td>Au + Cu/Ag/Zn</td><td>Substitutional</td><td>Harder and more durable than pure gold; jewelry</td></tr>
+        <tr><td>Stainless Steel</td><td>Fe + C + Cr</td><td>Interstitial (C in Fe)</td><td>Corrosion-resistant; cookware, surgical tools</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 7 — VSEPR & MOLECULAR GEOMETRY
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.6</span>
+      <h2>VSEPR Theory &amp; Molecular Geometry</h2>
+      <span class="goal">Goal: use Lewis structures and VSEPR to predict 3D shape</span>
+    </div>
+
+    <h3>What is VSEPR theory?</h3>
+    <p><strong>VSEPR (Valence Shell Electron Pair Repulsion)</strong> theory states that the electron pairs around a central atom repel each other and arrange themselves as far apart as possible. This repulsion determines the 3D shape (geometry) of the molecule.</p>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Electron region</span><span class="def-body">Any area around an atom that contains electron density — either a bond (single, double, or triple all count as ONE region) or a lone pair.</span></div>
+        <div class="def-item"><span class="def-term">Molecular geometry</span><span class="def-body">The 3-dimensional shape of a molecule based on the positions of its atoms (not counting lone pairs as "positions").</span></div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Critical Rule</div>
+      Count <strong>electron regions = bonding regions + lone pairs</strong>. A double bond and a triple bond each count as just <strong>one</strong> electron region. The electron regions determine the basic geometry; lone pairs compress the bond angles.
+    </div>
+
+    <h3>VSEPR geometry table</h3>
+    <table>
+      <tr>
+        <th>Total e⁻ regions</th>
+        <th>Bonding pairs</th>
+        <th>Lone pairs</th>
+        <th>Molecular geometry</th>
+        <th>Bond angle</th>
+        <th>Example</th>
+      </tr>
+      <tr><td>2</td><td>2</td><td>0</td><td>Linear</td><td>180°</td><td>CO₂, HCN, C₂H₂</td></tr>
+      <tr><td>3</td><td>3</td><td>0</td><td>Trigonal planar</td><td>120°</td><td>BCl₃, CH₂O (formaldehyde)</td></tr>
+      <tr><td>3</td><td>2</td><td>1</td><td>Bent (~120°)</td><td>~120°</td><td>SO₂</td></tr>
+      <tr><td>4</td><td>4</td><td>0</td><td>Tetrahedral</td><td>109.5°</td><td>CH₄, CCl₄, CF₄</td></tr>
+      <tr><td>4</td><td>3</td><td>1</td><td>Trigonal pyramidal</td><td>&lt;109.5°</td><td>NH₃, PH₃</td></tr>
+      <tr><td>4</td><td>2</td><td>2</td><td>Bent (~109.5°)</td><td>&lt;109.5°</td><td>H₂O, H₂S</td></tr>
+      <tr><td>5</td><td>5</td><td>0</td><td>Trigonal bipyramidal</td><td>90° and 120°</td><td>PCl₅, PF₅</td></tr>
+      <tr><td>6</td><td>6</td><td>0</td><td>Octahedral</td><td>90°</td><td>SF₆</td></tr>
+    </table>
+
+    <h3>Why lone pairs compress bond angles</h3>
+    <p>Lone pairs take up more space than bonding pairs because they are held by only one nucleus (not shared between two). This means lone pairs repel bonding pairs more strongly, <strong>compressing the bond angles below the ideal value.</strong></p>
+    <ul>
+      <li><strong>NH₃:</strong> 4 electron regions (3 bonds + 1 lone pair) → trigonal pyramidal geometry → bond angle is slightly less than 109.5° (about 107°)</li>
+      <li><strong>H₂O:</strong> 4 electron regions (2 bonds + 2 lone pairs) → bent geometry → bond angle is even more compressed, about 104.5°</li>
+    </ul>
+
+    <div class="callout watch">
+      <div class="callout-label">Water is Special: Always Draw H₂O as Bent</div>
+      H₂O could theoretically look linear if you ignore lone pairs, but <strong>always draw water as bent</strong>. The two lone pairs on oxygen push the H–O–H angle down to about 104.5°, making water a bent molecule. This bent shape and the polarity it creates are responsible for many of water's unique properties, including the fact that ice floats.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 8 — MOLECULAR POLARITY
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.7</span>
+      <h2>Molecular Polarity</h2>
+      <span class="goal">Goal: determine if a molecule is polar based on geometry and element types</span>
+    </div>
+
+    <h3>Bond polarity vs. molecular polarity</h3>
+    <p>A <strong>bond</strong> can be polar (if the two bonded atoms have different electronegativities) while the <strong>molecule</strong> as a whole may be nonpolar — if the bond dipoles cancel due to symmetry.</p>
+    <ul>
+      <li><strong>Polar molecule:</strong> has an uneven distribution of electrons — a net dipole. Results from asymmetric structure or different atoms on different sides.</li>
+      <li><strong>Nonpolar molecule:</strong> bond dipoles cancel out because of symmetry, resulting in a net dipole of zero.</li>
+    </ul>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Dipole</span><span class="def-body">Opposite charges separated by a distance; shown with an arrow pointing from δ+ to δ−.</span></div>
+        <div class="def-item"><span class="def-term">Polar molecule</span><span class="def-body">A molecule with an uneven distribution of electrons — has a net dipole (δ+ on one end, δ− on the other).</span></div>
+        <div class="def-item"><span class="def-term">Nonpolar molecule</span><span class="def-body">A molecule with an even distribution of electrons — dipoles cancel (net dipole = 0).</span></div>
+      </div>
+    </div>
+
+    <h3>5-step process to determine molecular polarity</h3>
+    <ol class="steps">
+      <li>Draw the correct Lewis structure.</li>
+      <li>Determine the molecular geometry using VSEPR (count all electron regions).</li>
+      <li>Consider the electronegativity of all atoms bonded to the central atom.</li>
+      <li>Draw arrows (dipoles) pointing from the less electronegative atom toward the more electronegative atom for each bond.</li>
+      <li>If the molecule is <strong>symmetrical</strong> (same atoms on all sides, dipoles cancel) → <strong>NONPOLAR</strong>. If asymmetrical (different atoms or lone pairs unbalance the dipoles) → <strong>POLAR</strong>.</li>
+    </ol>
+
+    <div class="callout example">
+      <div class="callout-label">Polarity Examples from Class</div>
+      <table>
+        <tr><th>Molecule</th><th>Geometry</th><th>Symmetrical?</th><th>Polar or Nonpolar?</th><th>Reason</th></tr>
+        <tr><td>BCl₃</td><td>Trigonal planar</td><td>Yes</td><td>Nonpolar</td><td>All 3 bonds identical; dipoles cancel</td></tr>
+        <tr><td>CH₂O</td><td>Trigonal planar</td><td>No</td><td>Polar</td><td>C=O bond is more polar than C–H; net dipole toward O</td></tr>
+        <tr><td>CH₄</td><td>Tetrahedral</td><td>Yes</td><td>Nonpolar</td><td>All 4 C–H bonds identical; dipoles cancel</td></tr>
+        <tr><td>NH₃</td><td>Trigonal pyramidal</td><td>No</td><td>Polar</td><td>Lone pair disrupts symmetry; net dipole toward N</td></tr>
+        <tr><td>CH₃Cl</td><td>Tetrahedral</td><td>No</td><td>Polar</td><td>Cl is more electronegative than H; net dipole toward Cl</td></tr>
+        <tr><td>PCl₅</td><td>Trigonal bipyramidal</td><td>Yes</td><td>Nonpolar</td><td>Symmetric; all dipoles cancel</td></tr>
+        <tr><td>SF₆</td><td>Octahedral</td><td>Yes</td><td>Nonpolar</td><td>Symmetric; all dipoles cancel</td></tr>
+        <tr><td>HCN</td><td>Linear</td><td>No</td><td>Polar</td><td>H and N are different; net dipole toward N</td></tr>
+        <tr><td>H₂O</td><td>Bent</td><td>No</td><td>Polar</td><td>Bent shape + 2 lone pairs → net dipole toward O</td></tr>
+        <tr><td>CF₄</td><td>Tetrahedral</td><td>Yes</td><td>Nonpolar</td><td>All 4 bonds C–F; symmetric; dipoles cancel</td></tr>
+      </table>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Key Insight: Symmetry vs. Atom Identity Both Matter</div>
+      Two molecules with the same geometry can have different polarities if they contain different atoms. Compare BCl₃ (nonpolar, all Cl) vs. CH₂O (polar, has both H and O). And compare CH₄ (nonpolar, all H) vs. CH₃Cl (polar, one H replaced by Cl). Symmetry of <em>both structure and atom types</em> must be considered.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 9 — INTERMOLECULAR FORCES
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.8</span>
+      <h2>Intermolecular Forces (IMFs)</h2>
+      <span class="goal">Goal: identify the type of IMF for a given molecular compound</span>
+    </div>
+
+    <h3>Intramolecular bonds vs. intermolecular forces</h3>
+    <p><strong>Intramolecular bonds</strong> are the bonds <em>within</em> a molecule (ionic, covalent, metallic — the actual chemical bonds). These are strong.</p>
+    <p><strong>Intermolecular forces</strong> (IMFs) are the attractive forces <em>between</em> molecules. These are generally much weaker than intramolecular bonds, but they control physical properties like boiling point, melting point, and vapor pressure.</p>
+    <p>The collective term for all intermolecular forces is <strong>Van der Waals forces</strong>.</p>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">IMF (intermolecular force)</span><span class="def-body">The force of attraction between molecules.</span></div>
+        <div class="def-item"><span class="def-term">Hydrogen bonding</span><span class="def-body">Attraction between a hydrogen bonded to F, O, or N and a lone pair on a neighboring molecule. Strongest IMF.</span></div>
+        <div class="def-item"><span class="def-term">Dipole-dipole</span><span class="def-body">Attraction between two polar molecules (between permanent dipoles). Medium strength.</span></div>
+        <div class="def-item"><span class="def-term">London dispersion forces</span><span class="def-body">Attraction between temporary dipoles caused by the movement of electrons; present in all molecules. Weakest IMF.</span></div>
+      </div>
+    </div>
+
+    <h3>The three types of IMF in detail</h3>
+
+    <h3>1. Hydrogen Bonding (strongest IMF)</h3>
+    <p>Hydrogen bonding is a <strong>special, extra-strong type of dipole-dipole interaction</strong>. It occurs only when hydrogen is covalently bonded directly to a highly electronegative atom — specifically <strong>F, O, or N</strong>. The partially positive H (δ+) is attracted to a lone pair on a neighboring F, O, or N atom.</p>
+    <ul>
+      <li>Molecules with H bonded to F, O, or N: H₂O, HF, NH₃, alcohols (–OH groups), etc.</li>
+      <li>Hydrogen bonding is why water has an unusually high boiling point (100°C) compared to similar-sized molecules.</li>
+      <li>It's also why ice floats: the HB network in ice creates an open structure that is less dense than liquid water.</li>
+    </ul>
+
+    <h3>2. Dipole-Dipole Interactions (medium strength)</h3>
+    <p>Dipole-dipole forces occur between any two <strong>polar molecules</strong>. The δ+ end of one molecule is attracted to the δ− end of a neighboring molecule.</p>
+    <ul>
+      <li>Any polar molecule has dipole-dipole forces: HCl, H₂S, SO₂, CH₂Cl₂, etc.</li>
+      <li>Weaker than hydrogen bonding, but stronger than London dispersion.</li>
+      <li><strong>Note:</strong> Hydrogen bonding is simply a very strong and special case of dipole-dipole interaction. A molecule with hydrogen bonding also has dipole-dipole forces — HB is the dominant one.</li>
+    </ul>
+
+    <h3>3. London Dispersion Forces (weakest IMF — but universal)</h3>
+    <p>London dispersion forces (LDF) exist in <strong>all</strong> molecules — polar and nonpolar alike. They arise from <strong>temporary (instantaneous) dipoles</strong>: at any given moment, electrons in a molecule are not perfectly evenly distributed. This creates a temporary dipole that induces a dipole in a neighboring molecule, and the two temporary dipoles attract each other.</p>
+    <ul>
+      <li>Present in: CH₄, I₂, noble gases, N₂, and all other molecules including polar ones.</li>
+      <li>London forces increase with the <strong>number of electrons</strong> in the molecule and with the <strong>size/mass</strong> of the molecule. Larger molecules have more electrons and stronger LDF.</li>
+      <li>Example: I₂ has a much higher boiling point than F₂ because I₂ has far more electrons and therefore much stronger London forces.</li>
+    </ul>
+
+    <h3>IMF identification rules — summary</h3>
+    <table>
+      <tr><th>Condition</th><th>IMF present</th></tr>
+      <tr><td>Any molecule at all</td><td>London dispersion forces (always)</td></tr>
+      <tr><td>Polar molecule (but no H–F, H–O, or H–N bond)</td><td>London dispersion + dipole-dipole</td></tr>
+      <tr><td>Molecule has H bonded directly to F, O, or N</td><td>London dispersion + dipole-dipole + hydrogen bonding</td></tr>
+    </table>
+
+    <div class="callout key">
+      <div class="callout-label">Key Idea</div>
+      Molecules can have multiple types of IMF simultaneously — you list all that apply. For example, water (H₂O) has all three: London dispersion, dipole-dipole, AND hydrogen bonding. When ranking, use the <em>strongest</em> IMF present to determine properties.
+    </div>
+
+    <div class="callout example">
+      <div class="callout-label">IMF Practice</div>
+      <table>
+        <tr><th>Molecule</th><th>Polar?</th><th>H–F/O/N?</th><th>IMF(s)</th></tr>
+        <tr><td>CH₄</td><td>No</td><td>No</td><td>London dispersion only</td></tr>
+        <tr><td>HCl</td><td>Yes</td><td>No</td><td>London dispersion + dipole-dipole</td></tr>
+        <tr><td>H₂S</td><td>Yes</td><td>No (H–S)</td><td>London dispersion + dipole-dipole</td></tr>
+        <tr><td>H₂O</td><td>Yes</td><td>Yes (H–O)</td><td>London dispersion + dipole-dipole + hydrogen bonding</td></tr>
+        <tr><td>NH₃</td><td>Yes</td><td>Yes (H–N)</td><td>London dispersion + dipole-dipole + hydrogen bonding</td></tr>
+        <tr><td>HF</td><td>Yes</td><td>Yes (H–F)</td><td>London dispersion + dipole-dipole + hydrogen bonding</td></tr>
+        <tr><td>I₂</td><td>No</td><td>No</td><td>London dispersion only</td></tr>
+        <tr><td>CH₂Cl₂</td><td>Yes</td><td>No</td><td>London dispersion + dipole-dipole</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 10 — IMFs & PHYSICAL PROPERTIES
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6.9</span>
+      <h2>IMFs &amp; Physical Properties</h2>
+      <span class="goal">Goal: explain and compare boiling points and vapor pressure using IMF strength</span>
+    </div>
+
+    <div class="callout vocab">
+      <div class="callout-label">Vocabulary</div>
+      <div class="def-list">
+        <div class="def-item"><span class="def-term">Vapor pressure</span><span class="def-body">The pressure of the vapor above a liquid in a closed container; a measure of how easily a liquid evaporates.</span></div>
+        <div class="def-item"><span class="def-term">Boiling point</span><span class="def-body">The temperature at which the vapor pressure of a liquid meets or exceeds the external (atmospheric) pressure.</span></div>
+        <div class="def-item"><span class="def-term">Volatile</span><span class="def-body">A substance that easily vaporizes at normal temperatures (has a high vapor pressure and low boiling point).</span></div>
+      </div>
+    </div>
+
+    <h3>How IMF strength affects physical properties</h3>
+    <p>The <strong>stronger</strong> the intermolecular forces between molecules, the <strong>more energy</strong> is required to separate them — whether melting (solid → liquid) or boiling (liquid → gas).</p>
+
+    <table>
+      <tr><th>Property</th><th>↑ Stronger IMF →</th><th>↑ Weaker IMF →</th><th>Relationship</th></tr>
+      <tr><td>Boiling point</td><td>Higher BP</td><td>Lower BP</td><td>Direct (↑IMF = ↑BP)</td></tr>
+      <tr><td>Melting point</td><td>Higher MP</td><td>Lower MP</td><td>Direct (↑IMF = ↑MP)</td></tr>
+      <tr><td>Vapor pressure</td><td>Lower VP (less volatile)</td><td>Higher VP (more volatile)</td><td>Inverse (↑IMF = ↓VP)</td></tr>
+    </table>
+
+    <p><strong>Summary relationship:</strong></p>
+    <ul>
+      <li>↑ IMF = ↓ vapor pressure → <strong>inverse</strong> relationship</li>
+      <li>↑ IMF = ↑ melting &amp; boiling points → <strong>direct</strong> relationship</li>
+    </ul>
+
+    <h3>How to rank boiling points</h3>
+    <p>Use this 3-step approach:</p>
+    <ol class="steps">
+      <li><strong>Identify the strongest IMF</strong> for each molecule. (HB &gt; dipole-dipole &gt; London dispersion)</li>
+      <li><strong>Compare IMF types:</strong> molecules with stronger IMF types have higher boiling points, regardless of size.</li>
+      <li><strong>If molecules have the same IMF type,</strong> the larger/heavier molecule (more electrons) has stronger London dispersion forces and therefore a higher boiling point.</li>
+    </ol>
+
+    <div class="callout example">
+      <div class="callout-label">Worked Examples from Class</div>
+
+      <p><strong>Example 1: H₂O vs. H₂S</strong><br>
+      H₂O boils at 100°C; H₂S boils at −60°C. Why? H₂O has H bonded to O → <strong>hydrogen bonding</strong> (the strongest IMF). H₂S has H bonded to S (not F/O/N) → only <strong>dipole-dipole</strong>. Hydrogen bonding is much stronger than dipole-dipole, so water requires far more energy to boil.</p>
+
+      <p><strong>Example 2: H₂O vs. isopropyl alcohol (rubbing alcohol)</strong><br>
+      Water boils at 100°C; isopropyl alcohol boils at 82.5°C. Both have hydrogen bonding (both have O–H groups). But water has a <em>higher</em> boiling point because water molecules form more HB per molecule (2 lone pairs on O available for bonding), whereas isopropyl alcohol's larger nonpolar hydrocarbon part weakens the overall HB network and increases London dispersion in a different way. The key takeaway: water's HB network is unusually strong for its molecular size.</p>
+
+      <p><strong>Example 3: F₂ vs. Cl₂ vs. Br₂ vs. I₂ (the halogens)</strong><br>
+      Boiling points: F₂ (−188°C) &lt; Cl₂ (−34°C) &lt; Br₂ (59°C) &lt; I₂ (184°C). All are nonpolar — they only have London dispersion forces. As you go down the group: more electrons, larger atoms → stronger London forces → higher boiling point. I₂ has the most electrons and the highest boiling point.</p>
+
+      <p><strong>Example 4: CH₂O vs. CBr₄ vs. SF₂</strong><br>
+      To compare boiling points when molecules are similar in size, look at which IMF is stronger. SF₂ (polar, has dipole-dipole) would have a higher boiling point than CBr₄ (nonpolar, London dispersion only) even though CBr₄ has more electrons, because the IMF type matters first.</p>
+    </div>
+
+    <h3>Why molecular compounds have low melting/boiling points</h3>
+    <p>When a molecular compound melts or boils, you are <strong>breaking the intermolecular forces between molecules</strong> — not the covalent bonds within the molecules. Because IMFs are much weaker than covalent bonds, relatively little energy is needed. This is why molecular compounds often exist as liquids or gases at room temperature.</p>
+
+    <h3>Molecular properties summary</h3>
+    <p>Compared to ionic and metallic compounds, molecular (covalent) compounds generally have:</p>
+    <ul>
+      <li>Lower melting and boiling points</li>
+      <li>Existence as solids, liquids, or gases at room temperature</li>
+      <li>Poor electrical conductivity</li>
+      <li>Variable solubility in water (polar molecules dissolve; nonpolar do not)</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 11 — BIG PICTURE COMPARISON
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">★</span>
+      <h2>Big Picture: Comparing Bond Types</h2>
+      <span class="goal">Master comparison table — ionic vs. covalent vs. metallic</span>
+    </div>
+
+    <table>
+      <tr>
+        <th>Property</th>
+        <th>Ionic compounds</th>
+        <th>Molecular (covalent) compounds</th>
+        <th>Metals (metallic bond)</th>
+      </tr>
+      <tr>
+        <td>Physical state at room temp</td>
+        <td>Solid</td>
+        <td>Solid, liquid, or gas</td>
+        <td>Solid (except Hg)</td>
+      </tr>
+      <tr>
+        <td>Melting / boiling points</td>
+        <td>High</td>
+        <td>Relatively low</td>
+        <td>High (generally)</td>
+      </tr>
+      <tr>
+        <td>Conducts electricity?</td>
+        <td>Only when molten or dissolved in water; NOT as solid</td>
+        <td>No (nonconductive)</td>
+        <td>Yes, always (solid and liquid)</td>
+      </tr>
+      <tr>
+        <td>Soluble in water?</td>
+        <td>Often yes (some partially)</td>
+        <td>Polar: yes · Nonpolar: no</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Malleable / ductile?</td>
+        <td>No (brittle)</td>
+        <td>No</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Shiny?</td>
+        <td>No (dull)</td>
+        <td>No (dull)</td>
+        <td>Yes (lustrous)</td>
+      </tr>
+      <tr>
+        <td>Structure</td>
+        <td>Crystal lattice of cations &amp; anions</td>
+        <td>Discrete molecules held by IMFs</td>
+        <td>Lattice of cations in electron sea</td>
+      </tr>
+      <tr>
+        <td>How to break apart</td>
+        <td>Melt or dissolve to free ions</td>
+        <td>Overcome IMFs (relatively easy)</td>
+        <td>Overcome cation–electron sea attraction</td>
+      </tr>
+    </table>
+
+    <h3>Bond / IMF strength hierarchy — full picture</h3>
+    <p>From strongest to weakest, with typical effects on melting and boiling points:</p>
+    <table>
+      <tr><th>#</th><th>Type</th><th>Category</th><th>Relative strength</th><th>Example</th></tr>
+      <tr><td>1</td><td>Ionic bond</td><td>Intramolecular</td><td>Very strong</td><td>NaCl (MP 801°C)</td></tr>
+      <tr><td>2</td><td>Metallic bond</td><td>Intramolecular</td><td>Strong</td><td>Fe (BP 2862°C)</td></tr>
+      <tr><td>3</td><td>Covalent bond</td><td>Intramolecular</td><td>Moderate–strong</td><td>C–C, C=O</td></tr>
+      <tr><td>4</td><td>Hydrogen bonding</td><td>Intermolecular</td><td>Moderate (strongest IMF)</td><td>H₂O, HF, NH₃</td></tr>
+      <tr><td>5</td><td>Dipole-dipole</td><td>Intermolecular</td><td>Weak–moderate</td><td>HCl, H₂S</td></tr>
+      <tr><td>6</td><td>London dispersion</td><td>Intermolecular</td><td>Weak (but universal)</td><td>CH₄, I₂, noble gases</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SECTION 12 — QUICK REFERENCE QUIZ CHECKLIST
+  ══════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">✓</span>
+      <h2>Quiz-Ready Checklist</h2>
+      <span class="goal">Can you do all of these? Aim for 100%.</span>
+    </div>
+
+    <p>Go through each item. If you can do it confidently without looking at your notes, check it off.</p>
+
+    <table>
+      <tr><th>Topic</th><th>Skill to master</th></tr>
+      <tr><td>Bond prediction</td><td>Given two elements, predict the bond type using BOTH the element-type method and the ΔEN method.</td></tr>
+      <tr><td>Bond prediction</td><td>Explain why examining physical properties is the only way to know bond type "for certain."</td></tr>
+      <tr><td>Electronegativity</td><td>Describe the periodic table trend for electronegativity (increases →, decreases ↓). Name the most electronegative element.</td></tr>
+      <tr><td>Ionic bonding</td><td>Describe what happens to electrons when an ionic bond forms. Identify which atom becomes the cation and which becomes the anion.</td></tr>
+      <tr><td>Ionic bonding</td><td>Define crystal lattice and formula unit.</td></tr>
+      <tr><td>Ionic properties</td><td>List all properties of ionic compounds and explain each using the crystal lattice structure.</td></tr>
+      <tr><td>Ionic properties</td><td>Explain specifically why ionic compounds are brittle, and why they conduct electricity only when molten or dissolved.</td></tr>
+      <tr><td>Metallic bonding</td><td>Describe the "sea of electrons" model. Define: metallic bonding, malleability, ductility, alloy.</td></tr>
+      <tr><td>Metallic bonding</td><td>Explain each metallic property (conductivity, malleability, ductility, luster, high MP/BP) using the sea of electrons.</td></tr>
+      <tr><td>Metallic bonding</td><td>State the two factors that affect metallic bond strength. Name the measurement used to compare metallic bond strength.</td></tr>
+      <tr><td>Alloys</td><td>Distinguish substitutional vs. interstitial alloys with examples. State at least 3 benefits of alloys over pure metals.</td></tr>
+      <tr><td>Alloys</td><td>Identify the composition and one use/property of: bronze, brass, solder, sterling silver, 18K gold, stainless steel.</td></tr>
+      <tr><td>Lewis structures</td><td>Draw a correct Lewis structure for any molecular compound given its formula. Count valence electrons, place bonds, complete octets, add double/triple bonds if needed.</td></tr>
+      <tr><td>Octet rule</td><td>List all exceptions to the octet rule: H (duet), Be (4e), B/Al (6e), Period 3+ nonmetals (expanded octet). Give an example for each.</td></tr>
+      <tr><td>Resonance</td><td>Explain what resonance is and why neither single resonance structure accurately describes the molecule. Draw resonance structures for O₃ and CO₃²⁻.</td></tr>
+      <tr><td>VSEPR</td><td>Given any molecule, count electron regions (including lone pairs), name the molecular geometry, and state the bond angle.</td></tr>
+      <tr><td>VSEPR</td><td>Explain why lone pairs compress bond angles more than bonding pairs. Apply to NH₃ and H₂O specifically.</td></tr>
+      <tr><td>Polarity</td><td>Use the 5-step method to determine whether any molecule is polar or nonpolar. Draw the correct dipole arrows.</td></tr>
+      <tr><td>Polarity</td><td>Explain why two molecules with the same geometry can have different polarity (e.g., BCl₃ vs. CH₂O).</td></tr>
+      <tr><td>IMFs</td><td>Define and explain the three types of IMF. State the condition for each to be present.</td></tr>
+      <tr><td>IMFs</td><td>Given any molecule, identify all IMFs present. Explain why all molecules have London dispersion forces.</td></tr>
+      <tr><td>IMF &amp; properties</td><td>Explain the direct relationship between IMF strength and boiling/melting point, and the inverse relationship with vapor pressure.</td></tr>
+      <tr><td>IMF &amp; properties</td><td>Rank boiling points for a set of molecules. Apply: (1) IMF type first, (2) molecule size/electron count if same type.</td></tr>
+      <tr><td>Big picture</td><td>Compare ionic, covalent, and metallic compounds across: state, MP/BP, conductivity, solubility, malleability.</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
