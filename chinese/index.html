@@ -496,6 +496,7 @@
         <div class="tabs">
             <button class="tab-btn active" id="tab-reading">📖 文章阅读</button>
             <button class="tab-btn" id="tab-apreading">📘 AP阅读</button>
+            <button class="tab-btn" id="tab-apspeaking">🗣️ AP口语练习</button>
             <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习</button>
             <button class="tab-btn" id="tab-quiz">🧠 记忆测验</button>
         </div>
@@ -553,6 +554,32 @@
             </div>
 
             <div class="text-content" id="apTextContent">
+            </div>
+        </div>
+
+        <div id="section-apspeaking" class="hidden">
+            <div class="header-bar">
+                <label for="apSpeakingSelect" style="font-weight: bold; white-space: nowrap;">AP口语篇目:</label>
+                <select id="apSpeakingSelect"></select>
+            </div>
+
+            <div class="controls-bar">
+                <button class="btn" id="apsPlayBtn">▶ 播放全文</button>
+                <button class="btn" id="apsPauseBtn" disabled>⏸ 暂停</button>
+                <button class="btn" id="apsStopBtn" disabled>⏹ 停止</button>
+
+                <div class="control-group">
+                    <label for="apsSpeedRate">语速: <span id="apsSpeedValue">1.0</span>x</label>
+                    <input type="range" id="apsSpeedRate" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <label class="checkbox-control">
+                    <input type="checkbox" id="apsLoopCheck">
+                    全文循环
+                </label>
+            </div>
+
+            <div class="text-content" id="apsTextContent">
             </div>
         </div>
 
@@ -957,6 +984,129 @@
             }
         ];
 
+        // --- AP 口语练习 (Speaking Practice) ---
+        const apSpeakingArticles = [
+            {
+                title: "对话第1题：电子游戏",
+                content: `小明：你觉得现在的高中生花太多时间在电子游戏上了吗？你自己玩游戏吗？
+【参考答案】 我觉得这要看个人情况。适度玩游戏其实没什么问题，可以放松心情，锻炼反应能力，甚至培养团队合作精神。但如果沉迷游戏、影响睡眠和学业，那就是个问题了。我自己偶尔也会玩，但我会控制时间，通常只在完成作业之后才玩一小时左右。我认为关键在于自律，而不是完全禁止游戏。`
+            },
+            {
+                title: "对话第2题：学校活动",
+                content: `小明：你们学校最近有什么有趣的活动或者比赛吗？你参加了吗？
+【参考答案】 有的！上个月我们学校举办了一年一度的科学展览，各年级的同学都要提交一个科学研究项目。我和两个朋友一起研究了植物在不同光照条件下的生长速度，做了对照实验，最后拿到了年级第二名，非常开心。我觉得这种活动不仅能学到课本上没有的知识，还能培养动手能力和团队合作精神，比单纯考试更有意思。`
+            },
+            {
+                title: "对话第3题：好老师的品质",
+                content: `小明：你认为一个好老师应该具备哪些品质？
+【参考答案】 我觉得好老师最重要的品质有三点。第一是耐心，好老师不会因为学生不理解就表现出不耐烦，而是用不同的方式反复解释，直到学生明白为止。第二是热情，对自己所教学科充满热情的老师更容易激发学生的兴趣。第三是关心学生，不只关注成绩，也关注学生的情绪和生活。我的中文老师就具备这些品质，所以我非常喜欢上她的课。`
+            },
+            {
+                title: "对话第4题：学习压力",
+                content: `小明：你平时怎么处理学习压力和焦虑？有什么好方法可以分享吗？
+【参考答案】 我有几个应对压力的方法。首先，当我感到焦虑的时候，我会出去跑步或者散步，运动能帮我清空脑子，心情也会好很多。其次，我会把要做的事情列成清单，一件一件完成，这样感觉更有掌控感，焦虑也会减少。另外，和朋友聊天也很有帮助，说出来之后往往会发现事情没有想象的那么严重。我觉得最重要的是不要把压力积在心里。`
+            },
+            {
+                title: "对话第5题：学习外语",
+                content: `小明：你觉得学外语对年轻人来说有多重要？除了中文，你还想学什么语言？
+【参考答案】 我觉得学外语对年轻人来说非常重要。在全球化的今天，会多种语言不仅能拓宽就业机会，还能让我们更好地理解不同文化，增强跨文化沟通的能力。除了中文，我很想学西班牙语，因为西班牙语是世界上使用人数第二多的语言，在美国也非常实用。另外，西班牙语和英语有很多相似之处，学起来相对容易一些，我觉得这是个很好的起点。`
+            },
+            {
+                title: "对话第6题：手机依赖",
+                content: `小明：你认为现代人越来越依赖手机，这是好事还是坏事？
+【参考答案】 我觉得这是一把双刃剑，既有好处也有坏处。手机让我们的生活更加便利，可以随时获取信息、导航、联系家人朋友，大大提高了生活效率。但另一方面，过度依赖手机也带来了不少问题。很多人吃饭、走路甚至开车时都在看手机，既影响安全，也破坏了面对面交流的质量。我自己也有这个问题，所以我最近开始尝试在吃饭和睡觉前一小时把手机放到一边。`
+            },
+            {
+                title: "对话第7题：历史名人",
+                content: `小明：如果你能和历史上的一位中国名人见面，你会选谁？你想问他什么？
+【参考答案】 如果可以的话，我最想见的是孔子。孔子是中国历史上最伟大的思想家和教育家之一，他的思想影响了中国几千年的文化和价值观。我想问他，在那个战乱不断的年代，他是如何坚持推广仁义礼智的理念，始终不放弃自己的理想的。我也想问他，如果他生活在今天这个信息爆炸的时代，他会如何看待现代人的道德观和人际关系。我相信他一定有很多深刻的见解。`
+            },
+            {
+                title: "对话第8题：家庭节日传统",
+                content: `小明：你们家过节的时候有什么特别的传统或者习惯吗？
+【参考答案】 我们家有几个很有意思的节日习惯。每年感恩节，全家人都会聚在一起，每个人要说出这一年里最感谢的三件事，这个传统让我们更懂得珍惜生活。另外，我们家每年元旦都会一起写下新一年的目标，然后把去年写的目标拿出来对照，看看哪些实现了。这个习惯让我养成了定期反思和规划的好习惯。我觉得家庭传统是很珍贵的，它把家人的心连在一起。`
+            },
+            {
+                title: "对话第9题：环境保护的责任",
+                content: `小明：你觉得环境保护是个人的责任还是政府的责任？为什么？
+【参考答案】 我认为环境保护是个人和政府共同的责任，两者缺一不可。政府有权力制定法律法规，比如限制工厂排放、推广清洁能源，这些是个人无法做到的。但是，如果每个人在日常生活中不注重环保，比如随意丢垃圾、浪费水电，政策再好也难以奏效。我自己平时会尽量减少使用一次性塑料，出门带购物袋，也会把垃圾分类。我相信改变从自身做起，每一个小行动都有意义。`
+            },
+            {
+                title: "对话第10题：大学的重要性",
+                content: `小明：你觉得读大学一定重要吗？还是说有些人可以不上大学也能成功？
+【参考答案】 这是个很有争议的话题。我觉得大学对大多数人来说仍然很重要，它不仅提供专业知识，还能培养批判性思维、拓展人脉，这些对未来的发展都很有帮助。但我也承认，并不是每个人都需要走传统的大学路线。有些人在技术、艺术或创业方面有天赋，通过职业培训或者自学同样可以取得成功。比如很多科技公司的创始人都没有完成大学学业。所以我觉得关键不在于有没有上大学，而在于是否找到了适合自己的道路并且持续努力。`
+            },
+            {
+                title: "文化比较第1题：茶文化",
+                content: `请介绍中国的茶文化，包括饮茶的习俗和礼仪，以及它在中国社会中的文化意义。请与你所在文化中的饮品文化做比较。
+【参考答案】 茶在中国有几千年的历史，不仅仅是一种饮料，更是文化和礼仪的象征。在中国，以茶待客是一种重要的礼节，主人为客人倒茶代表着尊重和热情款待。中国茶的种类非常丰富，绿茶、红茶、乌龙茶、普洱茶各有特色，不同地区也有不同的饮茶习惯。在广东，早茶文化尤为盛行，家人和朋友在茶楼共饮早茶、享用点心，是重要的家庭聚会方式。
+与我所在的文化相比，咖啡在美国扮演着类似的社交角色。人们约朋友去咖啡馆聊天，也用咖啡提神。不同的是，中国茶文化更注重仪式感和内涵，讲究泡茶的方式和茶具的选择；而美国的咖啡文化则更注重速度和便利，外带咖啡杯随处可见。总的来说，两种文化中的饮品都承载着重要的社交功能，只是表达方式不同。`
+            },
+            {
+                title: "文化比较第2题：孝道文化",
+                content: `请介绍中国的孝道文化，说明孝顺父母在中国传统价值观中的地位，以及在现代社会中这一观念的变化。请与你所在文化的家庭观念做比较。
+【参考答案】 孝道是中国传统文化的核心价值之一，几千年来深刻影响着中国人的家庭观念和社会行为。孔子认为，孝顺父母是所有美德的根本。在传统中国社会，子女有义务赡养年迈的父母，重大决定也需要考虑父母的意见。清明节扫墓、重阳节陪伴老人，都是孝道文化的具体体现。
+然而，随着城镇化进程加快和西方文化的影响，孝道观念在现代年轻人中有所淡化。许多年轻人离家到城市工作，与父母的联系减少，养老院也逐渐增多。
+与我所在文化相比，美国更强调个人独立，子女成年后通常会离家独立生活，父母也鼓励子女自立。而中国传统上更强调家庭整体的利益，三代同堂的大家庭模式至今仍被很多人视为理想。这两种价值观各有优点，关键在于找到个人自由与家庭责任之间的平衡。`
+            },
+            {
+                title: "文化比较第3题：中秋节",
+                content: `请介绍中国的中秋节，包括节日的起源、主要习俗，以及它所代表的文化内涵。请与你所在文化中类似的节日做比较。
+【参考答案】 中秋节是中国重要的传统节日，每年农历八月十五举行，这一天月亮最圆最亮，象征团圆与美满。关于中秋节的起源，最著名的传说是嫦娥奔月的故事：嫦娥因吞下长生不老药而飞上月宫，从此与丈夫后羿天各一方。这个故事寄托了人们对团聚的深切渴望。
+中秋节的主要习俗包括赏月、吃月饼和提灯笼。月饼是中秋节最具代表性的食品，馅料有莲蓉、豆沙、蛋黄等多种口味，也是亲友之间互赠的节日礼品。
+与美国的感恩节相比，两者都强调家人团聚，都有特定的节日食物。不同的是，感恩节更侧重于表达感恩之情，而中秋节更强调对团圆的珍视和对故乡的思念。对于身处异乡的中国人来说，中秋节往往承载着浓浓的乡愁。`
+            },
+            {
+                title: "文化比较第4题：书法艺术",
+                content: `请介绍中国的书法艺术，包括它的历史、主要字体风格，以及书法在现代中国社会中的地位。请与你所在文化中类似的艺术形式做比较。
+【参考答案】 中国书法是一门有着几千年历史的传统艺术，被誉为中国文化的精髓之一。书法不仅仅是写字，更是通过笔墨线条表达情感和个性的艺术形式。中国书法主要有篆书、隶书、楷书、行书和草书五种字体，各有不同的美感：楷书端正工整，草书奔放流畅，行书介于两者之间，是日常书写最常用的字体。
+历史上，书法是文人士大夫必须掌握的技艺，好的书法作品与绘画、诗歌并称为中国传统文化的三大艺术。在现代社会，虽然电脑和手机已经取代了手写的实用功能，但书法作为艺术和文化传承的价值依然受到重视，许多学校仍将书法列为必修课。
+与我所在文化相比，西方的书法艺术——Calligraphy——同样注重字体的美感和笔触的技巧，常用于婚礼请柬和艺术创作。两者都强调练习和专注，但中国书法更强调精神修炼和内心平静，书写的过程本身就是一种修身养性的方式。`
+            },
+            {
+                title: "文化比较第5题：饮食礼仪",
+                content: `请介绍中国的饮食礼仪，包括餐桌上的规矩和待客之道，以及这些礼仪所反映的文化价值观。请与你所在文化的饮食礼仪做比较。
+【参考答案】 中国的饮食礼仪历史悠久，体现了中国文化中对尊老敬长和人际关系的重视。在中国的传统餐桌上，晚辈应该等长辈先动筷子；为他人夹菜是表示关心和热情的方式；主人会不停地给客人添饭加菜，表示对客人的款待。此外，餐桌上的座次也有讲究，地位最尊贵的客人通常坐在面对门口的主位。
+共享式的用餐方式是中国饮食文化的重要特征。所有菜肴放在桌子中间，大家一起分享，象征着团结和共融，与西方各自点餐、各吃各的方式截然不同。
+与美国的饮食礼仪相比，两者都强调礼貌和尊重，但表现方式不同。美国更注重个人选择，分餐制保证了个人卫生和饮食自由；中国的合餐制则更强调集体感和情感联结。此外，美国餐桌礼仪中不建议发出吃饭的声音，而在一些亚洲文化中，适当的声音反而表示食物好吃。这些差异折射出两种文化对个人主义与集体主义的不同侧重。`
+            },
+            {
+                title: "文化比较第6题：武术文化",
+                content: `请介绍中国的武术文化，说明武术在中国历史和现代社会中的地位，以及它在全球的传播与影响。请与你所在文化中的体育或武术传统做比较。
+【参考答案】 中国武术，俗称功夫，是中国传统文化的重要组成部分，有着数千年的历史。武术最初是古代战争和自卫的技能，后来逐渐演变为兼具健身、表演和哲学内涵的综合艺术。中国武术流派众多，包括少林功夫、太极拳、咏春拳等，每种流派都有独特的技法和哲学理念。其中太极拳以柔克刚、以静制动，不仅是武术，更是一种身心修炼的方式，在中国老年人群中极为流行。
+随着李小龙、成龙等电影明星将中国功夫带向世界，中国武术在全球范围内获得了广泛的关注和喜爱。目前全球有数千万人在练习某种形式的中国武术。2020年，太极拳被列入联合国教科文组织非物质文化遗产名录。
+与我所在文化的体育传统相比，美国有棒球、美式足球等国家运动，这些运动同样承载着深厚的文化认同和民族情感。不同的是，中国武术更强调内外兼修，不仅锻炼身体，更注重培养意志力、专注力和道德品质，这与中国文化中修身养性的传统密切相关。`
+            },
+            {
+                title: "文化比较第7题：红包文化",
+                content: `请介绍中国的红包文化，说明红包在不同场合的用途和意义，以及电子红包兴起后的变化。请与你所在文化中类似的礼金习俗做比较。
+【参考答案】 红包在中国文化中有着重要的地位，是表达祝福、传递情意的重要方式。传统上，红色象征着好运和喜庆，长辈在春节时给晚辈发红包，寓意压岁、平安。除了春节，红包还广泛用于婚礼、满月、生日等喜庆场合，金额因关系亲疏和地区习俗而有所不同。
+近年来，随着移动支付的普及，微信红包彻底改变了红包文化的形式。电子红包不仅方便快捷，还增加了互动趣味——抢红包已经成为春节期间家庭和朋友群里最热闹的活动之一。据统计，每年春节期间微信红包的发送数量高达数百亿个。
+与我所在文化相比，在美国，送礼金在婚礼和毕业典礼上也很常见，通常装在贺卡里赠送。不同的是，中国的红包文化更加系统化，不同场合有约定俗成的金额范围；而美国的礼金更加随意，金额完全由送礼人自行决定。两者都表达了对他人的祝福与关爱，只是包装和形式不同。`
+            },
+            {
+                title: "文化比较第8题：教育观念",
+                content: `请介绍中国的教育观念，包括中国家庭对教育的重视程度和期望，以及这种观念对学生和家庭的影响。请与你所在文化的教育观念做比较。
+【参考答案】 在中国文化中，教育被视为改变命运、实现社会阶层流动的最重要途径。这一观念深受儒家思想影响——孔子强调通过学习不断完善自我，读书做官的传统更是延续了千年。许多中国家庭愿意倾尽全力为子女提供最好的教育资源，课外补习、兴趣班和重点学校的竞争十分激烈。家长们普遍认为，孩子学习成绩的好坏不仅关系到个人前途，也直接影响家庭的荣誉和面子。
+这种高度重视教育的文化催生了中国学生普遍的勤奋和刻苦，但也带来了不容忽视的负面影响：学生心理压力过大、睡眠不足、课外活动时间极少等问题已引发社会广泛讨论。
+与美国的教育观念相比，美国家庭更强调综合素质的培养，鼓励孩子发展个人兴趣、参与社区活动和体育运动，认为快乐和自信同样重要。而中国的教育观念则更侧重学业成绩和未来的职业稳定性。近年来，两种教育理念都在相互借鉴，中国也开始强调素质教育，美国也越来越重视学生的学业竞争力。`
+            },
+            {
+                title: "文化比较第9题：端午节",
+                content: `请介绍中国的龙舟节（端午节），包括节日的起源、主要习俗，以及这个节日在现代中国的传承与发展。请与你所在文化中类似的节日做比较。
+【参考答案】 端午节是中国重要的传统节日，每年农历五月初五举行，至今已有两千多年的历史。端午节最广为人知的起源与爱国诗人屈原有关。屈原是战国时期楚国的大臣，因忧国忧民、报国无门，于五月初五投汨罗江而死。百姓为了纪念他、防止鱼虾啃食其遗体，纷纷划船打捞，并向江中投入粽子。这便是赛龙舟和吃粽子习俗的由来。
+端午节的主要习俗包括赛龙舟、吃粽子、挂艾草和佩戴香囊。粽子是用糯米包裹各种馅料、以竹叶或芦叶包扎而成，馅料有咸肉、红豆、蛋黄等多种口味，各地做法不尽相同。赛龙舟则是一项充满力量与激情的集体运动，象征着团结协作的精神。
+与美国的独立日相比，两者都是重要的民族节日，都与历史事件密切相关，也都有盛大的户外庆典活动。不同的是，独立日庆祝的是国家诞生，充满欢庆气氛；端午节则带有一定的悼念色彩，在欢乐中也蕴含着对先贤的敬仰与怀念。`
+            },
+            {
+                title: "文化比较第10题：城乡差距",
+                content: `请介绍中国的城乡差距现象，说明这一社会问题的成因、影响，以及中国政府和社会为缩小差距所做的努力。请与你所在文化中类似的社会问题做比较。
+【参考答案】 城乡差距是中国在快速发展过程中面临的重要社会问题之一。改革开放以来，中国城市经济高速增长，而农村地区的发展相对滞后，城乡之间在收入水平、教育资源、医疗条件和基础设施等方面存在明显差距。许多农村孩子缺乏高质量的学校和师资，进一步限制了他们未来的发展机会，形成了贫困的代际传递。
+为了缩小城乡差距，中国政府实施了一系列政策，包括精准扶贫计划、农村基础设施建设、推进农村宽带网络覆盖，以及通过互联网直播带货帮助农民销售农产品。这些举措取得了一定成效，极大减少了农村绝对贫困人口的数量。
+与美国相比，城乡差距和贫富分化同样是存在的社会问题。美国农村地区在医疗、教育和就业机会方面也面临类似的挑战，部分农业州的经济发展明显落后于沿海大城市。两个国家都在探索如何通过政策和技术手段实现更均衡的发展，这也反映出不同社会制度下共同面临的现代化挑战。`
+            }
+        ];
+
         // --- 词汇列表 ---
         const studyGroups = {
         "熊猫虎子": [
@@ -1106,11 +1256,13 @@
         // Tabs
         const tabReadingBtn = document.getElementById('tab-reading');
         const tabApReadingBtn = document.getElementById('tab-apreading');
+        const tabApSpeakingBtn = document.getElementById('tab-apspeaking');
         const tabVocabBtn = document.getElementById('tab-vocab');
         const tabQuizBtn = document.getElementById('tab-quiz');
 
         const sectionReading = document.getElementById('section-reading');
         const sectionApReading = document.getElementById('section-apreading');
+        const sectionApSpeaking = document.getElementById('section-apspeaking');
         const sectionVocab = document.getElementById('section-vocab');
         const sectionQuiz = document.getElementById('section-quiz');
 
@@ -1133,6 +1285,16 @@
         const apSpeedRate = document.getElementById('apSpeedRate');
         const apSpeedValue = document.getElementById('apSpeedValue');
         const apLoopCheck = document.getElementById('apLoopCheck');
+
+        // AP Speaking Elements
+        const apsArticleSelect = document.getElementById('apSpeakingSelect');
+        const apsTextContentContainer = document.getElementById('apsTextContent');
+        const apsPlayBtn = document.getElementById('apsPlayBtn');
+        const apsPauseBtn = document.getElementById('apsPauseBtn');
+        const apsStopBtn = document.getElementById('apsStopBtn');
+        const apsSpeedRate = document.getElementById('apsSpeedRate');
+        const apsSpeedValue = document.getElementById('apsSpeedValue');
+        const apsLoopCheck = document.getElementById('apsLoopCheck');
 
         // Vocab Elements
         const vWord = document.getElementById('vWord');
@@ -1251,6 +1413,12 @@
         let apCurrentReadIndex = 0;
         let apReadState = 'STOPPED';
         let apCurrentSessionId = 0;
+
+        // AP Speaking State
+        let apsSentencesDOM = [];
+        let apsCurrentReadIndex = 0;
+        let apsReadState = 'STOPPED';
+        let apsCurrentSessionId = 0;
 
         // Active study group
         let activeGroup = "熊猫虎子";
@@ -1391,16 +1559,19 @@
         function switchTab(mode) {
             stopReadingPlayback();
             stopApReadingPlayback();
+            stopApSpeakingPlayback();
             synth.cancel();
             currentVocabSessionId++; // 中断任何正在进行的词汇连播
 
             // 隐藏所有
             tabReadingBtn.classList.remove('active');
             tabApReadingBtn.classList.remove('active');
+            tabApSpeakingBtn.classList.remove('active');
             tabVocabBtn.classList.remove('active');
             tabQuizBtn.classList.remove('active');
             sectionReading.classList.add('hidden');
             sectionApReading.classList.add('hidden');
+            sectionApSpeaking.classList.add('hidden');
             sectionVocab.classList.add('hidden');
             sectionQuiz.classList.add('hidden');
 
@@ -1414,12 +1585,17 @@
                 sectionApReading.classList.remove('hidden');
                 apSpeedRate.value = vocabSpeedRate.value;
                 apSpeedValue.textContent = apSpeedRate.value;
+            } else if (mode === 'apspeaking') {
+                tabApSpeakingBtn.classList.add('active');
+                sectionApSpeaking.classList.remove('hidden');
+                apsSpeedRate.value = vocabSpeedRate.value;
+                apsSpeedValue.textContent = apsSpeedRate.value;
             } else if (mode === 'vocab') {
                 tabVocabBtn.classList.add('active');
                 sectionVocab.classList.remove('hidden');
                 vocabSpeedRate.value = speedRate.value;
                 vocabSpeedValue.textContent = vocabSpeedRate.value;
-                renderVocabCard(true); 
+                renderVocabCard(true);
             } else if (mode === 'quiz') {
                 tabQuizBtn.classList.add('active');
                 sectionQuiz.classList.remove('hidden');
@@ -1429,6 +1605,7 @@
 
         tabReadingBtn.onclick = () => switchTab('reading');
         tabApReadingBtn.onclick = () => switchTab('apreading');
+        tabApSpeakingBtn.onclick = () => switchTab('apspeaking');
         tabVocabBtn.onclick = () => switchTab('vocab');
         tabQuizBtn.onclick = () => switchTab('quiz');
 
@@ -1998,6 +2175,135 @@
         apSpeedRate.oninput = (e) => apSpeedValue.textContent = Number(e.target.value).toFixed(1);
         apSpeedRate.onchange = () => { if (apReadState === 'PLAYING') apPlayReadingFrom(apCurrentReadIndex); };
 
+        // ==========================================
+        // 7c. AP 口语练习 (AP Speaking) 核心功能
+        // ==========================================
+        function apsInitSelect() {
+            apSpeakingArticles.forEach((article, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = article.title;
+                apsArticleSelect.appendChild(option);
+            });
+            apsArticleSelect.addEventListener('change', (e) => {
+                apsLoadArticle(e.target.value);
+            });
+        }
+
+        function apsLoadArticle(index) {
+            stopApSpeakingPlayback();
+            const article = apSpeakingArticles[index];
+            apsTextContentContainer.innerHTML = parseTextToHTML(article.content);
+            apsSentencesDOM = apsTextContentContainer.querySelectorAll('.sentence');
+            apsCurrentReadIndex = 0;
+            apsTextContentContainer.scrollTop = 0;
+            apsSentencesDOM.forEach((span, i) => {
+                span.title = '点击从此处开始播放 (Click to play from here)';
+                span.onclick = () => apsPlayReadingFrom(i);
+            });
+        }
+
+        function apsUpdateReadingButtons() {
+            if (apsReadState === 'STOPPED') {
+                apsPlayBtn.disabled = false;
+                apsPauseBtn.disabled = true;
+                apsStopBtn.disabled = true;
+            } else if (apsReadState === 'PLAYING') {
+                apsPlayBtn.disabled = true;
+                apsPauseBtn.disabled = false;
+                apsStopBtn.disabled = false;
+            } else if (apsReadState === 'PAUSED') {
+                apsPlayBtn.disabled = false;
+                apsPauseBtn.disabled = true;
+                apsStopBtn.disabled = false;
+            }
+        }
+
+        function apsRemoveHighlights() {
+            apsSentencesDOM.forEach(s => s.classList.remove('highlight'));
+        }
+
+        function apsPlayReadingFrom(index) {
+            apsCurrentSessionId++;
+            synth.cancel();
+            apsCurrentReadIndex = index;
+            apsReadState = 'PLAYING';
+            apsUpdateReadingButtons();
+
+            setTimeout(() => {
+                if (apsReadState === 'PLAYING') apsSpeakReadingSentence(apsCurrentReadIndex);
+            }, 250);
+        }
+
+        function apsSpeakReadingSentence(index) {
+            if (!apsSentencesDOM || apsSentencesDOM.length === 0) return;
+
+            if (index >= apsSentencesDOM.length) {
+                if (apsLoopCheck.checked) apsPlayReadingFrom(0);
+                else stopApSpeakingPlayback();
+                return;
+            }
+
+            apsRemoveHighlights();
+            const currentSpan = apsSentencesDOM[index];
+            currentSpan.classList.add('highlight');
+            currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            let utterance = makeUtterance(currentSpan.textContent, parseFloat(apsSpeedRate.value));
+
+            keepAliveArray.push(utterance);
+            if (keepAliveArray.length > 50) keepAliveArray.shift();
+
+            let capturedSessionId = apsCurrentSessionId;
+
+            utterance.onend = function() {
+                if (capturedSessionId !== apsCurrentSessionId) return;
+                if (apsReadState === 'PLAYING') {
+                    apsCurrentReadIndex++;
+                    setTimeout(() => {
+                        if (capturedSessionId === apsCurrentSessionId && apsReadState === 'PLAYING') {
+                            apsSpeakReadingSentence(apsCurrentReadIndex);
+                        }
+                    }, 150);
+                }
+            };
+
+            utterance.onerror = function() {
+                if (capturedSessionId !== apsCurrentSessionId) return;
+                if (apsReadState === 'PLAYING') {
+                    apsCurrentReadIndex++;
+                    setTimeout(() => apsSpeakReadingSentence(apsCurrentReadIndex), 150);
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        function stopApSpeakingPlayback() {
+            apsCurrentSessionId++;
+            apsReadState = 'STOPPED';
+            synth.cancel();
+            apsRemoveHighlights();
+            apsCurrentReadIndex = 0;
+            apsUpdateReadingButtons();
+        }
+
+        apsPlayBtn.onclick = () => {
+            if (apsReadState === 'STOPPED') apsPlayReadingFrom(0);
+            else if (apsReadState === 'PAUSED') {
+                apsReadState = 'PLAYING'; synth.resume(); apsUpdateReadingButtons();
+            }
+        };
+        apsPauseBtn.onclick = () => {
+            if (apsReadState === 'PLAYING') {
+                apsReadState = 'PAUSED'; synth.pause(); apsUpdateReadingButtons();
+            }
+        };
+        apsStopBtn.onclick = () => stopApSpeakingPlayback();
+
+        apsSpeedRate.oninput = (e) => apsSpeedValue.textContent = Number(e.target.value).toFixed(1);
+        apsSpeedRate.onchange = () => { if (apsReadState === 'PLAYING') apsPlayReadingFrom(apsCurrentReadIndex); };
+
         window.onbeforeunload = () => synth.cancel();
 
         // ==========================================
@@ -2025,6 +2331,8 @@
         loadArticle(0);
         apInitSelect();
         apLoadArticle(0);
+        apsInitSelect();
+        apsLoadArticle(0);
         renderVocabCard(false);
         renderQuizCard(); // 初始化测验数据
 
