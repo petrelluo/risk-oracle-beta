@@ -497,6 +497,7 @@
             <button class="tab-btn active" id="tab-reading">📖 文章阅读</button>
             <button class="tab-btn" id="tab-apreading">📘 AP阅读</button>
             <button class="tab-btn" id="tab-apspeaking">🗣️ AP口语练习</button>
+            <button class="tab-btn" id="tab-apspeaking2">🎤 AP口语练习2</button>
             <button class="tab-btn" id="tab-vocab">🗂️ 词汇学习</button>
             <button class="tab-btn" id="tab-quiz">🧠 记忆测验</button>
         </div>
@@ -580,6 +581,32 @@
             </div>
 
             <div class="text-content" id="apsTextContent">
+            </div>
+        </div>
+
+        <div id="section-apspeaking2" class="hidden">
+            <div class="header-bar">
+                <label for="apSpeaking2Select" style="font-weight: bold; white-space: nowrap;">AP口语2 篇目:</label>
+                <select id="apSpeaking2Select"></select>
+            </div>
+
+            <div class="controls-bar">
+                <button class="btn" id="aps2PlayBtn">▶ 播放全文</button>
+                <button class="btn" id="aps2PauseBtn" disabled>⏸ 暂停</button>
+                <button class="btn" id="aps2StopBtn" disabled>⏹ 停止</button>
+
+                <div class="control-group">
+                    <label for="aps2SpeedRate">语速: <span id="aps2SpeedValue">1.0</span>x</label>
+                    <input type="range" id="aps2SpeedRate" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+
+                <label class="checkbox-control">
+                    <input type="checkbox" id="aps2LoopCheck">
+                    全文循环
+                </label>
+            </div>
+
+            <div class="text-content" id="aps2TextContent">
             </div>
         </div>
 
@@ -1107,6 +1134,160 @@
             }
         ];
 
+        // --- AP 口语练习 2 (Cultural Presentation - 30 Topics) ---
+        const apSpeaking2Articles = [
+            {
+                title: "第1题：春节",
+                content: `请介绍中国的春节，并谈谈春节的重要性。
+【范文】 春节是中国最重要的传统节日，也叫农历新年。春节在农历一月一日，通常在公历一月底或二月初。春节前，家家户户都会打扫房子，贴春联，挂红灯笼。除夕夜，全家人一起吃年夜饭，饺子和鱼是必不可少的菜，因为饺子的形状像元宝，代表财富，而鱼代表年年有余。吃完饭，大家一起看春晚，放鞭炮。长辈会给小孩红包，叫压岁钱，祝他们平安健康。春节期间，人们互相拜年，说吉祥话，比如恭喜发财，万事如意。春节不仅是庆祝新年，更是家人团聚的重要时刻，体现了中国人重视家庭和传统的价值观。`
+            },
+            {
+                title: "第2题：中秋节",
+                content: `请介绍中秋节，并说明它在中国文化中的意义。
+【范文】 中秋节是中国第二重要的传统节日，在农历八月十五。这一天的月亮又圆又亮，象征着团圆和美满。中秋节最有名的食物是月饼，月饼是圆的，代表家人团圆。月饼的馅料有很多种，比如豆沙，莲蓉，蛋黄等。关于中秋节，有一个著名的传说叫嫦娥奔月。嫦娥是后羿的妻子，她吃了长生不老药，飞到了月亮上。中秋之夜，家人会聚在一起，一边赏月，一边吃月饼，一边喝茶聊天。在外地工作的人也会尽量回家和家人团聚。中秋节体现了中国人对家庭团圆的重视，也表达了人们对美好生活的向往。`
+            },
+            {
+                title: "第3题：端午节",
+                content: `请介绍端午节的由来和习俗。
+【范文】 端午节是中国的传统节日，在农历五月初五。这个节日已经有两千多年的历史了。端午节的由来和一位古代诗人有关，他叫屈原。屈原是战国时期楚国的爱国诗人，他因为国家灭亡，悲痛地跳进了汨罗江。老百姓为了纪念他，每年在这一天划龙舟，把粽子扔进江里，不让鱼吃他的身体。所以端午节有两个最重要的习俗：一是赛龙舟，几十个人一起划一条长长的船，场面非常热闹；二是吃粽子，粽子是用竹叶包着糯米和各种馅料做的。此外，人们还会在门上挂艾草，给小孩戴香包，希望驱邪避病。端午节不仅是一个传统节日，更体现了中国人的爱国精神和对英雄的怀念。`
+            },
+            {
+                title: "第4题：清明节",
+                content: `请介绍清明节及其文化意义。
+【范文】 清明节是中国的传统节日，一般在公历四月四日或五日。清明节的主要活动是扫墓，也就是去祖先的坟墓前祭拜。人们会带着鲜花，水果，纸钱等祭品，清理墓地，烧纸钱，磕头，表达对祖先的怀念和尊敬。这个习俗体现了中国文化中非常重要的孝道观念。除了扫墓，清明节还是一个踏青的好时候，因为这时春天到了，天气暖和，花开了，很多家庭会一起去郊外散步，放风筝，享受春天的美好。清明节有一句古诗很有名：清明时节雨纷纷，路上行人欲断魂，描写了这个节日忧伤的气氛。清明节让我们记住从哪里来，也提醒我们要珍惜现在的生活。`
+            },
+            {
+                title: "第5题：元宵节",
+                content: `请介绍元宵节及其主要习俗。
+【范文】 元宵节在农历正月十五，是春节之后的第一个重要节日，也是春节庆祝活动的结束。这一天的月亮是新年的第一个满月。元宵节最重要的习俗是吃元宵，也叫汤圆。元宵是圆圆的，代表团圆和美满，里面有各种各样的馅，比如芝麻，豆沙，花生等。另一个重要的习俗是看花灯。街上挂满了各种各样的灯笼，有动物的，有人物的，非常漂亮。人们还喜欢猜灯谜，就是把谜语写在灯笼上，大家一起猜，猜对了有奖励，非常有趣。在古代，元宵节也是年轻男女约会的日子，所以有人说元宵节是中国的情人节。元宵节体现了中国人对团圆和幸福生活的追求。`
+            },
+            {
+                title: "第6题：孔子与儒家思想",
+                content: `请介绍孔子及其思想对中国文化的影响。
+【范文】 孔子是中国古代最伟大的思想家和教育家，生活在两千五百多年前的春秋时期。他创立了儒家学派，他的思想深深地影响了中国文化两千多年。孔子的主要思想是仁，义，礼，智，信。仁就是爱人，要对别人有同情心；礼就是要有礼貌，尊重社会秩序；孝就是要尊敬父母和长辈。孔子非常重视教育，他说有教无类，意思是每个人都应该有受教育的机会。他还说学而时习之，不亦说乎，强调学习的重要性。孔子的学生把他的话记录下来，编成了论语这本书。今天，孔子的思想不仅在中国，在韩国，日本，越南等亚洲国家也有很大影响。很多国家都有孔子学院，传播中国文化。孔子的思想是中国文化的核心，对中国人的家庭观念，教育观念，和社会道德都有深远的影响。`
+            },
+            {
+                title: "第7题：老子与道家思想",
+                content: `请介绍老子和道家思想的主要内容。
+【范文】 老子是中国古代另一位伟大的思想家，他创立了道家学派。老子和孔子生活在差不多的时代，据说孔子还向他请教过问题。老子的思想和儒家不同，他写了一本书叫道德经，虽然只有五千字，但是内容非常深刻。道家思想的核心是道和无为。道是宇宙万物的根本，是自然的规律。无为不是什么都不做，而是顺其自然，不强求。老子还提出了很多有名的思想，比如上善若水，意思是最高的善良像水一样，柔软但有力量；还有天下难事必作于易，告诉我们做事要从简单的开始。道家思想对中国人的性格有很大影响，让中国人学会了随遇而安，知足常乐。今天，道家思想不仅影响中国文化，在西方也越来越受欢迎，很多人用它来面对现代生活的压力。`
+            },
+            {
+                title: "第8题：秦始皇",
+                content: `请介绍秦始皇及其历史贡献。
+【范文】 秦始皇是中国历史上第一个皇帝，生活在两千多年前。他的名字叫嬴政，秦始皇的意思是秦朝第一个皇帝。在他之前，中国有七个大国，经常打仗，老百姓生活很苦。秦始皇用十年的时间，打败了其他六个国家，第一次统一了中国。统一以后，他做了很多重要的事情。第一，他统一了文字，让全国人都使用同样的汉字；第二，他统一了度量衡和货币，让贸易更方便；第三，他修建了万里长城，防止北方的敌人入侵；第四，他还修建了大运河和很多道路，让交通更方便。秦始皇死后，他被葬在一个巨大的陵墓里，就是今天西安附近的兵马俑。兵马俑有八千多个真人大小的陶俑，被称为世界第八大奇迹。虽然秦始皇非常严厉，他的统治也有很多问题，但是他为中国两千多年的统一奠定了基础，影响非常深远。`
+            },
+            {
+                title: "第9题：孙中山",
+                content: `请介绍孙中山及其对现代中国的贡献。
+【范文】 孙中山是现代中国的国父，他领导了中国历史上非常重要的一场革命。孙中山出生在1866年的广东，年轻时去美国和欧洲学习，成为一名医生。但是他看到中国被外国人欺负，老百姓生活很苦，所以决定放弃医生的工作，投身革命。他的目标是推翻两千多年的君主制度，建立一个新的国家。1911年，辛亥革命成功，推翻了清朝，结束了中国两千多年的封建帝制。1912年，中华民国成立，孙中山成为第一任临时大总统。孙中山提出了三民主义，就是民族，民权，民生，意思是国家要独立，人民要有权利，大家要有好生活。这是中国现代化的重要指导思想。虽然孙中山后来因为身体不好去世了，革命也没有完全成功，但是他被中国大陆和台湾都尊为国父。他的思想和精神一直影响着中国人。`
+            },
+            {
+                title: "第10题：京剧",
+                content: `请介绍京剧及其艺术特色。
+【范文】 京剧是中国最有名的传统戏曲，被称为中国的国剧。京剧有两百多年的历史，起源于北京，所以叫京剧。京剧是一门综合艺术，结合了唱，念，做，打四种表演形式。京剧的角色分为四大类：生，旦，净，丑。生是男性角色，旦是女性角色，净是性格鲜明的男性角色，丑是喜剧角色。京剧最有特色的是脸谱，演员用不同颜色的妆画在脸上，每种颜色代表不同的性格。比如红色代表忠诚，像关公；黑色代表正直，像包公；白色代表奸诈，像曹操。京剧的服装也非常漂亮，色彩鲜艳，绣着精美的图案。京剧的音乐用锣鼓和二胡等乐器伴奏。有名的京剧有霸王别姬，贵妃醉酒等。最有名的京剧演员是梅兰芳，他把京剧介绍到了世界各地。现在，京剧不仅在中国，在世界上也很有影响，是中国文化的重要代表。`
+            },
+            {
+                title: "第11题：书法",
+                content: `请介绍中国书法艺术。
+【范文】 书法是中国独有的艺术形式，有三千多年的历史。在中国文化中，书法不只是把字写漂亮，更是一种表达情感和修养的方式。练习书法的人需要用到文房四宝，就是笔，墨，纸，砚。这四样东西都很讲究，特别是毛笔，用动物的毛做成，可以写出粗细不同的线条。书法有五种主要的字体：篆书，隶书，楷书，行书，草书。篆书最古老，楷书最规矩，适合初学者；行书写得快一点，像在走路；草书写得最快，像在跑步，看起来像画一样。中国历史上有很多有名的书法家，最有名的是王羲之，他的作品兰亭序被称为天下第一行书。学书法不仅可以写出漂亮的字，还可以培养耐心和专注力，让人心静下来。今天，很多中国人，特别是老年人，还在练习书法，把它当作一种爱好和健身方式。`
+            },
+            {
+                title: "第12题：中国画",
+                content: `请介绍中国画的特点。
+【范文】 中国画，也叫国画，是中国传统的绘画艺术，有几千年的历史。中国画和西方油画非常不同。西方油画注重写实，光影，和色彩；中国画更注重意境和精神，不一定要画得很像，但是要画出感觉。中国画用毛笔，墨，和宣纸，颜料大多是从植物和矿物里做出来的。中国画最有特色的是水墨画，只用黑色的墨，通过浓淡的变化，就能画出丰富的世界。中国画的题材很多，最主要的有三种：山水画，花鸟画，和人物画。山水画画山川河流，表达对自然的爱；花鸟画画梅，兰，竹，菊，代表不同的品德；人物画画历史人物和神话故事。中国画常常有留白，就是画上留有空白的地方，让人去想象。很多画还会题诗，把诗，画，书法结合在一起。有名的画家有齐白石，徐悲鸿等。中国画体现了中国人对自然的热爱和哲学思考。`
+            },
+            {
+                title: "第13题：剪纸",
+                content: `请介绍中国的剪纸艺术。
+【范文】 剪纸是中国最古老，最普及的民间艺术之一，有一千五百多年的历史。剪纸就是用剪刀或者刻刀在红纸上剪出各种图案。剪纸的工具很简单，但是作品非常精美。剪纸的内容很丰富，有花，鸟，动物，人物，和各种吉祥图案。最常见的是十二生肖，福字，和双喜字。在中国传统文化中，红色代表喜庆和好运，所以剪纸大多用红色的纸。剪纸在中国人的生活中有很重要的作用。过春节的时候，家家户户会把窗花贴在窗户上，让房子看起来更热闹。结婚的时候，要贴双喜字，表示双喜临门。生孩子，过生日，也都会用剪纸来装饰。剪纸还体现了中国人的审美观，讲究对称和平衡。剪纸主要由农村妇女代代相传，是女性智慧的体现。2009年，中国剪纸被联合国教科文组织列入世界非物质文化遗产，是中国文化的瑰宝。`
+            },
+            {
+                title: "第14题：中国结",
+                content: `请介绍中国结的文化意义。
+【范文】 中国结是一种传统的中国手工艺品，有上千年的历史。中国结是用一根红色的线，通过各种复杂的方法编出来的装饰品。一根线从头到尾不断，象征着团圆和圆满。中国结的种类很多，每种都有不同的名字和意义。比如盘长结代表长寿，如意结代表事事如意，吉祥结代表吉祥平安。中国结最常用的颜色是红色，因为红色在中国文化里代表喜庆，好运，和热情。中国结在中国人的生活中随处可见。过年的时候，人们把中国结挂在家里，祈求新年好运；结婚的时候，中国结是重要的装饰品；送朋友礼物，中国结是很好的选择。中国结不仅漂亮，还有深刻的文化意义。它体现了中国人对美好生活的追求，对家人平安的祝愿，对友谊的珍惜。今天，中国结已经成为中国文化的象征之一，被很多外国人喜爱。`
+            },
+            {
+                title: "第15题：中国茶文化",
+                content: `请介绍中国的茶文化。
+【范文】 中国是茶的故乡，有五千年的茶文化。根据传说，神农氏在四千多年前发现了茶。中国的茶分为六大类：绿茶，红茶，乌龙茶，白茶，黄茶，和黑茶。最有名的绿茶是西湖龙井和碧螺春；最有名的乌龙茶是铁观音和大红袍；最有名的红茶是祁门红茶。不同的茶有不同的功效，比如绿茶可以清热降火，红茶可以暖胃，乌龙茶可以帮助减肥。喝茶在中国文化里不只是解渴，更是一种生活艺术。中国人有专门的茶艺，用功夫茶的方法泡茶，非常讲究。茶具要漂亮，水要好水，温度要合适，每一步都要用心。中国人也用茶来招待客人，表示尊重和热情。当客人来家里，第一件事就是给他倒一杯茶。茶文化也和禅宗文化有关，很多和尚都喜欢喝茶，因为喝茶可以让心静下来。茶文化体现了中国人的生活哲学：慢下来，用心品味。`
+            },
+            {
+                title: "第16题：八大菜系",
+                content: `请介绍中国的八大菜系。
+【范文】 中国是一个很大的国家，各地的气候，物产，和生活习惯不同，所以形成了不同的饮食文化。中国有八大菜系，分别是川菜，粤菜，鲁菜，苏菜，浙菜，闽菜，湘菜，和徽菜。每个菜系都有自己的特点。川菜来自四川，最大的特点是麻辣，因为四川湿润，辣椒和花椒可以去湿。有名的川菜有麻婆豆腐，宫保鸡丁，水煮鱼。粤菜来自广东，口味比较清淡，注重食物的原味，有名的菜有广东点心，白切鸡，烤乳猪。粤菜在世界上影响最大，因为很多华侨来自广东。鲁菜来自山东，是中国北方菜的代表，口味比较咸。苏菜和浙菜来自江南地区，口味比较甜，注重造型，很精致。湘菜来自湖南，也很辣，但是和川菜不一样，湘菜更酸辣。中国人有句话说：民以食为天，意思是吃饭是最重要的事情。八大菜系体现了中国丰富多彩的饮食文化。`
+            },
+            {
+                title: "第17题：饺子",
+                content: `请介绍中国饺子的文化意义。
+【范文】 饺子是中国最有代表性的传统食物之一，有一千八百多年的历史。据说，饺子是东汉的一位叫张仲景的医生发明的，最早是用来治病的。饺子的形状像古代的金元宝，所以吃饺子象征着财富和好运。饺子的做法是用面粉做皮，里面包上各种馅料，然后放在水里煮，或者用油煎。饺子的馅料非常丰富，有猪肉白菜馅，牛肉馅，羊肉馅，虾仁馅，还有素馅。每个地方的口味都不一样。吃饺子要蘸醋和酱油，有的地方还要加辣椒油和蒜。饺子在中国文化里有特别的意义，尤其是在北方。过春节的时候，全家人一起包饺子，一起吃饺子，是最重要的传统。除夕夜吃的饺子叫更岁交子，意思是新旧年交接。有时候人们还会在饺子里放一个硬币，谁吃到谁就是新年最幸运的人。吃饺子不只是吃一种食物，更是一种家人团聚，分享快乐的方式。`
+            },
+            {
+                title: "第18题：筷子的使用",
+                content: `请介绍中国筷子的文化及使用礼仪。
+【范文】 筷子是中国人最主要的餐具，已经有三千多年的历史。筷子最早是用树枝做的，后来用竹子，木头，甚至金属和象牙。今天大多数筷子是用竹子或木头做的，也有塑料的。和西方的刀叉不同，两根小小的筷子可以做很多事情：夹，挑，撕，拌，都没问题。筷子不仅是餐具，还有丰富的文化意义。筷子成对使用，代表阴阳平衡；一根筷子容易断，两根一起就不容易断，所以筷子还代表团结。中国人用筷子有很多礼仪，比如不能把筷子直直地插在米饭里，因为这样像给死人烧香，很不吉利；不能用筷子敲碗，因为以前只有乞丐才这样；不能用筷子指着别人，这是不礼貌的；吃饭前要先给长辈盛饭。这些礼仪体现了中国人对家人的尊重和对传统的重视。今天，筷子已经传到了日本，韩国，越南等亚洲国家，成为亚洲饮食文化的共同象征。`
+            },
+            {
+                title: "第19题：长城",
+                content: `请介绍万里长城的历史和意义。
+【范文】 万里长城是中国最有名的名胜古迹，也是世界七大奇迹之一。长城从东边的山海关一直延伸到西边的嘉峪关，总长度超过两万一千公里。长城的建造历史很长，最早的长城是两千多年前的春秋战国时期，各个国家为了防御而修建的。秦始皇统一中国以后，把各国的长城连接起来。今天我们看到的大部分长城是明朝修建的，已经有六百多年的历史。长城的主要作用是军事防御，防止北方游牧民族的入侵。长城上有很多烽火台，一旦发现敌人，就点燃烽火，一个一个传下去，消息传得很快。修建长城是一件非常辛苦的事情，需要成千上万的人力，很多人因此失去了生命。最有名的故事是孟姜女哭长城，讲一个妻子因为丈夫修长城累死而哭倒长城。今天，长城已经不再用于军事，而是中国的象征和重要的旅游景点。有一句话说，不到长城非好汉，每年有数百万人来参观，感受中国历史的伟大。`
+            },
+            {
+                title: "第20题：故宫",
+                content: `请介绍北京故宫。
+【范文】 故宫位于北京的中心，是世界上最大，保存最完整的古代宫殿。故宫又叫紫禁城，是明朝和清朝两个朝代的皇宫，从1420年到1912年，一共有二十四个皇帝在这里生活和工作。故宫占地七十二万平方米，有九千多间房间，规模非常大。故宫的建筑非常有特色。所有的主要建筑都用红墙黄瓦，因为红色代表喜庆和权力，黄色是皇帝专用的颜色。故宫的布局讲究中轴对称，从南到北排列着一系列的宫殿，非常壮观。最重要的三大殿是太和殿，中和殿，保和殿，是皇帝举行重要仪式的地方。故宫不仅建筑漂亮，里面还保存了一百八十多万件文物，包括皇帝的书画，家具，珠宝等，非常珍贵。1987年，故宫被联合国教科文组织列入世界文化遗产。今天，故宫已经成为故宫博物院，对公众开放，每年有超过一千万人来参观，了解中国的历史和文化。`
+            },
+            {
+                title: "第21题：兵马俑",
+                content: `请介绍秦始皇兵马俑。
+【范文】 兵马俑是中国最著名的考古发现之一，被称为世界第八大奇迹。兵马俑位于陕西省西安市附近，是秦始皇陵墓的一部分。秦始皇是中国第一个皇帝，两千多年前，他用了三十多年的时间，动用七十多万工人，修建了这个巨大的陵墓。兵马俑是1974年被当地农民在打井的时候偶然发现的。考古学家挖掘以后，发现了三个大坑，里面有八千多个陶俑，包括士兵，战马，战车。最让人惊讶的是，每个陶俑的脸都不一样，表情，发型，衣服都非常细致，好像真的人一样。陶俑按照军队的阵型排列，有步兵，骑兵，弓箭手，非常壮观。这些陶俑原来都是彩色的，但是因为时间太久，大部分颜色都掉了。兵马俑不仅是艺术的奇迹，也告诉我们很多关于秦朝军事，艺术，和工艺的信息。1987年，秦始皇陵和兵马俑被联合国教科文组织列入世界文化遗产。今天，兵马俑是中国最重要的旅游景点之一，每年有数百万人从世界各地来参观。`
+            },
+            {
+                title: "第22题：桂林山水",
+                content: `请介绍桂林的自然风光。
+【范文】 中国有一句话说：桂林山水甲天下，意思是桂林的山水是世界上最美的。桂林位于中国南方的广西省，以它独特的喀斯特地貌而闻名于世。桂林的山非常奇特，不像其他地方的山是连在一起的一片，而是一座一座单独的，形状各异，就像大自然的雕塑。桂林的水也很美，特别是漓江，江水清澈，两岸的山倒映在水里，就像一幅水墨画。游客可以坐船从桂林到阳朔，大约四个小时，沿途可以欣赏到最美的风景。除了山水，桂林还有很多溶洞，洞里的钟乳石形状奇特，灯光一照更是漂亮。桂林也是少数民族聚居的地方，有壮族，瑶族等民族，文化非常丰富。中国的二十元人民币背面的图案就是桂林漓江的风景。桂林的美不仅吸引了中国人，也吸引了世界各地的游客。来到桂林，人们可以真正感受到中国山水画的意境，体会到大自然的神奇和美丽。`
+            },
+            {
+                title: "第23题：十二生肖",
+                content: `请介绍中国的十二生肖。
+【范文】 十二生肖是中国传统文化中非常独特的一部分，已经有两千多年的历史。十二生肖用十二种动物代表出生的年份，分别是鼠，牛，虎，兔，龙，蛇，马，羊，猴，鸡，狗，猪。每十二年循环一次。关于十二生肖的顺序，有一个有趣的传说。玉皇大帝要选十二种动物做生肖，决定比赛，谁先到就排在前面。聪明的老鼠骑在牛的背上，快到的时候跳下来，第一个到，所以老鼠排第一。中国人非常重视自己的生肖。每个生肖都有它的性格特点，比如属龙的人被认为是最幸运的，因为龙是中国文化里最神圣的动物；属鼠的人聪明；属虎的人勇敢；属兔的人温柔。人们相信生肖会影响一个人的命运和婚姻。如果今年是一个人的本命年，就是和他生肖一样的年，他要穿红色的衣服来辟邪。十二生肖现在不仅在中国流行，在亚洲其他国家，甚至在西方也越来越受欢迎。很多外国人也想知道自己属什么，2024年是龙年，很多人都在庆祝。`
+            },
+            {
+                title: "第24题：中医",
+                content: `请介绍中医的特点及其与西医的不同。
+【范文】 中医是中国传统的医学，有几千年的历史，是中国文化的重要组成部分。中医的基本理论和西医非常不同。中医认为人体是一个整体，身体的各个部分都是相互联系的，所以看病要看整个人，不能只看一个部分。中医还有阴阳和五行的理论，认为身体要保持平衡才能健康。中医看病的方法叫四诊，就是望，闻，问，切。望就是看病人的脸色，舌头；闻就是听声音，闻气味；问就是问病人的情况；切就是把脉，通过摸手腕的脉搏了解身体。中医治病的方法也很多，最常见的是中药，用各种植物，矿物，动物做成药；还有针灸，在身体的穴位上扎针；推拿就是按摩；刮痧是用板子在背上刮。中医最大的特点是注重预防，有一句话叫：治未病，意思是没生病的时候就要注意健康。中医和西医各有各的优点，很多中国人生病的时候会中西医结合治疗。现在，中医已经传到了世界各地，特别是针灸，在很多国家都很受欢迎。`
+            },
+            {
+                title: "第25题：孝道",
+                content: `请介绍中国文化中的孝道观念。
+【范文】 孝道是中国传统文化中最重要的价值观之一，有两千多年的历史。孝就是尊敬，爱护，和照顾父母和长辈。中国有一句古话：百善孝为先，意思是所有的好品德中，孝是最重要的。孔子非常重视孝道，他认为孝是做人的根本。孝道的内容很丰富。首先，孝就是要听父母的话，不让父母生气担心。其次，孝就是要照顾父母，特别是当他们老了，生病了，要陪在身边。再次，孝就是要让父母开心，有一句话叫光宗耀祖，意思是要努力学习，努力工作，给家族带来荣誉。在中国历史上，有很多关于孝的故事。最有名的是二十四孝，讲了二十四个孝子的故事，比如卧冰求鲤，王祥为了让母亲吃到鲤鱼，在冬天的冰上趴着，用身体的热气化开冰。孝道影响了中国人的家庭观念。在中国，父母和成年子女经常一起生活，孩子要负责照顾年老的父母。虽然现代社会在变化，但孝道仍然是中国家庭的核心价值。很多中国人即使工作再忙，也会经常打电话，看望父母，尤其是在春节的时候一定要回家。`
+            },
+            {
+                title: "第26题：面子文化",
+                content: `请介绍中国文化中的面子观念。
+【范文】 面子是中国文化中非常重要的一个概念，虽然很难翻译，但是对中国人的行为有很大影响。面子就是一个人在别人眼中的形象，名声，和尊严。中国人说给面子，就是尊重别人，让别人感觉好；丢面子就是让人在众人面前感到尴尬或者难堪。爱面子是中国人的一个特点。父母希望孩子学习好，考上好大学，这样他们在亲戚朋友面前有面子。做生意的人宴请客人要请好的饭店，点贵的菜，这样才有面子。结婚的时候要办得热闹，这也是面子。面子文化有好的一面。它让人注重自己的行为，不想让家人丢脸，所以会努力做好事情。它也让人尊重别人，不让别人难堪，这是一种礼貌。但是面子文化也有不好的一面，有时候人们为了面子，明明不同意也不好意思说出来；为了面子，花很多钱，甚至借钱，给自己造成压力。对中国人来说，理解面子文化非常重要，特别是外国人做生意或者交朋友的时候，要注意不要让中国朋友丢面子。`
+            },
+            {
+                title: "第27题：中国传统婚礼",
+                content: `请介绍中国传统的婚礼习俗。
+【范文】 中国传统婚礼有几千年的历史，是中国文化中非常重要的一部分。传统婚礼的颜色主要是红色，因为红色代表喜庆，好运，和幸福。新娘穿的不是白色的婚纱，而是红色的旗袍，叫凤冠霞帔，头上戴着凤冠，非常漂亮。新郎也穿红色的传统服装。传统婚礼有很多步骤和仪式。首先是订婚，男方要给女方家送彩礼，表示诚意。婚礼当天，新郎要去新娘家接新娘，这叫迎亲。新娘的家人会故意设置一些障碍，让新郎展示诚意，比如要新郎唱歌，付红包。到了男方家，新娘要跨过火盆，象征赶走不好的东西。最重要的仪式是拜堂，新郎新娘要拜三次：一拜天地，二拜高堂，三夫妻对拜。拜完以后，新人就正式结为夫妻。晚上有喜宴，所有的亲朋好友一起庆祝。客人会包红包给新人，送上祝福。传统婚礼中还有一个有趣的习俗叫闹洞房，就是朋友们去新房和新人开玩笑。虽然今天很多人办西式婚礼，但是传统的元素还是很常见，体现了中国人对传统和家庭的重视。`
+            },
+            {
+                title: "第28题：汉字的演变",
+                content: `请介绍汉字的历史和演变。
+【范文】 汉字是世界上使用人数最多的文字之一，也是世界上最古老的文字之一，有三千多年的历史。汉字和英文字母完全不同，每一个字都代表一个意思，所以汉字属于表意文字。汉字的演变经历了很多阶段。最早的汉字是甲骨文，是三千多年前商朝的人刻在龟甲和兽骨上的文字，主要用来占卜。后来发展成金文，刻在青铜器上。秦始皇统一中国以后，统一了文字，当时用的是小篆。汉朝开始用隶书，比小篆简单。再后来发展出楷书，就是我们今天用的汉字的基础。今天的汉字也分两种：繁体字和简体字。二十世纪五十年代，中国大陆为了让更多人容易学习，推行了简体字。但是台湾，香港，澳门还在使用繁体字。汉字的构造很有意思，很多字是象形字，比如日，月，山，水，都是按照物体的形状造的。还有形声字，一部分表意，一部分表音。学汉字需要时间，但是非常有意思，每一个字都像一幅小画，背后有丰富的文化。汉字不仅是交流的工具，更是中华文化的载体。`
+            },
+            {
+                title: "第29题：太极拳",
+                content: `请介绍太极拳。
+【范文】 太极拳是中国最有名的传统武术之一，也是一种健身运动。太极拳起源于中国，有几百年的历史，最早是武术家用来自卫和打仗的，后来逐渐变成了一种养生的运动。太极拳的特点是动作慢，柔和，连贯。和其他武术不同，太极拳看起来像在跳舞，但是每一个动作都有含义，都能强身健体。太极拳的基本理论来自道家思想，讲究阴阳平衡。练习太极拳的时候，动作要柔中有刚，以柔克刚，意思是用柔软的动作制服强硬的力量。太极拳还讲究呼吸和动作的配合，在慢慢的动作中调整呼吸，让身心都放松。太极拳有很多种流派，比如陈式，杨式，吴式，孙式，武式，每一种都有自己的特点。杨式太极拳是最流行的，动作比较慢，适合老年人。练太极拳的好处很多。它可以增强身体的平衡能力，对老年人特别好，可以预防摔倒。它还可以降低血压，缓解压力，让心情变好。现在，太极拳已经传到了世界各地，每天早上，在中国的公园里，你都能看到很多人在打太极拳，场面非常壮观。`
+            },
+            {
+                title: "第30题：中国流行文化",
+                content: `请介绍当代中国流行文化的特点。
+【范文】 近几十年来，中国的流行文化发展非常快，不仅影响了中国年轻人，也开始影响世界。中国流行文化的特点是传统和现代的结合。先说音乐。中国的流行音乐叫华语流行，简称C-pop。有很多有名的歌手，比如周杰伦，邓紫棋。周杰伦的歌把中国传统元素和现代流行音乐结合起来，非常有特色。再说电影。中国电影发展得很快，有很多有名的导演，比如张艺谋，李安，冯小刚。中国功夫电影一直在世界上有影响，成龙，李连杰都是国际明星。近年来，中国的科幻电影也开始兴起，流浪地球等电影在国际上很受欢迎。然后是电视剧。中国的古装剧特别流行，不仅在中国，在日本，韩国，东南亚都有很多观众。甄嬛传，琅琊榜等电视剧都非常有名。还有社交媒体和游戏。微博，微信，抖音是中国最流行的社交软件，抖音的国际版TikTok在世界上很受欢迎。中国游戏产业也很发达，原神是一款很受欢迎的游戏。中国流行文化体现了中国的发展和创新，也让世界更好地了解中国。`
+            }
+        ];
+
         // --- 词汇列表 ---
         const studyGroups = {
         "熊猫虎子": [
@@ -1257,12 +1438,14 @@
         const tabReadingBtn = document.getElementById('tab-reading');
         const tabApReadingBtn = document.getElementById('tab-apreading');
         const tabApSpeakingBtn = document.getElementById('tab-apspeaking');
+        const tabApSpeaking2Btn = document.getElementById('tab-apspeaking2');
         const tabVocabBtn = document.getElementById('tab-vocab');
         const tabQuizBtn = document.getElementById('tab-quiz');
 
         const sectionReading = document.getElementById('section-reading');
         const sectionApReading = document.getElementById('section-apreading');
         const sectionApSpeaking = document.getElementById('section-apspeaking');
+        const sectionApSpeaking2 = document.getElementById('section-apspeaking2');
         const sectionVocab = document.getElementById('section-vocab');
         const sectionQuiz = document.getElementById('section-quiz');
 
@@ -1295,6 +1478,16 @@
         const apsSpeedRate = document.getElementById('apsSpeedRate');
         const apsSpeedValue = document.getElementById('apsSpeedValue');
         const apsLoopCheck = document.getElementById('apsLoopCheck');
+
+        // AP Speaking 2 Elements
+        const aps2ArticleSelect = document.getElementById('apSpeaking2Select');
+        const aps2TextContentContainer = document.getElementById('aps2TextContent');
+        const aps2PlayBtn = document.getElementById('aps2PlayBtn');
+        const aps2PauseBtn = document.getElementById('aps2PauseBtn');
+        const aps2StopBtn = document.getElementById('aps2StopBtn');
+        const aps2SpeedRate = document.getElementById('aps2SpeedRate');
+        const aps2SpeedValue = document.getElementById('aps2SpeedValue');
+        const aps2LoopCheck = document.getElementById('aps2LoopCheck');
 
         // Vocab Elements
         const vWord = document.getElementById('vWord');
@@ -1419,6 +1612,12 @@
         let apsCurrentReadIndex = 0;
         let apsReadState = 'STOPPED';
         let apsCurrentSessionId = 0;
+
+        // AP Speaking 2 State
+        let aps2SentencesDOM = [];
+        let aps2CurrentReadIndex = 0;
+        let aps2ReadState = 'STOPPED';
+        let aps2CurrentSessionId = 0;
 
         // Active study group
         let activeGroup = "熊猫虎子";
@@ -1560,6 +1759,7 @@
             stopReadingPlayback();
             stopApReadingPlayback();
             stopApSpeakingPlayback();
+            stopApSpeaking2Playback();
             synth.cancel();
             currentVocabSessionId++; // 中断任何正在进行的词汇连播
 
@@ -1567,11 +1767,13 @@
             tabReadingBtn.classList.remove('active');
             tabApReadingBtn.classList.remove('active');
             tabApSpeakingBtn.classList.remove('active');
+            tabApSpeaking2Btn.classList.remove('active');
             tabVocabBtn.classList.remove('active');
             tabQuizBtn.classList.remove('active');
             sectionReading.classList.add('hidden');
             sectionApReading.classList.add('hidden');
             sectionApSpeaking.classList.add('hidden');
+            sectionApSpeaking2.classList.add('hidden');
             sectionVocab.classList.add('hidden');
             sectionQuiz.classList.add('hidden');
 
@@ -1590,6 +1792,11 @@
                 sectionApSpeaking.classList.remove('hidden');
                 apsSpeedRate.value = vocabSpeedRate.value;
                 apsSpeedValue.textContent = apsSpeedRate.value;
+            } else if (mode === 'apspeaking2') {
+                tabApSpeaking2Btn.classList.add('active');
+                sectionApSpeaking2.classList.remove('hidden');
+                aps2SpeedRate.value = vocabSpeedRate.value;
+                aps2SpeedValue.textContent = aps2SpeedRate.value;
             } else if (mode === 'vocab') {
                 tabVocabBtn.classList.add('active');
                 sectionVocab.classList.remove('hidden');
@@ -1606,6 +1813,7 @@
         tabReadingBtn.onclick = () => switchTab('reading');
         tabApReadingBtn.onclick = () => switchTab('apreading');
         tabApSpeakingBtn.onclick = () => switchTab('apspeaking');
+        tabApSpeaking2Btn.onclick = () => switchTab('apspeaking2');
         tabVocabBtn.onclick = () => switchTab('vocab');
         tabQuizBtn.onclick = () => switchTab('quiz');
 
@@ -2304,6 +2512,135 @@
         apsSpeedRate.oninput = (e) => apsSpeedValue.textContent = Number(e.target.value).toFixed(1);
         apsSpeedRate.onchange = () => { if (apsReadState === 'PLAYING') apsPlayReadingFrom(apsCurrentReadIndex); };
 
+        // ==========================================
+        // 7d. AP 口语练习 2 (AP Speaking 2) 核心功能
+        // ==========================================
+        function aps2InitSelect() {
+            apSpeaking2Articles.forEach((article, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = article.title;
+                aps2ArticleSelect.appendChild(option);
+            });
+            aps2ArticleSelect.addEventListener('change', (e) => {
+                aps2LoadArticle(e.target.value);
+            });
+        }
+
+        function aps2LoadArticle(index) {
+            stopApSpeaking2Playback();
+            const article = apSpeaking2Articles[index];
+            aps2TextContentContainer.innerHTML = parseTextToHTML(article.content);
+            aps2SentencesDOM = aps2TextContentContainer.querySelectorAll('.sentence');
+            aps2CurrentReadIndex = 0;
+            aps2TextContentContainer.scrollTop = 0;
+            aps2SentencesDOM.forEach((span, i) => {
+                span.title = '点击从此处开始播放 (Click to play from here)';
+                span.onclick = () => aps2PlayReadingFrom(i);
+            });
+        }
+
+        function aps2UpdateReadingButtons() {
+            if (aps2ReadState === 'STOPPED') {
+                aps2PlayBtn.disabled = false;
+                aps2PauseBtn.disabled = true;
+                aps2StopBtn.disabled = true;
+            } else if (aps2ReadState === 'PLAYING') {
+                aps2PlayBtn.disabled = true;
+                aps2PauseBtn.disabled = false;
+                aps2StopBtn.disabled = false;
+            } else if (aps2ReadState === 'PAUSED') {
+                aps2PlayBtn.disabled = false;
+                aps2PauseBtn.disabled = true;
+                aps2StopBtn.disabled = false;
+            }
+        }
+
+        function aps2RemoveHighlights() {
+            aps2SentencesDOM.forEach(s => s.classList.remove('highlight'));
+        }
+
+        function aps2PlayReadingFrom(index) {
+            aps2CurrentSessionId++;
+            synth.cancel();
+            aps2CurrentReadIndex = index;
+            aps2ReadState = 'PLAYING';
+            aps2UpdateReadingButtons();
+
+            setTimeout(() => {
+                if (aps2ReadState === 'PLAYING') aps2SpeakReadingSentence(aps2CurrentReadIndex);
+            }, 250);
+        }
+
+        function aps2SpeakReadingSentence(index) {
+            if (!aps2SentencesDOM || aps2SentencesDOM.length === 0) return;
+
+            if (index >= aps2SentencesDOM.length) {
+                if (aps2LoopCheck.checked) aps2PlayReadingFrom(0);
+                else stopApSpeaking2Playback();
+                return;
+            }
+
+            aps2RemoveHighlights();
+            const currentSpan = aps2SentencesDOM[index];
+            currentSpan.classList.add('highlight');
+            currentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            let utterance = makeUtterance(currentSpan.textContent, parseFloat(aps2SpeedRate.value));
+
+            keepAliveArray.push(utterance);
+            if (keepAliveArray.length > 50) keepAliveArray.shift();
+
+            let capturedSessionId = aps2CurrentSessionId;
+
+            utterance.onend = function() {
+                if (capturedSessionId !== aps2CurrentSessionId) return;
+                if (aps2ReadState === 'PLAYING') {
+                    aps2CurrentReadIndex++;
+                    setTimeout(() => {
+                        if (capturedSessionId === aps2CurrentSessionId && aps2ReadState === 'PLAYING') {
+                            aps2SpeakReadingSentence(aps2CurrentReadIndex);
+                        }
+                    }, 150);
+                }
+            };
+
+            utterance.onerror = function() {
+                if (capturedSessionId !== aps2CurrentSessionId) return;
+                if (aps2ReadState === 'PLAYING') {
+                    aps2CurrentReadIndex++;
+                    setTimeout(() => aps2SpeakReadingSentence(aps2CurrentReadIndex), 150);
+                }
+            };
+
+            synth.speak(utterance);
+        }
+
+        function stopApSpeaking2Playback() {
+            aps2CurrentSessionId++;
+            aps2ReadState = 'STOPPED';
+            synth.cancel();
+            aps2RemoveHighlights();
+            aps2CurrentReadIndex = 0;
+            aps2UpdateReadingButtons();
+        }
+
+        aps2PlayBtn.onclick = () => {
+            if (aps2ReadState === 'STOPPED') aps2PlayReadingFrom(0);
+            else if (aps2ReadState === 'PAUSED') {
+                aps2ReadState = 'PLAYING'; synth.resume(); aps2UpdateReadingButtons();
+            }
+        };
+        aps2PauseBtn.onclick = () => {
+            if (aps2ReadState === 'PLAYING') {
+                aps2ReadState = 'PAUSED'; synth.pause(); aps2UpdateReadingButtons();
+            }
+        };
+        aps2StopBtn.onclick = () => stopApSpeaking2Playback();
+
+        aps2SpeedRate.oninput = (e) => aps2SpeedValue.textContent = Number(e.target.value).toFixed(1);
+        aps2SpeedRate.onchange = () => { if (aps2ReadState === 'PLAYING') aps2PlayReadingFrom(aps2CurrentReadIndex); };
+
         window.onbeforeunload = () => synth.cancel();
 
         // ==========================================
@@ -2333,6 +2670,8 @@
         apLoadArticle(0);
         apsInitSelect();
         apsLoadArticle(0);
+        aps2InitSelect();
+        aps2LoadArticle(0);
         renderVocabCard(false);
         renderQuizCard(); // 初始化测验数据
 
