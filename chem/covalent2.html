@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Covalent Bonding & IMF 2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-fade: #757575;
+  --bg: #fafaf7;
+  --paper: #ffffff;
+  --rule: #d4d0c4;
+  --rule-soft: #ebe7da;
+  --teal: #1d6d6e;
+  --teal-bg: #e8f2f2;
+  --amber: #b06b00;
+  --amber-bg: #fbf2e0;
+  --rose: #a02828;
+  --rose-bg: #fbe8e8;
+  --moss: #3d6b35;
+  --moss-bg: #ecf3e8;
+  --plum: #6a3a82;
+  --plum-bg: #f1e8f4;
+  --slate: #34475e;
+  --slate-bg: #e8edf3;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  font-size: 10.5pt;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 0;
+}
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  background: var(--paper);
+  padding: 48px 56px 80px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.04);
+}
+
+/* ─── HEADER ─── */
+header.masthead {
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 20px;
+  margin-bottom: 32px;
+}
+.kicker {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  margin-bottom: 8px;
+}
+.title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 32pt;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variation-settings: "opsz" 144;
+}
+.subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13pt;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.meta-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 14px;
+  font-size: 8.5pt;
+  font-family: var(--mono);
+  color: var(--ink-fade);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── TOC ─── */
+nav.toc {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-bottom: 36px;
+}
+nav.toc h4 {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  margin-bottom: 10px;
+}
+nav.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 24px;
+}
+nav.toc li {
+  counter-increment: toc;
+  font-size: 9.5pt;
+  padding: 3px 0;
+  border-bottom: 1px dotted var(--rule-soft);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+nav.toc li::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: var(--ink-fade);
+  flex-shrink: 0;
+}
+nav.toc a {
+  color: var(--ink);
+  text-decoration: none;
+  flex: 1;
+}
+nav.toc a:hover { color: var(--teal); }
+
+/* ─── SECTION ─── */
+section.gap {
+  margin-top: 44px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+.gap-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+h2.gap-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 22pt;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.gap-deck {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12pt;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+  border-left: 3px solid var(--ink);
+  padding-left: 14px;
+}
+
+/* ─── CONTENT ─── */
+h3.subhead {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 14pt;
+  margin: 22px 0 10px;
+  color: var(--ink);
+}
+h4.minihead {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 10pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 16px 0 6px;
+  color: var(--ink);
+}
+p { margin-bottom: 10px; color: var(--ink-soft); }
+p strong, li strong { color: var(--ink); font-weight: 600; }
+em { color: var(--ink); }
+
+ul, ol { padding-left: 22px; margin-bottom: 10px; }
+ul li, ol li { margin-bottom: 4px; color: var(--ink-soft); }
+
+/* ─── CALLOUT BOXES ─── */
+.callout {
+  border-left: 4px solid;
+  padding: 14px 18px;
+  margin: 16px 0;
+  border-radius: 0 4px 4px 0;
+}
+.callout .label {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.callout p { margin-bottom: 6px; color: var(--ink); }
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.key { background: var(--amber-bg); border-color: var(--amber); }
+.callout.key .label { color: var(--amber); }
+.callout.warn { background: var(--rose-bg); border-color: var(--rose); }
+.callout.warn .label { color: var(--rose); }
+.callout.note { background: var(--teal-bg); border-color: var(--teal); }
+.callout.note .label { color: var(--teal); }
+.callout.example { background: var(--moss-bg); border-color: var(--moss); }
+.callout.example .label { color: var(--moss); }
+.callout.tip { background: var(--plum-bg); border-color: var(--plum); }
+.callout.tip .label { color: var(--plum); }
+
+/* ─── DOT DIAGRAM TABLE ─── */
+.dot-table {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin: 14px 0;
+}
+.dot-cell {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 8px 4px;
+  text-align: center;
+  background: var(--paper);
+}
+.dot-cell .grp {
+  font-family: var(--mono);
+  font-size: 7pt;
+  color: var(--ink-fade);
+  letter-spacing: 0.08em;
+}
+.dot-cell .dot-svg {
+  display: block;
+  width: 100%;
+  height: 60px;
+  margin: 4px auto;
+}
+.dot-cell .dot-svg .atom-sym {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dot-cell .dot-svg .dot {
+  fill: var(--ink);
+}
+.dot-cell .ve {
+  font-family: var(--mono);
+  font-size: 7pt;
+  color: var(--ink-fade);
+  margin-top: 2px;
+}
+.dot-cell .bonds {
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: var(--teal);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+/* ─── COMPARISON TABLE ─── */
+table.cmp {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 9.5pt;
+}
+table.cmp th, table.cmp td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+table.cmp th {
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  border-bottom: 2px solid var(--ink);
+  font-weight: 500;
+}
+table.cmp td { color: var(--ink-soft); }
+table.cmp tr:hover { background: var(--bg); }
+table.cmp .formula { font-family: var(--mono); color: var(--ink); font-weight: 500; }
+
+/* ─── DIAGRAM ─── */
+.molecule-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+.mol-card {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 14px;
+}
+.mol-card .name {
+  font-family: var(--mono);
+  font-size: 9pt;
+  letter-spacing: 0.06em;
+  color: var(--ink-fade);
+  margin-bottom: 6px;
+}
+.mol-card .struct,
+.mol-card .mol-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 8px 0;
+}
+.mol-card .mol-svg {
+  max-height: 130px;
+}
+.mol-card .note {
+  font-size: 9pt;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ─── EXERCISES ─── */
+.ex-section {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 4px double var(--ink);
+}
+.ex-intro {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 16px 20px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.ex-intro h2 {
+  font-family: var(--serif);
+  font-size: 22pt;
+  font-weight: 600;
+}
+.ex-group {
+  margin-top: 28px;
+}
+.ex-group-title {
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--rule-soft);
+  padding: 5px 10px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.exercise {
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  background: var(--paper);
+  break-inside: avoid;
+}
+.ex-num {
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  letter-spacing: 0.1em;
+  color: var(--ink-fade);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+.ex-num .pts {
+  color: var(--ink-fade);
+  font-size: 8pt;
+}
+.ex-prompt {
+  font-size: 10pt;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.ex-prompt strong { font-weight: 600; }
+.ex-options {
+  list-style: none;
+  padding-left: 0;
+}
+.ex-options li {
+  padding: 4px 0 4px 28px;
+  position: relative;
+  font-size: 9.5pt;
+  color: var(--ink-soft);
+}
+.ex-options li::before {
+  content: attr(data-letter);
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  font-size: 9pt;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  color: var(--ink-fade);
+}
+.work-space {
+  border-top: 1px dashed var(--rule);
+  margin-top: 10px;
+  padding-top: 8px;
+  min-height: 32px;
+}
+.work-space .label {
+  font-family: var(--mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+}
+.blank-line {
+  display: inline-block;
+  border-bottom: 1px solid var(--ink);
+  min-width: 100px;
+  height: 14px;
+  margin: 0 4px;
+  vertical-align: bottom;
+}
+.long-blank { min-width: 100%; }
+
+/* ─── ANSWER KEY ─── */
+.answer-key {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 4px double var(--ink);
+  page-break-before: always;
+}
+.answer-key .ak-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+}
+.answer-key .ak-header h2 {
+  font-family: var(--serif);
+  font-size: 20pt;
+  font-weight: 600;
+  color: var(--paper);
+}
+.answer-key .ak-header p {
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+  font-size: 9.5pt;
+  margin-top: 4px;
+}
+.ak-item {
+  border-left: 3px solid var(--moss);
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  background: var(--moss-bg);
+  border-radius: 0 4px 4px 0;
+}
+.ak-item .ak-num {
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  letter-spacing: 0.1em;
+  color: var(--moss);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.ak-item .ak-answer {
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+  font-size: 10pt;
+}
+.ak-item .ak-explain {
+  font-size: 9.5pt;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ─── FOOTER ─── */
+footer.colophon {
+  margin-top: 60px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 8pt;
+  letter-spacing: 0.08em;
+  color: var(--ink-fade);
+  text-align: center;
+}
+
+/* ─── PRINT ─── */
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; padding: 24px; max-width: 100%; }
+  section.gap { page-break-inside: avoid; }
+  .exercise { page-break-inside: avoid; }
+  .ak-item { page-break-inside: avoid; }
+  .answer-key { page-break-before: always; }
+  nav.toc a { color: var(--ink); }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ─────────── HEADER ─────────── -->
+<header class="masthead">
+  <div class="kicker">Unit 6 · Supplement · Targeted Mastery</div>
+  <h1 class="title">Covalent Bonding &amp; IMF 2</h1>
+  <p class="subtitle">A focused tutorial on the four knowledge points often missed, with 21 practice exercises</p>
+  <div class="meta-row">
+    <span>For Claire</span>
+    <span>Aligned with CK-12 Ch. 8.1–8.2, 9.2</span>
+    <span>21 exercises + answer key</span>
+  </div>
+</header>
+
+<!-- ─────────── TOC ─────────── -->
+<nav class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#gap1">Single-element dot diagrams &amp; pairing rules</a></li>
+    <li><a href="#gap2">Why covalent compounds burn easily</a></li>
+    <li><a href="#gap3">IMF and boiling-point comparisons</a></li>
+    <li><a href="#gap4">Are lone pairs part of the bond?</a></li>
+    <li><a href="#exercises">21 Practice Exercises</a></li>
+    <li><a href="#answers">Answer Key</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GAP 1: SINGLE-ELEMENT DOT DIAGRAMS              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="gap" id="gap1">
+  <span class="gap-tag">Gap 1 of 4</span>
+  <h2 class="gap-title">Single-element dot diagrams: why dots go where they go</h2>
+  <p class="gap-deck">The PowerPoint shows the dot diagrams for Period 2 elements — but does not explain <em>why</em> the dots are placed where they are, or how the placement predicts how many bonds the atom will form.</p>
+
+  <h3 class="subhead">The rule behind the dots</h3>
+  <p>Electron dot diagrams show only the <strong>valence electrons</strong> (outer-shell electrons). The placement follows two rules that come from how electrons actually fill orbitals:</p>
+
+  <div class="callout key">
+    <div class="label">★ The pairing rule (Hund's rule, simplified)</div>
+    <p><strong>1. Spread out first.</strong> Place one dot on each of the four sides of the symbol (top, right, bottom, left) — one at a time — before pairing any up.</p>
+    <p><strong>2. Pair up only when forced.</strong> Once all four sides have a single dot, additional electrons must double up.</p>
+    <p>Why? Electrons repel one another. Putting them on different sides keeps them apart, which is lower in energy and more stable.</p>
+  </div>
+
+  <h3 class="subhead">Walking through Period 2</h3>
+  <p>The number of valence electrons equals the group number (for main-group elements). Watch how the dots build up:</p>
+
+  <div class="dot-table">
+    <!-- Li: 1 ve -->
+    <div class="dot-cell">
+      <div class="grp">Grp 1</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">Li</text>
+        <circle cx="40" cy="14" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">1 v.e.</div>
+      <div class="bonds">forms 1 bond</div>
+    </div>
+    <!-- Be: 2 ve -->
+    <div class="dot-cell">
+      <div class="grp">Grp 2</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">Be</text>
+        <circle cx="40" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="38" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">2 v.e.</div>
+      <div class="bonds">forms 2 bonds*</div>
+    </div>
+    <!-- B: 3 ve -->
+    <div class="dot-cell">
+      <div class="grp">Grp 13</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">B</text>
+        <circle cx="40" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="38" r="2.6" class="dot"/>
+        <circle cx="40" cy="62" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">3 v.e.</div>
+      <div class="bonds">forms 3 bonds*</div>
+    </div>
+    <!-- C: 4 ve -->
+    <div class="dot-cell">
+      <div class="grp">Grp 14</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">C</text>
+        <circle cx="40" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="38" r="2.6" class="dot"/>
+        <circle cx="40" cy="62" r="2.6" class="dot"/>
+        <circle cx="12" cy="38" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">4 v.e.</div>
+      <div class="bonds">forms 4 bonds</div>
+    </div>
+    <!-- N: 5 ve (top paired) -->
+    <div class="dot-cell">
+      <div class="grp">Grp 15</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">N</text>
+        <circle cx="33" cy="14" r="2.6" class="dot"/>
+        <circle cx="47" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="38" r="2.6" class="dot"/>
+        <circle cx="40" cy="62" r="2.6" class="dot"/>
+        <circle cx="12" cy="38" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">5 v.e.</div>
+      <div class="bonds">forms 3 bonds</div>
+    </div>
+    <!-- O: 6 ve (top + right paired) -->
+    <div class="dot-cell">
+      <div class="grp">Grp 16</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">O</text>
+        <circle cx="33" cy="14" r="2.6" class="dot"/>
+        <circle cx="47" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="31" r="2.6" class="dot"/>
+        <circle cx="68" cy="45" r="2.6" class="dot"/>
+        <circle cx="40" cy="62" r="2.6" class="dot"/>
+        <circle cx="12" cy="38" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">6 v.e.</div>
+      <div class="bonds">forms 2 bonds</div>
+    </div>
+    <!-- F: 7 ve (top, right, bottom paired) -->
+    <div class="dot-cell">
+      <div class="grp">Grp 17</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">F</text>
+        <circle cx="33" cy="14" r="2.6" class="dot"/>
+        <circle cx="47" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="31" r="2.6" class="dot"/>
+        <circle cx="68" cy="45" r="2.6" class="dot"/>
+        <circle cx="33" cy="62" r="2.6" class="dot"/>
+        <circle cx="47" cy="62" r="2.6" class="dot"/>
+        <circle cx="12" cy="38" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">7 v.e.</div>
+      <div class="bonds">forms 1 bond</div>
+    </div>
+    <!-- Ne: 8 ve (all paired) -->
+    <div class="dot-cell">
+      <div class="grp">Grp 18</div>
+      <svg viewBox="0 0 80 70" class="dot-svg">
+        <text x="40" y="46" class="atom-sym">Ne</text>
+        <circle cx="33" cy="14" r="2.6" class="dot"/>
+        <circle cx="47" cy="14" r="2.6" class="dot"/>
+        <circle cx="68" cy="31" r="2.6" class="dot"/>
+        <circle cx="68" cy="45" r="2.6" class="dot"/>
+        <circle cx="33" cy="62" r="2.6" class="dot"/>
+        <circle cx="47" cy="62" r="2.6" class="dot"/>
+        <circle cx="12" cy="31" r="2.6" class="dot"/>
+        <circle cx="12" cy="45" r="2.6" class="dot"/>
+      </svg>
+      <div class="ve">8 v.e.</div>
+      <div class="bonds">forms 0 bonds</div>
+    </div>
+  </div>
+  <p style="font-size:8.5pt;font-style:italic;color:var(--ink-fade);margin-top:-4px">* Be and B are octet-rule exceptions — they are stable with fewer than 8 electrons.</p>
+
+  <h3 class="subhead">The big idea: unpaired dots → bonds</h3>
+  <div class="callout note">
+    <div class="label">▶ The connection</div>
+    <p><strong>The number of unpaired (single) dots tells you how many covalent bonds the atom will form.</strong></p>
+    <p>Each bond requires one electron from each atom. So an atom with one unpaired dot can share once (one bond), one with three unpaired dots can share three times (three bonds), and so on.</p>
+  </div>
+
+  <h4 class="minihead">Worked example: nitrogen</h4>
+  <p>Nitrogen has <strong>5 valence electrons</strong>. Place them one at a time:</p>
+  <ul>
+    <li>Dots 1, 2, 3, 4 → one on each side (top, right, bottom, left)</li>
+    <li>Dot 5 → must pair up. By convention, pair the top.</li>
+  </ul>
+  <p>Result: nitrogen has <strong>1 lone pair</strong> (the doubled top) and <strong>3 unpaired electrons</strong> (right, bottom, left). Therefore nitrogen forms <strong>3 bonds</strong> — exactly what we see in NH₃ and N₂.</p>
+
+  <h4 class="minihead">Worked example: oxygen</h4>
+  <p>Oxygen has <strong>6 valence electrons</strong>. Place them:</p>
+  <ul>
+    <li>Dots 1–4 → one on each side</li>
+    <li>Dot 5 pairs the top, dot 6 pairs the bottom (or right — convention varies)</li>
+  </ul>
+  <p>Result: oxygen has <strong>2 lone pairs</strong> and <strong>2 unpaired electrons</strong> → forms <strong>2 bonds</strong> (as in H₂O).</p>
+
+  <div class="callout tip">
+    <div class="label">Memory trick</div>
+    <p><strong>Bonds = 8 − valence electrons</strong> (for nonmetals in groups 14–17 only).</p>
+    <p>C: 8 − 4 = 4 bonds · N: 8 − 5 = 3 bonds · O: 8 − 6 = 2 bonds · F: 8 − 7 = 1 bond. This is just the octet rule re-stated: each atom needs to share enough electrons to reach 8 total.</p>
+  </div>
+
+  <h4 class="minihead">A common student mistake</h4>
+  <div class="callout warn">
+    <div class="label">⚠ Watch out</div>
+    <p>Students often pair up dots too early — for example, drawing carbon as <span class="formula">:C:</span> with two pairs and zero unpaired electrons. This would predict carbon forms <strong>0 bonds</strong>, which is wrong. Always spread one dot to each side first; only pair up after all four sides are occupied.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GAP 2: BURNING EASILY                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="gap" id="gap2">
+  <span class="gap-tag">Gap 2 of 4</span>
+  <h2 class="gap-title">Why "burns easily" is a covalent property</h2>
+  <p class="gap-deck">Flammability is one of the classic properties of covalent (molecular) compounds — but this is rarely explained well. Here's the reasoning.</p>
+
+  <h3 class="subhead">The general rule</h3>
+  <div class="callout key">
+    <div class="label">★ Property summary</div>
+    <p><strong>Many covalent compounds burn easily; ionic compounds generally do not burn.</strong></p>
+    <p>Think about it: gasoline (covalent), candle wax (covalent), rubbing alcohol (covalent), natural gas (covalent), wood (mostly covalent) — all flammable. Salt, baking soda, chalk (all ionic) — not flammable.</p>
+  </div>
+
+  <h3 class="subhead">Three reasons why</h3>
+
+  <h4 class="minihead">1. Covalent compounds usually contain C and H</h4>
+  <p>Most everyday covalent compounds are <strong>organic</strong> — built from carbon and hydrogen (hydrocarbons, alcohols, fats, sugars). Combustion is the reaction of C and H with oxygen:</p>
+  <p style="text-align:center;font-family:var(--mono);font-size:10pt;background:var(--bg);padding:10px;border-radius:4px;margin:8px 0">CₓHᵧ + O₂ → CO₂ + H₂O + <strong>energy</strong></p>
+  <p>The C–H and C–C bonds release a lot of energy when they break and reform as the much stronger C=O and O–H bonds. Ionic compounds don't have C–H bonds, so this reaction can't happen.</p>
+
+  <h4 class="minihead">2. Covalent compounds vaporize easily</h4>
+  <p>Burning is a <strong>gas-phase reaction</strong>: the fuel must be in vapor form to mix with O₂ and ignite. Because covalent compounds have weak intermolecular forces, they have low boiling points and evaporate readily — so they can reach the gas phase at moderate temperatures. Ionic compounds need thousands of degrees just to melt, let alone vaporize.</p>
+
+  <h4 class="minihead">3. Ionic compounds are already "oxidized" / stable</h4>
+  <p>Ionic compounds like NaCl have already formed very stable electrostatic networks. There's no chemical "fuel" left in them to react with O₂. Many ionic compounds (especially oxides like Na₂O, MgO, CaO) are essentially already the products of burning — they cannot burn again.</p>
+
+  <h3 class="subhead">Important nuances</h3>
+  <div class="callout warn">
+    <div class="label">⚠ Not every covalent compound burns</div>
+    <p><strong>Water (H₂O)</strong> is covalent but does not burn — it is a <em>product</em> of combustion, not a fuel.</p>
+    <p><strong>CO₂</strong> is covalent and is actually used to <em>extinguish</em> fires.</p>
+    <p><strong>Diamond &amp; quartz (SiO₂)</strong> are network covalent solids — extremely resistant to burning at normal temperatures.</p>
+    <p>The pattern: covalent compounds rich in C–H or C–C bonds tend to burn well; covalent compounds that are already heavily oxidized do not.</p>
+  </div>
+
+  <table class="cmp">
+    <thead>
+      <tr><th>Compound</th><th>Bond type</th><th>Burns?</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="formula">CH₄</td><td>covalent</td><td>yes (very well)</td><td>hydrocarbon — C and H combust</td></tr>
+      <tr><td class="formula">C₂H₅OH</td><td>covalent</td><td>yes</td><td>has lots of C–H bonds</td></tr>
+      <tr><td class="formula">C₆H₁₂O₆ (sugar)</td><td>covalent</td><td>yes (caramelizes, burns)</td><td>still mostly C–H and C–C</td></tr>
+      <tr><td class="formula">H₂O</td><td>covalent</td><td>no</td><td>already a combustion product</td></tr>
+      <tr><td class="formula">CO₂</td><td>covalent</td><td>no</td><td>fully oxidized; puts out fire</td></tr>
+      <tr><td class="formula">NaCl</td><td>ionic</td><td>no</td><td>no C–H fuel; already stable lattice</td></tr>
+      <tr><td class="formula">CaCO₃</td><td>ionic</td><td>no (decomposes)</td><td>no fuel; just breaks down with heat</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="label">Test-ready takeaway</div>
+    <p>If a question asks "which property is characteristic of covalent compounds?" and "burns easily / flammable" is an option — that's a covalent property. If asked about NaCl or CaCl₂ — those don't burn.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GAP 3: IMF & BOILING POINT COMPARISONS         -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="gap" id="gap3">
+  <span class="gap-tag">Gap 3 of 4</span>
+  <h2 class="gap-title">Using IMF to predict boiling points</h2>
+  <p class="gap-deck">The real test of IMF mastery: given two formulas, can you predict which has the higher boiling point and explain why?</p>
+
+  <h3 class="subhead">The 4-step method</h3>
+  <div class="callout key">
+    <div class="label">★ Steps to compare boiling points</div>
+    <ol style="padding-left:18px;margin-top:6px">
+      <li><strong>Draw the Lewis structure</strong> for each molecule.</li>
+      <li><strong>Determine the molecular polarity</strong> (polar or nonpolar) — check shape and bond dipoles.</li>
+      <li><strong>Identify the strongest IMF</strong> present in each:
+        <ul style="margin-top:4px">
+          <li><strong>Hydrogen bonding</strong> — H bonded directly to N, O, or F</li>
+          <li><strong>Dipole–dipole</strong> — polar molecule, no H–N/O/F</li>
+          <li><strong>London dispersion</strong> — nonpolar molecule (or as a baseline in all molecules)</li>
+        </ul>
+      </li>
+      <li><strong>Compare:</strong> stronger IMF → higher boiling point. If both have the same type of IMF, the larger / heavier molecule wins (more electrons → stronger London forces).</li>
+    </ol>
+  </div>
+
+  <h3 class="subhead">Worked comparison: H₂O vs. H₂S</h3>
+  <p>Both have the same shape (bent) and similar formulas. Why does water boil at 100 °C while H₂S boils at −60 °C?</p>
+
+  <div class="molecule-row">
+    <div class="mol-card">
+      <div class="name">H₂O — water</div>
+      <svg viewBox="0 0 180 110" class="mol-svg">
+        <!-- O atom with 2 lone pairs on top -->
+        <circle cx="64" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="74" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="86" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="96" cy="20" r="2" fill="#1a1a1a"/>
+        <text x="80" y="48" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill="#1a1a1a">O</text>
+        <!-- bonds -->
+        <line x1="68" y1="50" x2="40" y2="78" stroke="#1a1a1a" stroke-width="1.6"/>
+        <line x1="92" y1="50" x2="120" y2="78" stroke="#1a1a1a" stroke-width="1.6"/>
+        <!-- H atoms -->
+        <text x="32" y="92" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <text x="128" y="92" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+      </svg>
+      <div class="note">Polar, bent. <strong>H is bonded to O</strong> → forms <em>hydrogen bonds</em>.</div>
+    </div>
+    <div class="mol-card">
+      <div class="name">H₂S — hydrogen sulfide</div>
+      <svg viewBox="0 0 180 110" class="mol-svg">
+        <circle cx="64" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="74" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="86" cy="20" r="2" fill="#1a1a1a"/>
+        <circle cx="96" cy="20" r="2" fill="#1a1a1a"/>
+        <text x="80" y="48" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill="#1a1a1a">S</text>
+        <line x1="68" y1="50" x2="40" y2="78" stroke="#1a1a1a" stroke-width="1.6"/>
+        <line x1="92" y1="50" x2="120" y2="78" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="32" y="92" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <text x="128" y="92" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+      </svg>
+      <div class="note">Polar, bent. H is bonded to S (not N/O/F) → only <em>dipole–dipole</em>.</div>
+    </div>
+  </div>
+
+  <p><strong>Conclusion:</strong> water has hydrogen bonding, H₂S only has dipole–dipole. Hydrogen bonding is much stronger, so water needs much more energy to vaporize → much higher boiling point (100 °C vs −60 °C). The difference of 160 °C tells you how much stronger H-bonding is than ordinary dipole–dipole.</p>
+
+  <h3 class="subhead">Worked comparison: CH₄ vs. CH₃OH</h3>
+  <p>Both have one carbon. CH₄ boils at −161 °C; CH₃OH (methanol) boils at 65 °C — a 226 °C gap. Why?</p>
+
+  <div class="molecule-row">
+    <div class="mol-card">
+      <div class="name">CH₄ — methane</div>
+      <svg viewBox="0 0 180 130" class="mol-svg">
+        <!-- top H -->
+        <text x="80" y="22" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <line x1="80" y1="28" x2="80" y2="55" stroke="#1a1a1a" stroke-width="1.6"/>
+        <!-- center C -->
+        <text x="80" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill="#1a1a1a">C</text>
+        <!-- left H -->
+        <line x1="68" y1="68" x2="40" y2="68" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="30" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <!-- right H -->
+        <line x1="92" y1="68" x2="120" y2="68" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="130" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <!-- bottom H -->
+        <line x1="80" y1="80" x2="80" y2="105" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="80" y="120" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+      </svg>
+      <div class="note">Symmetric, nonpolar. Only <em>London dispersion</em>.</div>
+    </div>
+    <div class="mol-card">
+      <div class="name">CH₃OH — methanol</div>
+      <svg viewBox="0 0 220 130" class="mol-svg">
+        <!-- top H -->
+        <text x="60" y="22" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <line x1="60" y1="28" x2="60" y2="55" stroke="#1a1a1a" stroke-width="1.6"/>
+        <!-- C -->
+        <text x="60" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill="#1a1a1a">C</text>
+        <!-- left H -->
+        <line x1="48" y1="68" x2="22" y2="68" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="12" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <!-- bottom H -->
+        <line x1="60" y1="80" x2="60" y2="105" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="60" y="120" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+        <!-- C-O bond -->
+        <line x1="72" y1="68" x2="115" y2="68" stroke="#1a1a1a" stroke-width="1.6"/>
+        <!-- O with lone pairs -->
+        <circle cx="125" cy="50" r="1.8" fill="#1a1a1a"/>
+        <circle cx="135" cy="50" r="1.8" fill="#1a1a1a"/>
+        <circle cx="125" cy="86" r="1.8" fill="#1a1a1a"/>
+        <circle cx="135" cy="86" r="1.8" fill="#1a1a1a"/>
+        <text x="130" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="20" font-weight="600" fill="#1a1a1a">O</text>
+        <!-- O-H bond -->
+        <line x1="142" y1="68" x2="180" y2="68" stroke="#1a1a1a" stroke-width="1.6"/>
+        <text x="190" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+      </svg>
+      <div class="note">Polar; <strong>H bonded directly to O</strong> → <em>hydrogen bonding</em>.</div>
+    </div>
+  </div>
+
+  <p><strong>Conclusion:</strong> Methanol can hydrogen-bond; methane cannot even be polar. Methanol's IMF are dramatically stronger, so its boiling point is far higher.</p>
+
+  <h3 class="subhead">Worked comparison: F₂, Cl₂, Br₂, I₂</h3>
+  <p>All four are nonpolar diatomic molecules. They have <strong>only London dispersion forces</strong>. Yet their boiling points span over 350 °C. Why?</p>
+  <table class="cmp">
+    <thead><tr><th>Halogen</th><th>Mass (g/mol)</th><th># electrons</th><th>BP (°C)</th><th>State at 25 °C</th></tr></thead>
+    <tbody>
+      <tr><td class="formula">F₂</td><td>38</td><td>18</td><td>−188</td><td>gas</td></tr>
+      <tr><td class="formula">Cl₂</td><td>71</td><td>34</td><td>−34</td><td>gas</td></tr>
+      <tr><td class="formula">Br₂</td><td>160</td><td>70</td><td>59</td><td>liquid</td></tr>
+      <tr><td class="formula">I₂</td><td>254</td><td>106</td><td>184</td><td>solid</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Conclusion:</strong> larger molecules have more electrons. More electrons → stronger temporary dipoles → stronger London dispersion → higher BP. This is why the heaviest halogen (I₂) is a solid while the lightest (F₂) is a gas.</p>
+
+  <h3 class="subhead">Big picture: ranking IMF</h3>
+  <table class="cmp">
+    <thead><tr><th>Strength</th><th>Type</th><th>Found in</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>strongest</td><td>Hydrogen bonding</td><td>molecules with H–N, H–O, or H–F</td><td>H₂O, NH₃, HF, CH₃OH</td></tr>
+      <tr><td>middle</td><td>Dipole–dipole</td><td>polar molecules without H–N/O/F</td><td>HCl, H₂S, CH₂Cl₂</td></tr>
+      <tr><td>weakest</td><td>London dispersion</td><td>all molecules (only force in nonpolar)</td><td>CH₄, F₂, CO₂, noble gases</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout example">
+    <div class="label">Try this: a quick comparison set</div>
+    <p>Which of each pair has the higher boiling point? (Answers in exercise key.)</p>
+    <ul style="margin-top:4px;color:var(--ink)">
+      <li>HF vs HCl</li>
+      <li>NH₃ vs PH₃</li>
+      <li>CH₄ vs C₄H₁₀ (butane)</li>
+      <li>CO₂ vs H₂O</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- GAP 4: LONE PAIRS                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="gap" id="gap4">
+  <span class="gap-tag">Gap 4 of 4</span>
+  <h2 class="gap-title">Are lone pairs part of the chemical bond?</h2>
+  <p class="gap-deck">Short answer: <strong>No.</strong> Lone pairs are not part of the bond, but they matter — and here's exactly what they do.</p>
+
+  <h3 class="subhead">The clear definition</h3>
+  <div class="callout key">
+    <div class="label">★ Bond vs. lone pair</div>
+    <p><strong>A covalent bond</strong> is a pair of electrons <em>shared between two atoms</em>. Both atoms "claim" both electrons.</p>
+    <p><strong>A lone pair</strong> is a pair of electrons that belong to <em>one atom only</em> — they are not shared. They sit on a single atom and "stay home."</p>
+    <p>So lone pairs are <strong>not</strong> chemical bonds. They are unbonded valence electrons.</p>
+  </div>
+
+  <h3 class="subhead">Visualizing the difference in H₂O</h3>
+  <div style="background:var(--bg);padding:18px;border-radius:4px;margin:14px 0;display:flex;justify-content:center">
+    <svg viewBox="0 0 360 160" style="max-width:340px;width:100%;height:auto">
+      <!-- O atom with 2 lone pairs (one on top, one on right) -->
+      <text x="180" y="78" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#1a1a1a">O</text>
+      <!-- top lone pair -->
+      <circle cx="174" cy="42" r="2.4" fill="#a02828"/>
+      <circle cx="186" cy="42" r="2.4" fill="#a02828"/>
+      <!-- right lone pair -->
+      <circle cx="216" cy="66" r="2.4" fill="#a02828"/>
+      <circle cx="216" cy="78" r="2.4" fill="#a02828"/>
+      <!-- bonds (left & bottom) -->
+      <line x1="168" y1="80" x2="138" y2="108" stroke="#2256a0" stroke-width="2"/>
+      <line x1="180" y1="86" x2="180" y2="118" stroke="#2256a0" stroke-width="2"/>
+      <!-- H atoms -->
+      <text x="128" y="124" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+      <text x="180" y="138" text-anchor="middle" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1a1a1a">H</text>
+
+      <!-- annotation: lone pair top -->
+      <text x="120" y="42" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#a02828" font-weight="500">lone pair</text>
+      <line x1="124" y1="42" x2="170" y2="42" stroke="#a02828" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <!-- annotation: lone pair right -->
+      <text x="270" y="74" text-anchor="start" font-family="Inter, sans-serif" font-size="9" fill="#a02828" font-weight="500">lone pair</text>
+      <line x1="222" y1="72" x2="266" y2="72" stroke="#a02828" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <!-- annotation: bond -->
+      <text x="60" y="102" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#2256a0" font-weight="500">shared bond</text>
+      <line x1="62" y1="102" x2="148" y2="102" stroke="#2256a0" stroke-width="0.7" stroke-dasharray="2,2"/>
+    </svg>
+  </div>
+  <p>In water, O has <strong>4 valence electrons used in bonds</strong> (2 bonds × 2 electrons) and <strong>4 valence electrons in lone pairs</strong> (2 lone pairs × 2 electrons). Total: 6 valence electrons — exactly what oxygen brings to the table.</p>
+
+  <h3 class="subhead">Why lone pairs still matter</h3>
+  <p>Even though lone pairs aren't bonds, they have huge effects on the molecule:</p>
+
+  <h4 class="minihead">1. They take up space (VSEPR)</h4>
+  <p>Lone pairs repel other electron groups, just like bonds do. They count as "electron regions" in VSEPR. This is why H₂O is bent (not linear) and NH₃ is pyramidal (not flat). The lone pairs are pushing the bonds away.</p>
+
+  <h4 class="minihead">2. They make hydrogen bonds possible</h4>
+  <p>A hydrogen bond is the attraction between an H atom (bonded to N/O/F on one molecule) and a <strong>lone pair</strong> on N/O/F on a neighboring molecule. Without lone pairs, no hydrogen bonding — water would not exist as we know it.</p>
+
+  <h4 class="minihead">3. They affect polarity</h4>
+  <p>Lone pairs concentrate negative charge on one side of the molecule, contributing to molecular polarity. Compare CH₄ (no lone pairs on C, nonpolar) to NH₃ (one lone pair on N, polar) and H₂O (two lone pairs on O, very polar).</p>
+
+  <div class="callout note">
+    <div class="label">▶ Useful summary</div>
+    <p><strong>Lone pairs are not bonds — they are owned by one atom only.</strong></p>
+    <p>But they are crucial for: shape (VSEPR), hydrogen bonding (they're the "acceptor"), and molecular polarity.</p>
+  </div>
+
+  <h3 class="subhead">Quick reference: lone pairs on common atoms</h3>
+  <table class="cmp">
+    <thead><tr><th>Atom in molecule</th><th>Bonds it forms</th><th>Lone pairs</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>C (4 bonds)</td><td>4</td><td>0</td><td>CH₄, CO₂</td></tr>
+      <tr><td>N (3 bonds)</td><td>3</td><td>1</td><td>NH₃</td></tr>
+      <tr><td>O (2 bonds)</td><td>2</td><td>2</td><td>H₂O</td></tr>
+      <tr><td>F (1 bond)</td><td>1</td><td>3</td><td>HF</td></tr>
+      <tr><td>H (1 bond)</td><td>1</td><td>0</td><td>any H–X bond</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- EXERCISES                                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="ex-section" id="exercises">
+  <div class="ex-intro">
+    <h2>21 Practice Exercises</h2>
+    <p style="margin-top:8px">Five to six exercises per gap area. Show your work where indicated. Answer key follows.</p>
+  </div>
+
+  <!-- ─── GROUP A ─── -->
+  <div class="ex-group">
+    <span class="ex-group-title">Group A · Single-element dot diagrams (1–5)</span>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 01</span><span class="pts">[multiple choice]</span></div>
+      <div class="ex-prompt">When drawing the dot diagram for an atom, what is the correct order to place the valence electrons?</div>
+      <ul class="ex-options">
+        <li data-letter="A">Pair them up immediately on each side, two at a time</li>
+        <li data-letter="B">Place one dot on each side first, then pair up only after all four sides have one dot</li>
+        <li data-letter="C">Place all dots on the top first, then move clockwise</li>
+        <li data-letter="D">It doesn't matter — any arrangement is correct</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 02</span><span class="pts">[short answer]</span></div>
+      <div class="ex-prompt">Draw the electron dot diagram for <strong>nitrogen (N)</strong>. Then state how many lone pairs and how many unpaired electrons it has, and predict how many bonds nitrogen will form.</div>
+      <div class="work-space">
+        <span class="label">Work:</span>
+        <div style="height:80px"></div>
+        <div>Lone pairs: <span class="blank-line"></span> &nbsp; Unpaired e⁻: <span class="blank-line"></span> &nbsp; Bonds: <span class="blank-line"></span></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 03</span><span class="pts">[short answer]</span></div>
+      <div class="ex-prompt">Draw the electron dot diagram for <strong>oxygen (O)</strong>. Explain in 1–2 sentences why oxygen forms exactly 2 bonds based on your diagram.</div>
+      <div class="work-space">
+        <span class="label">Diagram &amp; explanation:</span>
+        <div style="height:90px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 04</span><span class="pts">[fill-in]</span></div>
+      <div class="ex-prompt">Complete the table for these atoms (use the bonds = 8 − v.e. rule for groups 14–17):</div>
+      <table class="cmp" style="margin-top:6px">
+        <thead><tr><th>Element</th><th>Valence e⁻</th><th>Lone pairs</th><th>Unpaired e⁻</th><th># bonds</th></tr></thead>
+        <tbody>
+          <tr><td class="formula">C</td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td></tr>
+          <tr><td class="formula">N</td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td></tr>
+          <tr><td class="formula">O</td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td></tr>
+          <tr><td class="formula">F</td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td><td><span class="blank-line" style="min-width:40px"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 05</span><span class="pts">[error analysis]</span></div>
+      <div class="ex-prompt">A student draws carbon's dot diagram with all 4 dots paired up as two lone pairs (i.e., <span class="formula">:C:</span>). They then conclude that carbon should form 0 bonds. Explain what error they made and what the correct number of bonds is.</div>
+      <div class="work-space">
+        <span class="label">Explanation:</span>
+        <div style="height:75px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── GROUP B ─── -->
+  <div class="ex-group">
+    <span class="ex-group-title">Group B · Burning easily as a covalent property (6–10)</span>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 06</span><span class="pts">[multiple choice]</span></div>
+      <div class="ex-prompt">Which of the following is a property of <strong>most covalent compounds</strong> but not of ionic compounds?</div>
+      <ul class="ex-options">
+        <li data-letter="A">Conducts electricity when dissolved in water</li>
+        <li data-letter="B">Forms a crystal lattice</li>
+        <li data-letter="C">Burns easily / flammable</li>
+        <li data-letter="D">Has very high melting and boiling points</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 07</span><span class="pts">[multiple choice]</span></div>
+      <div class="ex-prompt">A student claims: "All covalent compounds burn easily." Which compound is the best counterexample to this claim?</div>
+      <ul class="ex-options">
+        <li data-letter="A">CH₄ (methane)</li>
+        <li data-letter="B">C₂H₅OH (ethanol)</li>
+        <li data-letter="C">H₂O (water)</li>
+        <li data-letter="D">C₈H₁₈ (octane)</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 08</span><span class="pts">[short answer]</span></div>
+      <div class="ex-prompt">Explain in 2–3 sentences <strong>why ionic compounds like NaCl do not burn</strong>, but covalent compounds like methane (CH₄) burn very readily.</div>
+      <div class="work-space">
+        <span class="label">Answer:</span>
+        <div style="height:80px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 09</span><span class="pts">[classify]</span></div>
+      <div class="ex-prompt">For each compound, state (a) whether it is ionic or covalent, and (b) whether you would expect it to be flammable.</div>
+      <table class="cmp" style="margin-top:6px">
+        <thead><tr><th>Compound</th><th>Ionic / Covalent</th><th>Flammable? (Y/N)</th></tr></thead>
+        <tbody>
+          <tr><td class="formula">CaCl₂</td><td><span class="blank-line"></span></td><td><span class="blank-line" style="min-width:60px"></span></td></tr>
+          <tr><td class="formula">C₃H₈ (propane)</td><td><span class="blank-line"></span></td><td><span class="blank-line" style="min-width:60px"></span></td></tr>
+          <tr><td class="formula">KBr</td><td><span class="blank-line"></span></td><td><span class="blank-line" style="min-width:60px"></span></td></tr>
+          <tr><td class="formula">C₆H₆ (benzene)</td><td><span class="blank-line"></span></td><td><span class="blank-line" style="min-width:60px"></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 10</span><span class="pts">[reasoning]</span></div>
+      <div class="ex-prompt">CO₂ is a covalent compound but it is used in fire extinguishers — it does not burn. Explain why this does not contradict the rule that "covalent compounds burn easily."</div>
+      <div class="work-space">
+        <span class="label">Answer:</span>
+        <div style="height:80px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── GROUP C ─── -->
+  <div class="ex-group">
+    <span class="ex-group-title">Group C · IMF &amp; boiling-point comparisons (11–16)</span>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 11</span><span class="pts">[best comparison pair — challenge]</span></div>
+      <div class="ex-prompt">From the substances below, choose the <strong>two</strong> that best demonstrate how a difference in <em>intermolecular forces</em> causes a difference in boiling points. Then explain why your two are the best choice.</div>
+      <p style="font-family:var(--mono);text-align:center;background:var(--bg);padding:10px;border-radius:4px;font-size:11pt">CH₄ &nbsp;·&nbsp; H₂O &nbsp;·&nbsp; H₂S &nbsp;·&nbsp; NaCl &nbsp;·&nbsp; C₂H₆ &nbsp;·&nbsp; HF</p>
+      <div class="callout tip" style="margin:10px 0 8px">
+        <div class="label">Strategy hint</div>
+        <p>The "best" pair should be (1) <em>both</em> covalent (so we are isolating IMF differences, not bond-type differences), (2) <em>similar in size and shape</em> (so molecular weight is not the explanation), and (3) <em>different in IMF type</em> (one with hydrogen bonding, one without — for a clean, dramatic comparison).</p>
+      </div>
+      <div class="work-space">
+        <span class="label">My two substances: <span class="blank-line" style="min-width:80px"></span> and <span class="blank-line" style="min-width:80px"></span></span>
+        <div style="height:30px"></div>
+        <span class="label">Why these are the best comparison (3–4 sentences):</span>
+        <div style="height:90px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 12</span><span class="pts">[choose &amp; justify]</span></div>
+      <div class="ex-prompt">Below are five covalent compounds:</div>
+      <p style="font-family:var(--mono);text-align:center;background:var(--bg);padding:8px;border-radius:4px">CH₄ &nbsp;&nbsp; HF &nbsp;&nbsp; HCl &nbsp;&nbsp; CH₃OH &nbsp;&nbsp; C₂H₆</p>
+      <div class="ex-prompt">Pick <strong>any two</strong> from the list and predict which has the higher boiling point. Identify the strongest IMF in each and explain your reasoning.</div>
+      <div class="work-space">
+        <span class="label">My two compounds: <span class="blank-line" style="min-width:80px"></span> and <span class="blank-line" style="min-width:80px"></span></span>
+        <div style="height:90px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 13</span><span class="pts">[multiple choice]</span></div>
+      <div class="ex-prompt">Which molecule below has the <strong>highest</strong> boiling point?</div>
+      <ul class="ex-options">
+        <li data-letter="A">CH₄</li>
+        <li data-letter="B">CH₃F</li>
+        <li data-letter="C">CH₃OH</li>
+        <li data-letter="D">C₂H₆</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 14</span><span class="pts">[ranking]</span></div>
+      <div class="ex-prompt">Rank these four molecules from <strong>lowest to highest</strong> boiling point. Identify the strongest IMF in each.</div>
+      <p style="font-family:var(--mono);text-align:center;background:var(--bg);padding:8px;border-radius:4px">F₂ &nbsp;&nbsp; HF &nbsp;&nbsp; HCl &nbsp;&nbsp; Cl₂</p>
+      <div class="work-space">
+        <span class="label">Ranking (low → high):</span>
+        <div style="height:30px"></div>
+        <span class="label">IMF in each:</span>
+        <div style="height:60px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 15</span><span class="pts">[explain]</span></div>
+      <div class="ex-prompt">H₂O boils at 100 °C while H₂S boils at −60 °C, even though both are bent polar molecules with similar shapes. Explain the dramatic difference in their boiling points.</div>
+      <div class="work-space">
+        <span class="label">Answer:</span>
+        <div style="height:90px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 16</span><span class="pts">[apply]</span></div>
+      <div class="ex-prompt">Iodine (I₂) is a solid at room temperature, while fluorine (F₂) is a gas. Both are nonpolar diatomic molecules — so why is there such a difference? Use IMF to explain.</div>
+      <div class="work-space">
+        <span class="label">Answer:</span>
+        <div style="height:80px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── GROUP D ─── -->
+  <div class="ex-group">
+    <span class="ex-group-title">Group D · Lone pairs (17–21)</span>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 17</span><span class="pts">[multiple choice]</span></div>
+      <div class="ex-prompt">Which of the following is the <strong>best</strong> definition of a lone pair?</div>
+      <ul class="ex-options">
+        <li data-letter="A">A pair of electrons shared between two atoms in a covalent bond</li>
+        <li data-letter="B">A pair of electrons that belongs to only one atom and is not shared</li>
+        <li data-letter="C">A pair of protons in the nucleus of an atom</li>
+        <li data-letter="D">Two atoms that are bonded to each other</li>
+      </ul>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 18</span><span class="pts">[true/false + explain]</span></div>
+      <div class="ex-prompt">True or False: <em>"Lone pairs are a type of chemical bond."</em> Justify your answer in one sentence.</div>
+      <div class="work-space">
+        <span class="label">T / F &amp; explanation:</span>
+        <div style="height:60px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 19</span><span class="pts">[count]</span></div>
+      <div class="ex-prompt">Draw the Lewis structure of <strong>NH₃</strong> (ammonia). State (a) the number of bonds, (b) the number of lone pairs on the nitrogen, and (c) the total number of valence electrons used.</div>
+      <div class="work-space">
+        <span class="label">Diagram:</span>
+        <div style="height:90px"></div>
+        <div>(a) bonds: <span class="blank-line" style="min-width:50px"></span> &nbsp; (b) lone pairs on N: <span class="blank-line" style="min-width:50px"></span> &nbsp; (c) total v.e.: <span class="blank-line" style="min-width:50px"></span></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 20</span><span class="pts">[reasoning]</span></div>
+      <div class="ex-prompt">Even though lone pairs are not chemical bonds, they have important effects on molecules. Name <strong>two</strong> ways lone pairs influence a molecule's behavior, and give a specific example for each.</div>
+      <div class="work-space">
+        <span class="label">Effect 1 + example:</span>
+        <div style="height:50px"></div>
+        <span class="label">Effect 2 + example:</span>
+        <div style="height:50px"></div>
+      </div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-num"><span>Exercise 21</span><span class="pts">[synthesis — combines all 4 gaps]</span></div>
+      <div class="ex-prompt">Methanol (CH₃OH) and ethane (C₂H₆) have similar molecular masses (32 vs 30 g/mol), but methanol boils at 65 °C while ethane boils at −89 °C. In one short paragraph (3–5 sentences):</div>
+      <ol style="margin:6px 0 8px 22px;font-size:9.5pt;color:var(--ink)">
+        <li>Identify the strongest IMF in each.</li>
+        <li>Explain the role of the lone pairs on oxygen in CH₃OH.</li>
+        <li>Predict which compound would burn more easily and explain why both can burn (since they are both covalent).</li>
+      </ol>
+      <div class="work-space">
+        <span class="label">Answer:</span>
+        <div style="height:140px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ANSWER KEY                                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="answer-key" id="answers">
+  <div class="ak-header">
+    <h2>Answer Key</h2>
+    <p>Detailed answers and explanations for all 20 exercises</p>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 01</div>
+    <div class="ak-answer">B — Place one dot on each side first, then pair up</div>
+    <div class="ak-explain">This is Hund's rule (simplified). Electrons repel one another, so they occupy separate sides before pairing up. Pairing too early leads to wrong bond predictions (see Exercise 5).</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 02</div>
+    <div class="ak-answer">N has 5 v.e. → 1 lone pair (top), 3 unpaired electrons (right, bottom, left) → forms 3 bonds.</div>
+    <div class="ak-explain">Place dots one at a time: dots 1–4 fill all four sides, dot 5 must pair up. Result: 1 pair + 3 unpaired = 3 unpaired dots → 3 bonds. This matches the structure of NH₃ and N₂.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 03</div>
+    <div class="ak-answer">O has 6 v.e. → 2 lone pairs, 2 unpaired electrons → forms 2 bonds.</div>
+    <div class="ak-explain">Dots 1–4 fill the four sides; dots 5 and 6 pair up two of them. Two unpaired dots remain, so oxygen forms 2 bonds. This matches H₂O, where each H bonds with one of those unpaired electrons.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 04</div>
+    <div class="ak-answer">C: 4 v.e., 0 LP, 4 unpaired, 4 bonds · N: 5, 1, 3, 3 · O: 6, 2, 2, 2 · F: 7, 3, 1, 1</div>
+    <div class="ak-explain">Pattern: as v.e. increases by 1, lone pairs increase by 1 and unpaired electrons (= bonds) decrease by 1. Total dots = bonds + 2(lone pairs) always equals valence electrons.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 05</div>
+    <div class="ak-answer">The student paired electrons too early. The correct diagram has 4 unpaired dots (one on each side), so carbon forms 4 bonds.</div>
+    <div class="ak-explain">Hund's rule says place one dot per side first. Carbon has 4 v.e., which exactly fills the four sides with no pairing. All 4 are unpaired → 4 bonds, which is why carbon is tetravalent (CH₄, CO₂, all of organic chemistry).</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 06</div>
+    <div class="ak-answer">C — Burns easily / flammable</div>
+    <div class="ak-explain">A and B describe ionic properties; D is also ionic (low melting points are typical for covalent). Flammability is characteristic of most covalent compounds, especially those containing C and H.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 07</div>
+    <div class="ak-answer">C — H₂O (water)</div>
+    <div class="ak-explain">Water is a covalent compound but it is the <em>product</em> of combustion, not a fuel — it does not burn. CH₄, ethanol, and octane are all classic flammable hydrocarbons.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 08</div>
+    <div class="ak-answer">Ionic compounds like NaCl have very strong electrostatic bonds and are already stable; they have no C–H bonds to react with O₂. Methane has C–H bonds that release a lot of energy when they break and recombine with oxygen, and CH₄ vaporizes easily so it can mix with air and ignite.</div>
+    <div class="ak-explain">Two key points: (1) the chemical fuel must be present (C–H or C–C bonds), and (2) the compound must be able to vaporize so it can mix with O₂. Ionic compounds fail on both counts.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 09</div>
+    <div class="ak-answer">CaCl₂: ionic, not flammable · C₃H₈: covalent, flammable · KBr: ionic, not flammable · C₆H₆: covalent, flammable</div>
+    <div class="ak-explain">Quick check: metal + nonmetal = ionic (likely not flammable); compounds with C and H only = covalent and flammable. Propane is a common fuel; benzene is flammable (be careful — it's also toxic).</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 10</div>
+    <div class="ak-answer">CO₂ is covalent, but the rule says <em>most</em> covalent compounds burn — not all. CO₂ is already fully oxidized (it is what carbon looks like after burning), so there is no chemical fuel left. The rule applies most reliably to compounds containing C–H or C–C bonds.</div>
+    <div class="ak-explain">Flammability comes from oxidizable bonds (mainly C–H, C–C). When carbon is already bonded to two oxygens, it has nowhere to go — so CO₂ is the "ash" of combustion, not the fuel.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 11</div>
+    <div class="ak-answer">Best pair: <strong>H₂O and H₂S</strong>. Both are covalent (so we are isolating IMF effects), both are bent and have similar size and shape (so molecular weight is not the explanation), but they differ in IMF type — water has hydrogen bonding while H₂S only has dipole–dipole. The dramatic 160 °C boiling-point difference (100 °C vs −60 °C) is therefore caused by IMF type alone, making this the cleanest comparison.</div>
+    <div class="ak-explain">Why other pairs are worse: NaCl is ionic (the comparison would be confounded by bond-type difference, not just IMF). CH₄ and C₂H₆ both have only London dispersion forces (no IMF type difference). HF and any other listed item differ in too many ways at once. The H₂O/H₂S pair is the textbook example of an IMF-only comparison: same shape, same general size, only IMF type changes.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 12</div>
+    <div class="ak-answer">Sample answer: CH₃OH vs CH₄. CH₃OH has hydrogen bonding (H bonded to O); CH₄ has only London dispersion forces (nonpolar). Therefore CH₃OH has the higher boiling point. Other valid pairs: HF (H-bonding) > HCl (dipole–dipole); HCl (dipole–dipole) > CH₄ (LDF); CH₃OH (H-bonding) > C₂H₆ (LDF), etc.</div>
+    <div class="ak-explain">Any pair works as long as the IMF identification and ranking are correct: H-bonding > dipole–dipole > London dispersion. For molecules with the same IMF type, the larger/heavier wins.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 13</div>
+    <div class="ak-answer">C — CH₃OH</div>
+    <div class="ak-explain">CH₃OH is the only molecule with H bonded directly to O, so it can form hydrogen bonds — the strongest IMF. CH₃F is polar (dipole–dipole only); CH₄ and C₂H₆ are nonpolar (LDF only).</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 14</div>
+    <div class="ak-answer">F₂ (LDF, smallest) &lt; Cl₂ (LDF, larger) &lt; HCl (dipole–dipole) &lt; HF (hydrogen bonding)</div>
+    <div class="ak-explain">F₂ and Cl₂ are both nonpolar, so they only have LDF; Cl₂ wins because it is bigger (more electrons). HCl is polar with dipole–dipole. HF can H-bond (H to F!), giving the strongest IMF and highest BP. Actual values: F₂ = −188 °C, Cl₂ = −34 °C, HCl = −85 °C, HF = +20 °C.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 15</div>
+    <div class="ak-answer">In water (H₂O), hydrogen is bonded directly to oxygen, so water molecules form hydrogen bonds with one another — a very strong IMF. In H₂S, hydrogen is bonded to sulfur (not N, O, or F), so only weaker dipole–dipole forces exist between molecules. Hydrogen bonds require much more energy to break, raising water's boiling point dramatically.</div>
+    <div class="ak-explain">This is the textbook example showing how dramatic hydrogen bonding can be — a 160 °C difference between two structurally similar molecules.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 16</div>
+    <div class="ak-answer">Both molecules have only London dispersion forces (no permanent dipole). However, I₂ is much larger than F₂ and has many more electrons (106 vs 18). More electrons means stronger temporary dipoles, which means stronger LDF. The much stronger LDF in I₂ gives it a high enough boiling point to be solid at room temperature.</div>
+    <div class="ak-explain">Larger nonpolar molecules always have stronger LDF — this is why the halogens go from gas (F₂, Cl₂) to liquid (Br₂) to solid (I₂) as you go down the group.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 17</div>
+    <div class="ak-answer">B — A pair of electrons that belongs to only one atom and is not shared</div>
+    <div class="ak-explain">Option A describes a covalent bond — the opposite of a lone pair. Lone pairs sit on a single atom and do not participate in bonding (though they affect shape, polarity, and H-bonding).</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 18</div>
+    <div class="ak-answer">False. A chemical bond requires electrons to be shared between two atoms; lone pairs belong to one atom only and are not shared.</div>
+    <div class="ak-explain">This is a common conceptual confusion. Lone pairs are unbonded valence electrons. They affect molecular shape, polarity, and intermolecular interactions, but they are not bonds.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 19</div>
+    <div class="ak-answer">NH₃: 3 N–H bonds, 1 lone pair on N, 8 total valence electrons used. (5 from N + 3 × 1 from H = 8 v.e.)</div>
+    <div class="ak-explain">N forms 3 bonds (uses 6 electrons of which 3 are N's) and has 1 leftover lone pair (uses N's other 2 electrons). The 3 H atoms contribute 1 electron each to their bonds. Total = 8 v.e., distributed as 3 bonds + 1 lone pair.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 20</div>
+    <div class="ak-answer">(1) Shape (VSEPR): lone pairs push bonds together, making H₂O bent and NH₃ pyramidal instead of linear/flat. (2) Hydrogen bonding: lone pairs on N, O, or F act as the "acceptor" for hydrogen bonds — without them, water could not hydrogen-bond. (Other valid answers: lone pairs contribute to molecular polarity; they can act as electron donors in chemical reactions.)</div>
+    <div class="ak-explain">Any two of these effects are acceptable. The key insight: lone pairs are not bonds, but they shape molecular behavior in major ways.</div>
+  </div>
+
+  <div class="ak-item">
+    <div class="ak-num">Exercise 21</div>
+    <div class="ak-answer">CH₃OH has hydrogen bonding (H bonded directly to O), while C₂H₆ has only London dispersion forces (nonpolar molecule). The two lone pairs on oxygen in methanol are crucial — they are the "acceptors" that allow neighboring methanol molecules to form hydrogen bonds, which is why methanol's boiling point is so much higher despite similar mass. Both compounds are covalent and contain C–H bonds, so both can burn in oxygen; ethane (C₂H₆) is actually slightly more flammable per mass because it has more C–H content per molecule and no oxygen pulling it toward the oxidized state.</div>
+    <div class="ak-explain">This synthesis question pulls in all 4 gap topics: lone pairs (the O lone pairs enable H-bonding), IMF comparison (H-bond vs LDF), burning as a covalent property (both burn because they have C–H), and the underlying valence-electron logic (O's 6 v.e. give it 2 bonds + 2 lone pairs).</div>
+  </div>
+</section>
+
+<footer class="colophon">
+  Unit 6 Supplement · Targeted Mastery Tutorial · 4 Gaps + 21 Exercises
+</footer>
+
+</div>
+</body>
+</html>
