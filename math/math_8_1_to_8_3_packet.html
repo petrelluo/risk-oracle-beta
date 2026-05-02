@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Math 8.1-8.3 Quiz Packet</title>
+<style>
+
+@page { size: A4; margin: 0.55in; }
+* { box-sizing: border-box; }
+body { font-family: 'Times New Roman', Georgia, serif; font-size: 10.5pt; line-height: 1.32; color: #000; margin: 0; padding: 14px 22px; }
+
+h1 { text-align: center; font-size: 17pt; margin: 0 0 4px 0; }
+h2 { font-size: 13.5pt; background: #222; color: #fff; padding: 4px 8px; margin: 14px 0 6px 0; page-break-after: avoid; }
+h3 { font-size: 11.5pt; margin: 10px 0 4px 0; border-bottom: 1.5px solid #000; padding-bottom: 2px; page-break-after: avoid; }
+h4 { font-size: 11pt; margin: 8px 0 3px 0; font-style: italic; }
+.subtitle { text-align: center; font-size: 11pt; margin-bottom: 12px; font-style: italic; }
+.formula { background: #f0f0f0; padding: 6px 10px; border-left: 3px solid #000; margin: 5px 0; font-family: 'Courier New', monospace; font-size: 10.5pt; white-space: pre-wrap; }
+.key { background: #ffe; border: 1px solid #cc9; padding: 5px 8px; margin: 5px 0; }
+table { border-collapse: collapse; margin: 6px 0; font-size: 10.5pt; }
+td, th { border: 1px solid #000; padding: 3px 8px; text-align: center; }
+th { background: #ddd; }
+ul { margin: 3px 0; padding-left: 22px; }
+li { margin: 2px 0; }
+p { margin: 4px 0; }
+.note { font-size: 10pt; font-style: italic; }
+hr.thin { border: none; border-top: 1px solid #000; margin: 6px 0; }
+
+/* Square root with bar covering radicand */
+.rad { white-space: nowrap; }
+.rad .sr { border-top: 1.2px solid currentColor; padding: 0 1px 0 2px; margin-left: -2px; }
+
+/* Section break */
+.pagebreak { page-break-before: always; }
+
+/* Quiz layout (one quiz per A4 page) */
+.quiz {
+  page-break-before: always;
+  page-break-after: always;
+  break-before: page;
+  break-after: page;
+}
+.quiz-header {
+  border-bottom: 2px solid #000;
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.quiz-title { font-size: 14pt; font-weight: bold; }
+.quiz-meta { font-size: 9.5pt; font-style: italic; }
+ol.problems {
+  margin: 0;
+  padding: 0;
+  list-style-position: outside;
+  list-style: decimal;
+  padding-left: 22px;
+}
+ol.problems li {
+  padding: 4px 0 30px 0;
+  border-bottom: 1px dashed #888;
+  break-inside: avoid;
+}
+ol.problems li:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* Answer key compact */
+.akey ol.problems li {
+  padding: 2px 0 4px 0;
+  border-bottom: none;
+}
+.akey h3 { background: #f0f0f0; padding: 3px 6px; border: none; }
+
+/* Cheat sheet two-column */
+.cheat-cols { column-count: 2; column-gap: 16px; }
+.cheat-cols .nobreak { break-inside: avoid; }
+.cheat-cols h3 { font-size: 10.5pt; margin: 6px 0 3px 0; border-bottom: 1px solid #000; padding-bottom: 1px; }
+.cheat-cols .formula { font-size: 9.5pt; padding: 3px 6px; margin: 3px 0; }
+.cheat-cols .key { padding: 3px 6px; margin: 3px 0; font-size: 9.5pt; }
+.cheat-cols table { font-size: 9.5pt; width: 100%; }
+.cheat-cols td, .cheat-cols th { padding: 1.5px 4px; }
+.cheat-cols ul { padding-left: 16px; }
+
+/* On screen, give a soft page-edge so it's clear how it'll print */
+@media screen {
+  body { background: #eee; }
+  .page-section { background: #fff; max-width: 8.27in; min-height: 11.69in; margin: 16px auto; padding: 0.55in; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .quiz { min-height: 11.69in; max-width: 8.27in; margin: 16px auto; background: #fff; padding: 0.55in; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .akey-page { background: #fff; max-width: 8.27in; margin: 16px auto; padding: 0.55in; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .page-section, .quiz, .akey-page { box-shadow: none; padding: 0; max-width: none; }
+}
+
+</style>
+</head>
+<body>
+
+<nav class="page-section" style="font-size:11pt;">
+<h1 style="margin-bottom:6px;">Math 8.1&ndash;8.3 Quiz Packet</h1>
+<p class="subtitle">Big Ideas Math: Integrated Mathematics III &mdash; Chapter 8: Trigonometric Ratios and Functions</p>
+<ul style="list-style:none; padding-left:0;">
+<li><a href="#study-guide">Study Guide</a></li>
+<li><a href="#cheat-sheet">Cheat Sheet (1 page)</a></li>
+<li><a href="#quiz-1">Quiz 1</a></li>
+<li><a href="#quiz-2">Quiz 2</a></li>
+<li><a href="#quiz-3">Quiz 3</a></li>
+<li><a href="#quiz-4">Quiz 4</a></li>
+<li><a href="#quiz-5">Quiz 5</a></li>
+<li><a href="#quiz-6">Quiz 6</a></li>
+<li><a href="#quiz-7">Quiz 7</a></li>
+<li><a href="#quiz-8">Quiz 8</a></li>
+<li><a href="#quiz-9">Quiz 9</a></li>
+<li><a href="#quiz-10">Quiz 10</a></li>
+<li><a href="#answer-keys">Answer Keys (Quizzes 1&ndash;10)</a></li>
+</ul>
+<p class="note">Print tip: each quiz fits on one A4 page; the study guide spans a few pages; the cheat sheet is one page.</p>
+</nav>
+
+
+<section class="page-section" id="study-guide">
+<h1>Math 3 Study Guide &mdash; Chapter 8.1&ndash;8.3</h1>
+<p class="subtitle">Trigonometric Ratios and Functions (Right Triangles, Radians, Any Angle)</p>
+
+<h2>SECTION 8.1 &mdash; Right Triangle Trigonometry</h2>
+
+<h3>Right Triangle Anatomy</h3>
+<p>In a right triangle, the side opposite the right angle is the <b>hypotenuse</b> (longest side). The other two sides are <b>legs</b>. For an acute angle &theta; inside the triangle, the leg across from &theta; is the <b>opposite</b> side; the leg touching &theta; (that isn't the hypotenuse) is the <b>adjacent</b> side.</p>
+<div class="formula">Pythagorean Theorem:  a&sup2; + b&sup2; = c&sup2;   (c = hypotenuse)</div>
+
+<h3>The Six Trig Ratios (SOH-CAH-TOA + reciprocals)</h3>
+<div class="formula">sin &theta; = opp / hyp        csc &theta; = 1 / sin &theta; = hyp / opp
+cos &theta; = adj / hyp        sec &theta; = 1 / cos &theta; = hyp / adj
+tan &theta; = opp / adj        cot &theta; = 1 / tan &theta; = adj / opp</div>
+<p class="note">Reciprocal pairs: sin&harr;csc, cos&harr;sec, tan&harr;cot. These ratios are valid only for acute angles (0&deg; &lt; &theta; &lt; 90&deg;) inside a right triangle.</p>
+
+<h3>Pythagorean Triples (memorize)</h3>
+<p>(3, 4, 5)   (5, 12, 13)   (7, 24, 25)   (8, 15, 17) &mdash; and any multiple of these.</p>
+
+<h3>Special Right Triangles</h3>
+<table>
+<tr><th>Triangle</th><th>Side ratio</th><th>Decimal</th></tr>
+<tr><td>45&deg;-45&deg;-90&deg;</td><td>1 : 1 : <span class="rad">&radic;<span class="sr">2</span></span></td><td>&asymp; 1 : 1 : 1.414</td></tr>
+<tr><td>30&deg;-60&deg;-90&deg;</td><td>1 : <span class="rad">&radic;<span class="sr">3</span></span> : 2</td><td>&asymp; 1 : 1.732 : 2</td></tr>
+</table>
+<p>In 30-60-90: side opposite 30&deg; = short leg (1), opposite 60&deg; = long leg (<span class="rad">&radic;<span class="sr">3</span></span>), opposite 90&deg; = hypotenuse (2).</p>
+
+<h3>Exact Trig Values for 30&deg;, 45&deg;, 60&deg; (memorize)</h3>
+<table>
+<tr><th>&theta;</th><th>sin &theta;</th><th>cos &theta;</th><th>tan &theta;</th></tr>
+<tr><td>30&deg;</td><td>1/2</td><td><span class="rad">&radic;<span class="sr">3</span></span>/2</td><td><span class="rad">&radic;<span class="sr">3</span></span>/3   (= 1/<span class="rad">&radic;<span class="sr">3</span></span>)</td></tr>
+<tr><td>45&deg;</td><td><span class="rad">&radic;<span class="sr">2</span></span>/2</td><td><span class="rad">&radic;<span class="sr">2</span></span>/2</td><td>1</td></tr>
+<tr><td>60&deg;</td><td><span class="rad">&radic;<span class="sr">3</span></span>/2</td><td>1/2</td><td><span class="rad">&radic;<span class="sr">3</span></span></td></tr>
+</table>
+
+<h3>Solving a Right Triangle</h3>
+<p>"Solve &#9651;ABC" means find every unknown side and angle. With a right angle at C, you generally need either two sides OR one side + one acute angle. Strategy:</p>
+<ul>
+<li>The two acute angles add to 90&deg; (so &ang;A + &ang;B = 90&deg;).</li>
+<li>Pick a trig ratio whose two sides are (one known, one unknown).</li>
+<li>For unknown sides: multiply or divide. Example: cos 34&deg; = 13/c &rarr; c = 13 / cos 34&deg;.</li>
+<li>Always confirm with Pythagoras when possible.</li>
+</ul>
+
+<h2>SECTION 8.2 &mdash; Angles and Radian Measure</h2>
+
+<h3>Standard Position</h3>
+<p>An angle is in <b>standard position</b> when its vertex is at the origin and its initial side lies along the positive x-axis. A positive angle rotates <b>counterclockwise</b>; a negative angle rotates <b>clockwise</b>. The ray you end on is the <b>terminal side</b>.</p>
+
+<h3>Coterminal Angles</h3>
+<p>Two angles are <b>coterminal</b> if they share the same terminal side. To find coterminal angles, add or subtract any multiple of 360&deg;.</p>
+<div class="formula">Coterminal with &theta;:    &theta; + 360&deg;&middot;n,    where n is any integer</div>
+<p>Examples: 30&deg; and 390&deg; (= 30 + 360) and &minus;330&deg; (= 30 &minus; 360) are all coterminal.</p>
+
+<h3>Radians</h3>
+<p>A <b>radian</b> is the angle that subtends an arc length equal to one radius. Definition:</p>
+<div class="formula">&theta; (in radians) = arc length / radius = &ell; / r</div>
+<p>A full circle has circumference 2&pi;r, so a full rotation = 2&pi; rad = 360&deg;. A half rotation = &pi; rad = 180&deg;.</p>
+<div class="key"><b>Conversion (key fact): 180&deg; = &pi; radians</b><br>
+&nbsp;&nbsp;Degrees &rarr; Radians:   multiply by &pi; / 180&deg;<br>
+&nbsp;&nbsp;Radians &rarr; Degrees:   multiply by 180&deg; / &pi;
+</div>
+<p class="note">Useful approximation: 1 rad &asymp; 57.3&deg;.</p>
+
+<h3>Common Radian Values</h3>
+<table>
+<tr><th>Degrees</th><td>30&deg;</td><td>45&deg;</td><td>60&deg;</td><td>90&deg;</td><td>180&deg;</td><td>270&deg;</td><td>360&deg;</td></tr>
+<tr><th>Radians</th><td>&pi;/6</td><td>&pi;/4</td><td>&pi;/3</td><td>&pi;/2</td><td>&pi;</td><td>3&pi;/2</td><td>2&pi;</td></tr>
+</table>
+
+<h3>Arc Length and Sector Area</h3>
+<p>For a sector of a circle with radius r and central angle &theta; <b>in radians</b>:</p>
+<div class="formula">Arc length:        &ell; = &theta; &middot; r
+Sector area:       A = (1/2) &middot; &theta; &middot; r&sup2;</div>
+<p class="note">If &theta; is given in degrees, first convert to radians (multiply by &pi;/180&deg;) before using these formulas.</p>
+
+<h2>SECTION 8.3 &mdash; Trigonometric Functions of Any Angle</h2>
+
+<h3>General Definitions</h3>
+<p>Let (x, y) be any point (other than the origin) on the terminal side of an angle &theta; in standard position, and let r be the distance from the origin to (x, y):</p>
+<div class="formula">r = <span class="rad">&radic;<span class="sr">x&sup2; + y&sup2;</span></span>        (always positive)</div>
+<div class="formula">sin &theta; = y / r          csc &theta; = r / y     (y &ne; 0)
+cos &theta; = x / r          sec &theta; = r / x     (x &ne; 0)
+tan &theta; = y / x  (x &ne; 0)   cot &theta; = x / y     (y &ne; 0)</div>
+<p>These extend the right-triangle definitions to <b>any</b> angle &theta; (positive, negative, or larger than 90&deg;).</p>
+
+<h3>Signs by Quadrant ("All Students Take Calculus")</h3>
+<table>
+<tr><th>Quadrant</th><th>x</th><th>y</th><th>Positive trig functions</th></tr>
+<tr><td>I</td><td>+</td><td>+</td><td><b>A</b>ll six</td></tr>
+<tr><td>II</td><td>&minus;</td><td>+</td><td><b>S</b>in (and csc)</td></tr>
+<tr><td>III</td><td>&minus;</td><td>&minus;</td><td><b>T</b>an (and cot)</td></tr>
+<tr><td>IV</td><td>+</td><td>&minus;</td><td><b>C</b>os (and sec)</td></tr>
+</table>
+
+<h3>The Unit Circle</h3>
+<p>The circle x&sup2; + y&sup2; = 1 has center (0, 0) and radius r = 1. On the unit circle, sin &theta; = y and cos &theta; = x, which simplifies many evaluations.</p>
+
+<h3>Quadrantal Angles</h3>
+<p>A <b>quadrantal angle</b> is one whose terminal side lies on an axis (0&deg;, 90&deg;, 180&deg;, 270&deg;, 360&deg;, ...). At these angles, x or y equals 0, so some trig functions are <b>undefined</b> (division by zero).</p>
+<table>
+<tr><th>&theta;</th><th>(x, y)</th><th>sin &theta;</th><th>cos &theta;</th><th>tan &theta;</th></tr>
+<tr><td>0&deg;</td><td>(1, 0)</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>90&deg;</td><td>(0, 1)</td><td>1</td><td>0</td><td>undefined</td></tr>
+<tr><td>180&deg;</td><td>(&minus;1, 0)</td><td>0</td><td>&minus;1</td><td>0</td></tr>
+<tr><td>270&deg;</td><td>(0, &minus;1)</td><td>&minus;1</td><td>0</td><td>undefined</td></tr>
+</table>
+
+<h3>Worked Example (Section 8.3, Ex 1)</h3>
+<p>Let (8, &minus;6) be on the terminal side of &theta;. Find r, then all six trig functions.</p>
+<ul>
+<li>r = <span class="rad">&radic;<span class="sr">8&sup2; + (&minus;6)&sup2;</span></span> = <span class="rad">&radic;<span class="sr">64 + 36</span></span> = <span class="rad">&radic;<span class="sr">100</span></span> = 10</li>
+<li>sin &theta; = y/r = &minus;6/10 = &minus;3/5,  csc &theta; = &minus;5/3</li>
+<li>cos &theta; = x/r = 8/10 = 4/5,  sec &theta; = 5/4</li>
+<li>tan &theta; = y/x = &minus;6/8 = &minus;3/4,  cot &theta; = &minus;4/3</li>
+</ul>
+
+<h2>Master Problem-Solving Checklist</h2>
+<ul>
+<li><b>Right triangle? (8.1)</b> Identify hyp / opp / adj relative to the angle, choose SOH-CAH-TOA. For special triangles, recognize the ratios first.</li>
+<li><b>Converting angle units? (8.2)</b> Multiply by &pi;/180 (deg &rarr; rad) or by 180/&pi; (rad &rarr; deg). Keep &pi; symbolic when possible.</li>
+<li><b>Coterminal? (8.2)</b> Add/subtract 360&deg; (or 2&pi;) until in the desired range.</li>
+<li><b>Arc / sector? (8.2)</b> Convert &theta; to radians first; then &ell; = &theta;r and A = (1/2)&theta;r&sup2;.</li>
+<li><b>Any angle? (8.3)</b> Compute r = <span class="rad">&radic;<span class="sr">x&sup2; + y&sup2;</span></span>, then apply general definitions. Check signs against the quadrant.</li>
+<li><b>Quadrantal? (8.3)</b> Identify (x, y) on the axis; watch for zeros that make tan, cot, sec, or csc undefined.</li>
+</ul>
+</section>
+
+
+<section class="page-section" id="cheat-sheet">
+<h1 style="margin-bottom:8px;">Cheat Sheet &mdash; Math 3, &sect;&sect; 8.1&ndash;8.3</h1>
+<div class="cheat-cols">
+
+<div class="nobreak">
+<h2 style="margin:4px 0 4px 0;">8.1 Right Triangle Trig</h2>
+<p><b>Pythagoras:</b> a&sup2; + b&sup2; = c&sup2; (c = hyp).</p>
+<div class="formula">sin &theta; = opp/hyp     csc = 1/sin = hyp/opp
+cos &theta; = adj/hyp     sec = 1/cos = hyp/adj
+tan &theta; = opp/adj     cot = 1/tan = adj/opp</div>
+<p><b>SOH-CAH-TOA</b>. Reciprocals: sin&harr;csc, cos&harr;sec, tan&harr;cot.</p>
+<p><b>Pythagorean triples:</b> (3,4,5), (5,12,13), (7,24,25), (8,15,17).</p>
+</div>
+
+<div class="nobreak">
+<h3>Special Triangles</h3>
+<table>
+<tr><th>Type</th><th>Sides ratio</th></tr>
+<tr><td>45-45-90</td><td>1 : 1 : <span class="rad">&radic;<span class="sr">2</span></span></td></tr>
+<tr><td>30-60-90</td><td>1 : <span class="rad">&radic;<span class="sr">3</span></span> : 2</td></tr>
+</table>
+<p>30-60-90: side opposite 30&deg;=1, 60&deg;=<span class="rad">&radic;<span class="sr">3</span></span>, 90&deg;=2.</p>
+</div>
+
+<div class="nobreak">
+<h3>Exact Values</h3>
+<table>
+<tr><th>&theta;</th><th>sin</th><th>cos</th><th>tan</th></tr>
+<tr><td>0&deg;</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>30&deg;</td><td>1/2</td><td><span class="rad">&radic;<span class="sr">3</span></span>/2</td><td><span class="rad">&radic;<span class="sr">3</span></span>/3</td></tr>
+<tr><td>45&deg;</td><td><span class="rad">&radic;<span class="sr">2</span></span>/2</td><td><span class="rad">&radic;<span class="sr">2</span></span>/2</td><td>1</td></tr>
+<tr><td>60&deg;</td><td><span class="rad">&radic;<span class="sr">3</span></span>/2</td><td>1/2</td><td><span class="rad">&radic;<span class="sr">3</span></span></td></tr>
+<tr><td>90&deg;</td><td>1</td><td>0</td><td>undef</td></tr>
+</table>
+</div>
+
+<div class="nobreak">
+<h3>Solving &#9651;ABC</h3>
+<ul>
+<li>Acute angles sum to 90&deg;.</li>
+<li>Pick ratio with one known + one unknown side.</li>
+<li>Side on top: multiply (e.g., a = 13&middot;tan 34&deg;).</li>
+<li>Side on bottom: divide (e.g., c = 13/cos 34&deg;).</li>
+</ul>
+</div>
+
+<div class="nobreak">
+<h2 style="margin:4px 0 4px 0;">8.2 Angles &amp; Radians</h2>
+<p><b>Standard position:</b> vertex at origin, initial side on +x-axis. Counterclockwise = positive.</p>
+<p><b>Coterminal:</b> share the same terminal side.</p>
+<div class="formula">&theta; + 360&deg;&middot;n   (or  &theta; + 2&pi;&middot;n)</div>
+</div>
+
+<div class="nobreak">
+<h3>Radians</h3>
+<div class="formula">&theta;_rad = &ell; / r</div>
+<div class="key"><b>180&deg; = &pi; rad</b><br>
+deg &rarr; rad: &middot; &pi;/180&deg;<br>
+rad &rarr; deg: &middot; 180&deg;/&pi;</div>
+<table>
+<tr><th>deg</th><td>30</td><td>45</td><td>60</td><td>90</td><td>180</td><td>270</td><td>360</td></tr>
+<tr><th>rad</th><td>&pi;/6</td><td>&pi;/4</td><td>&pi;/3</td><td>&pi;/2</td><td>&pi;</td><td>3&pi;/2</td><td>2&pi;</td></tr>
+</table>
+<p>1 rad &asymp; 57.3&deg;.</p>
+</div>
+
+<div class="nobreak">
+<h3>Arc Length / Sector Area</h3>
+<div class="formula">&ell; = &theta; &middot; r        (&theta; in radians)
+A = (1/2) &middot; &theta; &middot; r&sup2;</div>
+<p>Convert &theta; to radians first if given in degrees.</p>
+</div>
+
+<div class="nobreak">
+<h2 style="margin:4px 0 4px 0;">8.3 Trig of Any Angle</h2>
+<p>Let (x, y) be on terminal side; r = <span class="rad">&radic;<span class="sr">x&sup2; + y&sup2;</span></span> &gt; 0.</p>
+<div class="formula">sin &theta; = y/r        csc &theta; = r/y
+cos &theta; = x/r        sec &theta; = r/x
+tan &theta; = y/x        cot &theta; = x/y</div>
+</div>
+
+<div class="nobreak">
+<h3>Sign Chart (ASTC)</h3>
+<table>
+<tr><th>Quad</th><th>x</th><th>y</th><th>+ trig</th></tr>
+<tr><td>I</td><td>+</td><td>+</td><td>All</td></tr>
+<tr><td>II</td><td>&minus;</td><td>+</td><td>Sin/csc</td></tr>
+<tr><td>III</td><td>&minus;</td><td>&minus;</td><td>Tan/cot</td></tr>
+<tr><td>IV</td><td>+</td><td>&minus;</td><td>Cos/sec</td></tr>
+</table>
+<p>"All Students Take Calculus."</p>
+</div>
+
+<div class="nobreak">
+<h3>Unit Circle &amp; Quadrantal Angles</h3>
+<p><b>Unit circle:</b> x&sup2; + y&sup2; = 1, so r = 1, sin &theta; = y, cos &theta; = x.</p>
+<p><b>Quadrantal angle:</b> terminal side on an axis. Watch for undefined values.</p>
+<table>
+<tr><th>&theta;</th><th>(x,y)</th><th>sin</th><th>cos</th><th>tan</th></tr>
+<tr><td>0&deg;</td><td>(1,0)</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><td>90&deg;</td><td>(0,1)</td><td>1</td><td>0</td><td>undef</td></tr>
+<tr><td>180&deg;</td><td>(&minus;1,0)</td><td>0</td><td>&minus;1</td><td>0</td></tr>
+<tr><td>270&deg;</td><td>(0,&minus;1)</td><td>&minus;1</td><td>0</td><td>undef</td></tr>
+</table>
+</div>
+
+<div class="nobreak">
+<h3>Quick Steps for "Find 6 Trig"</h3>
+<ul>
+<li>Compute r = <span class="rad">&radic;<span class="sr">x&sup2; + y&sup2;</span></span>.</li>
+<li>Plug into general definitions.</li>
+<li>Check signs match the quadrant.</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<section class="quiz" id="quiz-1">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 1</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>In a right triangle with legs of length 9 and 12, find the length of the hypotenuse, then evaluate sin &theta;, cos &theta;, and tan &theta; where &theta; is the acute angle opposite the leg of length 9.</li>
+  <li>In a right triangle, &theta; is acute and cos &theta; = 7/25. Find sin &theta;, tan &theta;, csc &theta;, sec &theta;, and cot &theta;.</li>
+  <li>The hypotenuse of a 30&deg;-60&deg;-90&deg; triangle is 14, and x is the side opposite the 60&deg; angle. Find x. Give an exact answer.</li>
+  <li>Solve right &#9651;ABC with right angle at C, given &ang;A = 28&deg; and b = 17. Find &ang;B, a, and c (round to nearest hundredth).</li>
+  <li>Convert: (a) 225&deg; to radians, (b) 7&pi;/12 radians to degrees. Give exact answers.</li>
+  <li>Find one positive and one negative angle that are coterminal with 510&deg;.</li>
+  <li>A circular sector has radius 8 cm and central angle 3&pi;/4 radians. Find the arc length and the area of the sector. Give exact answers.</li>
+  <li>Convert 135&deg; to radians, then use the result to find the arc length on a circle of radius 6 in.</li>
+  <li>The point (&minus;5, 12) lies on the terminal side of an angle &theta; in standard position. Evaluate the six trigonometric functions of &theta;.</li>
+  <li>Evaluate the six trigonometric functions of &theta; = 180&deg; using the unit circle.</li>
+  <li>The point (&minus;3, &minus;4) lies on the terminal side of &theta; in standard position. State the quadrant of &theta; and find sin &theta;, cos &theta;, and tan &theta;.</li>
+  <li>Without a calculator, evaluate (a) sin 270&deg;, (b) cos 360&deg;, (c) tan 90&deg;, (d) sec 180&deg;, (e) cot 270&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-2">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 2</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>In a right triangle the hypotenuse is 26 and one leg is 10. Find the other leg and evaluate the six trig functions of the angle opposite the leg of length 10.</li>
+  <li>&theta; is acute and tan &theta; = 8/15. Find sin &theta;, cos &theta;, and sec &theta;.</li>
+  <li>In a 45&deg;-45&deg;-90&deg; triangle the hypotenuse is 10. Find the length of each leg. Give an exact answer.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given &ang;B = 41&deg; and c = 22. Find &ang;A, a, and b (round to nearest hundredth).</li>
+  <li>Convert: (a) &minus;210&deg; to radians, (b) 11&pi;/6 radians to degrees. Give exact answers.</li>
+  <li>Find one positive and one negative angle coterminal with &minus;100&deg;.</li>
+  <li>A pendulum of length 24 in. swings through an angle of 40&deg;. Find the arc length traced by the tip (round to nearest tenth).</li>
+  <li>A circular sector has area 50&pi; cm² and radius 10 cm. Find the central angle in radians and degrees.</li>
+  <li>The point (4, &minus;3) lies on the terminal side of &theta;. Evaluate all six trig functions of &theta;.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 270&deg;.</li>
+  <li>Point (&minus;6, 8) is on the terminal side of &theta;. State the quadrant and find sin &theta;, cos &theta;, tan &theta;.</li>
+  <li>Without a calculator, evaluate (a) cos 90&deg;, (b) sin 0&deg;, (c) sec 360&deg;, (d) tan 180&deg;, (e) csc 90&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-3">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 3</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>In a right triangle, the legs measure 15 and 8. Find the hypotenuse, then sin &theta;, cos &theta;, tan &theta; for the angle &theta; opposite the leg of length 15.</li>
+  <li>&theta; is acute with sin &theta; = 3/7. Find cos &theta;, tan &theta;, and cot &theta; in simplified radical form.</li>
+  <li>In a 30&deg;-60&deg;-90&deg; triangle, the side opposite 30&deg; is 5. Find the other two sides exactly.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given a = 9 and c = 15. Find b, &ang;A, and &ang;B (angles to nearest tenth).</li>
+  <li>Convert (a) 405&deg; to radians, (b) &minus;5&pi;/3 radians to degrees. Give exact answers.</li>
+  <li>Find one positive and one negative angle coterminal with 7&pi;/4 radians. Give answers in radians.</li>
+  <li>The minute hand of a clock is 12 cm long. Through what arc length does the tip travel between 12:00 and 12:25? Give an exact answer in cm.</li>
+  <li>Find the area of a sector with radius 9 ft and central angle 80&deg;. Give an exact answer.</li>
+  <li>The point (&minus;7, &minus;24) lies on the terminal side of &theta;. Evaluate the six trig functions.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 360&deg;.</li>
+  <li>&theta; is in standard position with cos &theta; = &minus;5/13 and the terminal side in Quadrant II. Find sin &theta; and tan &theta;.</li>
+  <li>Without a calculator, evaluate: (a) cos 270&deg;; (b) tan 360&deg;; (c) csc 180&deg;; (d) sec 90&deg;; (e) cot 0&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-4">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 4</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>The legs of a right triangle are 20 and 21. Find the hypotenuse, then sin &theta; and cos &theta; for the angle opposite the leg of length 20.</li>
+  <li>&theta; is acute and sec &theta; = 13/5. Find sin &theta;, tan &theta;, and csc &theta;.</li>
+  <li>The longer leg of a 30&deg;-60&deg;-90&deg; triangle is 9. Find the lengths of the other two sides exactly.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given &ang;A = 52&deg; and a = 11. Find &ang;B, b, and c (round to nearest hundredth).</li>
+  <li>Convert: (a) 165&deg; to radians; (b) &minus;3&pi;/8 radians to degrees. Give exact answers.</li>
+  <li>Find one positive and one negative angle coterminal with 1000&deg;.</li>
+  <li>A circular sector has central angle 5&pi;/6 rad and arc length 15 ft. Find the radius, then the sector area.</li>
+  <li>Convert 75&deg; to radians (exact), then find the area of a sector of radius 12 m with that central angle.</li>
+  <li>The point (&minus;2, 5) lies on the terminal side of &theta;. Find the six trig functions in simplest form.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 0&deg;.</li>
+  <li>&theta; is in standard position with tan &theta; = 4/3 and sin &theta; &lt; 0. State the quadrant and find sin &theta;, cos &theta;, and sec &theta;.</li>
+  <li>Without a calculator: (a) sin 90&deg;; (b) cos 180&deg;; (c) tan 270&deg;; (d) csc 0&deg;; (e) cot 90&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-5">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 5</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>The legs of a right triangle are 14 and 48. Find the hypotenuse, then evaluate tan &theta; and sec &theta; for the angle opposite the shorter leg.</li>
+  <li>&theta; is acute and cot &theta; = 9/40. Find sin &theta;, cos &theta;, and csc &theta;.</li>
+  <li>The hypotenuse of a 30&deg;-60&deg;-90&deg; triangle is 8<span class="rad">&radic;<span class="sr">3</span></span>, and x is the side opposite the 30&deg; angle. Find x.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given a = 7 and b = 24. Find c, &ang;A, and &ang;B (angles to nearest tenth).</li>
+  <li>Convert: (a) 540&deg; to radians; (b) 13&pi;/6 radians to degrees. Give exact answers.</li>
+  <li>Find one positive and one negative angle coterminal with &minus;&pi;/3 radians. Express in radians.</li>
+  <li>A circular wheel of radius 14 in. rotates through 5&pi;/4 radians. How far does a point on the rim travel?</li>
+  <li>The area of a sector is 27&pi; m² and its radius is 6 m. Find the central angle in both radians and degrees.</li>
+  <li>The point (1, &minus;3) lies on the terminal side of &theta;. Evaluate the six trig functions in simplified form.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 90&deg;.</li>
+  <li>&theta; is in standard position with sin &theta; = 7/25 and cos &theta; &lt; 0. State the quadrant and find tan &theta; and sec &theta;.</li>
+  <li>Without a calculator: (a) sin 180&deg;; (b) cos 0&deg;; (c) sec 270&deg;; (d) cot 180&deg;; (e) tan 90&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-6">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 6</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>The hypotenuse of a right triangle is 41 and one leg is 9. Find the other leg, then evaluate sin &theta;, cos &theta;, and tan &theta; for the angle opposite the leg of length 9.</li>
+  <li>&theta; is acute and csc &theta; = 5/3. Find cos &theta;, tan &theta;, and cot &theta;.</li>
+  <li>The shorter leg of a 30&deg;-60&deg;-90&deg; triangle is 5<span class="rad">&radic;<span class="sr">3</span></span>. Find the other two sides exactly.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given &ang;B = 67&deg; and b = 25. Find &ang;A, a, c (round to nearest hundredth).</li>
+  <li>Convert: (a) &minus;315&deg; to radians, (b) 4&pi;/9 radians to degrees. Exact answers.</li>
+  <li>Find one positive and one negative angle coterminal with 17&pi;/6.</li>
+  <li>A circular sector has radius 15 m and central angle 144&deg;. Find the arc length and the sector area, in exact form.</li>
+  <li>A circular sector of radius 6 cm has area 18 cm². Find the central angle in radians.</li>
+  <li>The point (&minus;9, &minus;12) lies on the terminal side of &theta;. Find the six trig functions.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 180&deg;.</li>
+  <li>&theta; is in standard position with tan &theta; = &minus;5/12 and the terminal side in Quadrant IV. Find sin &theta;, cos &theta;, and csc &theta;.</li>
+  <li>Without a calculator: (a) cos(&minus;180&deg;); (b) sin(&minus;90&deg;); (c) tan 0&deg;; (d) sec 0&deg;; (e) csc 270&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-7">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 7</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>In a right triangle, the leg adjacent to angle &theta; is 7 and the hypotenuse is 25. Find the opposite leg, then sin &theta;, cos &theta;, tan &theta;, csc &theta;.</li>
+  <li>&theta; is acute and tan &theta; = 2. Find sin &theta;, cos &theta;, and sec &theta; in simplest radical form.</li>
+  <li>In a 45&deg;-45&deg;-90&deg; triangle each leg is 6<span class="rad">&radic;<span class="sr">2</span></span>. Find the hypotenuse exactly.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given b = 10 and c = 26. Find a, &ang;A, &ang;B (angles to nearest tenth).</li>
+  <li>Convert: (a) 22.5&deg; to radians; (b) 5&pi;/9 radians to degrees.</li>
+  <li>Find one positive and one negative angle coterminal with &minus;4&pi;/3.</li>
+  <li>A circular track has radius 50 m. A runner runs along an arc of length 75 m. Through what angle (in radians and degrees) has the runner traveled? (Round degrees to nearest tenth.)</li>
+  <li>Find the area of a sector with radius 4 in. and central angle 5&pi;/6 rad. Exact answer.</li>
+  <li>The point (6, 8) lies on the terminal side of &theta;. Evaluate the six trig functions.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 270&deg;.</li>
+  <li>&theta; is in standard position with cos &theta; = 8/17 and tan &theta; &lt; 0. State the quadrant and find sin &theta;, tan &theta;, and cot &theta;.</li>
+  <li>Without a calculator: (a) tan 180&deg;; (b) sec 180&deg;; (c) cos 90&deg;; (d) csc 90&deg;; (e) cot 270&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-8">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 8</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>A right triangle has hypotenuse 17 and one leg 15. Find the other leg, then evaluate cos &theta; and tan &theta; for the angle opposite the leg of length 15.</li>
+  <li>&theta; is acute and cos &theta; = 2/3. Find sin &theta;, tan &theta;, and csc &theta; in simplest radical form.</li>
+  <li>In a 30&deg;-60&deg;-90&deg; triangle the longer leg is 7. Find the hypotenuse x. Give an exact answer.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given &ang;A = 15&deg; and c = 30. Find &ang;B, a, b (round to nearest hundredth).</li>
+  <li>Convert: (a) 720&deg; to radians; (b) &minus;7&pi;/6 radians to degrees.</li>
+  <li>Find one positive and one negative angle coterminal with 850&deg;.</li>
+  <li>A bicycle wheel of radius 13 in. rotates through 240&deg;. Find the distance traveled by a point on the rim. Give exact and decimal (nearest tenth).</li>
+  <li>A circular sector has arc length 8&pi; cm and central angle 2&pi;/3 rad. Find its radius and area exactly.</li>
+  <li>The point (&minus;4, 7) lies on the terminal side of &theta;. Evaluate the six trig functions in simplest form.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 0&deg;.</li>
+  <li>&theta; is in standard position with sin &theta; = &minus;4/5 and cos &theta; &gt; 0. State the quadrant and find tan &theta;, sec &theta;, cot &theta;.</li>
+  <li>Without a calculator: (a) sin(&minus;180&deg;); (b) cos(&minus;360&deg;); (c) tan 90&deg;; (d) csc 360&deg;; (e) sec 90&deg;.</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-9">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 9</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>The legs of a right triangle are 5<span class="rad">&radic;<span class="sr">3</span></span> and 5. Find the hypotenuse, then sin &theta;, cos &theta;, tan &theta; for the angle &theta; opposite the leg of length 5.</li>
+  <li>&theta; is acute with sec &theta; = 4. Find sin &theta;, cos &theta;, and cot &theta; in simplest radical form.</li>
+  <li>A 45&deg;-45&deg;-90&deg; triangle has hypotenuse 5<span class="rad">&radic;<span class="sr">2</span></span>. Find each leg.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given b = 8 and &ang;B = 30&deg;. Find &ang;A, a, c. Use exact values.</li>
+  <li>Convert: (a) 200&deg; to radians; (b) 9&pi;/2 radians to degrees.</li>
+  <li>Find one positive and one negative angle coterminal with 23&pi;/4.</li>
+  <li>A circular sector has central angle 1.2 rad and radius 25 cm. Find the arc length and the sector area.</li>
+  <li>A circular sector with central angle 60&deg; has area 24&pi; m². Find the radius exactly.</li>
+  <li>The point (15, &minus;8) lies on the terminal side of &theta;. Evaluate the six trig functions.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 90&deg;.</li>
+  <li>&theta; is in standard position with cot &theta; = 7/24 and sin &theta; &lt; 0. State the quadrant and find sin &theta;, cos &theta;, csc &theta;.</li>
+  <li>Without a calculator: (a) cos 270&deg;; (b) sin 360&deg;; (c) tan(&minus;180&deg;); (d) csc(&minus;90&deg;); (e) sec(&minus;360&deg;).</li>
+  </ol>
+</section>
+
+<section class="quiz" id="quiz-10">
+  <div class="quiz-header">
+    <div class="quiz-title">Math 8.1&ndash;8.3 &mdash; Quiz 10</div>
+    <div class="quiz-meta">Date: __________ &nbsp;&nbsp; Score: ____ / 60</div>
+  </div>
+  <ol class="problems">
+  <li>A right triangle has legs 11 and 60. Find the hypotenuse, then sin &theta;, cos &theta;, tan &theta; for the angle opposite the leg of length 11.</li>
+  <li>&theta; is acute and sin &theta; = <span class="rad">&radic;<span class="sr">3</span></span>/4. Find cos &theta;, tan &theta;, and sec &theta; in simplest radical form.</li>
+  <li>The longer leg of a 30&deg;-60&deg;-90&deg; triangle is 18. Find the other two sides exactly.</li>
+  <li>Solve right &#9651;ABC, right angle at C, given a = 12 and &ang;A = 70&deg;. Find &ang;B, b, c (round to nearest hundredth).</li>
+  <li>Convert: (a) &minus;495&deg; to radians; (b) 5&pi;/12 radians to degrees.</li>
+  <li>Find one positive and one negative angle coterminal with 19&pi;/3.</li>
+  <li>A wheel of radius 21 cm rotates so that a point on the rim travels 14&pi; cm. Find the angle of rotation in radians and in degrees.</li>
+  <li>Find the central angle (in radians) of a sector with radius 5 in. and area 25&pi;/4 in².</li>
+  <li>The point (&minus;12, 5) lies on the terminal side of &theta;. Evaluate the six trig functions.</li>
+  <li>Use the unit circle to evaluate the six trig functions of &theta; = 360&deg;.</li>
+  <li>&theta; is in standard position with sec &theta; = &minus;13/12 and the terminal side in Quadrant II. Find sin &theta;, cos &theta;, and cot &theta;.</li>
+  <li>Without a calculator: (a) sin 90&deg;; (b) cos(&minus;270&deg;); (c) tan 360&deg;; (d) csc 180&deg;; (e) cot 90&deg;.</li>
+  </ol>
+</section>
+
+<section class="akey-page akey" id="answer-keys">
+<section class="akey-page akey">
+  <h2>Answer Keys (Quizzes 1&ndash;10)</h2>
+  
+<h3>Quiz 1 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">9² + 12²</span></span> = <span class="rad">&radic;<span class="sr">225</span></span> = 15. sin &theta; = 9/15 = 3/5; cos &theta; = 12/15 = 4/5; tan &theta; = 9/12 = 3/4.</li>
+  <li>Triple (7, 24, 25); opp = 24. sin &theta; = 24/25; tan &theta; = 24/7; csc &theta; = 25/24; sec &theta; = 25/7; cot &theta; = 7/24.</li>
+  <li>Sides ratio 1 : <span class="rad">&radic;<span class="sr">3</span></span> : 2. Hyp = 2k = 14 so k = 7. Side opposite 60&deg; = k<span class="rad">&radic;<span class="sr">3</span></span> = 7<span class="rad">&radic;<span class="sr">3</span></span>.</li>
+  <li>&ang;B = 90&deg; &minus; 28&deg; = 62&deg;. tan 28&deg; = a/17, so a = 17 &middot; tan 28&deg; &asymp; 9.04. cos 28&deg; = 17/c, so c = 17 / cos 28&deg; &asymp; 19.25.</li>
+  <li>(a) 225&deg; &middot; &pi;/180&deg; = 5&pi;/4. (b) 7&pi;/12 &middot; 180&deg;/&pi; = 7 &middot; 15&deg; = 105&deg;.</li>
+  <li>Positive: 510&deg; &minus; 360&deg; = 150&deg;. Negative: 150&deg; &minus; 360&deg; = &minus;210&deg;.</li>
+  <li>&ell; = &theta; &middot; r = (3&pi;/4)(8) = 6&pi; cm. A = (1/2) &middot; &theta; &middot; r² = (1/2)(3&pi;/4)(64) = 24&pi; cm².</li>
+  <li>135&deg; = 135 &middot; &pi;/180 = 3&pi;/4 rad. &ell; = &theta;r = (3&pi;/4)(6) = 9&pi;/2 in.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">25 + 144</span></span> = 13. sin &theta; = 12/13; cos &theta; = &minus;5/13; tan &theta; = &minus;12/5; csc &theta; = 13/12; sec &theta; = &minus;13/5; cot &theta; = &minus;5/12.</li>
+  <li>Terminal side at (&minus;1, 0). sin 180&deg; = 0; cos 180&deg; = &minus;1; tan 180&deg; = 0; csc 180&deg; = undefined; sec 180&deg; = &minus;1; cot 180&deg; = undefined.</li>
+  <li>Quadrant III. r = <span class="rad">&radic;<span class="sr">9 + 16</span></span> = 5. sin &theta; = &minus;4/5; cos &theta; = &minus;3/5; tan &theta; = 4/3.</li>
+  <li>(a) &minus;1; (b) 1; (c) undefined; (d) &minus;1; (e) 0.</li>
+</ol>
+
+<h3>Quiz 2 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Other leg = <span class="rad">&radic;<span class="sr">26² &minus; 10²</span></span> = <span class="rad">&radic;<span class="sr">576</span></span> = 24 (i.e., 2&middot;(5,12,13)). sin &theta; = 10/26 = 5/13; cos &theta; = 24/26 = 12/13; tan &theta; = 10/24 = 5/12; csc &theta; = 13/5; sec &theta; = 13/12; cot &theta; = 12/5.</li>
+  <li>Triple (8, 15, 17). sin &theta; = 8/17; cos &theta; = 15/17; sec &theta; = 17/15.</li>
+  <li>Sides 1 : 1 : <span class="rad">&radic;<span class="sr">2</span></span>. Hyp = k<span class="rad">&radic;<span class="sr">2</span></span> = 10, so k = 10/<span class="rad">&radic;<span class="sr">2</span></span> = 5<span class="rad">&radic;<span class="sr">2</span></span>. Each leg = 5<span class="rad">&radic;<span class="sr">2</span></span>.</li>
+  <li>&ang;A = 49&deg;. cos 41&deg; = a/22, so a = 22 &middot; cos 41&deg; &asymp; 16.60. sin 41&deg; = b/22, so b = 22 &middot; sin 41&deg; &asymp; 14.43.</li>
+  <li>(a) &minus;210 &middot; &pi;/180 = &minus;7&pi;/6. (b) 11&pi;/6 &middot; 180&deg;/&pi; = 11 &middot; 30&deg; = 330&deg;.</li>
+  <li>Positive: &minus;100&deg; + 360&deg; = 260&deg;. Negative: &minus;100&deg; &minus; 360&deg; = &minus;460&deg;.</li>
+  <li>40&deg; = 40 &middot; &pi;/180 = 2&pi;/9 rad. &ell; = &theta;r = (2&pi;/9)(24) = 48&pi;/9 = 16&pi;/3 &asymp; 16.8 in.</li>
+  <li>A = (1/2)&theta;r² gives 50&pi; = (1/2)&theta;(100) = 50&theta;, so &theta; = &pi; rad = 180&deg;.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">16 + 9</span></span> = 5. sin &theta; = &minus;3/5; cos &theta; = 4/5; tan &theta; = &minus;3/4; csc &theta; = &minus;5/3; sec &theta; = 5/4; cot &theta; = &minus;4/3.</li>
+  <li>(x, y) = (0, &minus;1). sin 270&deg; = &minus;1; cos 270&deg; = 0; tan 270&deg; = undefined; csc 270&deg; = &minus;1; sec 270&deg; = undefined; cot 270&deg; = 0.</li>
+  <li>Quadrant II. r = <span class="rad">&radic;<span class="sr">36 + 64</span></span> = 10. sin &theta; = 8/10 = 4/5; cos &theta; = &minus;6/10 = &minus;3/5; tan &theta; = 8/(&minus;6) = &minus;4/3.</li>
+  <li>(a) 0; (b) 0; (c) 1; (d) 0; (e) 1.</li>
+</ol>
+
+<h3>Quiz 3 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">225 + 64</span></span> = <span class="rad">&radic;<span class="sr">289</span></span> = 17 (triple 8, 15, 17). sin &theta; = 15/17; cos &theta; = 8/17; tan &theta; = 15/8.</li>
+  <li>opp = 3, hyp = 7, so adj = <span class="rad">&radic;<span class="sr">49 &minus; 9</span></span> = <span class="rad">&radic;<span class="sr">40</span></span> = 2<span class="rad">&radic;<span class="sr">10</span></span>. cos &theta; = 2<span class="rad">&radic;<span class="sr">10</span></span>/7; tan &theta; = 3/(2<span class="rad">&radic;<span class="sr">10</span></span>) = 3<span class="rad">&radic;<span class="sr">10</span></span>/20; cot &theta; = 2<span class="rad">&radic;<span class="sr">10</span></span>/3.</li>
+  <li>Short leg k = 5. Long leg = k<span class="rad">&radic;<span class="sr">3</span></span> = 5<span class="rad">&radic;<span class="sr">3</span></span>. Hyp = 2k = 10.</li>
+  <li>b = <span class="rad">&radic;<span class="sr">15² &minus; 9²</span></span> = <span class="rad">&radic;<span class="sr">144</span></span> = 12. sin A = 9/15 = 0.6, so &ang;A &asymp; 36.9&deg;. &ang;B = 90&deg; &minus; 36.9&deg; &asymp; 53.1&deg;.</li>
+  <li>(a) 405 &middot; &pi;/180 = 9&pi;/4. (b) &minus;5&pi;/3 &middot; 180&deg;/&pi; = &minus;300&deg;.</li>
+  <li>Positive: 7&pi;/4 + 2&pi; = 15&pi;/4. Negative: 7&pi;/4 &minus; 2&pi; = &minus;&pi;/4.</li>
+  <li>25 minutes is 25/60 of a full revolution = (5/12)(2&pi;) = 5&pi;/6 rad. &ell; = &theta;r = (5&pi;/6)(12) = 10&pi; cm.</li>
+  <li>80&deg; = 80&pi;/180 = 4&pi;/9 rad. A = (1/2)&theta;r² = (1/2)(4&pi;/9)(81) = 162&pi;/9 = 18&pi; ft².</li>
+  <li>r = <span class="rad">&radic;<span class="sr">49 + 576</span></span> = <span class="rad">&radic;<span class="sr">625</span></span> = 25. sin &theta; = &minus;24/25; cos &theta; = &minus;7/25; tan &theta; = 24/7; csc &theta; = &minus;25/24; sec &theta; = &minus;25/7; cot &theta; = 7/24.</li>
+  <li>(x, y) = (1, 0). sin 360&deg; = 0; cos 360&deg; = 1; tan 360&deg; = 0; csc 360&deg; = undefined; sec 360&deg; = 1; cot 360&deg; = undefined.</li>
+  <li>r = 13, x = &minus;5, so y² = 169 &minus; 25 = 144, y = &plusmn;12. In QII, y &gt; 0, so y = 12. sin &theta; = 12/13; tan &theta; = 12/(&minus;5) = &minus;12/5.</li>
+  <li>(a) 0; (b) 0; (c) undefined; (d) undefined; (e) undefined.</li>
+</ol>
+
+<h3>Quiz 4 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">400 + 441</span></span> = <span class="rad">&radic;<span class="sr">841</span></span> = 29. sin &theta; = 20/29; cos &theta; = 21/29.</li>
+  <li>sec &theta; = hyp/adj = 13/5, so hyp = 13, adj = 5; opp = <span class="rad">&radic;<span class="sr">169 &minus; 25</span></span> = 12 (triple 5, 12, 13). sin &theta; = 12/13; tan &theta; = 12/5; csc &theta; = 13/12.</li>
+  <li>Long leg = k<span class="rad">&radic;<span class="sr">3</span></span> = 9, so k = 9/<span class="rad">&radic;<span class="sr">3</span></span> = 3<span class="rad">&radic;<span class="sr">3</span></span>. Short leg = 3<span class="rad">&radic;<span class="sr">3</span></span>; hyp = 2k = 6<span class="rad">&radic;<span class="sr">3</span></span>.</li>
+  <li>&ang;B = 38&deg;. tan 52&deg; = 11/b, so b = 11 / tan 52&deg; &asymp; 8.59. sin 52&deg; = 11/c, so c = 11 / sin 52&deg; &asymp; 13.96.</li>
+  <li>(a) 165&pi;/180 = 11&pi;/12. (b) &minus;3&pi;/8 &middot; 180&deg;/&pi; = &minus;67.5&deg;.</li>
+  <li>1000&deg; &minus; 2&middot;360&deg; = 280&deg; (positive). 1000&deg; &minus; 3&middot;360&deg; = &minus;80&deg; (negative).</li>
+  <li>&ell; = &theta;r, so r = 15 / (5&pi;/6) = 18/&pi; ft. A = (1/2)&theta;r² = (1/2)(5&pi;/6)(18/&pi;)² = (5&pi;/12)&middot;324/&pi;² = 135/&pi; ft².</li>
+  <li>75&deg; = 5&pi;/12 rad. A = (1/2)(5&pi;/12)(144) = 30&pi; m².</li>
+  <li>r = <span class="rad">&radic;<span class="sr">4 + 25</span></span> = <span class="rad">&radic;<span class="sr">29</span></span>. sin &theta; = 5/<span class="rad">&radic;<span class="sr">29</span></span> = 5<span class="rad">&radic;<span class="sr">29</span></span>/29; cos &theta; = &minus;2/<span class="rad">&radic;<span class="sr">29</span></span> = &minus;2<span class="rad">&radic;<span class="sr">29</span></span>/29; tan &theta; = &minus;5/2; csc &theta; = <span class="rad">&radic;<span class="sr">29</span></span>/5; sec &theta; = &minus;<span class="rad">&radic;<span class="sr">29</span></span>/2; cot &theta; = &minus;2/5.</li>
+  <li>(x, y) = (1, 0). sin 0&deg; = 0; cos 0&deg; = 1; tan 0&deg; = 0; csc 0&deg; = undefined; sec 0&deg; = 1; cot 0&deg; = undefined.</li>
+  <li>tan &gt; 0 and sin &lt; 0, so Quadrant III. Triple (3, 4, 5): x = &minus;3, y = &minus;4, r = 5. sin &theta; = &minus;4/5; cos &theta; = &minus;3/5; sec &theta; = &minus;5/3.</li>
+  <li>(a) 1; (b) &minus;1; (c) undefined; (d) undefined; (e) 0.</li>
+</ol>
+
+<h3>Quiz 5 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">14² + 48²</span></span> = <span class="rad">&radic;<span class="sr">2500</span></span> = 50 (triple (7, 24, 25)&middot;2). For shorter leg 14: tan &theta; = 14/48 = 7/24; sec &theta; = 50/48 = 25/24.</li>
+  <li>cot = adj/opp = 9/40, so adj = 9, opp = 40, hyp = <span class="rad">&radic;<span class="sr">81 + 1600</span></span> = <span class="rad">&radic;<span class="sr">1681</span></span> = 41. sin &theta; = 40/41; cos &theta; = 9/41; csc &theta; = 41/40.</li>
+  <li>Hyp = 2k = 8<span class="rad">&radic;<span class="sr">3</span></span>, so k = 4<span class="rad">&radic;<span class="sr">3</span></span>. x = side opposite 30&deg; = k = 4<span class="rad">&radic;<span class="sr">3</span></span>.</li>
+  <li>c = <span class="rad">&radic;<span class="sr">49 + 576</span></span> = <span class="rad">&radic;<span class="sr">625</span></span> = 25. tan A = 7/24, so &ang;A &asymp; 16.3&deg;. &ang;B &asymp; 73.7&deg;.</li>
+  <li>(a) 540&pi;/180 = 3&pi;. (b) 13&pi;/6 &middot; 180&deg;/&pi; = 13 &middot; 30&deg; = 390&deg;.</li>
+  <li>Positive: &minus;&pi;/3 + 2&pi; = 5&pi;/3. Negative: &minus;&pi;/3 &minus; 2&pi; = &minus;7&pi;/3.</li>
+  <li>&ell; = &theta;r = (5&pi;/4)(14) = 70&pi;/4 = 35&pi;/2 in &asymp; 54.98 in.</li>
+  <li>A = (1/2)&theta;r² gives 27&pi; = (1/2)&theta;(36) = 18&theta;, so &theta; = 27&pi;/18 = 3&pi;/2 rad = 270&deg;.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">1 + 9</span></span> = <span class="rad">&radic;<span class="sr">10</span></span>. sin &theta; = &minus;3/<span class="rad">&radic;<span class="sr">10</span></span> = &minus;3<span class="rad">&radic;<span class="sr">10</span></span>/10; cos &theta; = 1/<span class="rad">&radic;<span class="sr">10</span></span> = <span class="rad">&radic;<span class="sr">10</span></span>/10; tan &theta; = &minus;3; csc &theta; = &minus;<span class="rad">&radic;<span class="sr">10</span></span>/3; sec &theta; = <span class="rad">&radic;<span class="sr">10</span></span>; cot &theta; = &minus;1/3.</li>
+  <li>(x, y) = (0, 1). sin 90&deg; = 1; cos 90&deg; = 0; tan 90&deg; = undefined; csc 90&deg; = 1; sec 90&deg; = undefined; cot 90&deg; = 0.</li>
+  <li>sin &gt; 0, cos &lt; 0, so Quadrant II. Triple (7, 24, 25): y = 7, r = 25, x = &minus;24. tan &theta; = 7/(&minus;24) = &minus;7/24; sec &theta; = 25/(&minus;24) = &minus;25/24.</li>
+  <li>(a) 0; (b) 1; (c) undefined; (d) undefined; (e) undefined.</li>
+</ol>
+
+<h3>Quiz 6 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Other leg = <span class="rad">&radic;<span class="sr">41² &minus; 9²</span></span> = <span class="rad">&radic;<span class="sr">1600</span></span> = 40 (triple 9, 40, 41). sin &theta; = 9/41; cos &theta; = 40/41; tan &theta; = 9/40.</li>
+  <li>sin &theta; = 3/5, so triple (3, 4, 5). cos &theta; = 4/5; tan &theta; = 3/4; cot &theta; = 4/3.</li>
+  <li>Short leg = k = 5<span class="rad">&radic;<span class="sr">3</span></span>. Long leg = k<span class="rad">&radic;<span class="sr">3</span></span> = 5<span class="rad">&radic;<span class="sr">3</span></span>&middot;<span class="rad">&radic;<span class="sr">3</span></span> = 15. Hyp = 2k = 10<span class="rad">&radic;<span class="sr">3</span></span>.</li>
+  <li>&ang;A = 23&deg;. tan 67&deg; = 25/a, so a = 25 / tan 67&deg; &asymp; 10.61. sin 67&deg; = 25/c, so c = 25 / sin 67&deg; &asymp; 27.16.</li>
+  <li>(a) &minus;315&pi;/180 = &minus;7&pi;/4. (b) 4&pi;/9 &middot; 180&deg;/&pi; = 4 &middot; 20&deg; = 80&deg;.</li>
+  <li>17&pi;/6 &minus; 2&pi; = 5&pi;/6 (positive). 5&pi;/6 &minus; 2&pi; = &minus;7&pi;/6 (negative).</li>
+  <li>144&deg; = 144&pi;/180 = 4&pi;/5 rad. &ell; = (4&pi;/5)(15) = 12&pi; m. A = (1/2)(4&pi;/5)(225) = 90&pi; m².</li>
+  <li>18 = (1/2)&theta;(36) = 18&theta;, so &theta; = 1 rad.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">81 + 144</span></span> = <span class="rad">&radic;<span class="sr">225</span></span> = 15. sin &theta; = &minus;12/15 = &minus;4/5; cos &theta; = &minus;9/15 = &minus;3/5; tan &theta; = &minus;12/(&minus;9) = 4/3; csc &theta; = &minus;5/4; sec &theta; = &minus;5/3; cot &theta; = 3/4.</li>
+  <li>(x, y) = (&minus;1, 0). sin 180&deg; = 0; cos 180&deg; = &minus;1; tan 180&deg; = 0; csc 180&deg; = undefined; sec 180&deg; = &minus;1; cot 180&deg; = undefined.</li>
+  <li>QIV: x &gt; 0, y &lt; 0. Triple (5, 12, 13): x = 12, y = &minus;5, r = 13. sin &theta; = &minus;5/13; cos &theta; = 12/13; csc &theta; = &minus;13/5.</li>
+  <li>(a) cos(&minus;180&deg;) = cos 180&deg; = &minus;1; (b) sin(&minus;90&deg;) = &minus;1; (c) 0; (d) 1; (e) &minus;1.</li>
+</ol>
+
+<h3>Quiz 7 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>opp = <span class="rad">&radic;<span class="sr">625 &minus; 49</span></span> = <span class="rad">&radic;<span class="sr">576</span></span> = 24 (triple 7, 24, 25). sin &theta; = 24/25; cos &theta; = 7/25; tan &theta; = 24/7; csc &theta; = 25/24.</li>
+  <li>opp = 2, adj = 1, so hyp = <span class="rad">&radic;<span class="sr">5</span></span>. sin &theta; = 2/<span class="rad">&radic;<span class="sr">5</span></span> = 2<span class="rad">&radic;<span class="sr">5</span></span>/5; cos &theta; = 1/<span class="rad">&radic;<span class="sr">5</span></span> = <span class="rad">&radic;<span class="sr">5</span></span>/5; sec &theta; = <span class="rad">&radic;<span class="sr">5</span></span>.</li>
+  <li>Hyp = leg &middot; <span class="rad">&radic;<span class="sr">2</span></span> = 6<span class="rad">&radic;<span class="sr">2</span></span> &middot; <span class="rad">&radic;<span class="sr">2</span></span> = 12.</li>
+  <li>a = <span class="rad">&radic;<span class="sr">26² &minus; 10²</span></span> = <span class="rad">&radic;<span class="sr">576</span></span> = 24 (triple 10, 24, 26). cos A = 10/26, so &ang;A &asymp; 67.4&deg;; &ang;B &asymp; 22.6&deg;.</li>
+  <li>(a) 22.5 &middot; &pi;/180 = &pi;/8. (b) 5&pi;/9 &middot; 180&deg;/&pi; = 5 &middot; 20&deg; = 100&deg;.</li>
+  <li>Positive: &minus;4&pi;/3 + 2&pi; = 2&pi;/3. Negative: &minus;4&pi;/3 &minus; 2&pi; = &minus;10&pi;/3.</li>
+  <li>&theta; = &ell;/r = 75/50 = 1.5 rad. In degrees: 1.5 &middot; 180&deg;/&pi; &asymp; 85.9&deg;.</li>
+  <li>A = (1/2)(5&pi;/6)(16) = 40&pi;/6 = 20&pi;/3 in².</li>
+  <li>r = <span class="rad">&radic;<span class="sr">36 + 64</span></span> = 10 (triple (3, 4, 5)&middot;2). sin &theta; = 8/10 = 4/5; cos &theta; = 6/10 = 3/5; tan &theta; = 8/6 = 4/3; csc &theta; = 5/4; sec &theta; = 5/3; cot &theta; = 3/4.</li>
+  <li>(x, y) = (0, &minus;1). sin 270&deg; = &minus;1; cos 270&deg; = 0; tan 270&deg; = undefined; csc 270&deg; = &minus;1; sec 270&deg; = undefined; cot 270&deg; = 0.</li>
+  <li>cos &gt; 0, tan &lt; 0, so QIV. Triple (8, 15, 17): x = 8, y = &minus;15, r = 17. sin &theta; = &minus;15/17; tan &theta; = &minus;15/8; cot &theta; = &minus;8/15.</li>
+  <li>(a) 0; (b) &minus;1; (c) 0; (d) 1; (e) 0.</li>
+</ol>
+
+<h3>Quiz 8 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Other leg = <span class="rad">&radic;<span class="sr">17² &minus; 15²</span></span> = <span class="rad">&radic;<span class="sr">64</span></span> = 8 (triple 8, 15, 17). cos &theta; = 8/17; tan &theta; = 15/8.</li>
+  <li>adj = 2, hyp = 3, so opp = <span class="rad">&radic;<span class="sr">9 &minus; 4</span></span> = <span class="rad">&radic;<span class="sr">5</span></span>. sin &theta; = <span class="rad">&radic;<span class="sr">5</span></span>/3; tan &theta; = <span class="rad">&radic;<span class="sr">5</span></span>/2; csc &theta; = 3/<span class="rad">&radic;<span class="sr">5</span></span> = 3<span class="rad">&radic;<span class="sr">5</span></span>/5.</li>
+  <li>Long leg k<span class="rad">&radic;<span class="sr">3</span></span> = 7, so k = 7/<span class="rad">&radic;<span class="sr">3</span></span> = 7<span class="rad">&radic;<span class="sr">3</span></span>/3. x = 2k = 14<span class="rad">&radic;<span class="sr">3</span></span>/3.</li>
+  <li>&ang;B = 75&deg;. sin 15&deg; = a/30, so a = 30 sin 15&deg; &asymp; 7.76. cos 15&deg; = b/30, so b = 30 cos 15&deg; &asymp; 28.98.</li>
+  <li>(a) 720 &middot; &pi;/180 = 4&pi;. (b) &minus;7&pi;/6 &middot; 180&deg;/&pi; = &minus;210&deg;.</li>
+  <li>850&deg; &minus; 2&middot;360&deg; = 130&deg;. 130&deg; &minus; 360&deg; = &minus;230&deg;.</li>
+  <li>240&deg; = 4&pi;/3 rad. &ell; = (4&pi;/3)(13) = 52&pi;/3 in &asymp; 54.5 in.</li>
+  <li>r = &ell;/&theta; = 8&pi; / (2&pi;/3) = 12 cm. A = (1/2)(2&pi;/3)(144) = 48&pi; cm².</li>
+  <li>r = <span class="rad">&radic;<span class="sr">16 + 49</span></span> = <span class="rad">&radic;<span class="sr">65</span></span>. sin &theta; = 7/<span class="rad">&radic;<span class="sr">65</span></span> = 7<span class="rad">&radic;<span class="sr">65</span></span>/65; cos &theta; = &minus;4/<span class="rad">&radic;<span class="sr">65</span></span> = &minus;4<span class="rad">&radic;<span class="sr">65</span></span>/65; tan &theta; = &minus;7/4; csc &theta; = <span class="rad">&radic;<span class="sr">65</span></span>/7; sec &theta; = &minus;<span class="rad">&radic;<span class="sr">65</span></span>/4; cot &theta; = &minus;4/7.</li>
+  <li>(x, y) = (1, 0). sin 0&deg; = 0; cos 0&deg; = 1; tan 0&deg; = 0; csc 0&deg; = undefined; sec 0&deg; = 1; cot 0&deg; = undefined.</li>
+  <li>sin &lt; 0, cos &gt; 0, so QIV. Triple (3, 4, 5): y = &minus;4, r = 5, x = 3. tan &theta; = &minus;4/3; sec &theta; = 5/3; cot &theta; = &minus;3/4.</li>
+  <li>(a) 0; (b) 1; (c) undefined; (d) undefined; (e) undefined.</li>
+</ol>
+
+<h3>Quiz 9 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">75 + 25</span></span> = <span class="rad">&radic;<span class="sr">100</span></span> = 10. sin &theta; = 5/10 = 1/2; cos &theta; = 5<span class="rad">&radic;<span class="sr">3</span></span>/10 = <span class="rad">&radic;<span class="sr">3</span></span>/2; tan &theta; = 5/(5<span class="rad">&radic;<span class="sr">3</span></span>) = 1/<span class="rad">&radic;<span class="sr">3</span></span> = <span class="rad">&radic;<span class="sr">3</span></span>/3 (i.e., &theta; = 30&deg;).</li>
+  <li>cos &theta; = 1/4, so adj = 1, hyp = 4, opp = <span class="rad">&radic;<span class="sr">15</span></span>. sin &theta; = <span class="rad">&radic;<span class="sr">15</span></span>/4; cot &theta; = 1/<span class="rad">&radic;<span class="sr">15</span></span> = <span class="rad">&radic;<span class="sr">15</span></span>/15.</li>
+  <li>Hyp = leg &middot; <span class="rad">&radic;<span class="sr">2</span></span> = 5<span class="rad">&radic;<span class="sr">2</span></span>, so leg = 5.</li>
+  <li>&ang;A = 60&deg;. tan 30&deg; = 8/a, so a = 8 / tan 30&deg; = 8<span class="rad">&radic;<span class="sr">3</span></span> &asymp; 13.86. sin 30&deg; = 8/c, so c = 8 / sin 30&deg; = 16.</li>
+  <li>(a) 200&pi;/180 = 10&pi;/9. (b) 9&pi;/2 &middot; 180&deg;/&pi; = 9 &middot; 90&deg; = 810&deg;.</li>
+  <li>23&pi;/4 &minus; 2&middot;2&pi; = 23&pi;/4 &minus; 16&pi;/4 = 7&pi;/4 (positive). 7&pi;/4 &minus; 2&pi; = &minus;&pi;/4 (negative).</li>
+  <li>&ell; = &theta;r = 1.2 &middot; 25 = 30 cm. A = (1/2)(1.2)(625) = 375 cm².</li>
+  <li>60&deg; = &pi;/3. A = (1/2)(&pi;/3)r² = (&pi;/6)r² = 24&pi;, so r² = 144 and r = 12 m.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">225 + 64</span></span> = <span class="rad">&radic;<span class="sr">289</span></span> = 17 (triple 8, 15, 17). sin &theta; = &minus;8/17; cos &theta; = 15/17; tan &theta; = &minus;8/15; csc &theta; = &minus;17/8; sec &theta; = 17/15; cot &theta; = &minus;15/8.</li>
+  <li>(x, y) = (0, 1). sin 90&deg; = 1; cos 90&deg; = 0; tan 90&deg; = undefined; csc 90&deg; = 1; sec 90&deg; = undefined; cot 90&deg; = 0.</li>
+  <li>cot &gt; 0 means QI or QIII; sin &lt; 0 forces QIII. Triple (7, 24, 25): x = &minus;7, y = &minus;24, r = 25. sin &theta; = &minus;24/25; cos &theta; = &minus;7/25; csc &theta; = &minus;25/24.</li>
+  <li>(a) 0; (b) 0; (c) 0; (d) &minus;1; (e) 1.</li>
+</ol>
+
+<h3>Quiz 10 &mdash; Answer Key</h3>
+<ol class="problems">
+  <li>Hyp = <span class="rad">&radic;<span class="sr">121 + 3600</span></span> = <span class="rad">&radic;<span class="sr">3721</span></span> = 61 (triple 11, 60, 61). sin &theta; = 11/61; cos &theta; = 60/61; tan &theta; = 11/60.</li>
+  <li>opp = <span class="rad">&radic;<span class="sr">3</span></span>, hyp = 4, adj = <span class="rad">&radic;<span class="sr">16 &minus; 3</span></span> = <span class="rad">&radic;<span class="sr">13</span></span>. cos &theta; = <span class="rad">&radic;<span class="sr">13</span></span>/4; tan &theta; = <span class="rad">&radic;<span class="sr">3</span></span>/<span class="rad">&radic;<span class="sr">13</span></span> = <span class="rad">&radic;<span class="sr">39</span></span>/13; sec &theta; = 4/<span class="rad">&radic;<span class="sr">13</span></span> = 4<span class="rad">&radic;<span class="sr">13</span></span>/13.</li>
+  <li>Long leg k<span class="rad">&radic;<span class="sr">3</span></span> = 18, so k = 18/<span class="rad">&radic;<span class="sr">3</span></span> = 6<span class="rad">&radic;<span class="sr">3</span></span>. Short leg = 6<span class="rad">&radic;<span class="sr">3</span></span>; hyp = 12<span class="rad">&radic;<span class="sr">3</span></span>.</li>
+  <li>&ang;B = 20&deg;. tan 70&deg; = 12/b, so b = 12 / tan 70&deg; &asymp; 4.37. sin 70&deg; = 12/c, so c = 12 / sin 70&deg; &asymp; 12.77.</li>
+  <li>(a) &minus;495&pi;/180 = &minus;11&pi;/4. (b) 5&pi;/12 &middot; 180&deg;/&pi; = 5 &middot; 15&deg; = 75&deg;.</li>
+  <li>19&pi;/3 &minus; 2&middot;2&pi; = 19&pi;/3 &minus; 12&pi;/3 = 7&pi;/3. 7&pi;/3 &minus; 2&pi; = &pi;/3. Positive: &pi;/3. Negative: &pi;/3 &minus; 2&pi; = &minus;5&pi;/3.</li>
+  <li>&theta; = &ell;/r = 14&pi;/21 = 2&pi;/3 rad. In degrees: 2&pi;/3 &middot; 180&deg;/&pi; = 120&deg;.</li>
+  <li>A = (1/2)&theta;r² gives 25&pi;/4 = (1/2)&theta;(25) = (25/2)&theta;, so &theta; = (25&pi;/4)(2/25) = &pi;/2 rad.</li>
+  <li>r = <span class="rad">&radic;<span class="sr">144 + 25</span></span> = 13 (triple 5, 12, 13). sin &theta; = 5/13; cos &theta; = &minus;12/13; tan &theta; = &minus;5/12; csc &theta; = 13/5; sec &theta; = &minus;13/12; cot &theta; = &minus;12/5.</li>
+  <li>(x, y) = (1, 0). sin 360&deg; = 0; cos 360&deg; = 1; tan 360&deg; = 0; csc 360&deg; = undefined; sec 360&deg; = 1; cot 360&deg; = undefined.</li>
+  <li>cos &theta; = &minus;12/13, so x = &minus;12, r = 13, y = <span class="rad">&radic;<span class="sr">169 &minus; 144</span></span> = 5 (positive in QII). sin &theta; = 5/13; cos &theta; = &minus;12/13; cot &theta; = x/y = &minus;12/5.</li>
+  <li>(a) 1; (b) cos(&minus;270&deg;) = cos 270&deg; = 0; (c) 0; (d) undefined; (e) 0.</li>
+</ol>
+
+</section>
+
+</section>
+</body>
+</html>
