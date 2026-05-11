@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Claire's Stoichiometry Quiz Prep — MQ8C</title>
+<style>
+/* =========================================================
+   CLAIRE'S STOICHIOMETRY STUDY PACKET — v3
+   Each quiz is a full chapter quiz (mixed topics)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --ink:        #1a1a2e;
+  --ink-soft:   #3d3d52;
+  --paper:      #faf7f0;
+  --paper-2:    #f3eee0;
+  --rule:       #2a2a44;
+  --accent:     #8b2c2c;
+  --accent-2:   #c45a3b;
+  --highlight:  #f4d35e;
+  --teal:       #2b6e6b;
+  --muted:      #6b6b7e;
+  --grid:       #e8e0cc;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+
+/* ---------- Navigation ---------- */
+.nav-bar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 14px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  align-items: center;
+  font-family: 'Fraunces', serif;
+  font-size: 10pt;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid var(--accent);
+}
+.nav-bar strong {
+  color: var(--highlight);
+  margin-right: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.nav-bar a {
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px dotted transparent;
+  padding-bottom: 1px;
+  transition: all 0.15s;
+}
+.nav-bar a:hover { color: var(--highlight); border-bottom-color: var(--highlight); }
+@media print { .nav-bar { display: none; } }
+
+/* ---------- Page container ---------- */
+.page {
+  max-width: 8.27in;
+  min-height: 11.69in;
+  margin: 24px auto;
+  padding: 0.55in 0.65in;
+  background: var(--paper);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  position: relative;
+  page-break-after: always;
+}
+
+@media print {
+  body { background: white; }
+  .page {
+    margin: 0;
+    box-shadow: none;
+    padding: 0.45in 0.5in;
+    page-break-after: always;
+  }
+}
+
+/* ---------- Headers ---------- */
+h1, h2, h3, h4 {
+  font-family: 'Fraunces', serif;
+  color: var(--ink);
+  margin: 0;
+}
+h1 {
+  font-size: 30pt;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+h1 .sub {
+  display: block;
+  font-size: 11pt;
+  font-weight: 500;
+  color: var(--accent);
+  margin-top: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+h2 {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 3px;
+  margin: 14px 0 8px;
+}
+h3 {
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 12px 0 5px;
+}
+h3::before {
+  content: "§ ";
+  color: var(--accent);
+}
+h4 {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 8px 0 3px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Title block ---------- */
+.title-block {
+  text-align: center;
+  margin-top: 0.7in;
+  padding-bottom: 0.25in;
+  border-bottom: 1px solid var(--ink);
+}
+.title-block .student {
+  font-family: 'Fraunces', serif;
+  font-size: 14pt;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.title-block .quiz-id {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 4px 14px;
+  background: var(--ink);
+  color: var(--highlight);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt;
+  letter-spacing: 0.12em;
+}
+.title-block .version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  margin-top: 8px;
+}
+
+.cover-meta {
+  margin-top: 0.25in;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+  font-size: 11pt;
+}
+.cover-meta .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.cover-meta .val {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 11.5pt;
+}
+
+.cover-toc {
+  margin-top: 0.25in;
+  padding: 12px 18px;
+  background: var(--paper-2);
+  border-left: 4px solid var(--accent);
+}
+.cover-toc h3 { margin-top: 0; font-size: 11pt; }
+.cover-toc h3::before { content: ""; }
+.cover-toc ol {
+  margin: 4px 0 0;
+  padding-left: 22px;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+
+/* ---------- Prose ---------- */
+p { margin: 5px 0; }
+ul, ol { margin: 5px 0; padding-left: 22px; }
+ul li, ol li { margin: 2px 0; }
+strong { color: var(--accent); font-weight: 700; }
+em { color: var(--teal); }
+code, .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+}
+
+/* ---------- Callouts ---------- */
+.callout {
+  background: var(--paper-2);
+  border-left: 4px solid var(--teal);
+  padding: 8px 13px;
+  margin: 8px 0;
+  font-size: 10pt;
+}
+.callout.warn { border-left-color: var(--accent); }
+.callout.warn::before {
+  content: "⚠ ";
+  color: var(--accent);
+  font-weight: 700;
+}
+.callout.key {
+  background: #fff8d6;
+  border-left-color: var(--accent-2);
+  font-weight: 600;
+}
+.callout .heading {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  font-size: 9pt;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* ---------- Roadmap ---------- */
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  text-align: center;
+}
+.roadmap .box {
+  padding: 8px 3px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-2);
+  border-radius: 2px;
+}
+.roadmap .box.start { background: var(--highlight); }
+.roadmap .box.end { background: var(--accent); color: var(--paper); }
+.roadmap .arr {
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 13pt;
+}
+
+/* ---------- Step boxes (3-step LR process) ---------- */
+.step-boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+  margin: 8px 0;
+}
+.step-box {
+  background: var(--paper-2);
+  border-top: 3px solid var(--accent);
+  padding: 8px 11px;
+  font-size: 9pt;
+  line-height: 1.4;
+}
+.step-box .num {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  color: var(--accent);
+  font-size: 12pt;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ---------- Quiz styling ---------- */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 6px;
+  border-bottom: 3px double var(--ink);
+  margin-bottom: 10px;
+}
+.quiz-header .id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+.quiz-header .title-text {
+  font-family: 'Fraunces', serif;
+  font-size: 18pt;
+  font-weight: 900;
+  line-height: 1;
+}
+.quiz-header .focus {
+  font-family: 'Fraunces', serif;
+  font-size: 9.5pt;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.name-line {
+  display: flex;
+  gap: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+.name-line span { flex: 1; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+.name-line .lbl { flex: none; }
+
+.instructions {
+  background: var(--paper-2);
+  padding: 6px 11px;
+  margin-bottom: 9px;
+  font-size: 9pt;
+  border-left: 3px solid var(--accent);
+  line-height: 1.4;
+}
+
+.quiz-q {
+  margin: 7px 0 9px;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+.quiz-q .qnum {
+  display: inline-block;
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  color: var(--accent);
+  margin-right: 5px;
+  font-size: 11pt;
+}
+.quiz-q .pts {
+  float: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  color: var(--muted);
+}
+.quiz-q .eq-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5pt;
+  margin: 3px 0 3px 20px;
+  font-weight: 600;
+}
+.work-space {
+  border: 1px solid var(--rule);
+  margin: 4px 0 0 20px;
+  background:
+    repeating-linear-gradient(to bottom,
+      transparent,
+      transparent 0.24in,
+      var(--grid) 0.24in,
+      var(--grid) calc(0.24in + 1px));
+  background-position: 0 4px;
+}
+.work-space.h-sm { height: 0.70in; }
+.work-space.h-md { height: 0.95in; }
+.work-space.h-lg { height: 1.25in; }
+
+.answer-blank {
+  display: inline-block;
+  border-bottom: 1.5px solid var(--ink);
+  min-width: 1.2in;
+  margin-left: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ---------- Answer key ---------- */
+.key-card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  padding: 10px 14px;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+.key-card h3 {
+  margin-top: 0;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+}
+.key-card h3::before { content: ""; }
+.key-q {
+  margin: 6px 0;
+  font-size: 9.5pt;
+  padding-left: 24px;
+  text-indent: -24px;
+}
+.key-q .qn {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  color: var(--accent);
+  display: inline-block;
+  width: 20px;
+  text-indent: 0;
+}
+.key-q .ans {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  background: var(--highlight);
+  padding: 0 4px;
+}
+.key-work {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  margin: 2px 0 5px 22px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ---------- Footer ---------- */
+.page-footer {
+  position: absolute;
+  bottom: 0.3in;
+  left: 0.65in;
+  right: 0.65in;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  border-top: 1px solid var(--grid);
+  padding-top: 5px;
+}
+
+/* ---------- Cheat sheet grid ---------- */
+.cheat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 6px;
+}
+.cheat-cell {
+  background: var(--paper-2);
+  padding: 8px 11px;
+  border-left: 3px solid var(--teal);
+  font-size: 9pt;
+  line-height: 1.4;
+}
+.cheat-cell h4 { margin: 0 0 3px; font-size: 9.5pt; }
+.cheat-cell.alt { border-left-color: var(--accent); }
+.cheat-cell.alt h4 { color: var(--accent); }
+
+/* ---------- Molar mass table ---------- */
+table.molar {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  margin: 5px 0;
+}
+table.molar th, table.molar td {
+  border: 1px solid var(--rule);
+  padding: 2px 5px;
+  text-align: center;
+}
+table.molar th { background: var(--ink); color: var(--paper); font-weight: 700; }
+table.molar tr:nth-child(even) td { background: var(--paper-2); }
+
+/* ---------- Worked example block ---------- */
+.worked {
+  border: 1.5px solid var(--ink);
+  padding: 10px 13px;
+  margin: 8px 0;
+  background: white;
+  font-size: 9.5pt;
+  line-height: 1.5;
+}
+.worked .title-row {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 10.5pt;
+  margin-bottom: 5px;
+  border-bottom: 1px dotted var(--ink);
+  padding-bottom: 2px;
+}
+.worked .step-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--teal);
+  font-size: 8.5pt;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 5px;
+}
+.worked .calc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  margin: 2px 0 2px 10px;
+}
+.worked .result {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--highlight);
+  font-weight: 700;
+  padding: 1px 5px;
+  display: inline-block;
+}
+
+.flask-deco {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  color: var(--muted);
+  text-align: center;
+  margin: 0.25in 0;
+  letter-spacing: 0.15em;
+}
+.flask-deco::before, .flask-deco::after {
+  content: "—————";
+  margin: 0 8px;
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <strong>MQ8C Prep</strong>
+  <a href="#cover">Cover</a>
+  <a href="#guide">Study Guide</a>
+  <a href="#worked">Worked Ex</a>
+  <a href="#cheat">Cheat Sheet</a>
+  <a href="#quizA">Quiz A</a>
+  <a href="#quizB">Quiz B</a>
+  <a href="#quizC">Quiz C</a>
+  <a href="#quizD">Quiz D</a>
+  <a href="#quizE">Quiz E</a>
+  <a href="#keys">Answer Keys</a>
+</nav>
+
+<!-- =========================================================
+     PAGE 1 — COVER
+     ========================================================= -->
+<section class="page" id="cover">
+  <div class="title-block">
+    <div class="student">Prepared for Claire Luo</div>
+    <h1>Stoichiometry<span class="sub">Full Chapter Quiz Prep · Unit 9</span></h1>
+    <div class="quiz-id">MQ8C · DR. PANGRLE · 25–26</div>
+    <div class="version">REV. 3 · 5 FULL-CHAPTER QUIZZES</div>
+  </div>
+
+  <div class="cover-meta">
+    <div>
+      <div class="label">Topics Covered</div>
+      <div class="val">9.1 → 9.5 (every section)</div>
+    </div>
+    <div>
+      <div class="label">CK-12 Sections</div>
+      <div class="val">9.9 &nbsp; · &nbsp; 9.10</div>
+    </div>
+    <div>
+      <div class="label">Required Method</div>
+      <div class="val">Mole Roadmap</div>
+    </div>
+    <div>
+      <div class="label">Scoring Rule</div>
+      <div class="val">Right answer, no work = 1/10</div>
+    </div>
+  </div>
+
+  <div class="cover-toc">
+    <h3>What's Inside</h3>
+    <ol>
+      <li><strong>Study Guide</strong> — every concept from §9.1 through §9.5, plus what to memorize cold</li>
+      <li><strong>Worked Examples</strong> — the two teacher-worksheet problems solved in her exact format</li>
+      <li><strong>Cheat Sheet</strong> — one-page reference with every formula, conversion factor, and molar mass</li>
+      <li><strong>Practice Quiz A through E</strong> — five full-chapter quizzes, each mirroring the real MQ8C format. Every quiz includes problems from all five topics: mole ratios, mass conversions, limiting reagent, excess reagent, and percent yield.</li>
+      <li><strong>Answer Keys</strong> — full worked solutions for every question</li>
+    </ol>
+  </div>
+
+  <div class="callout warn">
+    <span class="heading">Teacher's Rules — Memorize These</span>
+    <strong>ALL work must use the Mole Roadmap Method</strong> or it won't be graded. Right answer with no work = 1/10. No phones during the entire quiz period (even when finished) — phones out = −1. Quiz is on paper; partial credit is available, so <em>show every conversion factor</em>.
+  </div>
+
+  <div class="callout key">
+    <span class="heading">How each quiz is structured</span>
+    Each of Quizzes A–E has <strong>5 problems covering all chapter topics</strong>: (1) mole-to-mole or mass conversion · (2) particle or gas-volume conversion · (3) limiting reagent identification · (4) excess reagent leftover · (5) percent yield. After taking each one, grade yourself against the keys before moving to the next.
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · STOICHIOMETRY</span>
+    <span>PAGE 01 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     PAGE 2 — STUDY GUIDE
+     ========================================================= -->
+<section class="page" id="guide">
+  <h1 style="font-size:22pt;">Study Guide<span class="sub">Everything you need to know for MQ8C</span></h1>
+
+  <h2>1. The Mole Roadmap Method</h2>
+  <p style="font-size:10.5pt;">Every stoichiometry problem follows the same path: <strong>start with what you're given, convert to moles, hop to the unknown using a mole ratio, then convert to the units the question asks for</strong>. The required teacher format is a horizontal "train track" with conversion factors stacked top/bottom — multiply across the top, divide across the bottom.</p>
+
+  <div class="roadmap">
+    <div class="box start">GIVEN<br>(g, particles, L, mol)</div>
+    <div class="arr">→</div>
+    <div class="box">moles of<br>GIVEN</div>
+    <div class="arr">→</div>
+    <div class="box">moles of<br>UNKNOWN</div>
+  </div>
+  <div class="roadmap">
+    <div class="box">moles of<br>UNKNOWN</div>
+    <div class="arr">→</div>
+    <div class="box end">ANSWER<br>(in desired unit)</div>
+    <div></div><div></div><div></div>
+  </div>
+
+  <h2>2. Conversion Factors You Must Know Cold</h2>
+  <ul style="font-size:10.5pt;">
+    <li><strong>1 mole = molar mass in grams</strong> (add up atomic masses from the periodic table)</li>
+    <li><strong>1 mole = 6.02 × 10<sup>23</sup> particles</strong> (atoms, molecules, or formula units)</li>
+    <li><strong>1 mole gas = 22.4 L at STP</strong></li>
+    <li><strong>Mole ratio</strong> = the ratio of coefficients in the balanced equation</li>
+  </ul>
+
+  <h2>3. Vocabulary (from the worksheet)</h2>
+  <ul style="font-size:10.5pt;">
+    <li><strong>Limiting Reagent</strong> — the reactant used up first. <em>This determines how much product is made.</em></li>
+    <li><strong>Excess Reagent</strong> — the reactant that has some leftover when the reaction is complete. You had more than enough.</li>
+    <li><strong>Theoretical yield</strong> — the amount of product stoichiometry predicts (the math answer).</li>
+    <li><strong>Experimental (actual) yield</strong> — what was collected in the lab.</li>
+    <li><strong>Percent yield</strong> — a measure of how efficient the reaction was.</li>
+  </ul>
+
+  <h2>4. Limiting Reagent — Dr. Pangrle's 3-Step Process</h2>
+  <p style="font-size:10.5pt;">Per the class worksheet, whenever amounts are given for <strong>both</strong> reactants, follow these three steps exactly:</p>
+
+  <div class="step-boxes">
+    <div class="step-box">
+      <span class="num">Step 1</span>
+      <strong>Convert each reactant to the same product</strong> (mol or g) using the Mole Roadmap. Pick one product; run both reactants to it.
+    </div>
+    <div class="step-box">
+      <span class="num">Step 2</span>
+      <strong>Compare</strong>. Whichever reactant gave the <em>smaller</em> amount is the <strong>limiting reagent</strong>. The other is in <strong>excess</strong>.
+    </div>
+    <div class="step-box">
+      <span class="num">Step 3</span>
+      <strong>Use the limiting reagent only</strong> for any further math — actual product, OR how much of the excess was used.
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="heading">When only one reactant amount is given</span>
+    If a problem says "<em>reacted with excess</em>" something, the substance with the given amount is automatically the limiting reagent. No comparison needed — just run the roadmap.
+  </div>
+
+  <h2>5. Excess Reagent Leftover</h2>
+  <p style="font-size:10.5pt;">After identifying the limiting reagent, use it to calculate how much of the excess reagent <strong>was used up</strong> by running the limiting reagent through the roadmap toward the excess reagent. Then:</p>
+  <div class="callout key" style="text-align:center;">
+    leftover = initial amount of excess − amount used up
+  </div>
+
+  <h2>6. Percent Yield</h2>
+  <p style="font-size:10.5pt;">The <strong>theoretical yield</strong> is what stoichiometry predicts. The <strong>experimental yield</strong> is what was actually collected.</p>
+  <div class="callout key" style="text-align:center; font-size:12.5pt;">
+    percent yield = (experimental yield ÷ theoretical yield) × 100
+  </div>
+  <p style="font-size:10pt;"><strong>Why yields fall short:</strong> reactants weren't 100% pure · product gets lost during transfer · high temperatures cause vaporization · side reactions consume reactant.</p>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · STUDY GUIDE</span>
+    <span>PAGE 02 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     PAGE 3 — WORKED EXAMPLES (from worksheet)
+     ========================================================= -->
+<section class="page" id="worked">
+  <h1 style="font-size:22pt;">Worked Examples<span class="sub">The two worksheet problems · Dr. Pangrle's exact method</span></h1>
+
+  <p style="font-size:10pt;">These are the exact problems from the "Limiting &amp; Excess Reagents" worksheet. Study these carefully — they show the precise format and method the teacher expects on MQ8C.</p>
+
+  <div class="worked">
+    <div class="title-row">EXAMPLE 1 &nbsp;·&nbsp; CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
+    <p style="margin:3px 0;"><strong>Given:</strong> 1.0 mol CS<sub>2</sub> and 1.0 mol O<sub>2</sub></p>
+
+    <span class="step-label">STEP 1 — Convert each reactant to mol CO<sub>2</sub></span>
+    <div class="calc">From CS<sub>2</sub>: 1.0 mol CS<sub>2</sub> × (1 mol CO<sub>2</sub> / 1 mol CS<sub>2</sub>) = <span class="result">1.0 mol CO<sub>2</sub></span></div>
+    <div class="calc">From O<sub>2</sub>:&nbsp; 1.0 mol O<sub>2</sub> × (1 mol CO<sub>2</sub> / 3 mol O<sub>2</sub>) = <span class="result">0.33 mol CO<sub>2</sub></span></div>
+
+    <span class="step-label">STEP 2 — Compare</span>
+    <div class="calc">0.33 &lt; 1.0, so O<sub>2</sub> produces less. <strong>O<sub>2</sub> is limiting. CS<sub>2</sub> is in excess.</strong></div>
+
+    <span class="step-label">PART (a) — Limiting reagent</span>
+    <div class="calc"><span class="result">O<sub>2</sub> is limiting</span></div>
+
+    <span class="step-label">PART (b) — Moles of CS<sub>2</sub> remaining</span>
+    <div class="calc">CS<sub>2</sub> used: 1.0 mol O<sub>2</sub> × (1 mol CS<sub>2</sub> / 3 mol O<sub>2</sub>) = 0.33 mol CS<sub>2</sub></div>
+    <div class="calc">Leftover: 1.0 − 0.33 = <span class="result">0.7 mol CS<sub>2</sub> remain</span></div>
+
+    <span class="step-label">PART (c) — Grams of CO<sub>2</sub> formed (use limiting!)</span>
+    <div class="calc">1.0 mol O<sub>2</sub> × (1 mol CO<sub>2</sub> / 3 mol O<sub>2</sub>) × (44.01 g / 1 mol) = <span class="result">15 g CO<sub>2</sub></span></div>
+  </div>
+
+  <div class="worked">
+    <div class="title-row">EXAMPLE 2 &nbsp;·&nbsp; Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
+    <p style="margin:3px 0;"><strong>Given:</strong> 16.2 g Mg and 12.0 g H<sub>2</sub>O</p>
+
+    <span class="step-label">STEP 1 — Convert each reactant to g H<sub>2</sub></span>
+    <div class="calc">From Mg:&nbsp;&nbsp;16.2 g Mg × (1 mol / 24.31 g) × (1 mol H<sub>2</sub> / 1 mol Mg) × (2.02 g / mol) = <span class="result">1.34 g H<sub>2</sub></span></div>
+    <div class="calc">From H<sub>2</sub>O: 12.0 g H<sub>2</sub>O × (1 mol / 18.02 g) × (1 mol H<sub>2</sub> / 2 mol H<sub>2</sub>O) × (2.02 g / mol) = <span class="result">0.671 g H<sub>2</sub></span></div>
+
+    <span class="step-label">STEP 2 — Compare</span>
+    <div class="calc">0.671 &lt; 1.34, so H<sub>2</sub>O produces less. <strong>H<sub>2</sub>O is limiting. Mg is in excess.</strong></div>
+
+    <span class="step-label">PART (a) — Limiting reagent</span>
+    <div class="calc"><span class="result">H<sub>2</sub>O is limiting</span></div>
+
+    <span class="step-label">PART (b) — Grams of Mg remaining</span>
+    <div class="calc">Mg used: 12.0 g H<sub>2</sub>O × (1 mol / 18.02 g) × (1 mol Mg / 2 mol H<sub>2</sub>O) × (24.31 g / mol) = 8.1 g Mg</div>
+    <div class="calc">Leftover: 16.2 − 8.1 = <span class="result">8.1 g Mg remain</span></div>
+  </div>
+
+  <div class="callout key">
+    <span class="heading">Notice the pattern</span>
+    Whatever final unit you pick for Step 1 (mol of product, or grams of product), <em>use the same unit for both reactants</em> so the comparison is fair. The worksheet used mol CO<sub>2</sub> in Example 1 and grams H<sub>2</sub> in Example 2 — either works.
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · WORKED EXAMPLES</span>
+    <span>PAGE 03 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     PAGE 4 — CHEAT SHEET
+     ========================================================= -->
+<section class="page" id="cheat">
+  <h1 style="font-size:22pt;">Cheat Sheet<span class="sub">One-page reference · keep this open while studying</span></h1>
+
+  <h3>The Mole Roadmap (the only method that gets graded)</h3>
+  <div class="roadmap">
+    <div class="box start">Given<br>(g · particles · L)</div>
+    <div class="arr">→</div>
+    <div class="box">mol Given</div>
+    <div class="arr">→</div>
+    <div class="box end">mol Unknown → Answer</div>
+  </div>
+
+  <h3>Essential Conversion Factors</h3>
+  <div class="cheat-grid">
+    <div class="cheat-cell">
+      <h4>Mass ↔ Moles</h4>
+      <span class="mono">1 mol = molar mass (g)</span><br>
+      Add atomic masses from the periodic table.
+    </div>
+    <div class="cheat-cell">
+      <h4>Particles ↔ Moles</h4>
+      <span class="mono">1 mol = 6.02 × 10<sup>23</sup> particles</span><br>
+      Atoms · molecules · formula units.
+    </div>
+    <div class="cheat-cell">
+      <h4>Gas Volume ↔ Moles (STP)</h4>
+      <span class="mono">1 mol gas = 22.4 L</span><br>
+      Only at standard temperature and pressure.
+    </div>
+    <div class="cheat-cell alt">
+      <h4>Mole Ratio</h4>
+      <span class="mono">coeff. of unknown / coeff. of given</span><br>
+      From the <em>balanced</em> equation only.
+    </div>
+  </div>
+
+  <h3>Teacher's 3-Step Limiting Reagent Process</h3>
+  <div class="step-boxes">
+    <div class="step-box">
+      <span class="num">1</span>
+      Convert each reactant to <strong>moles (or grams) of the same product</strong>.
+    </div>
+    <div class="step-box">
+      <span class="num">2</span>
+      Whichever gives <strong>less</strong> product is <strong>limiting</strong>; the other is <strong>excess</strong>.
+    </div>
+    <div class="step-box">
+      <span class="num">3</span>
+      Use the limiting reagent for <strong>all</strong> further calculations.
+    </div>
+  </div>
+
+  <h3>Common Molar Masses</h3>
+  <table class="molar">
+    <tr><th>Substance</th><th>g/mol</th><th>Substance</th><th>g/mol</th><th>Substance</th><th>g/mol</th></tr>
+    <tr><td>H<sub>2</sub></td><td>2.02</td><td>Al</td><td>26.98</td><td>CS<sub>2</sub></td><td>76.15</td></tr>
+    <tr><td>O<sub>2</sub></td><td>32.00</td><td>Al<sub>2</sub>O<sub>3</sub></td><td>101.96</td><td>SO<sub>2</sub></td><td>64.07</td></tr>
+    <tr><td>H<sub>2</sub>O</td><td>18.02</td><td>Fe</td><td>55.85</td><td>Mg</td><td>24.31</td></tr>
+    <tr><td>CO<sub>2</sub></td><td>44.01</td><td>S</td><td>32.07</td><td>Mg(OH)<sub>2</sub></td><td>58.33</td></tr>
+    <tr><td>N<sub>2</sub></td><td>28.02</td><td>Fe<sub>2</sub>S<sub>3</sub></td><td>207.91</td><td>NaOH</td><td>40.00</td></tr>
+    <tr><td>NH<sub>3</sub></td><td>17.04</td><td>NaN<sub>3</sub></td><td>65.02</td><td>Na<sub>3</sub>PO<sub>4</sub></td><td>163.94</td></tr>
+    <tr><td>C<sub>3</sub>H<sub>8</sub></td><td>44.11</td><td>CaCO<sub>3</sub></td><td>100.09</td><td>CaO</td><td>56.08</td></tr>
+    <tr><td>Zn</td><td>65.38</td><td>HCl</td><td>36.46</td><td>ZnCl<sub>2</sub></td><td>136.28</td></tr>
+  </table>
+
+  <h3>Formulas to Memorize</h3>
+  <div class="cheat-grid">
+    <div class="cheat-cell alt">
+      <h4>Percent Yield</h4>
+      <span class="mono">% yield = (actual / theoretical) × 100</span><br>
+      Actual = experimental (lab). Theoretical = stoichiometry.
+    </div>
+    <div class="cheat-cell alt">
+      <h4>Excess Leftover</h4>
+      <span class="mono">leftover = initial − used</span><br>
+      Run the <em>limiting</em> reagent toward the excess to find "used".
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="heading">Common pitfalls</span>
+    Forgetting to balance · flipping the mole ratio upside down · skipping the LR check when <em>both</em> amounts are given · using atomic mass instead of molar mass for compounds · no units written next to numbers.
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · CHEAT SHEET</span>
+    <span>PAGE 04 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     QUIZ A — FULL CHAPTER
+     ========================================================= -->
+<section class="page" id="quizA">
+  <div class="quiz-header">
+    <div>
+      <div class="id">QUIZ A · FULL CHAPTER · ALL TOPICS</div>
+      <div class="title-text">Practice Quiz A</div>
+      <div class="focus">Mole ratios · mass · limiting · excess · % yield</div>
+    </div>
+    <div class="id" style="text-align:right;">/ 50 PTS</div>
+  </div>
+
+  <div class="name-line">
+    <span class="lbl">NAME:</span><span></span>
+    <span class="lbl">DATE:</span><span></span>
+    <span class="lbl">PERIOD:</span><span></span>
+  </div>
+
+  <div class="instructions">
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. Show every conversion factor with units. Right answer with no work = 1/10.
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">1.</span><span class="pts">/ 10</span>
+    How many moles of NH<sub>3</sub> are produced from 0.50 mol of N<sub>2</sub> with excess H<sub>2</sub>?
+    <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">2.</span><span class="pts">/ 10</span>
+    How many grams of CaO are produced from the thermal decomposition of 25.0 g of CaCO<sub>3</sub>?
+    <div class="eq-line">CaCO<sub>3</sub> → CaO + CO<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">3.</span><span class="pts">/ 10</span>
+    If 5.0 g of Zn is reacted with 5.0 g of HCl, what is the limiting reagent and how many grams of H<sub>2</sub> are produced?
+    <div class="eq-line">Zn + 2 HCl → ZnCl<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span> &nbsp; g H<sub>2</sub>:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">4.</span><span class="pts">/ 10</span>
+    If 4.0 mol Al reacts with 4.0 mol O<sub>2</sub>: (a) which is limiting? (b) how many moles of the excess reagent remain?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">5.</span><span class="pts">/ 10</span>
+    When 5.0 g of H<sub>2</sub> reacts with excess N<sub>2</sub>, 20.0 g of NH<sub>3</sub> is collected. Calculate the theoretical yield and the percent yield.
+    <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · QUIZ A</span>
+    <span>PAGE 05 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     QUIZ B — FULL CHAPTER
+     ========================================================= -->
+<section class="page" id="quizB">
+  <div class="quiz-header">
+    <div>
+      <div class="id">QUIZ B · FULL CHAPTER · ALL TOPICS</div>
+      <div class="title-text">Practice Quiz B</div>
+      <div class="focus">Mole ratios · particles · limiting · excess · % yield</div>
+    </div>
+    <div class="id" style="text-align:right;">/ 50 PTS</div>
+  </div>
+
+  <div class="name-line">
+    <span class="lbl">NAME:</span><span></span>
+    <span class="lbl">DATE:</span><span></span>
+    <span class="lbl">PERIOD:</span><span></span>
+  </div>
+
+  <div class="instructions">
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. Use 6.02 × 10<sup>23</sup> for Avogadro's number. Right answer with no work = 1/10.
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">1.</span><span class="pts">/ 10</span>
+    How many moles of H<sub>2</sub>O are produced from 3.0 mol of O<sub>2</sub> reacting with excess H<sub>2</sub>?
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">2.</span><span class="pts">/ 10</span>
+    How many molecules of Al<sub>2</sub>O<sub>3</sub> are produced when 50.0 g of Al reacts with excess O<sub>2</sub>?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">3.</span><span class="pts">/ 10</span>
+    If 1.0 mol CS<sub>2</sub> reacts with 1.0 mol O<sub>2</sub>: (a) which is the limiting reagent? (b) how many moles of the excess reagent remain? (c) how many grams of CO<sub>2</sub> are formed?
+    <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">4.</span><span class="pts">/ 10</span>
+    If 5.0 g of H<sub>2</sub> reacts with 8.0 g of O<sub>2</sub>: (a) identify the limiting reagent. (b) how many grams of the excess reagent remain?
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">5.</span><span class="pts">/ 10</span>
+    When 10.00 g of Fe reacts with excess S, 16.50 g of Fe<sub>2</sub>S<sub>3</sub> is collected. Calculate the theoretical yield and the percent yield.
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · QUIZ B</span>
+    <span>PAGE 06 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     QUIZ C — FULL CHAPTER
+     ========================================================= -->
+<section class="page" id="quizC">
+  <div class="quiz-header">
+    <div>
+      <div class="id">QUIZ C · FULL CHAPTER · ALL TOPICS</div>
+      <div class="title-text">Practice Quiz C</div>
+      <div class="focus">Mole→mass · gas volume · limiting · excess · % yield</div>
+    </div>
+    <div class="id" style="text-align:right;">/ 50 PTS</div>
+  </div>
+
+  <div class="name-line">
+    <span class="lbl">NAME:</span><span></span>
+    <span class="lbl">DATE:</span><span></span>
+    <span class="lbl">PERIOD:</span><span></span>
+  </div>
+
+  <div class="instructions">
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. STP gas volume = 22.4 L/mol. Right answer with no work = 1/10.
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">1.</span><span class="pts">/ 10</span>
+    How many grams of NH<sub>3</sub> are produced from 4.0 mol of H<sub>2</sub> with excess N<sub>2</sub>?
+    <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">2.</span><span class="pts">/ 10</span>
+    How many liters of N<sub>2</sub> at STP are produced from 65.0 g of NaN<sub>3</sub>?
+    <div class="eq-line">2 NaN<sub>3</sub> → 2 Na + 3 N<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">3.</span><span class="pts">/ 10</span>
+    If 16.2 g Mg reacts with 12.0 g H<sub>2</sub>O: (a) which is limiting? (b) how many grams of H<sub>2</sub> form? (c) how many grams of the excess reagent remain?
+    <div class="eq-line">Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">4.</span><span class="pts">/ 10</span>
+    How many grams of CO<sub>2</sub> are produced when 106 g of C<sub>3</sub>H<sub>8</sub> reacts with 528 g of O<sub>2</sub>? Identify the limiting reagent.
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span> &nbsp; g CO<sub>2</sub>:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">5.</span><span class="pts">/ 10</span>
+    When 6.30 g of Al reacts with excess O<sub>2</sub>, 11.10 g of Al<sub>2</sub>O<sub>3</sub> is formed. Calculate theoretical yield and percent yield.
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · QUIZ C</span>
+    <span>PAGE 07 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     QUIZ D — FULL CHAPTER
+     ========================================================= -->
+<section class="page" id="quizD">
+  <div class="quiz-header">
+    <div>
+      <div class="id">QUIZ D · FULL CHAPTER · ALL TOPICS</div>
+      <div class="title-text">Practice Quiz D</div>
+      <div class="focus">Mole ratios · mass · LR · excess · combined % yield</div>
+    </div>
+    <div class="id" style="text-align:right;">/ 50 PTS</div>
+  </div>
+
+  <div class="name-line">
+    <span class="lbl">NAME:</span><span></span>
+    <span class="lbl">DATE:</span><span></span>
+    <span class="lbl">PERIOD:</span><span></span>
+  </div>
+
+  <div class="instructions">
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. Q5 is the most quiz-like — combines limiting reagent with percent yield. Right answer with no work = 1/10.
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">1.</span><span class="pts">/ 10</span>
+    How many moles of Fe<sub>2</sub>S<sub>3</sub> are produced from 2.5 mol of Fe with excess S?
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">2.</span><span class="pts">/ 10</span>
+    How many grams of O<sub>2</sub> are produced when 36.0 g of H<sub>2</sub>O is decomposed?
+    <div class="eq-line">2 H<sub>2</sub>O → 2 H<sub>2</sub> + O<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">3.</span><span class="pts">/ 10</span>
+    If 156 g of O<sub>2</sub> reacts with 29 g of C<sub>3</sub>H<sub>8</sub>, what is the limiting reagent?
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">4.</span><span class="pts">/ 10</span>
+    If 3.50 g Al reacts with 4.0 g O<sub>2</sub>: (a) which is limiting? (b) how many grams of the excess remain?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">5.</span><span class="pts">/ 10</span>
+    A student reacts 8.00 g of H<sub>2</sub> with 32.00 g of O<sub>2</sub> and collects 30.5 g of H<sub>2</sub>O. (a) Identify the limiting reagent. (b) Calculate the theoretical yield. (c) Calculate the percent yield.
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · QUIZ D</span>
+    <span>PAGE 08 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     QUIZ E — FULL CHAPTER · MASTERY
+     ========================================================= -->
+<section class="page" id="quizE">
+  <div class="quiz-header">
+    <div>
+      <div class="id">QUIZ E · FULL CHAPTER · MASTERY</div>
+      <div class="title-text">Practice Quiz E</div>
+      <div class="focus">Hardest set · closest in style to the real MQ8C</div>
+    </div>
+    <div class="id" style="text-align:right;">/ 50 PTS</div>
+  </div>
+
+  <div class="name-line">
+    <span class="lbl">NAME:</span><span></span>
+    <span class="lbl">DATE:</span><span></span>
+    <span class="lbl">PERIOD:</span><span></span>
+  </div>
+
+  <div class="instructions">
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. This is the most quiz-realistic set. Right answer with no work = 1/10. Take this last — after you've worked through Quizzes A–D.
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">1.</span><span class="pts">/ 10</span>
+    For the reaction below, write <em>all four</em> possible mole ratios involving CS<sub>2</sub>.
+    <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
+    <div class="work-space h-sm"></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">2.</span><span class="pts">/ 10</span>
+    How many atoms of carbon are produced from 2.20 g of CO<sub>2</sub> in the combustion below?
+    <div class="eq-line">CH<sub>4</sub> + 2 O<sub>2</sub> → CO<sub>2</sub> + 2 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:20px;">(Hint: 1 C atom per CO<sub>2</sub>)&nbsp;&nbsp; Answer:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">3.</span><span class="pts">/ 10</span>
+    Determine how many grams of the excess reagent remain after 94.3 g of C<sub>3</sub>H<sub>8</sub> reacts with 185 g of O<sub>2</sub>.
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">Excess reagent:<span class="answer-blank"></span> &nbsp; g remaining:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">4.</span><span class="pts">/ 10</span>
+    If 5.0 g Fe reacts with 5.0 g S: (a) which is the limiting reagent? (b) how many grams of Fe<sub>2</sub>S<sub>3</sub> are formed?
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">5.</span><span class="pts">/ 10</span>
+    15.0 g Mg reacts with 20.0 g H<sub>2</sub>O. A student collects 1.00 g of H<sub>2</sub>. (a) Identify the limiting reagent. (b) Calculate the theoretical yield of H<sub>2</sub>. (c) Calculate the percent yield.
+    <div class="eq-line">Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-lg"></div>
+    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · QUIZ E</span>
+    <span>PAGE 09 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     ANSWER KEYS — QUIZ A
+     ========================================================= -->
+<section class="page" id="keys">
+  <h1 style="font-size:22pt;">Answer Keys<span class="sub">Full worked solutions · don't peek until you've tried each quiz</span></h1>
+
+  <div class="key-card">
+    <h3>Quiz A — Full Chapter</h3>
+
+    <div class="key-q"><span class="qn">1.</span> 0.50 mol N<sub>2</sub> × (2 mol NH<sub>3</sub> / 1 mol N<sub>2</sub>) = <span class="ans">1.0 mol NH<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">2.</span> 25.0 g CaCO<sub>3</sub> × (1 mol / 100.09 g) × (1 mol CaO / 1 mol CaCO<sub>3</sub>) × (56.08 g / 1 mol) = <span class="ans">14.0 g CaO</span></div>
+
+    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
+    <div class="key-work">From Zn: 5.0 × (1/65.38) × (1 mol H<sub>2</sub> / 1 mol Zn) × 2.02 = 0.154 g H<sub>2</sub><br>
+    From HCl: 5.0 × (1/36.46) × (1 mol H<sub>2</sub> / 2 mol HCl) × 2.02 = 0.138 g H<sub>2</sub><br>
+    <strong>Step 2:</strong> 0.138 &lt; 0.154 → <span class="ans">HCl is limiting</span> &nbsp; <strong>Step 3:</strong> g H<sub>2</sub> = <span class="ans">0.138 g H<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to mol Al<sub>2</sub>O<sub>3</sub>:</strong></div>
+    <div class="key-work">From Al: 4.0 × (2 mol Al<sub>2</sub>O<sub>3</sub> / 4 mol Al) = 2.00 mol Al<sub>2</sub>O<sub>3</sub><br>
+    From O<sub>2</sub>: 4.0 × (2/3) = 2.67 mol Al<sub>2</sub>O<sub>3</sub><br>
+    <strong>Step 2:</strong> 2.00 &lt; 2.67 → <span class="ans">(a) Al is limiting</span><br>
+    <strong>Step 3:</strong> O<sub>2</sub> used = 4.0 mol Al × (3 mol O<sub>2</sub> / 4 mol Al) = 3.0 mol. Leftover = 4.0 − 3.0 = <span class="ans">(b) 1.0 mol O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">5.</span> Theoretical: 5.0 g H<sub>2</sub> × (1/2.02) × (2 mol NH<sub>3</sub> / 3 mol H<sub>2</sub>) × 17.04 = <span class="ans">28.2 g NH<sub>3</sub></span></div>
+    <div class="key-work">% yield = (20.0 / 28.2) × 100 = <span class="ans">71.0 %</span></div>
+  </div>
+
+  <div class="key-card">
+    <h3>Quiz B — Full Chapter</h3>
+
+    <div class="key-q"><span class="qn">1.</span> 3.0 mol O<sub>2</sub> × (2 mol H<sub>2</sub>O / 1 mol O<sub>2</sub>) = <span class="ans">6.0 mol H<sub>2</sub>O</span></div>
+
+    <div class="key-q"><span class="qn">2.</span> 50.0 g Al × (1/26.98) × (2 mol Al<sub>2</sub>O<sub>3</sub> / 4 mol Al) × (6.02×10<sup>23</sup> / 1 mol) = <span class="ans">5.58 × 10<sup>23</sup> molecules Al<sub>2</sub>O<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to mol CO<sub>2</sub>:</strong></div>
+    <div class="key-work">From CS<sub>2</sub>: 1.0 × (1/1) = 1.0 mol CO<sub>2</sub>. From O<sub>2</sub>: 1.0 × (1/3) = 0.33 mol CO<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 0.33 &lt; 1.0 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
+    (b) CS<sub>2</sub> used = 1.0 mol O<sub>2</sub> × (1/3) = 0.33 mol CS<sub>2</sub>. Leftover = <span class="ans">0.67 mol CS<sub>2</sub></span><br>
+    (c) g CO<sub>2</sub> = 1.0 mol O<sub>2</sub> × (1/3) × 44.01 = <span class="ans">14.7 g CO<sub>2</sub> (≈ 15 g)</span></div>
+
+    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to mol H<sub>2</sub>O:</strong></div>
+    <div class="key-work">From H<sub>2</sub>: 5.0/2.02 × (2/2) = 2.48 mol H<sub>2</sub>O. From O<sub>2</sub>: 8.0/32.00 × (2/1) = 0.50 mol H<sub>2</sub>O.<br>
+    <strong>Step 2:</strong> 0.50 &lt; 2.48 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
+    (b) H<sub>2</sub> used: 8.0/32.00 × (2/1) × 2.02 = 1.01 g H<sub>2</sub>. Leftover = 5.0 − 1.01 = <span class="ans">4.0 g H<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">5.</span> Theoretical: 10.00 g Fe × (1/55.85) × (1 mol Fe<sub>2</sub>S<sub>3</sub> / 2 mol Fe) × 207.91 = <span class="ans">18.61 g Fe<sub>2</sub>S<sub>3</sub></span></div>
+    <div class="key-work">% yield = (16.50 / 18.61) × 100 = <span class="ans">88.7 %</span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · KEYS A & B</span>
+    <span>PAGE 10 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     ANSWER KEYS — QUIZ C & D
+     ========================================================= -->
+<section class="page">
+  <div class="key-card">
+    <h3>Quiz C — Full Chapter</h3>
+
+    <div class="key-q"><span class="qn">1.</span> 4.0 mol H<sub>2</sub> × (2 mol NH<sub>3</sub> / 3 mol H<sub>2</sub>) × (17.04 g / 1 mol) = <span class="ans">45.4 g NH<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">2.</span> 65.0 g NaN<sub>3</sub> × (1/65.02) × (3 mol N<sub>2</sub> / 2 mol NaN<sub>3</sub>) × (22.4 L / 1 mol) = <span class="ans">33.6 L N<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
+    <div class="key-work">From Mg: 16.2 × (1/24.31) × (1/1) × 2.02 = 1.34 g H<sub>2</sub>.<br>
+    From H<sub>2</sub>O: 12.0 × (1/18.02) × (1/2) × 2.02 = 0.671 g H<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 0.671 &lt; 1.34 → <span class="ans">(a) H<sub>2</sub>O is limiting</span><br>
+    (b) g H<sub>2</sub> = <span class="ans">0.671 g H<sub>2</sub></span><br>
+    (c) Mg used: 12.0 × (1/18.02) × (1/2) × 24.31 = 8.1 g Mg. Leftover = 16.2 − 8.1 = <span class="ans">8.1 g Mg</span></div>
+
+    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
+    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 106/44.11 × 3 × 44.01 = 317 g CO<sub>2</sub>.<br>
+    From O<sub>2</sub>: 528/32.00 × (3/5) × 44.01 = 436 g CO<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 317 &lt; 436 → <span class="ans">C<sub>3</sub>H<sub>8</sub> is limiting; 317 g CO<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">5.</span> Theoretical: 6.30 g Al × (1/26.98) × (2/4) × 101.96 = <span class="ans">11.90 g Al<sub>2</sub>O<sub>3</sub></span></div>
+    <div class="key-work">% yield = (11.10 / 11.90) × 100 = <span class="ans">93.3 %</span></div>
+  </div>
+
+  <div class="key-card">
+    <h3>Quiz D — Full Chapter</h3>
+
+    <div class="key-q"><span class="qn">1.</span> 2.5 mol Fe × (1 mol Fe<sub>2</sub>S<sub>3</sub> / 2 mol Fe) = <span class="ans">1.25 mol Fe<sub>2</sub>S<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">2.</span> 36.0 g H<sub>2</sub>O × (1/18.02) × (1 mol O<sub>2</sub> / 2 mol H<sub>2</sub>O) × 32.00 = <span class="ans">32.0 g O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
+    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 29/44.11 × 3 × 44.01 = 86.8 g CO<sub>2</sub>.<br>
+    From O<sub>2</sub>: 156/32.00 × (3/5) × 44.01 = 129 g CO<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 86.8 &lt; 129 → <span class="ans">C<sub>3</sub>H<sub>8</sub> is limiting</span></div>
+
+    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g Al<sub>2</sub>O<sub>3</sub>:</strong></div>
+    <div class="key-work">From Al: 3.50/26.98 × (2/4) × 101.96 = 6.61 g Al<sub>2</sub>O<sub>3</sub>.<br>
+    From O<sub>2</sub>: 4.0/32.00 × (2/3) × 101.96 = 8.50 g Al<sub>2</sub>O<sub>3</sub>.<br>
+    <strong>Step 2:</strong> 6.61 &lt; 8.50 → <span class="ans">(a) Al is limiting</span><br>
+    (b) O<sub>2</sub> used: 3.50/26.98 × (3/4) × 32.00 = 3.11 g O<sub>2</sub>. Leftover = 4.0 − 3.11 = <span class="ans">0.89 g O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">5.</span> <strong>Step 1 — convert each to g H<sub>2</sub>O:</strong></div>
+    <div class="key-work">From H<sub>2</sub>: 8.00/2.02 × (2/2) × 18.02 = 71.4 g H<sub>2</sub>O.<br>
+    From O<sub>2</sub>: 32.00/32.00 × (2/1) × 18.02 = 36.0 g H<sub>2</sub>O.<br>
+    <strong>Step 2:</strong> 36.0 &lt; 71.4 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
+    (b) Theoretical = <span class="ans">36.0 g H<sub>2</sub>O</span><br>
+    (c) % yield = (30.5 / 36.0) × 100 = <span class="ans">84.7 %</span></div>
+  </div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · KEYS C & D</span>
+    <span>PAGE 11 / 14</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     ANSWER KEYS — QUIZ E + FINAL TIPS
+     ========================================================= -->
+<section class="page">
+  <div class="key-card">
+    <h3>Quiz E — Full Chapter · Mastery</h3>
+
+    <div class="key-q"><span class="qn">1.</span> Four mole ratios involving CS<sub>2</sub> in <span class="mono">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></span>:</div>
+    <div class="key-work">
+      <span class="ans">1 mol CS<sub>2</sub> / 3 mol O<sub>2</sub></span> &nbsp;and inverse&nbsp; <span class="ans">3 mol O<sub>2</sub> / 1 mol CS<sub>2</sub></span><br>
+      <span class="ans">1 mol CS<sub>2</sub> / 1 mol CO<sub>2</sub></span> &nbsp;and inverse&nbsp; <span class="ans">1 mol CO<sub>2</sub> / 1 mol CS<sub>2</sub></span><br>
+      (Also acceptable: 1 mol CS<sub>2</sub> / 2 mol SO<sub>2</sub> and its inverse.)
+    </div>
+
+    <div class="key-q"><span class="qn">2.</span> 2.20 g CO<sub>2</sub> × (1 mol / 44.01 g) × (1 mol C / 1 mol CO<sub>2</sub>) × (6.02×10<sup>23</sup> / 1 mol) = <span class="ans">3.01 × 10<sup>22</sup> atoms C</span></div>
+
+    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
+    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 94.3/44.11 × 3 × 44.01 = 282 g CO<sub>2</sub>.<br>
+    From O<sub>2</sub>: 185/32.00 × (3/5) × 44.01 = 153 g CO<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 153 &lt; 282 → O<sub>2</sub> is limiting, <span class="ans">C<sub>3</sub>H<sub>8</sub> is in excess</span><br>
+    <strong>Step 3:</strong> C<sub>3</sub>H<sub>8</sub> used = 185/32.00 × (1/5) × 44.11 = 51.0 g. Leftover = 94.3 − 51.0 = <span class="ans">43.3 g C<sub>3</sub>H<sub>8</sub></span></div>
+
+    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g Fe<sub>2</sub>S<sub>3</sub>:</strong></div>
+    <div class="key-work">From Fe: 5.0/55.85 × (1/2) × 207.91 = 9.31 g Fe<sub>2</sub>S<sub>3</sub>.<br>
+    From S: 5.0/32.07 × (1/3) × 207.91 = 10.81 g Fe<sub>2</sub>S<sub>3</sub>.<br>
+    <strong>Step 2:</strong> 9.31 &lt; 10.81 → <span class="ans">(a) Fe is limiting</span> &nbsp; (b) <span class="ans">9.31 g Fe<sub>2</sub>S<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">5.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
+    <div class="key-work">From Mg: 15.0/24.31 × (1/1) × 2.02 = 1.24 g H<sub>2</sub>.<br>
+    From H<sub>2</sub>O: 20.0/18.02 × (1/2) × 2.02 = 1.12 g H<sub>2</sub>.<br>
+    <strong>Step 2:</strong> 1.12 &lt; 1.24 → <span class="ans">(a) H<sub>2</sub>O is limiting</span><br>
+    (b) Theoretical = <span class="ans">1.12 g H<sub>2</sub></span><br>
+    (c) % yield = (1.00 / 1.12) × 100 = <span class="ans">89.3 %</span></div>
+  </div>
+
+  <h2 style="margin-top:14px;">Final Pre-Quiz Checklist</h2>
+  <ul style="font-size:10pt;">
+    <li>Can you balance any equation given to you? Practice by counting atoms on each side.</li>
+    <li>Can you compute a molar mass from the periodic table in under 30 seconds?</li>
+    <li>For every "both reactants given" problem, do you automatically run the 3-step limiting reagent check?</li>
+    <li>For every "<em>reacts with excess</em>" problem, do you go straight through without comparison?</li>
+    <li>Are your conversion factors arranged so units cancel diagonally?</li>
+    <li>Do you write every label (g Al, mol O<sub>2</sub>, L N<sub>2</sub>) in every box?</li>
+    <li>Does your final answer have the correct significant figures (match the data given)?</li>
+  </ul>
+
+  <div class="callout warn">
+    <span class="heading">Last reminder before walking into class</span>
+    <strong>Phones away the entire period.</strong> Even after you finish. Phone out = −1. <strong>Mole Roadmap on every problem</strong> — no exceptions. Right answer with no work scores 1/10. You have the whole period, so don't rush.
+  </div>
+
+  <div class="flask-deco" style="margin-top:0.3in;">GOOD LUCK, CLAIRE</div>
+
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · KEY E + CHECKLIST</span>
+    <span>PAGE 12 / 14</span>
+  </div>
+</section>
+
+</body>
+</html>
