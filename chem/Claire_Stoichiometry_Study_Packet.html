@@ -5,8 +5,8 @@
 <title>Claire's Stoichiometry Quiz Prep — MQ8C</title>
 <style>
 /* =========================================================
-   CLAIRE'S STOICHIOMETRY STUDY PACKET — v3
-   Each quiz is a full chapter quiz (mixed topics)
+   CLAIRE'S STOICHIOMETRY STUDY PACKET — v4
+   Five full-chapter quizzes · 10 problems each
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
@@ -37,7 +37,6 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- Navigation ---------- */
 .nav-bar {
   background: var(--ink);
   color: var(--paper);
@@ -70,12 +69,11 @@ body {
 .nav-bar a:hover { color: var(--highlight); border-bottom-color: var(--highlight); }
 @media print { .nav-bar { display: none; } }
 
-/* ---------- Page container ---------- */
 .page {
   max-width: 8.27in;
   min-height: 11.69in;
   margin: 24px auto;
-  padding: 0.55in 0.65in;
+  padding: 0.5in 0.6in;
   background: var(--paper);
   box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
   position: relative;
@@ -87,12 +85,11 @@ body {
   .page {
     margin: 0;
     box-shadow: none;
-    padding: 0.45in 0.5in;
+    padding: 0.4in 0.45in;
     page-break-after: always;
   }
 }
 
-/* ---------- Headers ---------- */
 h1, h2, h3, h4 {
   font-family: 'Fraunces', serif;
   color: var(--ink);
@@ -140,7 +137,6 @@ h4 {
   text-transform: uppercase;
 }
 
-/* ---------- Title block ---------- */
 .title-block {
   text-align: center;
   margin-top: 0.7in;
@@ -208,7 +204,6 @@ h4 {
   line-height: 1.55;
 }
 
-/* ---------- Prose ---------- */
 p { margin: 5px 0; }
 ul, ol { margin: 5px 0; padding-left: 22px; }
 ul li, ol li { margin: 2px 0; }
@@ -219,7 +214,6 @@ code, .mono {
   font-size: 0.92em;
 }
 
-/* ---------- Callouts ---------- */
 .callout {
   background: var(--paper-2);
   border-left: 4px solid var(--teal);
@@ -249,7 +243,6 @@ code, .mono {
   color: var(--accent);
 }
 
-/* ---------- Roadmap ---------- */
 .roadmap {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -274,7 +267,6 @@ code, .mono {
   font-size: 13pt;
 }
 
-/* ---------- Step boxes (3-step LR process) ---------- */
 .step-boxes {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -297,122 +289,113 @@ code, .mono {
   margin-bottom: 2px;
 }
 
-/* ---------- Quiz styling ---------- */
+/* ---------- Quiz styling (compact for 10 problems / page) ---------- */
 .quiz-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding-bottom: 6px;
+  padding-bottom: 5px;
   border-bottom: 3px double var(--ink);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .quiz-header .id {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9pt;
+  font-size: 8.5pt;
   color: var(--muted);
   letter-spacing: 0.1em;
 }
 .quiz-header .title-text {
   font-family: 'Fraunces', serif;
-  font-size: 18pt;
+  font-size: 17pt;
   font-weight: 900;
   line-height: 1;
 }
 .quiz-header .focus {
   font-family: 'Fraunces', serif;
-  font-size: 9.5pt;
+  font-size: 9pt;
   color: var(--accent);
   font-style: italic;
 }
 
-.name-line {
-  display: flex;
-  gap: 18px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5pt;
-  margin-bottom: 8px;
-  color: var(--muted);
-}
-.name-line span { flex: 1; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
-.name-line .lbl { flex: none; }
-
 .instructions {
   background: var(--paper-2);
-  padding: 6px 11px;
-  margin-bottom: 9px;
-  font-size: 9pt;
+  padding: 5px 10px;
+  margin-bottom: 7px;
+  font-size: 8.5pt;
   border-left: 3px solid var(--accent);
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .quiz-q {
-  margin: 7px 0 9px;
-  font-size: 10pt;
-  line-height: 1.4;
+  margin: 5px 0 6px;
+  font-size: 9.5pt;
+  line-height: 1.35;
 }
 .quiz-q .qnum {
   display: inline-block;
   font-family: 'Fraunces', serif;
   font-weight: 900;
   color: var(--accent);
-  margin-right: 5px;
-  font-size: 11pt;
+  margin-right: 4px;
+  font-size: 10.5pt;
 }
 .quiz-q .pts {
   float: right;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8pt;
+  font-size: 7.5pt;
   color: var(--muted);
 }
 .quiz-q .eq-line {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5pt;
-  margin: 3px 0 3px 20px;
+  font-size: 9pt;
+  margin: 2px 0 2px 18px;
   font-weight: 600;
 }
 .work-space {
   border: 1px solid var(--rule);
-  margin: 4px 0 0 20px;
+  margin: 3px 0 0 18px;
   background:
     repeating-linear-gradient(to bottom,
       transparent,
-      transparent 0.24in,
-      var(--grid) 0.24in,
-      var(--grid) calc(0.24in + 1px));
-  background-position: 0 4px;
+      transparent 0.22in,
+      var(--grid) 0.22in,
+      var(--grid) calc(0.22in + 1px));
+  background-position: 0 3px;
 }
-.work-space.h-sm { height: 0.70in; }
-.work-space.h-md { height: 0.95in; }
-.work-space.h-lg { height: 1.25in; }
+.work-space.h-xs { height: 0.50in; }
+.work-space.h-sm { height: 0.65in; }
+.work-space.h-md { height: 0.85in; }
+.work-space.h-lg { height: 1.05in; }
 
 .answer-blank {
   display: inline-block;
   border-bottom: 1.5px solid var(--ink);
-  min-width: 1.2in;
+  min-width: 1.1in;
   margin-left: 4px;
   font-family: 'JetBrains Mono', monospace;
 }
+.answer-blank.short { min-width: 0.85in; }
 
-/* ---------- Answer key ---------- */
 .key-card {
   background: var(--paper-2);
   border: 1px solid var(--rule);
-  padding: 10px 14px;
-  margin: 10px 0;
+  padding: 9px 13px;
+  margin: 9px 0;
   border-radius: 2px;
 }
 .key-card h3 {
   margin-top: 0;
   color: var(--accent);
   border-bottom: 1px solid var(--accent);
-  padding-bottom: 3px;
+  padding-bottom: 2px;
+  font-size: 11.5pt;
 }
 .key-card h3::before { content: ""; }
 .key-q {
-  margin: 6px 0;
-  font-size: 9.5pt;
-  padding-left: 24px;
-  text-indent: -24px;
+  margin: 5px 0;
+  font-size: 9pt;
+  padding-left: 22px;
+  text-indent: -22px;
 }
 .key-q .qn {
   font-family: 'Fraunces', serif;
@@ -430,18 +413,17 @@ code, .mono {
 }
 .key-work {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8pt;
-  margin: 2px 0 5px 22px;
+  font-size: 7.5pt;
+  margin: 2px 0 4px 22px;
   color: var(--ink-soft);
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
-/* ---------- Footer ---------- */
 .page-footer {
   position: absolute;
-  bottom: 0.3in;
-  left: 0.65in;
-  right: 0.65in;
+  bottom: 0.25in;
+  left: 0.6in;
+  right: 0.6in;
   display: flex;
   justify-content: space-between;
   font-family: 'JetBrains Mono', monospace;
@@ -449,10 +431,9 @@ code, .mono {
   color: var(--muted);
   letter-spacing: 0.1em;
   border-top: 1px solid var(--grid);
-  padding-top: 5px;
+  padding-top: 4px;
 }
 
-/* ---------- Cheat sheet grid ---------- */
 .cheat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -470,7 +451,6 @@ code, .mono {
 .cheat-cell.alt { border-left-color: var(--accent); }
 .cheat-cell.alt h4 { color: var(--accent); }
 
-/* ---------- Molar mass table ---------- */
 table.molar {
   width: 100%;
   border-collapse: collapse;
@@ -486,7 +466,6 @@ table.molar th, table.molar td {
 table.molar th { background: var(--ink); color: var(--paper); font-weight: 700; }
 table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
-/* ---------- Worked example block ---------- */
 .worked {
   border: 1.5px solid var(--ink);
   padding: 10px 13px;
@@ -565,7 +544,7 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
     <div class="student">Prepared for Claire Luo</div>
     <h1>Stoichiometry<span class="sub">Full Chapter Quiz Prep · Unit 9</span></h1>
     <div class="quiz-id">MQ8C · DR. PANGRLE · 25–26</div>
-    <div class="version">REV. 3 · 5 FULL-CHAPTER QUIZZES</div>
+    <div class="version">REV. 4 · 5 QUIZZES · 10 PROBLEMS EACH</div>
   </div>
 
   <div class="cover-meta">
@@ -590,10 +569,10 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
   <div class="cover-toc">
     <h3>What's Inside</h3>
     <ol>
-      <li><strong>Study Guide</strong> — every concept from §9.1 through §9.5, plus what to memorize cold</li>
+      <li><strong>Study Guide</strong> — every concept from §9.1 through §9.5</li>
       <li><strong>Worked Examples</strong> — the two teacher-worksheet problems solved in her exact format</li>
       <li><strong>Cheat Sheet</strong> — one-page reference with every formula, conversion factor, and molar mass</li>
-      <li><strong>Practice Quiz A through E</strong> — five full-chapter quizzes, each mirroring the real MQ8C format. Every quiz includes problems from all five topics: mole ratios, mass conversions, limiting reagent, excess reagent, and percent yield.</li>
+      <li><strong>Practice Quizzes A–E</strong> — five full-chapter quizzes, <strong>10 problems each</strong>. Every quiz covers all five topics: mole ratios, mass conversions, limiting reagent, excess reagent, and percent yield.</li>
       <li><strong>Answer Keys</strong> — full worked solutions for every question</li>
     </ol>
   </div>
@@ -605,12 +584,12 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
   <div class="callout key">
     <span class="heading">How each quiz is structured</span>
-    Each of Quizzes A–E has <strong>5 problems covering all chapter topics</strong>: (1) mole-to-mole or mass conversion · (2) particle or gas-volume conversion · (3) limiting reagent identification · (4) excess reagent leftover · (5) percent yield. After taking each one, grade yourself against the keys before moving to the next.
+    Each of Quizzes A–E has <strong>10 problems</strong> spanning all chapter topics: mole-to-mole · mass conversions · particles · gas volume · limiting reagent · excess leftover · percent yield · and at least one combined limiting-reagent-plus-yield problem. Take one quiz at a time, grade yourself against the keys, then move on.
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · STOICHIOMETRY</span>
-    <span>PAGE 01 / 14</span>
+    <span>PAGE 01 / 16</span>
   </div>
 </section>
 
@@ -648,9 +627,9 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
   <h2>3. Vocabulary (from the worksheet)</h2>
   <ul style="font-size:10.5pt;">
     <li><strong>Limiting Reagent</strong> — the reactant used up first. <em>This determines how much product is made.</em></li>
-    <li><strong>Excess Reagent</strong> — the reactant that has some leftover when the reaction is complete. You had more than enough.</li>
+    <li><strong>Excess Reagent</strong> — the reactant with some leftover when the reaction is complete. You had more than enough.</li>
     <li><strong>Theoretical yield</strong> — the amount of product stoichiometry predicts (the math answer).</li>
-    <li><strong>Experimental (actual) yield</strong> — what was collected in the lab.</li>
+    <li><strong>Experimental (actual) yield</strong> — what was actually collected in the lab.</li>
     <li><strong>Percent yield</strong> — a measure of how efficient the reaction was.</li>
   </ul>
 
@@ -660,21 +639,21 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
   <div class="step-boxes">
     <div class="step-box">
       <span class="num">Step 1</span>
-      <strong>Convert each reactant to the same product</strong> (mol or g) using the Mole Roadmap. Pick one product; run both reactants to it.
+      <strong>Convert each reactant to the same product</strong> (mol or g) using the Mole Roadmap.
     </div>
     <div class="step-box">
       <span class="num">Step 2</span>
-      <strong>Compare</strong>. Whichever reactant gave the <em>smaller</em> amount is the <strong>limiting reagent</strong>. The other is in <strong>excess</strong>.
+      <strong>Compare</strong>. Whichever gave the <em>smaller</em> amount is <strong>limiting</strong>. The other is <strong>excess</strong>.
     </div>
     <div class="step-box">
       <span class="num">Step 3</span>
-      <strong>Use the limiting reagent only</strong> for any further math — actual product, OR how much of the excess was used.
+      <strong>Use the limiting reagent only</strong> for any further math — actual product OR excess consumed.
     </div>
   </div>
 
   <div class="callout">
     <span class="heading">When only one reactant amount is given</span>
-    If a problem says "<em>reacted with excess</em>" something, the substance with the given amount is automatically the limiting reagent. No comparison needed — just run the roadmap.
+    If a problem says "<em>reacted with excess</em>" something, the given reactant is automatically limiting. No comparison needed — just run the roadmap.
   </div>
 
   <h2>5. Excess Reagent Leftover</h2>
@@ -692,12 +671,12 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · STUDY GUIDE</span>
-    <span>PAGE 02 / 14</span>
+    <span>PAGE 02 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     PAGE 3 — WORKED EXAMPLES (from worksheet)
+     PAGE 3 — WORKED EXAMPLES
      ========================================================= -->
 <section class="page" id="worked">
   <h1 style="font-size:22pt;">Worked Examples<span class="sub">The two worksheet problems · Dr. Pangrle's exact method</span></h1>
@@ -747,12 +726,12 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
   <div class="callout key">
     <span class="heading">Notice the pattern</span>
-    Whatever final unit you pick for Step 1 (mol of product, or grams of product), <em>use the same unit for both reactants</em> so the comparison is fair. The worksheet used mol CO<sub>2</sub> in Example 1 and grams H<sub>2</sub> in Example 2 — either works.
+    Whatever unit you pick for Step 1 (mol of product, or grams of product), <em>use the same unit for both reactants</em> so the comparison is fair. The worksheet used mol CO<sub>2</sub> in Example 1 and grams H<sub>2</sub> in Example 2 — either works.
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · WORKED EXAMPLES</span>
-    <span>PAGE 03 / 14</span>
+    <span>PAGE 03 / 16</span>
   </div>
 </section>
 
@@ -760,7 +739,7 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
      PAGE 4 — CHEAT SHEET
      ========================================================= -->
 <section class="page" id="cheat">
-  <h1 style="font-size:22pt;">Cheat Sheet<span class="sub">One-page reference · keep this open while studying</span></h1>
+  <h1 style="font-size:22pt;">Cheat Sheet<span class="sub">One-page reference</span></h1>
 
   <h3>The Mole Roadmap (the only method that gets graded)</h3>
   <div class="roadmap">
@@ -799,7 +778,7 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
   <div class="step-boxes">
     <div class="step-box">
       <span class="num">1</span>
-      Convert each reactant to <strong>moles (or grams) of the same product</strong>.
+      Convert each reactant to <strong>mol (or g) of the same product</strong>.
     </div>
     <div class="step-box">
       <span class="num">2</span>
@@ -818,10 +797,11 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
     <tr><td>O<sub>2</sub></td><td>32.00</td><td>Al<sub>2</sub>O<sub>3</sub></td><td>101.96</td><td>SO<sub>2</sub></td><td>64.07</td></tr>
     <tr><td>H<sub>2</sub>O</td><td>18.02</td><td>Fe</td><td>55.85</td><td>Mg</td><td>24.31</td></tr>
     <tr><td>CO<sub>2</sub></td><td>44.01</td><td>S</td><td>32.07</td><td>Mg(OH)<sub>2</sub></td><td>58.33</td></tr>
-    <tr><td>N<sub>2</sub></td><td>28.02</td><td>Fe<sub>2</sub>S<sub>3</sub></td><td>207.91</td><td>NaOH</td><td>40.00</td></tr>
-    <tr><td>NH<sub>3</sub></td><td>17.04</td><td>NaN<sub>3</sub></td><td>65.02</td><td>Na<sub>3</sub>PO<sub>4</sub></td><td>163.94</td></tr>
-    <tr><td>C<sub>3</sub>H<sub>8</sub></td><td>44.11</td><td>CaCO<sub>3</sub></td><td>100.09</td><td>CaO</td><td>56.08</td></tr>
-    <tr><td>Zn</td><td>65.38</td><td>HCl</td><td>36.46</td><td>ZnCl<sub>2</sub></td><td>136.28</td></tr>
+    <tr><td>N<sub>2</sub></td><td>28.02</td><td>Fe<sub>2</sub>S<sub>3</sub></td><td>207.91</td><td>MgO</td><td>40.31</td></tr>
+    <tr><td>NH<sub>3</sub></td><td>17.04</td><td>NaN<sub>3</sub></td><td>65.02</td><td>Cu</td><td>63.55</td></tr>
+    <tr><td>C<sub>3</sub>H<sub>8</sub></td><td>44.11</td><td>CaCO<sub>3</sub></td><td>100.09</td><td>Ag</td><td>107.87</td></tr>
+    <tr><td>Zn</td><td>65.38</td><td>HCl</td><td>36.46</td><td>CaO</td><td>56.08</td></tr>
+    <tr><td>AgNO<sub>3</sub></td><td>169.87</td><td>KClO<sub>3</sub></td><td>122.55</td><td>KCl</td><td>74.55</td></tr>
   </table>
 
   <h3>Formulas to Memorize</h3>
@@ -845,27 +825,21 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · CHEAT SHEET</span>
-    <span>PAGE 04 / 14</span>
+    <span>PAGE 04 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     QUIZ A — FULL CHAPTER
+     QUIZ A
      ========================================================= -->
 <section class="page" id="quizA">
   <div class="quiz-header">
     <div>
-      <div class="id">QUIZ A · FULL CHAPTER · ALL TOPICS</div>
+      <div class="id">QUIZ A · FULL CHAPTER · 10 PROBLEMS</div>
       <div class="title-text">Practice Quiz A</div>
-      <div class="focus">Mole ratios · mass · limiting · excess · % yield</div>
+      <div class="focus">All topics · mole ratios → mass → particles → LR → excess → % yield</div>
     </div>
-    <div class="id" style="text-align:right;">/ 50 PTS</div>
-  </div>
-
-  <div class="name-line">
-    <span class="lbl">NAME:</span><span></span>
-    <span class="lbl">DATE:</span><span></span>
-    <span class="lbl">PERIOD:</span><span></span>
+    <div class="id" style="text-align:right;">/ 100</div>
   </div>
 
   <div class="instructions">
@@ -876,65 +850,96 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
     <span class="qnum">1.</span><span class="pts">/ 10</span>
     How many moles of NH<sub>3</sub> are produced from 0.50 mol of N<sub>2</sub> with excess H<sub>2</sub>?
     <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
-    <div class="work-space h-sm"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-xs"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">2.</span><span class="pts">/ 10</span>
-    How many grams of CaO are produced from the thermal decomposition of 25.0 g of CaCO<sub>3</sub>?
+    How many grams of CaO are produced from the decomposition of 25.0 g of CaCO<sub>3</sub>?
     <div class="eq-line">CaCO<sub>3</sub> → CaO + CO<sub>2</sub></div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">3.</span><span class="pts">/ 10</span>
-    If 5.0 g of Zn is reacted with 5.0 g of HCl, what is the limiting reagent and how many grams of H<sub>2</sub> are produced?
-    <div class="eq-line">Zn + 2 HCl → ZnCl<sub>2</sub> + H<sub>2</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span> &nbsp; g H<sub>2</sub>:<span class="answer-blank"></span></div>
+    How many liters of H<sub>2</sub> at STP are produced from 4.10 g of Al reacting with excess HCl?
+    <div class="eq-line">2 Al + 6 HCl → 2 AlCl<sub>3</sub> + 3 H<sub>2</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">4.</span><span class="pts">/ 10</span>
-    If 4.0 mol Al reacts with 4.0 mol O<sub>2</sub>: (a) which is limiting? (b) how many moles of the excess reagent remain?
-    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+    How many molecules of CO<sub>2</sub> are present in 11.0 g of CO<sub>2</sub>?
+    <div class="work-space h-xs"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">5.</span><span class="pts">/ 10</span>
-    When 5.0 g of H<sub>2</sub> reacts with excess N<sub>2</sub>, 20.0 g of NH<sub>3</sub> is collected. Calculate the theoretical yield and the percent yield.
+    If 5.0 g Zn reacts with 5.0 g HCl, identify the limiting reagent and find grams of H<sub>2</sub> produced.
+    <div class="eq-line">Zn + 2 HCl → ZnCl<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Limiting:<span class="answer-blank short"></span> g H<sub>2</sub>:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">6.</span><span class="pts">/ 10</span>
+    If 4.0 mol Al reacts with 4.0 mol O<sub>2</sub>: (a) which is limiting? (b) mol excess remaining?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">7.</span><span class="pts">/ 10</span>
+    If 3.50 g Al reacts with 4.0 g O<sub>2</sub>: (a) which is limiting? (b) grams of excess remaining?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">8.</span><span class="pts">/ 10</span>
+    5.0 g H<sub>2</sub> reacts with excess N<sub>2</sub>; 20.0 g NH<sub>3</sub> collected. Find theoretical yield and % yield.
     <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">9.</span><span class="pts">/ 10</span>
+    8.00 g H<sub>2</sub> + 32.00 g O<sub>2</sub> → 30.5 g H<sub>2</sub>O collected. (a) Limiting? (b) Theo yield? (c) % yield?
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">10.</span><span class="pts">/ 10</span>
+    Define <strong>limiting reagent</strong> in one sentence, and explain why we use it (not the excess) to find the amount of product formed.
+    <div class="work-space h-sm"></div>
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · QUIZ A</span>
-    <span>PAGE 05 / 14</span>
+    <span>PAGE 05 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     QUIZ B — FULL CHAPTER
+     QUIZ B
      ========================================================= -->
 <section class="page" id="quizB">
   <div class="quiz-header">
     <div>
-      <div class="id">QUIZ B · FULL CHAPTER · ALL TOPICS</div>
+      <div class="id">QUIZ B · FULL CHAPTER · 10 PROBLEMS</div>
       <div class="title-text">Practice Quiz B</div>
-      <div class="focus">Mole ratios · particles · limiting · excess · % yield</div>
+      <div class="focus">All topics · varying conversions · worksheet CS₂ problem inside</div>
     </div>
-    <div class="id" style="text-align:right;">/ 50 PTS</div>
-  </div>
-
-  <div class="name-line">
-    <span class="lbl">NAME:</span><span></span>
-    <span class="lbl">DATE:</span><span></span>
-    <span class="lbl">PERIOD:</span><span></span>
+    <div class="id" style="text-align:right;">/ 100</div>
   </div>
 
   <div class="instructions">
@@ -943,253 +948,388 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
   <div class="quiz-q">
     <span class="qnum">1.</span><span class="pts">/ 10</span>
-    How many moles of H<sub>2</sub>O are produced from 3.0 mol of O<sub>2</sub> reacting with excess H<sub>2</sub>?
+    How many moles of H<sub>2</sub>O form from 3.0 mol O<sub>2</sub> reacting with excess H<sub>2</sub>?
     <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
-    <div class="work-space h-sm"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-xs"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">2.</span><span class="pts">/ 10</span>
-    How many molecules of Al<sub>2</sub>O<sub>3</sub> are produced when 50.0 g of Al reacts with excess O<sub>2</sub>?
-    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    How many moles of N<sub>2</sub> are present in 28.0 g of N<sub>2</sub>?
+    <div class="work-space h-xs"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">3.</span><span class="pts">/ 10</span>
-    If 1.0 mol CS<sub>2</sub> reacts with 1.0 mol O<sub>2</sub>: (a) which is the limiting reagent? (b) how many moles of the excess reagent remain? (c) how many grams of CO<sub>2</sub> are formed?
-    <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+    How many molecules of Al<sub>2</sub>O<sub>3</sub> are produced when 50.0 g of Al reacts with excess O<sub>2</sub>?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">4.</span><span class="pts">/ 10</span>
-    If 5.0 g of H<sub>2</sub> reacts with 8.0 g of O<sub>2</sub>: (a) identify the limiting reagent. (b) how many grams of the excess reagent remain?
-    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+    How many grams of O<sub>2</sub> are needed to completely react with 0.75 mol of C<sub>3</sub>H<sub>8</sub>?
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">5.</span><span class="pts">/ 10</span>
-    When 10.00 g of Fe reacts with excess S, 16.50 g of Fe<sub>2</sub>S<sub>3</sub> is collected. Calculate the theoretical yield and the percent yield.
+    1.0 mol CS<sub>2</sub> + 1.0 mol O<sub>2</sub>: (a) Limiting? (b) mol excess remain? (c) g CO<sub>2</sub> formed?
+    <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">6.</span><span class="pts">/ 10</span>
+    5.0 g H<sub>2</sub> + 8.0 g O<sub>2</sub>: (a) Limiting? (b) grams excess remaining?
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">7.</span><span class="pts">/ 10</span>
+    6.0 g Mg + 10.0 g O<sub>2</sub>: how many grams of the excess reagent remain?
+    <div class="eq-line">2 Mg + O<sub>2</sub> → 2 MgO</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Excess:<span class="answer-blank short"></span> g remaining:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">8.</span><span class="pts">/ 10</span>
+    10.00 g Fe + excess S → 16.50 g Fe<sub>2</sub>S<sub>3</sub> collected. Find theoretical yield and % yield.
     <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">9.</span><span class="pts">/ 10</span>
+    6.30 g Al + excess O<sub>2</sub> → 11.10 g Al<sub>2</sub>O<sub>3</sub> collected. Find theoretical yield and % yield.
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">10.</span><span class="pts">/ 10</span>
+    Write any two mole ratios from <span class="mono">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></span>.
+    <div class="work-space h-xs"></div>
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · QUIZ B</span>
-    <span>PAGE 06 / 14</span>
+    <span>PAGE 06 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     QUIZ C — FULL CHAPTER
+     QUIZ C
      ========================================================= -->
 <section class="page" id="quizC">
   <div class="quiz-header">
     <div>
-      <div class="id">QUIZ C · FULL CHAPTER · ALL TOPICS</div>
+      <div class="id">QUIZ C · FULL CHAPTER · 10 PROBLEMS</div>
       <div class="title-text">Practice Quiz C</div>
-      <div class="focus">Mole→mass · gas volume · limiting · excess · % yield</div>
+      <div class="focus">All topics · includes the worksheet Mg + H₂O problem</div>
     </div>
-    <div class="id" style="text-align:right;">/ 50 PTS</div>
-  </div>
-
-  <div class="name-line">
-    <span class="lbl">NAME:</span><span></span>
-    <span class="lbl">DATE:</span><span></span>
-    <span class="lbl">PERIOD:</span><span></span>
+    <div class="id" style="text-align:right;">/ 100</div>
   </div>
 
   <div class="instructions">
-    <strong>Directions:</strong> Mole Roadmap Method on every problem. STP gas volume = 22.4 L/mol. Right answer with no work = 1/10.
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. Gas volume = 22.4 L/mol at STP. Right answer with no work = 1/10.
   </div>
 
   <div class="quiz-q">
     <span class="qnum">1.</span><span class="pts">/ 10</span>
-    How many grams of NH<sub>3</sub> are produced from 4.0 mol of H<sub>2</sub> with excess N<sub>2</sub>?
+    How many grams of NH<sub>3</sub> are produced from 4.0 mol H<sub>2</sub> with excess N<sub>2</sub>?
     <div class="eq-line">N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">2.</span><span class="pts">/ 10</span>
     How many liters of N<sub>2</sub> at STP are produced from 65.0 g of NaN<sub>3</sub>?
     <div class="eq-line">2 NaN<sub>3</sub> → 2 Na + 3 N<sub>2</sub></div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">3.</span><span class="pts">/ 10</span>
-    If 16.2 g Mg reacts with 12.0 g H<sub>2</sub>O: (a) which is limiting? (b) how many grams of H<sub>2</sub> form? (c) how many grams of the excess reagent remain?
-    <div class="eq-line">Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+    How many grams of Al<sub>2</sub>O<sub>3</sub> form from 3.01 × 10<sup>23</sup> atoms of Al with excess O<sub>2</sub>?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">4.</span><span class="pts">/ 10</span>
-    How many grams of CO<sub>2</sub> are produced when 106 g of C<sub>3</sub>H<sub>8</sub> reacts with 528 g of O<sub>2</sub>? Identify the limiting reagent.
-    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span> &nbsp; g CO<sub>2</sub>:<span class="answer-blank"></span></div>
+    How many grams of O<sub>2</sub> are produced when 12.25 g of KClO<sub>3</sub> decomposes completely?
+    <div class="eq-line">2 KClO<sub>3</sub> → 2 KCl + 3 O<sub>2</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">5.</span><span class="pts">/ 10</span>
-    When 6.30 g of Al reacts with excess O<sub>2</sub>, 11.10 g of Al<sub>2</sub>O<sub>3</sub> is formed. Calculate theoretical yield and percent yield.
-    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Theoretical:<span class="answer-blank"></span> &nbsp; % yield:<span class="answer-blank"></span></div>
+    16.2 g Mg + 12.0 g H<sub>2</sub>O: (a) Limiting? (b) g H<sub>2</sub> formed? (c) g excess remaining?
+    <div class="eq-line">Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">6.</span><span class="pts">/ 10</span>
+    106 g C<sub>3</sub>H<sub>8</sub> + 528 g O<sub>2</sub> burned: identify limiting reagent and find g CO<sub>2</sub>.
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Limiting:<span class="answer-blank short"></span> g CO<sub>2</sub>:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">7.</span><span class="pts">/ 10</span>
+    9.0 g H<sub>2</sub> + 50.0 g O<sub>2</sub>: (a) Limiting? (b) g excess remaining?
+    <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">8.</span><span class="pts">/ 10</span>
+    11.50 g Cu + excess AgNO<sub>3</sub> → 36.5 g Ag collected. Find theoretical and % yield.
+    <div class="eq-line">Cu + 2 AgNO<sub>3</sub> → Cu(NO<sub>3</sub>)<sub>2</sub> + 2 Ag</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">9.</span><span class="pts">/ 10</span>
+    5.0 g Fe + 5.0 g S → 8.50 g Fe<sub>2</sub>S<sub>3</sub> collected. (a) Limiting? (b) Theo yield? (c) % yield?
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">10.</span><span class="pts">/ 10</span>
+    Give two reasons why percent yield in a real lab is usually less than 100%.
+    <div class="work-space h-sm"></div>
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · QUIZ C</span>
-    <span>PAGE 07 / 14</span>
+    <span>PAGE 07 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     QUIZ D — FULL CHAPTER
+     QUIZ D
      ========================================================= -->
 <section class="page" id="quizD">
   <div class="quiz-header">
     <div>
-      <div class="id">QUIZ D · FULL CHAPTER · ALL TOPICS</div>
+      <div class="id">QUIZ D · FULL CHAPTER · 10 PROBLEMS</div>
       <div class="title-text">Practice Quiz D</div>
-      <div class="focus">Mole ratios · mass · LR · excess · combined % yield</div>
+      <div class="focus">All topics · mixed difficulty · NaN₃ airbag problem</div>
     </div>
-    <div class="id" style="text-align:right;">/ 50 PTS</div>
-  </div>
-
-  <div class="name-line">
-    <span class="lbl">NAME:</span><span></span>
-    <span class="lbl">DATE:</span><span></span>
-    <span class="lbl">PERIOD:</span><span></span>
+    <div class="id" style="text-align:right;">/ 100</div>
   </div>
 
   <div class="instructions">
-    <strong>Directions:</strong> Mole Roadmap Method on every problem. Q5 is the most quiz-like — combines limiting reagent with percent yield. Right answer with no work = 1/10.
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. Q9 is the most quiz-like. Right answer with no work = 1/10.
   </div>
 
   <div class="quiz-q">
     <span class="qnum">1.</span><span class="pts">/ 10</span>
-    How many moles of Fe<sub>2</sub>S<sub>3</sub> are produced from 2.5 mol of Fe with excess S?
+    How many moles of Fe<sub>2</sub>S<sub>3</sub> form from 2.5 mol Fe with excess S?
     <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
-    <div class="work-space h-sm"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-xs"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">2.</span><span class="pts">/ 10</span>
-    How many grams of O<sub>2</sub> are produced when 36.0 g of H<sub>2</sub>O is decomposed?
+    How many grams of O<sub>2</sub> are produced when 36.0 g of H<sub>2</sub>O decomposes?
     <div class="eq-line">2 H<sub>2</sub>O → 2 H<sub>2</sub> + O<sub>2</sub></div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">3.</span><span class="pts">/ 10</span>
-    If 156 g of O<sub>2</sub> reacts with 29 g of C<sub>3</sub>H<sub>8</sub>, what is the limiting reagent?
+    How many molecules of H<sub>2</sub>O form from the combustion of 22.0 g of C<sub>3</sub>H<sub>8</sub>?
     <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">Limiting:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">4.</span><span class="pts">/ 10</span>
-    If 3.50 g Al reacts with 4.0 g O<sub>2</sub>: (a) which is limiting? (b) how many grams of the excess remain?
-    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+    How many liters of N<sub>2</sub> at STP form from 130. g of NaN<sub>3</sub>? (Airbag reaction)
+    <div class="eq-line">2 NaN<sub>3</sub> → 2 Na + 3 N<sub>2</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">5.</span><span class="pts">/ 10</span>
-    A student reacts 8.00 g of H<sub>2</sub> with 32.00 g of O<sub>2</sub> and collects 30.5 g of H<sub>2</sub>O. (a) Identify the limiting reagent. (b) Calculate the theoretical yield. (c) Calculate the percent yield.
+    156 g O<sub>2</sub> + 29 g C<sub>3</sub>H<sub>8</sub>: what is the limiting reagent?
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Limiting:<span class="answer-blank"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">6.</span><span class="pts">/ 10</span>
+    3.50 g Al + 4.0 g O<sub>2</sub>: (a) Limiting? (b) g excess remaining?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">7.</span><span class="pts">/ 10</span>
+    94.3 g C<sub>3</sub>H<sub>8</sub> + 185 g O<sub>2</sub>: how many grams of the excess reagent remain?
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Excess:<span class="answer-blank short"></span> g remaining:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">8.</span><span class="pts">/ 10</span>
+    50.0 g CaCO<sub>3</sub> decomposes; 26.0 g CaO is collected. Find theoretical and % yield.
+    <div class="eq-line">CaCO<sub>3</sub> → CaO + CO<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">9.</span><span class="pts">/ 10</span>
+    8.00 g H<sub>2</sub> + 32.00 g O<sub>2</sub> → 30.5 g H<sub>2</sub>O collected. (a) Limiting? (b) Theo? (c) % yield?
     <div class="eq-line">2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O</div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">10.</span><span class="pts">/ 10</span>
+    Define <strong>theoretical yield</strong> and explain how it differs from experimental yield.
+    <div class="work-space h-sm"></div>
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · QUIZ D</span>
-    <span>PAGE 08 / 14</span>
+    <span>PAGE 08 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     QUIZ E — FULL CHAPTER · MASTERY
+     QUIZ E — MASTERY
      ========================================================= -->
 <section class="page" id="quizE">
   <div class="quiz-header">
     <div>
-      <div class="id">QUIZ E · FULL CHAPTER · MASTERY</div>
+      <div class="id">QUIZ E · FULL CHAPTER · MASTERY · 10 PROBLEMS</div>
       <div class="title-text">Practice Quiz E</div>
       <div class="focus">Hardest set · closest in style to the real MQ8C</div>
     </div>
-    <div class="id" style="text-align:right;">/ 50 PTS</div>
-  </div>
-
-  <div class="name-line">
-    <span class="lbl">NAME:</span><span></span>
-    <span class="lbl">DATE:</span><span></span>
-    <span class="lbl">PERIOD:</span><span></span>
+    <div class="id" style="text-align:right;">/ 100</div>
   </div>
 
   <div class="instructions">
-    <strong>Directions:</strong> Mole Roadmap Method on every problem. This is the most quiz-realistic set. Right answer with no work = 1/10. Take this last — after you've worked through Quizzes A–D.
+    <strong>Directions:</strong> Mole Roadmap Method on every problem. This is the most quiz-realistic set — take it after Quizzes A–D. Right answer with no work = 1/10.
   </div>
 
   <div class="quiz-q">
     <span class="qnum">1.</span><span class="pts">/ 10</span>
-    For the reaction below, write <em>all four</em> possible mole ratios involving CS<sub>2</sub>.
+    Write <em>all four</em> possible mole ratios involving CS<sub>2</sub> from this equation.
     <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
     <div class="work-space h-sm"></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">2.</span><span class="pts">/ 10</span>
-    How many atoms of carbon are produced from 2.20 g of CO<sub>2</sub> in the combustion below?
+    How many atoms of carbon are produced when 2.20 g of CO<sub>2</sub> forms in this combustion?
     <div class="eq-line">CH<sub>4</sub> + 2 O<sub>2</sub> → CO<sub>2</sub> + 2 H<sub>2</sub>O</div>
-    <div class="work-space h-md"></div>
-    <div style="margin-left:20px;">(Hint: 1 C atom per CO<sub>2</sub>)&nbsp;&nbsp; Answer:<span class="answer-blank"></span></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">3.</span><span class="pts">/ 10</span>
-    Determine how many grams of the excess reagent remain after 94.3 g of C<sub>3</sub>H<sub>8</sub> reacts with 185 g of O<sub>2</sub>.
-    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">Excess reagent:<span class="answer-blank"></span> &nbsp; g remaining:<span class="answer-blank"></span></div>
+    How many grams of Al<sub>2</sub>O<sub>3</sub> are produced from 8.10 g Al with excess O<sub>2</sub>?
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">4.</span><span class="pts">/ 10</span>
-    If 5.0 g Fe reacts with 5.0 g S: (a) which is the limiting reagent? (b) how many grams of Fe<sub>2</sub>S<sub>3</sub> are formed?
-    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank"></span> &nbsp; (b):<span class="answer-blank"></span></div>
+    How many liters of H<sub>2</sub> at STP are produced from 5.00 g Mg with excess HCl?
+    <div class="eq-line">Mg + 2 HCl → MgCl<sub>2</sub> + H<sub>2</sub></div>
+    <div class="work-space h-sm"></div>
+    <div style="margin-left:18px;">Answer:<span class="answer-blank"></span></div>
   </div>
 
   <div class="quiz-q">
     <span class="qnum">5.</span><span class="pts">/ 10</span>
-    15.0 g Mg reacts with 20.0 g H<sub>2</sub>O. A student collects 1.00 g of H<sub>2</sub>. (a) Identify the limiting reagent. (b) Calculate the theoretical yield of H<sub>2</sub>. (c) Calculate the percent yield.
+    5.0 g Fe + 5.0 g S: (a) Limiting? (b) g Fe<sub>2</sub>S<sub>3</sub> formed?
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">6.</span><span class="pts">/ 10</span>
+    1.0 mol CS<sub>2</sub> + 1.0 mol O<sub>2</sub>: (a) Limiting? (b) g CO<sub>2</sub> formed? (c) mol excess remaining?
+    <div class="eq-line">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">7.</span><span class="pts">/ 10</span>
+    94.3 g C<sub>3</sub>H<sub>8</sub> + 185 g O<sub>2</sub>: how many grams of the excess reagent remain?
+    <div class="eq-line">C<sub>3</sub>H<sub>8</sub> + 5 O<sub>2</sub> → 3 CO<sub>2</sub> + 4 H<sub>2</sub>O</div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Excess:<span class="answer-blank short"></span> g remaining:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">8.</span><span class="pts">/ 10</span>
+    6.30 g Al + excess O<sub>2</sub> → 11.10 g Al<sub>2</sub>O<sub>3</sub>. Find theoretical and % yield.
+    <div class="eq-line">4 Al + 3 O<sub>2</sub> → 2 Al<sub>2</sub>O<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">Theo:<span class="answer-blank short"></span> %:<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">9.</span><span class="pts">/ 10</span>
+    15.0 g Mg + 20.0 g H<sub>2</sub>O → 1.00 g H<sub>2</sub> collected. (a) Limiting? (b) Theo yield? (c) % yield?
     <div class="eq-line">Mg + 2 H<sub>2</sub>O → Mg(OH)<sub>2</sub> + H<sub>2</sub></div>
-    <div class="work-space h-lg"></div>
-    <div style="margin-left:20px;">(a):<span class="answer-blank" style="min-width:0.9in;"></span> (b):<span class="answer-blank" style="min-width:0.9in;"></span> (c):<span class="answer-blank" style="min-width:0.9in;"></span></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span></div>
+  </div>
+
+  <div class="quiz-q">
+    <span class="qnum">10.</span><span class="pts">/ 10</span>
+    10.00 g Fe + 10.00 g S → 16.50 g Fe<sub>2</sub>S<sub>3</sub> collected. (a) Limiting? (b) Theo yield? (c) % yield? (d) g excess remaining?
+    <div class="eq-line">2 Fe + 3 S → Fe<sub>2</sub>S<sub>3</sub></div>
+    <div class="work-space h-md"></div>
+    <div style="margin-left:18px;">(a):<span class="answer-blank short"></span> (b):<span class="answer-blank short"></span> (c):<span class="answer-blank short"></span> (d):<span class="answer-blank short"></span></div>
   </div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · QUIZ E</span>
-    <span>PAGE 09 / 14</span>
+    <span>PAGE 09 / 16</span>
   </div>
 </section>
 
@@ -1204,166 +1344,183 @@ table.molar tr:nth-child(even) td { background: var(--paper-2); }
 
     <div class="key-q"><span class="qn">1.</span> 0.50 mol N<sub>2</sub> × (2 mol NH<sub>3</sub> / 1 mol N<sub>2</sub>) = <span class="ans">1.0 mol NH<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">2.</span> 25.0 g CaCO<sub>3</sub> × (1 mol / 100.09 g) × (1 mol CaO / 1 mol CaCO<sub>3</sub>) × (56.08 g / 1 mol) = <span class="ans">14.0 g CaO</span></div>
+    <div class="key-q"><span class="qn">2.</span> 25.0 g CaCO<sub>3</sub> × (1/100.09) × (1/1) × 56.08 = <span class="ans">14.0 g CaO</span></div>
 
-    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
-    <div class="key-work">From Zn: 5.0 × (1/65.38) × (1 mol H<sub>2</sub> / 1 mol Zn) × 2.02 = 0.154 g H<sub>2</sub><br>
-    From HCl: 5.0 × (1/36.46) × (1 mol H<sub>2</sub> / 2 mol HCl) × 2.02 = 0.138 g H<sub>2</sub><br>
-    <strong>Step 2:</strong> 0.138 &lt; 0.154 → <span class="ans">HCl is limiting</span> &nbsp; <strong>Step 3:</strong> g H<sub>2</sub> = <span class="ans">0.138 g H<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">3.</span> 4.10 g Al × (1/26.98) × (3 mol H<sub>2</sub> / 2 mol Al) × 22.4 = <span class="ans">5.10 L H<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to mol Al<sub>2</sub>O<sub>3</sub>:</strong></div>
-    <div class="key-work">From Al: 4.0 × (2 mol Al<sub>2</sub>O<sub>3</sub> / 4 mol Al) = 2.00 mol Al<sub>2</sub>O<sub>3</sub><br>
-    From O<sub>2</sub>: 4.0 × (2/3) = 2.67 mol Al<sub>2</sub>O<sub>3</sub><br>
-    <strong>Step 2:</strong> 2.00 &lt; 2.67 → <span class="ans">(a) Al is limiting</span><br>
-    <strong>Step 3:</strong> O<sub>2</sub> used = 4.0 mol Al × (3 mol O<sub>2</sub> / 4 mol Al) = 3.0 mol. Leftover = 4.0 − 3.0 = <span class="ans">(b) 1.0 mol O<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">4.</span> 11.0 g CO<sub>2</sub> × (1/44.01) × (6.02×10<sup>23</sup>) = <span class="ans">1.50 × 10<sup>23</sup> molecules</span></div>
 
-    <div class="key-q"><span class="qn">5.</span> Theoretical: 5.0 g H<sub>2</sub> × (1/2.02) × (2 mol NH<sub>3</sub> / 3 mol H<sub>2</sub>) × 17.04 = <span class="ans">28.2 g NH<sub>3</sub></span></div>
-    <div class="key-work">% yield = (20.0 / 28.2) × 100 = <span class="ans">71.0 %</span></div>
+    <div class="key-q"><span class="qn">5.</span> Step 1: From Zn = 5.0/65.38 × 2.02 = 0.154 g H<sub>2</sub>. From HCl = 5.0/36.46 × (1/2) × 2.02 = 0.138 g H<sub>2</sub>. Step 2: 0.138 &lt; 0.154 → <span class="ans">HCl limiting; 0.138 g H<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">6.</span> Step 1: Al → 4.0 × (2/4) = 2.00 mol Al<sub>2</sub>O<sub>3</sub>. O<sub>2</sub> → 4.0 × (2/3) = 2.67 mol Al<sub>2</sub>O<sub>3</sub>. <span class="ans">(a) Al limiting</span> &nbsp; (b) O<sub>2</sub> used = 4.0 × (3/4) = 3.0 mol; leftover = <span class="ans">1.0 mol O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">7.</span> Step 1: Al → 3.50/26.98 × (2/4) × 101.96 = 6.61 g Al<sub>2</sub>O<sub>3</sub>. O<sub>2</sub> → 4.0/32.00 × (2/3) × 101.96 = 8.50 g Al<sub>2</sub>O<sub>3</sub>. <span class="ans">(a) Al limiting</span> &nbsp; (b) O<sub>2</sub> used = 3.50/26.98 × (3/4) × 32.00 = 3.11 g; leftover = <span class="ans">0.89 g O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">8.</span> Theo: 5.0/2.02 × (2/3) × 17.04 = <span class="ans">28.2 g NH<sub>3</sub></span>. % yield = (20.0/28.2)×100 = <span class="ans">71.0 %</span></div>
+
+    <div class="key-q"><span class="qn">9.</span> Step 1: H<sub>2</sub> → 8.00/2.02 × (2/2) × 18.02 = 71.4 g H<sub>2</sub>O. O<sub>2</sub> → 32.00/32.00 × (2/1) × 18.02 = 36.0 g H<sub>2</sub>O. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) <span class="ans">36.0 g H<sub>2</sub>O</span> &nbsp; (c) (30.5/36.0)×100 = <span class="ans">84.7 %</span></div>
+
+    <div class="key-q"><span class="qn">10.</span> The <strong>limiting reagent</strong> is the reactant used up first in a reaction; it determines how much product can be made. We use it (not the excess) because once it runs out, the reaction stops — no more product can form even if excess reactant remains.</div>
   </div>
 
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · KEY A</span>
+    <span>PAGE 10 / 16</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     ANSWER KEYS — QUIZ B
+     ========================================================= -->
+<section class="page">
   <div class="key-card">
     <h3>Quiz B — Full Chapter</h3>
 
     <div class="key-q"><span class="qn">1.</span> 3.0 mol O<sub>2</sub> × (2 mol H<sub>2</sub>O / 1 mol O<sub>2</sub>) = <span class="ans">6.0 mol H<sub>2</sub>O</span></div>
 
-    <div class="key-q"><span class="qn">2.</span> 50.0 g Al × (1/26.98) × (2 mol Al<sub>2</sub>O<sub>3</sub> / 4 mol Al) × (6.02×10<sup>23</sup> / 1 mol) = <span class="ans">5.58 × 10<sup>23</sup> molecules Al<sub>2</sub>O<sub>3</sub></span></div>
+    <div class="key-q"><span class="qn">2.</span> 28.0 g N<sub>2</sub> × (1 mol / 28.02 g) = <span class="ans">1.00 mol N<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to mol CO<sub>2</sub>:</strong></div>
-    <div class="key-work">From CS<sub>2</sub>: 1.0 × (1/1) = 1.0 mol CO<sub>2</sub>. From O<sub>2</sub>: 1.0 × (1/3) = 0.33 mol CO<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 0.33 &lt; 1.0 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
-    (b) CS<sub>2</sub> used = 1.0 mol O<sub>2</sub> × (1/3) = 0.33 mol CS<sub>2</sub>. Leftover = <span class="ans">0.67 mol CS<sub>2</sub></span><br>
-    (c) g CO<sub>2</sub> = 1.0 mol O<sub>2</sub> × (1/3) × 44.01 = <span class="ans">14.7 g CO<sub>2</sub> (≈ 15 g)</span></div>
+    <div class="key-q"><span class="qn">3.</span> 50.0 g Al × (1/26.98) × (2/4) × (6.02×10<sup>23</sup>) = <span class="ans">5.58 × 10<sup>23</sup> molecules Al<sub>2</sub>O<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to mol H<sub>2</sub>O:</strong></div>
-    <div class="key-work">From H<sub>2</sub>: 5.0/2.02 × (2/2) = 2.48 mol H<sub>2</sub>O. From O<sub>2</sub>: 8.0/32.00 × (2/1) = 0.50 mol H<sub>2</sub>O.<br>
-    <strong>Step 2:</strong> 0.50 &lt; 2.48 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
-    (b) H<sub>2</sub> used: 8.0/32.00 × (2/1) × 2.02 = 1.01 g H<sub>2</sub>. Leftover = 5.0 − 1.01 = <span class="ans">4.0 g H<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">4.</span> 0.75 mol C<sub>3</sub>H<sub>8</sub> × (5 mol O<sub>2</sub> / 1 mol C<sub>3</sub>H<sub>8</sub>) × 32.00 = <span class="ans">120 g O<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">5.</span> Theoretical: 10.00 g Fe × (1/55.85) × (1 mol Fe<sub>2</sub>S<sub>3</sub> / 2 mol Fe) × 207.91 = <span class="ans">18.61 g Fe<sub>2</sub>S<sub>3</sub></span></div>
-    <div class="key-work">% yield = (16.50 / 18.61) × 100 = <span class="ans">88.7 %</span></div>
+    <div class="key-q"><span class="qn">5.</span> Step 1: CS<sub>2</sub> → 1.0 × (1/1) = 1.0 mol CO<sub>2</sub>. O<sub>2</sub> → 1.0 × (1/3) = 0.33 mol CO<sub>2</sub>. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) CS<sub>2</sub> used = 1.0 × (1/3) = 0.33 mol; leftover = <span class="ans">0.67 mol CS<sub>2</sub></span> &nbsp; (c) 1.0 × (1/3) × 44.01 = <span class="ans">14.7 g CO<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">6.</span> Step 1: H<sub>2</sub> → 5.0/2.02 × (2/2) × 18.02 = 44.7 g H<sub>2</sub>O. O<sub>2</sub> → 8.0/32.00 × (2/1) × 18.02 = 9.0 g H<sub>2</sub>O. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) H<sub>2</sub> used = 8.0/32.00 × (2/1) × 2.02 = 1.01 g; leftover = <span class="ans">4.0 g H<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">7.</span> Step 1 (mol MgO): Mg → 6.0/24.31 × (2/2) = 0.247 mol. O<sub>2</sub> → 10.0/32.00 × (2/1) = 0.625 mol. Mg gives less → <strong>Mg limiting, O<sub>2</sub> excess</strong>. O<sub>2</sub> used = 6.0/24.31 × (1/2) × 32.00 = 3.95 g. Leftover = 10.0 − 3.95 = <span class="ans">6.05 g O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">8.</span> Theo: 10.00/55.85 × (1/2) × 207.91 = <span class="ans">18.61 g Fe<sub>2</sub>S<sub>3</sub></span>. % = (16.50/18.61)×100 = <span class="ans">88.7 %</span></div>
+
+    <div class="key-q"><span class="qn">9.</span> Theo: 6.30/26.98 × (2/4) × 101.96 = <span class="ans">11.90 g Al<sub>2</sub>O<sub>3</sub></span>. % = (11.10/11.90)×100 = <span class="ans">93.3 %</span></div>
+
+    <div class="key-q"><span class="qn">10.</span> Acceptable answers (any two): <span class="ans">1 mol N<sub>2</sub> / 3 mol H<sub>2</sub></span> · <span class="ans">3 mol H<sub>2</sub> / 1 mol N<sub>2</sub></span> · <span class="ans">1 mol N<sub>2</sub> / 2 mol NH<sub>3</sub></span> · <span class="ans">2 mol NH<sub>3</sub> / 1 mol N<sub>2</sub></span> · <span class="ans">3 mol H<sub>2</sub> / 2 mol NH<sub>3</sub></span> · <span class="ans">2 mol NH<sub>3</sub> / 3 mol H<sub>2</sub></span></div>
   </div>
 
   <div class="page-footer">
-    <span>CLAIRE · MQ8C · KEYS A & B</span>
-    <span>PAGE 10 / 14</span>
+    <span>CLAIRE · MQ8C · KEY B</span>
+    <span>PAGE 11 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     ANSWER KEYS — QUIZ C & D
+     ANSWER KEYS — QUIZ C
      ========================================================= -->
 <section class="page">
   <div class="key-card">
     <h3>Quiz C — Full Chapter</h3>
 
-    <div class="key-q"><span class="qn">1.</span> 4.0 mol H<sub>2</sub> × (2 mol NH<sub>3</sub> / 3 mol H<sub>2</sub>) × (17.04 g / 1 mol) = <span class="ans">45.4 g NH<sub>3</sub></span></div>
+    <div class="key-q"><span class="qn">1.</span> 4.0 mol H<sub>2</sub> × (2/3) × 17.04 = <span class="ans">45.4 g NH<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">2.</span> 65.0 g NaN<sub>3</sub> × (1/65.02) × (3 mol N<sub>2</sub> / 2 mol NaN<sub>3</sub>) × (22.4 L / 1 mol) = <span class="ans">33.6 L N<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">2.</span> 65.0 g NaN<sub>3</sub> × (1/65.02) × (3/2) × 22.4 = <span class="ans">33.6 L N<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
-    <div class="key-work">From Mg: 16.2 × (1/24.31) × (1/1) × 2.02 = 1.34 g H<sub>2</sub>.<br>
-    From H<sub>2</sub>O: 12.0 × (1/18.02) × (1/2) × 2.02 = 0.671 g H<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 0.671 &lt; 1.34 → <span class="ans">(a) H<sub>2</sub>O is limiting</span><br>
-    (b) g H<sub>2</sub> = <span class="ans">0.671 g H<sub>2</sub></span><br>
-    (c) Mg used: 12.0 × (1/18.02) × (1/2) × 24.31 = 8.1 g Mg. Leftover = 16.2 − 8.1 = <span class="ans">8.1 g Mg</span></div>
+    <div class="key-q"><span class="qn">3.</span> 3.01×10<sup>23</sup> atoms Al × (1 mol / 6.02×10<sup>23</sup>) × (2/4) × 101.96 = <span class="ans">12.7 g Al<sub>2</sub>O<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
-    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 106/44.11 × 3 × 44.01 = 317 g CO<sub>2</sub>.<br>
-    From O<sub>2</sub>: 528/32.00 × (3/5) × 44.01 = 436 g CO<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 317 &lt; 436 → <span class="ans">C<sub>3</sub>H<sub>8</sub> is limiting; 317 g CO<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">4.</span> 12.25 g KClO<sub>3</sub> × (1/122.55) × (3/2) × 32.00 = <span class="ans">4.80 g O<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">5.</span> Theoretical: 6.30 g Al × (1/26.98) × (2/4) × 101.96 = <span class="ans">11.90 g Al<sub>2</sub>O<sub>3</sub></span></div>
-    <div class="key-work">% yield = (11.10 / 11.90) × 100 = <span class="ans">93.3 %</span></div>
+    <div class="key-q"><span class="qn">5.</span> Step 1: Mg → 16.2/24.31 × (1/1) × 2.02 = 1.34 g H<sub>2</sub>. H<sub>2</sub>O → 12.0/18.02 × (1/2) × 2.02 = 0.671 g H<sub>2</sub>. <span class="ans">(a) H<sub>2</sub>O limiting</span> &nbsp; (b) <span class="ans">0.671 g H<sub>2</sub></span> &nbsp; (c) Mg used = 12.0/18.02 × (1/2) × 24.31 = 8.10 g; leftover = <span class="ans">8.10 g Mg</span></div>
+
+    <div class="key-q"><span class="qn">6.</span> Step 1: C<sub>3</sub>H<sub>8</sub> → 106/44.11 × 3 × 44.01 = 317 g CO<sub>2</sub>. O<sub>2</sub> → 528/32.00 × (3/5) × 44.01 = 436 g CO<sub>2</sub>. <span class="ans">C<sub>3</sub>H<sub>8</sub> limiting; 317 g CO<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">7.</span> Step 1: H<sub>2</sub> → 9.0/2.02 × (2/2) × 18.02 = 80.3 g H<sub>2</sub>O. O<sub>2</sub> → 50.0/32.00 × (2/1) × 18.02 = 56.3 g H<sub>2</sub>O. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) H<sub>2</sub> used = 50.0/32.00 × (2/1) × 2.02 = 6.31 g; leftover = <span class="ans">2.69 g H<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">8.</span> Theo: 11.50/63.55 × (2/1) × 107.87 = <span class="ans">39.0 g Ag</span>. % = (36.5/39.0)×100 = <span class="ans">93.5 %</span></div>
+
+    <div class="key-q"><span class="qn">9.</span> Step 1: Fe → 5.0/55.85 × (1/2) × 207.91 = 9.31 g. S → 5.0/32.07 × (1/3) × 207.91 = 10.81 g. <span class="ans">(a) Fe limiting</span> &nbsp; (b) <span class="ans">9.31 g Fe<sub>2</sub>S<sub>3</sub></span> &nbsp; (c) (8.50/9.31)×100 = <span class="ans">91.3 %</span></div>
+
+    <div class="key-q"><span class="qn">10.</span> Any two: reactants not 100% pure · product lost during transfer between containers · high temperature causes some product to vaporize · side reactions consume reactant · reaction doesn't go to completion · incomplete drying of product.</div>
   </div>
 
+  <div class="page-footer">
+    <span>CLAIRE · MQ8C · KEY C</span>
+    <span>PAGE 12 / 16</span>
+  </div>
+</section>
+
+<!-- =========================================================
+     ANSWER KEYS — QUIZ D
+     ========================================================= -->
+<section class="page">
   <div class="key-card">
     <h3>Quiz D — Full Chapter</h3>
 
     <div class="key-q"><span class="qn">1.</span> 2.5 mol Fe × (1 mol Fe<sub>2</sub>S<sub>3</sub> / 2 mol Fe) = <span class="ans">1.25 mol Fe<sub>2</sub>S<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">2.</span> 36.0 g H<sub>2</sub>O × (1/18.02) × (1 mol O<sub>2</sub> / 2 mol H<sub>2</sub>O) × 32.00 = <span class="ans">32.0 g O<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">2.</span> 36.0 g H<sub>2</sub>O × (1/18.02) × (1/2) × 32.00 = <span class="ans">32.0 g O<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
-    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 29/44.11 × 3 × 44.01 = 86.8 g CO<sub>2</sub>.<br>
-    From O<sub>2</sub>: 156/32.00 × (3/5) × 44.01 = 129 g CO<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 86.8 &lt; 129 → <span class="ans">C<sub>3</sub>H<sub>8</sub> is limiting</span></div>
+    <div class="key-q"><span class="qn">3.</span> 22.0 g C<sub>3</sub>H<sub>8</sub> × (1/44.11) × (4/1) × (6.02×10<sup>23</sup>) = <span class="ans">1.20 × 10<sup>24</sup> molecules H<sub>2</sub>O</span></div>
 
-    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g Al<sub>2</sub>O<sub>3</sub>:</strong></div>
-    <div class="key-work">From Al: 3.50/26.98 × (2/4) × 101.96 = 6.61 g Al<sub>2</sub>O<sub>3</sub>.<br>
-    From O<sub>2</sub>: 4.0/32.00 × (2/3) × 101.96 = 8.50 g Al<sub>2</sub>O<sub>3</sub>.<br>
-    <strong>Step 2:</strong> 6.61 &lt; 8.50 → <span class="ans">(a) Al is limiting</span><br>
-    (b) O<sub>2</sub> used: 3.50/26.98 × (3/4) × 32.00 = 3.11 g O<sub>2</sub>. Leftover = 4.0 − 3.11 = <span class="ans">0.89 g O<sub>2</sub></span></div>
+    <div class="key-q"><span class="qn">4.</span> 130. g NaN<sub>3</sub> × (1/65.02) × (3/2) × 22.4 = <span class="ans">67.2 L N<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">5.</span> <strong>Step 1 — convert each to g H<sub>2</sub>O:</strong></div>
-    <div class="key-work">From H<sub>2</sub>: 8.00/2.02 × (2/2) × 18.02 = 71.4 g H<sub>2</sub>O.<br>
-    From O<sub>2</sub>: 32.00/32.00 × (2/1) × 18.02 = 36.0 g H<sub>2</sub>O.<br>
-    <strong>Step 2:</strong> 36.0 &lt; 71.4 → <span class="ans">(a) O<sub>2</sub> is limiting</span><br>
-    (b) Theoretical = <span class="ans">36.0 g H<sub>2</sub>O</span><br>
-    (c) % yield = (30.5 / 36.0) × 100 = <span class="ans">84.7 %</span></div>
+    <div class="key-q"><span class="qn">5.</span> Step 1: C<sub>3</sub>H<sub>8</sub> → 29/44.11 × 3 × 44.01 = 86.8 g CO<sub>2</sub>. O<sub>2</sub> → 156/32.00 × (3/5) × 44.01 = 129 g CO<sub>2</sub>. <span class="ans">C<sub>3</sub>H<sub>8</sub> limiting</span></div>
+
+    <div class="key-q"><span class="qn">6.</span> Step 1: Al → 3.50/26.98 × (2/4) × 101.96 = 6.61 g. O<sub>2</sub> → 4.0/32.00 × (2/3) × 101.96 = 8.50 g. <span class="ans">(a) Al limiting</span> &nbsp; (b) O<sub>2</sub> used = 3.50/26.98 × (3/4) × 32.00 = 3.11 g; leftover = <span class="ans">0.89 g O<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">7.</span> Step 1: C<sub>3</sub>H<sub>8</sub> → 94.3/44.11 × 3 × 44.01 = 282 g CO<sub>2</sub>. O<sub>2</sub> → 185/32.00 × (3/5) × 44.01 = 153 g CO<sub>2</sub>. O<sub>2</sub> limiting → <strong>C<sub>3</sub>H<sub>8</sub> in excess</strong>. C<sub>3</sub>H<sub>8</sub> used = 185/32.00 × (1/5) × 44.11 = 51.0 g; leftover = <span class="ans">43.3 g C<sub>3</sub>H<sub>8</sub></span></div>
+
+    <div class="key-q"><span class="qn">8.</span> Theo: 50.0/100.09 × (1/1) × 56.08 = <span class="ans">28.0 g CaO</span>. % = (26.0/28.0)×100 = <span class="ans">92.8 %</span></div>
+
+    <div class="key-q"><span class="qn">9.</span> Step 1: H<sub>2</sub> → 8.00/2.02 × (2/2) × 18.02 = 71.4 g. O<sub>2</sub> → 32.00/32.00 × (2/1) × 18.02 = 36.0 g. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) <span class="ans">36.0 g H<sub>2</sub>O</span> &nbsp; (c) (30.5/36.0)×100 = <span class="ans">84.7 %</span></div>
+
+    <div class="key-q"><span class="qn">10.</span> <strong>Theoretical yield</strong> is the amount of product that <em>should</em> form based on stoichiometric calculations from the balanced equation. <strong>Experimental yield</strong> is what's actually collected in the lab. The experimental is usually less because of losses during transfer, impurities, side reactions, or incomplete reactions.</div>
   </div>
 
   <div class="page-footer">
-    <span>CLAIRE · MQ8C · KEYS C & D</span>
-    <span>PAGE 11 / 14</span>
+    <span>CLAIRE · MQ8C · KEY D</span>
+    <span>PAGE 13 / 16</span>
   </div>
 </section>
 
 <!-- =========================================================
-     ANSWER KEYS — QUIZ E + FINAL TIPS
+     ANSWER KEYS — QUIZ E
      ========================================================= -->
 <section class="page">
   <div class="key-card">
-    <h3>Quiz E — Full Chapter · Mastery</h3>
+    <h3>Quiz E — Mastery</h3>
 
-    <div class="key-q"><span class="qn">1.</span> Four mole ratios involving CS<sub>2</sub> in <span class="mono">CS<sub>2</sub> + 3 O<sub>2</sub> → CO<sub>2</sub> + 2 SO<sub>2</sub></span>:</div>
-    <div class="key-work">
-      <span class="ans">1 mol CS<sub>2</sub> / 3 mol O<sub>2</sub></span> &nbsp;and inverse&nbsp; <span class="ans">3 mol O<sub>2</sub> / 1 mol CS<sub>2</sub></span><br>
-      <span class="ans">1 mol CS<sub>2</sub> / 1 mol CO<sub>2</sub></span> &nbsp;and inverse&nbsp; <span class="ans">1 mol CO<sub>2</sub> / 1 mol CS<sub>2</sub></span><br>
-      (Also acceptable: 1 mol CS<sub>2</sub> / 2 mol SO<sub>2</sub> and its inverse.)
-    </div>
+    <div class="key-q"><span class="qn">1.</span> Four ratios with CS<sub>2</sub>: <span class="ans">1 mol CS<sub>2</sub> / 3 mol O<sub>2</sub></span> · <span class="ans">3 mol O<sub>2</sub> / 1 mol CS<sub>2</sub></span> · <span class="ans">1 mol CS<sub>2</sub> / 1 mol CO<sub>2</sub></span> · <span class="ans">1 mol CO<sub>2</sub> / 1 mol CS<sub>2</sub></span></div>
+    <div class="key-work">(Also acceptable: 1 mol CS<sub>2</sub> / 2 mol SO<sub>2</sub> and its inverse.)</div>
 
-    <div class="key-q"><span class="qn">2.</span> 2.20 g CO<sub>2</sub> × (1 mol / 44.01 g) × (1 mol C / 1 mol CO<sub>2</sub>) × (6.02×10<sup>23</sup> / 1 mol) = <span class="ans">3.01 × 10<sup>22</sup> atoms C</span></div>
+    <div class="key-q"><span class="qn">2.</span> 2.20 g CO<sub>2</sub> × (1/44.01) × (1 mol C / 1 mol CO<sub>2</sub>) × (6.02×10<sup>23</sup>) = <span class="ans">3.01 × 10<sup>22</sup> atoms C</span></div>
 
-    <div class="key-q"><span class="qn">3.</span> <strong>Step 1 — convert each to g CO<sub>2</sub>:</strong></div>
-    <div class="key-work">From C<sub>3</sub>H<sub>8</sub>: 94.3/44.11 × 3 × 44.01 = 282 g CO<sub>2</sub>.<br>
-    From O<sub>2</sub>: 185/32.00 × (3/5) × 44.01 = 153 g CO<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 153 &lt; 282 → O<sub>2</sub> is limiting, <span class="ans">C<sub>3</sub>H<sub>8</sub> is in excess</span><br>
-    <strong>Step 3:</strong> C<sub>3</sub>H<sub>8</sub> used = 185/32.00 × (1/5) × 44.11 = 51.0 g. Leftover = 94.3 − 51.0 = <span class="ans">43.3 g C<sub>3</sub>H<sub>8</sub></span></div>
+    <div class="key-q"><span class="qn">3.</span> 8.10 g Al × (1/26.98) × (2/4) × 101.96 = <span class="ans">15.3 g Al<sub>2</sub>O<sub>3</sub></span></div>
 
-    <div class="key-q"><span class="qn">4.</span> <strong>Step 1 — convert each to g Fe<sub>2</sub>S<sub>3</sub>:</strong></div>
-    <div class="key-work">From Fe: 5.0/55.85 × (1/2) × 207.91 = 9.31 g Fe<sub>2</sub>S<sub>3</sub>.<br>
-    From S: 5.0/32.07 × (1/3) × 207.91 = 10.81 g Fe<sub>2</sub>S<sub>3</sub>.<br>
-    <strong>Step 2:</strong> 9.31 &lt; 10.81 → <span class="ans">(a) Fe is limiting</span> &nbsp; (b) <span class="ans">9.31 g Fe<sub>2</sub>S<sub>3</sub></span></div>
+    <div class="key-q"><span class="qn">4.</span> 5.00 g Mg × (1/24.31) × (1 mol H<sub>2</sub> / 1 mol Mg) × 22.4 = <span class="ans">4.61 L H<sub>2</sub></span></div>
 
-    <div class="key-q"><span class="qn">5.</span> <strong>Step 1 — convert each to g H<sub>2</sub>:</strong></div>
-    <div class="key-work">From Mg: 15.0/24.31 × (1/1) × 2.02 = 1.24 g H<sub>2</sub>.<br>
-    From H<sub>2</sub>O: 20.0/18.02 × (1/2) × 2.02 = 1.12 g H<sub>2</sub>.<br>
-    <strong>Step 2:</strong> 1.12 &lt; 1.24 → <span class="ans">(a) H<sub>2</sub>O is limiting</span><br>
-    (b) Theoretical = <span class="ans">1.12 g H<sub>2</sub></span><br>
-    (c) % yield = (1.00 / 1.12) × 100 = <span class="ans">89.3 %</span></div>
+    <div class="key-q"><span class="qn">5.</span> Step 1: Fe → 5.0/55.85 × (1/2) × 207.91 = 9.31 g. S → 5.0/32.07 × (1/3) × 207.91 = 10.81 g. <span class="ans">(a) Fe limiting</span> &nbsp; (b) <span class="ans">9.31 g Fe<sub>2</sub>S<sub>3</sub></span></div>
+
+    <div class="key-q"><span class="qn">6.</span> Step 1: CS<sub>2</sub> → 1.0 × (1/1) = 1.0 mol CO<sub>2</sub>. O<sub>2</sub> → 1.0 × (1/3) = 0.33 mol CO<sub>2</sub>. <span class="ans">(a) O<sub>2</sub> limiting</span> &nbsp; (b) 1.0/3 × 44.01 = <span class="ans">14.7 g CO<sub>2</sub></span> &nbsp; (c) CS<sub>2</sub> used = 1.0 × (1/3) = 0.33 mol; leftover = <span class="ans">0.67 mol CS<sub>2</sub></span></div>
+
+    <div class="key-q"><span class="qn">7.</span> Step 1: C<sub>3</sub>H<sub>8</sub> → 94.3/44.11 × 3 × 44.01 = 282 g CO<sub>2</sub>. O<sub>2</sub> → 185/32.00 × (3/5) × 44.01 = 153 g CO<sub>2</sub>. O<sub>2</sub> limiting → <strong>C<sub>3</sub>H<sub>8</sub> in excess</strong>; leftover = 94.3 − 51.0 = <span class="ans">43.3 g C<sub>3</sub>H<sub>8</sub></span></div>
+
+    <div class="key-q"><span class="qn">8.</span> Theo: 6.30/26.98 × (2/4) × 101.96 = <span class="ans">11.90 g Al<sub>2</sub>O<sub>3</sub></span>. % = (11.10/11.90)×100 = <span class="ans">93.3 %</span></div>
+
+    <div class="key-q"><span class="qn">9.</span> Step 1: Mg → 15.0/24.31 × (1/1) × 2.02 = 1.24 g H<sub>2</sub>. H<sub>2</sub>O → 20.0/18.02 × (1/2) × 2.02 = 1.12 g H<sub>2</sub>. <span class="ans">(a) H<sub>2</sub>O limiting</span> &nbsp; (b) <span class="ans">1.12 g H<sub>2</sub></span> &nbsp; (c) (1.00/1.12)×100 = <span class="ans">89.3 %</span></div>
+
+    <div class="key-q"><span class="qn">10.</span> Step 1: Fe → 10.00/55.85 × (1/2) × 207.91 = 18.61 g. S → 10.00/32.07 × (1/3) × 207.91 = 21.61 g. <span class="ans">(a) Fe limiting</span> &nbsp; (b) <span class="ans">18.61 g Fe<sub>2</sub>S<sub>3</sub></span> &nbsp; (c) (16.50/18.61)×100 = <span class="ans">88.7 %</span> &nbsp; (d) S used = 10.00/55.85 × (3/2) × 32.07 = 8.61 g; leftover = <span class="ans">1.39 g S</span></div>
   </div>
 
-  <h2 style="margin-top:14px;">Final Pre-Quiz Checklist</h2>
+  <h2 style="margin-top:10px;">Final Pre-Quiz Checklist</h2>
   <ul style="font-size:10pt;">
-    <li>Can you balance any equation given to you? Practice by counting atoms on each side.</li>
-    <li>Can you compute a molar mass from the periodic table in under 30 seconds?</li>
-    <li>For every "both reactants given" problem, do you automatically run the 3-step limiting reagent check?</li>
-    <li>For every "<em>reacts with excess</em>" problem, do you go straight through without comparison?</li>
+    <li>Can you balance any equation given to you?</li>
+    <li>Can you compute a molar mass from the periodic table quickly?</li>
+    <li>For "both reactants given" problems, do you automatically run the 3-step LR check?</li>
+    <li>For "<em>reacts with excess</em>" problems, do you go straight through without comparison?</li>
     <li>Are your conversion factors arranged so units cancel diagonally?</li>
-    <li>Do you write every label (g Al, mol O<sub>2</sub>, L N<sub>2</sub>) in every box?</li>
-    <li>Does your final answer have the correct significant figures (match the data given)?</li>
+    <li>Do you write a unit label next to every number?</li>
+    <li>Does your final answer have the correct significant figures?</li>
   </ul>
 
   <div class="callout warn">
-    <span class="heading">Last reminder before walking into class</span>
-    <strong>Phones away the entire period.</strong> Even after you finish. Phone out = −1. <strong>Mole Roadmap on every problem</strong> — no exceptions. Right answer with no work scores 1/10. You have the whole period, so don't rush.
+    <span class="heading">Last reminder</span>
+    <strong>Phones away the entire period.</strong> Phone out = −1. <strong>Mole Roadmap on every problem.</strong> Right answer with no work = 1/10. You have the whole period — don't rush.
   </div>
 
-  <div class="flask-deco" style="margin-top:0.3in;">GOOD LUCK, CLAIRE</div>
+  <div class="flask-deco" style="margin-top:0.2in;">GOOD LUCK, CLAIRE</div>
 
   <div class="page-footer">
     <span>CLAIRE · MQ8C · KEY E + CHECKLIST</span>
-    <span>PAGE 12 / 14</span>
+    <span>PAGE 14 / 16</span>
   </div>
 </section>
 
