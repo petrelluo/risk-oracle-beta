@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphing Sine & Cosine — A Visual Guide (8.4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf7ee;
+    --ink:#1a1a1a;
+    --paper:#ffffff;
+    --accent:#c8442a;      /* rust */
+    --accent2:#1e6091;     /* deep teal-blue */
+    --accent3:#d4a017;     /* mustard */
+    --rule:#2a2a2a;
+    --soft:#e8dfc8;
+    --grid:#d9cfb6;
+    --good:#2f7d4f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    padding:20px 16px 80px;
+  }
+  .container{max-width:980px;margin:0 auto}
+  /* Title */
+  .hero{
+    border:2px solid var(--rule);
+    background:var(--paper);
+    padding:36px 30px 30px;
+    position:relative;
+    margin-bottom:36px;
+    box-shadow: 8px 8px 0 var(--rule);
+  }
+  .hero .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:800;
+    font-size:clamp(34px,5.5vw,56px);
+    line-height:1;
+    margin:0 0 12px;
+    letter-spacing:-0.02em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .hero .sub{
+    font-size:16px;
+    max-width:640px;
+    color:#444;
+  }
+  .hero::after{
+    content:"sin / cos";
+    position:absolute;
+    top:14px;
+    right:18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:#999;
+    letter-spacing:0.15em;
+  }
+
+  /* Sections */
+  section{margin-bottom:48px}
+  .section-label{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--bg);
+    padding:4px 10px;
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:34px;
+    line-height:1.1;
+    margin:0 0 16px;
+    letter-spacing:-0.01em;
+  }
+  h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:22px;
+    margin:24px 0 10px;
+  }
+  p{margin:0 0 14px;font-size:16px}
+  .lede{font-size:18px;color:#333;margin-bottom:20px}
+
+  /* Cards */
+  .card{
+    background:var(--paper);
+    border:1.5px solid var(--rule);
+    padding:24px;
+    margin-bottom:20px;
+    border-radius:2px;
+  }
+  .card.tinted{background:#fff8e8}
+  .card.blue{background:#eaf2f8}
+  .card.green{background:#e7f1ea}
+
+  /* The master formula */
+  .formula-block{
+    background:var(--ink);
+    color:var(--bg);
+    padding:30px 24px;
+    border-radius:2px;
+    text-align:center;
+    margin:18px 0;
+  }
+  .formula{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(20px,3.6vw,32px);
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .formula .a{color:#ffb38a}
+  .formula .b{color:#8fd1ff}
+  .formula .h{color:#ffd966}
+  .formula .k{color:#a6e3a1}
+  .formula-key{
+    display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:center;
+    margin-top:16px;font-size:13px;font-family:'JetBrains Mono',monospace;
+  }
+  .formula-key span{display:inline-flex;align-items:center;gap:6px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+
+  /* Interactive control panels */
+  .interactive{
+    background:var(--paper);
+    border:2px solid var(--rule);
+    padding:22px;
+    margin:22px 0;
+    box-shadow:5px 5px 0 var(--rule);
+  }
+  .controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px 18px;
+    margin-bottom:16px;
+  }
+  .ctrl{
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .ctrl label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#555;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .ctrl label .val{
+    color:var(--accent);
+    font-weight:600;
+  }
+  .ctrl input[type=range]{
+    width:100%;
+    accent-color:var(--accent);
+  }
+  .func-toggle{
+    display:flex;gap:10px;margin-bottom:12px;
+  }
+  .func-toggle button{
+    flex:1;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    padding:8px 0;
+    border:1.5px solid var(--rule);
+    background:var(--paper);
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .func-toggle button.active{
+    background:var(--ink);
+    color:var(--bg);
+  }
+  .live-eq{
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:18px;
+    background:var(--soft);
+    padding:10px;
+    margin:8px 0 16px;
+    border-radius:2px;
+  }
+  canvas{
+    width:100%;
+    height:auto;
+    display:block;
+    border:1px solid var(--grid);
+    background:var(--paper);
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    padding:6px 14px;
+    border:1.5px solid var(--rule);
+    background:var(--bg);
+    cursor:pointer;
+    margin-top:10px;
+  }
+  .reset-btn:hover{background:var(--ink);color:var(--bg)}
+
+  /* Step boxes */
+  .steps{counter-reset:step;margin:18px 0}
+  .step{
+    background:var(--paper);
+    border-left:4px solid var(--accent);
+    padding:16px 20px;
+    margin-bottom:14px;
+    position:relative;
+    padding-left:64px;
+    counter-increment:step;
+  }
+  .step::before{
+    content:counter(step);
+    position:absolute;
+    left:14px;top:14px;
+    font-family:'Fraunces',serif;
+    font-weight:800;
+    font-size:30px;
+    color:var(--accent);
+    line-height:1;
+  }
+  .step h4{
+    margin:0 0 6px;
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:18px;
+  }
+  .step p{margin:0;font-size:15px;color:#333}
+  .step code{
+    font-family:'JetBrains Mono',monospace;
+    background:var(--soft);
+    padding:1px 6px;
+    border-radius:2px;
+    font-size:14px;
+  }
+
+  /* Tables */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    background:var(--paper);
+  }
+  th,td{
+    border:1px solid var(--rule);
+    padding:10px 12px;
+    text-align:left;
+    font-size:15px;
+  }
+  th{
+    background:var(--ink);
+    color:var(--bg);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  td.center{text-align:center;font-family:'JetBrains Mono',monospace}
+
+  /* Inline math */
+  .math{font-family:'JetBrains Mono',monospace;font-weight:600}
+  .frac{display:inline-block;vertical-align:middle;text-align:center;font-size:0.9em;line-height:1.1}
+  .frac .num{display:block;border-bottom:1.5px solid currentColor;padding:0 4px}
+  .frac .den{display:block;padding:0 4px}
+
+  /* Key-points highlight */
+  .key-points{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:10px;margin:14px 0;
+  }
+  .kp{
+    background:var(--paper);
+    border:1.5px solid var(--rule);
+    padding:10px;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+  }
+  .kp .label{font-size:10px;text-transform:uppercase;color:#777;letter-spacing:0.1em;margin-bottom:4px}
+  .kp .v{font-size:15px;font-weight:600}
+
+  /* Example walkthroughs */
+  .example{
+    background:var(--paper);
+    border:1.5px solid var(--rule);
+    padding:24px;
+    margin:20px 0;
+    border-radius:2px;
+  }
+  .example-tag{
+    display:inline-block;
+    background:var(--accent);
+    color:var(--bg);
+    padding:3px 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .example h3{margin-top:0}
+
+  .anim-controls{
+    display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;
+    align-items:center;
+  }
+  .anim-btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    padding:8px 16px;
+    border:1.5px solid var(--rule);
+    background:var(--accent);
+    color:var(--bg);
+    cursor:pointer;
+    font-weight:600;
+  }
+  .anim-btn:hover{background:var(--ink)}
+  .anim-btn.secondary{
+    background:var(--paper);color:var(--ink);
+  }
+  .step-indicator{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:#555;
+  }
+  .narration{
+    background:var(--soft);
+    padding:12px 16px;
+    border-radius:2px;
+    font-size:15px;
+    margin-top:12px;
+    min-height:60px;
+    border-left:3px solid var(--accent);
+  }
+  .narration .step-num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--accent);
+    margin-right:8px;
+  }
+
+  /* Tips and warnings */
+  .tip{
+    background:#fff8e8;
+    border:1px dashed var(--accent3);
+    padding:14px 18px;
+    margin:14px 0;
+    border-radius:2px;
+    font-size:15px;
+  }
+  .tip strong{color:#8a6a00}
+  .warn{
+    background:#fdecea;
+    border:1px solid var(--accent);
+    padding:14px 18px;
+    margin:14px 0;
+    border-radius:2px;
+    font-size:15px;
+  }
+
+  /* TOC */
+  .toc{
+    background:var(--paper);
+    border:1.5px solid var(--rule);
+    padding:18px 22px;
+    margin-bottom:32px;
+  }
+  .toc h3{margin:0 0 10px;font-size:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:'JetBrains Mono',monospace}
+  .toc ol{margin:0;padding-left:22px}
+  .toc li{margin:4px 0;font-size:15px}
+  .toc a{color:var(--ink);text-decoration:none;border-bottom:1px dotted #999}
+  .toc a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  @media (max-width:600px){
+    .hero{padding:24px 20px;box-shadow:5px 5px 0 var(--rule)}
+    h2{font-size:26px}
+    .step{padding-left:52px}
+    .step::before{font-size:24px;left:12px}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="tag">Math 3 · Chapter 8.4 · A Visual Guide</div>
+    <h1>Graphing <em>sine</em> & <em>cosine</em>,<br>step by step.</h1>
+    <p class="sub">An interactive walkthrough for understanding amplitude, period, phase shift, and vertical shift — with live graphs you can play with.</p>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h3>What's inside</h3>
+    <ol>
+      <li><a href="#start">Start here: what does y = sin x actually look like?</a></li>
+      <li><a href="#formula">The master formula (the only one you need)</a></li>
+      <li><a href="#playground">Interactive playground — feel each transformation</a></li>
+      <li><a href="#recipe">The 5-step recipe for graphing anything</a></li>
+      <li><a href="#ex1">Worked example 1: y = 2 sin(2x)</a></li>
+      <li><a href="#ex2">Worked example 2: y = 3 cos(x − π/2) + 1</a></li>
+      <li><a href="#ex3">Worked example 3: the hard one</a></li>
+      <li><a href="#cheat">Cheat sheet</a></li>
+    </ol>
+  </nav>
+
+  <!-- SECTION 1 -->
+  <section id="start">
+    <span class="section-label">01 · Foundation</span>
+    <h2>Start with the parent graphs</h2>
+    <p class="lede">Before any stretching or shifting, you need the <em>shape</em> of sine and cosine burned into your brain. They're the same wavy curve — just starting in different places.</p>
+
+    <div class="card">
+      <h3>The 5 key points (memorize these!)</h3>
+      <p>Both sine and cosine repeat every <span class="math">2π</span>. We can draw the basic shape using just <strong>5 key points</strong> per cycle, evenly spaced:</p>
+
+      <div class="key-points">
+        <div class="kp"><div class="label">x</div><div class="v">0</div></div>
+        <div class="kp"><div class="label">x</div><div class="v">π/2</div></div>
+        <div class="kp"><div class="label">x</div><div class="v">π</div></div>
+        <div class="kp"><div class="label">x</div><div class="v">3π/2</div></div>
+        <div class="kp"><div class="label">x</div><div class="v">2π</div></div>
+      </div>
+
+      <p>For <strong>y = sin x</strong>, the y-values cycle:
+      <span class="math">0 → 1 → 0 → −1 → 0</span> &nbsp;(starts at zero, goes up)</p>
+
+      <p>For <strong>y = cos x</strong>, the y-values cycle:
+      <span class="math">1 → 0 → −1 → 0 → 1</span> &nbsp;(starts at the top)</p>
+
+      <canvas id="parentCanvas" width="900" height="340"></canvas>
+    </div>
+
+    <div class="tip"><strong>The big insight:</strong> cosine is just sine shifted left by π/2. They are literally the same wave! So once you know how to handle one, you know how to handle both.</div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section id="formula">
+    <span class="section-label">02 · The Formula</span>
+    <h2>One formula does everything</h2>
+    <p class="lede">Every problem in 8.4 — no matter how scary it looks — fits this single template:</p>
+
+    <div class="formula-block">
+      <div class="formula">y = <span class="a">a</span> · sin( <span class="b">b</span>(x − <span class="h">h</span>) ) + <span class="k">k</span></div>
+      <div class="formula-key">
+        <span><span class="dot" style="background:#ffb38a"></span><span class="a">a</span> = amplitude (vertical stretch)</span>
+        <span><span class="dot" style="background:#8fd1ff"></span><span class="b">b</span> = horizontal stretch/shrink</span>
+        <span><span class="dot" style="background:#ffd966"></span><span class="h">h</span> = phase shift (left/right)</span>
+        <span><span class="dot" style="background:#a6e3a1"></span><span class="k">k</span> = vertical shift (up/down)</span>
+      </div>
+    </div>
+
+    <p>(Same template works for cosine — just swap <code>sin</code> for <code>cos</code>.)</p>
+
+    <h3>What each letter <em>does</em> to the graph</h3>
+    <table>
+      <thead>
+        <tr><th>Letter</th><th>What it controls</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="center"><strong>a</strong></td>
+          <td>Amplitude</td>
+          <td>The wave goes up to <span class="math">|a|</span> and down to <span class="math">−|a|</span>. If <span class="math">a</span> is negative, the wave is flipped upside down.</td>
+        </tr>
+        <tr>
+          <td class="center"><strong>b</strong></td>
+          <td>Period</td>
+          <td>Period = <span class="math">2π / |b|</span>. Bigger <span class="math">b</span> = wave squished tighter. Smaller <span class="math">b</span> = wave stretched wide.</td>
+        </tr>
+        <tr>
+          <td class="center"><strong>h</strong></td>
+          <td>Phase shift</td>
+          <td>The whole wave slides <strong>right</strong> by <span class="math">h</span> (if <span class="math">h &gt; 0</span>) or <strong>left</strong> (if <span class="math">h &lt; 0</span>).</td>
+        </tr>
+        <tr>
+          <td class="center"><strong>k</strong></td>
+          <td>Vertical shift</td>
+          <td>The midline of the wave moves from <span class="math">y = 0</span> to <span class="math">y = k</span>. Everything moves up (or down).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warn"><strong>Watch out!</strong> The formula has <span class="math">(x − h)</span>, with a <em>minus</em>. So if you see <span class="math">sin(x + π/3)</span>, that's <span class="math">sin(x − (−π/3))</span>, meaning <span class="math">h = −π/3</span> and the graph shifts <em>left</em>.</div>
+  </section>
+
+  <!-- SECTION 3: PLAYGROUND -->
+  <section id="playground">
+    <span class="section-label">03 · Playground</span>
+    <h2>Play with each knob and watch the wave</h2>
+    <p class="lede">Drag the sliders below. The blue dashed curve is the parent graph; the solid red curve is your transformed graph. Try changing one slider at a time first to see what each does.</p>
+
+    <div class="interactive">
+      <div class="func-toggle">
+        <button id="btnSin" class="active">y = a · sin(b(x − h)) + k</button>
+        <button id="btnCos">y = a · cos(b(x − h)) + k</button>
+      </div>
+
+      <div class="live-eq" id="liveEq">y = 1 · sin(1(x − 0)) + 0</div>
+
+      <div class="controls">
+        <div class="ctrl">
+          <label>a (amplitude) <span class="val" id="aVal">1</span></label>
+          <input type="range" id="aSlide" min="-3" max="3" step="0.1" value="1">
+        </div>
+        <div class="ctrl">
+          <label>b (frequency) <span class="val" id="bVal">1</span></label>
+          <input type="range" id="bSlide" min="0.25" max="4" step="0.05" value="1">
+        </div>
+        <div class="ctrl">
+          <label>h (phase shift, in π) <span class="val" id="hVal">0</span></label>
+          <input type="range" id="hSlide" min="-2" max="2" step="0.0833" value="0">
+        </div>
+        <div class="ctrl">
+          <label>k (vertical shift) <span class="val" id="kVal">0</span></label>
+          <input type="range" id="kSlide" min="-3" max="3" step="0.1" value="0">
+        </div>
+      </div>
+
+      <div class="key-points" id="keyStats">
+        <div class="kp"><div class="label">Amplitude</div><div class="v" id="statAmp">1</div></div>
+        <div class="kp"><div class="label">Period</div><div class="v" id="statPer">2π</div></div>
+        <div class="kp"><div class="label">Midline</div><div class="v" id="statMid">y = 0</div></div>
+        <div class="kp"><div class="label">Shift</div><div class="v" id="statShift">none</div></div>
+      </div>
+
+      <canvas id="playCanvas" width="900" height="420"></canvas>
+      <button class="reset-btn" id="resetBtn">↻ Reset to parent</button>
+    </div>
+
+    <div class="tip"><strong>Try this:</strong> Set <span class="math">a = 2</span>, then change <span class="math">b</span> to <span class="math">2</span>. The wave gets <em>taller</em> AND <em>narrower</em>. Now drag <span class="math">h</span> right by π/2 — the whole thing slides over.</div>
+  </section>
+
+  <!-- SECTION 4: RECIPE -->
+  <section id="recipe">
+    <span class="section-label">04 · The Recipe</span>
+    <h2>The 5-step recipe (use this every single time)</h2>
+    <p class="lede">When you see a graphing problem, don't panic — just follow the steps in this order. They never change.</p>
+
+    <div class="steps">
+      <div class="step">
+        <h4>Identify a, b, h, k</h4>
+        <p>Match the equation to <code>y = a·sin(b(x−h)) + k</code>. Be careful with signs! If you see <code>sin(2x + π)</code>, factor first: <code>sin(2(x + π/2))</code>, so <code>h = −π/2</code>.</p>
+      </div>
+      <div class="step">
+        <h4>Find the period</h4>
+        <p><strong>Period = 2π / |b|</strong>. This is how wide ONE full wave is.</p>
+      </div>
+      <div class="step">
+        <h4>Find the midline and amplitude</h4>
+        <p>The midline is <code>y = k</code>. The wave goes up to <code>k + |a|</code> (max) and down to <code>k − |a|</code> (min).</p>
+      </div>
+      <div class="step">
+        <h4>Find the 5 key x-values</h4>
+        <p>Start at <code>x = h</code> (this is the "new zero"). Divide the period into 4 equal pieces. The 5 key x-values are:<br>
+        <code>h,  h + period/4,  h + period/2,  h + 3·period/4,  h + period</code></p>
+      </div>
+      <div class="step">
+        <h4>Plot the 5 key points and connect smoothly</h4>
+        <p>For <strong>sine</strong>: y-pattern is <code>mid → max → mid → min → mid</code>.<br>
+           For <strong>cosine</strong>: y-pattern is <code>max → mid → min → mid → max</code>.<br>
+           If <code>a</code> is negative, flip max and min!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: EXAMPLE 1 -->
+  <section id="ex1">
+    <span class="section-label">05 · Worked Example</span>
+    <h2>Example 1: <span class="math">y = 2 sin(2x)</span></h2>
+    <p class="lede">Click "Next step" to watch the graph build itself, one transformation at a time.</p>
+
+    <div class="example">
+      <div class="example-tag">Example 1</div>
+      <h3>y = 2 sin(2x)</h3>
+
+      <p><strong>Identify:</strong> &nbsp;<span class="math">a = 2</span>, &nbsp;<span class="math">b = 2</span>, &nbsp;<span class="math">h = 0</span>, &nbsp;<span class="math">k = 0</span></p>
+      <p><strong>Period:</strong> &nbsp;<span class="math">2π / 2 = π</span> &nbsp;(so one full wave fits in width π!)</p>
+      <p><strong>Amplitude:</strong> &nbsp;<span class="math">|2| = 2</span> &nbsp;(wave reaches up to 2, down to −2)</p>
+
+      <div class="anim-controls">
+        <button class="anim-btn" id="ex1Next">Next step →</button>
+        <button class="anim-btn secondary" id="ex1Reset">↻ Restart</button>
+        <span class="step-indicator" id="ex1StepInd">Step 0 of 4</span>
+      </div>
+
+      <canvas id="ex1Canvas" width="900" height="400"></canvas>
+
+      <div class="narration" id="ex1Narration">
+        <span class="step-num">Click "Next step" to begin.</span>
+        We'll build this graph in 4 stages: parent sine → vertical stretch → horizontal squeeze → final graph with key points.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: EXAMPLE 2 -->
+  <section id="ex2">
+    <span class="section-label">06 · Worked Example</span>
+    <h2>Example 2: <span class="math">y = 3 cos(x − π/2) + 1</span></h2>
+    <p class="lede">This one has BOTH a phase shift and a vertical shift. Watch how each transformation moves the graph.</p>
+
+    <div class="example">
+      <div class="example-tag">Example 2</div>
+      <h3>y = 3 cos(x − π/2) + 1</h3>
+
+      <p><strong>Identify:</strong> &nbsp;<span class="math">a = 3</span>, &nbsp;<span class="math">b = 1</span>, &nbsp;<span class="math">h = π/2</span>, &nbsp;<span class="math">k = 1</span></p>
+      <p><strong>Period:</strong> &nbsp;<span class="math">2π / 1 = 2π</span></p>
+      <p><strong>Amplitude:</strong> &nbsp;<span class="math">3</span></p>
+      <p><strong>Midline:</strong> &nbsp;<span class="math">y = 1</span> &nbsp;(everything is shifted up 1)</p>
+      <p><strong>Phase shift:</strong> &nbsp;<span class="math">π/2 to the right</span></p>
+
+      <h4 style="margin-top:20px">Find the 5 key x-values</h4>
+      <p>Start at <span class="math">x = h = π/2</span>. Period/4 = <span class="math">2π/4 = π/2</span>. So the key x-values are:</p>
+      <p class="math" style="text-align:center;background:var(--soft);padding:10px;border-radius:2px">
+        π/2, &nbsp; π, &nbsp; 3π/2, &nbsp; 2π, &nbsp; 5π/2
+      </p>
+      <p><strong>For cosine</strong>, the y-pattern is <span class="math">max → mid → min → mid → max</span>. With midline <span class="math">y = 1</span> and amplitude 3:</p>
+      <p class="math" style="text-align:center;background:var(--soft);padding:10px;border-radius:2px">
+        y: &nbsp; 4, &nbsp; 1, &nbsp; −2, &nbsp; 1, &nbsp; 4
+      </p>
+
+      <div class="anim-controls">
+        <button class="anim-btn" id="ex2Next">Next step →</button>
+        <button class="anim-btn secondary" id="ex2Reset">↻ Restart</button>
+        <span class="step-indicator" id="ex2StepInd">Step 0 of 5</span>
+      </div>
+
+      <canvas id="ex2Canvas" width="900" height="420"></canvas>
+
+      <div class="narration" id="ex2Narration">
+        <span class="step-num">Click "Next step" to begin.</span>
+        We'll build this in stages: parent cosine → stretch vertically by 3 → shift right by π/2 → shift up by 1 → mark the key points.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: EXAMPLE 3 - hardest -->
+  <section id="ex3">
+    <span class="section-label">07 · Challenge Example</span>
+    <h2>Example 3: <span class="math">y = −2 sin(2x + π) − 1</span></h2>
+    <p class="lede">All four transformations — including a negative amplitude (flip) AND a phase shift hidden inside the parentheses.</p>
+
+    <div class="example">
+      <div class="example-tag">Example 3 · Challenge</div>
+      <h3>y = −2 sin(2x + π) − 1</h3>
+
+      <div class="card tinted" style="margin:14px 0">
+        <h4 style="margin-top:0">⚠️ First: factor out the b inside the parentheses!</h4>
+        <p>The phase shift is the value of <strong>h</strong>, not the constant you see. We need to write the equation in standard form <span class="math">b(x − h)</span>.</p>
+        <p class="math" style="text-align:center;font-size:18px">
+          2x + π = 2(x + π/2) = 2(x − (−π/2))
+        </p>
+        <p>So <span class="math">h = −π/2</span> &nbsp;(shifts <strong>left</strong> by π/2).</p>
+      </div>
+
+      <p><strong>Identify:</strong> &nbsp;<span class="math">a = −2</span>, &nbsp;<span class="math">b = 2</span>, &nbsp;<span class="math">h = −π/2</span>, &nbsp;<span class="math">k = −1</span></p>
+      <p><strong>Period:</strong> &nbsp;<span class="math">2π / 2 = π</span></p>
+      <p><strong>Amplitude:</strong> &nbsp;<span class="math">|−2| = 2</span> &nbsp;(but negative → flipped upside down!)</p>
+      <p><strong>Midline:</strong> &nbsp;<span class="math">y = −1</span></p>
+
+      <h4 style="margin-top:20px">Key x-values</h4>
+      <p>Start at <span class="math">x = h = −π/2</span>. Period/4 = <span class="math">π/4</span>.</p>
+      <p class="math" style="text-align:center;background:var(--soft);padding:10px;border-radius:2px">
+        −π/2, &nbsp; −π/4, &nbsp; 0, &nbsp; π/4, &nbsp; π/2
+      </p>
+      <p>For sine the pattern is <span class="math">mid → max → mid → min → mid</span>. But <span class="math">a</span> is negative, so we flip: <span class="math">mid → min → mid → max → mid</span>.</p>
+      <p>With midline <span class="math">y = −1</span> and amplitude 2 (max = 1, min = −3):</p>
+      <p class="math" style="text-align:center;background:var(--soft);padding:10px;border-radius:2px">
+        y: &nbsp; −1, &nbsp; −3, &nbsp; −1, &nbsp; 1, &nbsp; −1
+      </p>
+
+      <div class="anim-controls">
+        <button class="anim-btn" id="ex3Next">Next step →</button>
+        <button class="anim-btn secondary" id="ex3Reset">↻ Restart</button>
+        <span class="step-indicator" id="ex3StepInd">Step 0 of 6</span>
+      </div>
+
+      <canvas id="ex3Canvas" width="900" height="440"></canvas>
+
+      <div class="narration" id="ex3Narration">
+        <span class="step-num">Click "Next step" to begin.</span>
+        This one has six stages because all four transformations are at play. Watch carefully — the order matters!
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEAT SHEET -->
+  <section id="cheat">
+    <span class="section-label">08 · Cheat Sheet</span>
+    <h2>One-page cheat sheet</h2>
+
+    <div class="card">
+      <h3>The formula</h3>
+      <p class="math" style="text-align:center;font-size:18px;background:var(--ink);color:var(--bg);padding:14px;border-radius:2px">
+        y = a · sin(b(x − h)) + k &nbsp; &nbsp;or&nbsp; &nbsp; y = a · cos(b(x − h)) + k
+      </p>
+
+      <h3>The recipe</h3>
+      <ol style="padding-left:22px">
+        <li>Identify <strong>a, b, h, k</strong> — factor out b if needed.</li>
+        <li>Find <strong>period = 2π / |b|</strong>.</li>
+        <li>Find <strong>midline y = k</strong> and amplitude <strong>|a|</strong>.</li>
+        <li>Find <strong>5 key x-values</strong>: start at h, add period/4 each step.</li>
+        <li>Plot the 5 points using the y-pattern:
+          <ul>
+            <li><strong>sin:</strong> mid → max → mid → min → mid &nbsp;(flip if a &lt; 0)</li>
+            <li><strong>cos:</strong> max → mid → min → mid → max &nbsp;(flip if a &lt; 0)</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3>The traps</h3>
+      <ul>
+        <li><strong>Sign of h:</strong> the formula uses <span class="math">(x − h)</span>. So <span class="math">sin(x + π/2) = sin(x − (−π/2))</span>, meaning h = −π/2 (shifts left).</li>
+        <li><strong>Factor first:</strong> <span class="math">sin(2x + π)</span> is NOT a shift of π. Factor: <span class="math">2(x + π/2)</span>, so the shift is π/2 (not π!).</li>
+        <li><strong>Negative a:</strong> the wave flips upside down — max and min swap.</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      <strong>Mantra for graphing:</strong> "Match, period, midline, key x's, key y's." Say it out loud while you work. Five steps. Every time.
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ============================================================================
+// SHARED GRAPHING UTILITIES
+// ============================================================================
+const COLORS = {
+  ink: '#1a1a1a',
+  grid: '#d9cfb6',
+  axis: '#444',
+  accent: '#c8442a',
+  accent2: '#1e6091',
+  accent3: '#d4a017',
+  soft: '#e8dfc8',
+  paper: '#ffffff',
+  parent: '#1e6091',
+  good: '#2f7d4f'
+};
+
+function setupHiDPI(canvas) {
+  const ratio = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(ratio, ratio);
+  return { ctx, w: rect.width, h: rect.height };
+}
+
+/* Plot params (in math coordinates)
+   xMin, xMax: domain
+   yMin, yMax: range
+   margins inside canvas
+*/
+function makePlot(canvas, opts) {
+  const { ctx, w, h } = setupHiDPI(canvas);
+  const M = { left: 50, right: 20, top: 20, bottom: 38 };
+  const plotW = w - M.left - M.right;
+  const plotH = h - M.top - M.bottom;
+  const xMin = opts.xMin, xMax = opts.xMax;
+  const yMin = opts.yMin, yMax = opts.yMax;
+  const xScale = x => M.left + ((x - xMin) / (xMax - xMin)) * plotW;
+  const yScale = y => M.top + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+  return { ctx, w, h, M, plotW, plotH, xScale, yScale, xMin, xMax, yMin, yMax };
+}
+
+function clearPlot(P) {
+  P.ctx.clearRect(0, 0, P.w, P.h);
+  P.ctx.fillStyle = COLORS.paper;
+  P.ctx.fillRect(0, 0, P.w, P.h);
+}
+
+function drawAxes(P, opts = {}) {
+  const { ctx, M, plotW, plotH, xScale, yScale, xMin, xMax, yMin, yMax } = P;
+  // grid (vertical lines at π/4 increments)
+  ctx.strokeStyle = COLORS.grid;
+  ctx.lineWidth = 1;
+  const xStep = opts.xStep || Math.PI / 2;
+  for (let x = Math.ceil(xMin / xStep) * xStep; x <= xMax; x += xStep) {
+    ctx.beginPath();
+    ctx.moveTo(xScale(x), M.top);
+    ctx.lineTo(xScale(x), M.top + plotH);
+    ctx.stroke();
+  }
+  const yStep = opts.yStep || 1;
+  for (let y = Math.ceil(yMin / yStep) * yStep; y <= yMax; y += yStep) {
+    ctx.beginPath();
+    ctx.moveTo(M.left, yScale(y));
+    ctx.lineTo(M.left + plotW, yScale(y));
+    ctx.stroke();
+  }
+  // axes
+  ctx.strokeStyle = COLORS.axis;
+  ctx.lineWidth = 1.5;
+  // x-axis
+  if (yMin <= 0 && yMax >= 0) {
+    ctx.beginPath();
+    ctx.moveTo(M.left, yScale(0));
+    ctx.lineTo(M.left + plotW, yScale(0));
+    ctx.stroke();
+  }
+  // y-axis
+  if (xMin <= 0 && xMax >= 0) {
+    ctx.beginPath();
+    ctx.moveTo(xScale(0), M.top);
+    ctx.lineTo(xScale(0), M.top + plotH);
+    ctx.stroke();
+  }
+
+  // x labels (in π)
+  ctx.fillStyle = COLORS.ink;
+  ctx.font = '12px JetBrains Mono, monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let x = Math.ceil(xMin / xStep) * xStep; x <= xMax; x += xStep) {
+    if (Math.abs(x) < 1e-9) continue;
+    const lbl = piLabel(x);
+    if (lbl) {
+      ctx.fillText(lbl, xScale(x), yScale(0) + 6);
+    }
+  }
+  // 0 label
+  if (xMin <= 0 && xMax >= 0 && yMin <= 0 && yMax >= 0) {
+    ctx.textAlign = 'right';
+    ctx.fillText('0', xScale(0) - 4, yScale(0) + 6);
+  }
+
+  // y labels
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  for (let y = Math.ceil(yMin / yStep) * yStep; y <= yMax; y += yStep) {
+    if (Math.abs(y) < 1e-9) continue;
+    ctx.fillText(y.toString(), M.left - 6, yScale(y));
+  }
+}
+
+function piLabel(x) {
+  // express x as fraction of π
+  const n = x / Math.PI;
+  if (Math.abs(n) < 1e-9) return '0';
+  // try nice fractions
+  const fracs = [
+    [1, 1, 'π'], [-1, 1, '−π'],
+    [1, 2, 'π/2'], [-1, 2, '−π/2'],
+    [3, 2, '3π/2'], [-3, 2, '−3π/2'],
+    [1, 4, 'π/4'], [-1, 4, '−π/4'],
+    [3, 4, '3π/4'], [-3, 4, '−3π/4'],
+    [5, 4, '5π/4'], [-5, 4, '−5π/4'],
+    [7, 4, '7π/4'], [-7, 4, '−7π/4'],
+    [2, 1, '2π'], [-2, 1, '−2π'],
+    [5, 2, '5π/2'], [-5, 2, '−5π/2'],
+    [3, 1, '3π'], [-3, 1, '−3π'],
+  ];
+  for (const [a, b, lbl] of fracs) {
+    if (Math.abs(n - a / b) < 1e-3) return lbl;
+  }
+  // fallback
+  return n.toFixed(2) + 'π';
+}
+
+function drawCurve(P, fn, color, lineWidth = 2.2, dashed = false) {
+  const { ctx, xScale, yScale, xMin, xMax, plotW } = P;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  if (dashed) ctx.setLineDash([6, 5]); else ctx.setLineDash([]);
+  ctx.beginPath();
+  const N = 600;
+  let started = false;
+  for (let i = 0; i <= N; i++) {
+    const x = xMin + (i / N) * (xMax - xMin);
+    const y = fn(x);
+    if (!isFinite(y)) { started = false; continue; }
+    if (!started) {
+      ctx.moveTo(xScale(x), yScale(y));
+      started = true;
+    } else {
+      ctx.lineTo(xScale(x), yScale(y));
+    }
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawPartialCurve(P, fn, color, t /*0..1*/, xStart, xEnd) {
+  const { ctx, xScale, yScale } = P;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.6;
+  ctx.beginPath();
+  const N = 400;
+  const xEndCur = xStart + (xEnd - xStart) * t;
+  let started = false;
+  for (let i = 0; i <= N; i++) {
+    const x = xStart + (i / N) * (xEndCur - xStart);
+    const y = fn(x);
+    if (!started) {
+      ctx.moveTo(xScale(x), yScale(y));
+      started = true;
+    } else {
+      ctx.lineTo(xScale(x), yScale(y));
+    }
+  }
+  ctx.stroke();
+}
+
+function drawPoint(P, x, y, color, label, labelOffset = [10, -8]) {
+  const { ctx, xScale, yScale } = P;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(xScale(x), yScale(y), 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(xScale(x), yScale(y), 5, 0, Math.PI * 2);
+  ctx.stroke();
+  if (label) {
+    ctx.fillStyle = COLORS.ink;
+    ctx.font = '600 12px JetBrains Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, xScale(x) + labelOffset[0], yScale(y) + labelOffset[1]);
+  }
+}
+
+function drawMidline(P, k, color = COLORS.accent3) {
+  const { ctx, xScale, yScale, xMin, xMax } = P;
+  ctx.strokeStyle = color;
+  ctx.setLineDash([3, 4]);
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(xScale(xMin), yScale(k));
+  ctx.lineTo(xScale(xMax), yScale(k));
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // label
+  ctx.fillStyle = color;
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('midline y=' + k, xScale(xMax) - 4, yScale(k) - 4);
+}
+
+// ============================================================================
+// 1. PARENT GRAPH (static)
+// ============================================================================
+function drawParentGraph() {
+  const canvas = document.getElementById('parentCanvas');
+  if (!canvas) return;
+  const P = makePlot(canvas, { xMin: -Math.PI / 2, xMax: 5 * Math.PI / 2, yMin: -1.6, yMax: 1.6 });
+  clearPlot(P);
+  drawAxes(P, { xStep: Math.PI / 2, yStep: 1 });
+
+  // sin curve
+  drawCurve(P, Math.sin, COLORS.accent, 2.4);
+  // cos curve
+  drawCurve(P, Math.cos, COLORS.parent, 2.4, true);
+
+  // 5 key points for sin
+  const keysSin = [[0, 0], [Math.PI / 2, 1], [Math.PI, 0], [3 * Math.PI / 2, -1], [2 * Math.PI, 0]];
+  keysSin.forEach(([x, y]) => drawPoint(P, x, y, COLORS.accent, null));
+  // 5 key points for cos
+  const keysCos = [[0, 1], [Math.PI / 2, 0], [Math.PI, -1], [3 * Math.PI / 2, 0], [2 * Math.PI, 1]];
+  keysCos.forEach(([x, y]) => drawPoint(P, x, y, COLORS.parent, null));
+
+  // legend
+  const ctx = P.ctx;
+  ctx.font = '600 13px JetBrains Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = COLORS.accent;
+  ctx.fillRect(P.M.left + 10, P.M.top + 8, 18, 3);
+  ctx.fillText('y = sin x', P.M.left + 34, P.M.top + 10);
+  ctx.fillStyle = COLORS.parent;
+  // dashed legend
+  ctx.strokeStyle = COLORS.parent;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(P.M.left + 110, P.M.top + 10);
+  ctx.lineTo(P.M.left + 128, P.M.top + 10);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillText('y = cos x', P.M.left + 134, P.M.top + 10);
+}
+
+// ============================================================================
+// 2. PLAYGROUND (interactive)
+// ============================================================================
+let playState = {
+  a: 1, b: 1, h: 0, k: 0, fn: 'sin'
+};
+
+function piFrac(x) {
+  // simplified label for h values in π units (input is multiple of π/12)
+  if (Math.abs(x) < 1e-9) return '0';
+  // try common
+  const candidates = [
+    [1/12, 'π/12'], [-1/12, '−π/12'],
+    [1/6, 'π/6'], [-1/6, '−π/6'],
+    [1/4, 'π/4'], [-1/4, '−π/4'],
+    [1/3, 'π/3'], [-1/3, '−π/3'],
+    [1/2, 'π/2'], [-1/2, '−π/2'],
+    [2/3, '2π/3'], [-2/3, '−2π/3'],
+    [3/4, '3π/4'], [-3/4, '−3π/4'],
+    [5/6, '5π/6'], [-5/6, '−5π/6'],
+    [1, 'π'], [-1, '−π'],
+    [7/6, '7π/6'], [-7/6, '−7π/6'],
+    [5/4, '5π/4'], [-5/4, '−5π/4'],
+    [4/3, '4π/3'], [-4/3, '−4π/3'],
+    [3/2, '3π/2'], [-3/2, '−3π/2'],
+    [5/3, '5π/3'], [-5/3, '−5π/3'],
+    [7/4, '7π/4'], [-7/4, '−7π/4'],
+    [11/6, '11π/6'], [-11/6, '−11π/6'],
+    [2, '2π'], [-2, '−2π']
+  ];
+  for (const [v, lbl] of candidates) {
+    if (Math.abs(x - v) < 0.01) return lbl;
+  }
+  return x.toFixed(2) + 'π';
+}
+
+function updatePlayground() {
+  const { a, b, h, k, fn } = playState;
+  // h is stored in units of π
+  const hRad = h * Math.PI;
+  const trig = fn === 'sin' ? Math.sin : Math.cos;
+
+  document.getElementById('aVal').textContent = a.toFixed(1);
+  document.getElementById('bVal').textContent = b.toFixed(2);
+  document.getElementById('hVal').textContent = piFrac(h);
+  document.getElementById('kVal').textContent = k.toFixed(1);
+
+  // live equation
+  const hStr = Math.abs(h) < 1e-6 ? 'x' : (h > 0 ? `(x − ${piFrac(h)})` : `(x + ${piFrac(-h)})`);
+  const bStr = Math.abs(b - 1) < 1e-6 ? hStr : `${b.toFixed(2)}·${hStr}`;
+  const kStr = Math.abs(k) < 1e-6 ? '' : (k > 0 ? ` + ${k.toFixed(1)}` : ` − ${Math.abs(k).toFixed(1)}`);
+  const aStr = Math.abs(a - 1) < 1e-6 ? '' : (Math.abs(a + 1) < 1e-6 ? '−' : `${a.toFixed(1)} · `);
+  document.getElementById('liveEq').textContent = `y = ${aStr}${fn}(${bStr})${kStr}`;
+
+  // stats
+  const period = 2 * Math.PI / Math.abs(b);
+  document.getElementById('statAmp').textContent = Math.abs(a).toFixed(2);
+  document.getElementById('statPer').textContent = piFrac(period / Math.PI);
+  document.getElementById('statMid').textContent = 'y = ' + k.toFixed(1);
+  let shiftDesc = '';
+  if (Math.abs(h) > 1e-6) shiftDesc += (h > 0 ? '→' : '←') + ' ' + piFrac(Math.abs(h));
+  if (Math.abs(k) > 1e-6) shiftDesc += (shiftDesc ? ', ' : '') + (k > 0 ? '↑' : '↓') + ' ' + Math.abs(k).toFixed(1);
+  document.getElementById('statShift').textContent = shiftDesc || 'none';
+
+  // draw
+  const canvas = document.getElementById('playCanvas');
+  const P = makePlot(canvas, { xMin: -Math.PI, xMax: 3 * Math.PI, yMin: -5.5, yMax: 5.5 });
+  clearPlot(P);
+  drawAxes(P, { xStep: Math.PI / 2, yStep: 1 });
+
+  // midline
+  if (Math.abs(k) > 0.01) drawMidline(P, k);
+
+  // parent curve (dashed blue)
+  drawCurve(P, x => trig(x), COLORS.parent, 1.8, true);
+
+  // transformed curve
+  drawCurve(P, x => a * trig(b * (x - hRad)) + k, COLORS.accent, 2.6);
+
+  // key points on transformed
+  const start = hRad;
+  const q = period / 4;
+  let yPattern;
+  if (fn === 'sin') yPattern = [0, 1, 0, -1, 0];
+  else yPattern = [1, 0, -1, 0, 1];
+  for (let i = 0; i < 5; i++) {
+    const x = start + i * q;
+    const y = a * yPattern[i] + k;
+    if (x >= P.xMin - 0.1 && x <= P.xMax + 0.1) {
+      drawPoint(P, x, y, COLORS.accent, null);
+    }
+  }
+}
+
+function attachPlayground() {
+  const ids = ['aSlide', 'bSlide', 'hSlide', 'kSlide'];
+  const keys = ['a', 'b', 'h', 'k'];
+  ids.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      playState[keys[i]] = parseFloat(el.value);
+      updatePlayground();
+    });
+  });
+  document.getElementById('btnSin').addEventListener('click', () => {
+    playState.fn = 'sin';
+    document.getElementById('btnSin').classList.add('active');
+    document.getElementById('btnCos').classList.remove('active');
+    updatePlayground();
+  });
+  document.getElementById('btnCos').addEventListener('click', () => {
+    playState.fn = 'cos';
+    document.getElementById('btnCos').classList.add('active');
+    document.getElementById('btnSin').classList.remove('active');
+    updatePlayground();
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    playState = { a: 1, b: 1, h: 0, k: 0, fn: 'sin' };
+    document.getElementById('aSlide').value = 1;
+    document.getElementById('bSlide').value = 1;
+    document.getElementById('hSlide').value = 0;
+    document.getElementById('kSlide').value = 0;
+    document.getElementById('btnSin').classList.add('active');
+    document.getElementById('btnCos').classList.remove('active');
+    updatePlayground();
+  });
+}
+
+// ============================================================================
+// 3. EXAMPLE 1: y = 2 sin(2x)
+// Steps: 0 (parent) → 1 (stretch to amp 2) → 2 (period change) → 3 (final + key pts) → 4 (annotations)
+// ============================================================================
+const EX1 = {
+  step: 0,
+  totalSteps: 4,
+  narrations: [
+    { title: 'Step 1', html: 'Start with the parent graph <strong>y = sin x</strong>. Amplitude = 1, period = 2π. We need to transform this.' },
+    { title: 'Step 2', html: 'Apply <strong>a = 2</strong> (vertical stretch). The peaks now reach y = 2 and the valleys reach y = −2. Period is still 2π — only the height changed.' },
+    { title: 'Step 3', html: 'Apply <strong>b = 2</strong> (horizontal squeeze). New period = 2π/2 = <strong>π</strong>. The wave is now squished — one full cycle fits in just π!' },
+    { title: 'Step 4', html: 'Mark the <strong>5 key points</strong>. Period/4 = π/4. Starting at x = 0, the key x-values are: 0, π/4, π/2, 3π/4, π. The y-pattern for sine is mid→max→mid→min→mid → 0, 2, 0, −2, 0.' }
+  ]
+};
+
+function drawEx1() {
+  const canvas = document.getElementById('ex1Canvas');
+  if (!canvas) return;
+  const P = makePlot(canvas, { xMin: -Math.PI / 4, xMax: 2 * Math.PI + 0.3, yMin: -3, yMax: 3 });
+  clearPlot(P);
+  drawAxes(P, { xStep: Math.PI / 4, yStep: 1 });
+
+  const s = EX1.step;
+
+  // parent (always show as faint dashed once past step 0)
+  if (s >= 1) {
+    drawCurve(P, Math.sin, COLORS.parent, 1.4, true);
+  }
+
+  if (s >= 1) {
+    // step 1: parent sine (no transformation yet)
+  }
+  if (s === 0) {
+    drawCurve(P, Math.sin, COLORS.accent, 2.6);
+  } else if (s === 1) {
+    // amplitude stretch
+    drawCurve(P, x => 2 * Math.sin(x), COLORS.accent, 2.6);
+  } else if (s >= 2) {
+    // final form
+    drawCurve(P, x => 2 * Math.sin(2 * x), COLORS.accent, 2.6);
+  }
+
+  // step 3: add key points
+  if (s >= 3) {
+    const keys = [[0, 0], [Math.PI / 4, 2], [Math.PI / 2, 0], [3 * Math.PI / 4, -2], [Math.PI, 0]];
+    const labels = ['(0, 0)', '(π/4, 2)', '(π/2, 0)', '(3π/4, −2)', '(π, 0)'];
+    keys.forEach(([x, y], i) => {
+      drawPoint(P, x, y, COLORS.accent, labels[i], i === 1 ? [8, -10] : (i === 3 ? [8, 14] : [8, -10]));
+    });
+  }
+
+  // narration
+  if (s > 0) {
+    const n = EX1.narrations[s - 1];
+    document.getElementById('ex1Narration').innerHTML = `<span class="step-num">${n.title}</span>${n.html}`;
+  } else {
+    document.getElementById('ex1Narration').innerHTML = `<span class="step-num">Click "Next step" to begin.</span>We'll build this graph in 4 stages.`;
+  }
+  document.getElementById('ex1StepInd').textContent = `Step ${s} of ${EX1.totalSteps}`;
+}
+
+function attachEx1() {
+  document.getElementById('ex1Next').addEventListener('click', () => {
+    if (EX1.step < EX1.totalSteps) EX1.step++;
+    drawEx1();
+  });
+  document.getElementById('ex1Reset').addEventListener('click', () => {
+    EX1.step = 0;
+    drawEx1();
+  });
+  drawEx1();
+}
+
+// ============================================================================
+// 4. EXAMPLE 2: y = 3 cos(x − π/2) + 1
+// Steps: 0 start → 1 parent → 2 vertical stretch (a=3) → 3 phase shift (h=π/2) → 4 vertical shift (k=1) → 5 key points
+// ============================================================================
+const EX2 = {
+  step: 0,
+  totalSteps: 5,
+  narrations: [
+    { title: 'Step 1', html: 'Start with the parent <strong>y = cos x</strong>. Amplitude 1, period 2π, starts at the top (1, 0).' },
+    { title: 'Step 2', html: 'Apply <strong>a = 3</strong>: vertical stretch. Peaks now hit y = 3, valleys hit y = −3.' },
+    { title: 'Step 3', html: 'Apply <strong>h = π/2</strong>: shift the entire graph RIGHT by π/2. The peak that was at x = 0 is now at x = π/2.' },
+    { title: 'Step 4', html: 'Apply <strong>k = 1</strong>: shift the entire graph UP by 1. New midline is y = 1, max is y = 4, min is y = −2.' },
+    { title: 'Step 5', html: 'Mark the 5 key points: <strong>(π/2, 4), (π, 1), (3π/2, −2), (2π, 1), (5π/2, 4)</strong>. The cosine pattern max→mid→min→mid→max, with midline at 1 and amplitude 3.' }
+  ]
+};
+
+function drawEx2() {
+  const canvas = document.getElementById('ex2Canvas');
+  if (!canvas) return;
+  const P = makePlot(canvas, { xMin: -Math.PI / 2, xMax: 3 * Math.PI, yMin: -3.5, yMax: 5 });
+  clearPlot(P);
+  drawAxes(P, { xStep: Math.PI / 2, yStep: 1 });
+
+  const s = EX2.step;
+
+  // parent reference (after step 1)
+  if (s >= 2) {
+    drawCurve(P, Math.cos, COLORS.parent, 1.4, true);
+  }
+
+  // current state of curve
+  if (s === 1) {
+    drawCurve(P, Math.cos, COLORS.accent, 2.6);
+  } else if (s === 2) {
+    drawCurve(P, x => 3 * Math.cos(x), COLORS.accent, 2.6);
+  } else if (s === 3) {
+    drawCurve(P, x => 3 * Math.cos(x - Math.PI / 2), COLORS.accent, 2.6);
+    // arrow showing shift
+    drawShiftArrow(P, 0, 3, Math.PI / 2, 3, 'shift right π/2');
+  } else if (s === 4) {
+    drawCurve(P, x => 3 * Math.cos(x - Math.PI / 2) + 1, COLORS.accent, 2.6);
+    drawMidline(P, 1);
+  } else if (s === 5) {
+    drawCurve(P, x => 3 * Math.cos(x - Math.PI / 2) + 1, COLORS.accent, 2.6);
+    drawMidline(P, 1);
+    const keys = [
+      [Math.PI / 2, 4, '(π/2, 4)'],
+      [Math.PI, 1, '(π, 1)'],
+      [3 * Math.PI / 2, -2, '(3π/2, −2)'],
+      [2 * Math.PI, 1, '(2π, 1)'],
+      [5 * Math.PI / 2, 4, '(5π/2, 4)']
+    ];
+    keys.forEach(([x, y, lbl], i) => {
+      const off = (i === 2) ? [8, 14] : [8, -10];
+      drawPoint(P, x, y, COLORS.accent, lbl, off);
+    });
+  }
+
+  if (s > 0) {
+    const n = EX2.narrations[s - 1];
+    document.getElementById('ex2Narration').innerHTML = `<span class="step-num">${n.title}</span>${n.html}`;
+  } else {
+    document.getElementById('ex2Narration').innerHTML = `<span class="step-num">Click "Next step" to begin.</span>We'll build in stages.`;
+  }
+  document.getElementById('ex2StepInd').textContent = `Step ${s} of ${EX2.totalSteps}`;
+}
+
+function drawShiftArrow(P, x1, y1, x2, y2, label) {
+  const { ctx, xScale, yScale } = P;
+  ctx.strokeStyle = COLORS.good;
+  ctx.fillStyle = COLORS.good;
+  ctx.lineWidth = 2;
+  const px1 = xScale(x1), py1 = yScale(y1);
+  const px2 = xScale(x2), py2 = yScale(y2);
+  ctx.beginPath();
+  ctx.moveTo(px1, py1);
+  ctx.lineTo(px2, py2);
+  ctx.stroke();
+  // arrowhead
+  const angle = Math.atan2(py2 - py1, px2 - px1);
+  ctx.beginPath();
+  ctx.moveTo(px2, py2);
+  ctx.lineTo(px2 - 10 * Math.cos(angle - 0.4), py2 - 10 * Math.sin(angle - 0.4));
+  ctx.lineTo(px2 - 10 * Math.cos(angle + 0.4), py2 - 10 * Math.sin(angle + 0.4));
+  ctx.closePath();
+  ctx.fill();
+  if (label) {
+    ctx.font = '600 11px JetBrains Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(label, (px1 + px2) / 2, Math.min(py1, py2) - 6);
+  }
+}
+
+function attachEx2() {
+  document.getElementById('ex2Next').addEventListener('click', () => {
+    if (EX2.step < EX2.totalSteps) EX2.step++;
+    drawEx2();
+  });
+  document.getElementById('ex2Reset').addEventListener('click', () => {
+    EX2.step = 0;
+    drawEx2();
+  });
+  drawEx2();
+}
+
+// ============================================================================
+// 5. EXAMPLE 3: y = −2 sin(2x + π) − 1 = −2 sin(2(x + π/2)) − 1
+// a=−2, b=2, h=−π/2, k=−1
+// Steps: 1 parent → 2 b=2 squeeze → 3 a=−2 stretch+flip → 4 h=−π/2 shift left → 5 k=−1 shift down → 6 key points
+// ============================================================================
+const EX3 = {
+  step: 0,
+  totalSteps: 6,
+  narrations: [
+    { title: 'Step 1', html: 'Parent <strong>y = sin x</strong>. Standard wave, amplitude 1, period 2π.' },
+    { title: 'Step 2', html: 'Apply <strong>b = 2</strong>: horizontal squeeze. New period = 2π/2 = π. The wave is now tighter.' },
+    { title: 'Step 3', html: 'Apply <strong>a = −2</strong>: vertical stretch AND flip. Wave reaches y = 2 and y = −2 — but now it goes DOWN first instead of up.' },
+    { title: 'Step 4', html: 'Apply <strong>h = −π/2</strong>: shift LEFT by π/2 (because h is negative). The starting point of the wave moves from x = 0 to x = −π/2.' },
+    { title: 'Step 5', html: 'Apply <strong>k = −1</strong>: shift DOWN by 1. New midline is y = −1, max is y = 1, min is y = −3.' },
+    { title: 'Step 6', html: 'Mark key points starting at x = −π/2, stepping by π/4: <strong>(−π/2, −1), (−π/4, −3), (0, −1), (π/4, 1), (π/2, −1)</strong>. Note the inverted pattern because a is negative.' }
+  ]
+};
+
+function drawEx3() {
+  const canvas = document.getElementById('ex3Canvas');
+  if (!canvas) return;
+  const P = makePlot(canvas, { xMin: -Math.PI, xMax: Math.PI, yMin: -4, yMax: 3 });
+  clearPlot(P);
+  drawAxes(P, { xStep: Math.PI / 4, yStep: 1 });
+
+  const s = EX3.step;
+
+  // parent shown as reference from step 2 on
+  if (s >= 2) {
+    drawCurve(P, Math.sin, COLORS.parent, 1.4, true);
+  }
+
+  if (s === 1) {
+    drawCurve(P, Math.sin, COLORS.accent, 2.6);
+  } else if (s === 2) {
+    drawCurve(P, x => Math.sin(2 * x), COLORS.accent, 2.6);
+  } else if (s === 3) {
+    drawCurve(P, x => -2 * Math.sin(2 * x), COLORS.accent, 2.6);
+  } else if (s === 4) {
+    drawCurve(P, x => -2 * Math.sin(2 * (x + Math.PI / 2)), COLORS.accent, 2.6);
+    drawShiftArrow(P, 0, 2.5, -Math.PI / 2, 2.5, 'shift left π/2');
+  } else if (s === 5) {
+    drawCurve(P, x => -2 * Math.sin(2 * (x + Math.PI / 2)) - 1, COLORS.accent, 2.6);
+    drawMidline(P, -1);
+  } else if (s === 6) {
+    drawCurve(P, x => -2 * Math.sin(2 * (x + Math.PI / 2)) - 1, COLORS.accent, 2.6);
+    drawMidline(P, -1);
+    const keys = [
+      [-Math.PI / 2, -1, '(−π/2, −1)'],
+      [-Math.PI / 4, -3, '(−π/4, −3)'],
+      [0, -1, '(0, −1)'],
+      [Math.PI / 4, 1, '(π/4, 1)'],
+      [Math.PI / 2, -1, '(π/2, −1)']
+    ];
+    keys.forEach(([x, y, lbl], i) => {
+      const off = (i === 1) ? [-78, 14] : (i === 3) ? [-14, -16] : [8, -10];
+      drawPoint(P, x, y, COLORS.accent, lbl, off);
+    });
+  }
+
+  if (s > 0) {
+    const n = EX3.narrations[s - 1];
+    document.getElementById('ex3Narration').innerHTML = `<span class="step-num">${n.title}</span>${n.html}`;
+  } else {
+    document.getElementById('ex3Narration').innerHTML = `<span class="step-num">Click "Next step" to begin.</span>Six stages — all four transformations.`;
+  }
+  document.getElementById('ex3StepInd').textContent = `Step ${s} of ${EX3.totalSteps}`;
+}
+
+function attachEx3() {
+  document.getElementById('ex3Next').addEventListener('click', () => {
+    if (EX3.step < EX3.totalSteps) EX3.step++;
+    drawEx3();
+  });
+  document.getElementById('ex3Reset').addEventListener('click', () => {
+    EX3.step = 0;
+    drawEx3();
+  });
+  drawEx3();
+}
+
+// ============================================================================
+// INIT
+// ============================================================================
+window.addEventListener('load', () => {
+  drawParentGraph();
+  attachPlayground();
+  updatePlayground();
+  attachEx1();
+  attachEx2();
+  attachEx3();
+});
+
+// Redraw on resize for hidpi
+let resizeTO;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTO);
+  resizeTO = setTimeout(() => {
+    drawParentGraph();
+    updatePlayground();
+    drawEx1();
+    drawEx2();
+    drawEx3();
+  }, 150);
+});
+</script>
+</body>
+</html>
