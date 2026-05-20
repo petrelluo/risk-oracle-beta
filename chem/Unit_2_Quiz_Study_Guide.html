@@ -432,6 +432,74 @@
     font-size: 16px;
   }
 
+  /* GLOSSARY */
+  .glossary {
+    margin: 16px 0 24px;
+  }
+  .glossary-group {
+    margin-bottom: 28px;
+    break-inside: avoid;
+  }
+  .glossary-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 600;
+    padding-bottom: 6px;
+    margin: 0 0 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .glossary-group-title .topic-ref {
+    color: var(--ink-soft);
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+  dl.terms {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  dl.terms > div {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+  dl.terms dt {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  dl.terms dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  dl.terms dd strong {
+    color: var(--accent-2);
+  }
+  @media (max-width: 640px) {
+    dl.terms > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    dl.terms dt {
+      font-size: 16px;
+    }
+  }
+
   /* FOOTER */
   footer {
     margin-top: 80px;
@@ -492,6 +560,7 @@
   <!-- TOC -->
   <nav class="toc">
     <ol>
+      <li><a href="#s0">Key Terms / Glossary</a></li>
       <li><a href="#s1">Thinking Skills</a></li>
       <li><a href="#s2">Accuracy vs. Precision</a></li>
       <li><a href="#s3">% Error</a></li>
@@ -505,6 +574,317 @@
       <li><a href="#s11">Common Mistakes</a></li>
     </ol>
   </nav>
+
+  <!-- SECTION 0 — KEY TERMS -->
+  <section class="topic" id="s0">
+    <div class="sec-head">
+      <span class="sec-num">§ 00</span>
+      <h2 class="sec-title">Key Terms <span class="topic-tag">Glossary</span></h2>
+    </div>
+    <p class="lede">Every "Terms you NEED to know" from your guided notes, plus the supporting vocabulary your teacher uses in problems. Grouped by topic for easy review.</p>
+
+    <div class="glossary">
+
+      <!-- Thinking Skills -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Thinking Skills <span class="topic-ref">Topic 2.1</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>scientific method</dt>
+            <dd>A systematic approach scientists use to answer questions or solve problems: observe → hypothesize → test → confirm/reject → incorporate.</dd>
+          </div>
+          <div>
+            <dt>observation</dt>
+            <dd>A <strong>fact</strong> obtained using your senses or an instrument. No explanation attached.</dd>
+          </div>
+          <div>
+            <dt>interpretation (inference)</dt>
+            <dd>An attempt to <strong>explain</strong> the facts. Adds reasoning, cause, or judgment to an observation.</dd>
+          </div>
+          <div>
+            <dt>hypothesis</dt>
+            <dd>A testable prediction made <em>before</em> doing an experiment. Often in "If… then… because…" form.</dd>
+          </div>
+          <div>
+            <dt>theory</dt>
+            <dd>An explanation supported by repeated experiments providing the same data. Remains in place until data is found to disprove it.</dd>
+          </div>
+          <div>
+            <dt>independent variable</dt>
+            <dd>The variable you <strong>change</strong> on purpose to test its effect. Goes on the x-axis.</dd>
+          </div>
+          <div>
+            <dt>dependent variable</dt>
+            <dd>The variable you <strong>measure</strong> — its value depends on the independent variable. Goes on the y-axis.</dd>
+          </div>
+          <div>
+            <dt>control (controlled variable)</dt>
+            <dd>Any factor held constant during the experiment so it doesn't affect the result.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Graphing -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Graphing <span class="topic-ref">Topic 2.2</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>direct relationship</dt>
+            <dd>As one variable increases, the other increases. Forms a <strong>straight line</strong>. Equation: y = kx (through origin) or y = kx + b. The constant k is the slope.</dd>
+          </div>
+          <div>
+            <dt>indirect (inverse) relationship</dt>
+            <dd>As one variable increases, the other decreases. Forms a <strong>curve</strong> that approaches but never crosses the axes. Equation: xy = k.</dd>
+          </div>
+          <div>
+            <dt>slope</dt>
+            <dd>The steepness of a line: Δy/Δx = (y₂ − y₁)/(x₂ − x₁). For a mass vs. volume graph, the slope <em>is</em> the density.</dd>
+          </div>
+          <div>
+            <dt>best-fit line</dt>
+            <dd>A straight line drawn through scattered data points to show the overall trend. Never connect lab points dot-to-dot.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Density -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Density <span class="topic-ref">Topic 2.3</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>density</dt>
+            <dd>The amount of <strong>mass</strong> compared to its <strong>volume</strong>. D = m/V. Units: g/mL (liquids) or g/cm³ (solids).</dd>
+          </div>
+          <div>
+            <dt>mass</dt>
+            <dd>The amount of matter in an object. Measured in grams (g) on a balance.</dd>
+          </div>
+          <div>
+            <dt>volume</dt>
+            <dd>The amount of space an object occupies. Measured in mL or cm³ (1 mL = 1 cm³).</dd>
+          </div>
+          <div>
+            <dt>water displacement</dt>
+            <dd>A method to find the volume of an irregular solid by submerging it in water and measuring how much the water level rises.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Metric System -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Metric System <span class="topic-ref">Topic 2.4</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>metric system</dt>
+            <dd>The international system of measurement based on powers of 10. Units relate by multiplying or dividing by 10, 100, 1000, etc.</dd>
+          </div>
+          <div>
+            <dt>base unit</dt>
+            <dd>The "starting" unit for a quantity, with no prefix attached. Gram (mass), liter (volume), meter (length), second (time).</dd>
+          </div>
+          <div>
+            <dt>prefix</dt>
+            <dd>A modifier (kilo, centi, milli, micro, nano, pico) attached to a base unit to express larger or smaller amounts.</dd>
+          </div>
+          <div>
+            <dt>kilo- (k)</dt>
+            <dd>10³ = 1000 times the base unit. 1 kg = 1000 g.</dd>
+          </div>
+          <div>
+            <dt>centi- (c)</dt>
+            <dd>10⁻² = one hundredth of the base unit. 1 m = 100 cm.</dd>
+          </div>
+          <div>
+            <dt>milli- (m)</dt>
+            <dd>10⁻³ = one thousandth of the base unit. 1 L = 1000 mL; 1 g = 1000 mg.</dd>
+          </div>
+          <div>
+            <dt>micro- (μ or u)</dt>
+            <dd>10⁻⁶ = one millionth of the base unit. Used for very small things.</dd>
+          </div>
+          <div>
+            <dt>nano- (n)</dt>
+            <dd>10⁻⁹ = one billionth of the base unit. Used for atoms and electrons.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Making Measurements -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Making Measurements <span class="topic-ref">Topic 2.5</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>graduated</dt>
+            <dd>Marked with a series of lines (graduations) to allow measurement. A graduated cylinder, ruler, or thermometer.</dd>
+          </div>
+          <div>
+            <dt>meniscus</dt>
+            <dd>The curved surface of a liquid in a narrow container. Water forms a <em>concave</em> meniscus (read the bottom); mercury forms a <em>convex</em> one (read the top).</dd>
+          </div>
+          <div>
+            <dt>parallax error</dt>
+            <dd>The reading mistake caused by viewing a measurement <strong>from an angle</strong> instead of at eye level. Fix: look straight on.</dd>
+          </div>
+          <div>
+            <dt>certain digits</dt>
+            <dd>The digits in a measurement that you know <strong>for sure</strong> based on the instrument's marked lines.</dd>
+          </div>
+          <div>
+            <dt>estimated digit</dt>
+            <dd>The <em>last</em> digit in a measurement — your best guess of the value between the smallest marked lines. Always one estimated digit, no more.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Dimensional Analysis -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Dimensional Analysis <span class="topic-ref">Topic 2.6</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>dimensional analysis</dt>
+            <dd>A method for converting between units using conversion factors, set up so that unwanted units cancel out. Also called the factor-label method.</dd>
+          </div>
+          <div>
+            <dt>conversion factor</dt>
+            <dd>A ratio of two equivalent quantities in different units, used to convert between them. Example: (1 m / 100 cm) or (60 s / 1 min).</dd>
+          </div>
+          <div>
+            <dt>imperial system</dt>
+            <dd>The non-metric system of measurement used mostly in the U.S. Inches, feet, miles, pounds, ounces, gallons.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Accuracy -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Accuracy &amp; Error <span class="topic-ref">Topic 2.7</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>accuracy</dt>
+            <dd>How <strong>close</strong> a measurement is to the true / accepted value. The dartboard bullseye.</dd>
+          </div>
+          <div>
+            <dt>theoretical value</dt>
+            <dd>The accepted, true, or "book" value of a quantity. What the answer <em>should</em> be.</dd>
+          </div>
+          <div>
+            <dt>experimental value</dt>
+            <dd>The value <strong>you</strong> obtained in lab through measurement and calculation.</dd>
+          </div>
+          <div>
+            <dt>percent error</dt>
+            <dd>A measure of how far off your experimental value is from the theoretical value, expressed as a percentage. |theoretical − experimental| / theoretical × 100.</dd>
+          </div>
+          <div>
+            <dt>systematic error</dt>
+            <dd>An error that affects every measurement the same way (e.g., a balance that always reads 0.5 g too high). Causes high precision with low accuracy.</dd>
+          </div>
+          <div>
+            <dt>random error</dt>
+            <dd>Small unpredictable variations in measurements. Reduced by averaging more trials.</dd>
+          </div>
+          <div>
+            <dt>percent recovered (yield)</dt>
+            <dd>How much of an expected product you actually obtained. actual / expected × 100.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Precision / Sig Figs -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Precision &amp; Significant Figures <span class="topic-ref">Topic 2.8</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>precision</dt>
+            <dd>(1) How close <strong>repeated measurements</strong> are to each other. (2) How finely an instrument can read — its smallest reliable division.</dd>
+          </div>
+          <div>
+            <dt>significant figures (sig figs)</dt>
+            <dd>All the digits in a measurement known for <strong>certain</strong>, plus the one <strong>estimated</strong> digit. They communicate how precise the measurement is.</dd>
+          </div>
+          <div>
+            <dt>captive zeros</dt>
+            <dd>Zeros <strong>between</strong> non-zero digits (e.g., 1<strong>0</strong>2). Always significant.</dd>
+          </div>
+          <div>
+            <dt>leading zeros</dt>
+            <dd>Zeros <strong>before</strong> the first non-zero digit (e.g., 0.0<strong>0</strong>25). Never significant — they're placeholders.</dd>
+          </div>
+          <div>
+            <dt>trailing zeros</dt>
+            <dd>Zeros <strong>after</strong> the last non-zero digit (e.g., 12<strong>0</strong> or 1.2<strong>0</strong>). Significant only if there's a decimal point.</dd>
+          </div>
+          <div>
+            <dt>uncertainty</dt>
+            <dd>The unavoidable "fuzziness" in any measurement — no instrument reads to an infinite number of decimal places.</dd>
+          </div>
+          <div>
+            <dt>rounding</dt>
+            <dd>Trimming a calculated answer to the correct number of sig figs. ≥ 5 rounds up; &lt; 5 rounds down.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Data Analysis -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Data Analysis</h3>
+        <dl class="terms">
+          <div>
+            <dt>average (mean)</dt>
+            <dd>The sum of all values divided by the number of values. Used to smooth out random errors across multiple trials.</dd>
+          </div>
+          <div>
+            <dt>weighted average</dt>
+            <dd>An average where each value is multiplied by its "weight" (how much it counts) before summing. Σ(value × weight) / Σ(weights). Used for atomic masses of isotopes.</dd>
+          </div>
+          <div>
+            <dt>sample size</dt>
+            <dd>The number of trials or data points collected. Larger samples give more reliable averages because random errors cancel out.</dd>
+          </div>
+          <div>
+            <dt>outlier</dt>
+            <dd>A data point that's noticeably different from the rest. Distorts averages more in small samples than in large ones.</dd>
+          </div>
+          <div>
+            <dt>trial</dt>
+            <dd>One complete run of an experiment or measurement. Best practice: at least 3 trials before averaging.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Lab Report -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Lab Report</h3>
+        <dl class="terms">
+          <div>
+            <dt>purpose / objective</dt>
+            <dd>The one-sentence statement of what the experiment is trying to find or test.</dd>
+          </div>
+          <div>
+            <dt>procedure</dt>
+            <dd>The numbered list of steps taken in the experiment — detailed enough that another scientist could reproduce it.</dd>
+          </div>
+          <div>
+            <dt>data</dt>
+            <dd>The raw measurements and observations collected during the experiment. Facts only, no interpretation.</dd>
+          </div>
+          <div>
+            <dt>analysis / calculations</dt>
+            <dd>Where you process the raw data — averages, density calculations, % error, unit conversions. Show all work with units and sig figs.</dd>
+          </div>
+          <div>
+            <dt>conclusion</dt>
+            <dd>The interpretation of your results. Did the data support the hypothesis? How close was the experimental value to the accepted value?</dd>
+          </div>
+          <div>
+            <dt>sources of error</dt>
+            <dd>Limitations of the equipment or procedure that could have affected accuracy. <strong>NOT</strong> "human error" — fix mistakes, don't list them.</dd>
+          </div>
+        </dl>
+      </div>
+
+    </div>
+  </section>
 
   <!-- SECTION 1 -->
   <section class="topic" id="s1">
