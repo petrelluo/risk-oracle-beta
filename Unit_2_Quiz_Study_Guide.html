@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MQ2B Study Guide — Measurements & Lab Skills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a; --ink-soft: #3a3a3a;
+    --paper: #fbfaf6; --paper-warm: #f3eee2;
+    --rule: #2a2a2a; --rule-soft: #d4cdb8;
+    --accent: #b3331c; --accent-2: #1d4d3a;
+    --highlight: #f7e98a;
+    --code-bg: #1a1a1a; --code-ink: #f3eee2;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.65;
+    background-image: radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 48px 96px; }
+  .masthead {
+    border-top: 4px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 28px 0 22px; margin-bottom: 48px; position: relative;
+  }
+  .masthead::after { content: ""; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px; background: var(--rule); }
+  .masthead .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .masthead .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--rule-soft); }
+  h1.title {
+    font-family: 'Fraunces', serif; font-weight: 900;
+    font-size: clamp(38px, 6vw, 64px); line-height: 0.95; letter-spacing: -0.025em;
+    margin: 0 0 12px; font-variation-settings: "opsz" 144;
+  }
+  h1.title em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .subtitle {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    color: var(--ink-soft); font-style: italic;
+    max-width: 600px; margin: 10px 0 0;
+  }
+  .quiz-format {
+    margin-top: 24px; padding: 16px 20px;
+    background: #eaf2ec;
+    border-left: 3px solid var(--accent-2);
+    border-radius: 0 3px 3px 0;
+    font-size: 14.5px;
+  }
+  .quiz-format .label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: var(--accent-2); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.2em; display: block; margin-bottom: 6px;
+  }
+  .topics-strip {
+    margin-top: 18px; padding: 14px 18px;
+    background: var(--paper-warm); border-left: 3px solid var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; line-height: 1.7; letter-spacing: 0.03em;
+  }
+  .topics-strip .label {
+    color: var(--accent); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.18em; display: block; margin-bottom: 4px;
+  }
+  .sources {
+    margin-top: 14px; font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-soft);
+    letter-spacing: 0.04em; line-height: 1.6;
+  }
+  .sources strong { color: var(--accent-2); }
+  nav.toc {
+    margin: 0 0 56px; padding: 24px 28px;
+    background: var(--paper-warm); border: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  nav.toc::before {
+    content: "Contents"; position: absolute; top: -12px; left: 20px;
+    background: var(--paper); padding: 0 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent);
+  }
+  nav.toc ol {
+    margin: 0; padding: 0; list-style: none; counter-reset: toc;
+    columns: 2; column-gap: 32px;
+  }
+  nav.toc li {
+    counter-increment: toc; padding: 6px 0; break-inside: avoid;
+    font-family: 'Fraunces', serif; font-size: 15.5px;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+  nav.toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); margin-right: 12px; font-weight: 500;
+  }
+  nav.toc a { color: var(--ink); text-decoration: none; transition: color 0.15s ease; }
+  nav.toc a:hover { color: var(--accent); }
+  section.topic { margin: 0 0 68px; scroll-margin-top: 24px; }
+  section.topic .sec-head {
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 8px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--rule);
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    color: var(--accent); font-weight: 600; letter-spacing: 0.05em;
+  }
+  h2.sec-title {
+    font-family: 'Fraunces', serif; font-weight: 700;
+    font-size: clamp(26px, 3.5vw, 34px);
+    margin: 0; line-height: 1.1; letter-spacing: -0.015em;
+  }
+  h2.sec-title .topic-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; background: var(--ink); color: var(--paper);
+    padding: 3px 8px; margin-left: 8px; vertical-align: middle;
+    font-weight: 500; letter-spacing: 0.1em; border-radius: 2px;
+  }
+  .board-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; background: var(--accent-2); color: var(--paper);
+    padding: 2px 7px; margin-left: 6px; vertical-align: middle;
+    font-weight: 500; letter-spacing: 0.1em; border-radius: 2px;
+  }
+  h3 {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 22px; margin: 36px 0 12px;
+    color: var(--accent-2); letter-spacing: -0.01em;
+  }
+  h4 {
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 14px; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--accent); margin: 28px 0 10px;
+  }
+  p { margin: 0 0 14px; }
+  p.lede {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    line-height: 1.55; color: var(--ink-soft); margin-bottom: 20px;
+  }
+  ul, ol { padding-left: 22px; margin: 0 0 18px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink); font-weight: 700; }
+  em { font-style: italic; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.88em;
+    background: var(--paper-warm); padding: 2px 6px; border-radius: 2px;
+    border: 1px solid var(--rule-soft); color: var(--accent);
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 20px 24px; border-radius: 4px; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px; line-height: 1.65;
+    margin: 18px 0; border-left: 4px solid var(--accent);
+  }
+  pre code { background: transparent; border: none; padding: 0; color: inherit; }
+  .formula {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 22px;
+    text-align: center; margin: 20px 0; padding: 18px 24px;
+    background: var(--paper-warm);
+    border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft);
+  }
+  .formula .frac { display: inline-block; vertical-align: middle; text-align: center; margin: 0 4px; }
+  .formula .frac .num { display: block; border-bottom: 1.5px solid currentColor; padding: 0 8px 2px; }
+  .formula .frac .den { display: block; padding: 2px 8px 0; }
+  .formula .abs { display: inline-block; border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor; padding: 0 8px; margin: 0 2px; }
+  .table-wrap { margin: 18px 0 22px; overflow-x: auto; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 14.5px; background: var(--paper);
+  }
+  thead th {
+    background: var(--ink); color: var(--paper);
+    text-align: left; padding: 12px 14px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  tbody td {
+    padding: 10px 14px; border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: rgba(243, 238, 226, 0.4); }
+  tbody tr:hover { background: var(--paper-warm); }
+  td code { font-size: 0.95em; }
+  .check { color: var(--accent-2); font-weight: 700; font-size: 17px; }
+  .x { color: var(--accent); font-weight: 700; font-size: 17px; }
+  .callout {
+    margin: 22px 0; padding: 18px 22px;
+    border-left: 4px solid var(--accent);
+    background: var(--paper-warm); position: relative;
+  }
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--accent); font-weight: 600; margin-bottom: 8px; display: block;
+  }
+  .callout.warning { border-left-color: #c75300; background: #fdf4e7; }
+  .callout.warning .callout-label { color: #c75300; }
+  .callout.tip { border-left-color: var(--accent-2); background: #eaf2ec; }
+  .callout.tip .callout-label { color: var(--accent-2); }
+  .example {
+    margin: 16px 0; padding: 16px 20px;
+    border: 1px solid var(--rule-soft); background: var(--paper);
+    border-radius: 3px;
+  }
+  .example .ex-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.18em;
+    font-weight: 600; margin-bottom: 6px;
+  }
+  .example p:last-child { margin-bottom: 0; }
+  .answer {
+    display: inline-block; background: var(--highlight);
+    padding: 1px 8px; font-weight: 700; border-radius: 2px;
+  }
+  ul.mistakes li {
+    padding: 8px 0; border-bottom: 1px dotted var(--rule-soft);
+    list-style: none; position: relative; padding-left: 28px;
+  }
+  ul.mistakes { padding-left: 0; }
+  ul.mistakes li::before {
+    content: "✗"; position: absolute; left: 0;
+    color: var(--accent); font-weight: 700; font-size: 16px;
+  }
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px; margin: 22px 0;
+  }
+  .equipment-card {
+    background: var(--paper); border: 1px solid var(--rule-soft);
+    padding: 16px; text-align: center; border-radius: 3px;
+  }
+  .equipment-card .letter {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.18em; font-weight: 600;
+  }
+  .equipment-card .name {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 18px; margin: 6px 0 8px; color: var(--accent-2);
+  }
+  .equipment-card .use {
+    font-size: 13px; color: var(--ink-soft); line-height: 1.45;
+  }
+  .glossary { margin: 16px 0 24px; }
+  .glossary-group { margin-bottom: 28px; break-inside: avoid; }
+  .glossary-group-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--accent); font-weight: 600;
+    padding-bottom: 6px; margin: 0 0 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .glossary-group-title .topic-ref {
+    color: var(--ink-soft); font-weight: 400;
+    font-size: 10px; letter-spacing: 0.15em;
+  }
+  dl.terms {
+    margin: 0; display: grid;
+    grid-template-columns: minmax(0, 1fr); gap: 12px;
+  }
+  dl.terms > div {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 18px; padding: 10px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+  dl.terms dt {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 17px; color: var(--ink); line-height: 1.3;
+  }
+  dl.terms dd {
+    margin: 0; font-size: 15px;
+    line-height: 1.55; color: var(--ink-soft);
+  }
+  dl.terms dd strong { color: var(--accent-2); }
+  footer {
+    margin-top: 80px; padding-top: 24px;
+    border-top: 2px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-soft);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer .stamp { color: var(--accent); }
+  @media print {
+    body { background: white; font-size: 11pt; background-image: none; }
+    .wrap { padding: 0; max-width: none; }
+    nav.toc { page-break-after: always; }
+    section.topic { page-break-inside: avoid; }
+    h2.sec-title, h3 { page-break-after: avoid; }
+    pre, .formula, table, .callout, .example, .equipment-grid { page-break-inside: avoid; }
+    a { color: var(--ink); text-decoration: none; }
+    .topics-strip, nav.toc, .quiz-format { background: #f5f1e6; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 32px 20px 56px; }
+    nav.toc ol { columns: 1; }
+    .sec-head { flex-direction: column; gap: 4px; }
+    table { font-size: 13px; }
+    thead th, tbody td { padding: 8px 10px; }
+    dl.terms > div { grid-template-columns: 1fr; gap: 4px; }
+    dl.terms dt { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="eyebrow">Chemistry · MQ2B · Quiz Prep</div>
+    <h1 class="title">Measurements<br>&amp; <em>Lab Skills</em></h1>
+    <p class="subtitle">Aligned with the teacher's <strong>MQ2B board</strong> topic list. Built from the full slide deck, guided notes 2.1–2.8, the Unit 1–2 study guide, ruler keys, and CK-12 Chemistry FlexBook 2.0.</p>
+
+    <div class="quiz-format">
+      <span class="label">Quiz Format</span>
+      MQ2B is the <strong>average</strong> of two rounds, each <strong>10 multiple-choice questions</strong>. Round 1: <strong>May 19</strong>. Round 2: <strong>May 22</strong>.
+    </div>
+
+    <div class="topics-strip">
+      <span class="label">Topics on the board (MQ2B)</span>
+      Thinking Skills (incl. independent variable, sample size) · Avg, Weighted Avg · % Error · Accuracy vs Precision · Science Communication (incl. Lab Report) · Lab Equipment · Separation Techniques · Making Solutions · Drawing Perspectives
+    </div>
+
+    <div class="sources">
+      <strong>Sources:</strong> Teacher's MQ2B board photo · Slide deck (65 slides) · Guided Notes 2.1–2.8 · Unit 1–2 Study Guide · Ruler Key P1 &amp; P2 · CK-12 Chemistry FlexBook 2.0
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <ol>
+      <li><a href="#s0">Key Terms / Glossary</a></li>
+      <li><a href="#s1">Thinking Skills (incl. variables, sample size)</a></li>
+      <li><a href="#s2">Averaging &amp; Weighted Averaging</a></li>
+      <li><a href="#s3">% Error</a></li>
+      <li><a href="#s4">Accuracy vs. Precision</a></li>
+      <li><a href="#s5">Science Communication &amp; Lab Reports</a></li>
+      <li><a href="#s6">Lab Equipment</a></li>
+      <li><a href="#s7">Separation Techniques</a></li>
+      <li><a href="#s8">Making Solutions</a></li>
+      <li><a href="#s9">Drawing Perspectives</a></li>
+      <li><a href="#s10">Significant Figures</a></li>
+      <li><a href="#s11">Making Measurements</a></li>
+      <li><a href="#s12">Metric System &amp; Dimensional Analysis</a></li>
+      <li><a href="#s13">Density &amp; Graphing</a></li>
+      <li><a href="#s14">Formula Sheet</a></li>
+      <li><a href="#s15">Common Mistakes</a></li>
+    </ol>
+  </nav>
+
+  <!-- SECTION 0 — KEY TERMS -->
+  <section class="topic" id="s0">
+    <div class="sec-head">
+      <span class="sec-num">§ 00</span>
+      <h2 class="sec-title">Key Terms <span class="topic-tag">Glossary</span></h2>
+    </div>
+    <p class="lede">Vocabulary grouped by board topic. The slide deck and guided notes call these out as "terms you NEED to know."</p>
+
+    <div class="glossary">
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Thinking Skills <span class="topic-ref">incl. ind. variable &amp; sample size</span></h3>
+        <dl class="terms">
+          <div><dt>scientific method</dt><dd>Systematic process: observe → question → hypothesize → test → confirm/reject → incorporate.</dd></div>
+          <div><dt>observation</dt><dd>A <strong>fact</strong> obtained using your senses.</dd></div>
+          <div><dt>interpretation (inference)</dt><dd>An attempt to <strong>explain</strong> the facts.</dd></div>
+          <div><dt>hypothesis</dt><dd>A testable prediction made <em>before</em> the experiment. "If… then… because…"</dd></div>
+          <div><dt>theory</dt><dd>An explanation supported by repeated experiments giving the same result. Remains until disproved.</dd></div>
+          <div><dt>independent variable</dt><dd>The variable you <strong>change</strong> on purpose (x-axis).</dd></div>
+          <div><dt>dependent variable</dt><dd>The variable you <strong>measure</strong>; depends on the independent (y-axis).</dd></div>
+          <div><dt>control (controlled variable)</dt><dd>Factor held constant so it doesn't affect the result.</dd></div>
+          <div><dt>trial</dt><dd>One complete run of an experiment.</dd></div>
+          <div><dt>sample size</dt><dd>Number of trials or data points. Larger = more reliable.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Averaging &amp; % Error</h3>
+        <dl class="terms">
+          <div><dt>average (mean)</dt><dd>Sum of all values ÷ number of values.</dd></div>
+          <div><dt>weighted average</dt><dd>Σ(value × weight) / Σ(weights). Used when data points "count more" than others.</dd></div>
+          <div><dt>outlier</dt><dd>A data point noticeably different from the rest. Distorts averages in small samples.</dd></div>
+          <div><dt>accuracy</dt><dd>How close your value is to the <strong>accepted (theoretical)</strong> value.</dd></div>
+          <div><dt>precision</dt><dd>How close repeated measurements are <strong>to each other</strong>.</dd></div>
+          <div><dt>theoretical value</dt><dd>The accepted or true value. Also called "theoretical yield."</dd></div>
+          <div><dt>experimental value</dt><dd>What <strong>you</strong> got in lab. Also called "experimental yield."</dd></div>
+          <div><dt>percent error</dt><dd>|theoretical − experimental| / theoretical × 100 — exactly as the teacher wrote it on the board.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Lab Equipment &amp; Science Communication</h3>
+        <dl class="terms">
+          <div><dt>graduated cylinder</dt><dd>Precision glassware for measuring liquid <strong>volume</strong>. Read at the bottom of the meniscus.</dd></div>
+          <div><dt>beaker</dt><dd>For mixing/holding liquids. Volume marks are <em>approximate only</em>.</dd></div>
+          <div><dt>Erlenmeyer flask</dt><dd>Cone-shaped flask with a narrow neck; good for swirling without splashing.</dd></div>
+          <div><dt>volumetric flask</dt><dd>Pear-shaped flask with a single line marking — used to prepare a <strong>solution of exact concentration</strong>.</dd></div>
+          <div><dt>burette / pipette</dt><dd>Precision glassware for delivering specific volumes (used in titrations and dilutions).</dd></div>
+          <div><dt>ring stand</dt><dd>Vertical metal rod holding clamps, rings, and apparatus during experiments.</dd></div>
+          <div><dt>Bunsen burner</dt><dd>Gas burner that produces a controlled flame for heating.</dd></div>
+          <div><dt>balance</dt><dd>Device for measuring mass. Tare/zero before each use.</dd></div>
+          <div><dt>thermometer</dt><dd>Measures temperature; bulb should contact only the material being measured.</dd></div>
+          <div><dt>lab report</dt><dd>Standardized write-up: title, purpose, hypothesis, materials, procedure, data, analysis, conclusion, sources of error.</dd></div>
+          <div><dt>sources of error</dt><dd>Equipment limitations or procedural issues — <strong>NOT</strong> "human error" per the slides.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Separation Techniques</h3>
+        <dl class="terms">
+          <div><dt>filtration</dt><dd>Separates an <strong>insoluble solid from a liquid</strong> using filter paper (e.g., sand from water).</dd></div>
+          <div><dt>distillation</dt><dd>Separates liquids based on <strong>different boiling points</strong>. Vapor is condensed and collected (e.g., salt water → pure water).</dd></div>
+          <div><dt>evaporation</dt><dd>Removes a liquid solvent to leave a dissolved solid behind (e.g., salt from salt water).</dd></div>
+          <div><dt>chromatography</dt><dd>Separates components of a mixture by how fast each moves through a stationary medium (e.g., separating ink dyes).</dd></div>
+          <div><dt>decanting</dt><dd>Pouring off a liquid carefully, leaving a solid (denser material) behind. Quick and rough.</dd></div>
+          <div><dt>separating funnel</dt><dd>Separates two <strong>immiscible liquids</strong> of different densities (e.g., oil and water).</dd></div>
+          <div><dt>magnetism</dt><dd>Separates a magnetic substance (iron) from a non-magnetic one (sand).</dd></div>
+          <div><dt>centrifugation</dt><dd>Rapid spinning separates substances of different densities (used in biology too).</dd></div>
+          <div><dt>distillate</dt><dd>The condensed liquid collected after distillation.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Making Solutions</h3>
+        <dl class="terms">
+          <div><dt>solution</dt><dd>A <strong>homogeneous mixture</strong> made by dissolving one substance in another.</dd></div>
+          <div><dt>solute</dt><dd>The substance being <strong>dissolved</strong> (usually present in smaller amount). Sugar in lemonade.</dd></div>
+          <div><dt>solvent</dt><dd>The substance doing the <strong>dissolving</strong> (usually larger amount). Water in lemonade.</dd></div>
+          <div><dt>aqueous solution</dt><dd>A solution where the solvent is water (abbreviated <em>aq</em>).</dd></div>
+          <div><dt>concentration</dt><dd>How much solute is dissolved per amount of solution. Expressed as % m/m, % v/v, or molarity (M).</dd></div>
+          <div><dt>concentrated solution</dt><dd>A relatively <strong>large</strong> amount of dissolved solute.</dd></div>
+          <div><dt>dilute solution</dt><dd>A relatively <strong>small</strong> amount of dissolved solute.</dd></div>
+          <div><dt>dilution</dt><dd>Adding more solvent to lower the concentration. Moles of solute stay the same.</dd></div>
+          <div><dt>stock solution</dt><dd>A high-concentration solution kept for later dilution into working solutions.</dd></div>
+          <div><dt>saturated</dt><dd>A solution holding the maximum solute it can at that temperature.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Drawing Perspectives</h3>
+        <dl class="terms">
+          <div><dt>scientific drawing</dt><dd>A neat, labeled sketch of what you observe — captures size, shape, and structure without artistic embellishment.</dd></div>
+          <div><dt>front view (elevation)</dt><dd>What you see looking <strong>directly at</strong> the object from the front.</dd></div>
+          <div><dt>side view</dt><dd>What you see from the <strong>left or right</strong> side (profile).</dd></div>
+          <div><dt>top view (bird's eye / plan)</dt><dd>What you see looking <strong>down</strong> on the object from above.</dd></div>
+          <div><dt>isometric / 3-D perspective</dt><dd>Shows three faces at once at an angle — useful for showing depth.</dd></div>
+          <div><dt>cross-section</dt><dd>The "inside" view as if the object were cut in half.</dd></div>
+          <div><dt>scale bar / label</dt><dd>Indicator of size and identifying labels on a scientific drawing.</dd></div>
+        </dl>
+      </div>
+
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Measurement Vocabulary <span class="topic-ref">Slides &amp; guided notes</span></h3>
+        <dl class="terms">
+          <div><dt>significant figures</dt><dd>All <strong>certain</strong> digits + <strong>one estimated</strong>.</dd></div>
+          <div><dt>captive zeros</dt><dd>Zeros between non-zeros (102) — always significant.</dd></div>
+          <div><dt>leading zeros</dt><dd>Zeros before the first non-zero (0.025) — never significant.</dd></div>
+          <div><dt>trailing zeros</dt><dd>Zeros after the last non-zero — significant <em>only</em> if a decimal point is present.</dd></div>
+          <div><dt>meniscus</dt><dd>Curved surface of a liquid. Water: concave, read bottom. Mercury: convex, read top.</dd></div>
+          <div><dt>parallax error</dt><dd>Reading from an angle gives the wrong value — always read at eye level.</dd></div>
+          <div><dt>conversion factor</dt><dd>An equivalence ratio used to cancel units in dimensional analysis.</dd></div>
+          <div><dt>density</dt><dd>D = m/V. Units g/mL or g/cm³. The slope of a mass-vs-volume graph.</dd></div>
+          <div><dt>direct relationship</dt><dd>Variables change in the same direction → straight line, y = kx.</dd></div>
+          <div><dt>indirect (inverse) relationship</dt><dd>Variables change in opposite directions → curve, xy = k.</dd></div>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 1 — THINKING SKILLS -->
+  <section class="topic" id="s1">
+    <div class="sec-head">
+      <span class="sec-num">§ 01</span>
+      <h2 class="sec-title">Thinking Skills <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">Board explicitly calls out <strong>independent variable</strong> and <strong>sample size</strong> under this heading.</p>
+
+    <h3>Observation vs. Interpretation</h3>
+    <p><strong>Observation</strong> = a <em>fact</em> from your senses or an instrument. <strong>Interpretation</strong> = an <em>explanation</em> of the facts.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Statement</th><th>Type</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>The match burns</td><td>Observation</td><td>You see flame</td></tr>
+        <tr><td>The match reacts with oxygen</td><td>Interpretation</td><td>Explaining the cause</td></tr>
+        <tr><td>The metal gets warmer</td><td>Observation</td><td>You feel/measure it</td></tr>
+        <tr><td>Heat transfers to the metal</td><td>Interpretation</td><td>Explaining the process</td></tr>
+        <tr><td>Black soot is deposited on the metal</td><td>Observation</td><td>You see it</td></tr>
+        <tr><td>The truck hit the car</td><td>Interpretation</td><td>You're inferring</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>The Scientific Method</h3>
+    <ol>
+      <li>Observe something happening</li>
+      <li>Think about <em>why</em> — form a question</li>
+      <li>Form a testable hypothesis</li>
+      <li>Test — change <strong>only one variable at a time</strong></li>
+      <li>Confirm or reject</li>
+      <li>Incorporate the new knowledge</li>
+    </ol>
+
+    <h3>Variables</h3>
+    <div class="callout tip">
+      <span class="callout-label">Variables Cheat-Sheet</span>
+      <strong>Independent variable (IV)</strong> = the one you <em>change</em> on purpose. Goes on the <strong>x-axis</strong>.<br>
+      <strong>Dependent variable (DV)</strong> = the one you <em>measure</em>. It "depends on" the IV. Goes on the <strong>y-axis</strong>.<br>
+      <strong>Control</strong> = factors held constant so they don't influence the DV.<br>
+      <strong>Memory trick:</strong> "I change the I; I measure the D."
+    </div>
+
+    <h3>Sample Size</h3>
+    <ul>
+      <li><strong>Larger sample size = more reliable results.</strong> Random errors tend to cancel out.</li>
+      <li>One trial is not enough — a single measurement could be a fluke.</li>
+      <li>Small samples are vulnerable to <strong>outliers</strong>.</li>
+      <li>Rule of thumb in chem lab: at least <strong>3 trials</strong> before averaging.</li>
+      <li>Bigger sample size → better estimate of both the true value <em>and</em> the precision.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 2 — AVERAGING -->
+  <section class="topic" id="s2">
+    <div class="sec-head">
+      <span class="sec-num">§ 02</span>
+      <h2 class="sec-title">Averaging &amp; Weighted Averaging <span class="board-tag">BOARD</span></h2>
+    </div>
+
+    <h3>Simple Average (Mean)</h3>
+    <div class="formula">
+      x̄ = <span class="frac"><span class="num">sum of all values</span><span class="den">number of values</span></span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Example</div>
+      Trial masses: 5.21 g, 5.19 g, 5.23 g, 5.22 g<br>
+      (5.21 + 5.19 + 5.23 + 5.22) / 4 = 20.85 / 4 = <span class="answer">5.21 g</span>
+    </div>
+    <p>Apply sig fig rules to your average — don't report more decimals than the data justifies.</p>
+
+    <h3>Weighted Average</h3>
+    <p>Use when some data points "count more" — different abundances, different trial counts, different reliabilities.</p>
+
+    <div class="formula">
+      x̄<sub>weighted</sub> = <span class="frac"><span class="num">Σ (value × weight)</span><span class="den">Σ weights</span></span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Classic chemistry — atomic mass of chlorine</div>
+      Cl-35: 75.77 % abundance, mass 34.97 amu<br>
+      Cl-37: 24.23 % abundance, mass 36.97 amu<br><br>
+      (34.97 × 0.7577) + (36.97 × 0.2423) = 26.50 + 8.957 ≈ <span class="answer">35.45 amu</span><br><br>
+      That's why chlorine's atomic mass is ~35.45, not a whole number.
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Lab example — different trial counts</div>
+      Group A: 5 trials, average 4.20 g/mL. Group B: 2 trials, average 4.50 g/mL.<br>
+      (4.20 × 5 + 4.50 × 2) / (5 + 2) = 30.0 / 7 = <span class="answer">4.29 g/mL</span><br>
+      A simple mean of (4.20, 4.50) would give 4.35 — wrong, because Group A had more trials.
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">Spot the difference</span>
+      If every data point contributed the <em>same</em> weight (e.g., one trial each) → simple average.<br>
+      If they contributed <em>different</em> weights (abundances, trial counts, % composition) → weighted average.
+    </div>
+  </section>
+
+  <!-- SECTION 3 — % ERROR -->
+  <section class="topic" id="s3">
+    <div class="sec-head">
+      <span class="sec-num">§ 03</span>
+      <h2 class="sec-title">% Error <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">The board explicitly writes: <strong>% error = ( |Th − Exp| / Th ) × 100</strong>. Use absolute value.</p>
+
+    <div class="formula">
+      % Error = <span class="abs"><span class="frac"><span class="num">theoretical − experimental</span><span class="den">theoretical</span></span></span> × 100
+    </div>
+
+    <ul>
+      <li><strong>theoretical value (Th)</strong> = accepted/true value</li>
+      <li><strong>experimental value (Exp)</strong> = what you measured in lab</li>
+      <li>Always positive when you use absolute value (which the board does)</li>
+    </ul>
+
+    <h3>Worked examples</h3>
+
+    <div class="example">
+      <div class="ex-tag">Calibration weight</div>
+      A 100.00 g weight reads 101.41 g.<br>
+      |100.00 − 101.41| / 100.00 × 100 = <span class="answer">1.41 %</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Density of nickel</div>
+      Experimental 7.59 g/mL, true 8.91 g/mL.<br>
+      |8.91 − 7.59| / 8.91 × 100 = <span class="answer">14.8 %</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Volume of a mole of gas</div>
+      Bobby got 18.7 L; should be 22.4 L.<br>
+      |22.4 − 18.7| / 22.4 × 100 = <span class="answer">16.5 %</span>
+    </div>
+
+    <h3>% Recovered (Yield)</h3>
+    <div class="formula">
+      % Recovered = <span class="frac"><span class="num">actual</span><span class="den">expected</span></span> × 100
+    </div>
+    <p>Example: recovered 12.56 g of 13.00 g expected → 12.56/13.00 × 100 = <span class="answer">96.6 %</span> recovered, so % error = <span class="answer">3.4 %</span>.</p>
+
+    <div class="callout warning">
+      <span class="callout-label">Causes of error — slide 15</span>
+      <strong>1. Limitations of the equipment</strong> (precision of the balance, thermometer, etc.)<br>
+      <strong>2. NOT "human error"</strong> — the slide is explicit: "if you make a mistake, fix it!"
+    </div>
+  </section>
+
+  <!-- SECTION 4 — ACCURACY VS PRECISION -->
+  <section class="topic" id="s4">
+    <div class="sec-head">
+      <span class="sec-num">§ 04</span>
+      <h2 class="sec-title">Accuracy vs. Precision <span class="board-tag">BOARD</span></h2>
+    </div>
+
+    <ul>
+      <li><strong>Accuracy</strong> = how close to the <strong>bullseye</strong> (the accepted value).</li>
+      <li><strong>Precision</strong> = how <strong>tightly grouped</strong> your repeated measurements are.</li>
+    </ul>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Dartboard pattern</th><th style="text-align:center">Precision</th><th style="text-align:center">Accuracy</th></tr></thead>
+      <tbody>
+        <tr><td>Scattered, far from bullseye</td><td style="text-align:center"><span class="x">✗</span></td><td style="text-align:center"><span class="x">✗</span></td></tr>
+        <tr><td>Tightly clustered, far from bullseye</td><td style="text-align:center"><span class="check">✓</span></td><td style="text-align:center"><span class="x">✗</span></td></tr>
+        <tr><td>Spread out, but average near bullseye</td><td style="text-align:center"><span class="x">✗</span></td><td style="text-align:center"><span class="check">✓</span></td></tr>
+        <tr><td>Tightly clustered on bullseye</td><td style="text-align:center"><span class="check">✓</span></td><td style="text-align:center"><span class="check">✓</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warning">
+      <span class="callout-label">Tell-tale pattern</span>
+      <strong>High precision + low accuracy = systematic error.</strong> The instrument is consistent, but consistently wrong (e.g., a miscalibrated balance reads 0.5 g too high <em>every</em> time).
+    </div>
+  </section>
+
+  <!-- SECTION 5 — SCIENCE COMMUNICATION / LAB REPORT -->
+  <section class="topic" id="s5">
+    <div class="sec-head">
+      <span class="sec-num">§ 05</span>
+      <h2 class="sec-title">Science Communication &amp; Lab Reports <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">Board says "Science Communication (incl. Lab Report)" — know the standard report sections.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Section</th><th>What goes here</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Title</strong></td><td>Specific, concise — what was the experiment?</td></tr>
+        <tr><td><strong>Purpose / Objective</strong></td><td>One sentence: what you set out to find or test.</td></tr>
+        <tr><td><strong>Hypothesis</strong></td><td>Your prediction, made <em>before</em> the experiment. "If… then… because…"</td></tr>
+        <tr><td><strong>Materials</strong></td><td>Bulleted list of equipment and chemicals used.</td></tr>
+        <tr><td><strong>Procedure</strong></td><td>Numbered steps, past tense, repeatable by someone else.</td></tr>
+        <tr><td><strong>Data / Observations</strong></td><td>Tables of measurements and qualitative observations. No interpretation — just facts.</td></tr>
+        <tr><td><strong>Calculations / Analysis</strong></td><td>Show your work: density, % error, averages, conversions. Units &amp; sig figs.</td></tr>
+        <tr><td><strong>Results</strong></td><td>Summary of calculated values, often in a small table.</td></tr>
+        <tr><td><strong>Conclusion</strong></td><td>Did the data support the hypothesis? Compare experimental vs accepted value.</td></tr>
+        <tr><td><strong>Sources of Error</strong></td><td>Equipment limitations, parallax, calibration. <strong>NOT "human error."</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">Quick distinction</span>
+      <strong>Data</strong> = observations (facts only). <strong>Conclusion</strong> = interpretation (what they mean).
+    </div>
+
+    <h3>Communication principles</h3>
+    <ul>
+      <li>Always include <strong>units</strong> on measured and calculated values.</li>
+      <li>Report numbers to the <strong>correct sig figs</strong> for the instrument used.</li>
+      <li>Label graph axes with the quantity <em>and</em> its units.</li>
+      <li>Use scientific notation for very large or very small numbers.</li>
+      <li>Draw a <strong>best-fit line</strong> through data points — never connect-the-dots.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 6 — LAB EQUIPMENT -->
+  <section class="topic" id="s6">
+    <div class="sec-head">
+      <span class="sec-num">§ 06</span>
+      <h2 class="sec-title">Lab Equipment <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">Slide 4 specifically names four pieces by letter. Recognize each on sight.</p>
+
+    <div class="equipment-grid">
+      <div class="equipment-card">
+        <div class="letter">A</div>
+        <div class="name">Graduated Cylinder</div>
+        <div class="use">Precise liquid volume. Read at the bottom of the meniscus, eye level.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">B</div>
+        <div class="name">Beaker</div>
+        <div class="use">Holds and mixes liquids. Volume marks <strong>approximate only</strong>.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">C</div>
+        <div class="name">Ring Stand</div>
+        <div class="use">Vertical support for rings, clamps, and heated apparatus.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">D</div>
+        <div class="name">Bunsen Burner</div>
+        <div class="use">Gas burner producing a controlled flame for heating.</div>
+      </div>
+    </div>
+
+    <h3>Other equipment you should know</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Equipment</th><th>Used for</th><th>Key behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Erlenmeyer flask</td><td>Mixing, swirling, holding</td><td>Narrow neck = less splashing</td></tr>
+        <tr><td>Volumetric flask</td><td>Preparing solutions of <strong>exact</strong> concentration</td><td>Has a single etched line for precise volume</td></tr>
+        <tr><td>Burette</td><td>Delivering precise variable volumes (titrations)</td><td>Stopcock at the bottom controls flow</td></tr>
+        <tr><td>Pipette</td><td>Transferring a precise fixed volume</td><td>Used with a bulb — never mouth-pipette</td></tr>
+        <tr><td>Test tube</td><td>Small-scale reactions, heating</td><td>Point opening away from people when heating</td></tr>
+        <tr><td>Balance</td><td>Measuring mass</td><td>Tare/zero before each use</td></tr>
+        <tr><td>Thermometer</td><td>Measuring temperature</td><td>Bulb contacts only the substance — not the container wall</td></tr>
+        <tr><td>Watch glass</td><td>Cover for beakers, evaporation surface</td><td>Curved glass disk</td></tr>
+        <tr><td>Crucible</td><td>Heating substances to high temperatures</td><td>Ceramic; sits in a clay triangle</td></tr>
+        <tr><td>Funnel (with filter paper)</td><td>Filtration</td><td>Holds filter paper for liquid/solid separation</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">Precision vs not</span>
+      <strong>Precision glassware:</strong> graduated cylinder, volumetric flask, burette, pipette. Use these when the volume matters.<br>
+      <strong>Approximate glassware:</strong> beakers, Erlenmeyer flasks. Never use these for precise volumes.
+    </div>
+  </section>
+
+  <!-- SECTION 7 — SEPARATION TECHNIQUES -->
+  <section class="topic" id="s7">
+    <div class="sec-head">
+      <span class="sec-num">§ 07</span>
+      <h2 class="sec-title">Separation Techniques <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">Mixtures can be separated by physical means based on differences in particle size, boiling point, solubility, density, or magnetic properties.</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Technique</th><th>Separates</th><th>Based on</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Filtration</strong></td><td>Insoluble solid from liquid</td><td>Particle size</td><td>Sand from water (filter paper traps sand)</td></tr>
+        <tr><td><strong>Evaporation</strong></td><td>Dissolved solid from liquid</td><td>Boiling point of solvent</td><td>Salt from salt water (water evaporates, salt remains)</td></tr>
+        <tr><td><strong>Distillation</strong></td><td>Two liquids OR a liquid from dissolved solid</td><td>Boiling point</td><td>Pure water from salt water (water vaporizes, condenses, collected)</td></tr>
+        <tr><td><strong>Chromatography</strong></td><td>Components of a mixed solution</td><td>How fast each moves through a medium</td><td>Separating ink dyes on filter paper</td></tr>
+        <tr><td><strong>Decanting</strong></td><td>Solid from liquid (or denser liquid)</td><td>Density / settling</td><td>Pouring water off settled sand</td></tr>
+        <tr><td><strong>Separating funnel</strong></td><td>Two <em>immiscible</em> liquids</td><td>Density</td><td>Oil and water (drain denser layer first)</td></tr>
+        <tr><td><strong>Magnetism</strong></td><td>Magnetic from non-magnetic solid</td><td>Magnetic property</td><td>Iron filings from sand</td></tr>
+        <tr><td><strong>Centrifugation</strong></td><td>Solids/liquids of different density</td><td>Spinning force</td><td>Blood cells from plasma</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">How to pick the right technique</span>
+      <strong>Solid in a liquid (won't dissolve)?</strong> → Filtration or decanting.<br>
+      <strong>Solid dissolved in a liquid?</strong> → Evaporation (keep solid) or distillation (keep liquid).<br>
+      <strong>Two liquids that mix?</strong> → Distillation (different boiling points).<br>
+      <strong>Two liquids that don't mix?</strong> → Separating funnel.<br>
+      <strong>Multiple dissolved colored components?</strong> → Chromatography.<br>
+      <strong>One component is magnetic?</strong> → Magnet.
+    </div>
+  </section>
+
+  <!-- SECTION 8 — MAKING SOLUTIONS -->
+  <section class="topic" id="s8">
+    <div class="sec-head">
+      <span class="sec-num">§ 08</span>
+      <h2 class="sec-title">Making Solutions <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">A solution is a homogeneous mixture of a solute dissolved in a solvent.</p>
+
+    <h3>Key vocabulary</h3>
+    <ul>
+      <li><strong>Solute</strong> = what you're dissolving (smaller amount). Sugar in lemonade.</li>
+      <li><strong>Solvent</strong> = what does the dissolving (larger amount). Water in lemonade.</li>
+      <li><strong>Aqueous solution</strong> = solute dissolved in water (most common in chem).</li>
+      <li><strong>Concentration</strong> = how much solute per amount of solution.</li>
+      <li><strong>Concentrated</strong> = lots of solute relative to solvent.</li>
+      <li><strong>Dilute</strong> = small amount of solute relative to solvent.</li>
+      <li><strong>Saturated</strong> = no more solute can dissolve at that temperature.</li>
+      <li><strong>Stock solution</strong> = a concentrated solution kept on hand for later dilution.</li>
+    </ul>
+
+    <h3>How to prepare a solution from a solid (general procedure)</h3>
+    <ol>
+      <li><strong>Calculate</strong> the mass of solute needed for the target concentration and volume.</li>
+      <li><strong>Weigh</strong> the solute on a tared balance.</li>
+      <li><strong>Transfer</strong> the solute into a <strong>volumetric flask</strong> (the precise glassware).</li>
+      <li>Add <em>some</em> solvent and swirl to dissolve.</li>
+      <li>Fill the flask up to the <strong>etched line</strong> with more solvent.</li>
+      <li><strong>Mix thoroughly</strong> by inverting and swirling.</li>
+      <li><strong>Label</strong> with the chemical name, concentration, and date.</li>
+    </ol>
+
+    <h3>Why a volumetric flask?</h3>
+    <p>A volumetric flask has a single line for the final volume — far more precise than a beaker. You don't measure the solvent separately; you dissolve the solute and then bring the total volume up to the line.</p>
+
+    <h3>Dilution</h3>
+    <p>Adding more solvent decreases concentration without changing the amount of solute. If you ever see the equation:</p>
+    <div class="formula">M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub></div>
+    <p>that's the dilution formula (initial molarity × initial volume = final molarity × final volume). Likely beyond MQ2B — but recognize that moles of solute stay constant during a dilution.</p>
+
+    <div class="callout warning">
+      <span class="callout-label">Safety</span>
+      When making <strong>acid</strong> solutions: always add <strong>Acid to Water</strong>, never the reverse. ("Do as you oughta — add acid to water.")
+    </div>
+  </section>
+
+  <!-- SECTION 9 — DRAWING PERSPECTIVES -->
+  <section class="topic" id="s9">
+    <div class="sec-head">
+      <span class="sec-num">§ 09</span>
+      <h2 class="sec-title">Drawing Perspectives <span class="board-tag">BOARD</span></h2>
+    </div>
+    <p class="lede">Scientific drawing is about capturing <em>exactly</em> what you see — clearly, accurately, with labels — from the perspective that best shows the structure.</p>
+
+    <h3>Standard perspectives</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Perspective</th><th>What it shows</th><th>When to use it</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Front view (elevation)</strong></td><td>Object as seen face-on</td><td>Most common — shows height &amp; width clearly</td></tr>
+        <tr><td><strong>Side view (profile)</strong></td><td>Object from the left or right</td><td>Shows depth, layering</td></tr>
+        <tr><td><strong>Top view (bird's-eye / plan)</strong></td><td>Looking down from above</td><td>Shows arrangement, footprint, internal grid</td></tr>
+        <tr><td><strong>Isometric / 3-D</strong></td><td>Three faces at once at an angle</td><td>Shows overall 3-D shape</td></tr>
+        <tr><td><strong>Cross-section</strong></td><td>The "inside" cut open</td><td>Shows internal structure (e.g., a layered solution)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Rules for a good scientific drawing</h3>
+    <ol>
+      <li><strong>Use a sharp pencil</strong> — never a pen — so corrections are possible.</li>
+      <li><strong>Draw what you see, not what you think you should see.</strong> Don't add details that aren't there.</li>
+      <li><strong>Label everything.</strong> Use straight lines (not arrows) and write labels horizontally.</li>
+      <li><strong>Include a scale bar</strong> or note the actual size so the drawing has context.</li>
+      <li><strong>Use clean, single lines</strong> — no sketchy, fuzzy multi-line strokes.</li>
+      <li><strong>Don't shade with pencil</strong> — use stippling (dots) or hatching if you need to show shadow.</li>
+      <li><strong>Title the drawing</strong> with what it shows and the perspective used.</li>
+    </ol>
+
+    <h3>Why this matters for chemistry labs</h3>
+    <ul>
+      <li>Drawings of apparatus setups (distillation, filtration) show that you understand what equipment connects to what.</li>
+      <li>Drawings of <strong>before vs after</strong> capture observations in a way text cannot (e.g., a colorless solution turning blue with a precipitate).</li>
+      <li>Drawings of layered liquids in a separating funnel show density relationships at a glance.</li>
+    </ul>
+
+    <div class="callout tip">
+      <span class="callout-label">Quick guidance</span>
+      For an apparatus setup, the <strong>front view</strong> is almost always the right choice — that's the angle from which you operate the equipment.<br>
+      For a layered solution (e.g., oil over water), draw a <strong>side view</strong> of the container so you can label each layer clearly.
+    </div>
+  </section>
+
+  <!-- SECTION 10 — SIG FIGS -->
+  <section class="topic" id="s10">
+    <div class="sec-head">
+      <span class="sec-num">§ 10</span>
+      <h2 class="sec-title">Significant Figures <span class="topic-tag">2.8</span></h2>
+    </div>
+
+    <h3>Counting sig figs</h3>
+    <ol>
+      <li><strong>All integers (1–9)</strong> are significant.</li>
+      <li><strong>Captive zeros</strong> (between non-zeros, like 10<strong>2</strong>) — always significant.</li>
+      <li><strong>Leading zeros</strong> (0.0<strong>0</strong>25) — never significant.</li>
+      <li><strong>Trailing zeros</strong> — significant <em>only</em> if there's a decimal point.
+        <ul>
+          <li><code>120</code> → 2 sig figs · <code>120.</code> → 3 sig figs · <code>120.0</code> → 4 sig figs</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Number</th><th>Sig figs</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td><code>23.1 g</code></td><td>3</td><td>All nonzero</td></tr>
+        <tr><td><code>200 mL</code></td><td>1</td><td>Trailing zeros, no decimal</td></tr>
+        <tr><td><code>20.0 cm</code></td><td>3</td><td>Decimal makes trailing zeros count</td></tr>
+        <tr><td><code>0.020 m</code></td><td>2</td><td>Leading zeros are placeholders</td></tr>
+        <tr><td><code>5.10 g</code></td><td>3</td><td>Trailing zero after decimal</td></tr>
+        <tr><td><code>0.000078 kg</code></td><td>2</td><td>Leading zeros are placeholders</td></tr>
+        <tr><td><code>0.04504 m</code></td><td>4</td><td>Captive zero counts</td></tr>
+        <tr><td><code>985.0 K</code></td><td>4</td><td>Decimal makes the zero count</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">Sig fig math</span>
+      <strong>Add/Subtract</strong> → keep the least number of <em>decimal places</em>.<br>
+      <strong>Multiply/Divide</strong> → keep the least number of <em>sig figs</em>.
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Add/Subtract</div>
+      12.321 m + 1.5 m = 13.821 → <span class="answer">13.8 m</span> (1.5 has 1 decimal)
+    </div>
+    <div class="example">
+      <div class="ex-tag">Multiply/Divide</div>
+      0.21 cm × 0.1385 cm = 0.029085 → <span class="answer">0.029 cm²</span> (0.21 has 2 sig figs)
+    </div>
+  </section>
+
+  <!-- SECTION 11 — MEASUREMENTS -->
+  <section class="topic" id="s11">
+    <div class="sec-head">
+      <span class="sec-num">§ 11</span>
+      <h2 class="sec-title">Making Measurements <span class="topic-tag">2.5</span></h2>
+    </div>
+
+    <h3>Reading a graduated instrument</h3>
+    <ol>
+      <li>Determine the value of the <strong>smallest line</strong>.</li>
+      <li><strong>Estimate</strong> between the smallest lines by mentally dividing into 10 units.</li>
+      <li>Read at the <strong>bottom of the meniscus</strong> for water (top for mercury).</li>
+    </ol>
+
+    <h3>Slide 39 worked example</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Beaker (10's)</th><th>Cylinder (1's)</th><th>Cylinder (0.1's)</th></tr></thead>
+      <tbody>
+        <tr><td>Smallest line</td><td>10</td><td>1</td><td>0.1</td></tr>
+        <tr><td>Read to</td><td>1's place</td><td>0.1's</td><td>0.01's</td></tr>
+        <tr><td>Volume between</td><td>40 &amp; 50</td><td>36 &amp; 37</td><td>6.5 &amp; 6.6</td></tr>
+        <tr><td>Estimate</td><td>8/10</td><td>5/10</td><td>9/10</td></tr>
+        <tr><td><strong>Measurement</strong></td><td><strong>48 mL</strong></td><td><strong>36.5 mL</strong></td><td><strong>6.59 mL</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Parallax Error</h3>
+    <ul>
+      <li>Looking down → reading appears higher</li>
+      <li>Looking up → reading appears lower</li>
+      <li>Looking straight at eye level → correct reading</li>
+    </ul>
+
+    <h3>Ruler practice (Ruler Key P1 &amp; P2)</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Ruler 1 (cm)</th><th>Ruler 2 (cm)</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>4.0</td><td>4.01</td></tr>
+        <tr><td>B</td><td>9.3</td><td>9.34</td></tr>
+        <tr><td>C</td><td>0.6</td><td>0.62</td></tr>
+        <tr><td>D</td><td>2.8</td><td>2.85</td></tr>
+        <tr><td>E</td><td>8.0</td><td>8.01</td></tr>
+        <tr><td>F</td><td>6.2</td><td>6.26</td></tr>
+        <tr><td>G</td><td>5.3</td><td>5.28</td></tr>
+        <tr><td>H</td><td>0.4</td><td>0.39</td></tr>
+        <tr><td>I</td><td>1.7</td><td>1.70</td></tr>
+        <tr><td>J</td><td>7.8</td><td>7.72</td></tr>
+        <tr><td>K</td><td>3.8</td><td>3.75</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- SECTION 12 — METRIC + DA -->
+  <section class="topic" id="s12">
+    <div class="sec-head">
+      <span class="sec-num">§ 12</span>
+      <h2 class="sec-title">Metric System &amp; Dimensional Analysis <span class="topic-tag">2.4/2.6</span></h2>
+    </div>
+
+    <h3>Metric prefixes</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Prefix</th><th>Symbol</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>kilo</td><td>k</td><td>10³ = 1000×</td></tr>
+        <tr><td><strong>base</strong></td><td>g / L / m / sec</td><td>1</td></tr>
+        <tr><td>centi</td><td>c</td><td>10⁻² = 0.01×</td></tr>
+        <tr><td>milli</td><td>m</td><td>10⁻³ = 0.001×</td></tr>
+        <tr><td>micro</td><td>μ</td><td>10⁻⁶</td></tr>
+        <tr><td>nano</td><td>n</td><td>10⁻⁹</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Equivalences to memorize</h3>
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><td>1 kg = 1000 g</td><td>1 m = 100 cm = 1000 mm</td></tr>
+        <tr><td>1 g = 1000 mg</td><td>1 m = 1,000,000 μm</td></tr>
+        <tr><td>1 km = 1000 m</td><td>1 L = 1000 mL</td></tr>
+        <tr><td>1 mL = 1 cm³</td><td>1 cm = 10 mm</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Dimensional Analysis</h3>
+    <p>Multiply by conversion factors so unwanted units cancel:</p>
+    <div class="formula" style="font-size:18px;">
+      1 day × <span class="frac"><span class="num">24 hr</span><span class="den">1 day</span></span> × <span class="frac"><span class="num">60 min</span><span class="den">1 hr</span></span> × <span class="frac"><span class="num">60 s</span><span class="den">1 min</span></span> = 86,400 s
+    </div>
+
+    <h4>Imperial conversions (slide 55)</h4>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mass</th><th>Length</th><th>Volume</th></tr></thead>
+      <tbody>
+        <tr><td>1 lb = 454 g</td><td>1 in = 2.54 cm</td><td>1 gal = 3.785 L</td></tr>
+        <tr><td>1 kg = 1000 g</td><td>1 mi = 1.61 km</td><td>1 L = 1000 mL</td></tr>
+        <tr><td>1 lb = 16 oz</td><td>1 mi = 5,280 ft</td><td>1 mL = 1 cm³</td></tr>
+        <tr><td>1 g = 1000 mg</td><td>1 ft = 12 in</td><td>1 oz = 29.6 mL</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- SECTION 13 — DENSITY + GRAPHING -->
+  <section class="topic" id="s13">
+    <div class="sec-head">
+      <span class="sec-num">§ 13</span>
+      <h2 class="sec-title">Density &amp; Graphing <span class="topic-tag">2.3/2.2</span></h2>
+    </div>
+
+    <div class="formula">D = <span class="frac"><span class="num">m</span><span class="den">V</span></span></div>
+    <p>Rearranged: <code>m = D × V</code> and <code>V = m / D</code>.</p>
+
+    <div class="example">
+      <div class="ex-tag">Baseball</div>
+      V = 210 cm³, D = 0.71 g/cm³ → m = 0.71 × 210 = <span class="answer">149 g</span>
+    </div>
+    <div class="example">
+      <div class="ex-tag">Copper block (water displacement)</div>
+      Water rises 20.0 → 25.9 mL, so V = 5.9 mL. D = 8.96 g/mL → m = <span class="answer">52.9 g</span>
+    </div>
+
+    <h3>Graphing relationships</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Direct</th><th>Indirect (inverse)</th></tr></thead>
+      <tbody>
+        <tr><td>As x ↑</td><td>y ↑</td><td>y ↓</td></tr>
+        <tr><td>Shape</td><td>Straight line</td><td>Curve approaching axes</td></tr>
+        <tr><td>Equation</td><td>y = kx (k = slope)</td><td>xy = k</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p><strong>Slope</strong> = (y₂ − y₁) / (x₂ − x₁). On a mass vs. volume graph, the slope = density.</p>
+
+    <div class="callout warning">
+      <span class="callout-label">Slide 51</span>
+      Lab data never forms perfectly straight or perfectly curved lines because of uncertainty in measurements. Draw a <strong>best-fit line</strong> — never connect-the-dots.
+    </div>
+  </section>
+
+  <!-- SECTION 14 — FORMULA SHEET -->
+  <section class="topic" id="s14">
+    <div class="sec-head">
+      <span class="sec-num">§ 14</span>
+      <h2 class="sec-title">Formula Sheet</h2>
+    </div>
+
+<pre><code>Density:        D = m/V          m = D × V          V = m/D
+
+% Error:        |theoretical − experimental| / theoretical × 100
+
+% Recovered:    actual / expected × 100
+
+Slope:          (y₂ − y₁) / (x₂ − x₁)
+
+Direct rel:     y = kx       (k = slope)
+Indirect rel:   xy = k
+
+Average:        Σ values / n
+
+Weighted avg:   Σ(value × weight) / Σ(weights)
+
+Dilution:       M₁V₁ = M₂V₂</code></pre>
+
+    <div class="callout">
+      <span class="callout-label">Sig fig math</span>
+      <strong>Add/Subtract</strong> → least decimal places. <strong>Multiply/Divide</strong> → least sig figs.<br>
+      <strong>Measurement rule:</strong> read to one decimal beyond the smallest marked division.
+    </div>
+  </section>
+
+  <!-- SECTION 15 — MISTAKES -->
+  <section class="topic" id="s15">
+    <div class="sec-head">
+      <span class="sec-num">§ 15</span>
+      <h2 class="sec-title">Common Mistakes to Avoid</h2>
+    </div>
+
+    <ul class="mistakes">
+      <li><strong>Mixing up accuracy and precision.</strong> Accuracy = bullseye. Precision = grouping.</li>
+      <li><strong>Forgetting absolute value</strong> in % error (the board uses |Th − Exp|).</li>
+      <li><strong>Citing "human error"</strong> as a source of error. The slides explicitly say don't.</li>
+      <li><strong>Mixing up solute and solvent.</strong> Solute is what dissolves; solvent does the dissolving.</li>
+      <li><strong>Using a beaker for precise volume.</strong> Beakers are approximate — use a graduated cylinder or volumetric flask.</li>
+      <li><strong>Adding water to acid.</strong> Always do the reverse: Acid to Water.</li>
+      <li><strong>Reading from an angle</strong> → parallax error.</li>
+      <li><strong>Connecting graph data dot-to-dot</strong> instead of a best-fit line.</li>
+      <li><strong>Picking distillation</strong> for separating sand from water. That's filtration.</li>
+      <li><strong>Using a simple mean</strong> when the data points have different weights.</li>
+      <li><strong>Mistaking 120 for 120.</strong> The decimal point changes the sig figs!</li>
+      <li><strong>Forgetting to label axes</strong> with quantity AND units.</li>
+    </ul>
+
+    <p style="margin-top:32px;font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:var(--ink-soft);text-align:center;">
+      Walk in confident. Read carefully. Check sig figs at the end.
+    </p>
+  </section>
+
+  <footer>
+    <span>MQ2B · Study Guide · Aligned to teacher's board</span>
+    <span class="stamp">Good luck on May 19 &amp; 22 ✦</span>
+  </footer>
+
+</div>
+</body>
+</html>
