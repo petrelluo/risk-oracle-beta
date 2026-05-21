@@ -23,12 +23,7 @@
   }
 
   * { box-sizing: border-box; }
-
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
   body {
     margin: 0;
@@ -37,16 +32,11 @@
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 1.65;
-    background-image:
-      radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
     background-size: 4px 4px;
   }
 
-  .wrap {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 64px 48px 96px;
-  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 48px 96px; }
 
   /* MASTHEAD */
   .masthead {
@@ -56,198 +46,129 @@
     margin-bottom: 48px;
     position: relative;
   }
-  .masthead::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0;
-    bottom: -5px;
-    height: 1px;
-    background: var(--rule);
-  }
+  .masthead::after { content: ""; position: absolute; left: 0; right: 0; bottom: -5px; height: 1px; background: var(--rule); }
   .masthead .eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 14px;
   }
-  .masthead .eyebrow::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--rule-soft);
-  }
+  .masthead .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--rule-soft); }
 
   h1.title {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
+    font-family: 'Fraunces', serif; font-weight: 900;
     font-size: clamp(38px, 6vw, 64px);
-    line-height: 0.95;
-    letter-spacing: -0.025em;
+    line-height: 0.95; letter-spacing: -0.025em;
     margin: 0 0 12px;
     font-variation-settings: "opsz" 144;
   }
-  h1.title em {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent);
-  }
+  h1.title em { font-style: italic; font-weight: 400; color: var(--accent); }
   .subtitle {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
-    color: var(--ink-soft);
-    font-style: italic;
-    max-width: 600px;
-    margin: 10px 0 0;
+    font-family: 'Fraunces', serif; font-size: 18px;
+    color: var(--ink-soft); font-style: italic;
+    max-width: 600px; margin: 10px 0 0;
   }
 
   .topics-strip {
-    margin-top: 28px;
-    padding: 14px 18px;
+    margin-top: 28px; padding: 14px 18px;
     background: var(--paper-warm);
     border-left: 3px solid var(--accent);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px;
-    line-height: 1.7;
-    letter-spacing: 0.03em;
+    font-size: 11.5px; line-height: 1.7; letter-spacing: 0.03em;
   }
   .topics-strip .label {
-    color: var(--accent);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    display: block;
-    margin-bottom: 4px;
+    color: var(--accent); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.18em; display: block; margin-bottom: 4px;
   }
+
+  /* SOURCES BANNER */
+  .sources {
+    margin-top: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
+  .sources strong { color: var(--accent-2); }
 
   /* TABLE OF CONTENTS */
   nav.toc {
-    margin: 0 0 56px;
-    padding: 24px 28px;
+    margin: 0 0 56px; padding: 24px 28px;
     background: var(--paper-warm);
     border: 1px solid var(--rule-soft);
     position: relative;
   }
   nav.toc::before {
-    content: "Contents";
-    position: absolute;
-    top: -12px;
-    left: 20px;
-    background: var(--paper);
-    padding: 0 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
+    content: "Contents"; position: absolute; top: -12px; left: 20px;
+    background: var(--paper); padding: 0 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent);
   }
   nav.toc ol {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: toc;
-    columns: 2;
-    column-gap: 32px;
+    margin: 0; padding: 0; list-style: none; counter-reset: toc;
+    columns: 2; column-gap: 32px;
   }
   nav.toc li {
-    counter-increment: toc;
-    padding: 6px 0;
+    counter-increment: toc; padding: 6px 0;
     break-inside: avoid;
-    font-family: 'Fraunces', serif;
-    font-size: 15.5px;
+    font-family: 'Fraunces', serif; font-size: 15.5px;
     border-bottom: 1px dotted var(--rule-soft);
   }
   nav.toc li::before {
     content: counter(toc, decimal-leading-zero);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    margin-right: 12px;
-    font-weight: 500;
+    font-size: 11px; color: var(--accent);
+    margin-right: 12px; font-weight: 500;
   }
-  nav.toc a {
-    color: var(--ink);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
+  nav.toc a { color: var(--ink); text-decoration: none; transition: color 0.15s ease; }
   nav.toc a:hover { color: var(--accent); }
 
   /* SECTIONS */
-  section.topic {
-    margin: 0 0 68px;
-    scroll-margin-top: 24px;
-  }
+  section.topic { margin: 0 0 68px; scroll-margin-top: 24px; }
   section.topic .sec-head {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 8px;
-    padding-bottom: 12px;
+    display: flex; align-items: baseline; gap: 20px;
+    margin-bottom: 8px; padding-bottom: 12px;
     border-bottom: 2px solid var(--rule);
   }
   .sec-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    color: var(--accent);
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-size: 14px; color: var(--accent);
+    font-weight: 600; letter-spacing: 0.05em;
   }
   h2.sec-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 700;
+    font-family: 'Fraunces', serif; font-weight: 700;
     font-size: clamp(26px, 3.5vw, 34px);
-    margin: 0;
-    line-height: 1.1;
-    letter-spacing: -0.015em;
+    margin: 0; line-height: 1.1; letter-spacing: -0.015em;
   }
   h2.sec-title .topic-tag {
     display: inline-block;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 3px 8px;
-    margin-left: 8px;
-    vertical-align: middle;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    border-radius: 2px;
+    font-size: 11px; background: var(--ink); color: var(--paper);
+    padding: 3px 8px; margin-left: 8px; vertical-align: middle;
+    font-weight: 500; letter-spacing: 0.1em; border-radius: 2px;
   }
 
   h3 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    margin: 36px 0 12px;
-    color: var(--accent-2);
-    letter-spacing: -0.01em;
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 22px; margin: 36px 0 12px;
+    color: var(--accent-2); letter-spacing: -0.01em;
   }
   h4 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 14px; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--accent);
     margin: 28px 0 10px;
   }
 
   p { margin: 0 0 14px; }
   p.lede {
-    font-family: 'Fraunces', serif;
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin-bottom: 20px;
+    font-family: 'Fraunces', serif; font-size: 18px;
+    line-height: 1.55; color: var(--ink-soft); margin-bottom: 20px;
   }
 
   ul, ol { padding-left: 22px; margin: 0 0 18px; }
   li { margin-bottom: 6px; }
-
   strong { color: var(--ink); font-weight: 700; }
   em { font-style: italic; }
 
@@ -256,89 +177,49 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.88em;
     background: var(--paper-warm);
-    padding: 2px 6px;
-    border-radius: 2px;
+    padding: 2px 6px; border-radius: 2px;
     border: 1px solid var(--rule-soft);
     color: var(--accent);
   }
 
   /* CODE BLOCKS */
   pre {
-    background: var(--code-bg);
-    color: var(--code-ink);
-    padding: 20px 24px;
-    border-radius: 4px;
+    background: var(--code-bg); color: var(--code-ink);
+    padding: 20px 24px; border-radius: 4px;
     overflow-x: auto;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13.5px;
-    line-height: 1.65;
-    margin: 18px 0;
-    border-left: 4px solid var(--accent);
+    font-size: 13.5px; line-height: 1.65;
+    margin: 18px 0; border-left: 4px solid var(--accent);
   }
-  pre code {
-    background: transparent;
-    border: none;
-    padding: 0;
-    color: inherit;
-  }
+  pre code { background: transparent; border: none; padding: 0; color: inherit; }
 
   /* FORMULAS */
   .formula {
     font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 22px;
-    text-align: center;
-    margin: 20px 0;
+    font-style: italic; font-size: 22px;
+    text-align: center; margin: 20px 0;
     padding: 18px 24px;
     background: var(--paper-warm);
     border-top: 1px solid var(--rule-soft);
     border-bottom: 1px solid var(--rule-soft);
   }
-  .formula .frac {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    margin: 0 4px;
-  }
-  .formula .frac .num {
-    display: block;
-    border-bottom: 1.5px solid currentColor;
-    padding: 0 8px 2px;
-  }
-  .formula .frac .den {
-    display: block;
-    padding: 2px 8px 0;
-  }
-  .formula .abs {
-    display: inline-block;
-    border-left: 1.5px solid currentColor;
-    border-right: 1.5px solid currentColor;
-    padding: 0 8px;
-    margin: 0 2px;
-  }
+  .formula .frac { display: inline-block; vertical-align: middle; text-align: center; margin: 0 4px; }
+  .formula .frac .num { display: block; border-bottom: 1.5px solid currentColor; padding: 0 8px 2px; }
+  .formula .frac .den { display: block; padding: 2px 8px 0; }
+  .formula .abs { display: inline-block; border-left: 1.5px solid currentColor; border-right: 1.5px solid currentColor; padding: 0 8px; margin: 0 2px; }
 
   /* TABLES */
-  .table-wrap {
-    margin: 18px 0 22px;
-    overflow-x: auto;
-  }
+  .table-wrap { margin: 18px 0 22px; overflow-x: auto; }
   table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14.5px;
-    background: var(--paper);
+    width: 100%; border-collapse: collapse;
+    font-size: 14.5px; background: var(--paper);
   }
   thead th {
-    background: var(--ink);
-    color: var(--paper);
-    text-align: left;
-    padding: 12px 14px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 12.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-bottom: none;
+    background: var(--ink); color: var(--paper);
+    text-align: left; padding: 12px 14px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    font-size: 12.5px; text-transform: uppercase;
+    letter-spacing: 0.08em; border-bottom: none;
   }
   tbody td {
     padding: 10px 14px;
@@ -348,27 +229,20 @@
   tbody tr:nth-child(even) { background: rgba(243, 238, 226, 0.4); }
   tbody tr:hover { background: var(--paper-warm); }
   td code { font-size: 0.95em; }
-
   .check { color: var(--accent-2); font-weight: 700; font-size: 17px; }
   .x     { color: var(--accent); font-weight: 700; font-size: 17px; }
 
   /* CALLOUT BOXES */
   .callout {
-    margin: 22px 0;
-    padding: 18px 22px;
+    margin: 22px 0; padding: 18px 22px;
     border-left: 4px solid var(--accent);
-    background: var(--paper-warm);
-    position: relative;
+    background: var(--paper-warm); position: relative;
   }
   .callout .callout-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 8px;
-    display: block;
+    font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--accent);
+    font-weight: 600; margin-bottom: 8px; display: block;
   }
   .callout.warning { border-left-color: #c75300; background: #fdf4e7; }
   .callout.warning .callout-label { color: #c75300; }
@@ -377,36 +251,28 @@
 
   /* WORKED EXAMPLES */
   .example {
-    margin: 16px 0;
-    padding: 16px 20px;
+    margin: 16px 0; padding: 16px 20px;
     border: 1px solid var(--rule-soft);
     background: var(--paper);
     border-radius: 3px;
   }
   .example .ex-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-weight: 600;
-    margin-bottom: 6px;
+    font-size: 10.5px; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.18em;
+    font-weight: 600; margin-bottom: 6px;
   }
   .example p:last-child { margin-bottom: 0; }
   .answer {
-    display: inline-block;
-    background: var(--highlight);
-    padding: 1px 8px;
-    font-weight: 700;
-    border-radius: 2px;
+    display: inline-block; background: var(--highlight);
+    padding: 1px 8px; font-weight: 700; border-radius: 2px;
   }
 
   /* PRACTICE / ANSWERS */
   .practice {
     background: var(--paper-warm);
     border: 1px solid var(--rule-soft);
-    padding: 28px 32px;
-    margin: 24px 0;
+    padding: 28px 32px; margin: 24px 0;
     border-radius: 4px;
   }
   .practice ol { padding-left: 22px; }
@@ -418,47 +284,57 @@
   ul.mistakes li {
     padding: 8px 0;
     border-bottom: 1px dotted var(--rule-soft);
-    list-style: none;
-    position: relative;
+    list-style: none; position: relative;
     padding-left: 28px;
   }
   ul.mistakes { padding-left: 0; }
   ul.mistakes li::before {
-    content: "✗";
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 16px;
+    content: "✗"; position: absolute; left: 0;
+    color: var(--accent); font-weight: 700; font-size: 16px;
+  }
+
+  /* EQUIPMENT GRID */
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px; margin: 22px 0;
+  }
+  .equipment-card {
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    padding: 16px;
+    text-align: center;
+    border-radius: 3px;
+  }
+  .equipment-card .letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent);
+    letter-spacing: 0.18em; font-weight: 600;
+  }
+  .equipment-card .name {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    font-size: 18px; margin: 6px 0 8px;
+    color: var(--accent-2);
+  }
+  .equipment-card .use {
+    font-size: 13px; color: var(--ink-soft); line-height: 1.45;
   }
 
   /* GLOSSARY */
-  .glossary {
-    margin: 16px 0 24px;
-  }
-  .glossary-group {
-    margin-bottom: 28px;
-    break-inside: avoid;
-  }
+  .glossary { margin: 16px 0 24px; }
+  .glossary-group { margin-bottom: 28px; break-inside: avoid; }
   .glossary-group-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--accent);
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--accent);
     font-weight: 600;
-    padding-bottom: 6px;
-    margin: 0 0 14px;
+    padding-bottom: 6px; margin: 0 0 14px;
     border-bottom: 1px solid var(--rule-soft);
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+    display: flex; align-items: baseline; gap: 10px;
   }
   .glossary-group-title .topic-ref {
-    color: var(--ink-soft);
-    font-weight: 400;
-    font-size: 10px;
-    letter-spacing: 0.15em;
+    color: var(--ink-soft); font-weight: 400;
+    font-size: 10px; letter-spacing: 0.15em;
   }
   dl.terms {
     margin: 0;
@@ -469,66 +345,45 @@
   dl.terms > div {
     display: grid;
     grid-template-columns: 200px 1fr;
-    gap: 18px;
-    padding: 10px 0;
+    gap: 18px; padding: 10px 0;
     border-bottom: 1px dotted var(--rule-soft);
   }
   dl.terms dt {
     font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 17px;
-    color: var(--ink);
-    line-height: 1.3;
+    font-weight: 600; font-size: 17px;
+    color: var(--ink); line-height: 1.3;
     letter-spacing: -0.005em;
   }
   dl.terms dd {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.55;
-    color: var(--ink-soft);
+    margin: 0; font-size: 15px;
+    line-height: 1.55; color: var(--ink-soft);
   }
-  dl.terms dd strong {
-    color: var(--accent-2);
-  }
+  dl.terms dd strong { color: var(--accent-2); }
   @media (max-width: 640px) {
-    dl.terms > div {
-      grid-template-columns: 1fr;
-      gap: 4px;
-    }
-    dl.terms dt {
-      font-size: 16px;
-    }
+    dl.terms > div { grid-template-columns: 1fr; gap: 4px; }
+    dl.terms dt { font-size: 16px; }
   }
 
   /* FOOTER */
   footer {
-    margin-top: 80px;
-    padding-top: 24px;
+    margin-top: 80px; padding-top: 24px;
     border-top: 2px solid var(--rule);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-soft);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
+    font-size: 11px; color: var(--ink-soft);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
   }
   footer .stamp { color: var(--accent); }
 
   /* PRINT STYLES */
   @media print {
-    body {
-      background: white;
-      font-size: 11pt;
-      background-image: none;
-    }
+    body { background: white; font-size: 11pt; background-image: none; }
     .wrap { padding: 0; max-width: none; }
     nav.toc { page-break-after: always; }
     section.topic { page-break-inside: avoid; }
     h2.sec-title, h3 { page-break-after: avoid; }
-    pre, .formula, table, .callout, .example, .practice { page-break-inside: avoid; }
+    pre, .formula, table, .callout, .example, .practice, .equipment-grid { page-break-inside: avoid; }
     a { color: var(--ink); text-decoration: none; }
     .topics-strip, nav.toc { background: #f5f1e6; }
   }
@@ -549,11 +404,15 @@
   <header class="masthead">
     <div class="eyebrow">Chemistry · Unit 2 · Quiz Prep</div>
     <h1 class="title">Measurement<br>&amp; <em>Lab Skills</em></h1>
-    <p class="subtitle">A comprehensive study guide built from your guided notes (Topics 2.1–2.8), the Unit 1–2 study guide, the ruler key worksheets, and the CK-12 Chemistry FlexBook 2.0.</p>
+    <p class="subtitle">A comprehensive study guide built from the teacher's full slide deck, the guided notes for Topics 2.1–2.8, the Unit 1–2 study guide, the ruler key worksheets, and the CK-12 Chemistry FlexBook 2.0.</p>
 
     <div class="topics-strip">
       <span class="label">Topics on the quiz</span>
       Thinking Skills · Accuracy vs Precision · Lab Equipment · Parts of a Science Report · Lab Analysis Techniques · Averaging · Weighted Averaging · Sample Size · % Error
+    </div>
+
+    <div class="sources">
+      <strong>Sources:</strong> Slide deck "Measurements in Chem 225" (65 slides) · Guided Notes 2.1–2.8 · Unit 1–2 Study Guide · Ruler Key P1 &amp; P2 · CK-12 Chemistry FlexBook 2.0
     </div>
   </header>
 
@@ -562,16 +421,20 @@
     <ol>
       <li><a href="#s0">Key Terms / Glossary</a></li>
       <li><a href="#s1">Thinking Skills</a></li>
-      <li><a href="#s2">Accuracy vs. Precision</a></li>
-      <li><a href="#s3">% Error</a></li>
-      <li><a href="#s4">Lab Equipment &amp; Measurements</a></li>
-      <li><a href="#s5">Significant Figures</a></li>
-      <li><a href="#s6">Lab Analysis Techniques</a></li>
-      <li><a href="#s7">Averaging, Weighted Averaging &amp; Sample Size</a></li>
-      <li><a href="#s8">Parts of a Science Report</a></li>
-      <li><a href="#s9">Formula Sheet</a></li>
-      <li><a href="#s10">Self-Check Practice</a></li>
-      <li><a href="#s11">Common Mistakes</a></li>
+      <li><a href="#s2">Lab Equipment</a></li>
+      <li><a href="#s3">Accuracy vs. Precision</a></li>
+      <li><a href="#s4">% Error</a></li>
+      <li><a href="#s5">Making Measurements</a></li>
+      <li><a href="#s6">Significant Figures</a></li>
+      <li><a href="#s7">Metric System</a></li>
+      <li><a href="#s8">Dimensional Analysis</a></li>
+      <li><a href="#s9">Density</a></li>
+      <li><a href="#s10">Graphing</a></li>
+      <li><a href="#s11">Averaging, Weighted Avg &amp; Sample Size</a></li>
+      <li><a href="#s12">Parts of a Science Report</a></li>
+      <li><a href="#s13">Formula Sheet</a></li>
+      <li><a href="#s14">Self-Check Practice</a></li>
+      <li><a href="#s15">Common Mistakes</a></li>
     </ol>
   </nav>
 
@@ -581,37 +444,41 @@
       <span class="sec-num">§ 00</span>
       <h2 class="sec-title">Key Terms <span class="topic-tag">Glossary</span></h2>
     </div>
-    <p class="lede">Every "Terms you NEED to know" from your guided notes, plus the supporting vocabulary your teacher uses in problems. Grouped by topic for easy review.</p>
+    <p class="lede">Every "Terms you NEED to know" from the slides and guided notes, grouped by topic. The slides explicitly call out these terms to listen for — that's your vocab list.</p>
 
     <div class="glossary">
 
       <!-- Thinking Skills -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Thinking Skills <span class="topic-ref">Topic 2.1</span></h3>
+        <h3 class="glossary-group-title">Thinking Skills <span class="topic-ref">Topic 2.1 · Slides 21–26</span></h3>
         <dl class="terms">
           <div>
             <dt>scientific method</dt>
-            <dd>A systematic approach scientists use to answer questions or solve problems: observe → hypothesize → test → confirm/reject → incorporate.</dd>
+            <dd>The systematic process scientists use to answer questions by making <strong>observations</strong> and explaining them: observe → question → hypothesize → test → confirm/reject → incorporate.</dd>
           </div>
           <div>
             <dt>observation</dt>
-            <dd>A <strong>fact</strong> obtained using your senses or an instrument. No explanation attached.</dd>
+            <dd>A <strong>fact</strong> obtained using your senses. No explanation attached.</dd>
           </div>
           <div>
             <dt>interpretation (inference)</dt>
-            <dd>An attempt to <strong>explain</strong> the facts. Adds reasoning, cause, or judgment to an observation.</dd>
+            <dd>An attempt to <strong>explain</strong> the facts. Adds reasoning, cause, or judgment.</dd>
           </div>
           <div>
             <dt>hypothesis</dt>
-            <dd>A testable prediction made <em>before</em> doing an experiment. Often in "If… then… because…" form.</dd>
+            <dd>A testable prediction made <em>before</em> doing an experiment. "If… then… because…" form.</dd>
           </div>
           <div>
             <dt>theory</dt>
-            <dd>An explanation supported by repeated experiments providing the same data. Remains in place until data is found to disprove it.</dd>
+            <dd>An explanation suggested when multiple experiments provide the <strong>same data</strong> about a phenomenon. Theories remain in place until data is found to disprove them.</dd>
+          </div>
+          <div>
+            <dt>variable</dt>
+            <dd>A factor in an experiment that can change. Only <strong>one</strong> should be varied at a time.</dd>
           </div>
           <div>
             <dt>independent variable</dt>
-            <dd>The variable you <strong>change</strong> on purpose to test its effect. Goes on the x-axis.</dd>
+            <dd>The variable you <strong>change</strong> (vary) on purpose. Goes on the x-axis.</dd>
           </div>
           <div>
             <dt>dependent variable</dt>
@@ -624,36 +491,13 @@
         </dl>
       </div>
 
-      <!-- Graphing -->
-      <div class="glossary-group">
-        <h3 class="glossary-group-title">Graphing <span class="topic-ref">Topic 2.2</span></h3>
-        <dl class="terms">
-          <div>
-            <dt>direct relationship</dt>
-            <dd>As one variable increases, the other increases. Forms a <strong>straight line</strong>. Equation: y = kx (through origin) or y = kx + b. The constant k is the slope.</dd>
-          </div>
-          <div>
-            <dt>indirect (inverse) relationship</dt>
-            <dd>As one variable increases, the other decreases. Forms a <strong>curve</strong> that approaches but never crosses the axes. Equation: xy = k.</dd>
-          </div>
-          <div>
-            <dt>slope</dt>
-            <dd>The steepness of a line: Δy/Δx = (y₂ − y₁)/(x₂ − x₁). For a mass vs. volume graph, the slope <em>is</em> the density.</dd>
-          </div>
-          <div>
-            <dt>best-fit line</dt>
-            <dd>A straight line drawn through scattered data points to show the overall trend. Never connect lab points dot-to-dot.</dd>
-          </div>
-        </dl>
-      </div>
-
       <!-- Density -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Density <span class="topic-ref">Topic 2.3</span></h3>
+        <h3 class="glossary-group-title">Density <span class="topic-ref">Topic 2.3 · Slides 5–10</span></h3>
         <dl class="terms">
           <div>
             <dt>density</dt>
-            <dd>The amount of <strong>mass</strong> compared to its <strong>volume</strong>. D = m/V. Units: g/mL (liquids) or g/cm³ (solids).</dd>
+            <dd>How the <strong>mass</strong> of a substance compares to its <strong>volume</strong>. D = m/V. Units: g/mL (liquids) or g/cm³ (solids).</dd>
           </div>
           <div>
             <dt>mass</dt>
@@ -663,82 +507,62 @@
             <dt>volume</dt>
             <dd>The amount of space an object occupies. Measured in mL or cm³ (1 mL = 1 cm³).</dd>
           </div>
-          <div>
-            <dt>water displacement</dt>
-            <dd>A method to find the volume of an irregular solid by submerging it in water and measuring how much the water level rises.</dd>
-          </div>
         </dl>
       </div>
 
       <!-- Metric System -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Metric System <span class="topic-ref">Topic 2.4</span></h3>
+        <h3 class="glossary-group-title">Metric System <span class="topic-ref">Topic 2.4 · Slides 27–35</span></h3>
         <dl class="terms">
           <div>
             <dt>metric system</dt>
-            <dd>The international system of measurement based on powers of 10. Units relate by multiplying or dividing by 10, 100, 1000, etc.</dd>
+            <dd>The international system of measurement based on powers of 10. Units scale by factors of 10, 100, 1000.</dd>
           </div>
           <div>
             <dt>base unit</dt>
-            <dd>The "starting" unit for a quantity, with no prefix attached. Gram (mass), liter (volume), meter (length), second (time).</dd>
+            <dd>The "starting" unit for a quantity, with no prefix attached. <strong>Gram</strong> (mass), <strong>liter</strong> (volume), <strong>meter</strong> (length), <strong>second</strong> (time).</dd>
           </div>
           <div>
             <dt>prefix</dt>
-            <dd>A modifier (kilo, centi, milli, micro, nano, pico) attached to a base unit to express larger or smaller amounts.</dd>
-          </div>
-          <div>
-            <dt>kilo- (k)</dt>
-            <dd>10³ = 1000 times the base unit. 1 kg = 1000 g.</dd>
-          </div>
-          <div>
-            <dt>centi- (c)</dt>
-            <dd>10⁻² = one hundredth of the base unit. 1 m = 100 cm.</dd>
-          </div>
-          <div>
-            <dt>milli- (m)</dt>
-            <dd>10⁻³ = one thousandth of the base unit. 1 L = 1000 mL; 1 g = 1000 mg.</dd>
-          </div>
-          <div>
-            <dt>micro- (μ or u)</dt>
-            <dd>10⁻⁶ = one millionth of the base unit. Used for very small things.</dd>
-          </div>
-          <div>
-            <dt>nano- (n)</dt>
-            <dd>10⁻⁹ = one billionth of the base unit. Used for atoms and electrons.</dd>
+            <dd>A modifier (kilo, centi, milli, micro, nano, pico) attached to a base unit. The most-used in chemistry are <strong>kilo-</strong> (1000× larger) and <strong>milli-</strong> (1000× smaller). <strong>Micro</strong> and <strong>nano</strong> are used for small things like atoms and electrons.</dd>
           </div>
         </dl>
       </div>
 
       <!-- Making Measurements -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Making Measurements <span class="topic-ref">Topic 2.5</span></h3>
+        <h3 class="glossary-group-title">Making Measurements <span class="topic-ref">Topic 2.5 · Slides 37–42</span></h3>
         <dl class="terms">
           <div>
             <dt>graduated</dt>
-            <dd>Marked with a series of lines (graduations) to allow measurement. A graduated cylinder, ruler, or thermometer.</dd>
+            <dd>Marked with a series of lines (graduations) to allow measurement.</dd>
           </div>
           <div>
             <dt>meniscus</dt>
-            <dd>The curved surface of a liquid in a narrow container. Water forms a <em>concave</em> meniscus (read the bottom); mercury forms a <em>convex</em> one (read the top).</dd>
+            <dd>The curved surface of a liquid in a narrow container. Water forms a <em>concave</em> meniscus (read the <strong>bottom</strong>); mercury forms a <em>convex</em> one (read the top).</dd>
           </div>
           <div>
             <dt>parallax error</dt>
-            <dd>The reading mistake caused by viewing a measurement <strong>from an angle</strong> instead of at eye level. Fix: look straight on.</dd>
+            <dd>The reading error caused by viewing a measurement <strong>not at eye level</strong>. Read from <em>higher</em> → measurement appears <em>lower</em>; read from <em>lower</em> → measurement appears <em>higher</em>.</dd>
           </div>
           <div>
-            <dt>certain digits</dt>
-            <dd>The digits in a measurement that you know <strong>for sure</strong> based on the instrument's marked lines.</dd>
+            <dt>known (certain) digits</dt>
+            <dd>The digits in a measurement that you read directly from the instrument's marked lines.</dd>
           </div>
           <div>
             <dt>estimated digit</dt>
-            <dd>The <em>last</em> digit in a measurement — your best guess of the value between the smallest marked lines. Always one estimated digit, no more.</dd>
+            <dd>The <em>last</em> digit in a measurement — your best guess of the value between the smallest marked lines (visually divide into 10 parts). Only <strong>one</strong> estimated digit.</dd>
+          </div>
+          <div>
+            <dt>uncertainty</dt>
+            <dd>The unavoidable "fuzziness" in any measurement — instruments cannot read to an infinite number of decimal places.</dd>
           </div>
         </dl>
       </div>
 
       <!-- Dimensional Analysis -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Dimensional Analysis <span class="topic-ref">Topic 2.6</span></h3>
+        <h3 class="glossary-group-title">Dimensional Analysis <span class="topic-ref">Topic 2.6 · Slides 52–57</span></h3>
         <dl class="terms">
           <div>
             <dt>dimensional analysis</dt>
@@ -746,61 +570,57 @@
           </div>
           <div>
             <dt>conversion factor</dt>
-            <dd>A ratio of two equivalent quantities in different units, used to convert between them. Example: (1 m / 100 cm) or (60 s / 1 min).</dd>
+            <dd>An equivalence relating two different units, used as a ratio. Examples: (1 m / 100 cm), (60 s / 1 min), (1 in / 2.54 cm).</dd>
           </div>
           <div>
             <dt>imperial system</dt>
-            <dd>The non-metric system of measurement used mostly in the U.S. Inches, feet, miles, pounds, ounces, gallons.</dd>
+            <dd>The non-metric system used mostly in the U.S. Inches, feet, miles, pounds, ounces, gallons.</dd>
           </div>
         </dl>
       </div>
 
       <!-- Accuracy -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Accuracy &amp; Error <span class="topic-ref">Topic 2.7</span></h3>
+        <h3 class="glossary-group-title">Accuracy &amp; % Error <span class="topic-ref">Topic 2.7 · Slides 11–19</span></h3>
         <dl class="terms">
           <div>
             <dt>accuracy</dt>
-            <dd>How <strong>close</strong> a measurement is to the true / accepted value. The dartboard bullseye.</dd>
+            <dd>The experimental data matches the <strong>accepted value</strong> — how close you got to the bullseye.</dd>
+          </div>
+          <div>
+            <dt>precise (precision)</dt>
+            <dd>The data points are <strong>repeatable</strong> — grouped together.</dd>
           </div>
           <div>
             <dt>theoretical value</dt>
-            <dd>The accepted, true, or "book" value of a quantity. What the answer <em>should</em> be.</dd>
+            <dd>The accepted or universally accepted value. Sometimes called "theoretical yield."</dd>
           </div>
           <div>
             <dt>experimental value</dt>
-            <dd>The value <strong>you</strong> obtained in lab through measurement and calculation.</dd>
+            <dd>What <strong>you</strong> get in lab. Sometimes called "experimental yield."</dd>
           </div>
           <div>
             <dt>percent error</dt>
-            <dd>A measure of how far off your experimental value is from the theoretical value, expressed as a percentage. |theoretical − experimental| / theoretical × 100.</dd>
+            <dd>The difference between accepted and experimental values, as a percentage. (theoretical − experimental) / theoretical × 100.</dd>
           </div>
           <div>
-            <dt>systematic error</dt>
-            <dd>An error that affects every measurement the same way (e.g., a balance that always reads 0.5 g too high). Causes high precision with low accuracy.</dd>
+            <dt>positive error</dt>
+            <dd>Experimental value is <strong>LESS</strong> than theoretical.</dd>
           </div>
           <div>
-            <dt>random error</dt>
-            <dd>Small unpredictable variations in measurements. Reduced by averaging more trials.</dd>
-          </div>
-          <div>
-            <dt>percent recovered (yield)</dt>
-            <dd>How much of an expected product you actually obtained. actual / expected × 100.</dd>
+            <dt>negative error</dt>
+            <dd>Experimental value is <strong>GREATER</strong> than theoretical.</dd>
           </div>
         </dl>
       </div>
 
       <!-- Precision / Sig Figs -->
       <div class="glossary-group">
-        <h3 class="glossary-group-title">Precision &amp; Significant Figures <span class="topic-ref">Topic 2.8</span></h3>
+        <h3 class="glossary-group-title">Precision &amp; Significant Figures <span class="topic-ref">Topic 2.8 · Slides 58–64</span></h3>
         <dl class="terms">
           <div>
-            <dt>precision</dt>
-            <dd>(1) How close <strong>repeated measurements</strong> are to each other. (2) How finely an instrument can read — its smallest reliable division.</dd>
-          </div>
-          <div>
-            <dt>significant figures (sig figs)</dt>
-            <dd>All the digits in a measurement known for <strong>certain</strong>, plus the one <strong>estimated</strong> digit. They communicate how precise the measurement is.</dd>
+            <dt>significant figures (digits)</dt>
+            <dd>All the digits known for <strong>certain</strong>, plus <strong>one estimated</strong> digit. They reflect the precision of the instrument used.</dd>
           </div>
           <div>
             <dt>captive zeros</dt>
@@ -808,19 +628,30 @@
           </div>
           <div>
             <dt>leading zeros</dt>
-            <dd>Zeros <strong>before</strong> the first non-zero digit (e.g., 0.0<strong>0</strong>25). Never significant — they're placeholders.</dd>
+            <dd>Zeros <strong>before</strong> the first non-zero digit (e.g., 0.0<strong>0</strong>25). Place holders — never significant.</dd>
           </div>
           <div>
             <dt>trailing zeros</dt>
-            <dd>Zeros <strong>after</strong> the last non-zero digit (e.g., 12<strong>0</strong> or 1.2<strong>0</strong>). Significant only if there's a decimal point.</dd>
+            <dd>Zeros <strong>after</strong> the last non-zero digit. Significant <strong>only if</strong> there's a decimal point.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Graphing -->
+      <div class="glossary-group">
+        <h3 class="glossary-group-title">Graphing <span class="topic-ref">Topic 2.2 · Slides 45–51</span></h3>
+        <dl class="terms">
+          <div>
+            <dt>direct relationship</dt>
+            <dd>As one variable changes, the other changes <strong>in the same direction</strong>. Forms a straight line: y = kx (through origin) or y = kx + b. k is the slope.</dd>
           </div>
           <div>
-            <dt>uncertainty</dt>
-            <dd>The unavoidable "fuzziness" in any measurement — no instrument reads to an infinite number of decimal places.</dd>
+            <dt>indirect (inverse) relationship</dt>
+            <dd>As one variable changes one direction, the other changes the <strong>opposite</strong> direction. Forms a curve that approaches but never crosses the axes. xy = k.</dd>
           </div>
           <div>
-            <dt>rounding</dt>
-            <dd>Trimming a calculated answer to the correct number of sig figs. ≥ 5 rounds up; &lt; 5 rounds down.</dd>
+            <dt>slope</dt>
+            <dd>Steepness of a line: (y₂ − y₁)/(x₂ − x₁). On a mass-vs-volume graph, the slope <em>is</em> the density.</dd>
           </div>
         </dl>
       </div>
@@ -831,23 +662,19 @@
         <dl class="terms">
           <div>
             <dt>average (mean)</dt>
-            <dd>The sum of all values divided by the number of values. Used to smooth out random errors across multiple trials.</dd>
+            <dd>Sum of all values divided by the number of values. Used to smooth out random errors across multiple trials.</dd>
           </div>
           <div>
             <dt>weighted average</dt>
-            <dd>An average where each value is multiplied by its "weight" (how much it counts) before summing. Σ(value × weight) / Σ(weights). Used for atomic masses of isotopes.</dd>
+            <dd>Each value is multiplied by its "weight" before summing. Σ(value × weight) / Σ(weights). Used for atomic masses of isotopes.</dd>
           </div>
           <div>
             <dt>sample size</dt>
-            <dd>The number of trials or data points collected. Larger samples give more reliable averages because random errors cancel out.</dd>
+            <dd>Number of trials or data points. Larger samples = more reliable averages.</dd>
           </div>
           <div>
             <dt>outlier</dt>
-            <dd>A data point that's noticeably different from the rest. Distorts averages more in small samples than in large ones.</dd>
-          </div>
-          <div>
-            <dt>trial</dt>
-            <dd>One complete run of an experiment or measurement. Best practice: at least 3 trials before averaging.</dd>
+            <dd>A data point noticeably different from the rest. Distorts averages more in small samples than in large ones.</dd>
           </div>
         </dl>
       </div>
@@ -858,27 +685,23 @@
         <dl class="terms">
           <div>
             <dt>purpose / objective</dt>
-            <dd>The one-sentence statement of what the experiment is trying to find or test.</dd>
+            <dd>One-sentence statement of what the experiment is trying to find or test.</dd>
           </div>
           <div>
             <dt>procedure</dt>
-            <dd>The numbered list of steps taken in the experiment — detailed enough that another scientist could reproduce it.</dd>
+            <dd>Numbered list of steps — detailed enough that another scientist could repeat it.</dd>
           </div>
           <div>
             <dt>data</dt>
-            <dd>The raw measurements and observations collected during the experiment. Facts only, no interpretation.</dd>
-          </div>
-          <div>
-            <dt>analysis / calculations</dt>
-            <dd>Where you process the raw data — averages, density calculations, % error, unit conversions. Show all work with units and sig figs.</dd>
+            <dd>Raw measurements and observations. Facts only, no interpretation.</dd>
           </div>
           <div>
             <dt>conclusion</dt>
-            <dd>The interpretation of your results. Did the data support the hypothesis? How close was the experimental value to the accepted value?</dd>
+            <dd>Interpretation: did the data support the hypothesis? How close was your value to the accepted value?</dd>
           </div>
           <div>
             <dt>sources of error</dt>
-            <dd>Limitations of the equipment or procedure that could have affected accuracy. <strong>NOT</strong> "human error" — fix mistakes, don't list them.</dd>
+            <dd>Limitations of equipment or procedure. <strong>NOT</strong> "human error" — the slides explicitly say if you make a mistake, fix it.</dd>
           </div>
         </dl>
       </div>
@@ -886,16 +709,16 @@
     </div>
   </section>
 
-  <!-- SECTION 1 -->
+  <!-- SECTION 1 — THINKING SKILLS -->
   <section class="topic" id="s1">
     <div class="sec-head">
       <span class="sec-num">§ 01</span>
       <h2 class="sec-title">Thinking Skills <span class="topic-tag">2.1</span></h2>
     </div>
-    <p class="lede">Observation vs. interpretation, and the scientific method.</p>
+    <p class="lede">Observation vs. interpretation, the scientific method, and variables.</p>
 
-    <p><strong>Observation</strong> = a fact obtained directly using your senses (or an instrument reading). No explanation, no "why."<br>
-    <strong>Interpretation (inference)</strong> = an attempt to <em>explain</em> the facts. It adds a reason, cause, or judgment.</p>
+    <p><strong>Observation</strong> = a fact obtained using your senses (or an instrument). No explanation, no "why."<br>
+    <strong>Interpretation (inference)</strong> = an attempt to <em>explain</em> the facts.</p>
 
     <p>Quick test: if the statement could be wrong because you're guessing <em>why</em> something happened, it's an interpretation.</p>
 
@@ -904,10 +727,13 @@
       <thead><tr><th>Statement</th><th>Type</th><th>Why</th></tr></thead>
       <tbody>
         <tr><td>The match burns</td><td>Observation</td><td>You see flame</td></tr>
-        <tr><td>The match reacts with oxygen</td><td>Interpretation</td><td>You're explaining the cause</td></tr>
+        <tr><td>The match reacts with oxygen</td><td>Interpretation</td><td>Explaining the cause</td></tr>
         <tr><td>The metal gets warmer</td><td>Observation</td><td>You feel/measure temperature</td></tr>
-        <tr><td>Heat transfers from the match to the metal</td><td>Interpretation</td><td>You're explaining what's happening</td></tr>
+        <tr><td>Heat transfers from the match to the metal</td><td>Interpretation</td><td>Explaining the process</td></tr>
         <tr><td>Black soot is deposited on the metal</td><td>Observation</td><td>You see it</td></tr>
+        <tr><td>There are 8 trees</td><td>Observation</td><td>You can count them</td></tr>
+        <tr><td>The man sitting was hurt</td><td>Interpretation</td><td>You don't know — you're guessing</td></tr>
+        <tr><td>The truck hit the car</td><td>Interpretation</td><td>You're inferring what happened, not seeing it</td></tr>
       </tbody>
     </table>
     </div>
@@ -915,33 +741,84 @@
     <h4>The Scientific Method</h4>
     <ol>
       <li>Observe something happening</li>
-      <li>Think about <em>why</em> it's happening</li>
+      <li>Think about <em>why</em> it's happening (form a question)</li>
       <li>Form a testable hypothesis</li>
-      <li>Test your hypothesis (experiment — change only <strong>one variable at a time</strong>)</li>
+      <li>Test your hypothesis — change only <strong>one variable at a time</strong></li>
       <li>Confirm or reject the hypothesis</li>
       <li>Incorporate the new knowledge</li>
     </ol>
 
     <div class="callout tip">
       <span class="callout-label">Variables Vocab</span>
-      <strong>Independent variable</strong> = the one you change/vary.
-      <strong>Dependent variable</strong> = the one you measure (it "depends" on the independent).
-      <strong>Control</strong> = factors held constant so they don't affect the result.
+      <strong>Independent variable</strong> = the one you change/vary (x-axis).<br>
+      <strong>Dependent variable</strong> = the one you measure; it "depends" on the independent (y-axis).<br>
+      <strong>Control</strong> = factors held constant so they don't affect the result.<br>
       <strong>Theory</strong> = an explanation supported by repeated experiments; stays until disproved.
     </div>
   </section>
 
-  <!-- SECTION 2 -->
+  <!-- SECTION 2 — LAB EQUIPMENT -->
   <section class="topic" id="s2">
     <div class="sec-head">
       <span class="sec-num">§ 02</span>
+      <h2 class="sec-title">Lab Equipment <span class="topic-tag">Slide 4</span></h2>
+    </div>
+    <p class="lede">The slide-deck warm-up specifically names four pieces of equipment by letter. Know what each one looks like and what it's used for.</p>
+
+    <div class="equipment-grid">
+      <div class="equipment-card">
+        <div class="letter">A</div>
+        <div class="name">Graduated Cylinder</div>
+        <div class="use">Measures liquid <strong>volume</strong> precisely. Read at the bottom of the meniscus at eye level.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">B</div>
+        <div class="name">Beaker</div>
+        <div class="use">Holds and mixes liquids. The volume marks are <strong>approximate only</strong> — not precision glassware.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">C</div>
+        <div class="name">Ring Stand</div>
+        <div class="use">Holds rings, clamps, and other equipment for heating or assembling apparatus.</div>
+      </div>
+      <div class="equipment-card">
+        <div class="letter">D</div>
+        <div class="name">Bunsen Burner</div>
+        <div class="use">Gas-powered burner that provides a controlled flame for heating substances.</div>
+      </div>
+    </div>
+
+    <h4>Other equipment you should recognize</h4>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Equipment</th><th>Used for</th><th>Key behavior</th></tr></thead>
+      <tbody>
+        <tr><td>Balance (electronic or triple-beam)</td><td>Measuring mass</td><td>Tare/zero before use; calibrate to check accuracy</td></tr>
+        <tr><td>Thermometer</td><td>Measuring temperature</td><td>Bulb in contact <strong>only</strong> with the material — don't touch the container wall</td></tr>
+        <tr><td>Ruler / meter stick</td><td>Measuring length</td><td>Read to one decimal beyond the smallest marked line</td></tr>
+        <tr><td>Erlenmeyer flask</td><td>Mixing, swirling, holding</td><td>Narrow neck reduces splashing</td></tr>
+        <tr><td>Test tube</td><td>Small-scale reactions, heating</td><td>Point opening away from people when heating</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">Precision glassware vs not</span>
+      <strong>Precision glassware</strong> (graduated cylinder, volumetric flask, burette, pipette) gives accurate volume readings. <strong>Beakers and Erlenmeyer flasks</strong> have volume marks but those are rough — never use them for precise measurement.
+    </div>
+  </section>
+
+  <!-- SECTION 3 — ACCURACY VS PRECISION -->
+  <section class="topic" id="s3">
+    <div class="sec-head">
+      <span class="sec-num">§ 03</span>
       <h2 class="sec-title">Accuracy vs. Precision <span class="topic-tag">2.7</span></h2>
     </div>
-    <p class="lede">These are <em>not</em> the same thing. Memorize the dartboard.</p>
+    <p class="lede">From slide 13's dartboard image. These are <em>not</em> the same thing.</p>
 
     <ul>
-      <li><strong>Accuracy</strong> — how close a measurement is to the <strong>true / accepted / theoretical</strong> value.</li>
-      <li><strong>Precision</strong> — how close repeated measurements are <strong>to each other</strong> (reproducibility), AND how finely an instrument can read.</li>
+      <li><strong>Accuracy</strong> = how close a measurement is to the <strong>true / accepted / theoretical</strong> value.</li>
+      <li><strong>Precision</strong> = how close repeated measurements are <strong>to each other</strong> (reproducibility).</li>
     </ul>
 
     <div class="table-wrap">
@@ -949,7 +826,7 @@
       <thead><tr><th>Dartboard pattern</th><th style="text-align:center">Precision</th><th style="text-align:center">Accuracy</th></tr></thead>
       <tbody>
         <tr><td>Darts scattered, none near bullseye</td><td style="text-align:center"><span class="x">✗</span></td><td style="text-align:center"><span class="x">✗</span></td></tr>
-        <tr><td>Darts tightly clustered, but far from bullseye</td><td style="text-align:center"><span class="check">✓</span></td><td style="text-align:center"><span class="x">✗</span></td></tr>
+        <tr><td>Darts tightly clustered, but far from bullseye <em>(slide 13 example)</em></td><td style="text-align:center"><span class="check">✓</span></td><td style="text-align:center"><span class="x">✗</span></td></tr>
         <tr><td>Darts spread out, but average near bullseye</td><td style="text-align:center"><span class="x">✗</span></td><td style="text-align:center"><span class="check">✓</span></td></tr>
         <tr><td>Darts tightly clustered on the bullseye</td><td style="text-align:center"><span class="check">✓</span></td><td style="text-align:center"><span class="check">✓</span></td></tr>
       </tbody>
@@ -958,24 +835,22 @@
 
     <div class="callout warning">
       <span class="callout-label">Watch for this</span>
-      A common lab situation: <strong>high precision but low accuracy</strong> = <em>systematic error</em>. The instrument is consistent, but consistently wrong (e.g., a miscalibrated balance reads the same wrong value every time).
+      <strong>High precision + low accuracy = systematic error.</strong> The instrument is consistent, but consistently wrong (e.g., a miscalibrated balance reads 0.5 g too high every time).
     </div>
   </section>
 
-  <!-- SECTION 3 -->
-  <section class="topic" id="s3">
+  <!-- SECTION 4 — % ERROR -->
+  <section class="topic" id="s4">
     <div class="sec-head">
-      <span class="sec-num">§ 03</span>
+      <span class="sec-num">§ 04</span>
       <h2 class="sec-title">% Error <span class="topic-tag">2.7</span></h2>
     </div>
 
     <div class="formula">
       % Error =
-      <span class="abs">
-        <span class="frac">
-          <span class="num">theoretical − experimental</span>
-          <span class="den">theoretical</span>
-        </span>
+      <span class="frac">
+        <span class="num">theoretical − experimental</span>
+        <span class="den">theoretical</span>
       </span>
       × 100
     </div>
@@ -984,36 +859,40 @@
       <li><strong>theoretical value</strong> = accepted/true value (from a textbook or reference)</li>
       <li><strong>experimental value</strong> = what <em>you</em> measured in lab</li>
     </ul>
-    <p>Sign convention (without absolute value):</p>
-    <ul>
-      <li><strong>(+) error</strong> → experimental is <strong>lower</strong> than theoretical</li>
-      <li><strong>(−) error</strong> → experimental is <strong>higher</strong> than theoretical</li>
-    </ul>
 
-    <h4>Worked examples</h4>
+    <div class="callout">
+      <span class="callout-label">Sign convention — from slide 14</span>
+      <strong>Positive (+) error</strong> → experimental is <strong>LESS</strong> than theoretical.<br>
+      <strong>Negative (−) error</strong> → experimental is <strong>GREATER</strong> than theoretical.<br>
+      (Many teachers also accept absolute value with no sign — check the question wording.)
+    </div>
+
+    <h4>Worked examples (from slides 16–17)</h4>
 
     <div class="example">
       <div class="ex-tag">Example 1 · Calibration weight</div>
-      A 100.00 g weight reads 101.41 g on the scale.<br>
-      % Error = |100.00 − 101.41| / 100.00 × 100 = <span class="answer">1.41 %</span>
+      A student places a 100.00 g calibration weight on a balance which reads 101.41 g. What is the percent error?<br>
+      (100.00 − 101.41) / 100.00 × 100 = <span class="answer">−1.41 %</span><br>
+      Negative because the reading was <em>more</em> than it should be.
     </div>
 
     <div class="example">
       <div class="ex-tag">Example 2 · Density of nickel</div>
-      Experimental 7.59 g/mL, true 8.91 g/mL.<br>
-      % Error = |8.91 − 7.59| / 8.91 × 100 = <span class="answer">14.8 %</span>
+      Kelly's experimental value: 7.59 g/mL. True value: 8.91 g/mL.<br>
+      (8.91 − 7.59) / 8.91 × 100 = <span class="answer">+14.8 %</span><br>
+      Positive because she got <em>less</em> than the true value.
     </div>
 
     <div class="example">
       <div class="ex-tag">Example 3 · Volume of a mole of gas</div>
-      Bobby got 18.7 L, should be 22.4 L.<br>
-      % Error = |22.4 − 18.7| / 22.4 × 100 = <span class="answer">16.5 %</span>
+      Bobby got 18.7 L; he should have obtained 22.4 L.<br>
+      (22.4 − 18.7) / 22.4 × 100 = <span class="answer">+16.5 %</span>
     </div>
 
     <div class="callout warning">
-      <span class="callout-label">Sources of error — what to cite</span>
-      <strong>1. Limitations of the equipment</strong> (e.g., the balance only reads to 0.01 g). <br>
-      <strong>2. NOT "human error"</strong> — your teacher's notes are explicit: if you made a mistake, you fix it; don't list it as a source of error.
+      <span class="callout-label">Causes of error — from slide 15</span>
+      <strong>1. Limitations of the equipment</strong> (e.g., the balance only reads to 0.01 g).<br>
+      <strong>2. NOT "human error"</strong> — the slide is explicit: "This is not usually cited as a source of error in a lab report… if you make a mistake, fix it!"
     </div>
 
     <h4>Related: % Recovered (Yield)</h4>
@@ -1028,67 +907,74 @@
     <p>Example: recovered 12.56 g of 13.00 g expected → 12.56/13.00 × 100 = <span class="answer">96.6 %</span> recovered, so % error = <span class="answer">3.4 %</span>.</p>
   </section>
 
-  <!-- SECTION 4 -->
-  <section class="topic" id="s4">
+  <!-- SECTION 5 — MAKING MEASUREMENTS -->
+  <section class="topic" id="s5">
     <div class="sec-head">
-      <span class="sec-num">§ 04</span>
-      <h2 class="sec-title">Lab Equipment &amp; Measurements <span class="topic-tag">2.5</span></h2>
+      <span class="sec-num">§ 05</span>
+      <h2 class="sec-title">Making Measurements <span class="topic-tag">2.5</span></h2>
     </div>
 
-    <h3>How to read a graduated instrument</h3>
+    <h3>Reading a graduated instrument <em style="font-size:14px;color:var(--ink-soft);">(from slide 39)</em></h3>
     <ol>
-      <li>Figure out what the <strong>smallest division</strong> represents.</li>
-      <li><strong>Read</strong> every digit that the lines give you for certain.</li>
-      <li><strong>Estimate</strong> ONE more digit between the smallest lines (mentally divide into 10 parts).</li>
-      <li>Your measurement = <strong>all certain digits + 1 estimated digit</strong>.</li>
+      <li>Determine what value the <strong>smallest lines</strong> represent.</li>
+      <li>Estimate the distance between the smallest lines by visually dividing it into <strong>10</strong> units.</li>
+      <li><em>Tip:</em> when reading the volume of a liquid, read from the <strong>bottom of the meniscus</strong> (the curve).</li>
     </ol>
 
-    <h3>Key lab equipment behaviors</h3>
+    <h4>Slide 39 worked example — three instruments side by side</h4>
     <div class="table-wrap">
     <table>
-      <thead><tr><th>Equipment</th><th>Read at...</th><th>Notes</th></tr></thead>
+      <thead>
+        <tr><th></th><th>Beaker (40s scale)</th><th>Cylinder (1s scale)</th><th>Cylinder (0.1s scale)</th></tr>
+      </thead>
       <tbody>
-        <tr><td>Graduated cylinder (water)</td><td><strong>Bottom of the meniscus</strong> (concave) at eye level</td><td>Bumper at top to prevent breakage if it tips</td></tr>
-        <tr><td>Graduated cylinder (mercury)</td><td><strong>Top of the meniscus</strong> (convex)</td><td>—</td></tr>
-        <tr><td>Beaker</td><td>Rough volume only</td><td>Beakers are <strong>not</strong> precision glassware</td></tr>
-        <tr><td>Thermometer</td><td>Bulb in contact <strong>only</strong> with the material being measured</td><td>Don't touch the container wall</td></tr>
-        <tr><td>Balance</td><td>Tare/zero before use; calibrate to check</td><td>—</td></tr>
-        <tr><td>Ruler</td><td>Smallest line + 1 estimated digit</td><td>See practice below</td></tr>
+        <tr><td>Smallest line represents</td><td>10's</td><td>1</td><td>0.1</td></tr>
+        <tr><td>Read to one power smaller</td><td>1's place</td><td>0.1's</td><td>0.01's</td></tr>
+        <tr><td>KNOW: volume between</td><td>40 &amp; 50</td><td>36 &amp; 37</td><td>6.5 &amp; 6.6</td></tr>
+        <tr><td>ESTIMATE between lines</td><td>8/10</td><td>5/10</td><td>9/10</td></tr>
+        <tr><td><strong>Measurement</strong></td><td><strong>48 mL</strong></td><td><strong>36.5 mL</strong></td><td><strong>6.59 mL</strong></td></tr>
       </tbody>
     </table>
     </div>
 
-    <h3>Parallax Error</h3>
-    <p>Looking at a measurement from the <strong>side</strong> instead of straight-on makes you read the wrong value. The graduated cylinder example from your notes:</p>
+    <h3>Other tips (slide 41)</h3>
+    <ol>
+      <li>Read liquid volume at <strong>eye level</strong> to avoid parallax error.</li>
+      <li>Read the <strong>bottom</strong> of the meniscus for liquids (or top for mercury).</li>
+      <li>When measuring temperature, the thermometer should be in contact <strong>only</strong> with the material being measured.</li>
+      <li>Make sure the <strong>bumper on a graduated cylinder is at the top</strong> to prevent breakage if it tips.</li>
+    </ol>
+
+    <h3>Parallax Error (slide 40)</h3>
+    <p>Looking at a measurement from the <strong>side</strong> instead of straight-on gives the wrong value. From the guided notes graduated cylinder example:</p>
     <ul>
       <li>Looking <strong>down</strong> → reads 19.82 mL (too high)</li>
       <li>Looking <strong>up</strong> → reads 19.62 mL (too low)</li>
-      <li>Looking <strong>straight</strong> at the meniscus → reads <span class="answer">19.70 mL</span> (correct)</li>
+      <li>Looking <strong>straight</strong> at the meniscus → <span class="answer">19.70 mL</span> (correct)</li>
     </ul>
-    <p><strong>Fix:</strong> read at eye level, straight on.</p>
+    <p>The slide's rule: <em>read from higher, measurement appears lower; read from lower, measurement appears higher.</em></p>
 
-    <h3>Ruler practice (Ruler Key 1 &amp; 2)</h3>
+    <h3>Ruler practice (Ruler Key P1 &amp; P2)</h3>
     <ul>
       <li><strong>Ruler 1</strong>: smallest division = 1's → read to the <strong>0.1's</strong> place (1 decimal)</li>
       <li><strong>Ruler 2</strong>: smallest division = 0.1's → read to the <strong>0.01's</strong> place (2 decimals)</li>
     </ul>
-    <p>The rule: a measurement is read to <strong>one decimal place beyond the smallest marked division</strong>.</p>
 
     <div class="table-wrap">
     <table>
       <thead><tr><th>Item</th><th>Ruler 1 (cm)</th><th>Ruler 2 (cm)</th></tr></thead>
       <tbody>
-        <tr><td>Sample A</td><td>4.0</td><td>4.01</td></tr>
-        <tr><td>Sample B</td><td>9.3</td><td>9.34</td></tr>
-        <tr><td>Sample C</td><td>0.6</td><td>0.62</td></tr>
-        <tr><td>Sample D</td><td>2.8</td><td>2.85</td></tr>
-        <tr><td>Sample E</td><td>8.0</td><td>8.01</td></tr>
-        <tr><td>Sample F</td><td>6.2</td><td>6.26</td></tr>
-        <tr><td>Sample G</td><td>5.3</td><td>5.28</td></tr>
-        <tr><td>Sample H</td><td>0.4</td><td>0.39</td></tr>
-        <tr><td>Sample I</td><td>1.7</td><td>1.70</td></tr>
-        <tr><td>Sample J</td><td>7.8</td><td>7.72</td></tr>
-        <tr><td>Sample K</td><td>3.8</td><td>3.75</td></tr>
+        <tr><td>A</td><td>4.0</td><td>4.01</td></tr>
+        <tr><td>B</td><td>9.3</td><td>9.34</td></tr>
+        <tr><td>C</td><td>0.6</td><td>0.62</td></tr>
+        <tr><td>D</td><td>2.8</td><td>2.85</td></tr>
+        <tr><td>E</td><td>8.0</td><td>8.01</td></tr>
+        <tr><td>F</td><td>6.2</td><td>6.26</td></tr>
+        <tr><td>G</td><td>5.3</td><td>5.28</td></tr>
+        <tr><td>H</td><td>0.4</td><td>0.39</td></tr>
+        <tr><td>I</td><td>1.7</td><td>1.70</td></tr>
+        <tr><td>J</td><td>7.8</td><td>7.72</td></tr>
+        <tr><td>K</td><td>3.8</td><td>3.75</td></tr>
       </tbody>
     </table>
     </div>
@@ -1099,28 +985,33 @@
     </div>
   </section>
 
-  <!-- SECTION 5 -->
-  <section class="topic" id="s5">
+  <!-- SECTION 6 — SIG FIGS -->
+  <section class="topic" id="s6">
     <div class="sec-head">
-      <span class="sec-num">§ 05</span>
+      <span class="sec-num">§ 06</span>
       <h2 class="sec-title">Significant Figures <span class="topic-tag">2.8</span></h2>
     </div>
 
-    <h3>Counting sig figs</h3>
+    <h3>Counting sig figs (slide 60)</h3>
     <ol>
-      <li>All <strong>non-zero digits</strong> (1–9) are significant.</li>
+      <li>All <strong>integers (1–9)</strong> are significant — they're read by the instrument.</li>
       <li><strong>Captive zeros</strong> (between non-zeros, like 10<strong>2</strong>) → <strong>always significant</strong>.</li>
-      <li><strong>Leading zeros</strong> (0.0<strong>0</strong>25) → <strong>never significant</strong>; placeholders.</li>
-      <li><strong>Trailing zeros</strong> → significant <strong>only if there's a decimal point</strong>.
+      <li><strong>Leading zeros</strong> (0.<strong>1</strong>02) → <strong>not significant</strong>; just place holders.</li>
+      <li><strong>Trailing zeros</strong> → <strong>sometimes</strong> significant — only if the number has a decimal point.
         <ul>
           <li><code>123.0</code> → 4 sig figs</li>
           <li><code>120</code> → 2 sig figs</li>
-          <li><code>120.</code> → 3 sig figs (the decimal point makes the zero count)</li>
+          <li><code>120.</code> → 3 sig figs (the decimal makes the zero count)</li>
         </ul>
       </li>
     </ol>
 
-    <h3>Sig fig practice</h3>
+    <div class="callout">
+      <span class="callout-label">Why this works (slide 60)</span>
+      The last significant digit is an estimate — therefore anything following it is just a placeholder.
+    </div>
+
+    <h3>Sig fig practice (slide 60)</h3>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Number</th><th>Sig figs</th><th>Reason</th></tr></thead>
@@ -1145,61 +1036,60 @@
     </table>
     </div>
 
-    <h3>Sig fig math rules</h3>
+    <h3>Sig fig math rules (slide 61)</h3>
 
     <div class="callout">
       <span class="callout-label">The Two Rules</span>
-      <strong>Adding &amp; Subtracting</strong> → answer keeps the <strong>least number of decimal places</strong>.<br>
-      <strong>Multiplying &amp; Dividing</strong> → answer keeps the <strong>least number of total sig figs</strong>.
+      <strong>Adding &amp; Subtracting</strong> → answer has same number of <strong>decimal places</strong> as the number with the <em>fewest</em> decimal places.<br>
+      <strong>Multiplying &amp; Dividing</strong> → answer has the same number of <strong>sig figs</strong> as the <em>least precise</em> number used.
     </div>
 
     <div class="example">
-      <div class="ex-tag">Add/Subtract example</div>
-      <code>12.321 m + 1.5 m = 13.821</code> → round to <span class="answer">13.8 m</span> (1.5 has only 1 decimal place).
+      <div class="ex-tag">Slide 61 add/subtract example</div>
+      12.321 m + 1.5 m = 13.821 → round to <span class="answer">13.8 m</span> (1.5 has only 1 decimal place).
     </div>
 
     <div class="example">
-      <div class="ex-tag">Multiply/Divide example</div>
-      <code>0.21 cm × 0.1385 cm = 0.029085</code> → round to <span class="answer">0.029 cm²</span> (0.21 has only 2 sig figs).
+      <div class="ex-tag">Slide 61 multiply/divide example</div>
+      0.21 cm × 0.1385 cm = 0.029085 → round to <span class="answer">0.029 cm²</span> (0.21 has only 2 sig figs).
     </div>
 
-    <h4>Practice problems (from your notes)</h4>
+    <h4>Slide 63 practice — all 12 answers</h4>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Problem</th><th>Answer</th></tr></thead>
       <tbody>
-        <tr><td>6.78 cm + 2.1 cm</td><td>8.9 cm (1 decimal)</td></tr>
-        <tr><td>8.118 m − 5.34 m</td><td>2.78 m (2 decimals)</td></tr>
-        <tr><td>1.1856 mL − 0.9 mL</td><td>0.3 mL (1 decimal)</td></tr>
-        <tr><td>0.900 g − 0.10 g</td><td>0.80 g (2 decimals)</td></tr>
-        <tr><td>120 mL − 54.6 mL</td><td>70 mL (no decimals)</td></tr>
-        <tr><td>10.9 m + 0.8174 m</td><td>11.7 m (1 decimal)</td></tr>
-        <tr><td>6.78 cm × 2.1 cm</td><td>14 cm² (2 sig figs)</td></tr>
-        <tr><td>8.118 g ÷ 5.34 mL</td><td>1.52 g/mL (3 sig figs)</td></tr>
-        <tr><td>1.185 m × 0.91 m</td><td>1.1 m² (2 sig figs)</td></tr>
-        <tr><td>0.900 g ÷ 0.10 mL</td><td>9.0 g/mL (2 sig figs)</td></tr>
-        <tr><td>120 cm × 54.6 cm</td><td>6600 cm² or 6.6×10³ (2 sig figs)</td></tr>
-        <tr><td>10.9 m ÷ 0.81 s</td><td>13 m/s (2 sig figs)</td></tr>
+        <tr><td>6.78 cm + 2.1 cm</td><td>8.9 cm</td></tr>
+        <tr><td>8.118 m − 5.34 m</td><td>2.78 m</td></tr>
+        <tr><td>1.1856 mL − 0.9 mL</td><td>0.3 mL</td></tr>
+        <tr><td>0.900 g − 0.10 g</td><td>0.80 g</td></tr>
+        <tr><td>120 mL − 54.6 mL</td><td>65 mL</td></tr>
+        <tr><td>10.9 m + 0.8174 m</td><td>11.7 m</td></tr>
+        <tr><td>6.78 cm × 2.1 cm</td><td>14 cm²</td></tr>
+        <tr><td>8.118 g ÷ 5.34 mL</td><td>1.52 g/mL</td></tr>
+        <tr><td>1.185 m × 0.91 m</td><td>1.1 m²</td></tr>
+        <tr><td>0.900 g ÷ 0.10 mL</td><td>9.0 g/mL</td></tr>
+        <tr><td>120 cm × 54.6 cm</td><td>6,600 cm²</td></tr>
+        <tr><td>10.9 m ÷ 0.81 s</td><td>13 m/s</td></tr>
       </tbody>
     </table>
     </div>
   </section>
 
-  <!-- SECTION 6 -->
-  <section class="topic" id="s6">
+  <!-- SECTION 7 — METRIC SYSTEM -->
+  <section class="topic" id="s7">
     <div class="sec-head">
-      <span class="sec-num">§ 06</span>
-      <h2 class="sec-title">Lab Analysis Techniques</h2>
+      <span class="sec-num">§ 07</span>
+      <h2 class="sec-title">Metric System <span class="topic-tag">2.4</span></h2>
     </div>
 
-    <h3>A. The Metric System <span style="font-size:14px;color:var(--accent);font-family:'JetBrains Mono',monospace;">2.4</span></h3>
-    <p>Memorize the prefix line:</p>
+    <p>Memorize the prefix line (slide 32):</p>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Prefix</th><th>Symbol</th><th>Value</th><th>In base units</th></tr></thead>
       <tbody>
         <tr><td>kilo</td><td>k</td><td>10³</td><td>1000</td></tr>
-        <tr><td><strong>base</strong></td><td>g / L / m / s</td><td>10⁰</td><td>1</td></tr>
+        <tr><td><strong>base</strong></td><td>g / L / m / sec</td><td>10⁰</td><td>1</td></tr>
         <tr><td>deci</td><td>d</td><td>10⁻¹</td><td>0.1</td></tr>
         <tr><td>centi</td><td>c</td><td>10⁻²</td><td>0.01</td></tr>
         <tr><td>milli</td><td>m</td><td>10⁻³</td><td>0.001</td></tr>
@@ -1210,22 +1100,75 @@
     </table>
     </div>
 
-    <h4>Memorize these equivalences</h4>
+    <div class="callout tip">
+      <span class="callout-label">Slide 35 key idea</span>
+      The most-used prefixes in chemistry are <strong>kilo-</strong> (1000× larger) and <strong>milli-</strong> (1000× smaller). <strong>Micrometer (μm)</strong> and <strong>nanometer (nm)</strong> are used for small things like atoms and electrons.
+    </div>
+
+    <h4>Equivalences to memorize (slide 31)</h4>
     <div class="table-wrap">
     <table>
       <tbody>
         <tr><td>1 kg = 1000 g</td><td>1 m = 1,000,000 μm</td></tr>
         <tr><td>1 g = 1000 mg</td><td>1 m = 1,000,000,000 nm</td></tr>
         <tr><td>1 g = 1,000,000 μg</td><td>1 L = 1000 mL</td></tr>
-        <tr><td>1 km = 1000 m</td><td>1 mL = 1 cm³</td></tr>
+        <tr><td>1 km = 1000 m</td><td><strong>1 mL = 1 cm³</strong> (a 1-cm cube)</td></tr>
         <tr><td>1 m = 100 cm</td><td>1 mm = 1000 μm</td></tr>
         <tr><td>1 m = 1000 mm</td><td>1 cm = 10 mm</td></tr>
       </tbody>
     </table>
     </div>
 
-    <h3>B. Dimensional Analysis <span style="font-size:14px;color:var(--accent);font-family:'JetBrains Mono',monospace;">2.6</span></h3>
-    <p>The "factor-label" method. Set up so units <strong>cancel</strong> (top × bottom).</p>
+    <h4>Best-fit unit examples (slide 34)</h4>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Item</th><th>Mass</th><th>Volume</th><th>Length</th></tr></thead>
+      <tbody>
+        <tr><td>A grape</td><td>g (~1 g)</td><td>mL (~5 mL)</td><td>cm (~2 cm)</td></tr>
+        <tr><td>An apple</td><td>grams</td><td>mL</td><td>centimeters</td></tr>
+        <tr><td>A basketball</td><td>kilograms</td><td>liters</td><td>centimeters</td></tr>
+        <tr><td>A refrigerator</td><td>kilograms</td><td>liters</td><td>meters</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h4>Slide 44 conversion practice — all 13 problems</h4>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Conversion</th><th>Answer</th></tr></thead>
+      <tbody>
+        <tr><td>16 kg = ? g</td><td>16,000 g</td></tr>
+        <tr><td>0.750 km = ? mm</td><td>750,000 mm</td></tr>
+        <tr><td>6,750 mg = ? g</td><td>6.75 g</td></tr>
+        <tr><td>350 cm = ? m</td><td>3.50 m</td></tr>
+        <tr><td>9.3 g = ? mg</td><td>9,300 mg</td></tr>
+        <tr><td>0.956 m = ? mm</td><td>956 mm</td></tr>
+        <tr><td>255 km = ? m</td><td>255,000 m</td></tr>
+        <tr><td>64.2 g = ? kg</td><td>0.0642 kg</td></tr>
+        <tr><td>0.000545 kg = ? g</td><td>0.545 g</td></tr>
+        <tr><td>0.0300 km = ? m</td><td>30.0 m</td></tr>
+        <tr><td>2000 msec = ? sec</td><td>2 sec</td></tr>
+        <tr><td>0.0035 km = ? cm</td><td>350 cm</td></tr>
+        <tr><td>4.0 g = ? kg</td><td>0.0040 kg</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- SECTION 8 — DIMENSIONAL ANALYSIS -->
+  <section class="topic" id="s8">
+    <div class="sec-head">
+      <span class="sec-num">§ 08</span>
+      <h2 class="sec-title">Dimensional Analysis <span class="topic-tag">2.6</span></h2>
+    </div>
+    <p class="lede">The factor-label method. Set up so units <strong>cancel</strong>.</p>
+
+    <h4>The steps (slide 54)</h4>
+    <ol>
+      <li>Determine the <strong>given</strong> value and unit, and the unit you're <strong>seeking</strong>.</li>
+      <li>Find conversion factors that relate the start and end units, directly or in a chain.</li>
+      <li>Write the given quantity, then multiply by conversion factors. Each factor must have the previous unit in the <strong>bottom</strong> so it cancels.</li>
+    </ol>
 
     <div class="formula" style="font-size:18px;">
       1 day ×
@@ -1237,33 +1180,51 @@
       = 86,400 s
     </div>
 
-    <h4>Common conversion factors</h4>
+    <h4>Common conversion factors (slide 55)</h4>
     <div class="table-wrap">
     <table>
       <thead><tr><th>Mass</th><th>Length</th><th>Volume</th></tr></thead>
       <tbody>
         <tr><td>1 lb = 454 g</td><td>1 in = 2.54 cm</td><td>1 gal = 3.785 L</td></tr>
         <tr><td>1 kg = 1000 g</td><td>1 mi = 1.61 km</td><td>1 L = 1000 mL</td></tr>
-        <tr><td>1 lb = 16 oz</td><td>1 mi = 5280 ft</td><td>1 mL = 1 cm³</td></tr>
+        <tr><td>1 lb = 16 oz</td><td>1 mi = 5,280 ft</td><td>1 mL = 1 cm³</td></tr>
         <tr><td>1 g = 1000 mg</td><td>1 ft = 12 in</td><td>1 oz = 29.6 mL</td></tr>
       </tbody>
     </table>
     </div>
 
-    <h4>Worked examples</h4>
+    <h4>Slide-deck worked examples</h4>
+
     <div class="example">
-      <ul style="margin:0;padding-left:16px;">
-        <li>25 cm → m: <code>25 cm × (1 m / 100 cm) = 0.25 m</code></li>
-        <li>89 nm → m: <code>89 nm × (1 m / 10⁹ nm) = 8.9 × 10⁻⁸ m</code></li>
-        <li>560 mL → L: <span class="answer">0.56 L</span></li>
-        <li>210 mm → m: <span class="answer">0.21 m</span></li>
-        <li>0.325 L → mL: <span class="answer">325 mL</span></li>
-        <li>0.533 g → mg: <span class="answer">533 mg</span></li>
-        <li>25 km/hr → mi/hr: <code>25 km/hr × 1000 m/km × 100 cm/m × 1 in/2.54 cm × 1 ft/12 in × 1 mi/5280 ft = </code><span class="answer">15.5 mi/hr</span></li>
-      </ul>
+      <div class="ex-tag">Slide 55 · Robert Wadlow (tallest man in history)</div>
+      272 cm to feet?<br>
+      272 cm × (1 in / 2.54 cm) × (1 ft / 12 in) = <span class="answer">8.92 ft</span>
     </div>
 
-    <h3>C. Density <span style="font-size:14px;color:var(--accent);font-family:'JetBrains Mono',monospace;">2.3</span></h3>
+    <div class="example">
+      <div class="ex-tag">Slide 56 · Hollie the dog</div>
+      42.5 kg to pounds?<br>
+      42.5 kg × (1000 g / 1 kg) × (1 lb / 454 g) = <span class="answer">93.6 lb</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Slide 57 · Cow's daily milk</div>
+      831 oz of milk to gallons?<br>
+      831 oz × (29.6 mL / 1 oz) × (1 L / 1000 mL) × (1 gal / 3.785 L) = <span class="answer">6.5 gallons</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Bonus · 25 km/hr to mi/hr</div>
+      25 km/hr × (1000 m / 1 km) × (100 cm / 1 m) × (1 in / 2.54 cm) × (1 ft / 12 in) × (1 mi / 5280 ft) = <span class="answer">15.5 mi/hr</span>
+    </div>
+  </section>
+
+  <!-- SECTION 9 — DENSITY -->
+  <section class="topic" id="s9">
+    <div class="sec-head">
+      <span class="sec-num">§ 09</span>
+      <h2 class="sec-title">Density <span class="topic-tag">2.3</span></h2>
+    </div>
 
     <div class="formula">
       D =
@@ -1279,49 +1240,86 @@
       <li>V → mL or cm³ (they're equal!)</li>
     </ul>
 
-    <h4>Key behaviors</h4>
-    <ul>
-      <li>The <strong>denser</strong> substance sinks; the <strong>less dense</strong> floats.</li>
-      <li>A graph of mass vs. volume → straight line through origin → <strong>direct relationship</strong>; the <strong>slope = density</strong>.</li>
-    </ul>
-
-    <div class="example">
-      <div class="ex-tag">Density problems</div>
-      <p><strong>Baseball:</strong> V = 210 cm³, D = 0.71 g/cm³ → m = 0.71 × 210 = <span class="answer">149 g</span> (2 sig figs: 150 g)</p>
-      <p><strong>Golf ball:</strong> m = 45.9 g, D = 1.13 g/mL → V = 45.9 / 1.13 = <span class="answer">40.6 mL</span></p>
-      <p><strong>Copper block (water displacement):</strong> Water rises from 20.0 mL to 25.9 mL, so V = 5.9 mL. With D = 8.96 g/mL:<br>
-      m = 8.96 × 5.9 = <span class="answer">52.9 g</span></p>
+    <div class="callout tip">
+      <span class="callout-label">Key idea — slide 10</span>
+      Liquids of different densities will <strong>layer</strong> themselves: the more dense substance <strong>sinks</strong>; the less dense one <strong>floats</strong>. A heavier (denser) ball sinks; a lighter (less dense) ball floats.
     </div>
 
-    <h3>D. Graphing <span style="font-size:14px;color:var(--accent);font-family:'JetBrains Mono',monospace;">2.2</span></h3>
+    <h4>Slide 8 worked problems</h4>
+
+    <div class="example">
+      <div class="ex-tag">Baseball</div>
+      Determine the mass of an official MLB baseball with V = 210 cm³, D = 0.71 g/cm³.<br>
+      m = D × V = 0.71 × 210 = <span class="answer">149 g</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Golf ball</div>
+      If a golf ball has density 1.13 g/mL and mass 45.9 g, what's its volume?<br>
+      V = m / D = 45.9 / 1.13 = <span class="answer">40.6 mL</span>
+    </div>
+
+    <div class="example">
+      <div class="ex-tag">Copper block (water displacement)</div>
+      Water rises from 20.0 mL to 25.9 mL → V = 5.9 mL. With D = 8.96 g/mL:<br>
+      m = 8.96 × 5.9 = <span class="answer">52.9 g</span>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">Density from a graph — slide 9</span>
+      If you graph mass (y-axis) vs. volume (x-axis), the data forms a straight line through the origin. This is a <strong>direct relationship</strong>, and the <strong>slope = density</strong> (with units of g/mL).
+    </div>
+  </section>
+
+  <!-- SECTION 10 — GRAPHING -->
+  <section class="topic" id="s10">
+    <div class="sec-head">
+      <span class="sec-num">§ 10</span>
+      <h2 class="sec-title">Graphing <span class="topic-tag">2.2</span></h2>
+    </div>
+
+    <p>One variable is varied (the <strong>independent</strong> variable) and the other is measured (the <strong>dependent</strong> variable). Graphing illustrates the mathematical relationship.</p>
+
     <div class="table-wrap">
     <table>
       <thead><tr><th></th><th>Direct relationship</th><th>Indirect (inverse) relationship</th></tr></thead>
       <tbody>
-        <tr><td>As x ↑</td><td>y ↑</td><td>y ↓</td></tr>
-        <tr><td>Shape</td><td>straight line</td><td>curve approaching but never crossing axes</td></tr>
+        <tr><td>As x ↑</td><td>y ↑ (same direction)</td><td>y ↓ (opposite direction)</td></tr>
+        <tr><td>Shape</td><td>Straight line</td><td>Curve approaching but never crossing axes</td></tr>
         <tr><td>Equation</td><td>y = kx (through origin) or y = kx + b</td><td>xy = k</td></tr>
-        <tr><td>k means</td><td>slope of the line</td><td>area under the curve at that point</td></tr>
+        <tr><td>What k means</td><td>Slope of the line</td><td>Area under the curve at that point</td></tr>
       </tbody>
     </table>
     </div>
 
-    <p><strong>Slope formula:</strong> <code>slope = Δy / Δx = (y₂ − y₁) / (x₂ − x₁)</code></p>
-    <p>If you graph <strong>mass vs. volume</strong> for a substance and get a straight line through the origin, the <strong>slope is the density</strong>.</p>
+    <h4>Slope (slide 48 worked example)</h4>
+    <p>Slope = Δy / Δx = (y₂ − y₁) / (x₂ − x₁)</p>
+
+    <div class="example">
+      <div class="ex-tag">From slide 48 data points (2.7, 3.8) and (5.0, 7.5)</div>
+      Slope = (7.5 − 3.8) / (5.0 − 2.7) = 3.7 / 2.3 ≈ <span class="answer">1.6</span><br>
+      Equation: y = 1.6x (passes through origin) — a direct relationship.
+    </div>
 
     <div class="callout warning">
-      <span class="callout-label">Important</span>
-      Real lab data never makes a <em>perfectly</em> straight or <em>perfectly</em> curved line — there's always <strong>uncertainty</strong> in measurements. Draw a <strong>best-fit line</strong>, not a connect-the-dots zigzag.
+      <span class="callout-label">Slide 51 key idea</span>
+      Lab data <strong>never</strong> forms a perfectly straight or perfectly curved line because of <strong>uncertainty</strong> in measurements. Draw a <strong>best-fit line</strong>, never connect-the-dots.
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-label">Spotting the relationship from an equation</span>
+      Both variables on the <strong>same side</strong> in the <strong>same location</strong> (both in the numerator) → <strong>direct</strong>.<br>
+      One variable in the numerator and one in the denominator → <strong>indirect</strong>.
     </div>
   </section>
 
-  <!-- SECTION 7 -->
-  <section class="topic" id="s7">
+  <!-- SECTION 11 — AVERAGING -->
+  <section class="topic" id="s11">
     <div class="sec-head">
-      <span class="sec-num">§ 07</span>
-      <h2 class="sec-title">Averaging, Weighted Averaging &amp; Sample Size</h2>
+      <span class="sec-num">§ 11</span>
+      <h2 class="sec-title">Averaging, Weighted Avg &amp; Sample Size</h2>
     </div>
-    <p class="lede">Not in your guided notes — built from standard chemistry conventions. Expect conceptual questions.</p>
+    <p class="lede">Not in the slide deck — built from standard chemistry conventions. Expect basic conceptual questions.</p>
 
     <h3>Simple Average (Mean)</h3>
     <div class="formula">
@@ -1337,15 +1335,14 @@
     <p><strong>Apply sig fig rules to your average</strong> — don't report more decimals than your data justifies.</p>
 
     <h3>Weighted Average</h3>
-    <p>Use when some data points "count more" than others (different sample sizes, different reliability, or different proportions).</p>
+    <p>Use when some data points "count more" than others (different sample sizes, different abundances).</p>
     <div class="formula">
       x̄<sub>weighted</sub> =
       <span class="frac"><span class="num">Σ (value × weight)</span><span class="den">Σ weights</span></span>
     </div>
 
     <div class="example">
-      <div class="ex-tag">Classic chemistry example — atomic mass</div>
-      Chlorine has two isotopes:<br>
+      <div class="ex-tag">Classic chemistry example — atomic mass of chlorine</div>
       • Cl-35 at 75.77 % abundance, mass ≈ 34.97 amu<br>
       • Cl-37 at 24.23 % abundance, mass ≈ 36.97 amu<br><br>
       Atomic mass = (34.97 × 0.7577) + (36.97 × 0.2423) = 26.50 + 8.957 ≈ <span class="answer">35.45 amu</span><br><br>
@@ -1353,30 +1350,29 @@
     </div>
 
     <div class="example">
-      <div class="ex-tag">General lab example</div>
-      Group A measured 5 trials averaging 4.20 g/mL; Group B measured 2 trials averaging 4.50 g/mL.<br>
-      Weighted by trial count:<br>
-      (4.20 × 5 + 4.50 × 2) / (5 + 2) = (21.0 + 9.0) / 7 = <span class="answer">4.29 g/mL</span><br><br>
-      A simple mean of just (4.20, 4.50) would give 4.35 — but that's wrong because Group A's data is based on more trials.
+      <div class="ex-tag">Lab example</div>
+      Group A: 5 trials averaging 4.20 g/mL. Group B: 2 trials averaging 4.50 g/mL.<br>
+      Weighted by trial count: (4.20 × 5 + 4.50 × 2) / (5 + 2) = 30.0 / 7 = <span class="answer">4.29 g/mL</span><br>
+      A simple mean of (4.20, 4.50) would give 4.35 — wrong, because Group A's data is based on more trials.
     </div>
 
     <h3>Sample Size</h3>
     <ul>
-      <li><strong>Larger sample size = more reliable results.</strong> Random errors tend to cancel out.</li>
+      <li><strong>Larger sample size = more reliable results.</strong> Random errors cancel out.</li>
       <li><strong>One trial is not enough.</strong> A single measurement could be a fluke.</li>
-      <li>More trials → better estimate of the true value AND better estimate of precision.</li>
-      <li><strong>Outliers:</strong> with a small sample, one weird data point distorts the average a lot. With a big sample, outliers matter less.</li>
+      <li>More trials → better estimate of both the true value AND the precision.</li>
+      <li><strong>Outliers</strong>: in small samples, one weird point distorts the average. In big samples, outliers matter less.</li>
       <li>Rule of thumb in chem lab: at least <strong>3 trials</strong> before averaging.</li>
     </ul>
   </section>
 
-  <!-- SECTION 8 -->
-  <section class="topic" id="s8">
+  <!-- SECTION 12 — LAB REPORT -->
+  <section class="topic" id="s12">
     <div class="sec-head">
-      <span class="sec-num">§ 08</span>
+      <span class="sec-num">§ 12</span>
       <h2 class="sec-title">Parts of a Science Report</h2>
     </div>
-    <p class="lede">A likely test target since it isn't in the guided notes.</p>
+    <p class="lede">A likely test target — these aren't in the slide deck either.</p>
 
     <div class="table-wrap">
     <table>
@@ -1386,12 +1382,12 @@
         <tr><td><strong>Purpose / Objective</strong></td><td>One sentence: what you set out to find or test.</td></tr>
         <tr><td><strong>Hypothesis</strong></td><td>Your prediction, stated <em>before</em> doing the experiment ("If… then… because…").</td></tr>
         <tr><td><strong>Materials</strong></td><td>Bulleted list of equipment and chemicals used.</td></tr>
-        <tr><td><strong>Procedure</strong></td><td>Steps taken — numbered, in past tense, detailed enough that someone else could repeat it.</td></tr>
-        <tr><td><strong>Data / Observations</strong></td><td>Tables of measurements, qualitative observations (color changes, etc.). No interpretation here — just facts.</td></tr>
-        <tr><td><strong>Calculations / Analysis</strong></td><td>Show your work: density, % error, averages, dimensional analysis. Include units and proper sig figs.</td></tr>
+        <tr><td><strong>Procedure</strong></td><td>Numbered steps in past tense — detailed enough that someone else could repeat it.</td></tr>
+        <tr><td><strong>Data / Observations</strong></td><td>Tables of measurements and qualitative observations. No interpretation here — just facts.</td></tr>
+        <tr><td><strong>Calculations / Analysis</strong></td><td>Show your work: density, % error, averages, dimensional analysis. Include units and sig figs.</td></tr>
         <tr><td><strong>Results</strong></td><td>Summary of the key calculated values (often in a small summary table).</td></tr>
-        <tr><td><strong>Conclusion</strong></td><td>Did the data support your hypothesis? What's the experimental value? How does it compare to the accepted value (% error)?</td></tr>
-        <tr><td><strong>Sources of Error</strong></td><td>Limitations of equipment, parallax, calibration. <strong>NOT "human error"</strong> per your teacher.</td></tr>
+        <tr><td><strong>Conclusion</strong></td><td>Did the data support your hypothesis? What's the experimental value, and how does it compare to the accepted value (% error)?</td></tr>
+        <tr><td><strong>Sources of Error</strong></td><td>Limitations of equipment, parallax, calibration. <strong>NOT "human error"</strong> per the slides.</td></tr>
       </tbody>
     </table>
     </div>
@@ -1402,20 +1398,25 @@
     </div>
   </section>
 
-  <!-- SECTION 9 -->
-  <section class="topic" id="s9">
+  <!-- SECTION 13 — FORMULA SHEET -->
+  <section class="topic" id="s13">
     <div class="sec-head">
-      <span class="sec-num">§ 09</span>
+      <span class="sec-num">§ 13</span>
       <h2 class="sec-title">Formula Sheet</h2>
     </div>
 
 <pre><code>Density:        D = m/V        m = D × V        V = m/D
 
-% Error:        |theoretical − experimental| / theoretical × 100
+% Error:        (theoretical − experimental) / theoretical × 100
+                  (+) error → experimental LESS than theoretical
+                  (−) error → experimental GREATER than theoretical
 
 % Recovered:    actual / expected × 100
 
 Slope:          (y₂ − y₁) / (x₂ − x₁)
+
+Direct rel:     y = kx       (k = slope)
+Indirect rel:   xy = k
 
 Average:        sum of values / number of values
 
@@ -1429,67 +1430,75 @@ Weighted avg:   Σ(value × weight) / Σ(weights)</code></pre>
     </div>
   </section>
 
-  <!-- SECTION 10 -->
-  <section class="topic" id="s10">
+  <!-- SECTION 14 — SELF-CHECK -->
+  <section class="topic" id="s14">
     <div class="sec-head">
-      <span class="sec-num">§ 10</span>
+      <span class="sec-num">§ 14</span>
       <h2 class="sec-title">Self-Check Practice</h2>
     </div>
-    <p class="lede">Try these without looking at the notes. Answers below.</p>
+    <p class="lede">Try these without looking. Answers below.</p>
 
     <div class="practice">
       <ol>
         <li>Classify: "The solution turned blue." Observation or interpretation?</li>
         <li>Classify: "The copper reacted with the acid." Observation or interpretation?</li>
         <li>A target has 4 darts grouped tightly together but far from the bullseye. Precise? Accurate?</li>
+        <li>Slide 4 equipment: name A, B, C, and D.</li>
         <li>How many sig figs: 0.00450, 4500, 4500.0, 4.50 × 10³?</li>
         <li>12.11 g + 0.4 g + 1.115 g = ? (correct sig figs)</li>
         <li>3.20 cm × 1.5 cm = ? (correct sig figs)</li>
-        <li>A student measures the density of aluminum as 2.55 g/mL. The accepted value is 2.70 g/mL. What is the % error?</li>
+        <li>A student measures aluminum density as 2.55 g/mL. Accepted value is 2.70 g/mL. % error (with sign)?</li>
         <li>Convert 4.5 km to mm using dimensional analysis.</li>
         <li>A block has mass 54.0 g and volume 20.0 mL. What is its density?</li>
-        <li>Trials yielded densities of 1.02, 1.04, 1.03, 1.01 g/mL. What's the average?</li>
-        <li>Looking at Ruler 1 (1's marked), the bar ends at the 6th line plus a little. To what precision should you record? Give an example.</li>
-        <li>Two groups report: Group 1 → 8 trials averaging 25.0°C; Group 2 → 2 trials averaging 26.0°C. What's the weighted average temperature?</li>
+        <li>Trials yield densities 1.02, 1.04, 1.03, 1.01 g/mL. What's the average?</li>
+        <li>Two groups: Group 1 → 8 trials averaging 25.0°C; Group 2 → 2 trials averaging 26.0°C. What's the weighted average?</li>
+        <li>Convert 272 cm to feet (slide 55).</li>
+        <li>What is the slope of a line passing through (2.7, 3.8) and (5.0, 7.5)?</li>
+        <li>On a graduated cylinder where the smallest line = 0.1 mL, you read between 6.5 and 6.6, about 9/10 of the way up. What's the measurement?</li>
       </ol>
 
       <div class="answers-block">
         <h4>Answers</h4>
         <ol>
           <li><strong>Observation</strong> — you see the color.</li>
-          <li><strong>Interpretation</strong> — "reacted" explains what's happening at the molecular level.</li>
-          <li><strong>Precise, not accurate.</strong> Classic systematic error pattern.</li>
+          <li><strong>Interpretation</strong> — "reacted" explains what's happening.</li>
+          <li><strong>Precise, not accurate.</strong> Classic systematic-error pattern.</li>
+          <li>A = <strong>graduated cylinder</strong>, B = <strong>beaker</strong>, C = <strong>ring stand</strong>, D = <strong>Bunsen burner</strong>.</li>
           <li>0.00450 → <strong>3</strong>; 4500 → <strong>2</strong>; 4500.0 → <strong>5</strong>; 4.50 × 10³ → <strong>3</strong>.</li>
           <li>12.11 + 0.4 + 1.115 = 13.625 → <strong>13.6 g</strong> (0.4 has 1 decimal).</li>
           <li>3.20 × 1.5 = 4.80 → <strong>4.8 cm²</strong> (1.5 has 2 sig figs).</li>
-          <li>|2.70 − 2.55| / 2.70 × 100 = <strong>5.56 %</strong>.</li>
+          <li>(2.70 − 2.55) / 2.70 × 100 = <strong>+5.56 %</strong> (positive because experimental was less than theoretical).</li>
           <li>4.5 km × (1000 m / 1 km) × (1000 mm / 1 m) = <strong>4,500,000 mm</strong> or 4.5 × 10⁶ mm.</li>
           <li>D = 54.0 / 20.0 = <strong>2.70 g/mL</strong>.</li>
           <li>(1.02 + 1.04 + 1.03 + 1.01) / 4 = 4.10/4 = <strong>1.03 g/mL</strong>.</li>
-          <li>Read to <strong>0.1 cm</strong> — example "6.2 cm" or "6.4 cm" (one estimated digit past the smallest line).</li>
-          <li>(25.0 × 8 + 26.0 × 2) / (8 + 2) = (200 + 52) / 10 = <strong>25.2 °C</strong>.</li>
+          <li>(25.0 × 8 + 26.0 × 2) / 10 = 252/10 = <strong>25.2 °C</strong>.</li>
+          <li>272 cm × (1 in / 2.54 cm) × (1 ft / 12 in) = <strong>8.92 ft</strong>.</li>
+          <li>(7.5 − 3.8) / (5.0 − 2.7) = 3.7 / 2.3 = <strong>1.6</strong>.</li>
+          <li>Between 6.5 and 6.6, estimate 9/10 → <strong>6.59 mL</strong> (matches slide 39).</li>
         </ol>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 11 -->
-  <section class="topic" id="s11">
+  <!-- SECTION 15 — COMMON MISTAKES -->
+  <section class="topic" id="s15">
     <div class="sec-head">
-      <span class="sec-num">§ 11</span>
+      <span class="sec-num">§ 15</span>
       <h2 class="sec-title">Common Mistakes to Avoid</h2>
     </div>
 
     <ul class="mistakes">
       <li>Forgetting that <strong>the decimal point matters</strong> for trailing zeros (120 vs 120.).</li>
-      <li>Writing <strong>more decimal places than your instrument allows</strong> (a balance reading 5.0 g shouldn't get reported as 5.00 g).</li>
-      <li>Mixing up accuracy and precision — repeat after me: <strong>accuracy = bullseye, precision = grouping</strong>.</li>
-      <li>Citing "human error" as a source of error. Your teacher explicitly says <strong>don't do this</strong>.</li>
-      <li>Forgetting absolute value bars in % error (or forgetting to multiply by 100).</li>
+      <li>Writing <strong>more decimal places than your instrument allows</strong>.</li>
+      <li>Mixing up accuracy and precision — repeat: <strong>accuracy = bullseye, precision = grouping</strong>.</li>
+      <li>Getting the % error sign backwards. <strong>(+) means experimental was LESS; (−) means GREATER.</strong></li>
+      <li>Citing "human error" as a source of error. The slides explicitly say <strong>don't do this</strong>.</li>
+      <li>Forgetting to multiply by 100 in % error.</li>
       <li>Reading a graduated cylinder from the <strong>top</strong> of the meniscus instead of the bottom (for water).</li>
       <li>Reading from an angle → parallax error.</li>
-      <li>Connecting graph data points like a dot-to-dot puzzle instead of drawing a <strong>best-fit line</strong>.</li>
-      <li>Reporting <code>m³</code> for a length × length calculation. Watch your units.</li>
+      <li>Connecting graph data points dot-to-dot instead of drawing a <strong>best-fit line</strong>.</li>
+      <li>Forgetting to convert units before plugging into a formula (always check units cancel).</li>
+      <li>Treating beaker volume markings as precise — they're not.</li>
     </ul>
 
     <p style="margin-top:32px;font-family:'Fraunces',serif;font-style:italic;font-size:19px;color:var(--ink-soft);text-align:center;">
@@ -1498,7 +1507,7 @@ Weighted avg:   Σ(value × weight) / Σ(weights)</code></pre>
   </section>
 
   <footer>
-    <span>Chemistry Unit 2 · Study Guide</span>
+    <span>Chemistry Unit 2 · Study Guide · Rebuilt with Slide Deck</span>
     <span class="stamp">Good luck ✦</span>
   </footer>
 
