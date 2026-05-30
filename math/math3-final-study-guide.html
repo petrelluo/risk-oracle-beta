@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math 3 Final — Study Guide (Chapters 5–8)</title>
+<style>
+  :root{
+    --ink:#1d1b16; --ink2:#524d42; --paper:#f7f3ea; --card:#fffdf8;
+    --rule:#d8cfba; --accent:#8a2f24; --accent2:#2d5a4e; --hard:#b5651d;
+    --grid:#d9d2c2; --axis:#7a7163;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    font-size:17px; line-height:1.5;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 18px 80px;}
+  header.top{
+    border-bottom:3px double var(--accent); padding:26px 0 16px; margin-bottom:6px;
+  }
+  header.top h1{
+    font-size:30px;margin:0;letter-spacing:.3px;font-weight:700;
+  }
+  header.top .sub{color:var(--ink2);font-style:italic;margin-top:4px;font-size:16px;}
+  nav.tabs{
+    position:sticky;top:0;z-index:50;background:var(--paper);
+    border-bottom:1px solid var(--rule); padding:8px 0; margin-bottom:22px;
+    display:flex;flex-wrap:wrap;gap:6px;
+  }
+  nav.tabs button{
+    font-family:inherit;font-size:13px;cursor:pointer;
+    border:1px solid var(--rule);background:var(--card);color:var(--ink2);
+    padding:5px 10px;border-radius:3px;
+  }
+  nav.tabs button:hover{border-color:var(--accent);color:var(--accent);}
+  nav.tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  nav.tabs .sp{flex:1 1 auto;}
+  section.view{display:none;}
+  section.view.active{display:block;}
+
+  h2.qh{font-size:23px;margin:0 0 2px;border-bottom:1px solid var(--rule);padding-bottom:6px;}
+  .meta{color:var(--ink2);font-size:14px;font-style:italic;margin:4px 0 16px;}
+  .badge{display:inline-block;font-style:normal;font-size:11px;letter-spacing:.5px;
+    text-transform:uppercase;padding:2px 7px;border-radius:3px;vertical-align:middle;margin-left:6px;}
+  .badge.std{background:#e9e2d0;color:var(--accent2);}
+  .badge.chal{background:var(--accent);color:#fff;}
+
+  .toolbar{margin:0 0 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .toolbar button{font-family:inherit;font-size:13px;cursor:pointer;border:1px solid var(--accent2);
+    background:var(--card);color:var(--accent2);padding:5px 12px;border-radius:3px;}
+  .toolbar button:hover{background:var(--accent2);color:#fff;}
+  .toolbar .note{color:var(--ink2);font-size:13px;font-style:italic;}
+
+  ol.problems{
+    margin:0;padding:0;list-style:none;
+    column-count:2;column-gap:26px;
+  }
+  ol.problems > li{
+    break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
+    margin:0 0 13px;padding-left:26px;position:relative;
+  }
+  ol.problems > li .num{
+    position:absolute;left:0;top:0;font-weight:700;color:var(--accent);min-width:22px;
+  }
+  .star{color:var(--hard);font-weight:700;}
+  .qtext{display:block;}
+
+  /* math typography */
+  .fr{display:inline-grid;vertical-align:middle;text-align:center;margin:0 .2em;line-height:1.12;}
+  .fr>.n{border-bottom:1.4px solid currentColor;padding:0 .34em 1px;white-space:nowrap;}
+  .fr>.d{padding:1px .34em 0;white-space:nowrap;}
+  .vin{border-top:1.4px solid currentColor;padding:0 .12em .02em;}
+  sup.idx{font-size:.7em;vertical-align:.5em;margin-right:-.15em;}
+  .sg{display:inline-flex;flex-direction:column;align-items:center;vertical-align:-0.9em;margin:0 .12em;line-height:1;}
+  .sg>.t{font-size:.62em;}
+  .sg>.s{font-size:1.7em;line-height:.82;}
+  .sg>.b{font-size:.62em;}
+  .se{vertical-align:-0.1em;}
+  .fn{font-style:normal;}
+
+  /* graphs */
+  svg.graph{display:block;margin:8px 0 2px;max-width:100%;height:auto;background:#fffefb;border:1px solid var(--rule);}
+  svg.graph .gl{stroke:var(--grid);stroke-width:.7;}
+  svg.graph .ax{stroke:var(--axis);stroke-width:1.3;}
+  svg.graph text{fill:var(--ink2);font-family:Georgia,serif;font-size:10px;}
+  svg.graph .crv{fill:none;stroke:var(--accent);stroke-width:1.8;}
+  svg.graph .asy{stroke:var(--accent2);stroke-width:1.1;stroke-dasharray:4 3;}
+  svg.graph .pt{fill:var(--accent);}
+
+  /* answer keys */
+  .akblock{border:1px solid var(--rule);background:var(--card);border-radius:4px;
+    padding:14px 18px;margin:0 0 18px;break-inside:avoid;}
+  .akblock h3{margin:0 0 8px;font-size:18px;color:var(--accent);}
+  ol.answers{margin:0;padding-left:22px;}
+  ol.answers > li{margin:0 0 7px;}
+
+  /* home / study guide */
+  .lead{font-size:18px;color:var(--ink2);max-width:70ch;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:18px 0;}
+  .panel{border:1px solid var(--rule);background:var(--card);border-radius:5px;padding:16px 20px;}
+  .panel h3{margin:0 0 6px;color:var(--accent2);font-size:19px;}
+  .panel ul{margin:6px 0 0;padding-left:20px;}
+  .panel li{margin:3px 0;}
+  .howto{border-left:4px solid var(--accent);background:var(--card);padding:12px 18px;border-radius:0 5px 5px 0;margin:10px 0 0;}
+
+  /* review guide */
+  .rev{margin-top:8px;}
+  .chapsec{margin:30px 0 8px;}
+  .chapsec > h2{font-size:24px;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:5px;margin:0 0 4px;}
+  .topic{margin:16px 0;break-inside:avoid;}
+  .topic h4{margin:0 0 4px;font-size:18px;color:var(--accent2);}
+  .topic p{margin:5px 0;}
+  .topic .key{font-weight:700;}
+  .fbox{background:#efe8d8;border-radius:4px;padding:7px 12px;margin:7px 0;font-size:16px;}
+  .eg{border-left:3px solid var(--accent2);background:var(--card);padding:9px 14px;margin:9px 0;border-radius:0 4px 4px 0;}
+  .eg .lbl{font-style:italic;color:var(--accent2);font-weight:700;font-size:14px;}
+  .pitfall{border-left:3px solid var(--hard);background:#fbf2e6;padding:9px 14px;margin:12px 0 0;border-radius:0 4px 4px 0;}
+  .pitfall .lbl{font-weight:700;color:var(--hard);font-size:14px;}
+
+  /* cheat sheet */
+  .cs{column-count:2;column-gap:26px;}
+  .csbox{break-inside:avoid;border:1px solid var(--rule);background:var(--card);border-radius:5px;
+    padding:12px 15px;margin:0 0 16px;}
+  .csbox h3{margin:0 0 6px;font-size:17px;color:var(--accent);border-bottom:1px solid var(--rule);padding-bottom:4px;}
+  .csbox p{margin:5px 0;}
+  .csbox .k{font-weight:700;color:var(--accent2);}
+  table.tri{border-collapse:collapse;width:100%;font-size:14px;margin:4px 0;}
+  table.tri td,table.tri th{border:1px solid var(--rule);padding:3px 6px;text-align:center;}
+  svg.unit{display:block;margin:6px auto;max-width:100%;height:auto;}
+  svg.unit text{font-family:Georgia,serif;}
+
+  footer{margin-top:40px;border-top:1px solid var(--rule);padding-top:14px;color:var(--ink2);font-size:13px;}
+
+  @media (max-width:760px){
+    ol.problems,.cs{column-count:1;}
+    .grid2{grid-template-columns:1fr;}
+  }
+
+  /* ---------- PRINT ---------- */
+  @page{size:A4;margin:14mm;}
+  @media print{
+    body{background:#fff;font-size:11pt;color:#000;}
+    .wrap{max-width:none;padding:0;}
+    nav.tabs,.toolbar,header.top .sub,footer,.noprint{display:none !important;}
+    header.top{border-bottom:2px solid #000;padding:0 0 6px;margin:0 0 10px;}
+    header.top h1{font-size:18pt;}
+    section.view{display:none !important;}
+    section.view.active{display:block !important;}
+    ol.problems{column-gap:14px;}
+    ol.problems > li{margin-bottom:9px;}
+    h2.qh{font-size:15pt;}
+    svg.graph{border:1px solid #999;background:#fff;}
+    .akblock,.csbox,.panel{border:1px solid #999;}
+    .cs{column-gap:16px;}
+    a[href]{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Math 3 — Final Exam Study Guide</h1>
+    <div class="sub">Big Ideas Math: Integrated Mathematics III · Chapters 5–8 · 10 mock quizzes + cheat sheet</div>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <main id="view"></main>
+  <footer>
+    Built from your teacher's notes and Big Ideas Math Integrated III (Larson &amp; Boswell). Use the cheat sheet sparingly — the goal is to not need it.
+  </footer>
+</div>
+
+<script>
+/* ============ math helpers ============ */
+function sup(e){return "<sup>"+e+"</sup>";}
+function sub(b){return "<sub>"+b+"</sub>";}
+function fr(n,d){return '<span class="fr"><span class="n">'+n+'</span><span class="d">'+d+'</span></span>';}
+function sq(x){return "&radic;<span class='vin'>"+x+"</span>";}
+function rt(i,x){return "<sup class='idx'>"+i+"</sup>&radic;<span class='vin'>"+x+"</span>";}
+function pw(b,e){return b+sup(e);}
+function lg(b,a){return "<span class='fn'>log</span>"+sub(b)+"&thinsp;"+a;}
+function ln(a){return "<span class='fn'>ln</span>&thinsp;"+a;}
+function lOG(a){return "<span class='fn'>log</span>&thinsp;"+a;}
+function trg(f,a){return "<span class='fn'>"+f+"</span>&thinsp;"+a;}
+function sumn(t,b,expr){return "<span class='sg'><span class='t'>"+t+"</span><span class='s'>&Sigma;</span><span class='b'>"+b+"</span></span><span class='se'>"+expr+"</span>";}
+var PI="&pi;", TH="&theta;", DEG="&deg;", LE="&le;", GE="&ge;", NE="&ne;", PM="&plusmn;", INF="&infin;", AP="&asymp;", TO="&rarr;", CD="&middot;", MN="&minus;", IN="&isin;", times="&times;";
+
+/* ============ coordinate grid generator (blank, for graphing) ============ */
+function grid(o){
+  o=Object.assign({xmin:-6,xmax:6,ymin:-6,ymax:6,xt:1,yt:1,xpi:false,w:300,h:226,pad:16,
+                   xlab:2,ylab:2},o);
+  var xmin=o.xmin,xmax=o.xmax,ymin=o.ymin,ymax=o.ymax,xt=o.xt,yt=o.yt,w=o.w,h=o.h,pad=o.pad;
+  function X(x){return pad+(x-xmin)/(xmax-xmin)*(w-2*pad);}
+  function Y(y){return h-pad-(y-ymin)/(ymax-ymin)*(h-2*pad);}
+  var s='<svg class="graph" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">';
+  var x,y;
+  for(x=Math.ceil(xmin/xt)*xt;x<=xmax+1e-9;x+=xt) s+='<line class="gl" x1="'+X(x).toFixed(1)+'" y1="'+Y(ymax)+'" x2="'+X(x).toFixed(1)+'" y2="'+Y(ymin)+'"/>';
+  for(y=Math.ceil(ymin/yt)*yt;y<=ymax+1e-9;y+=yt) s+='<line class="gl" x1="'+X(xmin)+'" y1="'+Y(y).toFixed(1)+'" x2="'+X(xmax)+'" y2="'+Y(y).toFixed(1)+'"/>';
+  // axes
+  s+='<line class="ax" x1="'+X(xmin)+'" y1="'+Y(0)+'" x2="'+X(xmax)+'" y2="'+Y(0)+'"/>';
+  s+='<line class="ax" x1="'+X(0)+'" y1="'+Y(ymax)+'" x2="'+X(0)+'" y2="'+Y(ymin)+'"/>';
+  // arrows
+  function ar(px,py,dx,dy){var a=6;return '<path d="M'+px+' '+py+' L'+(px-dx*a-dy*a*0.5)+' '+(py-dy*a+dx*a*0.5)+' M'+px+' '+py+' L'+(px-dx*a+dy*a*0.5)+' '+(py-dy*a-dx*a*0.5)+'" stroke="var(--axis)" stroke-width="1.3" fill="none"/>';}
+  s+=ar(X(xmax),Y(0),1,0)+ar(X(xmin),Y(0),-1,0)+ar(X(0),Y(ymax),0,-1)+ar(X(0),Y(ymin),0,1);
+  // labels
+  if(o.xpi){
+    for(x=Math.ceil(xmin/xt)*xt;x<=xmax+1e-9;x+=xt){
+      var k=Math.round(x/Math.PI*2); if(k===0) continue;
+      if(k%2!==0) continue; // label whole multiples of pi only
+      var m=k/2, lab=(m===1?"\u03c0":(m===-1?"\u2212\u03c0":(m+"\u03c0")));
+      s+='<text x="'+X(x).toFixed(1)+'" y="'+(Y(0)+13)+'" text-anchor="middle">'+lab+'</text>';
+    }
+  } else {
+    for(x=Math.ceil(xmin/xt)*xt;x<=xmax+1e-9;x+=xt){ var xi=Math.round(x);
+      if(xi===0||Math.abs(xi)%o.xlab!==0) continue;
+      s+='<text x="'+X(x).toFixed(1)+'" y="'+(Y(0)+12)+'" text-anchor="middle">'+xi+'</text>';}
+  }
+  for(y=Math.ceil(ymin/yt)*yt;y<=ymax+1e-9;y+=yt){ var yi=Math.round(y);
+    if(yi===0||Math.abs(yi)%o.ylab!==0) continue;
+    s+='<text x="'+(X(0)-5)+'" y="'+(Y(y)+3.5).toFixed(1)+'" text-anchor="end">'+yi+'</text>';}
+  s+='</svg>';
+  return s;
+}
+
+/* ============ unit circle for cheat sheet ============ */
+function unitCircle(){
+  var R=120,cx=160,cy=160,w=320,h=320;
+  var s='<svg class="unit" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="var(--accent2)" stroke-width="1.4"/>';
+  s+='<line x1="'+(cx-R-14)+'" y1="'+cy+'" x2="'+(cx+R+14)+'" y2="'+cy+'" stroke="var(--axis)" stroke-width="1"/>';
+  s+='<line x1="'+cx+'" y1="'+(cy-R-14)+'" x2="'+cx+'" y2="'+(cy+R+14)+'" stroke="var(--axis)" stroke-width="1"/>';
+  var data=[
+   [0,"0","(1, 0)"],[30,"\u03c0/6","(\u221a3/2, 1/2)"],[45,"\u03c0/4","(\u221a2/2, \u221a2/2)"],
+   [60,"\u03c0/3","(1/2, \u221a3/2)"],[90,"\u03c0/2","(0, 1)"],[120,"2\u03c0/3","(\u22121/2, \u221a3/2)"],
+   [135,"3\u03c0/4","(\u2212\u221a2/2, \u221a2/2)"],[150,"5\u03c0/6","(\u2212\u221a3/2, 1/2)"],
+   [180,"\u03c0","(\u22121, 0)"],[210,"7\u03c0/6","(\u2212\u221a3/2, \u22121/2)"],
+   [225,"5\u03c0/4","(\u2212\u221a2/2, \u2212\u221a2/2)"],[240,"4\u03c0/3","(\u22121/2, \u2212\u221a3/2)"],
+   [270,"3\u03c0/2","(0, \u22121)"],[300,"5\u03c0/3","(1/2, \u2212\u221a3/2)"],
+   [315,"7\u03c0/4","(\u221a2/2, \u2212\u221a2/2)"],[330,"11\u03c0/6","(\u221a3/2, \u2212\u221a2/2)"]];
+  // fix 330 coord typo
+  data[15][2]="(\u221a3/2, \u22121/2)";
+  for(var i=0;i<data.length;i++){
+    var a=data[i][0]*Math.PI/180;
+    var px=cx+R*Math.cos(a), py=cy-R*Math.sin(a);
+    s+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="2.4" fill="var(--accent)"/>';
+    var lx=cx+(R+4)*Math.cos(a), ly=cy-(R+4)*Math.sin(a);
+    var anc=(Math.cos(a)>0.2?"start":(Math.cos(a)<-0.2?"end":"middle"));
+    var dy=(Math.sin(a)>0.2?-2:(Math.sin(a)<-0.2?9:3));
+    s+='<text x="'+lx.toFixed(1)+'" y="'+(ly+dy).toFixed(1)+'" text-anchor="'+anc+'" font-size="8" fill="var(--accent2)">'+data[i][1]+'</text>';
+    s+='<text x="'+lx.toFixed(1)+'" y="'+(ly+dy+8.5).toFixed(1)+'" text-anchor="'+anc+'" font-size="7" fill="var(--ink2)">'+data[i][2]+'</text>';
+  }
+  s+='<text x="'+(cx)+'" y="'+(cy-4)+'" text-anchor="middle" font-size="8" fill="var(--ink2)">(cos&#952;, sin&#952;)</text>';
+  s+='</svg>';
+  return s;
+}
+
+/* ============ sine/cosine reference graph ============ */
+function sineRef(){
+  var w=320,h=150,pad=18;
+  var xmin=0,xmax=2*Math.PI,ymin=-1.4,ymax=1.4;
+  function X(x){return pad+(x-xmin)/(xmax-xmin)*(w-2*pad);}
+  function Y(y){return h-pad-(y-ymin)/(ymax-ymin)*(h-2*pad);}
+  var s='<svg class="graph" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">';
+  s+='<line class="ax" x1="0" y1="'+Y(0)+'" x2="'+w+'" y2="'+Y(0)+'"/>';
+  var d1="",d2="",x,first=true;
+  for(x=0;x<=2*Math.PI+0.01;x+=0.08){
+    d1+=(first?"M":"L")+X(x).toFixed(1)+" "+Y(Math.sin(x)).toFixed(1)+" ";
+    d2+=(first?"M":"L")+X(x).toFixed(1)+" "+Y(Math.cos(x)).toFixed(1)+" ";
+    first=false;
+  }
+  s+='<path d="'+d1+'" class="crv"/>';
+  s+='<path d="'+d2+'" class="crv" style="stroke:var(--accent2)"/>';
+  s+='<text x="'+X(Math.PI/2)+'" y="14" text-anchor="middle" fill="var(--accent)">sin x</text>';
+  s+='<text x="'+X(0.2)+'" y="14" fill="var(--accent2)">cos x</text>';
+  [["\u03c0",Math.PI],["2\u03c0",2*Math.PI]].forEach(function(t){
+    s+='<text x="'+X(t[1]).toFixed(1)+'" y="'+(Y(0)+12)+'" text-anchor="middle">'+t[0]+'</text>';});
+  s+='</svg>';
+  return s;
+}
+
+/* =================== QUIZ DATA =================== */
+/* Each problem: {q, a, grid?(svg), hard?} */
+
+var QUIZZES=[
+/* ---------------- QUIZ 1 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Simplify: "+fr("16e"+sup(5),"4e"+sup(2)),a:"4e"+sup(3)+" &nbsp;(divide coefficients, subtract exponents)"},
+ {q:"Evaluate: "+lg(2,"32"),a:"5 &nbsp;(2"+sup(5)+"=32)"},
+ {q:"Write 4"+sup(3)+"=64 in logarithmic form.",a:lg(4,"64")+"=3"},
+ {q:"Solve: 9"+sup("x")+"=27.",a:"3"+sup("2x")+"=3"+sup(3)+" "+TO+" 2x=3 "+TO+" x="+fr(3,2)},
+ {q:"Expand: "+lg(3,"(9x"+sup(4)+")"),a:"2 + 4"+lg(3,"x")},
+ {q:"Solve, round to 3 decimals: 5"+sup("x")+"=20.",a:"x="+lg(5,"20")+"="+fr(ln("20"),ln("5"))+" "+AP+" 1.861"},
+ {q:"y varies inversely with x, and y=6 when x=3. Write the equation, then find y when x=9.",a:"xy=18, so y="+fr("18","x")+"; &nbsp;x=9 "+TO+" y=2"},
+ {q:"Simplify and state restrictions: "+fr("x"+sup(2)+MN+"9","x"+sup(2)+MN+"x"+MN+"6"),a:fr("(x"+MN+"3)(x+3)","(x"+MN+"3)(x+2)")+"="+fr("x+3","x+2")+", x"+NE+"3,"+MN+"2"},
+ {q:"Add: "+fr(3,"x")+" + "+fr(2,"x+1"),a:fr("3(x+1)+2x","x(x+1)")+"="+fr("5x+3","x(x+1)")},
+ {q:"For 7, 10, 13, 16, &hellip; write a rule for a"+sub("n")+" and find a"+sub("15")+".",a:"d=3, a"+sub("n")+"=3n+4; &nbsp;a"+sub("15")+"=49"},
+ {q:"Find the sum of the first 6 terms of 3, 6, 12, &hellip;",a:"a"+sub(1)+"=3, r=2; S"+sub(6)+"="+fr("3(1"+MN+"2"+sup(6)+")","1"+MN+"2")+"=189"},
+ {q:"A right triangle has legs 5 and 12. Find sin, cos, tan of the angle "+TH+" opposite the side of length 5.",a:"hyp=13; sin"+TH+"="+fr(5,13)+", cos"+TH+"="+fr(12,13)+", tan"+TH+"="+fr(5,12)},
+ {q:"Convert 135"+DEG+" to radians.",a:"135"+CD+fr(PI,"180")+"="+fr("3"+PI,4)},
+ {q:"Graph y="+lg(2,"x")+". State the asymptote, domain, and range.",grid:grid({xmin:-1,xmax:9,ymin:-4,ymax:4,xlab:2,ylab:1}),
+   a:"Points (1,0), (2,1), (4,2), ("+fr(1,2)+",&minus;1). Vertical asymptote x=0; domain x&gt;0; range all reals."},
+ {q:"Evaluate exactly: cos 240"+DEG+".",hard:true,a:"Quadrant III, reference 60"+DEG+" "+TO+" cos negative: "+MN+fr(1,2)}
+]},
+/* ---------------- QUIZ 2 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Simplify: (2e"+sup("&minus;3x")+")"+sup(5),a:"32e"+sup("&minus;15x")+"="+fr("32","e"+sup("15x"))},
+ {q:"Evaluate: "+lg("1/3","27"),a:MN+"3 &nbsp;(("+fr(1,3)+")"+sup("&minus;3")+"=27)"},
+ {q:"Write "+lg(5,"125")+"=3 in exponential form.",a:"5"+sup(3)+"=125"},
+ {q:"Simplify: e"+sup(ln("7")),a:"7"},
+ {q:"Condense to one logarithm: "+lOG("6")+" + 4"+lOG("3")+" "+MN+" "+lOG("3"),a:lOG("6")+"+"+lOG("3"+sup(3))+"="+lOG("(6"+CD+"27)")+"="+lOG("162")},
+ {q:"$2000 is invested at 4% annual interest, compounded quarterly. Find the balance after 5 years.",a:"A=2000(1+"+fr(".04","4")+")"+sup("4"+CD+"5")+"=2000(1.01)"+sup("20")+" "+AP+" $2440.38"},
+ {q:"Direct, inverse, or neither? &nbsp; xy=24.",a:"inverse (product is constant)"},
+ {q:"Multiply: "+fr("6x"+sup(2)+"y","3xy"+sup(3))+" "+CD+" "+fr("9x"+sup(5)+"y"+sup(2),"2y"),a:fr("54x"+sup(7)+"y"+sup(3),"6xy"+sup(4))+"="+fr("9x"+sup(6),"y")},
+ {q:"Solve: "+fr("2","x+2")+" = "+fr("10","3x+2"),a:"2(3x+2)=10(x+2) "+TO+" 6x+4=10x+20 "+TO+" x="+MN+"4"},
+ {q:"An arithmetic sequence has a"+sub(5)+"="+MN+"43 and a"+sub("12")+"="+MN+"8. Find a"+sub("n")+".",a:"7d=35 "+TO+" d=5; a"+sub("n")+"=a"+sub(5)+"+(n"+MN+"5)(5)="+MN+"43+5(n"+MN+"5)=5n"+MN+"68"},
+ {q:"Find the sum of the infinite geometric series "+fr(1,5)+" + "+fr(1,10)+" + "+fr(1,20)+" + &hellip;",a:"a"+sub(1)+"="+fr(1,5)+", r="+fr(1,2)+"; S="+fr("a"+sub(1),"1"+MN+"r")+" = "+fr(1,5)+" &divide; "+fr(1,2)+" = "+fr(2,5)},
+ {q:"Convert "+fr("9"+PI,4)+" to degrees.",a:fr("9"+PI,4)+" "+CD+" "+fr("180"+DEG,PI)+"=405"+DEG},
+ {q:"Graph y=2"+sup("x")+". State the asymptote, domain, and range.",grid:grid({xmin:-4,xmax:4,ymin:-1,ymax:8,xlab:1,ylab:2}),
+   a:"Points ("+MN+"1,"+fr(1,2)+"), (0,1), (1,2), (2,4). Asymptote y=0; domain all reals; range y&gt;0 (growth)."},
+ {q:"Solve and check: "+lg(6,"6x")+" + "+lg(6,"(x"+MN+"1)")+" = 2.",hard:true,
+   a:lg(6,"[6x(x"+MN+"1)]")+"=2 "+TO+" 6x(x"+MN+"1)=36 "+TO+" x"+sup(2)+MN+"x"+MN+"6=0 "+TO+" (x"+MN+"3)(x+2)=0. x=3 (x="+MN+"2 rejected)."},
+ {q:"The terminal side of "+TH+" passes through ("+"8, "+MN+"6). Find all six trig functions.",hard:true,
+   a:"r=10. sin="+MN+fr(3,5)+", cos="+fr(4,5)+", tan="+MN+fr(3,4)+", csc="+MN+fr(5,3)+", sec="+fr(5,4)+", cot="+MN+fr(4,3)}
+]},
+/* ---------------- QUIZ 3 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Evaluate: "+lg(8,"0.125"),a:lg(8,fr(1,8))+"="+MN+"1"},
+ {q:"Simplify: "+lg(4,"16"+sup("x")),a:lg(4,"(4"+sup(2)+")"+sup("x"))+"="+lg(4,"4"+sup("2x"))+"=2x"},
+ {q:"Solve: 81"+sup("x")+"=("+fr(1,9)+")"+sup("x+3")+".",a:"3"+sup("4x")+"=3"+sup("&minus;2x&minus;6")+" "+TO+" 4x="+MN+"2x"+MN+"6 "+TO+" x="+MN+"1"},
+ {q:"Expand: "+ln(fr("3x"+sup(5),"y")),a:ln("3")+" + 5"+ln("x")+" "+MN+" "+ln("y")},
+ {q:"$500 is invested at 6% compounded continuously. Find the balance after 8 years.",a:"A=500e"+sup("0.06"+CD+"8")+"=500e"+sup("0.48")+" "+AP+" $808.04"},
+ {q:"Find the inverse of y=4"+sup("x")+".",a:"x=4"+sup("y")+" "+TO+" y="+lg(4,"x")},
+ {q:"y varies inversely with x and y=8 when x=4. Find y when x="+MN+"16.",a:"xy=32; y="+fr("32","&minus;16")+"="+MN+"2"},
+ {q:"Divide: "+fr("11x","3x"+MN+"9")+" "+"&divide;"+" "+fr("x"+sup(2)+MN+"5x","x"+sup(2)+MN+"8x+15"),
+   a:"Multiply by the reciprocal; (x"+MN+"3) and (x"+MN+"5) cancel: "+fr("11","3")+", x"+NE+"0,3,5"},
+ {q:"Solve: "+fr(3,"x")+" + "+fr(5,2)+" = "+MN+fr("12","x")+".",a:"Multiply by 2x: 6+5x="+MN+"24 "+TO+" 5x="+MN+"30 "+TO+" x="+MN+"6"},
+ {q:"For 6, 2, "+fr(2,3)+", "+fr(2,9)+", &hellip; write a rule for a"+sub("n")+" and find a"+sub("10")+".",
+   a:"r="+fr(1,3)+"; a"+sub("n")+"=6("+fr(1,3)+")"+sup("n&minus;1")+"; a"+sub("10")+"=6("+fr(1,3)+")"+sup(9)+"="+fr(2,"6561")},
+ {q:"Write the series ("+MN+"1)+2+("+MN+"3)+4+("+MN+"5)+&hellip;+40 (40 terms) in summation notation.",
+   a:sumn("40","n=1","("+MN+"1)"+sup("n")+"n")},
+ {q:"In a 30"+DEG+"-60"+DEG+"-90"+DEG+" triangle the hypotenuse is 12. Find the side opposite the 30"+DEG+" angle.",
+   a:"Opposite 30"+DEG+" is half the hypotenuse: 6"},
+ {q:"Find the arc length on a circle of radius 8 cut off by a central angle of "+fr("3"+PI,4)+" radians.",
+   a:"s="+TH+"r="+fr("3"+PI,4)+"(8)=6"+PI+" "+AP+" 18.85"},
+ {q:"Graph y=5 sin x for one period. State amplitude and period.",grid:grid({xmin:0,xmax:2*Math.PI,ymin:-6,ymax:6,xt:Math.PI/2,xpi:true,ylab:2}),
+   a:"amp=5, period=2"+PI+". Key points (0,0), ("+fr(PI,2)+",5), ("+PI+",0), ("+fr("3"+PI,2)+","+MN+"5), (2"+PI+",0)."},
+ {q:"Write 0.777&hellip; as a fraction in simplest form.",hard:true,
+   a:"Infinite geometric: a"+sub(1)+"=0.7, r=0.1 "+TO+" S="+fr("0.7","1"+MN+"0.1")+"="+fr("0.7","0.9")+"="+fr(7,9)}
+]},
+/* ---------------- QUIZ 4 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Simplify: "+fr("e"+sup(2)+CD+"e"+sup(9),"e"+sup(5)),a:"e"+sup(6)},
+ {q:"Evaluate: "+lg(6,"216"),a:"3 (6"+sup(3)+"=216)"},
+ {q:"Solve: ("+fr(1,10)+")"+sup("&minus;x")+"=100"+sup("3x+2")+".",a:"10"+sup("x")+"=10"+sup("6x+4")+" "+TO+" x=6x+4 "+TO+" x="+MN+fr(4,5)},
+ {q:"Condense to one logarithm: "+ln("4")+" "+MN+" 3"+ln("3")+" "+MN+" "+ln("12"),
+   a:ln(fr("4","3"+sup(3)+CD+"12"))+"="+ln(fr("1","81"))+"="+MN+ln("81")},
+ {q:"Evaluate using change of base, round to 3 decimals: "+lg(2,"5"),a:fr(ln("5"),ln("2"))+" "+AP+" 2.322"},
+ {q:"Newton's Law of Cooling: T=(T"+sub(0)+MN+"T"+sub("R")+")e"+sup("&minus;rt")+"+T"+sub("R")+". Chili at 212"+DEG+"F cools in a 75"+DEG+"F room with r=0.051. How long to reach 95"+DEG+"F?",
+   a:"95=137e"+sup("&minus;0.051t")+"+75 "+TO+" "+fr("20","137")+"=e"+sup("&minus;0.051t")+" "+TO+" t="+fr(ln("20/137"),"&minus;0.051")+" "+AP+" 38 min"},
+ {q:"Graph y="+fr("&minus;2","x"+MN+"1")+"+3. State the asymptotes, domain, and range.",grid:grid({xmin:-4,xmax:6,ymin:-2,ymax:8,xlab:2,ylab:2}),
+   a:"Vertical asymptote x=1, horizontal y=3; domain x"+NE+"1; range y"+NE+"3."},
+ {q:"Multiply: "+fr("x"+MN+"7","x"+sup(3)+"+8")+" "+CD+" (x"+sup(2)+MN+"2x+4)",
+   a:"x"+sup(3)+"+8=(x+2)(x"+sup(2)+MN+"2x+4), so that factor cancels: "+fr("x"+MN+"7","x+2")+", x"+NE+MN+"2"},
+ {q:"Subtract: "+fr("4x","x"+MN+"5")+" "+MN+" "+fr("3x"+MN+"4","x"+MN+"5"),a:fr("4x"+MN+"(3x"+MN+"4)","x"+MN+"5")+"="+fr("x+4","x"+MN+"5")},
+ {q:"Find the sum: "+sumn("18","k=1","(6k"+MN+"2)"),
+   a:"a"+sub(1)+"=4, a"+sub("18")+"=106; S="+fr("18","2")+"(4+106)=9(110)=990"},
+ {q:"A geometric sequence has a"+sub(3)+"=20 and a"+sub(6)+"="+MN+"160. Find a"+sub("n")+".",
+   a:"r"+sup(3)+"="+fr("&minus;160","20")+"="+MN+"8 "+TO+" r="+MN+"2; a"+sub(1)+"="+fr("20","r"+sup(2))+"=5; a"+sub("n")+"=5("+MN+"2)"+sup("n&minus;1")},
+ {q:"Find the reference angle of "+TH+"="+MN+"220"+DEG+".",a:MN+"220+360=140"+DEG+"; reference = 180"+MN+"140 = 40"+DEG},
+ {q:"Graph y=tan x for "+MN+fr(PI,2)+"&lt;x&lt;"+fr(PI,2)+". State period and asymptotes.",grid:grid({xmin:-Math.PI,xmax:Math.PI,ymin:-5,ymax:5,xt:Math.PI/2,xpi:true,ylab:2}),
+   a:"period="+PI+"; vertical asymptotes x="+PM+fr(PI,2)+"; passes ("+MN+fr(PI,4)+","+MN+"1), (0,0), ("+fr(PI,4)+",1)."},
+ {q:"Solve, round to 3 decimals: 4e"+sup("&minus;0.3x")+" "+MN+" 7 = 13.",hard:true,
+   a:"4e"+sup("&minus;0.3x")+"=20 "+TO+" e"+sup("&minus;0.3x")+"=5 "+TO+" "+MN+"0.3x="+ln("5")+" "+TO+" x="+fr(ln("5"),"&minus;0.3")+" "+AP+" "+MN+"5.365"},
+ {q:"Find the area of a sector with radius 6 and central angle 120"+DEG+".",hard:true,
+   a:TH+"="+fr("2"+PI,3)+"; A="+fr(1,2)+TH+"r"+sup(2)+"="+fr(1,2)+"("+fr("2"+PI,3)+")(36)=12"+PI+" "+AP+" 37.70"}
+]},
+/* ---------------- QUIZ 5 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Does g(x)=e"+sup("&minus;0.2x")+" represent growth or decay? Identify the base.",
+   a:"=(e"+sup("&minus;0.2")+")"+sup("x")+" "+AP+" 0.82"+sup("x")+"; base &lt;1 "+TO+" decay"},
+ {q:"Evaluate: "+lg("64","8"),a:fr(1,2)+" (64"+sup("1/2")+"=8)"},
+ {q:"Solve, round to 3 decimals: 3"+sup("x")+"=8.",a:"x="+lg(3,"8")+"="+fr(ln("8"),ln("3"))+" "+AP+" 1.893"},
+ {q:"Expand: "+lg(2,sq("x")),a:lg(2,"x"+sup("1/2"))+"="+fr(1,2)+lg(2,"x")},
+ {q:"Solve and check: "+ln("(5x+2)")+" = "+ln("(x+10)")+".",a:"5x+2=x+10 "+TO+" 4x=8 "+TO+" x=2 (valid)"},
+ {q:"Determine the function type, then write a rule. <br>x: "+MN+"2, "+MN+"1, 0, 1, 2, 3 &nbsp; y: 243, 81, 27, 9, 3, 1",
+   a:"y is multiplied by "+fr(1,3)+" each step "+TO+" exponential: y=27("+fr(1,3)+")"+sup("x")},
+ {q:"Direct, inverse, or neither? &nbsp; y=x+29.",a:"neither (not y=ax and not xy=a)"},
+ {q:"Solve and check for extraneous solutions: "+fr("4x","x"+sup(2)+MN+"9")+" = "+fr("x"+MN+"1","x"+sup(2)+MN+"6x+9")+" + "+fr("2","x+3")+".",
+   a:"LCD (x+3)(x"+MN+"3)"+sup(2)+": 4x(x"+MN+"3)=(x"+MN+"1)(x+3)+2(x"+MN+"3)"+sup(2)+" "+TO+" x"+sup(2)+MN+"2x"+MN+"15=0 "+TO+" (x"+MN+"5)(x+3)=0. x=5 (x="+MN+"3 extraneous)."},
+ {q:"Find the geometric mean of 4 and 25.",a:sq("4"+CD+"25")+"="+sq("100")+"=10"},
+ {q:"Translate to an explicit rule: a"+sub(1)+"=7, a"+sub("n")+"=a"+sub("n&minus;1")+"+4.",a:"arithmetic, d=4 "+TO+" a"+sub("n")+"=7+(n"+MN+"1)4=4n+3"},
+ {q:"Solve right triangle ABC (right angle at C) with "+"&ang;A=34"+DEG+" and b=13 (the leg adjacent to A).",
+   a:"&ang;B=56"+DEG+"; a=13 tan34"+DEG+" "+AP+" 8.77; c="+fr("13","cos34"+DEG)+" "+AP+" 15.68"},
+ {q:"Find one positive and one negative angle coterminal with "+MN+"75"+DEG+".",a:MN+"75+360=285"+DEG+"; "+MN+"75"+MN+"360="+MN+"435"+DEG},
+ {q:"Graph the sequence a"+sub("n")+"=5+2n for n=1,2,3,4,5 (discrete points).",grid:grid({xmin:0,xmax:6,ymin:0,ymax:16,xlab:1,ylab:2}),
+   a:"Points (1,7), (2,9), (3,11), (4,13), (5,15) — discrete, lying on the line y=2x+5."},
+ {q:"Solve the inequality: 3"+sup("x")+"&lt;20.",hard:true,a:"x&lt;"+lg(3,"20")+"="+fr(ln("20"),ln("3"))+" "+AP+" 2.7"},
+ {q:"Write an exponential function y=ab"+sup("x")+" whose graph passes through (1,10) and (3,40).",hard:true,
+   a:fr("ab"+sup(3),"ab")+"="+fr("40","10")+" "+TO+" b"+sup(2)+"=4 "+TO+" b=2; ab=10 "+TO+" a=5; &nbsp;y=5"+CD+"2"+sup("x")}
+]},
+/* ---------------- QUIZ 6 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Simplify (positive exponents): "+fr("a"+sup(3),"a"+sup(7)),a:"a"+sup("&minus;4")+"="+fr(1,"a"+sup(4))},
+ {q:"Evaluate: "+lg(4,"256"),a:"4 (4"+sup(4)+"=256)"},
+ {q:"Write "+lg(2,"1")+"=0 in exponential form.",a:"2"+sup(0)+"=1"},
+ {q:"Solve: 8"+sup("x")+"=4"+sup("x+1")+".",a:"2"+sup("3x")+"=2"+sup("2x+2")+" "+TO+" 3x=2x+2 "+TO+" x=2"},
+ {q:"Condense to one logarithm: "+MN+lg(2,"x")+" "+MN+" "+lg(2,"y")+" "+MN+" 3.",
+   a:MN+"("+lg(2,"x")+"+"+lg(2,"y")+"+"+lg(2,"8")+")="+MN+lg(2,"(8xy)")+"="+lg(2,fr("1","8xy"))},
+ {q:"Money is invested at 5% compounded 12 times a year. How long until it doubles?",
+   a:"2=(1+"+fr(".05","12")+")"+sup("12t")+" "+TO+" t="+fr(ln("2"),"12 "+ln("(1+.05/12)"))+" "+AP+" 13.89 yr"},
+ {q:"Graph y="+fr(3,"x")+" "+MN+" 2. State the asymptotes, domain, and range.",grid:grid({xmin:-6,xmax:6,ymin:-6,ymax:4,xlab:2,ylab:2}),
+   a:"Vertical asymptote x=0, horizontal y="+MN+"2; domain x"+NE+"0; range y"+NE+MN+"2."},
+ {q:"Simplify: "+fr("5x"+MN+"5x"+sup(2),"x"+sup(2)+MN+"4x+3")+" "+CD+" "+fr("x"+sup(2)+MN+"5x+6","5x"),
+   a:"Factor: "+fr("5x(1"+MN+"x)","(x"+MN+"1)(x"+MN+"3)")+CD+fr("(x"+MN+"2)(x"+MN+"3)","5x")+"; cancel "+TO+" "+MN+"(x"+MN+"2)=2"+MN+"x, x"+NE+"0,1,3"},
+ {q:"Add: "+fr(5,"21x")+" + "+fr(2,"21x"),a:fr("7","21x")+"="+fr("1","3x")},
+ {q:"Write a rule for the nth term of 0, 3, 8, 15, &hellip; and find the next term.",
+   a:"second differences constant "+TO+" a"+sub("n")+"=n"+sup(2)+MN+"1; next term a"+sub(5)+"=24"},
+ {q:"Find the sum of the first 23 terms of the arithmetic sequence 41, 38, 35, &hellip;",
+   a:"d="+MN+"3, a"+sub("23")+"=41+22("+MN+"3)="+MN+"25; S="+fr("23","2")+"(41+("+MN+"25))=184"},
+ {q:"The point ("+MN+"3, 4) lies on the terminal side of "+TH+". Find sin"+TH+", cos"+TH+", tan"+TH+".",
+   a:"r=5; sin="+fr(4,5)+", cos="+MN+fr(3,5)+", tan="+MN+fr(4,3)},
+ {q:"Graph y=3 cos("+PI+"x). State amplitude and period.",grid:grid({xmin:-2,xmax:2,ymin:-4,ymax:4,xlab:1,ylab:2}),
+   a:"amp=3, period="+fr("2"+PI,PI)+"=2; key points (0,3), ("+fr(1,2)+",0), (1,"+MN+"3), ("+fr(3,2)+",0), (2,3)."},
+ {q:"Evaluate exactly: sin("+MN+"135"+DEG+").",hard:true,a:MN+"sin135"+DEG+", reference 45"+DEG+" "+TO+" "+MN+fr(sq("2"),2)},
+ {q:"A 5-year, $20,000 loan at 6% annual interest (i=0.005 per month) has monthly payment M="+fr("L","S")+", where S="+sumn("60","k=1","(1+i)"+sup("&minus;k"))+" and L=20000. Find M.",hard:true,
+   a:"S is a geometric sum: S="+sumn("60","k=1","(1.005)"+sup("&minus;k"))+" "+AP+" 51.726; M="+fr("20000","51.726")+" "+AP+" $386.66/month"}
+]},
+/* ---------------- QUIZ 7 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Simplify: e"+sup(ln("18")),a:"18"},
+ {q:"Evaluate the common log: "+lOG("1000"),a:"3 (10"+sup(3)+"=1000)"},
+ {q:"Solve: 2"+sup("x")+"="+sq("2")+".",a:"2"+sup("x")+"=2"+sup("1/2")+" "+TO+" x="+fr(1,2)},
+ {q:"Expand fully: "+lOG(fr("5","12x")),a:lOG("5")+" "+MN+" "+lOG("12")+" "+MN+" "+lOG("x")},
+ {q:"Evaluate exactly: "+lg("1/3","9"),a:"("+fr(1,3)+")"+sup("x")+"=9 "+TO+" ("+fr(1,3)+")"+sup("&minus;2")+"=9 "+TO+" "+MN+"2"},
+ {q:"A bacteria culture starts at 50 and doubles every 3 hours. Write P(t) and find the count after 9 hours.",
+   a:"P=50"+CD+"2"+sup("t/3")+"; t=9 "+TO+" 50"+CD+"2"+sup(3)+"=400"},
+ {q:"Find the inverse of f(x)="+fr("7","x+5")+".",a:"x="+fr("7","y+5")+" "+TO+" y+5="+fr("7","x")+" "+TO+" f"+sup("&minus;1")+"(x)="+fr("7","x")+" "+MN+" 5"},
+ {q:"Solve: "+fr("x","x+1")+" = "+fr(3,4),a:"4x=3(x+1) "+TO+" 4x=3x+3 "+TO+" x=3"},
+ {q:"Add: "+fr(8,"12x"+sup(2))+" + "+fr("x","x"+sup(2)+"+x"),
+   a:fr(2,"3x"+sup(2))+"+"+fr("1","x+1")+"="+fr("3x"+sup(2)+"+2x+2","3x"+sup(2)+"(x+1)")},
+ {q:"Write a recursive rule for "+MN+"11, "+MN+"6, "+MN+"1, 4, 9, &hellip;",a:"a"+sub(1)+"="+MN+"11, a"+sub("n")+"=a"+sub("n&minus;1")+"+5"},
+ {q:"Find the sum: "+sumn("6","k=1",fr(1,2)+"(5)"+sup("k")),
+   a:"a"+sub(1)+"="+fr(5,2)+", r=5; S="+fr(5,2)+CD+fr("1"+MN+"5"+sup(6),"1"+MN+"5")+"=9765"},
+ {q:"Convert "+MN+"150"+DEG+" to radians.",a:MN+"150"+CD+fr(PI,"180")+"="+MN+fr("5"+PI,6)},
+ {q:"Graph y=3 sin(x "+MN+" "+fr(PI,2)+"). State amplitude, period, phase shift, and midline.",grid:grid({xmin:0,xmax:5*Math.PI/2,ymin:-4,ymax:4,xt:Math.PI/2,xpi:true,ylab:2}),
+   a:"amp=3, period=2"+PI+", shift right "+fr(PI,2)+", midline y=0; cycle ("+fr(PI,2)+",0)("+PI+",3)("+fr("3"+PI,2)+",0)(2"+PI+","+MN+"3)("+fr("5"+PI,2)+",0)."},
+ {q:"Solve and check: "+lg(3,"(10x"+MN+"9)")+" = 4.",hard:true,a:"10x"+MN+"9=3"+sup(4)+"=81 "+TO+" 10x=90 "+TO+" x=9 (valid)"},
+ {q:"White gold is 75% gold by weight. You have 12 oz of an alloy that is 60% gold. How many ounces of pure gold must you add to make white gold?",hard:true,
+   a:"12(0.60)+x=0.75(12+x) "+TO+" 7.2+x=9+0.75x "+TO+" 0.25x=1.8 "+TO+" x=7.2 oz"}
+]},
+/* ---------------- QUIZ 8 (standard) ---------------- */
+{level:"std",problems:[
+ {q:"Does f(x)=3e"+sup("x")+" represent growth or decay? Give the y-intercept.",a:"growth (base e&gt;1); y-intercept (0,3)"},
+ {q:"Evaluate: "+lg("1/2",fr(1,32)),a:"("+fr(1,2)+")"+sup(5)+"="+fr(1,32)+" "+TO+" 5"},
+ {q:"Solve: 4"+sup("x")+"=8"+sup("x&minus;1")+".",a:"2"+sup("2x")+"=2"+sup("3x&minus;3")+" "+TO+" 2x=3x"+MN+"3 "+TO+" x=3"},
+ {q:"Using "+lg(3,"4")+" "+AP+" 1.262 and "+lg(3,"5")+" "+AP+" 1.465, evaluate "+lg(3,"20")+".",
+   a:lg(3,"(4"+CD+"5)")+"="+lg(3,"4")+"+"+lg(3,"5")+" "+AP+" 2.727"},
+ {q:"Solve, round to 3 decimals: 7"+sup("9x")+"=15.",a:"9x="+lg(7,"15")+" "+TO+" x="+fr(lg(7,"15"),"9")+" "+AP+" 0.155"},
+ {q:"On $1000 at 8% for one year, which is greater: compounded monthly or continuously? Give both.",
+   a:"monthly 1000(1+"+fr(".08","12")+")"+sup("12")+" "+AP+" $1083.00; continuous 1000e"+sup("0.08")+" "+AP+" $1083.29 (continuous is greater)"},
+ {q:"The time t to roof a house varies inversely with the number n of roofers; 4 roofers take 9 hours. Find t for 6 roofers.",
+   a:"tn=36; t="+fr("36","6")+"=6 hours"},
+ {q:"Graph y="+fr("2x+5","x+2")+". (Hint: long division.) State the asymptotes, domain, and range.",grid:grid({xmin:-7,xmax:3,ymin:-3,ymax:7,xlab:2,ylab:2}),
+   a:"="+"2+"+fr("1","x+2")+"; vertical asymptote x="+MN+"2, horizontal y=2; domain x"+NE+MN+"2; range y"+NE+"2."},
+ {q:"Subtract and simplify: "+fr("5x"+MN+"1","x"+sup(2)+MN+"3x+2")+" "+MN+" "+fr("&minus;2x"+MN+"1","2x"+MN+"4"),
+   a:"LCD 2(x"+MN+"1)(x"+MN+"2): "+fr("2x"+sup(2)+"+9x"+MN+"3","2(x"+MN+"1)(x"+MN+"2)")},
+ {q:"Write an explicit rule: a"+sub(1)+"=5, a"+sub("n")+"=6a"+sub("n&minus;1")+".",a:"geometric, r=6 "+TO+" a"+sub("n")+"=5"+CD+"6"+sup("n&minus;1")},
+ {q:"A pendulum travels 100 cm on its first swing; each swing is 96% of the previous one. Find the total distance.",
+   a:"S="+fr("100","1"+MN+"0.96")+"="+fr("100","0.04")+"=2500 cm = 25 m"},
+ {q:"A 20-ft ladder leans against a wall, making a 70"+DEG+" angle with the ground. How high up the wall does it reach?",
+   a:"h=20 sin70"+DEG+" "+AP+" 18.79 ft"},
+ {q:"Graph one period of y=sec x on [0, 2"+PI+"]. Note where the asymptotes are.",grid:grid({xmin:0,xmax:2*Math.PI,ymin:-4,ymax:4,xt:Math.PI/2,xpi:true,ylab:2}),
+   a:"sec x="+fr("1","cos x")+"; asymptotes where cos x=0: x="+fr(PI,2)+", "+fr("3"+PI,2)+"; opens up from min 1, down from max "+MN+"1."},
+ {q:"Solve the inequality: "+lg("1/2","x")+" "+GE+" 5.",hard:true,a:"0&lt;x"+LE+"("+fr(1,2)+")"+sup(5)+"="+fr(1,32)},
+ {q:"A lab has 500 mosquitoes. Each day the population drops 85% but 100 new ones hatch. Write a recursive rule and find the long-term population.",hard:true,
+   a:"a"+sub(1)+"=500, a"+sub("n")+"=0.15a"+sub("n&minus;1")+"+100; steady state L=0.15L+100 "+TO+" L="+fr("100","0.85")+" "+AP+" 118"}
+]},
+/* ---------------- QUIZ 9 (CHALLENGE) ---------------- */
+{level:"chal",problems:[
+ {q:"Solve: 2"+sup("2x")+" "+MN+" 5"+CD+"2"+sup("x")+" + 4 = 0. (Hint: let u=2"+sup("x")+".)",
+   a:"u"+sup(2)+MN+"5u+4=0 "+TO+" (u"+MN+"1)(u"+MN+"4)=0 "+TO+" 2"+sup("x")+"=1 or 4 "+TO+" x=0 or x=2"},
+ {q:"Solve and check: "+lg(2,"x")+" + "+lg(2,"(x"+MN+"2)")+" = 3.",
+   a:lg(2,"[x(x"+MN+"2)]")+"=3 "+TO+" x"+sup(2)+MN+"2x"+MN+"8=0 "+TO+" (x"+MN+"4)(x+2)=0. x=4 (x="+MN+"2 rejected)."},
+ {q:"Condense and evaluate: "+lg(6,"54")+" + "+lg(6,"4")+" "+MN+" "+lg(6,"6")+".",
+   a:lg(6,fr("54"+CD+"4","6"))+"="+lg(6,"36")+"=2"},
+ {q:"A substance has a half-life of 5 years: A(t)=A"+sub(0)+"("+fr(1,2)+")"+sup("t/5")+". Starting with 80 g, when is 5 g left?",
+   a:fr(5,80)+"="+fr(1,16)+"=("+fr(1,2)+")"+sup(4)+" "+TO+" "+fr("t","5")+"=4 "+TO+" t=20 years"},
+ {q:"Solve and identify any extraneous solutions: "+fr("1","x"+MN+"1")+" + "+fr("1","x+1")+" = "+fr("2","x"+sup(2)+MN+"1")+".",
+   a:"Multiply by (x"+sup(2)+MN+"1): (x+1)+(x"+MN+"1)=2 "+TO+" 2x=2 "+TO+" x=1, but x=1 makes a denominator 0 "+TO+" no solution."},
+ {q:"Simplify y="+fr("x"+sup(2)+MN+"x"+MN+"6","x"+MN+"3")+" and identify any hole. Then graph.",grid:grid({xmin:-4,xmax:6,ymin:-4,ymax:8,xlab:2,ylab:2}),
+   a:"="+fr("(x"+MN+"3)(x+2)","x"+MN+"3")+"=x+2, x"+NE+"3 "+TO+" the line y=x+2 with a hole at (3, 5)."},
+ {q:"Find "+sumn(INF,"n=1","3("+fr(2,5)+")"+sup("n&minus;1"))+" and explain why it converges.",
+   a:"|r|="+fr(2,5)+"&lt;1 "+TO+" converges; 1"+MN+"r="+fr(3,5)+", so S=3 &divide; "+fr(3,5)+" = 5"},
+ {q:"An arithmetic sequence has a"+sub(3)+"=14 and a"+sub(7)+"=26. Find a"+sub(1)+", d, and S"+sub("10")+".",
+   a:"4d=12 "+TO+" d=3; a"+sub(1)+"=14"+MN+"2(3)=8; a"+sub("10")+"=35; S"+sub("10")+"="+fr("10","2")+"(8+35)=215"},
+ {q:"Write 2.181818&hellip; (the block 18 repeats) as a fraction in lowest terms.",
+   a:"2 + "+fr("18","99")+" = 2 + "+fr(2,11)+" = "+fr("24","11")},
+ {q:"From point A the angle of elevation to a tower top is 30"+DEG+". Moving 40 m closer to point B, it is 45"+DEG+". Find the tower height.",
+   a:"At B: h=d; at A: h=(d+40)tan30"+DEG+". So "+sq("3")+"d=d+40 "+TO+" d=20("+sq("3")+"+1) "+AP+" 54.64 m = h"},
+ {q:"Evaluate exactly: sin("+fr("7"+PI,6)+") + cos("+fr("5"+PI,3)+") + tan("+fr("3"+PI,4)+").",
+   a:MN+fr(1,2)+" + "+fr(1,2)+" + ("+MN+"1) = "+MN+"1"},
+ {q:"Graph y="+MN+"2 sin(2x)+1 over one period. State amplitude, period, midline, max/min, and x-intercepts in the period.",
+   grid:grid({xmin:0,xmax:Math.PI,ymin:-2,ymax:4,xt:Math.PI/4,xpi:true,ylab:1}),
+   a:"amp=2, period="+PI+", midline y=1, max 3, min "+MN+"1. x-intercepts: "+MN+"2 sin2x+1=0 "+TO+" sin2x="+fr(1,2)+" "+TO+" x="+fr(PI,12)+", "+fr("5"+PI,12)+". (Reflected: at x=0,1; "+fr(PI,4)+"&rarr;min; "+fr("3"+PI,4)+"&rarr;max.)"},
+ {q:"(a) Explain why "+lg(4,"4"+sup("x"))+"=x. (b) Use that idea to solve 3"+CD+"4"+sup("x")+"=96.",
+   a:"(a) "+lg(4,"4"+sup("x"))+" asks: what power of 4 gives 4"+sup("x")+"? "+TO+" x. (b) 4"+sup("x")+"=32 "+TO+" 2"+sup("2x")+"=2"+sup(5)+" "+TO+" x="+fr(5,2)},
+ {q:"A ball dropped from 10 ft rebounds to "+fr(3,4)+" of its height each bounce. Find the total vertical distance traveled.",
+   a:"10 + 2"+CD+fr("10("+fr(3,4)+")","1"+MN+fr(3,4))+" = 10 + 2(30) = 70 ft"},
+ {q:"How long for an investment to triple at 7% compounded continuously?",
+   a:"3=e"+sup("0.07t")+" "+TO+" t="+fr(ln("3"),"0.07")+" "+AP+" 15.69 years"}
+]},
+/* ---------------- QUIZ 10 (CHALLENGE) ---------------- */
+{level:"chal",problems:[
+ {q:"Solve, round to 3 decimals: e"+sup("2x")+" "+MN+" 7e"+sup("x")+" + 12 = 0.",
+   a:"u=e"+sup("x")+": (u"+MN+"3)(u"+MN+"4)=0 "+TO+" x="+ln("3")+" "+AP+" 1.099 or x="+ln("4")+" "+AP+" 1.386"},
+ {q:"Solve and check (common log): "+lOG("x")+" + "+lOG("(x"+MN+"3)")+" = 1.",
+   a:"x(x"+MN+"3)=10 "+TO+" x"+sup(2)+MN+"3x"+MN+"10=0 "+TO+" (x"+MN+"5)(x+2)=0. x=5 (x="+MN+"2 rejected)."},
+ {q:"Write 2"+lg(5,"x")+" + "+lg(5,"9")+" "+MN+" "+lg(5,"(x"+sup(2)+")")+" as a single logarithm and evaluate.",
+   a:lg(5,fr("x"+sup(2)+CD+"9","x"+sup(2))) +"="+lg(5,"9")+" "+AP+" 1.365 (independent of x)"},
+ {q:"A town of 50,000 grows 3% per year. Write P(t) and find when it reaches 75,000.",
+   a:"P=50000(1.03)"+sup("t")+"; 1.5=1.03"+sup("t")+" "+TO+" t="+fr(ln("1.5"),ln("1.03"))+" "+AP+" 13.7 years"},
+ {q:"Solve and check: "+fr("2x","x"+MN+"3")+" = "+fr("6","x"+MN+"3")+" + 4.",
+   a:"Multiply by (x"+MN+"3): 2x=6+4(x"+MN+"3) "+TO+" "+MN+"2x="+MN+"6 "+TO+" x=3, which makes a denominator 0 "+TO+" no solution."},
+ {q:"For y="+fr("1","x"+sup(2)+MN+"4")+", give the vertical and horizontal asymptotes and any symmetry. Then sketch.",
+   grid:grid({xmin:-5,xmax:5,ymin:-3,ymax:3,xlab:1,ylab:1}),
+   a:"Vertical asymptotes x="+PM+"2; horizontal y=0; even (symmetric about y-axis). On ("+MN+"2,2) it dips to (0,"+MN+fr(1,4)+")."},
+ {q:"A geometric series has S"+sub(3)+"=26 with r=3 and a"+sub(1)+"&gt;0. Find a"+sub(1)+" and S"+sub(6)+".",
+   a:"S"+sub(3)+"=a"+sub(1)+"(1+3+9)=13a"+sub(1)+"=26 "+TO+" a"+sub(1)+"=2; S"+sub(6)+"=2"+CD+fr("1"+MN+"3"+sup(6),"1"+MN+"3")+"=728"},
+ {q:"Insert two numbers between 3 and 24 so that all four form a geometric sequence.",
+   a:"r"+sup(3)+"="+fr("24","3")+"=8 "+TO+" r=2 "+TO+" 3, 6, 12, 24 (the two numbers are 6 and 12)"},
+ {q:"Write 0.454545&hellip; as a fraction in lowest terms.",
+   a:fr("45","99")+"="+fr(5,11)},
+ {q:"From the top of a 60-m lighthouse the angle of depression to a boat is 25"+DEG+". How far is the boat from the base?",
+   a:"tan25"+DEG+"="+fr("60","d")+" "+TO+" d="+fr("60","tan25"+DEG)+" "+AP+" 128.7 m"},
+ {q:"Evaluate exactly: csc("+fr("4"+PI,3)+") + sec("+fr("5"+PI,6)+") + cot("+fr("7"+PI,4)+").",
+   a:MN+fr("2"+sq("3"),3)+" + ("+MN+fr("2"+sq("3"),3)+") + ("+MN+"1) = "+MN+fr("4"+sq("3"),3)+" "+MN+" 1"},
+ {q:"Graph one full period of y=2 cos("+fr(1,2)+"(x "+MN+" "+PI+")). State amplitude, period, phase shift, midline, and the 5 key points.",
+   grid:grid({xmin:0,xmax:5*Math.PI,ymin:-3,ymax:3,xt:Math.PI,xpi:true,ylab:1}),
+   a:"amp=2, period="+fr("2"+PI,fr(1,2))+"=4"+PI+", shift right "+PI+", midline 0. Key points ("+PI+",2)(2"+PI+",0)(3"+PI+","+MN+"2)(4"+PI+",0)(5"+PI+",2)."},
+ {q:"A drug leaves the body so that 20% remains each hour. A patient takes 200 mg now and 200 mg at the start of each later hour. Write a recursive rule for the amount at the start of hour n and find the steady-state amount.",
+   a:"a"+sub(1)+"=200, a"+sub("n")+"=0.20a"+sub("n&minus;1")+"+200; steady L=0.2L+200 "+TO+" L="+fr("200","0.8")+"=250 mg"},
+ {q:"Solve and check: "+lg(2,"x")+" "+MN+" "+lg(2,"(x"+MN+"1)")+" = 3.",
+   a:lg(2,fr("x","x"+MN+"1"))+"=3 "+TO+" "+fr("x","x"+MN+"1")+"=8 "+TO+" x=8x"+MN+"8 "+TO+" x="+fr(8,7)+" (valid, &gt;1)"},
+ {q:"A radioactive isotope decays as A=A"+sub(0)+"e"+sup("&minus;0.0012t")+" (t in years). Find its half-life.",
+   a:fr(1,2)+"=e"+sup("&minus;0.0012t")+" "+TO+" t="+fr(ln("2"),"0.0012")+" "+AP+" 578 years"}
+]}
+];
+
+/* =================== CHEAT SHEET =================== */
+function cheatSheet(){
+  var s='<h2 class="qh">Final Cheat Sheet — Chapters 5&ndash;8</h2>';
+  s+='<div class="meta">Every formula you should have at your fingertips. Printable on its own.</div>';
+  s+='<div class="toolbar noprint"><button onclick="printOnly(\'sec-cheat\')">Print cheat sheet</button></div>';
+  s+='<div class="cs">';
+
+  s+='<div class="csbox"><h3>Ch 5 &middot; Exponent &amp; e Rules</h3>'
+    +'<p>'+pw("b","m")+CD+pw("b","n")+"="+pw("b","m+n")+'; &nbsp;'+fr(pw("b","m"),pw("b","n"))+"="+pw("b","m&minus;n")+'; &nbsp;('+pw("b","m")+")"+sup("n")+"="+pw("b","mn")+'</p>'
+    +'<p>'+pw("b","&minus;n")+"="+fr("1",pw("b","n"))+'; &nbsp;'+pw("b","0")+'=1; &nbsp;e '+AP+' 2.718 (irrational)</p>'
+    +'<p><span class="k">Growth/decay:</span> y='+pw("b","x")+', b&gt;1 growth, 0&lt;b&lt;1 decay; asymptote y=0.</p>'
+    +'<p><span class="k">Interest:</span> A=P(1+'+fr("r","n")+")"+sup("nt")+' (n times/yr); &nbsp;A=Pe'+sup("rt")+' (continuous).</p></div>';
+
+  s+='<div class="csbox"><h3>Ch 5 &middot; Logarithms</h3>'
+    +'<p><span class="k">Definition:</span> '+pw("b","x")+"=y &harr; "+lg("b","y")+"=x. &nbsp;log="+lg("10","")+", ln="+lg("e","")+'.</p>'
+    +'<p>'+lg("b","b")+"=1; "+lg("b","1")+"=0; "+lg("b",pw("b","x"))+"=x; "+pw("b",lg("b","x"))+"=x.</p>"
+    +'<p><span class="k">Properties:</span> '+lg("b","(mn)")+"="+lg("b","m")+"+"+lg("b","n")+"; &nbsp;"+lg("b",fr("m","n"))+"="+lg("b","m")+MN+lg("b","n")+"; &nbsp;"+lg("b",pw("m","n"))+"=n"+lg("b","m")+'.</p>'
+    +'<p><span class="k">Change of base:</span> '+lg("b","x")+"="+fr(lg("c","x"),lg("c","b"))+"="+fr(ln("x"),ln("b"))+'.</p>'
+    +'<p><span class="k">Solving:</span> same base &rarr; set exponents equal; otherwise take a log of both sides. Always <b>check log equations</b> for extraneous solutions (arguments must be &gt;0).</p>'
+    +'<p><span class="k">Cooling:</span> T=(T'+sub(0)+MN+"T"+sub("R")+")e"+sup("&minus;rt")+"+T"+sub("R")+'.</p></div>';
+
+  s+='<div class="csbox"><h3>Ch 6 &middot; Rational Functions</h3>'
+    +'<p><span class="k">Direct:</span> y=ax (or '+fr("y","x")+'=a). <span class="k">Inverse:</span> xy=a (or y='+fr("a","x")+').</p>'
+    +'<p><span class="k">Parent:</span> y='+fr("1","x")+', asymptotes x=0, y=0.</p>'
+    +'<p>For y='+fr("a","x"+MN+"h")+"+k: asymptotes x=h, y=k.</p>"
+    +'<p>For '+fr("linear","linear")+': use long division to write as '+fr("a","x"+MN+"h")+'+k.</p>'
+    +'<p><span class="k">Simplify/&times;/&divide;:</span> factor, divide out common factors (track domain restrictions); divide = multiply by reciprocal.</p>'
+    +'<p><span class="k">+ / &minus;:</span> get the LCD first.</p>'
+    +'<p><span class="k">Solving:</span> multiply both sides by the LCD (or cross-multiply a proportion); <b>check for extraneous solutions</b>.</p></div>';
+
+  s+='<div class="csbox"><h3>Ch 7 &middot; Sequences &amp; Series</h3>'
+    +'<p><span class="k">Summation:</span> '+sumn("n","i=1","a"+sub("i"))+" = a"+sub(1)+"+a"+sub(2)+"+&hellip;+a"+sub("n")+'.</p>'
+    +'<p><span class="k">Arithmetic</span> (common difference d): a'+sub("n")+"=a"+sub(1)+"+(n"+MN+"1)d; &nbsp;S"+sub("n")+"="+fr("n","2")+"(a"+sub(1)+"+a"+sub("n")+').</p>'
+    +'<p><span class="k">Geometric</span> (common ratio r): a'+sub("n")+"=a"+sub(1)+pw("r","n&minus;1")+"; &nbsp;S"+sub("n")+"=a"+sub(1)+fr("1"+MN+pw("r","n"),"1"+MN+"r")+'.</p>'
+    +'<p><span class="k">Infinite geometric:</span> S='+fr("a"+sub(1),"1"+MN+"r")+', only if &minus;1&lt;r&lt;1.</p>'
+    +'<p><span class="k">Means:</span> arithmetic '+fr("a+c","2")+'; geometric '+sq("ac")+'.</p>'
+    +'<p><span class="k">Recursive:</span> give starting term(s) + equation relating a'+sub("n")+" to previous terms.</p></div>";
+
+  s+='<div class="csbox"><h3>Ch 8 &middot; Right-Triangle Trig</h3>'
+    +'<p>SOH&middot;CAH&middot;TOA: sin'+TH+"="+fr("opp","hyp")+", cos"+TH+"="+fr("adj","hyp")+", tan"+TH+"="+fr("opp","adj")+'.</p>'
+    +'<p>Reciprocals: csc='+fr("1","sin")+", sec="+fr("1","cos")+", cot="+fr("1","tan")+'.</p>'
+    +'<p>Pythagorean: a'+sup(2)+"+b"+sup(2)+"=c"+sup(2)+'. Triples: (3,4,5),(5,12,13),(8,15,17),(7,24,25).</p>'
+    +'<table class="tri"><tr><th>'+TH+'</th><th>sin</th><th>cos</th><th>tan</th></tr>'
+    +'<tr><td>30'+DEG+'</td><td>'+fr(1,2)+'</td><td>'+fr(sq("3"),2)+'</td><td>'+fr(sq("3"),3)+'</td></tr>'
+    +'<tr><td>45'+DEG+'</td><td>'+fr(sq("2"),2)+'</td><td>'+fr(sq("2"),2)+'</td><td>1</td></tr>'
+    +'<tr><td>60'+DEG+'</td><td>'+fr(sq("3"),2)+'</td><td>'+fr(1,2)+'</td><td>'+sq("3")+'</td></tr></table>'
+    +'<p>Special triangles: 45-45-90 sides 1:1:'+sq("2")+'; &nbsp;30-60-90 sides 1:'+sq("3")+':2.</p></div>';
+
+  s+='<div class="csbox"><h3>Ch 8 &middot; Angles &amp; the Circle</h3>'
+    +'<p><span class="k">Coterminal:</span> '+TH+" + 360"+DEG+CD+"n (or "+TH+"+2"+PI+"n).</p>"
+    +'<p><span class="k">Radians:</span> 180'+DEG+"="+PI+" rad; multiply by "+fr(PI,"180"+DEG)+" or "+fr("180"+DEG,PI)+" to convert.</p>"
+    +'<p><span class="k">Arc length:</span> s='+TH+"r &nbsp;(&theta; in radians). <span class='k'>Sector area:</span> A="+fr(1,2)+TH+"r"+sup(2)+'.</p>'
+    +'<p><span class="k">Any angle</span> through (x,y), r='+sq("x"+sup(2)+"+y"+sup(2))+": sin="+fr("y","r")+", cos="+fr("x","r")+", tan="+fr("y","x")+'.</p>'
+    +'<p><span class="k">Reference angle</span> '+TH+"': acute angle to the x-axis. Signs by quadrant (<b>A</b>ll, <b>S</b>in, <b>T</b>an, <b>C</b>os positive): "
+    +'</p>'+unitCircle()+'</div>';
+
+  s+='<div class="csbox"><h3>Ch 8 &middot; Graphing Trig</h3>'
+    +'<p>y=a sin b(x'+MN+"h)+k &nbsp;(and cos): <span class='k'>amplitude</span> |a|, <span class='k'>period</span> "+fr("2"+PI,"b")+", phase shift h, midline y=k.</p>"
+    +'<p>Steps: draw midline y=k; solve 0'+LE+"b(x"+MN+"h)"+LE+"2"+PI+"; plot 5 key points; if a&lt;0 reflect over midline.</p>"
+    +'<p>tan x &amp; cot x: period '+PI+', no amplitude. tan asymptotes at '+PM+fr(PI,2)+"+&pi;n; cot asymptotes at &pi;n.</p>"
+    +'<p>sec x='+fr("1","cos x")+", csc x="+fr("1","sin x")+": period 2"+PI+", asymptotes where cos (resp. sin) = 0.</p>"
+    +sineRef()+'</div>';
+
+  s+='</div>';
+  return s;
+}
+
+/* =================== HOME / STUDY GUIDE =================== */
+function topic(title,body){return '<div class="topic"><h4>'+title+'</h4>'+body+'</div>';}
+function fbox(x){return '<div class="fbox">'+x+'</div>';}
+function eg(x){return '<div class="eg"><span class="lbl">Example. </span>'+x+'</div>';}
+function pit(x){return '<div class="pitfall"><span class="lbl">Watch out: </span>'+x+'</div>';}
+
+function homeSection(){
+  var s='<h2 class="qh">Review Guide &amp; How to Study</h2>';
+  s+='<p class="lead">A full review of Chapters 5&ndash;8 &mdash; the ideas, the methods, worked examples, and the traps &mdash; followed by ten mock quizzes and a cheat sheet.</p>';
+  s+='<div class="howto"><b>Suggested plan:</b> read the chapter review below, then take one quiz cold and timed (~30 min, no notes). Grade it from the Answer Keys tab, re-read the topics you missed, and try the next quiz a day later. Save Quizzes 9&ndash;10 (challenge) for the last few days.</div>';
+  s+='<div class="howto" style="border-color:var(--accent2)"><b>Printing:</b> use the button on any quiz to print just that quiz (1&ndash;2 A4 pages). This review, the answer keys, and the cheat sheet each print on their own.</div>';
+  s+='<div class="toolbar noprint" style="margin-top:14px"><button onclick="printOnly(\'sec-home\')">Print review guide</button><button onclick="go(\'q0\')">Go to Quiz 1</button><button onclick="go(\'cheat\')">Cheat sheet</button></div>';
+
+  s+='<div class="rev">';
+
+  /* ---------- CHAPTER 5 ---------- */
+  s+='<div class="chapsec"><h2>Chapter 5 &middot; Exponential &amp; Logarithmic Functions</h2>';
+  s+=topic("5.1 &nbsp;The base e and exponent rules",
+    "<p>e "+AP+" 2.718 is an irrational constant used for continuous growth. The exponent rules work for any base, e included.</p>"
+    +fbox(pw("b","m")+CD+pw("b","n")+"="+pw("b","m+n")+" &nbsp;&bull;&nbsp; "+fr(pw("b","m"),pw("b","n"))+"="+pw("b","m"+MN+"n")+" &nbsp;&bull;&nbsp; ("+pw("b","m")+")"+sup("n")+"="+pw("b","mn")+" &nbsp;&bull;&nbsp; "+pw("b",MN+"n")+"="+fr("1",pw("b","n"))+" &nbsp;&bull;&nbsp; "+pw("b","0")+"=1")
+    +eg("Simplify "+fr("20e"+sup(7),"4e"+sup(3))+" = 5e"+sup(4)+". &nbsp;Simplify (2e"+sup("2x")+")"+sup(3)+" = 8e"+sup("6x")+"."));
+  s+=topic("5.2 &nbsp;Growth, decay, and interest",
+    "<p>For y=a"+CD+pw("b","x")+": a is the starting value (the y-intercept), the asymptote is y=0, and b decides direction &mdash; <span class='key'>b&gt;1 is growth, 0&lt;b&lt;1 is decay</span>.</p>"
+    +fbox("Compound: A=P(1+"+fr("r","n")+")"+sup("nt")+" &nbsp;(n = times per year) &nbsp;&bull;&nbsp; Continuous: A=Pe"+sup("rt"))
+    +eg("$1500 at 4.5% compounded monthly for 6 yr: A=1500(1+"+fr("0.045","12")+")"+sup("72")+" "+AP+" $1964."));
+  s+=topic("5.3 &nbsp;Logarithms &amp; their meaning",
+    "<p>A logarithm is the inverse of an exponential. <span class='key'>"+lg("b","y")+"=x means "+pw("b","x")+"=y</span> &mdash; it asks &ldquo;what power of b gives y?&rdquo; The common log is base 10 ("+lOG("")+"); the natural log is base e ("+ln("")+").</p>"
+    +fbox(lg("b","1")+"=0 &nbsp;&bull;&nbsp; "+lg("b","b")+"=1 &nbsp;&bull;&nbsp; "+lg("b",pw("b","x"))+"=x &nbsp;&bull;&nbsp; "+pw("b",lg("b","x"))+"=x")
+    +eg(lg(2,"32")+"=5; &nbsp;"+lg(5,fr("1","25"))+"="+MN+"2; &nbsp;"+ln("e"+sup(3))+"=3. Graphs of "+pw("b","x")+" and "+lg("b","x")+" are reflections across y=x."));
+  s+=topic("5.4 &nbsp;Transforming exp &amp; log graphs",
+    "<p>f(x)=a"+CD+pw("b","x"+MN+"h")+"+k moves the parent "+pw("b","x")+": the <span class='key'>asymptote becomes y=k</span>. For log functions g(x)=a"+lg("b","(x"+MN+"h)")+"+k the asymptote is the vertical line x=h.</p>"
+    +"<p>Exponential: domain all reals, range y&gt;k (if a&gt;0). &nbsp;Logarithmic: domain x&gt;h, range all reals.</p>");
+  s+=topic("5.5 &nbsp;Properties of logarithms",
+    fbox("Product: "+lg("b","(mn)")+"="+lg("b","m")+"+"+lg("b","n")+"<br>Quotient: "+lg("b",fr("m","n"))+"="+lg("b","m")+MN+lg("b","n")+"<br>Power: "+lg("b","(m"+sup("p")+")")+"=p"+CD+lg("b","m")+"<br>Change of base: "+lg("b","x")+"="+fr(ln("x"),ln("b")))
+    +"<p>Use them left-to-right to <span class='key'>expand</span>, right-to-left to <span class='key'>condense</span>.</p>"
+    +eg("Expand "+lOG(fr("7x"+sup(3),"y"))+" = "+lOG("7")+"+3"+lOG("x")+MN+lOG("y")+". &nbsp;Condense 2"+ln("x")+"+"+ln("5")+" = "+ln("(5x"+sup(2)+")")+"."));
+  s+=topic("5.6 &nbsp;Solving equations &amp; modeling",
+    "<p><span class='key'>Same base:</span> if "+pw("b","m")+"="+pw("b","n")+" then m=n. <span class='key'>Different base:</span> take a log of both sides. <span class='key'>Log equations:</span> condense to one log, rewrite in exponential form, solve, then <u>check</u> &mdash; reject any answer that makes an argument "+LE+"0.</p>"
+    +eg("2"+sup("x")+"=40 "+TO+" x="+lg(2,"40")+" "+AP+" 5.32. &nbsp; "+lg(3,"x")+"+"+lg(3,"(x"+MN+"6)")+"=3 "+TO+" x(x"+MN+"6)=27 "+TO+" x=9 (reject "+MN+"3).")
+    +fbox("Newton's Law of Cooling: T=(T"+sub(0)+MN+"T"+sub("R")+")e"+sup("&minus;rt")+"+T"+sub("R")));
+  s+=pit(lg("b","(m+n)")+" is <u>not</u> "+lg("b","m")+"+"+lg("b","n")+". The product rule applies to "+lg("b","(mn)")+", not to a sum. And never skip the extraneous-solution check on log equations.");
+  s+='</div>';
+
+  /* ---------- CHAPTER 6 ---------- */
+  s+='<div class="chapsec"><h2>Chapter 6 &middot; Rational Functions</h2>';
+  s+=topic("6.1 &nbsp;Direct vs. inverse variation",
+    "<p><span class='key'>Direct:</span> y=ax (the ratio "+fr("y","x")+" is constant). <span class='key'>Inverse:</span> xy=a, i.e. y="+fr("a","x")+" (the product xy is constant). To classify a table, test which one stays constant.</p>"
+    +eg("y=12 when x=3 and the variation is inverse "+TO+" a=xy=36 "+TO+" y="+fr("36","x")+"."));
+  s+=topic("6.2 &nbsp;Graphing rational functions",
+    "<p>Parent y="+fr("1","x")+" has asymptotes x=0 and y=0. For y="+fr("a","x"+MN+"h")+"+k: <span class='key'>vertical asymptote x=h, horizontal asymptote y=k</span>; domain x"+NE+"h, range y"+NE+"k.</p>"
+    +"<p>For a "+fr("linear","linear")+" function, use long division to rewrite it as quotient + "+fr("remainder","x"+MN+"h")+"; the quotient is the horizontal asymptote.</p>"
+    +eg(fr("2x+5","x+2")+" = 2 + "+fr("1","x+2")+" "+TO+" VA x="+MN+"2, HA y=2."));
+  s+=topic("6.3 &nbsp;Multiplying &amp; dividing",
+    "<p>Factor every numerator and denominator, divide out common <u>factors</u>, and state restrictions (any value that makes an original denominator 0). To divide, <span class='key'>multiply by the reciprocal</span>.</p>"
+    +eg(fr("x"+sup(2)+MN+"9","x"+sup(2)+"+4x+3")+CD+fr("x+1","x"+MN+"3")+" = "+fr("(x"+MN+"3)(x+3)","(x+3)(x+1)")+CD+fr("x+1","x"+MN+"3")+" = 1, x"+NE+MN+"3,"+MN+"1,3."));
+  s+=topic("6.4 &nbsp;Adding &amp; subtracting",
+    "<p>Find the <span class='key'>LCD</span> from the factored denominators, rewrite each fraction over it, combine the numerators, then simplify.</p>"
+    +eg(fr("2","x")+"+"+fr("3","x+1")+" = "+fr("2(x+1)+3x","x(x+1)")+" = "+fr("5x+2","x(x+1)")+"."));
+  s+=topic("6.5 &nbsp;Solving rational equations",
+    "<p><span class='key'>Cross-multiply</span> when it is one fraction = one fraction; otherwise <span class='key'>multiply every term by the LCD</span> and solve. Always check for extraneous solutions. Word problems: average cost = "+fr("total cost","number")+", plus mixture and rate models.</p>"
+    +eg(fr("1","x"+MN+"2")+"+1="+fr("4","x"+MN+"2")+" "+TO+" 1+(x"+MN+"2)=4 "+TO+" x=5 (valid)."));
+  s+=pit("Cancel <u>factors</u>, never individual terms: "+fr("x+3","x")+" is not "+fr("3","1")+". And a value that zeroes a denominator is always rejected, even if the algebra produces it.");
+  s+='</div>';
+
+  /* ---------- CHAPTER 7 ---------- */
+  s+='<div class="chapsec"><h2>Chapter 7 &middot; Sequences &amp; Series</h2>';
+  s+=topic("7.1&ndash;7.2 &nbsp;Sequences, series, and "+String.fromCharCode(931)+" notation",
+    "<p>A sequence is a function on the positive integers; a"+sub("n")+" is the nth term. An <span class='key'>explicit</span> rule gives a"+sub("n")+" from n; a <span class='key'>recursive</span> rule gives a"+sub("n")+" from earlier terms plus a starting value. A series is the sum of a sequence's terms.</p>"
+    +eg(sumn("4","k=1","(2k+1)")+" = 3+5+7+9 = 24."));
+  s+=topic("7.3 &nbsp;Arithmetic sequences &amp; series",
+    "<p>Constant <span class='key'>common difference</span> d = a"+sub("n")+MN+"a"+sub("n&minus;1")+".</p>"
+    +fbox("a"+sub("n")+"=a"+sub(1)+"+(n"+MN+"1)d &nbsp;&bull;&nbsp; S"+sub("n")+"="+fr("n","2")+"(a"+sub(1)+"+a"+sub("n")+")")
+    +eg("4, 7, 10, &hellip;: d=3, a"+sub("n")+"=3n+1; S"+sub("10")+"="+fr("10","2")+"(4+31)=175."));
+  s+=topic("7.4 &nbsp;Geometric sequences &amp; series",
+    "<p>Constant <span class='key'>common ratio</span> r = "+fr("a"+sub("n"),"a"+sub("n&minus;1"))+".</p>"
+    +fbox("a"+sub("n")+"=a"+sub(1)+CD+pw("r","n"+MN+"1")+" &nbsp;&bull;&nbsp; S"+sub("n")+"=a"+sub(1)+fr("1"+MN+pw("r","n"),"1"+MN+"r")+" &nbsp;&bull;&nbsp; Infinite (|r|&lt;1): S="+fr("a"+sub(1),"1"+MN+"r"))
+    +"<p>If |r|"+GE+"1 an infinite geometric series has no sum. Means: arithmetic "+fr("a+c","2")+", geometric "+sq("ac")+". Repeating decimals are infinite geometric series.</p>"
+    +eg("2, 6, 18, &hellip;: r=3, a"+sub("n")+"=2"+CD+pw("3","n"+MN+"1")+"; S"+sub(5)+"=2"+fr("1"+MN+"3"+sup(5),"1"+MN+"3")+"=242."));
+  s+=topic("7.5 &nbsp;Recursive rules &amp; models",
+    "<p>Arithmetic: a"+sub("n")+"=a"+sub("n&minus;1")+"+d. Geometric: a"+sub("n")+"=r"+CD+"a"+sub("n&minus;1")+". A model a"+sub("n")+"=r"+CD+"a"+sub("n&minus;1")+"+c (loans, populations) settles to a <span class='key'>steady state</span> L where L=rL+c.</p>"
+    +eg("a"+sub(1)+"=200, a"+sub("n")+"=0.2a"+sub("n&minus;1")+"+200 "+TO+" L=0.2L+200 "+TO+" L=250."));
+  s+=pit("Decide arithmetic vs. geometric first (difference constant or ratio constant?). In the geometric rule the exponent is n"+MN+"1, not n. You can only sum an infinite geometric series when |r|&lt;1.");
+  s+='</div>';
+
+  /* ---------- CHAPTER 8 ---------- */
+  s+='<div class="chapsec"><h2>Chapter 8 &middot; Trigonometric Ratios &amp; Functions</h2>';
+  s+=topic("8.1 &nbsp;Right-triangle trig",
+    "<p><span class='key'>SOH-CAH-TOA:</span> sin"+TH+"="+fr("opp","hyp")+", cos"+TH+"="+fr("adj","hyp")+", tan"+TH+"="+fr("opp","adj")+". Reciprocals: csc="+fr("1","sin")+", sec="+fr("1","cos")+", cot="+fr("1","tan")+". Special triangles: 45-45-90 (1:1:"+sq("2")+"), 30-60-90 (1:"+sq("3")+":2). Solve a triangle by finding every missing side and angle.</p>"
+    +eg("A 25-ft ladder at 65"+DEG+" to the ground reaches 25 sin65"+DEG+" "+AP+" 22.7 ft up the wall."));
+  s+=topic("8.2 &nbsp;Angles, radians, arcs",
+    "<p>Standard position: vertex at origin, initial side on the +x-axis. <span class='key'>Coterminal</span> angles differ by 360"+DEG+" (or 2"+PI+"). Convert with 180"+DEG+"="+PI+".</p>"
+    +fbox("Arc length s=r"+TH+" &nbsp;&bull;&nbsp; Sector area A="+fr("1","2")+pw("r","2")+TH+" &nbsp;("+TH+" in radians)")
+    +eg("135"+DEG+CD+fr(PI,"180")+"="+fr("3"+PI,"4")+" rad. &nbsp;Radius 8, angle "+fr("3"+PI,"4")+": s=8"+CD+fr("3"+PI,"4")+"=6"+PI+"."));
+  s+=topic("8.3&ndash;8.4 &nbsp;Any angle &amp; the unit circle",
+    "<p>For a point (x,y) on the terminal side with r="+sq("x"+sup(2)+"+y"+sup(2))+": sin"+TH+"="+fr("y","r")+", cos"+TH+"="+fr("x","r")+", tan"+TH+"="+fr("y","x")+". The <span class='key'>reference angle</span> "+TH+"&prime; is the acute angle to the x-axis; evaluate with it, then attach the sign from the quadrant (<span class='key'>ASTC</span>: All, Sine, Tangent, Cosine positive in QI&ndash;QIV). On the unit circle a point is (cos"+TH+", sin"+TH+").</p>"
+    +eg("cos210"+DEG+": QIII (cosine negative), reference 30"+DEG+" "+TO+" "+MN+fr(sq("3"),"2")+"."));
+  s+=topic("8.5 &nbsp;Graphing sine &amp; cosine",
+    "<p>For y=a sin b(x"+MN+"h)+k (and cosine): <span class='key'>amplitude |a|, period "+fr("2"+PI,"b")+", phase shift h, midline y=k</span>. Plot 5 key points by splitting one period into quarters; if a&lt;0, reflect over the midline.</p>"
+    +eg("y=3 sin2x: amp 3, period "+PI+", key x-values 0, "+fr(PI,"4")+", "+fr(PI,"2")+", "+fr("3"+PI,"4")+", "+PI+"."));
+  s+=topic("8.6 &nbsp;Tangent, cotangent, secant, cosecant",
+    "<p>tan x and cot x have <span class='key'>period "+PI+"</span>: tan has asymptotes where cos x=0 ("+fr(PI,"2")+"+"+PI+"n), cot where sin x=0 ("+PI+"n). sec x="+fr("1","cos x")+" and csc x="+fr("1","sin x")+" have period 2"+PI+" with asymptotes where the denominator is 0 &mdash; sketch cos/sin first, then take reciprocals.</p>");
+  s+=pit("Arc length and sector area need "+TH+" in <u>radians</u>, not degrees. The period is "+fr("2"+PI,"b")+" (divide by b, don't multiply). A reference angle gives only the size of the value &mdash; the quadrant gives the sign.");
+  s+='</div>';
+
+  s+='</div>'; /* .rev */
+  return s;
+}
+
+/* =================== RENDER =================== */
+function renderQuiz(qi){
+  var Q=QUIZZES[qi], n=qi+1;
+  var chal=(Q.level==="chal");
+  var s='<h2 class="qh">Mock Quiz '+n
+    +'<span class="badge '+(chal?"chal":"std")+'">'+(chal?"Challenge":"Standard")+'</span></h2>';
+  s+='<div class="meta">'+Q.problems.length+' problems &middot; covers Chapters 5&ndash;8'
+    +(chal?' &middot; expect multi-step reasoning':' &middot; '+(chal?'':'')+'<span class="star">&#9733;</span> marks a harder problem')
+    +' &middot; answers under the Answer Keys tab.</div>';
+  s+='<div class="toolbar noprint"><button onclick="printOnly(\'sec-q'+qi+'\')">Print this quiz</button>'
+    +'<button onclick="go(\'ak\')">Go to answer keys</button>'
+    +'<span class="note">Tip: try it timed and closed-book first.</span></div>';
+  s+='<ol class="problems">';
+  Q.problems.forEach(function(p,i){
+    s+='<li><span class="num">'+(i+1)+'.</span><span class="qtext">'
+      +(p.hard?'<span class="star">&#9733; </span>':'')+p.q+'</span>'
+      +(p.grid?p.grid:'')+'</li>';
+  });
+  s+='</ol>';
+  return s;
+}
+function renderAnswerKeys(){
+  var s='<h2 class="qh">Answer Keys</h2>';
+  s+='<div class="meta">Worked answers for all ten quizzes. Grade yourself honestly.</div>';
+  s+='<div class="toolbar noprint"><button onclick="printOnly(\'sec-ak\')">Print all answer keys</button></div>';
+  QUIZZES.forEach(function(Q,qi){
+    s+='<div class="akblock" id="ak'+qi+'"><h3>Quiz '+(qi+1)+' '+(Q.level==="chal"?'(Challenge)':'')+'</h3><ol class="answers">';
+    Q.problems.forEach(function(p){ s+='<li>'+p.a+'</li>'; });
+    s+='</ol></div>';
+  });
+  return s;
+}
+
+/* build sections + tabs */
+var view=document.getElementById('view');
+var tabs=document.getElementById('tabs');
+var sections=[];
+
+function addSection(id,label,html){
+  var sec=document.createElement('section');
+  sec.className='view'; sec.id='sec-'+id;
+  sec.innerHTML=html;
+  view.appendChild(sec);
+  var b=document.createElement('button');
+  b.textContent=label; b.dataset.target=id;
+  b.onclick=function(){go(id);};
+  tabs.appendChild(b);
+  sections.push({id:id,btn:b,el:sec});
+}
+
+addSection('home','Study Guide',homeSection());
+for(var i=0;i<QUIZZES.length;i++){ addSection('q'+i,'Quiz '+(i+1),renderQuiz(i)); }
+// spacer
+var sp=document.createElement('span'); sp.className='sp'; tabs.appendChild(sp);
+addSection('ak','Answer Keys',renderAnswerKeys());
+addSection('cheat','Cheat Sheet',cheatSheet());
+
+function go(id){
+  sections.forEach(function(o){
+    var on=(o.id===id);
+    o.el.classList.toggle('active',on);
+    o.btn.classList.toggle('active',on);
+  });
+  window.scrollTo(0,0);
+}
+function printOnly(secId){
+  // ensure the target section is the only active one, then print
+  var target=secId.replace('sec-','');
+  go(target);
+  setTimeout(function(){ window.print(); },60);
+}
+go('home');
+</script>
+</body>
+</html>
