@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thermochemistry A — Claire's Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1c22; --ink2:#454a55; --paper:#f7f4ee; --panel:#ffffff;
+  --cold:#1f6f9e; --warm:#d64516; --amber:#e8a33d; --line:#e4ddcf;
+  --endo:#1f6f9e; --exo:#d64516;
+  --shadow:0 1px 2px rgba(26,28,34,.06),0 8px 24px rgba(26,28,34,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:Inter,system-ui,sans-serif;line-height:1.6;font-size:16px;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+
+/* header */
+header.top{padding:48px 24px 30px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#fbf9f4,var(--paper))}
+.top-inner{max-width:980px;margin:0 auto}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--warm);font-weight:600}
+h1{font-size:clamp(34px,6vw,56px);font-weight:600;margin:.18em 0 .1em;letter-spacing:-.01em}
+.sub{color:var(--ink2);max-width:60ch;font-size:17px}
+.thermobar{height:8px;border-radius:8px;margin-top:22px;
+  background:linear-gradient(90deg,var(--cold),var(--amber),var(--warm))}
+
+/* nav */
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(247,244,238,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabs-inner{max-width:980px;margin:0 auto;display:flex;gap:4px;padding:8px 16px;
+  overflow-x:auto}
+.tab{appearance:none;border:0;background:transparent;cursor:pointer;
+  font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:600;
+  letter-spacing:.04em;color:var(--ink2);padding:10px 16px;border-radius:8px;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]:hover{color:#fff}
+
+main{max-width:980px;margin:0 auto;padding:34px 22px 90px}
+.view{display:none}
+.view.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.lede{font-size:18px;color:var(--ink2);max-width:68ch;margin:0 0 26px}
+
+/* study guide */
+.topic{position:relative;background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:26px 28px 30px;margin:0 0 22px;box-shadow:var(--shadow);overflow:hidden}
+.topic-bar{position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(180deg,var(--cold),var(--amber),var(--warm))}
+.topic h2{font-size:25px;font-weight:600;display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.tn{font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--warm);
+  border:1.5px solid var(--warm);border-radius:6px;padding:2px 8px;font-weight:600}
+.topic p{margin:.5em 0}
+.pts{margin:.6em 0;padding-left:20px}
+.pts li{margin:.45em 0}
+.callout{background:#fdf6ec;border-left:3px solid var(--amber);padding:12px 16px;
+  border-radius:0 8px 8px 0;font-size:15px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:#fcfaf6}
+.card h4{font-size:17px;margin-bottom:6px}
+.card.endo{border-top:4px solid var(--endo)} .card.exo{border-top:4px solid var(--exo)}
+.card .ex{font-size:14px;color:var(--ink2);margin-top:6px}
+
+.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px}
+.tbl th{background:var(--ink);color:#fff;text-align:left;padding:9px 12px;font-weight:600;font-family:Inter}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--line)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl.mini td{padding:6px 10px}
+.tbl.mini .mono{font-family:"JetBrains Mono",monospace}
+.tbl .tot td{font-weight:700;background:#fdf6ec}
+
+.eqbox{background:var(--ink);color:#fff;border-radius:12px;padding:18px 20px;margin:16px 0}
+.eq{font-family:"JetBrains Mono",monospace;font-size:22px;font-weight:600;text-align:center;letter-spacing:.02em}
+.eq.small{font-size:16px}
+.eqkey{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin-top:12px;
+  font-size:13px;color:#cfd6e0;font-family:"JetBrains Mono",monospace}
+.eqkey b{color:var(--amber)}
+.worked{background:#f3f7fa;border:1px solid #d9e6ee;border-radius:10px;padding:16px 18px;margin-top:16px}
+.worked h4{color:var(--cold);font-size:16px;margin-bottom:6px}
+code{background:#efeadf;padding:1px 6px;border-radius:5px;font-size:.92em}
+
+/* heating curve svg */
+.curvefig{margin:18px 0;background:#fcfaf6;border:1px solid var(--line);border-radius:12px;padding:10px 10px 4px}
+.curvefig svg{width:100%;height:auto}
+.axt{font-family:"JetBrains Mono",monospace;font-size:12px;fill:var(--ink2)}
+.seg{font-family:Inter;font-size:12.5px;font-weight:600;fill:var(--ink)}
+.ftag{font-family:"JetBrains Mono",monospace;font-size:10.5px;fill:var(--ink2)}
+figcaption{font-size:13px;color:var(--ink2);padding:8px 8px 6px;text-align:center}
+
+/* cheat sheet */
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.cs-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+.cs-card h4{font-size:16px;color:var(--warm);margin-bottom:10px;
+  border-bottom:2px solid var(--line);padding-bottom:6px}
+.cs-card.sign h4{color:var(--ink)}
+.cs-eq{font-family:"JetBrains Mono",monospace;font-size:14px;background:#f3efe5;
+  border-radius:6px;padding:7px 10px;margin:6px 0}
+.cs-tbl{width:100%;font-size:14px;border-collapse:collapse}
+.cs-tbl td{padding:4px 4px;border-bottom:1px solid var(--line)}
+.cs-tbl td:last-child{text-align:right;font-family:"JetBrains Mono",monospace;font-weight:600}
+.cs-card p{font-size:14px;margin:6px 0}
+.cs-note{font-size:12.5px!important;color:var(--ink2);font-style:italic}
+
+/* quizzes */
+.qbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.qzbtn{appearance:none;border:1px solid var(--line);background:var(--panel);cursor:pointer;
+  font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:600;color:var(--ink2);
+  padding:9px 13px;border-radius:8px;text-align:left}
+.qzbtn:hover{border-color:var(--warm);color:var(--ink)}
+.qzbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.quiz{display:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:8px 26px 26px;box-shadow:var(--shadow)}
+.quiz.show{display:block}
+.quiz-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:20px 0 14px;border-bottom:2px solid var(--line);margin-bottom:8px}
+.qz-num{font-family:"JetBrains Mono",monospace;font-weight:600;color:#fff;background:var(--warm);
+  padding:4px 10px;border-radius:6px;font-size:13px}
+.quiz-head h3{font-size:21px;font-weight:600;flex:1}
+.qz-meta{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
+.qlist{counter-reset:q;list-style:none;padding:0;margin:0}
+.qitem{counter-increment:q;padding:18px 0;border-bottom:1px dashed var(--line)}
+.qitem:last-child{border-bottom:0}
+.qtext{font-size:16px;font-weight:500}
+.qtext::before{content:"Q" counter(q) ".";font-family:"JetBrains Mono",monospace;
+  color:var(--warm);font-weight:700;margin-right:8px}
+.choices{margin-top:10px;display:grid;gap:6px}
+.choice{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink2);
+  padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fcfaf6}
+.clab{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--cold)}
+.answer-line{display:flex;align-items:center;gap:10px;margin-top:12px;
+  font-size:14px;color:var(--ink2);font-family:"JetBrains Mono",monospace}
+.answer-line .rule{flex:1;height:1px;border-bottom:1.5px solid var(--line)}
+
+/* answer keys */
+.keyswrap-note{background:#fdf6ec;border-left:3px solid var(--amber);padding:12px 16px;
+  border-radius:0 8px 8px 0;margin-bottom:18px;font-size:15px}
+.keyblock{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  margin:0 0 12px;box-shadow:var(--shadow);overflow:hidden}
+.keyblock summary{cursor:pointer;list-style:none;padding:16px 20px;display:flex;
+  align-items:center;justify-content:space-between;gap:12px}
+.keyblock summary::-webkit-details-marker{display:none}
+.reveal-hint{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink2)}
+.keyblock[open] .reveal-hint{color:var(--warm)}
+.klist{counter-reset:k;list-style:none;margin:0;padding:0 20px 18px}
+.klist li{counter-increment:k;padding:12px 0;border-top:1px solid var(--line)}
+.kans{font-size:15px}
+.kans::before{content:"Q" counter(k) ".";font-family:"JetBrains Mono",monospace;
+  color:var(--cold);font-weight:700;margin-right:8px}
+.kans b{color:var(--ink)}
+.ksol{font-size:14px;color:var(--ink2);margin-top:4px;padding-left:6px;border-left:2px solid var(--line)}
+.ksol .mono,.ksol code{font-family:"JetBrains Mono",monospace}
+
+footer{max-width:980px;margin:0 auto;padding:24px 22px 60px;color:var(--ink2);font-size:13px;
+  border-top:1px solid var(--line)}
+
+@media(max-width:640px){
+  .twocol{grid-template-columns:1fr}
+  .topic{padding:22px 18px 24px 22px}
+  main{padding:24px 14px 70px}
+  .eq{font-size:18px}
+}
+@media print{
+  nav.tabs,.qbar{display:none}
+  .view{display:block!important}
+  .quiz{display:block!important;page-break-inside:avoid}
+  .keyblock[open]{display:block}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="kicker">Unit 13A · Thermochemistry A · for Claire</div>
+    <h1>Heat, Energy &amp; the Heating Curve</h1>
+    <p class="sub">A complete prep kit for the quiz: a seven-topic study guide, a one-page cheat sheet, and twelve 12-question mock quizzes (including three full-unit comprehensive reviews). Answer keys are kept in their own tab so you can test yourself honestly first.</p>
+    <div class="thermobar"></div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner" role="tablist">
+    <button class="tab" role="tab" aria-selected="true"  data-view="study">Study Guide</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="cheat">Cheat Sheet</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="quiz">Mock Quizzes</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="keys">Answer Keys</button>
+  </div>
+</nav>
+
+<main>
+  <div class="view active" id="view-study">
+<section class="sg">
+
+<div class="sg-intro">
+  <p class="lede">Everything on the quiz lives in seven ideas, and they all hang off one picture: a heating curve. Energy goes in, particles speed up, temperature climbs — until a phase change, where the line goes flat and the energy quietly tears intermolecular forces apart instead. Master that story and the math (<code>q = mcΔT</code> plus the two phase-change terms) and you have the whole unit.</p>
+</div>
+
+<!-- 1 -->
+<div class="topic" id="t1">
+<div class="topic-bar"></div>
+<h2><span class="tn">01</span> Heat, temperature & heat flow</h2>
+<p><b>Heat</b> is the <i>transfer</i> of thermal (kinetic) energy from a hotter object to a colder one. It is energy in motion, not something an object "contains."</p>
+<p><b>Temperature</b> is the <i>average</i> kinetic energy of the particles in a sample. A small cup of boiling water is hotter (higher temperature) than a warm bathtub, but the bathtub holds far more <i>total</i> energy because of its mass.</p>
+<ul class="pts">
+  <li><b>Direction of flow:</b> heat always moves spontaneously from high temperature to low temperature (second law of thermodynamics), until both reach the same temperature — <b>thermal equilibrium</b>.</li>
+  <li><b>Units:</b> the joule (J) is the SI unit. The calorie is older: <b>1 cal = 4.184 J</b>. A food Calorie is a kilocalorie (1 Cal = 1000 cal).</li>
+  <li><b>System vs. surroundings:</b> the <b>system</b> is the reaction or process you're studying; the <b>surroundings</b> are everything else (in a calorimeter, the water).</li>
+  <li><b>Key limit:</b> you can never measure the <i>total</i> heat energy of a system — only the <i>change</i>, based on what it absorbs or releases.</li>
+</ul>
+<p class="callout"><b>Trap:</b> "More heat" ≠ "higher temperature." The bathtub vs. cup question tests exactly this. Temperature = average KE; total thermal energy depends on mass too.</p>
+</div>
+
+<!-- 2 -->
+<div class="topic" id="t2">
+<div class="topic-bar"></div>
+<h2><span class="tn">02</span> Endothermic & exothermic processes</h2>
+<div class="twocol">
+  <div class="card endo">
+    <h4>Endothermic — energy IN</h4>
+    <p>System <b>absorbs</b> heat from the surroundings. Surroundings get <b>colder</b>. <b>ΔH is positive (+)</b>.</p>
+    <p class="ex">Melting, boiling, sublimation, photosynthesis, cold packs, ice melting in your hand.</p>
+  </div>
+  <div class="card exo">
+    <h4>Exothermic — energy OUT</h4>
+    <p>System <b>releases</b> heat to the surroundings. Surroundings get <b>warmer</b>. <b>ΔH is negative (−)</b>.</p>
+    <p class="ex">Freezing, condensation, combustion, neutralization, hand warmers, the sun radiating.</p>
+  </div>
+</div>
+<p><b>Mnemonic:</b> <i>exo = exit (out), endo = enter (in)</i>.</p>
+<p><b>At the bond level:</b> breaking bonds <i>absorbs</i> energy; forming bonds <i>releases</i> energy. If breaking costs more than forming gives back → endothermic. If forming gives back more → exothermic.</p>
+<table class="tbl">
+<thead><tr><th>Scenario (from the deck)</th><th>System</th><th>Surroundings</th></tr></thead>
+<tbody>
+<tr><td>Iron pan heated on a stove</td><td>Endothermic (pan absorbs)</td><td>Lose heat</td></tr>
+<tr><td>Athlete takes an ice bath</td><td>Exothermic (body releases)</td><td>Gain heat</td></tr>
+<tr><td>Turkey cooking in the oven</td><td>Endothermic (turkey absorbs)</td><td>Lose heat</td></tr>
+<tr><td>Cooked turkey cooling in room air</td><td>Exothermic (turkey releases)</td><td>Gain heat</td></tr>
+<tr><td>Sun radiating into the solar system</td><td>Exothermic (sun releases)</td><td>Gain heat</td></tr>
+<tr><td>Ice melting in a glass of water</td><td>Endothermic (ice absorbs)</td><td>Lose heat</td></tr>
+</tbody></table>
+</div>
+
+<!-- 3 -->
+<div class="topic" id="t3">
+<div class="topic-bar"></div>
+<h2><span class="tn">03</span> Heat capacity & specific heat</h2>
+<p><b>Specific heat capacity (c)</b> is the amount of heat needed to raise the temperature of <b>1 gram</b> of a substance by <b>1 °C</b> (or 1 K). Units: <code>J/(g·°C)</code> or <code>J/(g·K)</code>.</p>
+<ul class="pts">
+  <li><b>Low c → fast temperature change.</b> Metals (low c) heat up and cool down quickly. That's why a metal spoon in hot soup gets hot fast.</li>
+  <li><b>High c → resists temperature change.</b> Water's c = 4.18 is unusually high, so water stores lots of energy with little temperature change — this moderates coastal climates.</li>
+  <li><b>°C vs. K:</b> a <i>change</i> of 1 °C is the same size as a change of 1 K, so the numerical value of c is identical in either unit.</li>
+</ul>
+<table class="tbl">
+<thead><tr><th>Substance</th><th>Specific heat J/(g·°C)</th></tr></thead>
+<tbody>
+<tr><td>Water (liquid)</td><td>4.18</td></tr>
+<tr><td>Water (ice, solid)</td><td>2.10</td></tr>
+<tr><td>Water (steam, gas)</td><td>1.89</td></tr>
+<tr><td>Aluminum</td><td>0.897</td></tr>
+<tr><td>Iron</td><td>0.439</td></tr>
+<tr><td>Copper</td><td>0.385</td></tr>
+<tr><td>Lead</td><td>0.129</td></tr>
+</tbody></table>
+<p class="callout"><b>Quick test:</b> given equal masses and equal heat, the substance with the <i>lowest</i> c shows the <i>biggest</i> temperature change.</p>
+</div>
+
+<!-- 4 -->
+<div class="topic" id="t4">
+<div class="topic-bar"></div>
+<h2><span class="tn">04</span> Specific heat calculations — q = mcΔT</h2>
+<div class="eqbox">
+  <div class="eq">q = m · c · ΔT</div>
+  <div class="eqkey">
+    <span><b>q</b> heat flow (J)</span>
+    <span><b>m</b> mass (g)</span>
+    <span><b>c</b> specific heat (J/g·°C)</span>
+    <span><b>ΔT</b> = T<sub>final</sub> − T<sub>initial</sub> (°C)</span>
+  </div>
+</div>
+<p><b>Rearrangements:</b> &nbsp; c = q/(mΔT) &nbsp;•&nbsp; m = q/(cΔT) &nbsp;•&nbsp; ΔT = q/(mc).</p>
+<p><b>Sign of q (for the object):</b> positive if it absorbs heat (warms up), negative if it releases heat (cools down).</p>
+<div class="worked">
+  <h4>Worked example (from the deck)</h4>
+  <p>4.0 g of glass warms from 274 °C to 314 °C by absorbing 32.0 J. Find c.</p>
+  <p>ΔT = 314 − 274 = 40 °C → c = q/(mΔT) = 32.0 / (4.0 × 40) = <b>0.20 J/g·°C</b>.</p>
+  <p>If that glass then cools from 325 K to 275 K: ΔT = 50 K = 50 °C, so q = (0.20)(4.0)(50) = <b>40 J released</b>. Note Kelvin works fine for a temperature <i>change</i>.</p>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="topic" id="t5">
+<div class="topic-bar"></div>
+<h2><span class="tn">05</span> Enthalpy (ΔH)</h2>
+<p><b>Enthalpy (H)</b> is the heat content of a system at constant pressure. The <b>enthalpy change (ΔH)</b> is the heat absorbed or released by a reaction at constant pressure — that is, <code>ΔH = q<sub>p</sub></code>.</p>
+<ul class="pts">
+  <li><b>ΔH negative (−)</b> → exothermic (heat released; products lower energy than reactants).</li>
+  <li><b>ΔH positive (+)</b> → endothermic (heat absorbed; products higher energy than reactants).</li>
+  <li>Enthalpy is a <b>state function</b>: ΔH depends only on the initial and final states, not the path (basis of Hess's Law).</li>
+  <li>Reverse a reaction → the sign of ΔH flips.</li>
+</ul>
+<p class="callout"><b>Example:</b> a reaction with ΔH = −109 kJ releases 109 kJ and is exothermic.</p>
+</div>
+
+<!-- 6 -->
+<div class="topic" id="t6">
+<div class="topic-bar"></div>
+<h2><span class="tn">06</span> Calorimetry</h2>
+<p><b>Calorimetry</b> is measuring the heat absorbed or released by a reaction or process. It rests on conservation of energy: with no heat lost to the environment,</p>
+<div class="eqbox"><div class="eq">−q<sub>block/reaction</sub> = q<sub>water</sub></div></div>
+<p>"It's all about the water." Heat released by the system flows into the water (warming it); heat absorbed by the system pulls energy from the water (cooling it).</p>
+<ul class="pts">
+  <li>Water <b>heats up</b> → reaction is <b>exothermic</b> → ΔH<sub>rxn</sub> is <b>negative</b>.</li>
+  <li>Water <b>cools down</b> → reaction is <b>endothermic</b> → ΔH<sub>rxn</sub> is <b>positive</b>.</li>
+</ul>
+<div class="twocol">
+  <div class="card">
+    <h4>Coffee-cup calorimeter</h4>
+    <p>Nested Styrofoam cups (insulation), a stirrer, a thermometer, water (surroundings), and the sample (system). Open to air → <b>constant pressure</b> → measures ΔH for solution reactions.</p>
+  </div>
+  <div class="card">
+    <h4>Bomb calorimeter</h4>
+    <p>Sealed rigid steel chamber with an O₂ inlet, ignition leads, a motorized stirrer, thermometer, and surrounding water. <b>Constant volume</b> → built for combustion reactions.</p>
+  </div>
+</div>
+<div class="worked">
+  <h4>Worked example (from the deck)</h4>
+  <p>A 59.0 g metal heated to 100.0 °C is dropped into 100.0 mL water (100.0 g) at 23.7 °C; final T = 27.8 °C. Find c of the metal.</p>
+  <p>Step 1 — water: q<sub>water</sub> = (100.0)(4.18)(27.8 − 23.7) = <b>1713.8 J</b> absorbed.</p>
+  <p>Step 2 — metal: −q<sub>metal</sub> = q<sub>water</sub>, ΔT<sub>metal</sub> = 27.8 − 100.0 = −72.2 °C.<br>
+  c = 1713.8 / (59.0 × 72.2) ≈ <b>0.40 J/g·°C</b>.</p>
+</div>
+</div>
+
+<!-- 7 -->
+<div class="topic" id="t7">
+<div class="topic-bar"></div>
+<h2><span class="tn">07</span> Heating curves & multi-step phase-change problems</h2>
+<p>A heating curve plots temperature vs. heat added. It has five parts: three <b>sloped</b> regions (a single phase warming) and two <b>flat</b> plateaus (phase changes).</p>
+
+
+<figure class="curvefig">
+<svg viewBox="0 0 760 360" role="img" aria-label="Heating curve of water with five segments">
+  <defs>
+    <linearGradient id="thermo" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#1f6f9e"/>
+      <stop offset="0.5" stop-color="#e8a33d"/>
+      <stop offset="1" stop-color="#d64516"/>
+    </linearGradient>
+  </defs>
+  <!-- axes -->
+  <line x1="70" y1="40" x2="70" y2="312" stroke="var(--ink)" stroke-width="2"/>
+  <line x1="70" y1="312" x2="724" y2="312" stroke="var(--ink)" stroke-width="2"/>
+  <text x="20" y="180" transform="rotate(-90 24 180)" class="axt">Temperature →</text>
+  <text x="360" y="346" class="axt">Heat energy added →</text>
+  <!-- curve -->
+  <polyline fill="none" stroke="url(#thermo)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"
+    points="80,290 195,232 320,232 470,120 620,120 712,72"/>
+  <!-- markers for plateaus -->
+  <line x1="195" y1="232" x2="320" y2="232" stroke="#1f6f9e" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <line x1="470" y1="120" x2="620" y2="120" stroke="#d64516" stroke-width="6" stroke-linecap="round" opacity="0.35"/>
+  <!-- labels -->
+  <text x="120" y="270" class="seg">solid<tspan x="120" dy="14">warming</tspan></text>
+  <text x="257" y="222" class="seg" text-anchor="middle">melting<tspan x="257" dy="14">(0 °C)</tspan></text>
+  <text x="395" y="180" class="seg" text-anchor="middle">liquid<tspan x="395" dy="14">warming</tspan></text>
+  <text x="545" y="110" class="seg" text-anchor="middle">boiling<tspan x="545" dy="14">(100 °C)</tspan></text>
+  <text x="668" y="100" class="seg">gas<tspan x="668" dy="14">warming</tspan></text>
+  <!-- formula tags -->
+  <text x="120" y="306" class="ftag">q=mcΔT</text>
+  <text x="257" y="252" class="ftag" text-anchor="middle">q=mΔH_fus</text>
+  <text x="395" y="206" class="ftag" text-anchor="middle">q=mcΔT</text>
+  <text x="545" y="142" class="ftag" text-anchor="middle">q=mΔH_vap</text>
+  <text x="690" y="60" class="ftag" text-anchor="middle">q=mcΔT</text>
+</svg>
+<figcaption>The two flat plateaus stay at constant temperature while intermolecular forces break. The boiling plateau is longer because ΔH<sub>vap</sub> ≫ ΔH<sub>fus</sub>.</figcaption>
+</figure>
+
+
+<ul class="pts">
+  <li><b>Sloped regions</b> (warming solid / liquid / gas): particles move faster, average kinetic energy and temperature <i>rise</i>. Use <code>q = mcΔT</code>.</li>
+  <li><b>Flat plateaus</b> (melting, boiling): temperature is <b>constant</b>; energy goes into breaking intermolecular forces (potential energy rises, KE constant). Use <code>q = mΔH</code>.</li>
+  <li>The <b>melting point = freezing point</b> (same temperature); melting absorbs energy, freezing releases it. Same for <b>boiling = condensation</b>.</li>
+  <li>The <b>boiling plateau is longer</b> than the melting plateau because ΔH<sub>vap</sub> (2260 J/g) ≫ ΔH<sub>fus</sub> (334 J/g) — it takes far more energy to fully separate particles into a gas than to let them flow as a liquid.</li>
+</ul>
+
+<p><b>The full multi-step equation</b> (ice below 0 °C → steam above 100 °C):</p>
+<div class="eqbox">
+  <div class="eq small">Q = m·c<sub>s</sub>·ΔT + m·ΔH<sub>fus</sub> + m·c<sub>l</sub>·ΔT + m·ΔH<sub>vap</sub> + m·c<sub>g</sub>·ΔT</div>
+  <div class="eqkey">
+    <span>① warm solid</span><span>② melt</span><span>③ warm liquid</span><span>④ boil</span><span>⑤ warm gas</span>
+  </div>
+</div>
+<div class="worked">
+  <h4>Worked example — 50.0 g ice (−20 °C) → steam (120 °C)</h4>
+  <table class="tbl mini">
+    <tr><td>① warm ice</td><td>50 × 2.10 × 20</td><td>2 100 J</td></tr>
+    <tr><td>② melt</td><td>50 × 334</td><td>16 700 J</td></tr>
+    <tr><td>③ warm water</td><td>50 × 4.18 × 100</td><td>20 900 J</td></tr>
+    <tr><td>④ boil</td><td>50 × 2260</td><td>113 000 J</td></tr>
+    <tr><td>⑤ warm steam</td><td>50 × 1.89 × 20</td><td>1 890 J</td></tr>
+    <tr class="tot"><td>Total</td><td></td><td>154 590 J ≈ 154.6 kJ</td></tr>
+  </table>
+  <p>Vaporization dominates — it's by far the largest term. A <b>cooling curve</b> is the exact reverse, and its phase changes (condensation, freezing) are exothermic.</p>
+</div>
+</div>
+
+</section>
+</div>
+  <div class="view" id="view-cheat">
+<section class="cheat">
+<p class="lede">One page. Print it, fold it, glance at it before the bell. Everything you must have memorized.</p>
+<div class="cheat-grid">
+
+  <div class="cs-card">
+    <h4>Core equations</h4>
+    <div class="cs-eq">q = m·c·ΔT</div>
+    <div class="cs-eq">c = q/(mΔT) · m = q/(cΔT) · ΔT = q/(mc)</div>
+    <div class="cs-eq">phase change: q = m·ΔH</div>
+    <div class="cs-eq">calorimetry: −q<sub>rxn</sub> = q<sub>water</sub></div>
+    <div class="cs-eq">ΔT = T<sub>final</sub> − T<sub>initial</sub></div>
+  </div>
+
+  <div class="cs-card">
+    <h4>Water constants</h4>
+    <table class="cs-tbl">
+      <tr><td>c (ice)</td><td>2.10 J/g·°C</td></tr>
+      <tr><td>c (liquid)</td><td>4.18 J/g·°C</td></tr>
+      <tr><td>c (steam)</td><td>1.89 J/g·°C</td></tr>
+      <tr><td>ΔH<sub>fus</sub></td><td>334 J/g</td></tr>
+      <tr><td>ΔH<sub>vap</sub></td><td>2260 J/g</td></tr>
+      <tr><td>1 cal</td><td>4.184 J</td></tr>
+    </table>
+  </div>
+
+  <div class="cs-card">
+    <h4>Specific heats J/g·°C</h4>
+    <table class="cs-tbl">
+      <tr><td>Aluminum</td><td>0.897</td></tr>
+      <tr><td>Iron</td><td>0.439</td></tr>
+      <tr><td>Copper</td><td>0.385</td></tr>
+      <tr><td>Lead</td><td>0.129</td></tr>
+    </table>
+    <p class="cs-note">Low c → heats/cools fast & bigger ΔT.</p>
+  </div>
+
+  <div class="cs-card sign">
+    <h4>Sign conventions</h4>
+    <p><b>Exothermic:</b> heat OUT · surroundings warmer · q & ΔH <b>negative (−)</b> · water heats up.</p>
+    <p><b>Endothermic:</b> heat IN · surroundings colder · q & ΔH <b>positive (+)</b> · water cools down.</p>
+    <p class="cs-note">exo = exit · endo = enter</p>
+  </div>
+
+  <div class="cs-card">
+    <h4>Phase-change energetics</h4>
+    <p><b>Endo (energy in):</b> melting, boiling, sublimation.</p>
+    <p><b>Exo (energy out):</b> freezing, condensation, deposition.</p>
+    <p class="cs-note">Melting pt = freezing pt; boiling pt = condensation pt.</p>
+  </div>
+
+  <div class="cs-card">
+    <h4>Heating-curve recipe</h4>
+    <p>Sloped segment → <b>q = mcΔT</b> (temp changes).<br>
+       Flat plateau → <b>q = mΔH</b> (temp constant).</p>
+    <p>5 steps: warm solid → melt → warm liquid → boil → warm gas. <b>Add them all.</b></p>
+    <p class="cs-note">Boiling step is biggest (ΔH<sub>vap</sub> ≫ ΔH<sub>fus</sub>).</p>
+  </div>
+
+  <div class="cs-card">
+    <h4>Heat vs. temperature</h4>
+    <p><b>Temperature</b> = average KE of particles.</p>
+    <p><b>Heat</b> = energy transferred (hot → cold).</p>
+    <p class="cs-note">More mass can mean more total energy at a lower temperature.</p>
+  </div>
+
+  <div class="cs-card">
+    <h4>Calorimeters</h4>
+    <p><b>Coffee-cup:</b> open, constant pressure, ΔH, solution reactions.</p>
+    <p><b>Bomb:</b> sealed, constant volume, O₂, combustion.</p>
+    <p class="cs-note">Both: thermometer, stirrer, insulation, water = surroundings.</p>
+  </div>
+
+</div>
+</section>
+</div>
+  <div class="view" id="view-quiz">
+    <p class="lede">Twelve quizzes, twelve questions each. Pick one, work it on paper, then check the Answer Keys tab.</p>
+    <div class="qbar"><button class="qzbtn" data-target="quiz1">01 · Foundations — heat, temperature & flow</button>
+<button class="qzbtn" data-target="quiz2">02 · Specific heat & q = mcΔT</button>
+<button class="qzbtn" data-target="quiz3">03 · Endothermic, exothermic & enthalpy</button>
+<button class="qzbtn" data-target="quiz4">04 · Calorimetry</button>
+<button class="qzbtn" data-target="quiz5">05 · Heating & cooling curves (concepts)</button>
+<button class="qzbtn" data-target="quiz6">06 · Multi-step phase-change calculations</button>
+<button class="qzbtn" data-target="quiz7">07 · Mixed calculations</button>
+<button class="qzbtn" data-target="quiz8">08 · Concept check (mixed)</button>
+<button class="qzbtn" data-target="quiz9">09 · Calorimetry & enthalpy (deeper)</button>
+<button class="qzbtn" data-target="quiz10">10 · Comprehensive cumulative review</button>
+<button class="qzbtn" data-target="quiz11">11 · Comprehensive review A — full-unit cumulative</button>
+<button class="qzbtn" data-target="quiz12">12 · Comprehensive review B — full-unit cumulative</button></div>
+    <article class="quiz" id="quiz1" data-quiz="1">
+<header class="quiz-head"><span class="qz-num">Quiz 01</span><h3>Foundations — heat, temperature & flow</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Which statement best defines <b>heat</b>?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The average kinetic energy of the particles in a sample</span></div>
+<div class="choice"><span class="clab">B</span><span>The transfer of thermal energy from a hotter object to a colder object</span></div>
+<div class="choice"><span class="clab">C</span><span>The total potential energy stored in chemical bonds</span></div>
+<div class="choice"><span class="clab">D</span><span>A measure of how fast a single particle is moving</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">How does <b>heat</b> differ from <b>temperature</b>?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>They are the same thing measured in different units</span></div>
+<div class="choice"><span class="clab">B</span><span>Heat is average KE; temperature is total energy</span></div>
+<div class="choice"><span class="clab">C</span><span>Heat is the transfer of energy; temperature is the average kinetic energy of particles</span></div>
+<div class="choice"><span class="clab">D</span><span>Temperature can be transferred but heat cannot</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">In which direction does heat flow naturally (2nd law of thermodynamics)?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>From low temperature to high temperature</span></div>
+<div class="choice"><span class="clab">B</span><span>From high temperature to low temperature</span></div>
+<div class="choice"><span class="clab">C</span><span>From large object to small object</span></div>
+<div class="choice"><span class="clab">D</span><span>It does not flow without a machine</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Convert 250 calories to joules (1 cal = 4.184 J).</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A chemical reaction is the <b>system</b>. What are the <b>surroundings</b>?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Only the container walls</span></div>
+<div class="choice"><span class="clab">B</span><span>Everything in the universe except the system</span></div>
+<div class="choice"><span class="clab">C</span><span>Only the dissolved reactants</span></div>
+<div class="choice"><span class="clab">D</span><span>The thermometer only</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">True or False: The total heat energy of a chemical system can be measured directly.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which process is <b>endothermic</b>?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Combustion of propane</span></div>
+<div class="choice"><span class="clab">B</span><span>Water freezing into ice</span></div>
+<div class="choice"><span class="clab">C</span><span>Ice melting into liquid water</span></div>
+<div class="choice"><span class="clab">D</span><span>Steam condensing on a mirror</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A frying pan is heated on a stove. Is the pan undergoing an endothermic or exothermic process, and do the surroundings gain or lose heat?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat is needed to raise the temperature of 50.0 g of liquid water by 15.0 °C? (c = 4.18 J/g°C)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 25.0 g iron block (c = 0.439 J/g°C) is heated from 20.0 °C to 80.0 °C. How much heat is absorbed?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">On a heating curve, what happens to temperature during a phase change (a flat segment)?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>It rises steadily</span></div>
+<div class="choice"><span class="clab">B</span><span>It falls steadily</span></div>
+<div class="choice"><span class="clab">C</span><span>It stays constant</span></div>
+<div class="choice"><span class="clab">D</span><span>It oscillates</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">During the flat (phase-change) part of a heating curve, where does the added energy go if not into raising the temperature?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz2" data-quiz="2">
+<header class="quiz-head"><span class="qz-num">Quiz 02</span><h3>Specific heat & q = mcΔT</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Define <b>specific heat capacity</b> and give its usual unit.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Given the same mass and the same amount of heat added, which has the LARGER temperature change: water (c=4.18) or iron (c=0.439)?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Water</span></div>
+<div class="choice"><span class="clab">B</span><span>Iron</span></div>
+<div class="choice"><span class="clab">C</span><span>Both the same</span></div>
+<div class="choice"><span class="clab">D</span><span>Cannot tell</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">What is the specific heat of a 4.0 g sample of glass that warms from 274 °C to 314 °C by absorbing 32.0 J? </div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">That same glass (c = 0.20 J/g°C, m = 4.0 g) cools from 325 K to 275 K. How much heat does it release?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Does the temperature change (ΔT) need to be in Celsius for a q = mcΔT calculation, or can Kelvin be used? Explain in one sentence.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat is released when 120.0 g of liquid water cools from 95.0 °C to 25.0 °C? (c = 4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 75.0 g block of copper (c = 0.385) absorbs 1155 J. What is its temperature change (ΔT)?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">What mass of aluminum (c = 0.897) absorbs 500.0 J while warming by 12.0 °C?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which substance heats up the FASTEST when equal masses absorb equal heat?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Water (4.18)</span></div>
+<div class="choice"><span class="clab">B</span><span>Aluminum (0.897)</span></div>
+<div class="choice"><span class="clab">C</span><span>Iron (0.439)</span></div>
+<div class="choice"><span class="clab">D</span><span>Lead (0.129)</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Rearrange q = mcΔT to solve for c, for m, and for ΔT.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 200.0 g sample of water is heated, and its temperature rises from 18.0 °C to 100.0 °C. How much heat (in kJ) did it absorb? (c = 4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Why does water moderate coastal climates (stays cool by day, warm by night)?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Water has a very low specific heat</span></div>
+<div class="choice"><span class="clab">B</span><span>Water has a very high specific heat, so it resists temperature change</span></div>
+<div class="choice"><span class="clab">C</span><span>Water cannot absorb heat</span></div>
+<div class="choice"><span class="clab">D</span><span>Water reflects all sunlight</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz3" data-quiz="3">
+<header class="quiz-head"><span class="qz-num">Quiz 03</span><h3>Endothermic, exothermic & enthalpy</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">For an <b>exothermic</b> reaction, the sign of ΔH is:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Positive (+)</span></div>
+<div class="choice"><span class="clab">B</span><span>Negative (−)</span></div>
+<div class="choice"><span class="clab">C</span><span>Zero</span></div>
+<div class="choice"><span class="clab">D</span><span>It depends on temperature</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">For an <b>endothermic</b> process, the surroundings feel:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Warmer</span></div>
+<div class="choice"><span class="clab">B</span><span>Colder</span></div>
+<div class="choice"><span class="clab">C</span><span>No change</span></div>
+<div class="choice"><span class="clab">D</span><span>Hotter then colder</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">An athlete takes an ice bath. Is the athlete's body process exothermic or endothermic, and do the surroundings (the bath) gain or lose heat?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Ice melting in a glass of water — endothermic or exothermic for the ice? Explain.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Classify each phase change as endothermic or exothermic: melting, freezing, vaporization, condensation.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">ΔH for a reaction is −109 kJ. This means the reaction:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Absorbs 109 kJ and is endothermic</span></div>
+<div class="choice"><span class="clab">B</span><span>Releases 109 kJ and is exothermic</span></div>
+<div class="choice"><span class="clab">C</span><span>Absorbs 109 kJ and is exothermic</span></div>
+<div class="choice"><span class="clab">D</span><span>Releases 109 kJ and is endothermic</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Define <b>enthalpy change (ΔH)</b> in terms of heat and pressure.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">In terms of bonds, when is a reaction endothermic vs exothermic?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">The sun radiating energy throughout the solar system is best described as:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Endothermic; surroundings lose heat</span></div>
+<div class="choice"><span class="clab">B</span><span>Exothermic; surroundings gain heat</span></div>
+<div class="choice"><span class="clab">C</span><span>Endothermic; surroundings gain heat</span></div>
+<div class="choice"><span class="clab">D</span><span>Neither</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A cooked turkey is taken out of the oven into cooler room air. Endothermic or exothermic for the turkey?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which is a state function whose value depends only on the initial and final states?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Heat (q)</span></div>
+<div class="choice"><span class="clab">B</span><span>Work (w)</span></div>
+<div class="choice"><span class="clab">C</span><span>Enthalpy (H)</span></div>
+<div class="choice"><span class="clab">D</span><span>Path taken</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Combustion of methane releases heat. Write whether ΔH is positive or negative and the classification.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz4" data-quiz="4">
+<header class="quiz-head"><span class="qz-num">Quiz 04</span><h3>Calorimetry</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Define <b>calorimetry</b>.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">In a coffee-cup calorimeter, the <b>water</b> represents the:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>System</span></div>
+<div class="choice"><span class="clab">B</span><span>Surroundings</span></div>
+<div class="choice"><span class="clab">C</span><span>Insulation</span></div>
+<div class="choice"><span class="clab">D</span><span>Reaction chamber</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">State the central principle of calorimetry as an equation relating heat released and heat absorbed.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">In a calorimeter, 100.0 mL of water (density 1.00 g/mL, c = 4.18) warms from 23.7 °C to 27.8 °C. How much heat did the water absorb?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 59.0 g metal at 100.0 °C is dropped into the water above (final 27.8 °C). Using q_water = 1713.8 J and −q_metal = q_water, find the metal's specific heat.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">If the water in a calorimeter <b>heats up</b>, the reaction (system) is:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Endothermic; ΔH positive</span></div>
+<div class="choice"><span class="clab">B</span><span>Exothermic; ΔH negative</span></div>
+<div class="choice"><span class="clab">C</span><span>Endothermic; ΔH negative</span></div>
+<div class="choice"><span class="clab">D</span><span>Exothermic; ΔH positive</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">If the water in a calorimeter <b>cools down</b>, the reaction (system) is:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Exothermic; ΔH negative</span></div>
+<div class="choice"><span class="clab">B</span><span>Endothermic; ΔH positive</span></div>
+<div class="choice"><span class="clab">C</span><span>Exothermic; ΔH positive</span></div>
+<div class="choice"><span class="clab">D</span><span>Endothermic; ΔH negative</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Name the four labelled parts of a coffee-cup calorimeter diagram.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How is a bomb calorimeter different from a coffee-cup calorimeter (give two differences)?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A reaction releases 2090 J into 100.0 g of water (c = 4.18). What temperature rise does the water show?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 150.0 g piece of copper (c = 0.385) cools from 90.0 °C to 30.0 °C inside a calorimeter. How much heat does it give to the water?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Why must a calorimeter be well insulated?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>To keep the reaction from starting</span></div>
+<div class="choice"><span class="clab">B</span><span>So heat is exchanged only between system and water, not lost to the environment</span></div>
+<div class="choice"><span class="clab">C</span><span>To increase the specific heat of water</span></div>
+<div class="choice"><span class="clab">D</span><span>To raise the boiling point</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz5" data-quiz="5">
+<header class="quiz-head"><span class="qz-num">Quiz 05</span><h3>Heating & cooling curves (concepts)</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">On a heating curve, the <b>sloped</b> regions represent:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Phase changes at constant temperature</span></div>
+<div class="choice"><span class="clab">B</span><span>A single phase warming up (KE and temperature increasing)</span></div>
+<div class="choice"><span class="clab">C</span><span>Energy being destroyed</span></div>
+<div class="choice"><span class="clab">D</span><span>Constant potential energy with rising KE only during boiling</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">The <b>flat</b> regions of a heating curve correspond to:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Warming of a single phase</span></div>
+<div class="choice"><span class="clab">B</span><span>Phase changes (melting or boiling) at constant temperature</span></div>
+<div class="choice"><span class="clab">C</span><span>Cooling of a gas</span></div>
+<div class="choice"><span class="clab">D</span><span>Temperature dropping</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">On a heating curve, the melting plateau is SHORTER than the boiling plateau. Why?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">During melting and during freezing of the same substance, the temperature is the same. What is the difference in terms of energy?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">As more energy is added to a single-phase substance, the particles move ____, average kinetic energy ____, and temperature ____.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">During a phase change, added energy is used to break ____ forces, so the temperature ____.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">On the heating curve of Substance X, point A (lowest, left) is in which state?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Gas</span></div>
+<div class="choice"><span class="clab">B</span><span>Liquid</span></div>
+<div class="choice"><span class="clab">C</span><span>Solid</span></div>
+<div class="choice"><span class="clab">D</span><span>Plasma</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A flat segment where solid and liquid coexist is the:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Boiling plateau</span></div>
+<div class="choice"><span class="clab">B</span><span>Melting plateau</span></div>
+<div class="choice"><span class="clab">C</span><span>Gas-warming region</span></div>
+<div class="choice"><span class="clab">D</span><span>Solid-warming region</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Cooling curves are the reverse of heating curves. Are the phase changes on a cooling curve endothermic or exothermic?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which list places the heating-curve stages in the correct order (low to high energy)?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>solid → melting → liquid → boiling → gas</span></div>
+<div class="choice"><span class="clab">B</span><span>gas → boiling → liquid → melting → solid</span></div>
+<div class="choice"><span class="clab">C</span><span>liquid → solid → melting → gas → boiling</span></div>
+<div class="choice"><span class="clab">D</span><span>solid → boiling → liquid → melting → gas</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">On the flat segments of a heating curve, what happens to average kinetic energy and to potential energy?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Two flat segments appear on a complete heating curve of water. They correspond to:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Two different boiling points</span></div>
+<div class="choice"><span class="clab">B</span><span>Melting (0 °C) and boiling (100 °C)</span></div>
+<div class="choice"><span class="clab">C</span><span>Condensation and deposition</span></div>
+<div class="choice"><span class="clab">D</span><span>Sublimation only</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz6" data-quiz="6">
+<header class="quiz-head"><span class="qz-num">Quiz 06</span><h3>Multi-step phase-change calculations</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Calculate the total heat (J) to convert 50.0 g of ice at −20.0 °C to steam at 120.0 °C. Use c_ice=2.10, c_water=4.18, c_steam=1.89, ΔH_fus=334, ΔH_vap=2260.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat is needed just to MELT 30.0 g of ice at 0 °C? (ΔH_fus = 334 J/g)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat is released when 15.0 g of steam at 100 °C CONDENSES to water at 100 °C? (ΔH_vap = 2260 J/g)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Find the total heat to melt 25.0 g of ice at 0 °C and warm the liquid to 50.0 °C. (ΔH_fus=334, c_water=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">In a multi-step heating-curve problem, which step usually absorbs the MOST energy for water?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Warming the ice</span></div>
+<div class="choice"><span class="clab">B</span><span>Melting the ice</span></div>
+<div class="choice"><span class="clab">C</span><span>Warming the liquid</span></div>
+<div class="choice"><span class="clab">D</span><span>Vaporizing (boiling) the water</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Which equation form do you use for a flat (phase-change) segment, and which for a sloped segment?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Total heat (J) to take 10.0 g of ice at −10.0 °C to steam at exactly 100.0 °C (stop right after boiling). c_ice=2.10, c_water=4.18, ΔH_fus=334, ΔH_vap=2260.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat must be REMOVED to cool 40.0 g of liquid water from 100 °C to 0 °C and then freeze it? (c_water=4.18, ΔH_fus=334)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Why is q = mcΔT NOT used during melting?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Because mass changes</span></div>
+<div class="choice"><span class="clab">B</span><span>Because temperature does not change during melting (ΔT = 0)</span></div>
+<div class="choice"><span class="clab">C</span><span>Because c becomes negative</span></div>
+<div class="choice"><span class="clab">D</span><span>Because heat is not involved</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Heat needed to warm 5.0 g of ice from −15.0 °C to 0 °C and then melt it. (c_ice=2.10, ΔH_fus=334)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">List, in order, the five steps used to take ice below 0 °C all the way to steam above 100 °C.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much energy melts 100.0 g of ice already at 0 °C into water at 0 °C? (ΔH_fus = 334 J/g)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz7" data-quiz="7">
+<header class="quiz-head"><span class="qz-num">Quiz 07</span><h3>Mixed calculations</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">A 30.0 g gold sample (c = 0.129) is heated from 25.0 °C to 125.0 °C. Heat absorbed?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">880 J warms 40.0 g of an unknown metal by 50.0 °C. Find its specific heat and identify it from {Al 0.897, Fe 0.439, Cu 0.385}.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat raises 500.0 g of water from 10.0 °C to its boiling point 100.0 °C? (c=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 12.0 g lead sphere (c=0.129) releases 46.4 J. Find ΔT and state whether it warmed or cooled.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">What mass of water can be warmed 25.0 °C by 5225 J? (c=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Heat released when 20.0 g of steam at 100 °C condenses AND the liquid cools to 50 °C. (ΔH_vap=2260, c_water=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 60.0 g aluminum block (c=0.897) goes from 200.0 °C to 25.0 °C in a calorimeter. Heat given to surroundings?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Equal 100 g masses of water (4.18) and iron (0.439) each absorb 2000 J. Which has the bigger ΔT, and what are both ΔT values?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A reaction transfers 4180 J to 200.0 g of calorimeter water (c=4.18). Find the water's ΔT and say if the reaction was exo- or endothermic.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Heat to melt 8.00 g of ice at 0 °C and warm the water to 37 °C (body temp). (ΔH_fus=334, c_water=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">35.0 g of silver (c=0.235) absorbs 411.25 J. Find ΔT.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Convert: a process releases 23.5 kJ. Express this in joules and give the sign of q for the system.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz8" data-quiz="8">
+<header class="quiz-head"><span class="qz-num">Quiz 08</span><h3>Concept check (mixed)</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Which has the higher average kinetic energy of particles: a cup of water at 90 °C or a bathtub of water at 40 °C?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The bathtub (more total energy)</span></div>
+<div class="choice"><span class="clab">B</span><span>The cup (higher temperature)</span></div>
+<div class="choice"><span class="clab">C</span><span>Equal</span></div>
+<div class="choice"><span class="clab">D</span><span>Cannot compare</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Which holds more TOTAL thermal energy: the 90 °C cup or the 40 °C bathtub?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The cup</span></div>
+<div class="choice"><span class="clab">B</span><span>The bathtub (much larger mass)</span></div>
+<div class="choice"><span class="clab">C</span><span>Equal</span></div>
+<div class="choice"><span class="clab">D</span><span>Impossible to say</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Why does a metal spoon left in hot soup get hot quickly while water takes longer?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Heat naturally flows when two objects are in contact until:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The colder one is hottest</span></div>
+<div class="choice"><span class="clab">B</span><span>Both reach the same temperature (thermal equilibrium)</span></div>
+<div class="choice"><span class="clab">C</span><span>All energy is destroyed</span></div>
+<div class="choice"><span class="clab">D</span><span>The masses are equal</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A cold popsicle melts in your warm mouth. For the popsicle, is this endo- or exothermic? Which way does heat flow?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Specific heat in J/(g·°C) and J/(g·K) for the same substance are:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Always different</span></div>
+<div class="choice"><span class="clab">B</span><span>Numerically the same (a 1° change is equal in size)</span></div>
+<div class="choice"><span class="clab">C</span><span>Related by ×1000</span></div>
+<div class="choice"><span class="clab">D</span><span>Only equal at 0 K</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">State the sign convention: for the SYSTEM, q is ___ when heat is absorbed and ___ when heat is released.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which of these is exothermic?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Photosynthesis</span></div>
+<div class="choice"><span class="clab">B</span><span>Melting ice</span></div>
+<div class="choice"><span class="clab">C</span><span>Combustion of gasoline</span></div>
+<div class="choice"><span class="clab">D</span><span>Boiling water</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Two metal blocks, one at 80 °C and one at 20 °C, touch. Which loses energy, which gains, and what is true at the end?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A calorimeter measures ΔH of a reaction. If ΔH is reported as positive, the reaction is:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Exothermic</span></div>
+<div class="choice"><span class="clab">B</span><span>Endothermic</span></div>
+<div class="choice"><span class="clab">C</span><span>Impossible</span></div>
+<div class="choice"><span class="clab">D</span><span>At equilibrium</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Why can't we measure the total heat content (enthalpy) of a system, only ΔH?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">On a heating curve, between the melting plateau and the boiling plateau, the substance is:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Solid</span></div>
+<div class="choice"><span class="clab">B</span><span>A pure liquid being warmed</span></div>
+<div class="choice"><span class="clab">C</span><span>Gas</span></div>
+<div class="choice"><span class="clab">D</span><span>Solid + liquid mix</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz9" data-quiz="9">
+<header class="quiz-head"><span class="qz-num">Quiz 09</span><h3>Calorimetry & enthalpy (deeper)</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Water in a calorimeter (250.0 g, c=4.18) rises from 22.0 °C to 30.0 °C. Find q_water and ΔH_rxn (sign).</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A hot 80.0 g copper piece (c=0.385) at 150 °C is placed in water; it cools to 35 °C. Heat released by the copper?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">The copper from the previous question released 3542 J. If all of it is absorbed by 100.0 g of water (c=4.18), find the water's ΔT.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A bomb calorimeter is best suited to measure the heat of:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>A dissolving salt</span></div>
+<div class="choice"><span class="clab">B</span><span>A combustion reaction</span></div>
+<div class="choice"><span class="clab">C</span><span>An acid–base neutralization in solution</span></div>
+<div class="choice"><span class="clab">D</span><span>Melting ice</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Write the calorimetry relationship used in the metal-in-water experiment and explain the negative sign.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 45.0 g unknown metal at 100.0 °C is dropped into 80.0 g water at 20.0 °C; final T = 24.0 °C. (c_water=4.18) Find q_water, then c_metal.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">The heat of reaction measured at constant pressure equals:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The work done</span></div>
+<div class="choice"><span class="clab">B</span><span>The enthalpy change, ΔH</span></div>
+<div class="choice"><span class="clab">C</span><span>The entropy change</span></div>
+<div class="choice"><span class="clab">D</span><span>The activation energy</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">If a dissolving salt makes the calorimeter water get COLDER, classify the dissolving process and give the sign of ΔH.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How many kJ are released when 25.0 g of steam condenses at 100 °C? (ΔH_vap=2260 J/g)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">List the components common to BOTH a coffee-cup and a bomb calorimeter.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A calorimetry run gives ΔH = −540 J for dissolving 2.0 g of a substance. What is ΔH per gram, and is dissolving exo- or endothermic?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">If the direction of a thermochemical equation is reversed, the ΔH:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Stays the same</span></div>
+<div class="choice"><span class="clab">B</span><span>Changes sign</span></div>
+<div class="choice"><span class="clab">C</span><span>Doubles</span></div>
+<div class="choice"><span class="clab">D</span><span>Becomes zero</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz10" data-quiz="10">
+<header class="quiz-head"><span class="qz-num">Quiz 10</span><h3>Comprehensive cumulative review</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">In one sentence each, distinguish heat, temperature, and specific heat.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which sequence is correct for energy content, lowest to highest, for water at the SAME mass?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>steam < liquid < ice</span></div>
+<div class="choice"><span class="clab">B</span><span>ice < liquid < steam</span></div>
+<div class="choice"><span class="clab">C</span><span>liquid < ice < steam</span></div>
+<div class="choice"><span class="clab">D</span><span>steam < ice < liquid</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Total heat (J) to turn 20.0 g of ice at −15.0 °C into steam at 125.0 °C. (c_ice=2.10, c_water=4.18, c_steam=1.89, ΔH_fus=334, ΔH_vap=2260)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 100.0 g iron skillet (c=0.439) cools from 220 °C to 25 °C. Heat released (kJ)?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">During boiling, the temperature stays at 100 °C because the energy added:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Is lost to the air</span></div>
+<div class="choice"><span class="clab">B</span><span>Breaks the intermolecular attractions to form gas, raising potential not kinetic energy</span></div>
+<div class="choice"><span class="clab">C</span><span>Increases the average kinetic energy</span></div>
+<div class="choice"><span class="clab">D</span><span>Is converted to mass</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">An instant cold pack gets cold when squeezed. Endothermic or exothermic? Sign of ΔH?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">50.0 g of water at 80.0 °C is mixed with 50.0 g of water at 20.0 °C in an insulated cup. Estimate the final temperature.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat melts 250.0 g of ice at 0 °C? (ΔH_fus=334 J/g) Give kJ.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which correctly pairs a process with its energy term on the heating curve?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Warming liquid → q = mΔH_vap</span></div>
+<div class="choice"><span class="clab">B</span><span>Melting → q = mcΔT</span></div>
+<div class="choice"><span class="clab">C</span><span>Boiling → q = mΔH_vap</span></div>
+<div class="choice"><span class="clab">D</span><span>Warming steam → q = mΔH_fus</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A 90.0 g sample of aluminum (c=0.897) absorbs 4036.5 J. Find ΔT.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Explain why the boiling plateau on water's heating curve is much longer than the melting plateau.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A reaction in a coffee-cup calorimeter raises the water temperature. Which set is correct?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>System absorbs energy; ΔH > 0; endothermic</span></div>
+<div class="choice"><span class="clab">B</span><span>System releases energy; ΔH < 0; exothermic</span></div>
+<div class="choice"><span class="clab">C</span><span>System releases energy; ΔH > 0; endothermic</span></div>
+<div class="choice"><span class="clab">D</span><span>No energy change</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz11" data-quiz="11">
+<header class="quiz-head"><span class="qz-num">Quiz 11</span><h3>Comprehensive review A — full-unit cumulative</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">A small cup of tea at 95 °C and a full bathtub at 40 °C. Which is true?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The tea has more total thermal energy</span></div>
+<div class="choice"><span class="clab">B</span><span>The tea has the higher average kinetic energy; the bathtub has more total energy</span></div>
+<div class="choice"><span class="clab">C</span><span>Both have the same average kinetic energy</span></div>
+<div class="choice"><span class="clab">D</span><span>The bathtub has the higher average kinetic energy</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Classify each as endothermic or exothermic: (a) water boiling, (b) steam condensing, (c) a hand warmer activating, (d) ice subliming.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Equal 100.0 g masses of aluminum (c=0.897) and water (c=4.18) each gain 1500 J. Which warms more, and by how many °C each?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat warms 80.0 g of water from 21.0 °C to 96.0 °C? (c=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 50.0 g metal absorbs 1097.5 J and its temperature rises 50.0 °C. Find c and identify it from {Al 0.897, Fe 0.439, Cu 0.385}.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 65.0 g metal at 95.0 °C is dropped into 120.0 g of water at 22.0 °C; final T=25.5 °C. (c_water=4.18) Find q_water, then c_metal.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A reaction has ΔH = +58 kJ. This reaction:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Releases 58 kJ; exothermic</span></div>
+<div class="choice"><span class="clab">B</span><span>Absorbs 58 kJ; endothermic</span></div>
+<div class="choice"><span class="clab">C</span><span>Releases 58 kJ; endothermic</span></div>
+<div class="choice"><span class="clab">D</span><span>Absorbs 58 kJ; exothermic</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">On a heating curve, why is temperature constant on a plateau, and why is the boiling plateau longer than the melting plateau?</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Total heat (J) to convert 40.0 g of ice at −25.0 °C to steam at 115.0 °C. (c_ice=2.10, c_water=4.18, c_steam=1.89, ΔH_fus=334, ΔH_vap=2260)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat is released when 18.0 g of steam at 100 °C condenses and the liquid then cools to 25 °C? (ΔH_vap=2260, c_water=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">120.0 g of water at 70.0 °C is mixed with 40.0 g of water at 10.0 °C (insulated). Find the final temperature.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which statement is CORRECT?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Specific heat can be negative</span></div>
+<div class="choice"><span class="clab">B</span><span>During melting, q = mcΔT is used</span></div>
+<div class="choice"><span class="clab">C</span><span>If a calorimeter's water cools, the reaction is endothermic (ΔH positive)</span></div>
+<div class="choice"><span class="clab">D</span><span>Reversing a reaction keeps the sign of ΔH the same</span></div>
+</div>
+</li>
+</ol></article>
+<article class="quiz" id="quiz12" data-quiz="12">
+<header class="quiz-head"><span class="qz-num">Quiz 12</span><h3>Comprehensive review B — full-unit cumulative</h3><span class="qz-meta">12 questions</span></header>
+<ol class="qlist">
+<li class="qitem">
+<div class="qtext">Temperature is best defined as:</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>The total energy of all particles</span></div>
+<div class="choice"><span class="clab">B</span><span>The average kinetic energy of the particles</span></div>
+<div class="choice"><span class="clab">C</span><span>The amount of heat an object contains</span></div>
+<div class="choice"><span class="clab">D</span><span>The transfer of energy between objects</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">A process releases 17.8 kJ. Express this in joules and give the sign of q for the system.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">What mass of water is warmed 30.0 °C by 6270 J? (c=4.18)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">A 75.0 g copper block (c=0.385) absorbs 577.5 J. Find its ΔT.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Heat needed to warm 20.0 g of ice from −12.0 °C to 0 °C and then melt it. (c_ice=2.10, ΔH_fus=334)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Total heat (J) to convert 75.0 g of ice at −10.0 °C to steam at 110.0 °C. (c_ice=2.10, c_water=4.18, c_steam=1.89, ΔH_fus=334, ΔH_vap=2260)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">In a calorimeter, 200.0 g of water (c=4.18) cools from 24.0 °C to 19.5 °C while a salt dissolves. Find the heat exchanged and classify the dissolving (exo/endo, sign of ΔH).</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which feature belongs to a BOMB calorimeter but not a coffee-cup calorimeter?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>A thermometer</span></div>
+<div class="choice"><span class="clab">B</span><span>A stirrer</span></div>
+<div class="choice"><span class="clab">C</span><span>A sealed constant-volume chamber with an O₂ inlet</span></div>
+<div class="choice"><span class="clab">D</span><span>Water as the surroundings</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">In terms of bonds, explain why a reaction is exothermic.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">How much heat must be REMOVED to cool 30.0 g of liquid water from 40.0 °C to 0 °C and then freeze it? (c_water=4.18, ΔH_fus=334)</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+<li class="qitem">
+<div class="qtext">Which pairing of heating-curve stage and equation is correct?</div>
+<div class="choices">
+<div class="choice"><span class="clab">A</span><span>Melting → q = mcΔT</span></div>
+<div class="choice"><span class="clab">B</span><span>Warming steam → q = mΔH_vap</span></div>
+<div class="choice"><span class="clab">C</span><span>Boiling → q = mΔH_vap</span></div>
+<div class="choice"><span class="clab">D</span><span>Warming liquid → q = mΔH_fus</span></div>
+</div>
+</li>
+<li class="qitem">
+<div class="qtext">Water has both a high specific heat AND a high heat of vaporization. Give one real-world consequence of each.</div>
+<div class="answer-line"><span>Answer:</span><div class="rule"></div></div>
+</li>
+</ol></article>
+  </div>
+  <div class="view" id="view-keys">
+    <div class="keyswrap-note"><b>Kept separate on purpose.</b> Try each quiz fully before opening its key. Click a bar to reveal worked solutions.</div>
+    <details class="keyblock"><summary><span class="qz-num">Quiz 01 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Heat is energy <i>in transit</i> — it flows from a hotter substance to a colder one. Temperature, not heat, is the average kinetic energy of particles.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Temperature = AVERAGE kinetic energy of particles. Heat = the transfer of kinetic energy from a hotter to a colder substance.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Heat flows spontaneously from the higher-temperature object to the lower-temperature object until thermal equilibrium is reached.</div></li>
+<li><div class="kans"><b>1046 J</b></div><div class="ksol">250 cal × 4.184 J/cal = 1046 J.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">The surroundings are everything else in the universe besides the system (in a calorimeter this is usually taken to be the water).</div></li>
+<li><div class="kans"><b>False</b></div><div class="ksol">The TOTAL heat energy is impossible to measure; only the CHANGE in heat energy (based on what the system absorbs or releases) can be measured.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Melting absorbs energy from the surroundings (endothermic). Freezing, condensation, and combustion all release energy (exothermic).</div></li>
+<li><div class="kans"><b>Endothermic; surroundings lose heat</b></div><div class="ksol">The stove puts energy INTO the pan, so the pan (system) absorbs energy → endothermic. The surroundings lose that heat.</div></li>
+<li><div class="kans"><b>3135 J</b></div><div class="ksol">q = mcΔT = 50.0 g × 4.18 J/g°C × 15.0 °C = 3135 J.</div></li>
+<li><div class="kans"><b>658.5 J</b></div><div class="ksol">ΔT = 80.0 − 20.0 = 60.0 °C. q = 25.0 × 0.439 × 60.0 = 658.5 J.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">During a phase change the temperature stays constant; all added energy goes to overcoming intermolecular forces, not to raising kinetic energy.</div></li>
+<li><div class="kans"><b>Into breaking/overcoming the intermolecular forces (increasing potential energy)</b></div><div class="ksol">The energy is used by the particles to overcome intermolecular forces so they can flow as a liquid or separate into a gas — potential energy rises while average kinetic energy (temperature) stays constant.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 02 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>Energy needed to raise the temperature of 1 g of a substance by 1 °C; unit J/g°C (or J/g·K)</b></div><div class="ksol">Specific heat = the amount of heat required to raise the temperature of 1 gram of a substance by 1 degree Celsius. Typical units: J/(g·°C) or J/(g·K).</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Iron has the lower specific heat, so less energy is needed to raise 1 g by 1 °C → it heats up more for the same energy. Iron has the larger ΔT.</div></li>
+<li><div class="kans"><b>0.2 J/g°C</b></div><div class="ksol">ΔT = 314 − 274 = 40 °C. c = q/(mΔT) = 32.0 / (4.0 × 40.0) = 0.2 J/g°C.</div></li>
+<li><div class="kans"><b>40 J released</b></div><div class="ksol">ΔT = 50 K = 50 °C (a 50-degree change is the same size in K and °C). q = 0.20 × 4.0 × 50 = 40 J. It is released (cooling).</div></li>
+<li><div class="kans"><b>Either works — a temperature CHANGE is identical in size in °C and K</b></div><div class="ksol">A change of 1 °C equals a change of 1 K, so ΔT has the same numerical value in both scales; the specific-heat equation gives the same answer either way.</div></li>
+<li><div class="kans"><b>35112 J released</b></div><div class="ksol">ΔT = 95.0 − 25.0 = 70.0 °C. q = 120.0 × 4.18 × 70.0 = 35112 J. Released because it cools.</div></li>
+<li><div class="kans"><b>40 °C</b></div><div class="ksol">ΔT = q/(mc) = 1155 / (75.0 × 0.385) = 40 °C.</div></li>
+<li><div class="kans"><b>46.451 g</b></div><div class="ksol">m = q/(cΔT) = 500.0 / (0.897 × 12.0) = 46.451 g.</div></li>
+<li><div class="kans"><b>D</b></div><div class="ksol">Lowest specific heat → fastest temperature rise. Lead (0.129) has the lowest of these, so it heats fastest.</div></li>
+<li><div class="kans"><b>c = q/(mΔT);  m = q/(cΔT);  ΔT = q/(mc)</b></div><div class="ksol">Divide both sides by whichever two quantities you are not solving for.</div></li>
+<li><div class="kans"><b>68.552 kJ</b></div><div class="ksol">ΔT = 100.0 − 18.0 = 82.0 °C. q = 200.0 × 4.18 × 82.0 = 68552 J = 68.552 kJ.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Water's high specific heat (4.18 J/g°C) means large amounts of energy cause only small temperature changes, so large bodies of water buffer temperature swings.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 03 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Exothermic = energy OUT, products lower in energy than reactants, so ΔH is negative.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Endothermic processes absorb heat FROM the surroundings, so the surroundings lose energy and feel colder.</div></li>
+<li><div class="kans"><b>Exothermic; surroundings gain heat</b></div><div class="ksol">The athlete releases energy into the ice bath → exothermic; the surroundings (bath) gain that heat.</div></li>
+<li><div class="kans"><b>Endothermic</b></div><div class="ksol">Going from solid → liquid requires energy input (the liquid has more energy than the solid). The ice absorbs energy from the water, so melting is endothermic; the surroundings lose heat.</div></li>
+<li><div class="kans"><b>Melting: endo; Freezing: exo; Vaporization: endo; Condensation: exo</b></div><div class="ksol">Going to a higher-energy state (melt, vaporize, sublime) absorbs energy = endothermic. Going to a lower-energy state (freeze, condense, deposit) releases energy = exothermic.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">A negative ΔH means heat is released → exothermic. The magnitude (109 kJ) is the amount of heat released.</div></li>
+<li><div class="kans"><b>The heat absorbed or released by a reaction at constant pressure</b></div><div class="ksol">ΔH is the heat content change of a system at constant pressure; the heat absorbed or released by a reaction at constant pressure equals ΔH.</div></li>
+<li><div class="kans"><b>Endothermic if more energy is needed to break bonds than is released forming them; exothermic if more energy is released forming bonds than is needed to break them</b></div><div class="ksol">Breaking bonds absorbs energy; forming bonds releases energy. If net energy is absorbed → endothermic (ΔH > 0); if net energy is released → exothermic (ΔH < 0).</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">The sun RELEASES energy to the solar system → exothermic; the surroundings gain heat.</div></li>
+<li><div class="kans"><b>Exothermic</b></div><div class="ksol">The turkey releases heat to the cooler air → exothermic; surroundings (air) gain heat.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Enthalpy is a state function — ΔH depends only on the initial and final states, not the route taken (the basis of Hess's Law).</div></li>
+<li><div class="kans"><b>ΔH negative; exothermic</b></div><div class="ksol">Combustion releases heat to the surroundings → exothermic → ΔH < 0.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 04 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>Measuring the amount of heat absorbed or released by a chemical reaction or process</b></div><div class="ksol">Calorimetry is the measurement of heat flow into or out of a system during a chemical or physical process.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">The reaction/process is the system; the water is the surroundings whose temperature change we measure.</div></li>
+<li><div class="kans"><b>q released = q absorbed  →  −q (block/reaction) = q (water)</b></div><div class="ksol">Assuming no heat is lost to the environment, the heat released by the hot object/reaction equals the heat absorbed by the water: −q_block = q_water.</div></li>
+<li><div class="kans"><b>1713.8 J</b></div><div class="ksol">m = 100.0 g. ΔT = 27.8 − 23.7 = 4.1 °C. q = 100.0 × 4.18 × 4.1 = 1713.8 J absorbed.</div></li>
+<li><div class="kans"><b>0.402 J/g°C</b></div><div class="ksol">q_metal = −1713.8 J (released). ΔT_metal = 27.8 − 100.0 = −72.2 °C. c = |q|/(mΔT) = 1713.8/(59.0 × 72.2) = 0.402 J/g°C.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Water heating up means the reaction released heat → exothermic → ΔH (heat of reaction) is negative.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Water cooling means the reaction absorbed heat from the water → endothermic → ΔH positive.</div></li>
+<li><div class="kans"><b>Stirrer, thermometer, Styrofoam cups (insulation), water (surroundings) — holding the sample (system)</b></div><div class="ksol">A coffee-cup calorimeter has a stirrer, a thermometer, nested Styrofoam cups for insulation, and water (the surroundings) holding the sample (the system).</div></li>
+<li><div class="kans"><b>Bomb: sealed rigid steel chamber, constant volume, has O2 inlet + ignition leads, used for combustion; coffee-cup: open to air, constant pressure, simpler, measures solution reactions</b></div><div class="ksol">A bomb calorimeter is a sealed, rigid steel vessel that runs at constant volume with an O2 supply and electrical ignition (for combustion). A coffee-cup calorimeter is open to the atmosphere at constant pressure and is used for dissolution/neutralization reactions in solution.</div></li>
+<li><div class="kans"><b>5 °C</b></div><div class="ksol">ΔT = q/(mc) = 2090 / (100.0 × 4.18) = 5 °C.</div></li>
+<li><div class="kans"><b>3465 J</b></div><div class="ksol">ΔT = 60.0 °C. q = 150.0 × 0.385 × 60.0 = 3465 J transferred to the water.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Insulation ensures the assumption '−q_system = q_water' holds — heat isn't lost to the outside, so the measurement is accurate.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 05 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Sloped (rising) regions = one phase present; added heat raises average kinetic energy, so temperature rises.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Flat regions = phase change; temperature is constant while intermolecular forces are overcome.</div></li>
+<li><div class="kans"><b>It takes more energy to vaporize (boil) than to melt — more energy is needed to fully separate particles into a gas than to let them flow as a liquid</b></div><div class="ksol">The heat of vaporization is much larger than the heat of fusion, so the boiling plateau (which represents more absorbed energy) is longer.</div></li>
+<li><div class="kans"><b>Melting absorbs energy (heat added); freezing releases energy (heat removed)</b></div><div class="ksol">The melting point and freezing point are the same temperature; melting is endothermic (energy in) while freezing is exothermic (energy out).</div></li>
+<li><div class="kans"><b>faster; increases; increases (higher)</b></div><div class="ksol">More energy → particles move faster → higher average kinetic energy → higher temperature.</div></li>
+<li><div class="kans"><b>intermolecular; remains constant</b></div><div class="ksol">Energy goes into overcoming intermolecular forces (raising potential energy), so the temperature stays constant during the phase change.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">The lowest-temperature starting region is the solid; from there the curve rises as the solid warms.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Solid + liquid coexist during melting — the melting plateau.</div></li>
+<li><div class="kans"><b>Exothermic</b></div><div class="ksol">Cooling means removing heat; condensation and freezing release energy, so phase changes on a cooling curve are exothermic.</div></li>
+<li><div class="kans"><b>A</b></div><div class="ksol">From least to most energy: warming solid → melting → warming liquid → boiling → warming gas.</div></li>
+<li><div class="kans"><b>Average kinetic energy stays constant; potential energy increases</b></div><div class="ksol">Temperature (avg KE) is constant during a phase change; the absorbed energy raises potential energy as intermolecular forces are overcome.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">For water the two plateaus are melting at 0 °C and boiling at 100 °C.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 06 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>154590 J  (≈ 154.59 kJ)</b></div><div class="ksol">q1 warm ice: 50×2.10×20=2100; q2 melt: 50×334=16700; q3 warm water: 50×4.18×100=20900; q4 boil: 50×2260=113000; q5 warm steam: 50×1.89×20=1890. Total = 154590 J.</div></li>
+<li><div class="kans"><b>10020 J</b></div><div class="ksol">q = mΔH_fus = 30.0 × 334 = 10020 J. (No temperature change occurs.)</div></li>
+<li><div class="kans"><b>33900 J released</b></div><div class="ksol">Condensation releases the heat of vaporization: q = 15.0 × 2260 = 33900 J, released (exothermic).</div></li>
+<li><div class="kans"><b>13575 J</b></div><div class="ksol">Melt: 25.0×334=8350 J. Warm: 25.0×4.18×50.0=5225 J. Total = 13575 J.</div></li>
+<li><div class="kans"><b>D</b></div><div class="ksol">Vaporization (ΔH_vap = 2260 J/g) is by far the largest energy term — much bigger than fusion or any sensible-heat step.</div></li>
+<li><div class="kans"><b>Flat: q = mΔH (fusion or vaporization). Sloped: q = mcΔT</b></div><div class="ksol">Sloped segments use q = mcΔT (temperature changes). Flat segments use q = mΔH_fus or q = mΔH_vap (temperature constant).</div></li>
+<li><div class="kans"><b>30330 J</b></div><div class="ksol">Warm ice: 10×2.10×10=210; melt: 10×334=3340; warm water: 10×4.18×100=4180; boil: 10×2260=22600. Total = 30330 J. (No steam-warming step since we stop at 100 °C.)</div></li>
+<li><div class="kans"><b>30080 J removed</b></div><div class="ksol">Cool liquid: 40×4.18×100=16720 J. Freeze: 40×334=13360 J. Total removed = 30080 J (exothermic).</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">During melting the temperature is constant (ΔT = 0), so q = mcΔT would give 0. Use q = mΔH_fus instead.</div></li>
+<li><div class="kans"><b>1827.5 J</b></div><div class="ksol">Warm ice: 5.0×2.10×15.0=157.5 J. Melt: 5.0×334=1670 J. Total = 1827.5 J.</div></li>
+<li><div class="kans"><b>1) warm ice (q=mcΔT) 2) melt (q=mΔH_fus) 3) warm liquid (q=mcΔT) 4) boil (q=mΔH_vap) 5) warm steam (q=mcΔT)</b></div><div class="ksol">Five steps: heat solid, melt, heat liquid, vaporize, heat gas. Add all five for the total.</div></li>
+<li><div class="kans"><b>33400 J (33.4 kJ)</b></div><div class="ksol">Only the fusion step applies: q = 100.0 × 334 = 33400 J.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 07 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>387 J</b></div><div class="ksol">q = 30.0 × 0.129 × 100.0 = 387 J.</div></li>
+<li><div class="kans"><b>0.44 J/g°C → Iron</b></div><div class="ksol">c = q/(mΔT) = 880/(40.0×50.0) = 0.44 J/g°C, which matches iron (0.439 ≈ 0.44).</div></li>
+<li><div class="kans"><b>188100 J (188.1 kJ)</b></div><div class="ksol">ΔT = 90.0 °C. q = 500.0 × 4.18 × 90.0 = 188100 J.</div></li>
+<li><div class="kans"><b>ΔT = 29.974 °C; it cooled</b></div><div class="ksol">ΔT = q/(mc) = 46.4/(12.0×0.129) = 29.974 °C. Heat released ⇒ the lead cooled.</div></li>
+<li><div class="kans"><b>50 g</b></div><div class="ksol">m = q/(cΔT) = 5225/(4.18×25.0) = 50 g.</div></li>
+<li><div class="kans"><b>49380 J released</b></div><div class="ksol">Condense: 20.0×2260=45200 J. Cool: 20.0×4.18×50.0=4180 J. Total released = 49380 J.</div></li>
+<li><div class="kans"><b>9418.5 J</b></div><div class="ksol">ΔT = 175.0 °C. q = 60.0 × 0.897 × 175.0 = 9418.5 J released to surroundings.</div></li>
+<li><div class="kans"><b>Iron bigger. Water ΔT = 4.785 °C; Iron ΔT = 45.558 °C</b></div><div class="ksol">Water: ΔT = 2000/(100×4.18) = 4.785 °C. Iron: 2000/(100×0.439) = 45.558 °C. Iron's lower c gives the larger temperature change.</div></li>
+<li><div class="kans"><b>ΔT = 5 °C; exothermic</b></div><div class="ksol">ΔT = 4180/(200.0×4.18) = 5 °C. Water warmed ⇒ reaction released heat ⇒ exothermic (ΔH negative).</div></li>
+<li><div class="kans"><b>3909.28 J</b></div><div class="ksol">Melt: 8.0×334=2672 J. Warm: 8.0×4.18×37.0=1237.28 J. Total = 3909.28 J.</div></li>
+<li><div class="kans"><b>50 °C</b></div><div class="ksol">ΔT = 411.25/(35.0×0.235) = 50 °C.</div></li>
+<li><div class="kans"><b>−23 500 J (q is negative; energy leaves the system)</b></div><div class="ksol">23.5 kJ × 1000 = 23 500 J; released means q is negative: q = −23 500 J.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 08 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Temperature = average KE. The 90 °C cup has higher average KE even though the bathtub holds more TOTAL energy.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Total thermal energy depends on mass and temperature; the much larger mass of the bathtub gives it more total energy despite lower temperature.</div></li>
+<li><div class="kans"><b>Metal has a low specific heat, so little energy raises its temperature quickly</b></div><div class="ksol">Metals have low specific heat values, so they require little energy to change temperature and heat up fast; water's high specific heat makes it slow to change.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Heat flows from hot to cold until both objects reach the same temperature — thermal equilibrium.</div></li>
+<li><div class="kans"><b>Endothermic for the popsicle; heat flows from your mouth (hot) into the popsicle (cold)</b></div><div class="ksol">Heat flows from the warmer mouth to the colder popsicle; the popsicle absorbs energy and melts → endothermic for the popsicle.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Because a temperature CHANGE of 1 °C equals a change of 1 K, the specific heat value is numerically identical in both units.</div></li>
+<li><div class="kans"><b>positive (+) when absorbed; negative (−) when released</b></div><div class="ksol">Energy in = positive q (endothermic); energy out = negative q (exothermic).</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Combustion releases energy (exothermic). The others all absorb energy.</div></li>
+<li><div class="kans"><b>80 °C block loses energy; 20 °C block gains energy; both end at the same (intermediate) temperature</b></div><div class="ksol">Heat flows from the hotter (80 °C) block to the cooler (20 °C) block until they reach a common equilibrium temperature.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Positive ΔH means heat was absorbed by the system → endothermic.</div></li>
+<li><div class="kans"><b>Absolute enthalpy can't be measured; only the CHANGE in enthalpy (heat absorbed or released) is measurable</b></div><div class="ksol">There is no way to measure the total internal energy/enthalpy of a system directly; calorimetry measures only the change, ΔH, via the heat exchanged with the surroundings.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Between the two plateaus the substance is entirely liquid and its temperature is rising (sloped region).</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 09 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>q_water = 8360 J; ΔH_rxn = −8360 J (exothermic)</b></div><div class="ksol">q_water = 250.0×4.18×8.0 = 8360 J (absorbed). The reaction released this, so ΔH_rxn = −8360 J.</div></li>
+<li><div class="kans"><b>3542 J</b></div><div class="ksol">ΔT = 150 − 35 = 115 °C. q = 80.0 × 0.385 × 115.0 = 3542 J released.</div></li>
+<li><div class="kans"><b>8.474 °C</b></div><div class="ksol">ΔT_water = q/(mc) = 3542/(100.0×4.18) = 8.474 °C.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">The sealed, oxygen-filled, constant-volume bomb calorimeter is designed for combustion reactions.</div></li>
+<li><div class="kans"><b>−q_metal = q_water (the heat lost by the metal equals the heat gained by the water)</b></div><div class="ksol">Energy is conserved: whatever the metal releases (negative q) the water absorbs (positive q). The negative sign shows the metal loses the energy the water gains.</div></li>
+<li><div class="kans"><b>q_water = 1337.6 J; c_metal = 0.391 J/g°C</b></div><div class="ksol">q_water = 80.0×4.18×(24.0−20.0)=80.0×4.18×4.0=1337.6 J. ΔT_metal = 24.0−100.0 = −76.0 °C. c_metal = 1337.6/(45.0×76.0) = 0.391 J/g°C.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">At constant pressure, q_p = ΔH, the enthalpy change.</div></li>
+<li><div class="kans"><b>Endothermic; ΔH positive</b></div><div class="ksol">Water cooling means the process absorbed heat from the water → endothermic → ΔH positive (like a cold pack).</div></li>
+<li><div class="kans"><b>56.5 kJ</b></div><div class="ksol">q = 25.0 × 2260 = 56500 J = 56.5 kJ released.</div></li>
+<li><div class="kans"><b>A thermometer, a stirrer, water (surroundings), insulation, and a sample (system)</b></div><div class="ksol">Both have a thermometer, a stirrer, water that absorbs/releases heat, insulation, and the sample being studied. They differ mainly in pressure/volume conditions and ruggedness.</div></li>
+<li><div class="kans"><b>-270 J/g; exothermic</b></div><div class="ksol">ΔH per gram = −540/2.0 = -270 J/g. Negative ΔH ⇒ exothermic (released heat, water warmed).</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Reversing a reaction flips the sign of ΔH (an exothermic forward reaction is endothermic in reverse).</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 10 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>Heat = energy transferred (hot→cold); Temperature = average KE of particles; Specific heat = energy to raise 1 g by 1 °C</b></div><div class="ksol">Heat is energy in transit; temperature measures average kinetic energy; specific heat is a property telling how much energy a substance needs to change temperature.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Solid (ice) has the least energy, gas (steam) the most; ice < liquid < steam.</div></li>
+<li><div class="kans"><b>61815 J (≈ 61.815 kJ)</b></div><div class="ksol">q1=20×2.10×15=630; q2=20×334=6680; q3=20×4.18×100=8360; q4=20×2260=45200; q5=20×1.89×25=945. Total=61815 J.</div></li>
+<li><div class="kans"><b>8.56 kJ</b></div><div class="ksol">ΔT=195 °C. q=100.0×0.439×195=(8560.5 J) = 8.56 kJ released.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">At a phase change, added energy overcomes intermolecular forces (raises PE); average KE (temperature) stays constant.</div></li>
+<li><div class="kans"><b>Endothermic; ΔH positive</b></div><div class="ksol">It absorbs heat from its surroundings (your hand), getting cold → endothermic → ΔH > 0.</div></li>
+<li><div class="kans"><b>50.0 °C</b></div><div class="ksol">Equal masses of the same substance: final T is the average = (80+20)/2 = 50.0 °C (heat lost by hot water = heat gained by cold water).</div></li>
+<li><div class="kans"><b>83.5 kJ</b></div><div class="ksol">q = 250.0 × 334 = 83500 J = 83.5 kJ.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Boiling uses q = mΔH_vap. Warming any single phase uses q = mcΔT; melting uses q = mΔH_fus.</div></li>
+<li><div class="kans"><b>50 °C</b></div><div class="ksol">ΔT = q/(mc) = 4036.5/(90.0×0.897) = 50 °C.</div></li>
+<li><div class="kans"><b>ΔH_vap (2260 J/g) is far greater than ΔH_fus (334 J/g) — vaporizing absorbs much more energy than melting</b></div><div class="ksol">It takes about 7× more energy per gram to vaporize water than to melt it, because boiling must fully separate the molecules while melting only lets them flow. So the boiling plateau represents (and takes) much more heat.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Water warming ⇒ the system (reaction) released heat ⇒ exothermic ⇒ ΔH negative.</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 11 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Temperature = average KE, so the 95 °C tea wins there. But the bathtub's much larger mass gives it more TOTAL thermal energy.</div></li>
+<li><div class="kans"><b>(a) endo  (b) exo  (c) exo  (d) endo</b></div><div class="ksol">Boiling and subliming go to a higher-energy state → absorb energy (endo). Condensing and a hand warmer release energy (exo).</div></li>
+<li><div class="kans"><b>Aluminum warms more. Al ΔT=16.722 °C; water ΔT=3.589 °C</b></div><div class="ksol">ΔT=q/(mc). Al: 1500/(100×0.897)=16.722 °C. Water: 1500/(100×4.18)=3.589 °C. Lower c (aluminum) → bigger ΔT.</div></li>
+<li><div class="kans"><b>25080 J</b></div><div class="ksol">ΔT=96.0−21.0=75.0 °C. q=80.0×4.18×75.0=25080 J.</div></li>
+<li><div class="kans"><b>0.439 J/g°C → Iron</b></div><div class="ksol">c=q/(mΔT)=1097.5/(50.0×50.0)=0.439 J/g°C, which matches iron (0.439).</div></li>
+<li><div class="kans"><b>q_water=1755.6 J; c_metal=0.389 J/g°C</b></div><div class="ksol">q_water=120.0×4.18×(25.5−22.0)=120.0×4.18×3.5=1755.6 J. ΔT_metal=25.5−95.0=−69.5 °C. c=qw/(65.0×69.5)=0.389 J/g°C.</div></li>
+<li><div class="kans"><b>B</b></div><div class="ksol">Positive ΔH means heat is absorbed → endothermic; magnitude is 58 kJ.</div></li>
+<li><div class="kans"><b>Plateau: energy breaks intermolecular forces (PE up, KE/temperature constant). Boiling plateau longer because ΔH_vap (2260) ≫ ΔH_fus (334)</b></div><div class="ksol">During a phase change all energy goes to overcoming intermolecular forces, so temperature (average KE) stays constant. Vaporization needs far more energy per gram than fusion, so its plateau is longer.</div></li>
+<li><div class="kans"><b>123714 J (≈ 123.714 kJ)</b></div><div class="ksol">q1=40×2.10×25=2100; q2=40×334=13360; q3=40×4.18×100=16720; q4=40×2260=90400; q5=40×1.89×15=1134. Total=123714 J.</div></li>
+<li><div class="kans"><b>46323 J released</b></div><div class="ksol">Condense: 18.0×2260=40680 J. Cool: 18.0×4.18×75=5643 J. Total released=46323 J.</div></li>
+<li><div class="kans"><b>55 °C</b></div><div class="ksol">Heat lost by hot = heat gained by cold. T_f=(m₁T₁+m₂T₂)/(m₁+m₂)=(120×70+40×10)/160=55 °C.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Water cooling means the reaction absorbed heat → endothermic, ΔH positive. (Specific heat is always positive; melting uses q=mΔH_fus; reversing a reaction flips ΔH's sign.)</div></li>
+</ol></details>
+<details class="keyblock"><summary><span class="qz-num">Quiz 12 — Answer Key</span><span class="reveal-hint">tap to reveal</span></summary>
+<ol class="klist">
+<li><div class="kans"><b>B</b></div><div class="ksol">Temperature measures the AVERAGE kinetic energy of particles. 'Heat an object contains' and 'transfer of energy' describe thermal energy/heat, not temperature.</div></li>
+<li><div class="kans"><b>−17 800 J (q negative; energy leaves the system)</b></div><div class="ksol">17.8 kJ × 1000 = 17 800 J. Released → q is negative: q=−17 800 J.</div></li>
+<li><div class="kans"><b>50 g</b></div><div class="ksol">m=q/(cΔT)=6270/(4.18×30.0)=50 g.</div></li>
+<li><div class="kans"><b>20 °C</b></div><div class="ksol">ΔT=q/(mc)=577.5/(75.0×0.385)=20 °C.</div></li>
+<li><div class="kans"><b>7184 J</b></div><div class="ksol">Warm ice: 20.0×2.10×12.0=504 J. Melt: 20.0×334=6680 J. Total=7184 J.</div></li>
+<li><div class="kans"><b>228892.5 J (≈ 228.893 kJ)</b></div><div class="ksol">q1=75×2.10×10=1575; q2=75×334=25050; q3=75×4.18×100=31350; q4=75×2260=169500; q5=75×1.89×10=1417.5. Total=228892.5 J.</div></li>
+<li><div class="kans"><b>3762 J absorbed from the water; endothermic; ΔH positive</b></div><div class="ksol">ΔT=19.5−24.0=−4.5 °C, so the water lost 3762 J (q=200.0×4.18×4.5). The salt absorbed it → endothermic → ΔH positive.</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">The sealed, rigid constant-volume steel chamber with an oxygen inlet (for combustion) is unique to the bomb calorimeter. Both share a thermometer, stirrer, and water.</div></li>
+<li><div class="kans"><b>More energy is released forming new bonds than is absorbed breaking the old bonds, so net energy is released (ΔH negative)</b></div><div class="ksol">Breaking bonds absorbs energy; forming bonds releases it. When bond formation releases more than bond breaking absorbs, the net result is energy out → exothermic.</div></li>
+<li><div class="kans"><b>15036 J removed</b></div><div class="ksol">Cool: 30.0×4.18×40.0=5016 J. Freeze: 30.0×334=10020 J. Total removed=15036 J (exothermic).</div></li>
+<li><div class="kans"><b>C</b></div><div class="ksol">Boiling (a phase change) uses q=mΔH_vap. Warming any single phase uses q=mcΔT; melting uses q=mΔH_fus.</div></li>
+<li><div class="kans"><b>High c: large bodies of water moderate climate. High ΔH_vap: evaporative sweating removes lots of heat (and steam burns are severe).</b></div><div class="ksol">High specific heat lets water absorb large amounts of energy with little temperature change (climate moderation, coolant). High heat of vaporization means evaporation/condensation moves a lot of energy (effective sweating; dangerous steam burns).</div></li>
+</ol></details>
+  </div>
+</main>
+
+<footer>
+  Built from the Unit 13A Thermochemistry A deck and CK-12 Chemistry sections 17.2, 17.5, 17.6, 17.7, 17.8, 17.9 and 17.14. Constants used: c(ice)=2.10, c(water)=4.18, c(steam)=1.89 J/g·°C; ΔH<sub>fus</sub>=334 J/g; ΔH<sub>vap</sub>=2260 J/g. Always use the values your teacher provides on the quiz if they differ.
+</footer>
+
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+const views={study:'view-study',cheat:'view-cheat',quiz:'view-quiz',keys:'view-keys'};
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected', x===t));
+  Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));
+  document.getElementById(views[t.dataset.view]).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+// quiz selector
+const qbtns=[...document.querySelectorAll('.qzbtn')];
+const quizzesEls=[...document.querySelectorAll('.quiz')];
+function showQuiz(id){
+  quizzesEls.forEach(q=>q.classList.toggle('show', q.id===id));
+  qbtns.forEach(b=>b.classList.toggle('on', b.dataset.target===id));
+}
+qbtns.forEach(b=>b.addEventListener('click',()=>showQuiz(b.dataset.target)));
+if(qbtns.length) showQuiz('quiz1');
+</script>
+</body>
+</html>
